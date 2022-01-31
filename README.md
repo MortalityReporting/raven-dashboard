@@ -2,6 +2,10 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.2.
 
+# UI mocks 
+We decided to go with FIGMA for the mocks. 
+https://www.figma.com/file/TyInbYsZ0d8KpBVHmNNIVr/Raven-2.0?node-id=0%3A1
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
