@@ -1,0 +1,19 @@
+<mat-sidenav-container>
+
+  <mat-toolbar color="primary" class="menu-spacer">
+
+    <span style="cursor: pointer"><h1 (click)="onTitleClick();">Raven 2.0 Logo</h1></span>
+
+    <a mat-button [routerLink]="'/'">
+      FHIR Validator
+    </a>
+    <span class="menu-spacer"></span>
+
+    <a mat-button  [routerLink]="'/about'">
+      About
+    </a>
+
+  </mat-toolbar>
+
+</mat-sidenav-container>
+
