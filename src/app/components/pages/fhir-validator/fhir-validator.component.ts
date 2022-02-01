@@ -4,10 +4,9 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
-  FormGroupDirective, ValidationErrors,
-  ValidatorFn,
   Validators
 } from "@angular/forms";
+import {ValidateFhir} from "../../../validator/validate-fhir";
 
 @Component({
   selector: 'app-fhir-validator',
@@ -22,16 +21,20 @@ export class FhirValidatorComponent implements OnInit {
 
   createForm(){
     this.form = this.formBuilder.group({
-      fhirResource: new FormControl(null, [Validators.required]),
+      fhirResource: new FormControl(null, [Validators.required, ValidateFhir],null),
     });
   }
 
   submit() {
-    console.log(this.form.value);
+    console.log(this.form);
   }
 
   onClear() {
     this.form.reset();
+  }
+
+  getErrorMessage(form: AbstractControl) {
+    console.log("I am running");
   }
 
   ngOnInit() {
