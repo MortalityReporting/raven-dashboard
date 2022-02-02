@@ -1,12 +1,12 @@
 <div class="container top-spacer">
   <h1>FHIR Validator</h1>
-  <form [formGroup]="form" (ngSubmit)="submit()">
+  <form [formGroup]="form" (ngSubmit)="submit()" #formDirective="ngForm" >
 
     <mat-form-field class="form-element" appearance="fill">
       <mat-label>Enter FHIR Resource</mat-label>
       <textarea matInput rows="30" formControlName="fhirResource"></textarea>
       <mat-error *ngIf="!form.controls['fhirResource'].valid && form.controls['fhirResource'].touched">
-        {{getErrorMessage(form.controls['fhirResource'])}}
+        Invalid
       </mat-error>
     </mat-form-field>
 

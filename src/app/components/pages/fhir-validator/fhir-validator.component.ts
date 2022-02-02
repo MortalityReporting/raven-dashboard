@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
   FormControl,
-  FormGroup,
+  FormGroup, FormGroupDirective, NgForm,
   Validators
 } from "@angular/forms";
 import {ValidateFhir} from "../../../validator/validate-fhir";
@@ -16,21 +16,26 @@ import {ValidateFhir} from "../../../validator/validate-fhir";
 export class FhirValidatorComponent implements OnInit {
 
   form: FormGroup;
+  @ViewChild('formDirective') formDirective: NgForm;
 
   constructor(private formBuilder: FormBuilder) {}
 
   createForm(){
     this.form = this.formBuilder.group({
       fhirResource: new FormControl(null, [Validators.required, ValidateFhir],null),
-    });
+    }, { updateOn: 'submit'});
   }
 
   submit() {
-    console.log(this.form);
+    if(this.form.valid) {
+      this.formDirective.resetForm();
+    }
   }
 
   onClear() {
-    this.form.reset();
+    // We need to reset the form directive and not the form.
+    // We also need to use set timeout, or required values will render mat-error messages
+    setTimeout(() => this.formDirective.resetForm(), 0)
   }
 
   getErrorMessage(form: AbstractControl) {
