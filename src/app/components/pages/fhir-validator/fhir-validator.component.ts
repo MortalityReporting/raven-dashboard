@@ -3,7 +3,7 @@ import {
   AbstractControl,
   FormBuilder,
   FormControl,
-  FormGroup, FormGroupDirective, NgForm,
+  FormGroup, NgForm,
   Validators
 } from "@angular/forms";
 import {ValidateFhir} from "../../../validator/validate-fhir";
@@ -28,7 +28,7 @@ export class FhirValidatorComponent implements OnInit {
 
   submit() {
     if(this.form.valid) {
-      this.formDirective.resetForm();
+     // this.formDirective.resetForm();
     }
   }
 

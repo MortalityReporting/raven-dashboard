@@ -2,7 +2,7 @@
   <h1>FHIR Validator</h1>
   <form [formGroup]="form" (ngSubmit)="submit()" #formDirective="ngForm" >
 
-    <mat-form-field class="form-element" appearance="fill">
+    <mat-form-field class="form-element" appearance="outline">
       <mat-label>Enter FHIR Resource</mat-label>
       <textarea matInput rows="30" formControlName="fhirResource"></textarea>
       <mat-error *ngIf="!form.controls['fhirResource'].valid && form.controls['fhirResource'].touched">
@@ -17,9 +17,9 @@
             Validate
           </button>
       </span>
-      <button mat-raised-button color="basic" class="button" (click)="onClear();">
+      <button mat-raised-button color="success" class="button" (click)="onClear();">
         <mat-icon>clear</mat-icon>
-        Clear Text
+        Clear
       </button>
     </div>
   </form>

@@ -26,3 +26,26 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 }
 
+.top-spacer{
+  padding-top: 15px;
+}
+
+/*Adding some green buttons. We may have to change the color if we don't like it*/
+.mat-button.mat-success {
+  color: green;
+}
+
+.mat-raised-button.mat-success, .mat-flat-button.mat-success{
+  background-color: green;
+  color: white;
+}
+
+.mat-form-field-appearance-outline.mat-success .mat-form-field-outline.mat-success{
+  color: green;
+}
+
+/*!* Border *!*/
+/*.mat-form-field-appearance-outline .mat-form-field-outline{*/
+/*  color: green;*/
+/*}*/
+
