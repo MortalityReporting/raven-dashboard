@@ -12,16 +12,27 @@ export class DecedentService {
   constructor(private http: HttpClient) { }
 
   loadDecedentRecords(
-    filter = '', sortOrder = 'asc',
-    pageNumber = 0, pageSize = 10):  Observable<Decedent[]> {
+    filter = '',
+    sortOrder = 'asc',
+    sortBy = 'personId',
+    pageNumber = 0,
+    pageSize = 10):  Observable<Decedent[]> {
 
-    return this.http.get('/api/decedents', {
+    return this.http.get('/api/decedent-list', {
       params: new HttpParams()
         .set('filter', filter)
+        .set('sortBy', sortBy)
         .set('sortOrder', sortOrder)
         .set('pageNumber', pageNumber.toString())
         .set('pageSize', pageSize.toString())
     }).pipe(
+      map((result: any) => result.map((item: any) => Object.assign(new Decedent, item))
+      )
+    );
+  }
+
+  testCall():Observable<Decedent[]>{
+    return this.http.get('/api/decedent-list').pipe(
       map((result: any) =>
         result.map((item: any) => Object.assign(new Decedent, item))
       )

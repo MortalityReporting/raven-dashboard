@@ -17,6 +17,8 @@ import {CaseExplorerComponent} from './components/pages/case-explorer/case-explo
 import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
+import { HttpClientModule } from '@angular/common/http';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 
 @NgModule({
@@ -24,7 +26,7 @@ import {MatSortModule} from "@angular/material/sort";
     AppComponent,
     FhirValidatorComponent,
     HeaderComponent,
-    CaseExplorerComponent
+    CaseExplorerComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,7 +41,9 @@ import {MatSortModule} from "@angular/material/sort";
     MatToolbarModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatProgressSpinnerModule,
+    MatSortModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
