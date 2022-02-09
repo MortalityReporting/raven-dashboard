@@ -44,9 +44,11 @@
     </table>
 
     <mat-paginator
-                  [length]=50
+                  #paginator
+                  [length]=totalCount
                   [pageSizeOptions]="[10, 20]"
                   [pageSize]="10"
+                  (page)="pageChanged($event)"
                   showFirstLastButtons
                   aria-label="Select page">
     </mat-paginator>
