@@ -12,19 +12,25 @@ export class DecedentService {
   constructor(private http: HttpClient) { }
 
   getCases(
-    filter = '',
-    sortOrder = 'asc',
-    sortBy = 'personId',
-    pageNumber = 0,
-    pageSize = 10):  Observable<DecedentResponse> {
+    filter?: string,
+    sortOrder?: string,
+    sortBy?: string,
+    pageNumber?: number,
+    pageSize?: number):  Observable<DecedentResponse> {
+
+    const filterParam: string = filter || '';
+    const sortOrderParam: string = sortOrder || 'asc';
+    const sortByParam: string = sortBy || 'personId';
+    const pageNumberParam: number = pageNumber || 0;
+    const pageSizePram: number = pageSize || 10;
 
     return this.http.get('/api/decedent-list', {
       params: new HttpParams()
-        .set('filter', filter)
-        .set('sortBy', sortBy)
-        .set('sortOrder', sortOrder)
-        .set('pageNumber', pageNumber)
-        .set('pageSize', pageSize)
+        .set('filter', filterParam)
+        .set('sortBy', sortByParam)
+        .set('sortOrder', sortOrderParam)
+        .set('pageNumber', pageNumberParam)
+        .set('pageSize', pageSizePram)
     }).pipe( map((result: any) => (
         result as DecedentResponse
       )),

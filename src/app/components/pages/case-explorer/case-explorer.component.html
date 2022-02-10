@@ -6,8 +6,15 @@
     <input matInput placeholder="Search records" #input>
   </mat-form-field>
 
+  <div class="spinner-container" *ngIf="isLoading">
+
+    <mat-spinner [diameter]="70"></mat-spinner>
+
+  </div>
+
+
   <div class="mat-elevation-z5">
-    <table mat-table [dataSource]="dataSource" matSort matSortDisableClear matSortActive="seqNo">
+    <table mat-table [dataSource]="dataSource" matSort matSortDisableClear matSortActive="personId">
 
       <!-- Position Column -->
       <ng-container matColumnDef="personId">
@@ -52,5 +59,6 @@
                   showFirstLastButtons
                   aria-label="Select page">
     </mat-paginator>
+
   </div>
 </div>

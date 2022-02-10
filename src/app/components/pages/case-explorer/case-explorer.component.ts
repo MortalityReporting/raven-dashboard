@@ -5,20 +5,25 @@ import {MatSort} from "@angular/material/sort";
 import {Decedent} from "../../../model/decedent";
 import {DecedentService} from "../../../service/decedent.service";
 import {ActivatedRoute} from "@angular/router";
+import {distinctUntilChanged, fromEvent, Subscription, tap} from "rxjs";
+import { debounceTime } from "rxjs/operators";
+
+interface ngOnDestroy {
+}
 
 @Component({
   selector: 'app-case-explorer',
   templateUrl: './case-explorer.component.html',
   styleUrls: ['./case-explorer.component.css']
 })
-export class CaseExplorerComponent implements OnInit, AfterViewInit {
+export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy {
 
   decedent: Decedent;
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['personId', 'firstName', 'lastName', 'gender', 'age'];
   totalCount: 0;
-
   decedentList: Decedent[];
+  isLoading = true;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -26,24 +31,28 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit {
 
   @ViewChild('input') input: ElementRef;
 
+  filterResultsObservable$: Subscription;
+  loadDataObservable$: Subscription;
 
   constructor(
     private route: ActivatedRoute,
     private decedentService: DecedentService,
   ) { }
 
-  getDecedents(filter: string, sortOrder: string='asc',  sortBy: string = 'personId', pageNumber: number = 1, pageSize: number = 10): void {
+  getDecedents(filter: string, sortOrder: string,  sortBy: string, pageNumber: number, pageSize: number): void {
+    this.isLoading = true;
     this.decedentService.getCases(filter, sortOrder, sortBy, pageNumber, pageSize).subscribe(
       (response: any) => {
         this.decedentList = response.data;
         this.totalCount = response.count;
         this.dataSource = new MatTableDataSource<any>(this.decedentList);
+        this.isLoading = false;
       }
     );
   }
 
   ngOnInit(): void {
-    this.getDecedents("", 'asc', 'personId', 1,  10);
+    this.getDecedents(null, null, null, null, null);
   }
 
   ngAfterViewInit() {
@@ -59,8 +68,27 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit {
         this.paginator.pageSize
       );
     });
+
+    this.filterResultsObservable$ = fromEvent(this.input.nativeElement,'keyup')
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        tap((text) => {
+          this.getDecedents(
+            this.input.nativeElement.value,
+            this.sort.direction,
+            this.sort.active,
+            this.paginator.pageIndex,
+            this.paginator.pageSize
+          );
+        })
+      ).subscribe();
   }
 
+  ngOnDestroy(){
+    this.filterResultsObservable$.unsubscribe();
+    this.loadDataObservable$.unsubscribe();
+  }
 
   onRowClicked(row: any) {
     console.log(row);
@@ -74,5 +102,9 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit {
       this.paginator.pageIndex,
       this.paginator.pageSize
     );
+  }
+
+  filterResults($event: KeyboardEvent) {
+
   }
 }
