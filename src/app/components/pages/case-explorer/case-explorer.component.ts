@@ -41,7 +41,7 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
 
   getDecedents(filter: string, sortOrder: string,  sortBy: string, pageNumber: number, pageSize: number): void {
     this.isLoading = true;
-    this.decedentService.getCases(filter, sortOrder, sortBy, pageNumber, pageSize).subscribe(
+    this.loadDataObservable$ = this.decedentService.getCases(filter, sortOrder, sortBy, pageNumber, pageSize).subscribe(
       (response: any) => {
         this.decedentList = response.data;
         this.totalCount = response.count;
@@ -104,7 +104,4 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
     );
   }
 
-  filterResults($event: KeyboardEvent) {
-
-  }
 }
