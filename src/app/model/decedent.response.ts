@@ -1,6 +1,7 @@
-import {Decedent} from "./decedent";
+import {DecedentGridDTO} from "./decedent.grid.dto";
+
 
 export class DecedentResponse {
   count: number;
-  data: Decedent[]
+  data: DecedentGridDTO[]
 }

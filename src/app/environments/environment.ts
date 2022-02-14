@@ -4,9 +4,8 @@
 
 export const environment = {
   production: false,
-  ravenApiUrl: "https://apps.hdap.gatech.edu/raven-fhir-server/fhir"
+  rcApiUrl: "https://apps.hdap.gatech.edu/raven-fhir-server/fhir"
 };
-
 
 /*
  * For easier debugging in development mode, you can import the following file
