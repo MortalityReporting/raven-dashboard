@@ -5,7 +5,7 @@ import {MatSort} from "@angular/material/sort";
 import {DecedentGridDTO} from "../../../model/decedent.grid.dto";
 import {DecedentService} from "../../../service/decedent.service";
 import {ActivatedRoute} from "@angular/router";
-import {distinctUntilChanged, fromEvent, Subscription, tap} from "rxjs";
+import { distinctUntilChanged, fromEvent, mergeMap, Subscription, tap, forkJoin, map} from "rxjs";
 import { debounceTime } from "rxjs/operators";
 
 interface ngOnDestroy {
@@ -34,6 +34,7 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
 
   filterResultsObservable$: Subscription;
   loadDataObservable$: Subscription;
+  private entryResult: [];
 
 
 
@@ -44,26 +45,18 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
 
   getDecedents(filter: string, sortOrder: string,  sortBy: string, pageNumber: number, pageSize: number): void {
     this.isLoading = true;
-    // this.loadDataObservable$ = this.decedentService.getCases(filter, sortOrder, sortBy, pageNumber, pageSize).subscribe(
-    //   (response: any) => {
-    //     this.decedentList = response.data;
-    //     this.totalCount = response.count;
-    //     this.dataSource = new MatTableDataSource<any>(this.decedentList);
-    //     this.isLoading = false;
-    //   }
-    // );
-    this.decedentService.testCall().subscribe((bundle: any) => {
-      //this.patientList  = bundle.entry;
+    this.loadDataObservable$ = this.decedentService.getCases(filter, sortOrder, sortBy, pageNumber, pageSize).subscribe(
+      (response: any) => {
+        this.decedentList = response.data;
+        this.totalCount = response.count;
+        this.dataSource = new MatTableDataSource<any>(this.decedentList);
+        this.isLoading = false;
+      }
+    );
 
-      // bundle.entry.forEach((entry: any) => {
-      //   console.log(entry.resource);
-      //   decedent.id = entry?.resource?.id;
-      //   decedent.firstName = entry?.resource?.name[0].given[0];
-      //   decedent.lastName = entry?.resource?.name[0].family;
-      //   decedent.gender = entry?.resource?.gender;
-      //   decedent.dob = entry?.resource?.birthDate;
-      //   this.patientList.push(decedent);
-      // });
+
+
+    this.decedentService.testCall().subscribe((bundle: any) => {
 
       bundle.entry.forEach(
          (entry: any, i: number) => {
@@ -92,6 +85,23 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
 
   ngOnInit(): void {
     this.getDecedents(null, null, null, null, null);
+
+    this.decedentService.getClinicalCases().pipe(
+      mergeMap((clinicalCaseList: any[]) =>
+        forkJoin(
+          clinicalCaseList.map((clinicalCase: any) =>
+            this.decedentService.getDetails(clinicalCase).pipe(
+              map((tod: string) => {
+                clinicalCase.resource.tod = tod;
+                return clinicalCase;
+              })
+            )
+          ))
+      )
+    ).subscribe((data: any) => {
+      console.log(data);
+    });
+
   }
 
   ngAfterViewInit() {
@@ -144,10 +154,12 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
   }
 
   calculateAge(birthday: any) { // birthday is a daten calculateAge(birthday) { // birthday is a date
-    console.log(birthday);
    const ageDifMs = Date.now() - birthday;
    const ageDate = new Date(ageDifMs);
    return Math.abs(ageDate.getUTCFullYear() - 1970);
   }
 
+  private setActiveUser(data: any) {
+
+  }
 }
