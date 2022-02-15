@@ -5,8 +5,7 @@ import {MatSort} from "@angular/material/sort";
 import {DecedentGridDTO} from "../../../model/decedent.grid.dto";
 import {DecedentService} from "../../../service/decedent.service";
 import {ActivatedRoute} from "@angular/router";
-import { distinctUntilChanged, fromEvent, mergeMap, Subscription, tap, forkJoin, map} from "rxjs";
-import { debounceTime } from "rxjs/operators";
+import {mergeMap, forkJoin, map} from "rxjs";
 
 interface ngOnDestroy {
 }
@@ -19,12 +18,10 @@ interface ngOnDestroy {
 export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy {
 
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['personId', 'firstName', 'lastName', 'gender', 'age', 'tod'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'gender',  'tod', 'system'];
   totalCount: 0;
-  decedentList: DecedentGridDTO[];
+  decedentGridDtoList: DecedentGridDTO[];
   isLoading = true;
-
-  patientList: any[] = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -32,76 +29,49 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
 
   @ViewChild('input') input: ElementRef;
 
-  filterResultsObservable$: Subscription;
-  loadDataObservable$: Subscription;
-  private entryResult: [];
-
-
-
   constructor(
     private route: ActivatedRoute,
     private decedentService: DecedentService,
-  ) { }
+    // private constants: Constants,
+  ) {
+  }
 
-  getDecedents(filter: string, sortOrder: string,  sortBy: string, pageNumber: number, pageSize: number): void {
-    this.isLoading = true;
-    this.loadDataObservable$ = this.decedentService.getCases(filter, sortOrder, sortBy, pageNumber, pageSize).subscribe(
-      (response: any) => {
-        this.decedentList = response.data;
-        this.totalCount = response.count;
-        this.dataSource = new MatTableDataSource<any>(this.decedentList);
-        this.isLoading = false;
-      }
-    );
-
-
-
-    this.decedentService.testCall().subscribe((bundle: any) => {
-
-      bundle.entry.forEach(
-         (entry: any, i: number) => {
-              const decedent : any = {};
-             decedent.id = entry?.resource?.id;
-             decedent.firstName = entry?.resource?.name[0].given[0];
-             decedent.lastName = entry?.resource?.name[0].family;
-             decedent.gender = entry?.resource?.gender;
-             decedent.dob = entry?.resource?.birthDate;
-             decedent.age = this.calculateAge(new Date(entry?.resource?.birthDate));
-             this.patientList.push(decedent);
-             console.log(this.patientList);
-           console.log(entry);
-           this.decedentService.getDetails(entry).subscribe(
-             (tod: any) => {
-                   this.patientList[i].tod = tod;
-
-             }
-           )
-         }
-       );
-    },
-      (error)=> console.log(error),
-      ()=>{ console.log(this.patientList); this.dataSource = new MatTableDataSource<any>(this.patientList)});
+  mapToDto(entry: any): DecedentGridDTO {
+    let decedentDTO = new DecedentGridDTO();
+    decedentDTO.decedentId = entry.resource?.id;
+    decedentDTO.firstName = entry.resource?.name[0].given[0];
+    decedentDTO.lastName = entry.resource?.name[0].family;
+    decedentDTO.gender = entry.resource?.gender;
+    decedentDTO.system = entry.resource?.identifier[0]?.system;
+    decedentDTO.age = this.getAgeFromDob(new Date(entry.resource?.birthDate));
+    return decedentDTO;
   }
 
   ngOnInit(): void {
-    this.getDecedents(null, null, null, null, null);
 
-    this.decedentService.getClinicalCases().pipe(
+    this.isLoading = true;
+
+    this.decedentService.getDecedentRecords().pipe(
       mergeMap((clinicalCaseList: any[]) =>
         forkJoin(
           clinicalCaseList.map((clinicalCase: any) =>
             this.decedentService.getDetails(clinicalCase).pipe(
               map((tod: string) => {
-                clinicalCase.resource.tod = tod;
+                clinicalCase = this.mapToDto(clinicalCase);
+                clinicalCase.tod = tod;
                 return clinicalCase;
               })
             )
           ))
       )
     ).subscribe((data: any) => {
-      console.log(data);
-    });
-
+      this.isLoading = false;
+      this.decedentGridDtoList = data;
+      this.dataSource = new MatTableDataSource(data);
+    },
+      (response: any)=> {console.log(response)},
+      () => { this.isLoading = false;}
+    );
   }
 
   ngAfterViewInit() {
@@ -109,34 +79,10 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
     this.dataSource.sort = this.sort;
 
     this.sort.sortChange.subscribe(() => {
-      this.getDecedents(
-        this.input.nativeElement.value,
-        this.sort.direction,
-        this.sort.active,
-        this.paginator.pageIndex,
-        this.paginator.pageSize
-      );
     });
-
-    this.filterResultsObservable$ = fromEvent(this.input.nativeElement,'keyup')
-      .pipe(
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap((text) => {
-          this.getDecedents(
-            this.input.nativeElement.value,
-            this.sort.direction,
-            this.sort.active,
-            this.paginator.pageIndex,
-            this.paginator.pageSize
-          );
-        })
-      ).subscribe();
   }
 
-  ngOnDestroy(){
-    this.filterResultsObservable$.unsubscribe();
-    this.loadDataObservable$.unsubscribe();
+  ngOnDestroy() {
   }
 
   onRowClicked(row: any) {
@@ -144,22 +90,12 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
   }
 
   pageChanged(event: PageEvent) {
-    this.getDecedents(
-      this.input.nativeElement.value,
-      this.sort.direction,
-      this.sort.active,
-      this.paginator.pageIndex,
-      this.paginator.pageSize
-    );
   }
 
-  calculateAge(birthday: any) { // birthday is a daten calculateAge(birthday) { // birthday is a date
-   const ageDifMs = Date.now() - birthday;
-   const ageDate = new Date(ageDifMs);
-   return Math.abs(ageDate.getUTCFullYear() - 1970);
+  getAgeFromDob(birthday: any) {
+    const ageDifMs = Date.now() - birthday;
+    const ageDate = new Date(ageDifMs);
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
   }
 
-  private setActiveUser(data: any) {
-
-  }
 }
