@@ -7,9 +7,6 @@ import {DecedentService} from "../../../service/decedent.service";
 import {ActivatedRoute} from "@angular/router";
 import {mergeMap, forkJoin, map} from "rxjs";
 
-interface ngOnDestroy {
-}
-
 @Component({
   selector: 'app-decedent-records-grid',
   templateUrl: './decedent-records-grid.component.html',
