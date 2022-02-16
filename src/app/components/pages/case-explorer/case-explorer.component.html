@@ -14,7 +14,6 @@
   <div class="mat-elevation-z5">
     <table mat-table [dataSource]="dataSource" matSort matSortDisableClear matSortActive="personId">
 
-      <!-- Name Column -->
       <ng-container matColumnDef="firstName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by firstName"> First Name </th>
         <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.firstName}} </td>
@@ -25,7 +24,6 @@
         <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.lastName}} </td>
       </ng-container>
 
-      <!-- Weight Column -->
       <ng-container matColumnDef="gender">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by gender"> Gender </th>
         <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.gender}} </td>
