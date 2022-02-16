@@ -11,11 +11,11 @@ interface ngOnDestroy {
 }
 
 @Component({
-  selector: 'app-case-explorer',
-  templateUrl: './case-explorer.component.html',
-  styleUrls: ['./case-explorer.component.css']
+  selector: 'app-decedent-records-grid',
+  templateUrl: './decedent-records-grid.component.html',
+  styleUrls: ['./decedent-records-grid.component.css']
 })
-export class CaseExplorerComponent implements OnInit {
+export class DecedentRecordsGridComponent implements OnInit {
 
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['index', 'firstName', 'lastName', 'gender',  'tod', 'system'];
@@ -49,15 +49,15 @@ export class CaseExplorerComponent implements OnInit {
     this.isLoading = true;
 
     this.decedentService.getDecedentRecords().pipe(
-      mergeMap((clinicalCaseList: any[]) =>
+      mergeMap((decedentRecordsList: any[]) =>
         forkJoin(
-          clinicalCaseList.map((clinicalCase: any, i) =>
-            this.decedentService.getDetails(clinicalCase).pipe(
+          decedentRecordsList.map((decedentRecord: any, i) =>
+            this.decedentService.getDecedentConditionRecords(decedentRecord).pipe(
               map((observation: any) => {
-                clinicalCase = this.mapToDto(clinicalCase);
-                clinicalCase.tod = observation?.entry[0]?.resource?.effectiveDateTime;
-                clinicalCase.index = i + 1;
-                return clinicalCase;
+                decedentRecord = this.mapToDto(decedentRecord);
+                decedentRecord.tod = observation?.entry[0]?.resource?.effectiveDateTime;
+                decedentRecord.index = i + 1;
+                return decedentRecord;
               })
             )
           ))

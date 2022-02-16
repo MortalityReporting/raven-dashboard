@@ -10,7 +10,7 @@ export class DecedentService {
 
   constructor(private http: HttpClient) { }
 
-  getDetails(patient: any):  Observable<any> {
+  getDecedentConditionRecords(decedent: any):  Observable<any> {
     let authorizationData = 'Basic ' + btoa('client' + ':' + 'secret');
 
     const headerOptions = {
@@ -20,7 +20,7 @@ export class DecedentService {
       })
     };
 
-    return this.http.get("https://apps.hdap.gatech.edu/raven-fhir-server/fhir/Observation?patient=" + patient.resource.id + "&code=81956-5", headerOptions).pipe( map((result: any) => result));
+    return this.http.get("https://apps.hdap.gatech.edu/raven-fhir-server/fhir/Observation?patient=" + decedent.resource.id + "&code=81956-5", headerOptions).pipe( map((result: any) => result));
   }
   getDecedentRecords():  Observable<any> {
     const authorizationData = 'Basic ' + btoa('client' + ':' + 'secret');

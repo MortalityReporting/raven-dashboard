@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {FhirValidatorComponent} from "./components/pages/fhir-validator/fhir-validator.component";
-import {CaseExplorerComponent} from "./components/pages/case-explorer/case-explorer.component";
+import {DecedentRecordsGridComponent} from "./components/pages/decedent-records-grid/decedent-records-grid.component";
 
 const routes: Routes = [
   {
     path: '',
-    component: CaseExplorerComponent
+    component: DecedentRecordsGridComponent
   },
   {
     path: 'fhir-validator',

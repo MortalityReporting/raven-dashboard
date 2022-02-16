@@ -13,7 +13,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from "@angular/material/icon";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatToolbarModule} from "@angular/material/toolbar";
-import {CaseExplorerComponent} from './components/pages/case-explorer/case-explorer.component';
+import {DecedentRecordsGridComponent} from './components/pages/decedent-records-grid/decedent-records-grid.component';
 import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
@@ -26,7 +26,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     AppComponent,
     FhirValidatorComponent,
     HeaderComponent,
-    CaseExplorerComponent,
+    DecedentRecordsGridComponent,
   ],
   imports: [
     BrowserModule,
