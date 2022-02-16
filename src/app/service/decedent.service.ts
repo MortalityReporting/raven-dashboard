@@ -20,10 +20,7 @@ export class DecedentService {
       })
     };
 
-    return this.http.get("https://apps.hdap.gatech.edu/raven-fhir-server/fhir/Observation?patient=" + patient.resource.id + "&code=81956-5", headerOptions).pipe( map((result: any) =>
-        { console.log(result); return result?.entry[0]?.resource?.effectiveDateTime}
-      )
-    );
+    return this.http.get("https://apps.hdap.gatech.edu/raven-fhir-server/fhir/Observation?patient=" + patient.resource.id + "&code=81956-5", headerOptions).pipe( map((result: any) => result));
   }
   getDecedentRecords():  Observable<any> {
     const authorizationData = 'Basic ' + btoa('client' + ':' + 'secret');

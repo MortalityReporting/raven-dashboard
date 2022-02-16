@@ -15,15 +15,12 @@ interface ngOnDestroy {
   templateUrl: './case-explorer.component.html',
   styleUrls: ['./case-explorer.component.css']
 })
-export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy {
+export class CaseExplorerComponent implements OnInit {
 
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['firstName', 'lastName', 'gender',  'tod', 'system'];
-  totalCount: 0;
   decedentGridDtoList: DecedentGridDTO[];
   isLoading = true;
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -39,8 +36,8 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
   mapToDto(entry: any): DecedentGridDTO {
     let decedentDTO = new DecedentGridDTO();
     decedentDTO.decedentId = entry.resource?.id;
-    decedentDTO.firstName = entry.resource?.name[0].given[0];
-    decedentDTO.lastName = entry.resource?.name[0].family;
+    decedentDTO.firstName = entry.resource?.name[0]?.given[0];
+    decedentDTO.lastName = entry.resource?.name[0]?.family;
     decedentDTO.gender = entry.resource?.gender;
     decedentDTO.system = entry.resource?.identifier[0]?.system;
     decedentDTO.age = this.getAgeFromDob(new Date(entry.resource?.birthDate));
@@ -56,33 +53,28 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
         forkJoin(
           clinicalCaseList.map((clinicalCase: any) =>
             this.decedentService.getDetails(clinicalCase).pipe(
-              map((tod: string) => {
+              map((observation: any) => {
                 clinicalCase = this.mapToDto(clinicalCase);
-                clinicalCase.tod = tod;
+                clinicalCase.tod = observation?.entry[0]?.resource?.effectiveDateTime;
                 return clinicalCase;
               })
             )
           ))
       )
-    ).subscribe((data: any) => {
-      this.isLoading = false;
-      this.decedentGridDtoList = data;
-      this.dataSource = new MatTableDataSource(data);
-    },
-      (response: any)=> {console.log(response)},
-      () => { this.isLoading = false;}
-    );
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-
-    this.sort.sortChange.subscribe(() => {
+    ).subscribe({
+        next: (data) => {
+          this.decedentGridDtoList = data;
+          this.dataSource = new MatTableDataSource(data);
+          this.dataSource.sort = this.sort;
+          },
+        error: (e) => {
+          console.error(e);
+          //TODO render error message to the user
+        },
+        complete:  () => {
+          this.isLoading = false
+          }
     });
-  }
-
-  ngOnDestroy() {
   }
 
   onRowClicked(row: any) {
@@ -90,6 +82,11 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
   }
 
   pageChanged(event: PageEvent) {
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   getAgeFromDob(birthday: any) {

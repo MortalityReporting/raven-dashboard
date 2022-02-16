@@ -44,8 +44,4 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   color: green;
 }
 
-/*!* Border *!*/
-/*.mat-form-field-appearance-outline .mat-form-field-outline{*/
-/*  color: green;*/
-/*}*/
-
+.pointer {cursor: pointer;}
