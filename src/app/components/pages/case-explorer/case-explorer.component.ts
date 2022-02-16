@@ -1,6 +1,6 @@
-import {Component, OnInit, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {MatPaginator, PageEvent} from '@angular/material/paginator';
+import {PageEvent} from '@angular/material/paginator';
 import {MatSort} from "@angular/material/sort";
 import {DecedentGridDTO} from "../../../model/decedent.grid.dto";
 import {DecedentService} from "../../../service/decedent.service";
@@ -18,7 +18,7 @@ interface ngOnDestroy {
 export class CaseExplorerComponent implements OnInit {
 
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['firstName', 'lastName', 'gender',  'tod', 'system'];
+  displayedColumns: string[] = ['index', 'firstName', 'lastName', 'gender',  'tod', 'system'];
   decedentGridDtoList: DecedentGridDTO[];
   isLoading = true;
 
@@ -51,11 +51,12 @@ export class CaseExplorerComponent implements OnInit {
     this.decedentService.getDecedentRecords().pipe(
       mergeMap((clinicalCaseList: any[]) =>
         forkJoin(
-          clinicalCaseList.map((clinicalCase: any) =>
+          clinicalCaseList.map((clinicalCase: any, i) =>
             this.decedentService.getDetails(clinicalCase).pipe(
               map((observation: any) => {
                 clinicalCase = this.mapToDto(clinicalCase);
                 clinicalCase.tod = observation?.entry[0]?.resource?.effectiveDateTime;
+                clinicalCase.index = i + 1;
                 return clinicalCase;
               })
             )

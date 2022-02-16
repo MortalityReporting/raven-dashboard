@@ -1,5 +1,5 @@
 <div class="container top-spacer">
-  <h1>Decedent Record Explorer</h1>
+  <h1>Decedent Records</h1>
 
   <mat-form-field appearance="standard">
     <mat-label>Filter</mat-label>
@@ -14,28 +14,33 @@
   <div class="mat-elevation-z5">
     <table mat-table [dataSource]="dataSource" matSort matSortDisableClear matSortActive="personId">
 
+      <ng-container matColumnDef="index">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> # </th>
+        <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.index}} </td>
+      </ng-container>
+
       <ng-container matColumnDef="firstName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by firstName"> First Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
         <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.firstName}} </td>
       </ng-container>
 
       <ng-container matColumnDef="lastName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by lastName"> Last Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
         <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.lastName}} </td>
       </ng-container>
 
       <ng-container matColumnDef="gender">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by gender"> Gender </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Gender </th>
         <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.gender}} </td>
       </ng-container>
 
       <ng-container matColumnDef="age">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by age"> Age </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Age </th>
         <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.age}} </td>
       </ng-container>
 
       <ng-container matColumnDef="tod">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by tod"> Time of Death </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Time of Death </th>
         <td mat-cell class="pointer"*matCellDef="let decedent"> {{decedent.tod | date: 'MM/yyyy'}} </td>
       </ng-container>
 
