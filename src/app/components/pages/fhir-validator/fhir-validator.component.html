@@ -1,10 +1,21 @@
 <div class="container top-spacer">
   <h1>FHIR Validator</h1>
+  <div>
+
+  </div>
   <form [formGroup]="form" (ngSubmit)="submit()" #formDirective="ngForm" >
+
+    <mat-radio-group formControlName="textFormat">
+      <mat-radio-button value="json">JSON</mat-radio-button>
+      <mat-radio-button value="xml">XML</mat-radio-button>
+    </mat-radio-group>
 
     <mat-form-field class="form-element" appearance="outline">
       <mat-label>Enter FHIR Resource</mat-label>
-      <textarea matInput rows="30" formControlName="fhirResource"></textarea>
+      <textarea matInput rows="30"
+                formControlName="fhirResource"
+                (paste)="onPaste($event)"
+      ></textarea>
       <mat-error *ngIf="!form.controls['fhirResource'].valid && form.controls['fhirResource'].touched">
         Invalid
       </mat-error>
@@ -20,6 +31,10 @@
       <button mat-raised-button color="success" class="button" (click)="onClear();">
         <mat-icon>clear</mat-icon>
         Clear
+      </button>
+      <button mat-raised-button color="success" class="button" (click)="onFormatInput();">
+        <mat-icon>clear</mat-icon>
+        Format Input
       </button>
     </div>
   </form>

@@ -8,3 +8,21 @@
   padding: 5px 0px 25px 2px;
   width: 100%;
 }
+
+.mat-radio-button {
+  margin-right: 16px;
+  margin-bottom: 10px;
+}
+
+
+.line-numbers {
+  display: inline-block;
+  font-family: fixed-width;
+  margin: 0px;
+  background: #F0F8FF;
+}
+
+.text-area {
+  display: inline-block;
+  /*margin: 0px;*/
+}

@@ -7,6 +7,7 @@ import {
   Validators
 } from "@angular/forms";
 import {ValidateFhir} from "../../../validator/validate-fhir";
+import {UtilsService} from "../../../service/utils.service";
 
 @Component({
   selector: 'app-fhir-validator',
@@ -18,18 +19,26 @@ export class FhirValidatorComponent implements OnInit {
   form: FormGroup;
   @ViewChild('formDirective') formDirective: NgForm;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private utilsService: UtilsService
+  ) {}
 
   createForm(){
     this.form = this.formBuilder.group({
       fhirResource: new FormControl(null, [Validators.required, ValidateFhir],null),
-    }, { updateOn: 'submit'});
+      textFormat: new FormControl("json", [Validators.required],null),
+    },
+      //{ updateOn: 'submit'}
+    );
   }
 
   submit() {
     if(this.form.valid) {
      // this.formDirective.resetForm();
     }
+    const result = this.utilsService.isXmlString(this.form.controls['fhirResource'].value.trim());
+    console.log(result)
   }
 
   onClear() {
@@ -46,6 +55,32 @@ export class FhirValidatorComponent implements OnInit {
     this.createForm();
   }
 
+  onPaste(event: ClipboardEvent) {
+    let fhirInputStr = event.clipboardData.getData('text');
+    if(fhirInputStr && fhirInputStr.length){
+      this.determineDataType(fhirInputStr.trim());
+    }
+  }
+
+  private determineDataType(fhirInputStr: string) {
+    if(this.utilsService.isJsonString(fhirInputStr)){
+      this.form.controls['textFormat'].setValue('json');
+    }
+    else if(this.utilsService.isXmlString(fhirInputStr)){
+      this.form.controls['textFormat'].setValue('xml');
+    }
+  }
+
+  onFormatInput() {
+    if(this.form.controls['textFormat'].value == 'json'){
+      this.form.controls['fhirResource'].setValue(this.utilsService.beautifyJSON(this.form.controls['fhirResource'].value))
+      // let strValue =  this.form.controls['fhirResource'].value;
+      // const parsedJson = JSON.stringify(JSON.parse(strValue), null, 2);
+      //
+      // this.form.controls['fhirResource'].setValue(parsedJson);
+    }
+
+  }
 }
 
 
