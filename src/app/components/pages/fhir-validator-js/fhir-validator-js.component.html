@@ -1,0 +1,14 @@
+<div class="container top-spacer">
+  <mat-radio-group>
+    <mat-radio-button value="json">JSON</mat-radio-button>
+    <mat-radio-button value="xml">XML</mat-radio-button>
+  </mat-radio-group>
+  <div class="textarea-wrapper">
+    <textarea rows="40" cols="80"[(ngModel)]="fhirResource"></textarea>
+  </div>
+  <button mat-raised-button color="success" class="button" (click)="onFormatInput();">
+    <mat-icon>clear</mat-icon>
+    Format Input
+  </button>
+</div>
+

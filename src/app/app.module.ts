@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FhirValidatorComponent } from './components/pages/fhir-validator/fhir-validator.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MatFormFieldModule} from "@angular/material/form-field";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from "@angular/material/icon";
@@ -20,32 +20,35 @@ import {MatSortModule} from "@angular/material/sort";
 import { HttpClientModule } from '@angular/common/http';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatRadioModule} from "@angular/material/radio";
+import { FhirValidatorJsComponent } from './components/pages/fhir-validator-js/fhir-validator-js.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FhirValidatorComponent,
     HeaderComponent,
-    DecedentRecordsGridComponent
+    DecedentRecordsGridComponent,
+    FhirValidatorJsComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        ReactiveFormsModule,
-        MatIconModule,
-        MatSidenavModule,
-        MatToolbarModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatProgressSpinnerModule,
-        MatSortModule,
-        HttpClientModule,
-        MatRadioModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatSortModule,
+    HttpClientModule,
+    MatRadioModule,
+    FormsModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
