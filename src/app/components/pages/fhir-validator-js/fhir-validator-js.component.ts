@@ -8,17 +8,34 @@ import {UtilsService} from "../../../service/utils.service";
 })
 export class FhirValidatorJsComponent implements OnInit {
   fhirResource: string ='';
+  resourceFormat = 'json';
+  errorMessage: string;
 
   constructor(
     private utilsService: UtilsService
   ) { }
 
+  // It is important the format is working with "best effort"
+  // That is it may or may not format the text properly and require extensive testing to validate it's operation.
   onFormatInput() {
-      this.fhirResource = this.utilsService.beautifyJSON(this.fhirResource);
-      console.log(this.fhirResource);
+    if(this.fhirResource
+      && (this.utilsService.isXmlString(this.fhirResource) || this.utilsService.isJsonString(this.fhirResource)))
+    {
+      if(this.resourceFormat === 'json'){
+        this.fhirResource = this.utilsService.beautifyJSON(this.fhirResource);
+      }
+      else if(this.resourceFormat === 'xml'){
+        this.fhirResource = this.utilsService.beautifyXML(this.fhirResource);
+      }
+    }
+    this.fhirResource = this.utilsService.beautifyXML(this.fhirResource);
   }
 
   ngOnInit(): void {
   }
 
+  isEnabledFormatInputBtn(): boolean {
+    return !!this.fhirResource
+      && (this.utilsService.isXmlString(this.fhirResource) || this.utilsService.isJsonString(this.fhirResource));
+  }
 }

@@ -6,6 +6,10 @@ textarea {
   padding-top: 10px;
   border-color: #ccc;
   margin-bottom: 20px;
+  margin-top: 20px;
+  font-size: 13px;
+  line-height: 16px;
+  width:96%;
 }
 
 .mat-radio-button {

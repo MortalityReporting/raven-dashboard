@@ -1,14 +1,46 @@
 <div class="container top-spacer">
-  <mat-radio-group>
-    <mat-radio-button value="json">JSON</mat-radio-button>
-    <mat-radio-button value="xml">XML</mat-radio-button>
-  </mat-radio-group>
+
+  <h1>FHIR Validator</h1>
+  <div>
+    <mat-radio-group [(ngModel)]="resourceFormat">
+      <mat-radio-button value="json"
+        [checked]="resourceFormat =='json'"
+        (select)="resourceFormat = 'json'">
+        JSON
+      </mat-radio-button>
+      <mat-radio-button value="xml"
+        [checked]="resourceFormat =='xml'"
+        (select)="resourceFormat = 'xml'">
+        XML
+      </mat-radio-button>
+    </mat-radio-group>
+
+    <button style="float: right" mat-raised-button color="primary" class="button">
+      Upload
+    </button>
+  </div>
   <div class="textarea-wrapper">
     <textarea rows="40" cols="80"[(ngModel)]="fhirResource"></textarea>
   </div>
-  <button mat-raised-button color="success" class="button" (click)="onFormatInput();">
-    <mat-icon>clear</mat-icon>
-    Format Input
-  </button>
+
+  <div class="buttons">
+    <button mat-raised-button color="primary" class="button" [disabled]="!isEnabledFormatInputBtn()" (click)="onFormatInput();">
+      Format Input
+    </button>
+
+    <span style="float: right">
+      <button mat-raised-button color="basic" class="button">
+        Clear Text
+      </button>
+      <span style="margin-left: 10px">
+        <button mat-raised-button color="accent" class="button">
+          Submit
+        </button>
+      </span>
+    </span>
+
+  </div>
+
+  <div>{{errorMessage}}</div>
 </div>
 

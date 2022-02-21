@@ -20,7 +20,6 @@ export class UtilsService {
     try {
       const parser = new DOMParser();
       const theDom = parser.parseFromString(str?.trim(), 'application/xml');
-      console.log(theDom.getElementsByTagName('parsererror'));
       return !(theDom.getElementsByTagName('parsererror').length > 0);
     }
     catch (e) {
@@ -30,6 +29,22 @@ export class UtilsService {
 
   beautifyJSON(str: string): string{
     return JSON.stringify(JSON.parse(str), null, 2);
+  }
+
+  // I borrowed some regex code
+  beautifyXML(str: string): string{
+    let formatted = '', indent= '';
+    const tab='  ';
+    str.split(/>\s*</).forEach(function(node) {
+      if (node.match( /^\/\w/ )) {
+        indent = indent.substring(tab.length);
+      }
+      formatted += indent + '<' + node + '>\r\n';
+      if (node.match( /^<?\w[^>]*[^\/]$/ )){
+        indent += tab;
+      }
+    });
+    return formatted.substring(1, formatted.length-3);
   }
 
 }
