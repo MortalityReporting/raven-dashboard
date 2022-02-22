@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {UtilsService} from "../../../service/utils.service";
 
 @Component({
@@ -10,6 +10,7 @@ export class FhirValidatorJsComponent implements OnInit {
   fhirResource: string ='';
   resourceFormat = 'json';
   errorMessage: string;
+  fileName: string;
 
   constructor(
     private utilsService: UtilsService
@@ -21,11 +22,12 @@ export class FhirValidatorJsComponent implements OnInit {
     if(this.fhirResource
       && (this.utilsService.isXmlString(this.fhirResource) || this.utilsService.isJsonString(this.fhirResource)))
     {
-      if(this.resourceFormat === 'json'){
+      if(this.resourceFormat === 'json' && this.utilsService.isJsonString(this.fhirResource)){
         this.fhirResource = this.utilsService.beautifyJSON(this.fhirResource);
       }
-      else if(this.resourceFormat === 'xml'){
+      else if(this.resourceFormat === 'xml' && this.utilsService.isXmlString(this.fhirResource)){
         this.fhirResource = this.utilsService.beautifyXML(this.fhirResource);
+        console.log(this.fhirResource);
       }
     }
     this.fhirResource = this.utilsService.beautifyXML(this.fhirResource);
@@ -37,5 +39,37 @@ export class FhirValidatorJsComponent implements OnInit {
   isEnabledFormatInputBtn(): boolean {
     return !!this.fhirResource
       && (this.utilsService.isXmlString(this.fhirResource) || this.utilsService.isJsonString(this.fhirResource));
+  }
+
+  onFileSelected(event: any) {
+    const file:File = event.target.files[0];
+
+    if (file) {
+
+      // auto toggle the file type radio buttons
+      if (file.type === "text/xml"){
+        this.resourceFormat = 'xml';
+      }
+      else if ("application/json"){
+        this.resourceFormat = 'json';
+      }
+
+      // set the filename in the UI
+      this.fileName = file.name;
+
+      const reader = new FileReader();
+      reader.readAsText(file, "UTF-8");
+      reader.onload = () => {
+        this.fhirResource = reader.result as string;
+      }
+      reader.onerror = function (evt) {
+        console.log("error");
+      }
+
+    }
+    else {
+      console.log("error reading the file");
+      console.log(file);
+    }
   }
 }

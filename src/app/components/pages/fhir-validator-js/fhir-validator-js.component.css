@@ -16,3 +16,7 @@ textarea {
   margin-right: 16px;
   margin-bottom: 10px;
 }
+
+.file-input {
+  display: none;
+}

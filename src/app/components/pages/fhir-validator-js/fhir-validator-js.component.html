@@ -1,7 +1,9 @@
 <div class="container top-spacer">
 
   <h1>FHIR Validator</h1>
+
   <div>
+
     <mat-radio-group [(ngModel)]="resourceFormat">
       <mat-radio-button value="json"
         [checked]="resourceFormat =='json'"
@@ -15,21 +17,32 @@
       </mat-radio-button>
     </mat-radio-group>
 
-    <button style="float: right" mat-raised-button color="primary" class="button">
-      Upload
-    </button>
+    <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+
+    <span style="float: right" class="file-upload">
+
+      {{fileName || "No file uploaded yet."}}
+
+      <button mat-raised-button color="primary" class="upload-btn" (click)="fileUpload.click()">
+        <mat-icon>attach_file</mat-icon> Upload
+      </button>
+    </span>
+
   </div>
+
   <div class="textarea-wrapper">
     <textarea rows="40" cols="80"[(ngModel)]="fhirResource"></textarea>
   </div>
 
   <div class="buttons">
-    <button mat-raised-button color="primary" class="button" [disabled]="!isEnabledFormatInputBtn()" (click)="onFormatInput();">
+
+    <button mat-raised-button color="primary" class="button"
+      [disabled]="!isEnabledFormatInputBtn()" (click)="onFormatInput();">
       Format Input
     </button>
 
     <span style="float: right">
-      <button mat-raised-button color="basic" class="button">
+      <button mat-raised-button color="basic" class="button" (click)="fhirResource=''; fileName=''">
         Clear Text
       </button>
       <span style="margin-left: 10px">
