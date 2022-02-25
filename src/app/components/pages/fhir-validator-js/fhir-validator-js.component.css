@@ -1,3 +1,7 @@
+/*We may have to change the text area to resize dynamically as different users have different aspect ration screens.
+* see https://stackoverflow.com/questions/17772260/textarea-auto-height
+*/
+
 textarea {
   background: url(http://i.imgur.com/2cOaJ.png);
   background-attachment: local;

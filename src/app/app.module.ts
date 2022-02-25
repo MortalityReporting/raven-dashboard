@@ -21,6 +21,7 @@ import { HttpClientModule } from '@angular/common/http';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatRadioModule} from "@angular/material/radio";
 import { FhirValidatorJsComponent } from './components/pages/fhir-validator-js/fhir-validator-js.component';
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
   declarations: [
@@ -30,25 +31,26 @@ import { FhirValidatorJsComponent } from './components/pages/fhir-validator-js/f
     DecedentRecordsGridComponent,
     FhirValidatorJsComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatProgressSpinnerModule,
-    MatSortModule,
-    HttpClientModule,
-    MatRadioModule,
-    FormsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatProgressSpinnerModule,
+        MatSortModule,
+        HttpClientModule,
+        MatRadioModule,
+        FormsModule,
+        MatCardModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

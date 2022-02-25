@@ -32,16 +32,32 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /*Adding some green buttons. We may have to change the color if we don't like it*/
 .mat-button.mat-success {
-  color: green;
+  color: #28a745;
 }
 
 .mat-raised-button.mat-success, .mat-flat-button.mat-success{
-  background-color: green;
+  background-color: #28a745;
   color: white;
 }
 
 .mat-form-field-appearance-outline.mat-success .mat-form-field-outline.mat-success{
-  color: green;
+  color: #28a745;
+}
+
+.success-color{
+  color: #28a745;
+}
+
+.danger-color{
+  color: #dc3549;
+}
+
+.warning-color{
+  color: #ffc107;
+}
+
+.md-primary-color{
+  color: #3F51B5
 }
 
 .pointer {cursor: pointer;}
