@@ -1,44 +1,51 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit } from '@angular/core';
 import {UtilsService} from "../../../service/utils.service";
 import {FhirValidatorService} from "../../../service/fhir-validator.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-fhir-validator-js',
   templateUrl: './fhir-validator-js.component.html',
-  styleUrls: ['./fhir-validator-js.component.css']
+  styleUrls: ['./fhir-validator-js.component.css'],
 })
 export class FhirValidatorJsComponent implements OnInit {
   fhirResource: string ='';
   resourceFormat = 'json';
   fileName: string;
-  validationErrorPresent: false;
   validationErrorStr: string;
+  isValidErrorMsgRendered = false;
+  isFormattingPerformedRendered = false;
   isValidResourceMsgRendered = false;
-  isUnableToFormatTextMsgRendered = false;
 
   constructor(
     private utilsService: UtilsService,
-    private fhirValidatorService: FhirValidatorService
+    private fhirValidatorService: FhirValidatorService,
+    private _snackBar: MatSnackBar,
   ) { }
 
   // It is important the format is working with "best effort"
   // That is it may or may not format the text properly and require extensive testing to validate its operation.
+
+
   onFormatInput() {
+    this.isFormattingPerformedRendered = true;
     if(this.fhirResource
       && (this.utilsService.isXmlString(this.fhirResource) || this.utilsService.isJsonString(this.fhirResource)))
       {
         if(this.resourceFormat === 'json' && this.utilsService.isJsonString(this.fhirResource)){
-          this.fhirResource = this.utilsService.beautifyJSON(this.fhirResource);
+          setTimeout(() => this.isFormattingPerformedRendered = false, 3000);
         }
         else if(this.resourceFormat === 'xml' && this.utilsService.isXmlString(this.fhirResource)){
           this.fhirResource = this.utilsService.beautifyXML(this.fhirResource);
+          setTimeout(() => this.isFormattingPerformedRendered = false, 3000);
         }
         else {
-          this.isUnableToFormatTextMsgRendered = true;
+          setTimeout(() => this.isFormattingPerformedRendered = false, 3000);
         }
     }
     else {
-      this.isUnableToFormatTextMsgRendered = true;
+      this.isFormattingPerformedRendered = true;
+      setTimeout(() => this.isFormattingPerformedRendered = false, 3000);
     }
   }
 
@@ -48,9 +55,9 @@ export class FhirValidatorJsComponent implements OnInit {
   clearUI(){
     this.fhirResource='';
     this.fileName=''
-    this.isValidResourceMsgRendered = false;
     this.validationErrorStr = '';
-    this.isUnableToFormatTextMsgRendered = false;
+    this.isFormattingPerformedRendered = false;
+    this.isValidErrorMsgRendered = false;
   }
 
   onClear(){
@@ -62,7 +69,6 @@ export class FhirValidatorJsComponent implements OnInit {
     const file:File = event.target.files[0];
 
     if (file) {
-
       // auto toggle the file type radio buttons
       if (file.type === "text/xml"){
         this.resourceFormat = 'xml';
@@ -85,21 +91,23 @@ export class FhirValidatorJsComponent implements OnInit {
 
     }
     else {
-      console.log("error reading the file");
-      console.log(file);
+      this._snackBar.open("Errors selecting a file.", 'x' ,{
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        duration: 3000,
+        panelClass: ['danger-color']
+      });
     }
   }
 
   validateFhirResource(fhirResource: any, resourceFormat: string) {
-    this.isUnableToFormatTextMsgRendered = false;
     this.validationErrorStr = this.fhirValidatorService.getUiValidationMessages(fhirResource, resourceFormat);
     if(this.validationErrorStr){
-      this.isValidResourceMsgRendered = false;
+      this.isValidErrorMsgRendered = true;
     }
     else {
-      this.isValidResourceMsgRendered = true;
+      this.isValidErrorMsgRendered = false;
     }
-
   }
 
   onPasteFhirResource(event: ClipboardEvent) {

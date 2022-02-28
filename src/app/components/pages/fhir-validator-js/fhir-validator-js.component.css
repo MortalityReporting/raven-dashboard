@@ -24,3 +24,8 @@ textarea {
 .file-input {
   display: none;
 }
+
+.close-icon{
+  float: right;
+  color: #5F6368
+}

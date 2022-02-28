@@ -1,98 +1,92 @@
 <div class="container top-spacer">
 
-  <h1>FHIR Validator</h1>
+  <mat-card class="mat-elevation-z8">
 
-  <div>
+    <h1>FHIR Validator</h1>
 
-    <mat-radio-group [(ngModel)]="resourceFormat">
-      <mat-radio-button value="json"
-        [checked]="resourceFormat =='json'"
-        (select)="resourceFormat = 'format'">
-        JSON
-      </mat-radio-button>
-      <mat-radio-button value="xml"
-        [checked]="resourceFormat =='xml'"
-        (select)="resourceFormat = 'xml'">
-        XML
-      </mat-radio-button>
-    </mat-radio-group>
+    <div>
+      <mat-radio-group [(ngModel)]="resourceFormat">
+        <mat-radio-button value="json"
+          [checked]="resourceFormat =='json'"
+          (select)="resourceFormat = 'format'">
+          JSON
+        </mat-radio-button>
+        <mat-radio-button value="xml"
+          [checked]="resourceFormat =='xml'"
+          (select)="resourceFormat = 'xml'">
+          XML
+        </mat-radio-button>
+      </mat-radio-group>
 
-    <input type="file" class="file-input" (click)="fileUpload.value = null" (change)="onFileSelected($event)" #fileUpload>
-    <span style="float: right" class="file-upload">
-      {{fileName}}
-      <button mat-raised-button color="primary" class="upload-btn" (click)="clearUI(); fileUpload.click();">
-        <mat-icon>upload</mat-icon>
-        Upload
-      </button>
-    </span>
-
-  </div>
-
-  <div class="textarea-wrapper">
-    <textarea
-      rows="30"
-      [(ngModel)]="fhirResource"
-      [ngStyle]="{'border-color': (!!validationErrorStr) ? 'red': null }"
-      (paste)="onPasteFhirResource($event)"
-      (keyup)="isUnableToFormatTextMsgRendered = false">
-    </textarea>
-  </div>
-
-  <div style="padding-bottom: 1em" *ngIf="!!validationErrorStr">
-    <mat-card *ngIf="!!validationErrorStr">
-      <span class="danger-color">{{validationErrorStr}}</span>
-    </mat-card>
-  </div>
-
-  <div style="padding-bottom: 1em" *ngIf="isValidResourceMsgRendered">
-    <mat-card>
-      <span class="success-color"> This is a valid FHIR resource.</span>
-      <span class="pointer" style="float: right; color: #5F6368">
-        <mat-icon (click)="isValidResourceMsgRendered = false">clear</mat-icon>
-      </span>
-    </mat-card>
-  </div>
-
-  <div style="padding-bottom: 1em" *ngIf="isUnableToFormatTextMsgRendered">
-    <mat-card *ngIf="fhirResource">
-      <span class="md-primary-color"> Unable to format the text.</span>
-      <span class="pointer" style="float: right; color: #5F6368">
-        <mat-icon (click)="isUnableToFormatTextMsgRendered = false">clear</mat-icon>
-      </span>
-    </mat-card>
-    <mat-card *ngIf="!fhirResource">
-      <span class="md-primary-color"> Please enter FHIR resource.</span>
-      <span class="pointer" style="float: right; color: #5F6368">
-        <mat-icon (click)="isUnableToFormatTextMsgRendered = false">clear</mat-icon>
-      </span>
-    </mat-card>
-  </div>
-
-  <div class="buttons">
-
-    <button
-      mat-raised-button color="primary" class="button"
-      (click)="onFormatInput();">
-      <mat-icon>code</mat-icon>
-      Format Input
-    </button>
-
-    <span style="float: right">
-      <button
-        mat-raised-button color="success" class="button"
-        (click)="onClear()">
-        <mat-icon>refresh</mat-icon>
-        Clear Text
-      </button>
-      <span style="margin-left: 10px">
-        <button mat-raised-button color="accent" class="button" (click)="validateFhirResource(fhirResource, resourceFormat)">
-          <mat-icon>send</mat-icon>
-          Submit
+      <input type="file" class="file-input" (click)="fileUpload.value = null" (change)="onFileSelected($event)" #fileUpload>
+      <span style="float: right" class="file-upload">
+        {{fileName}}
+        <button mat-raised-button color="primary" class="upload-btn" (click)="clearUI(); fileUpload.click();">
+          <mat-icon>upload</mat-icon>
+          Upload
         </button>
       </span>
-    </span>
+    </div>
 
-  </div>
+    <div class="textarea-wrapper">
+      <textarea
+        rows="30"
+        [(ngModel)]="fhirResource"
+        [ngStyle]="{'border-color': (!!validationErrorStr) ? 'red': null }"
+        (paste)="onPasteFhirResource($event)">
+      </textarea>
+    </div>
+
+    <div style="padding-bottom: 1em" *ngIf="!!validationErrorStr">
+      <mat-card *ngIf="!!validationErrorStr">
+        <span class="danger-color">{{validationErrorStr}}</span>
+      </mat-card>
+    </div>
+
+    <div style="padding-bottom: 1em" *ngIf="isValidResourceMsgRendered">
+      <mat-card>
+        <span class="success-color"> This is a valid FHIR resource.</span>
+      </mat-card>
+    </div>
+
+    <div style="padding-bottom: 1em" *ngIf="isFormattingPerformedRendered">
+      <mat-card>
+        <span class="md-primary-color">Formatting Attempted.</span>
+        <span class="pointer close-icon">
+          <mat-icon (click)="isFormattingPerformedRendered = false">clear</mat-icon>
+        </span>
+      </mat-card>
+    </div>
+
+    <div class="buttons">
+
+      <button
+        mat-raised-button color="primary" class="button"
+        (click)="onFormatInput();"
+        [disabled]="!fhirResource">
+        <mat-icon>code</mat-icon>
+        Format Input
+      </button>
+
+      <span style="float: right">
+        <button
+          mat-raised-button color="success" class="button"
+          (click)="onClear()">
+          <mat-icon>clear</mat-icon>
+          Clear Text
+        </button>
+        <span style="margin-left: 10px">
+          <button mat-raised-button color="accent" class="button"
+            (click)="validateFhirResource(fhirResource, resourceFormat)">
+            <mat-icon>send</mat-icon>
+            Submit
+          </button>
+        </span>
+      </span>
+
+    </div>
+
+  </mat-card>
 
 </div>
 

@@ -22,6 +22,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatRadioModule} from "@angular/material/radio";
 import { FhirValidatorJsComponent } from './components/pages/fhir-validator-js/fhir-validator-js.component';
 import {MatCardModule} from "@angular/material/card";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import {MatCardModule} from "@angular/material/card";
     FhirValidatorComponent,
     HeaderComponent,
     DecedentRecordsGridComponent,
-    FhirValidatorJsComponent
+    FhirValidatorJsComponent,
   ],
     imports: [
         BrowserModule,
@@ -49,7 +50,8 @@ import {MatCardModule} from "@angular/material/card";
         HttpClientModule,
         MatRadioModule,
         FormsModule,
-        MatCardModule
+        MatCardModule,
+        MatSnackBarModule
     ],
   providers: [],
   bootstrap: [AppComponent]
