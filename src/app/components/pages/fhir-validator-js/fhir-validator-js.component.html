@@ -2,9 +2,11 @@
 
   <mat-card class="mat-elevation-z8">
 
-    <h1>FHIR Validator</h1>
+    <mat-card-header>
+      <mat-card-title>FHIR Validator</mat-card-title>
 
-    <div>
+    </mat-card-header>
+
       <mat-radio-group [(ngModel)]="resourceFormat">
         <mat-radio-button value="json"
           [checked]="resourceFormat =='json'"
@@ -26,7 +28,6 @@
           Upload
         </button>
       </span>
-    </div>
 
     <div class="textarea-wrapper">
       <textarea
@@ -70,7 +71,16 @@
         </span>
       </span>
 
+
     </div>
+  </mat-card>
+    <mat-card class="mat-elevation-z8" style="margin-top: 2em">
+      <mat-card-header>
+        <mat-card-title>Validation Results</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+      <pre style="width: 100%"><div class="test" style="border-style: solid; border-width: thin;"[innerHTML]="parsedFhirResource"></div></pre>
+      </mat-card-content>
   </mat-card>
 
 </div>

@@ -16,6 +16,21 @@ textarea {
   width:96%;
 }
 
+.test{
+  background: url(http://i.imgur.com/2cOaJ.png);
+  background-attachment: local;
+  background-repeat: no-repeat;
+  padding-left: 35px;
+  padding-top: 10px;
+  border-color: #ccc;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  font-size: 13px;
+  line-height: 16px;
+  width:96%;
+  font-family: monospace;
+}
+
 .mat-radio-button {
   margin-right: 16px;
   margin-bottom: 10px;
@@ -43,3 +58,13 @@ textarea {
   width:33.33333%;
   text-align:right;
 }
+
+pre {
+  /*font-family:sans;*/
+  width:400px;
+}
+
+mark {
+  background:red;
+}
+
