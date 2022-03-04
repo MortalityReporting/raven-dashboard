@@ -25,27 +25,26 @@ export class FhirValidatorJsComponent implements OnInit {
 
   // It is important the format is working with "best effort"
   // That is it may or may not format the text properly and require extensive testing to validate its operation.
-
-
   onFormatInput() {
     this.isFormattingPerformedRendered = true;
+
     if(this.fhirResource
       && (this.utilsService.isXmlString(this.fhirResource) || this.utilsService.isJsonString(this.fhirResource)))
       {
         if(this.resourceFormat === 'json' && this.utilsService.isJsonString(this.fhirResource)){
-          setTimeout(() => this.isFormattingPerformedRendered = false, 3000);
+          setTimeout(() => this.isFormattingPerformedRendered = false, 2000);
         }
         else if(this.resourceFormat === 'xml' && this.utilsService.isXmlString(this.fhirResource)){
           this.fhirResource = this.utilsService.beautifyXML(this.fhirResource);
-          setTimeout(() => this.isFormattingPerformedRendered = false, 3000);
+          setTimeout(() => this.isFormattingPerformedRendered = false, 2000);
         }
         else {
-          setTimeout(() => this.isFormattingPerformedRendered = false, 3000);
+          setTimeout(() => this.isFormattingPerformedRendered = false, 2000);
         }
     }
     else {
       this.isFormattingPerformedRendered = true;
-      setTimeout(() => this.isFormattingPerformedRendered = false, 3000);
+      setTimeout(() => this.isFormattingPerformedRendered = false, 2000);
     }
   }
 
@@ -58,6 +57,7 @@ export class FhirValidatorJsComponent implements OnInit {
     this.validationErrorStr = '';
     this.isFormattingPerformedRendered = false;
     this.isValidErrorMsgRendered = false;
+    this.isValidResourceMsgRendered = false;
   }
 
   onClear(){
@@ -69,6 +69,7 @@ export class FhirValidatorJsComponent implements OnInit {
     const file:File = event.target.files[0];
 
     if (file) {
+
       // auto toggle the file type radio buttons
       if (file.type === "text/xml"){
         this.resourceFormat = 'xml';
@@ -85,13 +86,17 @@ export class FhirValidatorJsComponent implements OnInit {
       reader.onload = () => {
         this.fhirResource = reader.result as string;
       }
-      reader.onerror = function (evt) {
-        console.log("error");
+      reader.onerror =  () => {
+        this._snackBar.open("Unable to open the file.", 'x' ,{
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['error-color']
+        });
       }
 
     }
     else {
-      this._snackBar.open("Errors selecting a file.", 'x' ,{
+      this._snackBar.open("Unable to open the file.", 'x' ,{
         horizontalPosition: 'center',
         verticalPosition: 'top',
         duration: 3000,
@@ -104,9 +109,11 @@ export class FhirValidatorJsComponent implements OnInit {
     this.validationErrorStr = this.fhirValidatorService.getUiValidationMessages(fhirResource, resourceFormat);
     if(this.validationErrorStr){
       this.isValidErrorMsgRendered = true;
+      this.isValidResourceMsgRendered = false;
     }
     else {
       this.isValidErrorMsgRendered = false;
+      this.isValidResourceMsgRendered = true;
     }
   }
 

@@ -37,38 +37,24 @@
       </textarea>
     </div>
 
-    <div style="padding-bottom: 1em" *ngIf="!!validationErrorStr">
-      <mat-card *ngIf="!!validationErrorStr">
-        <span class="danger-color">{{validationErrorStr}}</span>
-      </mat-card>
-    </div>
+    <div id="spaced-content">
+      <span class="alignleft">
+        <button
+          mat-raised-button color="primary" class="button"
+          (click)="onFormatInput();"
+          [disabled]="!fhirResource">
+          <mat-icon>code</mat-icon>
+          Format Input
+        </button>
+        <span class="md-primary-color" *ngIf="isFormattingPerformedRendered" style="margin-left: 1em">Formatting Attempted.</span>
+      </span>
 
-    <div style="padding-bottom: 1em" *ngIf="isValidResourceMsgRendered">
-      <mat-card>
-        <span class="success-color"> This is a valid FHIR resource.</span>
-      </mat-card>
-    </div>
+      <span class="aligncenter" style="margin-top:7px">
+        <span class="danger-color" *ngIf="!!validationErrorStr">{{validationErrorStr}}</span>
+        <span class="success-color" *ngIf="isValidResourceMsgRendered"> This is a valid FHIR resource.</span>
+      </span>
 
-    <div style="padding-bottom: 1em" *ngIf="isFormattingPerformedRendered">
-      <mat-card>
-        <span class="md-primary-color">Formatting Attempted.</span>
-        <span class="pointer close-icon">
-          <mat-icon (click)="isFormattingPerformedRendered = false">clear</mat-icon>
-        </span>
-      </mat-card>
-    </div>
-
-    <div class="buttons">
-
-      <button
-        mat-raised-button color="primary" class="button"
-        (click)="onFormatInput();"
-        [disabled]="!fhirResource">
-        <mat-icon>code</mat-icon>
-        Format Input
-      </button>
-
-      <span style="float: right">
+      <span class="alignright">
         <button
           mat-raised-button color="success" class="button"
           (click)="onClear()">
@@ -85,8 +71,8 @@
       </span>
 
     </div>
-
   </mat-card>
 
 </div>
+
 
