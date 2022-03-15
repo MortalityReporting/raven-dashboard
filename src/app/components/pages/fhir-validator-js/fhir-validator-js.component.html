@@ -4,26 +4,28 @@
 
     <mat-card-header>
       <mat-card-title>FHIR Validator</mat-card-title>
-
     </mat-card-header>
 
-      <mat-radio-group [(ngModel)]="resourceFormat">
-        <mat-radio-button value="json"
-          [checked]="resourceFormat =='json'"
-          (select)="resourceFormat = 'format'">
-          JSON
-        </mat-radio-button>
-        <mat-radio-button value="xml"
-          [checked]="resourceFormat =='xml'"
-          (select)="resourceFormat = 'xml'">
-          XML
-        </mat-radio-button>
-      </mat-radio-group>
+    <mat-radio-group [(ngModel)]="resourceFormat">
+      <mat-radio-button
+        value="json"
+        [checked]="resourceFormat =='json'"
+        (select)="resourceFormat = 'format'">
+        JSON
+      </mat-radio-button>
+      <mat-radio-button
+        value="xml"
+        [checked]="resourceFormat =='xml'"
+        (select)="resourceFormat = 'xml'">
+        XML
+      </mat-radio-button>
+    </mat-radio-group>
 
-      <input type="file" class="file-input" (click)="fileUpload.value = null" (change)="onFileSelected($event)" #fileUpload>
-      <span style="float: right" class="file-upload">
+    <input type="file" class="file-input" (click)="fileUpload.value = null" (change)="onFileSelected($event)"
+           #fileUpload>
+    <span style="float: right" class="file-upload">
         {{fileName}}
-        <button mat-raised-button color="primary" class="upload-btn" (click)="clearUI(); fileUpload.click();">
+      <button mat-raised-button color="primary" class="upload-btn" (click)="clearUI(); fileUpload.click();">
           <mat-icon>upload</mat-icon>
           Upload
         </button>
@@ -50,7 +52,7 @@
         <span class="md-primary-color" *ngIf="isFormattingPerformedRendered" style="margin-left: 1em">Formatting Attempted.</span>
       </span>
 
-      <span class="aligncenter" style="margin-top:7px">
+      <span class="align-center" style="margin-top:7px">
         <span class="danger-color" *ngIf="!!validationErrorStr">{{validationErrorStr}}</span>
         <span class="success-color" *ngIf="isValidResourceMsgRendered"> This is a valid FHIR resource.</span>
       </span>
@@ -60,27 +62,60 @@
           mat-raised-button color="success" class="button"
           (click)="onClear()">
           <mat-icon>clear</mat-icon>
-          Clear Text
+          Clear Resource
         </button>
         <span style="margin-left: 10px">
           <button mat-raised-button color="accent" class="button"
-            (click)="validateFhirResource(fhirResource, resourceFormat)">
+                  (click)="validateFhirResource(fhirResource, resourceFormat)">
             <mat-icon>send</mat-icon>
             Submit
           </button>
         </span>
       </span>
-
-
     </div>
-  </mat-card>
-    <mat-card class="mat-elevation-z8" style="margin-top: 2em">
-      <mat-card-header>
-        <mat-card-title>Validation Results</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-      <pre style="width: 100%"><div class="test" style="border-style: solid; border-width: thin;"[innerHTML]="parsedFhirResource"></div></pre>
-      </mat-card-content>
+
+    <div *ngIf=hasBackendValidationErrors>
+
+      <div class="top-spacer">
+        <table mat-table [dataSource]="apiErrorResponse" class="mat-elevation-z5">
+
+          <ng-container matColumnDef="severity">
+            <th mat-header-cell *matHeaderCellDef> Severity</th>
+            <td mat-cell *matCellDef="let response"> {{response.severity}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="fhirPath">
+            <th mat-header-cell *matHeaderCellDef> Fhir Path</th>
+            <td mat-cell *matCellDef="let response"> {{response.fhirPath}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="message">
+            <th mat-header-cell *matHeaderCellDef> Message</th>
+            <td mat-cell *matCellDef="let response"> {{response.message}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="location" stickyEnd>
+            <th mat-header-cell *matHeaderCellDef> Location</th>
+            <td mat-cell *matCellDef="let response" (click)="onLocationSelected(response)">
+              <span class="location-pointer"> {{response.location}}</span>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        </table>
+      </div>
+
+      <div class="top-spacer">
+        <pre style="width: 100%">
+          <div class="test" style="border-style: solid; border-width: thin;" [innerHTML]="parsedFhirResource">
+            {{ parsedFhirResource }}
+          </div>
+        </pre>
+      </div>
+    </div>
+
   </mat-card>
 
 </div>

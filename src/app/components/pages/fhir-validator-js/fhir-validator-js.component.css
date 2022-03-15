@@ -16,7 +16,7 @@ textarea {
   width:96%;
 }
 
-.test{
+.test {
   background: url(http://i.imgur.com/2cOaJ.png);
   background-attachment: local;
   background-repeat: no-repeat;
@@ -29,6 +29,7 @@ textarea {
   line-height: 16px;
   width:96%;
   font-family: monospace;
+  background-color: #F8F8F8;
 }
 
 .mat-radio-button {
@@ -50,7 +51,7 @@ textarea {
   width:33.33333%;
   text-align:left;
 }
-.aligncenter {
+.align-center {
   width:33.33333%;
   text-align:center;
 }
@@ -59,12 +60,31 @@ textarea {
   text-align:right;
 }
 
+.warning-mark {
+  background-color: #fff2cc;
+}
+
+.error-mark {
+  background-color: #ffcccc;
+}
+
 pre {
-  /*font-family:sans;*/
-  width:400px;
+  white-space: pre-wrap;
 }
 
-mark {
-  background:red;
+td.mat-cell {
+  padding-left: 1em !important;
+  padding-right: 1em !important;
+  font-size: 13px;
+  font-family: monospace;
 }
 
+.mat-column-location {
+  flex: none;
+  width: 10em;
+}
+
+.location-pointer {
+  cursor: pointer;
+  color: #3F51B5;
+}
