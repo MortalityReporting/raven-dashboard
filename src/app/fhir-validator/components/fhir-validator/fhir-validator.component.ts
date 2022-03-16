@@ -46,7 +46,7 @@ export class FhirValidatorComponent implements OnInit {
     {
       "severity": "Error",
       "fhirPath": "Patient.identifier[0].type",
-      "location": "(line 17, col20)",
+      "location": "(line 120, col20)",
       "message": "None of the codings provided are in the value set http://hl7.org/fhir/ValueSet/identifier-type (http://hl7.org/fhir/ValueSet/identifier-type), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://cbsig.chai.gatech.edu/CodeSystem/cbs-temp-code-system#Local-Record-ID)"
     }
   ];
@@ -202,7 +202,7 @@ export class FhirValidatorComponent implements OnInit {
     if(!apiResponse || apiResponse.length === 0){
       return null;
     }
-    return [9, 17];
+    return [9, 17, 120];
   };
 
   getWarningWarningLineNumber(apiResponse: any): number[]{
@@ -271,9 +271,10 @@ export class FhirValidatorComponent implements OnInit {
   }
 
   private executeAPIValidation(fhirResource: any, resourceFormat: string) {
-    this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat).subscribe((response: any) => {
-      console.log(response);
-    })
+    // this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat).subscribe((response: any) => {
+    //   console.log(response);
+    // })
+    this.renderAPIValidationErrors();
   }
 
   onSelectProfile(event: any) {

@@ -26,7 +26,7 @@
       <mat-label>Select Profile</mat-label>
       <mat-select  (selectionChange)="onSelectProfile($event)">
         <mat-option *ngFor="let profile of constants.PROFILE_LIST" [value]="profile">
-          {{profile.name}}
+          <span style="font-family: monospace;">{{profile.name}}</span>
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -131,6 +131,7 @@
           </div>
         </pre>
       </div>
+
     </div>
   </mat-card>
 </div>

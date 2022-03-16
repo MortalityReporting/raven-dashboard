@@ -31,7 +31,9 @@ textarea {
   width:96%;
   font-family: monospace;
   background-color: #F8F8F8;
-  white-space: nowrap;
+  white-space: pre;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .mat-radio-button {
