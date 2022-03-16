@@ -14,9 +14,10 @@ textarea {
   font-size: 13px;
   line-height: 16px;
   width:96%;
+  white-space: nowrap;
 }
 
-.test {
+.validator-response {
   background: url(http://i.imgur.com/2cOaJ.png);
   background-attachment: local;
   background-repeat: no-repeat;
@@ -30,6 +31,7 @@ textarea {
   width:96%;
   font-family: monospace;
   background-color: #F8F8F8;
+  white-space: nowrap;
 }
 
 .mat-radio-button {
@@ -46,8 +48,10 @@ textarea {
   color: #5F6368
 }
 
+/* TODO we can do a better css here especially if we go with responsive design */
 #spaced-content {display:flex; flex-flow:row wrap;}
-.alignleft {
+
+.align-left {
   width:33.33333%;
   text-align:left;
 }
@@ -55,7 +59,7 @@ textarea {
   width:33.33333%;
   text-align:center;
 }
-.alignright {
+.align-right {
   width:33.33333%;
   text-align:right;
 }

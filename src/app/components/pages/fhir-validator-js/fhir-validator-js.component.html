@@ -41,7 +41,7 @@
     </div>
 
     <div id="spaced-content">
-      <span class="alignleft">
+      <span class="align-left">
         <button
           mat-raised-button color="primary" class="button"
           (click)="onFormatInput();"
@@ -57,7 +57,7 @@
         <span class="success-color" *ngIf="isValidResourceMsgRendered"> This is a valid FHIR resource.</span>
       </span>
 
-      <span class="alignright">
+      <span class="align-right">
         <button
           mat-raised-button color="success" class="button"
           (click)="onClear()">
@@ -109,7 +109,7 @@
 
       <div class="top-spacer">
         <pre style="width: 100%">
-          <div class="test" style="border-style: solid; border-width: thin;" [innerHTML]="parsedFhirResource">
+          <div class="validator-response" style="border-style: solid; border-width: thin;" [innerHTML]="parsedFhirResource">
             {{ parsedFhirResource }}
           </div>
         </pre>

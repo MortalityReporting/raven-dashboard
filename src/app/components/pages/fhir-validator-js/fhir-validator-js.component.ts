@@ -1,5 +1,4 @@
 import {Component, ElementRef, OnInit, ViewEncapsulation} from '@angular/core';
-import {UtilsService} from "../../../service/utils.service";
 import {FhirValidatorService} from "../../../service/fhir-validator.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {DomSanitizer} from "@angular/platform-browser";
@@ -78,7 +77,6 @@ export class FhirValidatorJsComponent implements OnInit {
 
 
   constructor(
-    private utilsService: UtilsService,
     private fhirValidatorService: FhirValidatorService,
     private _snackBar: MatSnackBar,
     private sanitized: DomSanitizer
@@ -90,13 +88,13 @@ export class FhirValidatorJsComponent implements OnInit {
     this.isFormattingPerformedRendered = true;
 
     if(this.fhirResource
-      && (this.utilsService.isXmlString(this.fhirResource) || this.utilsService.isJsonString(this.fhirResource)))
+      && (this.fhirValidatorService.isXmlString(this.fhirResource) || this.fhirValidatorService.isJsonString(this.fhirResource)))
       {
-        if(this.resourceFormat === 'json' && this.utilsService.isJsonString(this.fhirResource)){
+        if(this.resourceFormat === 'json' && this.fhirValidatorService.isJsonString(this.fhirResource)){
           setTimeout(() => this.isFormattingPerformedRendered = false, 2000);
         }
-        else if(this.resourceFormat === 'xml' && this.utilsService.isXmlString(this.fhirResource)){
-          this.fhirResource = this.utilsService.beautifyXML(this.fhirResource);
+        else if(this.resourceFormat === 'xml' && this.fhirValidatorService.isXmlString(this.fhirResource)){
+          this.fhirResource = this.fhirValidatorService.beautifyXML(this.fhirResource);
           setTimeout(() => this.isFormattingPerformedRendered = false, 2000);
         }
         else {
@@ -187,9 +185,9 @@ export class FhirValidatorJsComponent implements OnInit {
     if(!this.fhirResource) {
       this.clearUI();
       let text = event.clipboardData.getData('text');
-      if (this.utilsService.isJsonString(text)) {
+      if (this.fhirValidatorService.isJsonString(text)) {
         this.resourceFormat = 'json';
-      } else if (this.utilsService.isXmlString(text)) {
+      } else if (this.fhirValidatorService.isXmlString(text)) {
         this.resourceFormat = 'xml';
       }
     }
