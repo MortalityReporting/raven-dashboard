@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {DecedentRecordsGridComponent} from "./components/pages/decedent-records-grid/decedent-records-grid.component";
-import {FhirValidatorJsComponent} from "./components/pages/fhir-validator-js/fhir-validator-js.component";
+import {FhirValidatorComponent} from "./fhir-validator/components/fhir-validator/fhir-validator.component";
 
 const routes: Routes = [
   {
@@ -9,8 +9,8 @@ const routes: Routes = [
     component: DecedentRecordsGridComponent
   },
   {
-    path: 'fhir-validator-js',
-    component: FhirValidatorJsComponent
+    path: 'fhir-validator',
+    component: FhirValidatorComponent
   },
   { // Do not add any paths below this point, this path MUST ALWAYS be the last path!
     path: '**', redirectTo: ''

@@ -1,15 +1,16 @@
-import {Component, ElementRef, OnInit, ViewEncapsulation} from '@angular/core';
-import {FhirValidatorService} from "../../../service/fhir-validator.service";
+import { Component, OnInit } from '@angular/core';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {DomSanitizer} from "@angular/platform-browser";
+import {FhirValidatorService} from "../../service/fhir-validator.service";
+import {ValidatorConstants} from "../../providers/validator-constants";
 
 @Component({
-  selector: 'app-fhir-validator-js',
-  templateUrl: './fhir-validator-js.component.html',
-  styleUrls: ['./fhir-validator-js.component.css'],
-  encapsulation: ViewEncapsulation.None,
+  selector: 'app-fhir-validator',
+  templateUrl: './fhir-validator.component.html',
+  styleUrls: ['./fhir-validator.component.css']
 })
-export class FhirValidatorJsComponent implements OnInit {
+export class FhirValidatorComponent implements OnInit {
+
   fhirResource: string ='';
   resourceFormat = 'json';
   fileName: string;
@@ -20,6 +21,9 @@ export class FhirValidatorJsComponent implements OnInit {
   hasBackendValidationErrors = false;
   parsedFhirResource : any;
   displayedColumns: string[] = ['severity', 'fhirPath', 'message', 'location'];
+  selectedProfile: any;
+
+
   apiErrorResponse = [
     {
       "severity": "Warning",
@@ -48,38 +52,39 @@ export class FhirValidatorJsComponent implements OnInit {
   ];
 
   response = {
-      "resourceType" : "Observation",
-      "id" : "observation-death-date-j-rogers",
-      "meta" : {
-        "versionId" : "1",
-        "lastUpdated" : "2022-02-17T03:30:31.175+00:00",
-        "source" : "#HxNQbdXHR9YLhjG8",
-        "profile" : [
-          "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date"
-        ]
-      },
-      "status" : "final",
-      "component" : [
-        {
-          "code" : {
-            "coding" : [
-              {
-                "system" : "http://loinc.org",
-                "code" : "80616-6",
-                "display" : "Date and time pronounced dead [US Standard Certificate of Death]"
-              }
-            ]
-          },
-          "valueDateTime" : "2022-01-04T05:30:00-05:00"
-        }
+    "resourceType" : "Observation",
+    "id" : "observation-death-date-j-rogers",
+    "meta" : {
+      "versionId" : "1",
+      "lastUpdated" : "2022-02-17T03:30:31.175+00:00",
+      "source" : "#HxNQbdXHR9YLhjG8",
+      "profile" : [
+        "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date"
       ]
-    }
+    },
+    "status" : "final",
+    "component" : [
+      {
+        "code" : {
+          "coding" : [
+            {
+              "system" : "http://loinc.org",
+              "code" : "80616-6",
+              "display" : "Date and time pronounced dead [US Standard Certificate of Death]"
+            }
+          ]
+        },
+        "valueDateTime" : "2022-01-04T05:30:00-05:00"
+      }
+    ]
+  }
 
 
   constructor(
     private fhirValidatorService: FhirValidatorService,
     private _snackBar: MatSnackBar,
-    private sanitized: DomSanitizer
+    private sanitized: DomSanitizer,
+    public constants: ValidatorConstants
   ) { }
 
   // It is important the format is working with "best effort"
@@ -89,17 +94,17 @@ export class FhirValidatorJsComponent implements OnInit {
 
     if(this.fhirResource
       && (this.fhirValidatorService.isXmlString(this.fhirResource) || this.fhirValidatorService.isJsonString(this.fhirResource)))
-      {
-        if(this.resourceFormat === 'json' && this.fhirValidatorService.isJsonString(this.fhirResource)){
-          setTimeout(() => this.isFormattingPerformedRendered = false, 2000);
-        }
-        else if(this.resourceFormat === 'xml' && this.fhirValidatorService.isXmlString(this.fhirResource)){
-          this.fhirResource = this.fhirValidatorService.beautifyXML(this.fhirResource);
-          setTimeout(() => this.isFormattingPerformedRendered = false, 2000);
-        }
-        else {
-          setTimeout(() => this.isFormattingPerformedRendered = false, 2000);
-        }
+    {
+      if(this.resourceFormat === 'json' && this.fhirValidatorService.isJsonString(this.fhirResource)){
+        setTimeout(() => this.isFormattingPerformedRendered = false, 2000);
+      }
+      else if(this.resourceFormat === 'xml' && this.fhirValidatorService.isXmlString(this.fhirResource)){
+        this.fhirResource = this.fhirValidatorService.beautifyXML(this.fhirResource);
+        setTimeout(() => this.isFormattingPerformedRendered = false, 2000);
+      }
+      else {
+        setTimeout(() => this.isFormattingPerformedRendered = false, 2000);
+      }
     }
     else {
       this.isFormattingPerformedRendered = true;
@@ -108,7 +113,7 @@ export class FhirValidatorJsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  //  this.parsedFhirResource = JSON.stringify(this.response, null, 2)
+    //  this.parsedFhirResource = JSON.stringify(this.response, null, 2)
   }
 
   clearUI(){
@@ -269,5 +274,9 @@ export class FhirValidatorJsComponent implements OnInit {
     this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat).subscribe((response: any) => {
       console.log(response);
     })
+  }
+
+  onSelectProfile(event: any) {
+    this.selectedProfile = event.value;
   }
 }

@@ -26,7 +26,7 @@ export class DecedentRecordsGridComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private decedentService: DecedentService,
-    // private constants: Constants,
+    // private constants: ValidatorConstants,
   ) {
   }
 

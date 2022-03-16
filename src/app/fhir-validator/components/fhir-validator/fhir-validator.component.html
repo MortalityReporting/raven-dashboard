@@ -6,6 +6,7 @@
       <mat-card-title>FHIR Validator</mat-card-title>
     </mat-card-header>
 
+    <div>
     <mat-radio-group [(ngModel)]="resourceFormat">
       <mat-radio-button
         value="json"
@@ -21,15 +22,31 @@
       </mat-radio-button>
     </mat-radio-group>
 
-    <input type="file" class="file-input" (click)="fileUpload.value = null" (change)="onFileSelected($event)"
+    <mat-form-field style="margin-bottom: -1.25em; margin-left: 1em; width: 40%"  appearance="outline">
+      <mat-label>Select Profile</mat-label>
+      <mat-select  (selectionChange)="onSelectProfile($event)">
+        <mat-option *ngFor="let profile of constants.PROFILE_LIST" [value]="profile">
+          {{profile.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <span style="margin-left: 1em">
+      <button [disabled]="!selectedProfile" mat-mini-fab color="primary" aria-label="Go to profile url.">
+        <mat-icon>link</mat-icon>
+      </button>
+    </span>
+
+      <input type="file" class="file-input" (click)="fileUpload.value = null" (change)="onFileSelected($event)"
            #fileUpload>
-    <span style="float: right" class="file-upload">
+    <span style="float: right; margin-top: 1em" class="file-upload">
         {{fileName}}
       <button mat-raised-button color="primary" class="upload-btn" (click)="clearUI(); fileUpload.click();">
           <mat-icon>upload</mat-icon>
           Upload
         </button>
-      </span>
+    </span>
+    </div>
 
     <div class="textarea-wrapper">
       <textarea
@@ -115,9 +132,7 @@
         </pre>
       </div>
     </div>
-
   </mat-card>
-
 </div>
 
 
