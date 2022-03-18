@@ -85,12 +85,22 @@ td.mat-cell {
   font-family: monospace;
 }
 
-.mat-column-location {
-  flex: none;
-  width: 10em;
-}
+/*.mat-column-location {*/
+/*  flex: none;*/
+/*  width: 10em;*/
+/*}*/
 
 .location-pointer {
   cursor: pointer;
   color: #3F51B5;
+}
+
+.spinner-container {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  top: 40%;
+  left: 50%;
+  margin-left: -50px;
+  margin-top: -50px;
 }

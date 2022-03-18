@@ -1,7 +1,0 @@
-{
-  "/api/*": {
-    "target": "https://apps.hdap.gatech.edu/raven-fhir-server/fhir",
-    "secure": false,
-    "logLevel": "debug"
-  }
-}

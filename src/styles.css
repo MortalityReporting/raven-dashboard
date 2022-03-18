@@ -69,3 +69,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .content-spacer{
   flex: 1 1 auto;
 }
+
+.warning-mark {
+  background-color: #fff2cc;
+}
+
+.error-mark {
+  background-color: #ffcccc;
+}

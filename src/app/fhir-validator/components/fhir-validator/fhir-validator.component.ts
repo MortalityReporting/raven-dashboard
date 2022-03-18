@@ -22,62 +22,63 @@ export class FhirValidatorComponent implements OnInit {
   parsedFhirResource : any;
   displayedColumns: string[] = ['severity', 'fhirPath', 'message', 'location'];
   selectedProfile: any;
+  isLoading = false;
+  apiErrorResponse: any;
 
+  // apiErrorResponse = [
+  //   {
+  //     "severity": "Warning",
+  //     "fhirPath": "Patient.address[0].state",
+  //     "location": "(line 4, col24)",
+  //     "message": "The value provided ('Texas') is not in the value set http://hl7.org/fhir/us/core/ValueSet/us-core-usps-state (http://hl7.org/fhir/us/core/ValueSet/us-core-usps-state), and a code should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable)  (error message = The code \"Texas\" is not valid in the system https://www.usps.com/; The code provided (https://www.usps.com/#Texas) is not valid in the value set 'UspsTwoLetterAlphabeticCodes' (from http://tx.fhir.org/r4))\r\n"
+  //   },
+  //   {
+  //     "severity": "Warning",
+  //     "fhirPath": "Patient.address[0].use",
+  //     "location": "(line 6, col6)",
+  //     "message": "ValueSet http://hl7.org/fhir/ValueSet/address-use|4.0.1 not found by validator"
+  //   },
+  //   {
+  //     "severity": "Error",
+  //     "fhirPath": "Patient.identifier[0].type",
+  //     "location": "(line 9, col20)",
+  //     "message": "None of the codings provided are in the value set http://hl7.org/fhir/ValueSet/identifier-type (http://hl7.org/fhir/ValueSet/identifier-type), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://cbsig.chai.gatech.edu/CodeSystem/cbs-temp-code-system#Local-Record-ID)"
+  //   },
+  //   {
+  //     "severity": "Error",
+  //     "fhirPath": "Patient.identifier[0].type",
+  //     "location": "(line 120, col20)",
+  //     "message": "None of the codings provided are in the value set http://hl7.org/fhir/ValueSet/identifier-type (http://hl7.org/fhir/ValueSet/identifier-type), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://cbsig.chai.gatech.edu/CodeSystem/cbs-temp-code-system#Local-Record-ID)"
+  //   }
+  // ];
 
-  apiErrorResponse = [
-    {
-      "severity": "Warning",
-      "fhirPath": "Patient.address[0].state",
-      "location": "(line 4, col24)",
-      "message": "The value provided ('Texas') is not in the value set http://hl7.org/fhir/us/core/ValueSet/us-core-usps-state (http://hl7.org/fhir/us/core/ValueSet/us-core-usps-state), and a code should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable)  (error message = The code \"Texas\" is not valid in the system https://www.usps.com/; The code provided (https://www.usps.com/#Texas) is not valid in the value set 'UspsTwoLetterAlphabeticCodes' (from http://tx.fhir.org/r4))\r\n"
-    },
-    {
-      "severity": "Warning",
-      "fhirPath": "Patient.address[0].use",
-      "location": "(line 6, col6)",
-      "message": "ValueSet http://hl7.org/fhir/ValueSet/address-use|4.0.1 not found by validator"
-    },
-    {
-      "severity": "Error",
-      "fhirPath": "Patient.identifier[0].type",
-      "location": "(line 9, col20)",
-      "message": "None of the codings provided are in the value set http://hl7.org/fhir/ValueSet/identifier-type (http://hl7.org/fhir/ValueSet/identifier-type), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://cbsig.chai.gatech.edu/CodeSystem/cbs-temp-code-system#Local-Record-ID)"
-    },
-    {
-      "severity": "Error",
-      "fhirPath": "Patient.identifier[0].type",
-      "location": "(line 120, col20)",
-      "message": "None of the codings provided are in the value set http://hl7.org/fhir/ValueSet/identifier-type (http://hl7.org/fhir/ValueSet/identifier-type), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://cbsig.chai.gatech.edu/CodeSystem/cbs-temp-code-system#Local-Record-ID)"
-    }
-  ];
-
-  response = {
-    "resourceType" : "Observation",
-    "id" : "observation-death-date-j-rogers",
-    "meta" : {
-      "versionId" : "1",
-      "lastUpdated" : "2022-02-17T03:30:31.175+00:00",
-      "source" : "#HxNQbdXHR9YLhjG8",
-      "profile" : [
-        "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date"
-      ]
-    },
-    "status" : "final",
-    "component" : [
-      {
-        "code" : {
-          "coding" : [
-            {
-              "system" : "http://loinc.org",
-              "code" : "80616-6",
-              "display" : "Date and time pronounced dead [US Standard Certificate of Death]"
-            }
-          ]
-        },
-        "valueDateTime" : "2022-01-04T05:30:00-05:00"
-      }
-    ]
-  }
+  // response = {
+  //   "resourceType" : "Observation",
+  //   "id" : "observation-death-date-j-rogers",
+  //   "meta" : {
+  //     "versionId" : "1",
+  //     "lastUpdated" : "2022-02-17T03:30:31.175+00:00",
+  //     "source" : "#HxNQbdXHR9YLhjG8",
+  //     "profile" : [
+  //       "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date"
+  //     ]
+  //   },
+  //   "status" : "final",
+  //   "component" : [
+  //     {
+  //       "code" : {
+  //         "coding" : [
+  //           {
+  //             "system" : "http://loinc.org",
+  //             "code" : "80616-6",
+  //             "display" : "Date and time pronounced dead [US Standard Certificate of Death]"
+  //           }
+  //         ]
+  //       },
+  //       "valueDateTime" : "2022-01-04T05:30:00-05:00"
+  //     }
+  //   ]
+  // }
 
 
   constructor(
@@ -123,6 +124,7 @@ export class FhirValidatorComponent implements OnInit {
     this.isFormattingPerformedRendered = false;
     this.isErrorMsgRendered = false;
     this.isValidResourceMsgRendered = false;
+    this.parsedFhirResource = null;
   }
 
   onClear(){
@@ -202,14 +204,18 @@ export class FhirValidatorComponent implements OnInit {
     if(!apiResponse || apiResponse.length === 0){
       return null;
     }
-    return [9, 17, 120];
+    return apiResponse
+      .filter((element: any) => element.severity == 'Error')
+      .map((element: any) => this.getLineNumberFromLocation(element.location) - 1);
   };
 
   getWarningWarningLineNumber(apiResponse: any): number[]{
     if(!apiResponse || apiResponse.length === 0){
       return null;
     }
-    return [4, 6];
+    return apiResponse
+      .filter((element: any) => element.severity == 'Warning')
+      .map((element: any) => this.getLineNumberFromLocation(element.location) - 1);
   };
 
   escapeHtml(str: string): string {
@@ -222,10 +228,10 @@ export class FhirValidatorComponent implements OnInit {
       .replace(/'/g, "&#039;");
   }
 
-  renderAPIValidationErrors() {
+  renderAPIValidationErrors(apiResponse: any) {
 
-    const errorLineNumbers = this.getErrorLineNumbers(this.apiErrorResponse);
-    const warningLineNumbers = this.getWarningWarningLineNumber(this.apiErrorResponse);
+    const errorLineNumbers = this.getErrorLineNumbers(apiResponse);
+    const warningLineNumbers = this.getWarningWarningLineNumber(apiResponse);
 
     if(errorLineNumbers?.length > 0 || warningLineNumbers?.length > 0){
       this.hasBackendValidationErrors = true;
@@ -241,6 +247,7 @@ export class FhirValidatorComponent implements OnInit {
       }
       if(errorLineNumbers.indexOf(i) != -1){
         let tempText = '<span class="error-mark" id="error' + i + '">' + sanitized + '</span>';
+        console.log(tempText);
         this.parsedFhirResource += tempText;
         this.parsedFhirResource += '\n';
       }
@@ -265,19 +272,38 @@ export class FhirValidatorComponent implements OnInit {
     if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
+  getLineNumberFromLocation(locationStr: string): number {
+    // Here we grab the location from response not in (line 6, col 5) response
+    return parseInt (locationStr.split(",")[0].replace( /^\D+/g, ''));
+  }
+
   onLocationSelected(response: any): void {
-    let locationId = ('#'+ response.severity + response.location.split(",")[0].replace( /^\D+/g, '')).toLowerCase();
+    let locationId = ('#'+ response.severity + this.getLineNumberFromLocation(response.location)).toLowerCase();
     this.scrollToElement(locationId);
   }
 
   private executeAPIValidation(fhirResource: any, resourceFormat: string) {
-    // this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat).subscribe((response: any) => {
-    //   console.log(response);
-    // })
-    this.renderAPIValidationErrors();
+    this.isLoading = true;
+    this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat).subscribe((response: any) => {
+      if(false){ //TODO we still don't know exactly what a valid fhir resource response looks like
+
+      }
+      else {
+        console.log(response);
+        this.apiErrorResponse = response;
+        this.renderAPIValidationErrors(response);
+      }
+    },
+      ()=> {this.isLoading = false;},
+      () => {
+        this.isLoading = false;
+      }
+    )
+
   }
 
   onSelectProfile(event: any) {
     this.selectedProfile = event.value;
   }
+
 }
