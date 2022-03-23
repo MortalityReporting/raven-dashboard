@@ -85,12 +85,7 @@ td.mat-cell {
   font-family: monospace;
 }
 
-/*.mat-column-location {*/
-/*  flex: none;*/
-/*  width: 10em;*/
-/*}*/
-
-.location-pointer {
+.location-data {
   cursor: pointer;
   color: #3F51B5;
 }
@@ -104,3 +99,18 @@ td.mat-cell {
   margin-left: -50px;
   margin-top: -50px;
 }
+
+
+td , th {
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+#location-column-header {
+  min-width:100px
+}
+
+#severity-column-header {
+  min-width:80px
+}
+
