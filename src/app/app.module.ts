@@ -16,12 +16,13 @@ import {DecedentRecordsGridComponent} from './components/pages/decedent-records-
 import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatCardModule} from "@angular/material/card";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {FhirValidatorModule} from "./fhir-validator/fhir-validator.module";
+import {FhirAuthInterceptor} from "./interceptors/fhir-auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -51,7 +52,9 @@ import {FhirValidatorModule} from "./fhir-validator/fhir-validator.module";
         MatSnackBarModule,
         FhirValidatorModule
     ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: FhirAuthInterceptor, multi: true },
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
