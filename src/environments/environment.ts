@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  ravenApiUrl: "https://apps.hdap.gatech.edu/raven-fhir-server/fhir"
+  ravenFhirServer: "https://apps.hdap.gatech.edu/raven-fhir-server/fhir/",
+  ravenFhirServerBasicAuth: "client:secret"
 };
 
 
