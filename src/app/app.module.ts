@@ -23,12 +23,14 @@ import {MatCardModule} from "@angular/material/card";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {FhirValidatorModule} from "./fhir-validator/fhir-validator.module";
 import {FhirAuthInterceptor} from "./interceptors/fhir-auth.interceptor";
+import { CaseSummaryComponent } from './components/pages/case-summary/case-summary.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     DecedentRecordsGridComponent,
+    CaseSummaryComponent,
   ],
     imports: [
         BrowserModule,

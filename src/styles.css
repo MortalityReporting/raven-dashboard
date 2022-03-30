@@ -77,3 +77,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .error-mark {
   background-color: #ffcccc;
 }
+
+/* Color Shades */
+.primary-light {
+  background-color: #9fa8da;
+}
+

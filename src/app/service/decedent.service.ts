@@ -22,6 +22,14 @@ export class DecedentService {
     )));
   }
 
+  getComposition(subjectId: string): Observable<any> {
+    return this.http.get(this.getFhirServerBaseURL() + "Composition?subject=" + subjectId);
+  }
+
+  getDocumentBundle(compositionId: string): Observable<any> {
+    return this.http.get(this.getFhirServerBaseURL() + "Composition/" + compositionId + "/$document");
+  }
+
   getFhirServerBaseURL(): string {
     let ravenFhirServer = environment.ravenFhirServer;
     if (!ravenFhirServer.endsWith("/")) {
