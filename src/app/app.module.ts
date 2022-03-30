@@ -24,6 +24,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {FhirValidatorModule} from "./fhir-validator/fhir-validator.module";
 import {FhirAuthInterceptor} from "./interceptors/fhir-auth.interceptor";
 import { CaseSummaryComponent } from './components/pages/case-summary/case-summary.component';
+import { LandingComponent } from './components/landing/landing.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { CaseSummaryComponent } from './components/pages/case-summary/case-summa
     HeaderComponent,
     DecedentRecordsGridComponent,
     CaseSummaryComponent,
+    LandingComponent,
   ],
     imports: [
         BrowserModule,
