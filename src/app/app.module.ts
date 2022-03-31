@@ -23,6 +23,7 @@ import {MatCardModule} from "@angular/material/card";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {FhirValidatorModule} from "./fhir-validator/fhir-validator.module";
 import {FhirAuthInterceptor} from "./interceptors/fhir-auth.interceptor";
+import {MatGridListModule} from '@angular/material/grid-list';
 import { CaseSummaryComponent } from './components/pages/case-summary/case-summary.component';
 import { LandingComponent } from './components/landing/landing.component';
 
@@ -34,27 +35,28 @@ import { LandingComponent } from './components/landing/landing.component';
     CaseSummaryComponent,
     LandingComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        ReactiveFormsModule,
-        MatIconModule,
-        MatSidenavModule,
-        MatToolbarModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatProgressSpinnerModule,
-        MatSortModule,
-        HttpClientModule,
-        MatRadioModule,
-        FormsModule,
-        MatCardModule,
-        MatSnackBarModule,
-        FhirValidatorModule
+  imports: [
+      BrowserModule,
+      AppRoutingModule,
+      BrowserAnimationsModule,
+      MatFormFieldModule,
+      MatInputModule,
+      MatButtonModule,
+      ReactiveFormsModule,
+      MatIconModule,
+      MatSidenavModule,
+      MatToolbarModule,
+      MatTableModule,
+      MatPaginatorModule,
+      MatProgressSpinnerModule,
+      MatSortModule,
+      HttpClientModule,
+      MatRadioModule,
+      FormsModule,
+      MatCardModule,
+      MatSnackBarModule,
+      FhirValidatorModule,
+      MatGridListModule
     ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: FhirAuthInterceptor, multi: true },

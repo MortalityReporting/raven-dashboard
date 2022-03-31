@@ -1,1 +1,28 @@
-<p>landing works!</p>
+<div class="container">
+  <div class="option-card-container">
+    <mat-grid-list cols="4" rowHeight="2:1">
+      <mat-grid-tile>
+        <mat-card class="option-card" routerLink="/cases">
+          <div class="option-card-label">
+            Cases
+          </div>
+        </mat-card>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-card class="option-card" routerLink="/fhir-validator">
+          <div class="option-card-label">FHIR Validator</div>
+        </mat-card>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-card class="option-card" routerLink="/">
+          <div class="option-card-label">Import Case</div>
+        </mat-card>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-card class="option-card" routerLink="/">
+          <div class="option-card-label">EDRS Search</div>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>

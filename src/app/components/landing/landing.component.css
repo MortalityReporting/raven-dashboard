@@ -1,0 +1,30 @@
+/* Landing Page */
+.option-card {
+  background-color: #3f51b5;
+  font-weight: bold;
+  font-size: xx-large;
+  color: white;
+  width: 80%;
+  height: 80%;
+  align-content: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.option-card-container {
+  margin: 10%;
+}
+
+.option-card-label {
+  height: 100%;
+  vertical-align: center;
+  text-align: center;
+  justify-content: center;
+  flex-direction: column;
+  display: flex;
+}
+
+.option-card-label a {
+  text-decoration: none;
+  color: white;
+}
