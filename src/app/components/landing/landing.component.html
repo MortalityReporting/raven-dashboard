@@ -2,26 +2,16 @@
   <div class="option-card-container">
     <mat-grid-list cols="4" rowHeight="2:1">
       <mat-grid-tile>
-        <mat-card class="option-card" routerLink="/cases">
-          <div class="option-card-label">
-            Cases
-          </div>
-        </mat-card>
+        <button mat-raised-button color="primary" class="menu-item" (click)="onBtnClick('/cases');">Cases</button>
       </mat-grid-tile>
       <mat-grid-tile>
-        <mat-card class="option-card" routerLink="/fhir-validator">
-          <div class="option-card-label">FHIR Validator</div>
-        </mat-card>
+        <button mat-raised-button color="primary" class="menu-item" (click)="onBtnClick('/fhir-validator');">FHIR Validator</button>
       </mat-grid-tile>
       <mat-grid-tile>
-        <mat-card class="option-card" routerLink="/">
-          <div class="option-card-label">Import Case</div>
-        </mat-card>
+        <button mat-raised-button color="primary" class="menu-item" (click)="onBtnClick('/');">Import Case</button>
       </mat-grid-tile>
       <mat-grid-tile>
-        <mat-card class="option-card" routerLink="/">
-          <div class="option-card-label">EDRS Search</div>
-        </mat-card>
+          <button mat-raised-button color="primary" class="menu-item" (click)="onBtnClick('/');">EDRS Search</button>
       </mat-grid-tile>
     </mat-grid-list>
   </div>

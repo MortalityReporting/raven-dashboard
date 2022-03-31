@@ -28,3 +28,10 @@
   text-decoration: none;
   color: white;
 }
+
+.menu-item{
+  width: 95%;
+  height: 95%;
+  font-size: 2.0em;
+  font-weight: bold;
+}

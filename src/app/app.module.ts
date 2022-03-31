@@ -26,6 +26,7 @@ import {FhirAuthInterceptor} from "./interceptors/fhir-auth.interceptor";
 import {MatGridListModule} from '@angular/material/grid-list';
 import { CaseSummaryComponent } from './components/pages/case-summary/case-summary.component';
 import { LandingComponent } from './components/landing/landing.component';
+import {MatRippleModule} from "@angular/material/core";
 
 @NgModule({
   declarations: [
