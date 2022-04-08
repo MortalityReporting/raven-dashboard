@@ -13,8 +13,7 @@ export class DocumentHandlerService {
 
   getPatientOfficialName(documentBundle: any): string {
     if (documentBundle) {
-      let entryList = documentBundle.entry;
-      let patientResource = (entryList.filter((entry: any) => entry.resource.resourceType === "Patient"))[0].resource;
+      let patientResource = this.filterPatientResource(documentBundle)
       let nameList = patientResource.name;
       let firstOfficialName = (nameList.filter((humanName: any) => humanName.use === "official"))[0];
       console.log(firstOfficialName);
@@ -30,4 +29,9 @@ export class DocumentHandlerService {
     }
   }
 
+  filterPatientResource(documentBundle: any): any {
+    let entryList = documentBundle.entry;
+    let patientResource = (entryList.filter((entry: any) => entry.resource.resourceType === "Patient"))[0].resource;
+    return patientResource;
+  }
 }

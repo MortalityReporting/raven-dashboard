@@ -15,7 +15,7 @@ export class CaseSummaryComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private decedentService: DecedentService,
-    private documentHandler: DocumentHandlerService
+    public documentHandler: DocumentHandlerService
   ) { }
 
   ngOnInit(): void {
