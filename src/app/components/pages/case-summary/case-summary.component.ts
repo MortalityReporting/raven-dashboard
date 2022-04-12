@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import {DecedentService} from "../../../service/decedent.service";
 import {DocumentHandlerService} from "../../../service/document-handler.service";
+import {BehaviorSubject, Observable, Subject} from "rxjs";
+import {PatientHeader} from "../../../model/case-summary-models/patient.header";
+import {map} from "rxjs-compat/operator/map";
+import {CaseHeader} from "../../../model/case-summary-models/case.header";
+import {CaseSummary} from "../../../model/case-summary-models/case.summary";
 
 @Component({
   selector: 'app-case-summary',
@@ -10,7 +15,10 @@ import {DocumentHandlerService} from "../../../service/document-handler.service"
 })
 export class CaseSummaryComponent implements OnInit {
 
-  documentBundle: any;
+  patientHeader$: Observable<PatientHeader>;
+  caseHeader$: Observable<CaseHeader>;
+  caseSummary$: Observable<CaseSummary>;
+  documentBundle$: Observable<any>;
 
   constructor(
     private route: ActivatedRoute,
@@ -20,20 +28,15 @@ export class CaseSummaryComponent implements OnInit {
 
   ngOnInit(): void {
     let subjectId = this.route.snapshot.params['id'];
-    this.decedentService.getComposition(subjectId).subscribe({
-      next: (data) => {
-        this.decedentService.getDocumentBundle(data.entry[0].resource.id).subscribe({
-          next: (document) => {
-            console.log(document);
-            this.documentBundle = document
-          }
-        })
-      }
-    });
-  }
+    this.decedentService.getComposition(subjectId).subscribe(
+      {next: (composition: any) => {
+          this.documentBundle$ = this.documentHandler.getDocumentBundle(composition.entry[0].resource.id);
+          this.documentBundle$.subscribe();
+        }}
+    );
 
-  // TODO: REFACTOR THIS IT'S REALLY BAD
-  getPatientOfficialName() {
-    return this.documentHandler.getPatientOfficialName(this.documentBundle);
+    this.patientHeader$ = this.documentHandler.patientHeader$;
+    this.caseHeader$ = this.documentHandler.caseHeader$;
+    this.caseSummary$ = this.documentHandler.caseSummary$;
   }
 }

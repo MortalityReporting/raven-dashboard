@@ -2,7 +2,55 @@ mat-card {
   margin: auto;
 }
 
-.subject-header {
+.subject-header-card {
+  display: flex;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.subject-header-bounding-box {
+  border: 1px solid black;
+  background-color: white;
+  padding: 5px;
+}
+
+.subject-header-large {
   font-size: x-large;
   font-weight: bold;
+}
+.subject-header-medium {
+  font-size: larger;
+  font-weight: bold;
+}
+
+.case-header-card {
+  display: flex;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.summary-section {
+  border: black 1px solid;
+  box-shadow: 1px 1px 2px black;
+  margin: 5px;
+}
+.summary-section-title {
+  border-bottom: black 1px solid;
+  padding: 5px;
+  font-weight: bold;
+}
+.summary-section-body {
+  padding: 5px;
+}
+
+.alias-table {
+  width: 100%;
+  border: 1px black solid;
+}
+.alias-table th {
+  text-decoration: underline;
+}
+.alias-table td {
+  border: 1px black solid;
+  padding: 5px;
 }

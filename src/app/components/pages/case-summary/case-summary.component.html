@@ -1,11 +1,76 @@
-<mat-card class="subject-header primary-light">
-  Subject Name: {{documentHandler.getPatientOfficialName(this.documentBundle)}}
+<mat-card class="primary-light subject-header-card">
+  <span class="subject-header-medium">Subject Name: <input type="text" value="{{ (patientHeader$ | async)?.fullName}}" readonly></span>
+  <span class="content-spacer"> </span>
+  <span class="subject-header-medium">Date of Birth: <input type="text" value="{{ (patientHeader$ | async)?.birthDate}}" readonly></span>
+  <span class="content-spacer"> </span>
+  <span class="subject-header-medium">Gender: <input type="text" value="{{ (patientHeader$ | async)?.gender}}" readonly></span>
+</mat-card>
+<mat-card class="primary-lighter case-header-card">
+  <span class="subject-header-medium">
+    Tracking Number/Type:
+    <input type="text" value="{{ (caseHeader$ | async)?.trackingNumber?.value}}" readonly>
+    <input type="text" value="{{ (caseHeader$ | async)?.trackingNumber?.type}}" readonly>
+  </span>
+  <span class="content-spacer"> </span>
+  <span class="subject-header-medium">Authors (DROP DOWN)</span>
 </mat-card>
 <div class="container">
-  <mat-card>
-    <mat-card-title>Demographics</mat-card-title>
-    Patient Names (Aliases): --list of all patient.name objects--<br>
-    Gender: <br>
-    Date of Birth: <br>
-  </mat-card>
+  <div class="summary-section">
+    <div class="summary-section-title primary-light">Demographics</div>
+    <div class="summary-section-body">
+      SSN: <input type="text" value="{{ (caseSummary$ | async)?.demographics.ssn || 'Unknown'}}" readonly><br/>
+      Other Identifiers: <br/>
+      Gender: <input type="text" value="{{ (caseSummary$ | async)?.demographics.gender || 'Unknown'}}" readonly><br/>
+      Date of Birth: <input type="text" value="{{ (caseSummary$ | async)?.demographics.birthDate || 'Unknown'}}" readonly><br/>
+      Race: <br/>
+      Ethnicity: <br/>
+      Aliases:
+      <table class="alias-table">
+        <tr>
+          <th>Given Name(s)</th>
+          <th>Family Name</th>
+          <th>Use</th>
+          <th>Period</th>
+        </tr>
+        <tr *ngFor="let alias of (caseSummary$ | async)?.demographics.aliases;">
+          <td>
+              <span *ngFor="let givenName of alias.given;"> {{givenName}} </span>
+          </td>
+          <td>
+            {{alias.family}}
+          </td>
+          <td>
+            {{alias.use}}
+          </td>
+          <td>
+            {{alias.period?.start || "Unknown"}} - {{alias.period?.end || "Unknown"}}
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="summary-section">
+    <div class="summary-section-title">Circumstances</div>
+    <div class="summary-section-body"></div>
+  </div>
+  <div class="summary-section">
+    <div class="summary-section-title">Cause and Manner of Death</div>
+    <div class="summary-section-body"></div>
+  </div>
+  <div class="summary-section">
+    <div class="summary-section-title">Relevant Medical History</div>
+    <div class="summary-section-body"></div>
+  </div>
+  <div class="summary-section">
+    <div class="summary-section-title">Exam and Autopsy Notes</div>
+    <div class="summary-section-body"></div>
+  </div>
+  <div class="summary-section">
+    <div class="summary-section-title">Narratives</div>
+    <div class="summary-section-body"></div>
+  </div>
+  <div class="summary-section">
+    <div class="summary-section-title">Death Certificate</div>
+    <div class="summary-section-body"></div>
+  </div>
 </div>
