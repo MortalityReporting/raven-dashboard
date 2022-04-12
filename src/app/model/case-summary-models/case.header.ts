@@ -1,6 +1,8 @@
 import {TrackingNumber} from "../mdi/tracking.number";
 
 export class CaseHeader {
-  trackingNumber: TrackingNumber;
+  fullName: string;
+  gender: string;
   deathDate: string;
+  trackingNumber: TrackingNumber;
 }

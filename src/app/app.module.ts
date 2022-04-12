@@ -26,6 +26,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { CaseSummaryComponent } from './components/pages/case-summary/case-summary.component';
 import { LandingComponent } from './components/landing/landing.component';
 import {MatRippleModule} from "@angular/material/core";
+import { CaseContainerComponent } from './components/pages/case-container/case-container.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import {MatRippleModule} from "@angular/material/core";
     DecedentRecordsGridComponent,
     CaseSummaryComponent,
     LandingComponent,
+    CaseContainerComponent,
   ],
   imports: [
       BrowserModule,

@@ -1,29 +1,30 @@
-<mat-card class="primary-light subject-header-card">
-  <span class="subject-header-medium">Subject Name: <input type="text" value="{{ (patientHeader$ | async)?.fullName}}" readonly></span>
-  <span class="content-spacer"> </span>
-  <span class="subject-header-medium">Date of Birth: <input type="text" value="{{ (patientHeader$ | async)?.birthDate}}" readonly></span>
-  <span class="content-spacer"> </span>
-  <span class="subject-header-medium">Gender: <input type="text" value="{{ (patientHeader$ | async)?.gender}}" readonly></span>
-</mat-card>
-<mat-card class="primary-lighter case-header-card">
-  <span class="subject-header-medium">
+<mat-toolbar>
+  <mat-toolbar-row class="primary-light">
+    Subject Name: <input type="text" value="{{ (caseHeader$ | async)?.fullName}}" readonly>
+    <span class="content-spacer"> </span>
+    Date/Time of Death: <input type="text" value="{{ (caseHeader$ | async)?.deathDate}}" readonly>
+    <span class="content-spacer"> </span>
+    Gender: <input type="text" value="{{ (caseHeader$ | async)?.gender}}" readonly>
+  </mat-toolbar-row>
+  <mat-toolbar-row>
     Tracking Number/Type:
     <input type="text" value="{{ (caseHeader$ | async)?.trackingNumber?.value}}" readonly>
     <input type="text" value="{{ (caseHeader$ | async)?.trackingNumber?.type}}" readonly>
-  </span>
-  <span class="content-spacer"> </span>
-  <span class="subject-header-medium">Authors (DROP DOWN)</span>
-</mat-card>
+    <span class="content-spacer"> </span>
+    Authors (DROP DOWN PLACEHOLDER)
+  </mat-toolbar-row>
+</mat-toolbar>
+
 <div class="container">
   <div class="summary-section">
     <div class="summary-section-title primary-light">Demographics</div>
     <div class="summary-section-body">
-      SSN: <input type="text" value="{{ (caseSummary$ | async)?.demographics.ssn || 'Unknown'}}" readonly><br/>
+      SSN: <input type="text" value="{{ (caseSummary$ | async)?.demographics.ssn}}" readonly><br/>
       Other Identifiers: <br/>
-      Gender: <input type="text" value="{{ (caseSummary$ | async)?.demographics.gender || 'Unknown'}}" readonly><br/>
-      Date of Birth: <input type="text" value="{{ (caseSummary$ | async)?.demographics.birthDate || 'Unknown'}}" readonly><br/>
-      Race: <br/>
-      Ethnicity: <br/>
+      Gender: <input type="text" value="{{ (caseSummary$ | async)?.demographics.gender}}" readonly><br/>
+      Date of Birth: <input type="text" value="{{ (caseSummary$ | async)?.demographics.birthDate}}" readonly><br/>
+      Race: <input type="text" value="{{ (caseSummary$ | async)?.demographics.race}}" readonly><br/>
+      Ethnicity: <input type="text" value="{{ (caseSummary$ | async)?.demographics.ethnicity}}" readonly><br/>
       Aliases:
       <table class="alias-table">
         <tr>
@@ -50,27 +51,27 @@
     </div>
   </div>
   <div class="summary-section">
-    <div class="summary-section-title">Circumstances</div>
+    <div class="summary-section-title primary-light">Circumstances</div>
     <div class="summary-section-body"></div>
   </div>
   <div class="summary-section">
-    <div class="summary-section-title">Cause and Manner of Death</div>
+    <div class="summary-section-title primary-light">Cause and Manner of Death</div>
     <div class="summary-section-body"></div>
   </div>
   <div class="summary-section">
-    <div class="summary-section-title">Relevant Medical History</div>
+    <div class="summary-section-title primary-light">Relevant Medical History</div>
     <div class="summary-section-body"></div>
   </div>
   <div class="summary-section">
-    <div class="summary-section-title">Exam and Autopsy Notes</div>
+    <div class="summary-section-title primary-light">Exam and Autopsy Notes</div>
     <div class="summary-section-body"></div>
   </div>
   <div class="summary-section">
-    <div class="summary-section-title">Narratives</div>
+    <div class="summary-section-title primary-light">Narratives</div>
     <div class="summary-section-body"></div>
   </div>
   <div class="summary-section">
-    <div class="summary-section-title">Death Certificate</div>
+    <div class="summary-section-title primary-light">Death Certificate</div>
     <div class="summary-section-body"></div>
   </div>
 </div>

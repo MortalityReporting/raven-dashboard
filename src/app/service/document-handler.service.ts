@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {finalize, Observable, Subject, map, BehaviorSubject, generate} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {DecedentService} from "./decedent.service";
-import {PatientHeader} from "../model/case-summary-models/patient.header";
 import {CaseSummary, CauseAndManner, Circumstances, Demographics} from "../model/case-summary-models/case.summary";
 import {CaseHeader} from "../model/case-summary-models/case.header";
 import {TrackingNumber} from "../model/mdi/tracking.number";
@@ -15,11 +14,6 @@ export class DocumentHandlerService {
 
   private subjectId: string;
 
-  private patientResource = new Subject<any>();
-  patientResource$ = this.patientResource.asObservable();
-
-  private patientHeader = new Subject<PatientHeader>();
-  patientHeader$ = this.patientHeader.asObservable();
   private caseHeader = new Subject<CaseHeader>();
   caseHeader$ = this.caseHeader.asObservable();
   private caseSummary = new Subject<CaseSummary>();
@@ -34,10 +28,8 @@ export class DocumentHandlerService {
         let compositionResource = this.findResourceById(documentBundle, "Composition/" + compositionId);
         this.subjectId = compositionResource.subject.reference
         let patientResource = this.findResourceById(documentBundle, this.subjectId);
-        this.patientResource.next(patientResource);
-        this.patientHeader.next(this.createPatientHeader(patientResource));
-        this.caseHeader.next(this.createCaseHeader(compositionResource));
-        this.caseSummary.next(this.createCaseSummary(documentBundle));
+        this.caseHeader.next(this.createCaseHeader(documentBundle, patientResource, compositionResource));
+        this.caseSummary.next(this.createCaseSummary(documentBundle, patientResource));
       })
     );
   }
@@ -51,21 +43,16 @@ export class DocumentHandlerService {
   }
 
   // -------------------------
-  // Case and Patient Header Functions
+  // Case Header Functions
   // -------------------------
 
-  createPatientHeader(patientResource: any): PatientHeader {
-    let header = new PatientHeader();
-    header.fullName = this.getPatientOfficialName(patientResource);
-    let genderString = patientResource.gender || "Unknown";
-    header.gender = genderString.substring(0,1).toUpperCase() + genderString.substring(1);
-    header.birthDate = patientResource.birthDate || "Unknown";
-    return header;
-  }
-
-  createCaseHeader(compositionResource: any): CaseHeader {
-    console.log(compositionResource);
+  createCaseHeader(documentBundle: any, patientResource: any, compositionResource: any): CaseHeader {
     let caseHeader = new CaseHeader();
+    caseHeader.fullName = this.getPatientOfficialName(patientResource);
+    let genderString = patientResource.gender || "Unknown";
+    caseHeader.gender = genderString.substring(0,1).toUpperCase() + genderString.substring(1);
+    let deathDateResource = this.findDeathDate(documentBundle);
+    caseHeader.deathDate = deathDateResource.valueDateTime || "Unknown";
     caseHeader.trackingNumber = this.getTrackingNumber(compositionResource);
     return caseHeader;
   }
@@ -74,17 +61,16 @@ export class DocumentHandlerService {
   // Case Summary Section Functions
   // -------------------------
 
-  createCaseSummary(documentBundle: any): CaseSummary {
+  createCaseSummary(documentBundle: any, patientResource: any): CaseSummary {
     let summary: CaseSummary = new CaseSummary();
-    summary.demographics = this.generateDemographics(documentBundle);
+    summary.demographics = this.generateDemographics(documentBundle, patientResource);
     summary.circumstances = this.generateCircumstances(documentBundle);
     summary.causeAndManner = this.generateCauseAndManner(documentBundle);
     return summary;
   }
 
-  generateDemographics(documentBundle: any): Demographics {
+  generateDemographics(documentBundle: any, patientResource: any): Demographics {
     let demographics: Demographics = new Demographics();
-    let patientResource = this.findResourceById(documentBundle, this.subjectId);
 
     // Setup Basic Demographics from Patient Resource Directly
     demographics.aliases = patientResource.name;
@@ -120,17 +106,17 @@ export class DocumentHandlerService {
   // -------------------------
 
   // This function should be used whenever possible to go off of absolute references to the full URL.
-  findResourceById(documentBundle: any, resourceId: string) {
-    let entryList = documentBundle.entry;
-    let resource = (entryList.find((entry: any) => entry.fullUrl === resourceId)).resource;
-    return resource;
+  findResourceById(documentBundle: any, resourceId: string): any {
+    return (documentBundle.entry.find((entry: any) => entry.fullUrl === resourceId)).resource;
+  }
+
+  findDeathDate(documentBundle: any): any {
+    return documentBundle.entry.find((entry: any) => entry.resource.meta.profile.includes("http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date")).resource;
   }
 
   // Filter Bundle Entries by Patient Resource.
   filterPatientResources(documentBundle: any): any {
-    let entryList = documentBundle.entry;
-    let patientResources = entryList.filter((entry: any) => entry.resource.resourceType === "Patient");
-    return patientResources;
+    return documentBundle.entry.filter((entry: any) => entry.resource.resourceType === "Patient");
   }
 
   // -------------------------
@@ -142,8 +128,8 @@ export class DocumentHandlerService {
     let extensions = compositionResource.extension;
     let trackingNumberExtension = extensions.find((extension: any) => extension.url === "http://hl7.org/fhir/us/mdi/StructureDefinition/Extension-tracking-number");
     let valueIdentifier = trackingNumberExtension?.valueIdentifier;
-    console.log(valueIdentifier)
-    trackingNumber.value = valueIdentifier.value || "Not Specified";
+    trackingNumber.value = valueIdentifier.value || "Tracking Number Not Specified";
+
     if (valueIdentifier?.type?.text) {
       trackingNumber.type = valueIdentifier.type.text;
     }
@@ -152,7 +138,7 @@ export class DocumentHandlerService {
       trackingNumber.type = this.terminologyService.mapMdiCodeToDisplay(code);
     }
     else {
-      trackingNumber.type = "Unknown"
+      trackingNumber.type = "Unknown Type"
     }
     return trackingNumber;
   }
@@ -175,12 +161,14 @@ export class DocumentHandlerService {
   }
 
   getDecedentRaceText(extensions: any): string {
-    // TODO: Need Test Data
-    return ""
+    let raceExtension = extensions.find((extension: any) => extension.url === "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race");
+    let textExtension = raceExtension?.extension?.find((extension: any) => extension.url === "text");
+    return textExtension?.valueString || "Unknown";
   }
 
   getDecedentEthnicityText(extensions: any): string {
-    // TODO: Need Test Data
-    return ""
+    let ethnicityExtension = extensions.find((extension: any) => extension.url === "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity");
+    let textExtension = ethnicityExtension?.extension?.find((extension: any) => extension.url === "text");
+    return textExtension?.valueString || "Unknown";
   }
 }

@@ -3,7 +3,6 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import {DecedentService} from "../../../service/decedent.service";
 import {DocumentHandlerService} from "../../../service/document-handler.service";
 import {BehaviorSubject, Observable, Subject} from "rxjs";
-import {PatientHeader} from "../../../model/case-summary-models/patient.header";
 import {map} from "rxjs-compat/operator/map";
 import {CaseHeader} from "../../../model/case-summary-models/case.header";
 import {CaseSummary} from "../../../model/case-summary-models/case.summary";
@@ -15,7 +14,6 @@ import {CaseSummary} from "../../../model/case-summary-models/case.summary";
 })
 export class CaseSummaryComponent implements OnInit {
 
-  patientHeader$: Observable<PatientHeader>;
   caseHeader$: Observable<CaseHeader>;
   caseSummary$: Observable<CaseSummary>;
   documentBundle$: Observable<any>;
@@ -35,7 +33,6 @@ export class CaseSummaryComponent implements OnInit {
         }}
     );
 
-    this.patientHeader$ = this.documentHandler.patientHeader$;
     this.caseHeader$ = this.documentHandler.caseHeader$;
     this.caseSummary$ = this.documentHandler.caseSummary$;
   }

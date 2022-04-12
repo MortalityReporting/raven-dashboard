@@ -10,7 +10,6 @@ export class TerminologyHandlerService {
   constructor() { }
 
   mapMdiCodeToDisplay(code: string): string {
-    console.log(MdiCodesCS);
     let concept = MdiCodesCS.concept.find((concept: any) => concept.code === code);
     return concept.display;
   }
