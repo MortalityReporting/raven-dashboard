@@ -51,7 +51,7 @@
 
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClicked(row)"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onCaseSelected(row)"></tr>
 
     </table>
 
