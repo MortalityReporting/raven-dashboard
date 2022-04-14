@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {finalize, Observable, Subject, map, BehaviorSubject, generate} from "rxjs";
+import { Subject, map } from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {DecedentService} from "./decedent.service";
 import {CaseSummary, CauseAndManner, Circumstances, Demographics} from "../model/case-summary-models/case.summary";
@@ -29,13 +29,9 @@ export class DocumentHandlerService {
         this.subjectId = compositionResource.subject.reference
         let patientResource = this.findResourceById(documentBundle, this.subjectId);
         this.caseHeader.next(this.createCaseHeader(documentBundle, patientResource, compositionResource));
-        this.caseSummary.next(this.createCaseSummary(documentBundle, patientResource));
+        this.caseSummary.next(this.createCaseSummary(documentBundle, patientResource, compositionResource));
       })
     );
-  }
-
-  updateDocumentBundle() {
-
   }
 
   getSourceResourceByFieldId(fieldId: string) {
@@ -61,10 +57,10 @@ export class DocumentHandlerService {
   // Case Summary Section Functions
   // -------------------------
 
-  createCaseSummary(documentBundle: any, patientResource: any): CaseSummary {
+  createCaseSummary(documentBundle: any, patientResource: any, compositionResource: any): CaseSummary {
     let summary: CaseSummary = new CaseSummary();
     summary.demographics = this.generateDemographics(documentBundle, patientResource);
-    summary.circumstances = this.generateCircumstances(documentBundle);
+    summary.circumstances = this.generateCircumstances(documentBundle, compositionResource);
     summary.causeAndManner = this.generateCauseAndManner(documentBundle);
     return summary;
   }
@@ -89,9 +85,14 @@ export class DocumentHandlerService {
     return demographics;
   }
 
-  generateCircumstances(documentBundle: any): Circumstances {
+  generateCircumstances(documentBundle: any, compositionResource: any): Circumstances {
     let circumstances: Circumstances = new Circumstances();
+    circumstances.workInjury = "" // TODO: Missing data, once available fix.
+    circumstances.pregnancy = "" // TODO: Missing data, once available fix.
+    circumstances.tobaccoUseContributed = "" // TODO: Missing data, once available fix.
 
+    let deathLocationResource = this.findDeathLocation(documentBundle, compositionResource);
+    circumstances.deathLocation = deathLocationResource.name || "Unknown" // TODO: Missing data, once available fix.
     return circumstances;
   }
 
@@ -105,13 +106,23 @@ export class DocumentHandlerService {
   // Find and Filter Functions
   // -------------------------
 
-  // This function should be used whenever possible to go off of absolute references to the full URL.
+  // This function should be used whenever possible to go off of absolute references to the full URL within the Document Bundle.
   findResourceById(documentBundle: any, resourceId: string): any {
     return (documentBundle.entry.find((entry: any) => entry.fullUrl === resourceId)).resource;
   }
 
+  // Find Death Date Profile (singleton) by profile name.
   findDeathDate(documentBundle: any): any {
     return documentBundle.entry.find((entry: any) => entry.resource.meta.profile.includes("http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date")).resource;
+  }
+
+  // Find Death Location Resource (US Core Location Profile) through the Composition.section reference.
+  findDeathLocation(documentBundle: any, compositionResource: any): any {
+    let circumstancesSection = compositionResource.section.find((section: any) => section.code.coding.some((coding: any) => coding.code === "circumstances"));
+    let deathLocationResourceId = (circumstancesSection.entry.find((entry: any) => entry.reference.startsWith("Location"))).reference;
+    let deathLocationResource = this.findResourceById(documentBundle, deathLocationResourceId);
+    // TODO: Add handling for reference from death date?
+    return deathLocationResource;
   }
 
   // Filter Bundle Entries by Patient Resource.
@@ -119,10 +130,16 @@ export class DocumentHandlerService {
     return documentBundle.entry.filter((entry: any) => entry.resource.resourceType === "Patient");
   }
 
+  // Filter Bundle Entries by Observation Resource.
+  filterObservationResources(documentBundle: any): any {
+    return documentBundle.entry.filter((entry: any) => entry.resource.resourceType === "Observation");
+  }
+
   // -------------------------
   // Helper Functions
   // -------------------------
 
+  // Get Tracking Number from Composition Extension
   getTrackingNumber(compositionResource: any): TrackingNumber {
     let trackingNumber = new TrackingNumber();
     let extensions = compositionResource.extension;
@@ -143,6 +160,7 @@ export class DocumentHandlerService {
     return trackingNumber;
   }
 
+  // Build a full name from Patient official use name
   getPatientOfficialName(patientResource: any): string {
     let nameList = patientResource.name;
     let firstOfficialName = (nameList.filter((humanName: any) => humanName.use === "official"))[0];
@@ -154,21 +172,30 @@ export class DocumentHandlerService {
     return fullName;
   }
 
+  // Get SSN from Patient Identifier
   getSocialSecurityNumber(patientResource: any): string {
     let identifierList = patientResource.identifier;
     let ssnIdentifier = (identifierList.filter((identifier: any) => identifier.system === "http://hl7.org/fhir/sid/us-ssn"))[0];
     return ssnIdentifier?.value || "Unknown";
   }
 
+  // Get Race Text from Patient Extension
   getDecedentRaceText(extensions: any): string {
     let raceExtension = extensions.find((extension: any) => extension.url === "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race");
     let textExtension = raceExtension?.extension?.find((extension: any) => extension.url === "text");
     return textExtension?.valueString || "Unknown";
   }
 
+  // Get Ethnicity Text from Patient Extension
   getDecedentEthnicityText(extensions: any): string {
     let ethnicityExtension = extensions.find((extension: any) => extension.url === "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity");
     let textExtension = ethnicityExtension?.extension?.find((extension: any) => extension.url === "text");
     return textExtension?.valueString || "Unknown";
+  }
+
+  // Get Death Location
+  getDeathLocation(documentBundle: any): string {
+    // TODO:
+    return ""
   }
 }
