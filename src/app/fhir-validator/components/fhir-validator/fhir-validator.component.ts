@@ -3,11 +3,28 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {DomSanitizer} from "@angular/platform-browser";
 import {FhirValidatorService} from "../../service/fhir-validator.service";
 import {ValidatorConstants} from "../../providers/validator-constants";
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {MatTableDataSource} from "@angular/material/table";
+
+export interface WarningError {
+  severity: string;
+  message: string;
+  location: string;
+  expanded: boolean;
+}
+
 
 @Component({
   selector: 'app-fhir-validator',
   templateUrl: './fhir-validator.component.html',
-  styleUrls: ['./fhir-validator.component.css']
+  styleUrls: ['./fhir-validator.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class FhirValidatorComponent implements OnInit {
 
@@ -20,17 +37,52 @@ export class FhirValidatorComponent implements OnInit {
   isValidResourceMsgRendered = false;
   hasBackendValidationErrors = false;
   parsedFhirResource : any;
-  displayedColumns: string[] = ['severity', 'fhirPath', 'message', 'location'];
+  displayedColumns: string[] = ['toggle', 'icon', 'severity', 'fhirPath', 'location'];
   isLoading = false;
-  apiErrorResponse: any;
+  apiErrorResponse: any = [];
   selectedProfile: any;
+  allExpanded = true;
+  dataSource = new MatTableDataSource(
+    [
+      {
+        "severity": "Warning",
+        "fhirPath": "Patient.address[0].state",
+        "location": "(line 4, col24)",
+        "message": "The value provided ('Texas') is not in the value set http://hl7.org/fhir/us/core/ValueSet/us-core-usps-state (http://hl7.org/fhir/us/core/ValueSet/us-core-usps-state), and a code should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable)  (error message = The code \"Texas\" is not valid in the system https://www.usps.com/; The code provided (https://www.usps.com/#Texas) is not valid in the value set 'UspsTwoLetterAlphabeticCodes' (from http://tx.fhir.org/r4))\r\n",
+        "expanded": true
+      },
+      {
+        "severity": "Warning",
+        "fhirPath": "Patient.address[0].use",
+        "location": "(line 6, col6)",
+        "message": "ValueSet http://hl7.org/fhir/ValueSet/address-use|4.0.1 not found by validator",
+        "expanded": true
+      },
+      {
+        "severity": "Error",
+        "fhirPath": "Patient.identifier[0].type",
+        "location": "(line 9, col20)",
+        "message": "None of the codings provided are in the value set http://hl7.org/fhir/ValueSet/identifier-type (http://hl7.org/fhir/ValueSet/identifier-type), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://cbsig.chai.gatech.edu/CodeSystem/cbs-temp-code-system#Local-Record-ID)",
+        "expanded": true,
+      },
+      {
+        "severity": "Error",
+        "fhirPath": "Patient.identifier[0].type",
+        "location": "(line 17, col20)",
+        "message": "None of the codings provided are in the value set http://hl7.org/fhir/ValueSet/identifier-type (http://hl7.org/fhir/ValueSet/identifier-type), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://cbsig.chai.gatech.edu/CodeSystem/cbs-temp-code-system#Local-Record-ID)",
+        "expanded": true,
+      }
+    ]
+  );
 
   constructor(
     private fhirValidatorService: FhirValidatorService,
     private _snackBar: MatSnackBar,
     private sanitized: DomSanitizer,
-    public constants: ValidatorConstants
-  ) { }
+    public constants: ValidatorConstants,
+
+  ) {
+  }
 
   // It is important the format is working with "best effort"
   // That is it may or may not format the text properly and require extensive testing to validate its operation.
@@ -99,7 +151,7 @@ export class FhirValidatorComponent implements OnInit {
       reader.onload = () => {
         this.fhirResource = reader.result as string;
       }
-      reader.onerror =  () => {
+      reader.onerror = () => {
         this._snackBar.open("Unable to open the file.", 'x' ,{
           horizontalPosition: 'center',
           verticalPosition: 'top',
@@ -133,7 +185,7 @@ export class FhirValidatorComponent implements OnInit {
   }
 
   onPasteFhirResource(event: ClipboardEvent) {
-    // If not text is present in the textarea (this.fhirResource is empty) we toggle the  radio buttons
+    // If no text is present in the textarea (this.fhirResource is empty) we toggle the  radio buttons
     // based on the input text format.
     if(!this.fhirResource) {
       this.clearUI();
@@ -218,10 +270,11 @@ export class FhirValidatorComponent implements OnInit {
   }
 
   getLineNumberFromLocation(locationStr: string): number {
-    // Here we grab the location from response not in (line 6, col 5) response
+    // We grab the location from response
     return parseInt (locationStr.split(",")[0].replace( /^\D+/g, ''));
   }
 
+  // When the user selects a location from the errors and warning results, we want to scroll the page to that location
   onLocationSelected(response: any): void {
     let locationId = ('#'+ response.severity + this.getLineNumberFromLocation(response.location)).toLowerCase();
     this.scrollToElement(locationId);
@@ -238,6 +291,10 @@ export class FhirValidatorComponent implements OnInit {
         }
         else {
           response.forEach((element: any) => element.message = element.message .replace(/,(?=[^\s])/g, ", "));
+          this.dataSource.data = response.map((element: any) => {
+            let result: WarningError = Object.assign({}, element);
+              result.expanded = true;
+              return result});
           this.apiErrorResponse = response;
           this.renderAPIValidationErrors(response);
         }
@@ -262,5 +319,10 @@ export class FhirValidatorComponent implements OnInit {
 
   onSelectedProfileLink(selectedProfile: any) {
     window.open(selectedProfile.url);
+  }
+
+  toggle() {
+    this.allExpanded = !this.allExpanded;
+    this.dataSource.data.forEach(item => item.expanded = this.allExpanded);
   }
 }
