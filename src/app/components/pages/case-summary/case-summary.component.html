@@ -48,15 +48,26 @@
           </td>
         </tr>
       </table>
+      Occupation History:
     </div>
   </div>
   <div class="summary-section">
     <div class="summary-section-title primary-light">Circumstances</div>
-    <div class="summary-section-body"></div>
+    <div class="summary-section-body">
+      Death Location: <input type="text" value="{{ (caseSummary$ | async)?.circumstances.deathLocation}}" readonly><br/>
+      Injury at Work: <input type="text" value="{{ (caseSummary$ | async)?.circumstances.workInjury}}" readonly><br/>
+      Tobacco Use Contributed to Death: <input type="text" value="{{ (caseSummary$ | async)?.circumstances.tobaccoUseContributed}}" readonly><br/>
+      Decedent Pregnancy Status: <input type="text" value="{{ (caseSummary$ | async)?.circumstances.pregnancy}}" readonly><br/>
+    </div>
   </div>
   <div class="summary-section">
     <div class="summary-section-title primary-light">Cause and Manner of Death</div>
-    <div class="summary-section-body"></div>
+    <div class="summary-section-body">
+      Cause of Death Pathway: <br/>
+      Conditions Contributing to Death: <br/>
+      Manner of Death: <input type="text" value="{{ (caseSummary$ | async)?.causeAndManner.mannerOfDeath}}" readonly><br/>
+      How Death Injury Occurred: <input type="text" value="{{ (caseSummary$ | async)?.causeAndManner.howDeathInjuryOccurred}}" readonly><br/>
+    </div>
   </div>
   <div class="summary-section">
     <div class="summary-section-title primary-light">Relevant Medical History</div>
