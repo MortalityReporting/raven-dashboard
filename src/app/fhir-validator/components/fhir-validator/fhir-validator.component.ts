@@ -3,7 +3,6 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {DomSanitizer} from "@angular/platform-browser";
 import {FhirValidatorService} from "../../service/fhir-validator.service";
 import {ValidatorConstants} from "../../providers/validator-constants";
-import {MatTableDataSource} from "@angular/material/table";
 
 @Component({
   selector: 'app-fhir-validator',
@@ -24,6 +23,7 @@ export class FhirValidatorComponent implements OnInit {
   displayedColumns: string[] = ['severity', 'fhirPath', 'message', 'location'];
   isLoading = false;
   apiErrorResponse: any;
+  selectedProfile: any;
 
   constructor(
     private fhirValidatorService: FhirValidatorService,
@@ -118,7 +118,7 @@ export class FhirValidatorComponent implements OnInit {
     }
   }
 
-  validateFhirResource(fhirResource: any, resourceFormat: string) {
+  validateFhirResource(fhirResource: any, resourceFormat: string, selectedProfile: any) {
 
     this.validationErrorStr = this.fhirValidatorService.getUiValidationMessages(fhirResource, resourceFormat);
     if(this.validationErrorStr){
@@ -128,7 +128,7 @@ export class FhirValidatorComponent implements OnInit {
     }
     else {
       // The UI validation passed successfully, and we execute the backend validation.
-      this.executeAPIValidation(fhirResource, resourceFormat);
+      this.executeAPIValidation(fhirResource, resourceFormat ,selectedProfile);
     }
   }
 
@@ -191,12 +191,12 @@ export class FhirValidatorComponent implements OnInit {
       if(!this.parsedFhirResource){
         this.parsedFhirResource = '';
       }
-      if(errorLineNumbers.indexOf(i) != -1){
+      if(errorLineNumbers?.indexOf(i) != -1){
         let tempText = '<span class="error-mark" id="error' + i + '">' + sanitized + '</span>';
         this.parsedFhirResource += tempText;
         this.parsedFhirResource += '\n';
       }
-      else if(warningLineNumbers.indexOf(i) != -1){
+      else if(warningLineNumbers?.indexOf(i) != -1){
         let tempText = '<span class="warning-mark" id="warning' + i + '">' + sanitized + '</span>';
         this.parsedFhirResource += tempText;
         this.parsedFhirResource += '\n';
@@ -227,10 +227,11 @@ export class FhirValidatorComponent implements OnInit {
     this.scrollToElement(locationId);
   }
 
-  private executeAPIValidation(fhirResource: any, resourceFormat: string) {
+  private executeAPIValidation(fhirResource: any, resourceFormat: string, selectedProfile: any) {
     this.isLoading = true;
-
-    this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat).subscribe({
+    this.parsedFhirResource = null;
+    this.apiErrorResponse = null;
+    this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat, selectedProfile).subscribe({
       next: (response) => {
         if(false){ //TODO we still don't know exactly what a valid fhir resource response looks like
 
@@ -255,4 +256,11 @@ export class FhirValidatorComponent implements OnInit {
     });
   }
 
+  onSelectProfile(event: any) {
+    this.selectedProfile = event.value;
+  }
+
+  onSelectedProfileLink(selectedProfile: any) {
+    window.open(selectedProfile.url);
+  }
 }

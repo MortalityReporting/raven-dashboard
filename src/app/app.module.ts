@@ -26,6 +26,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { CaseSummaryComponent } from './components/pages/case-summary/case-summary.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { CaseContainerComponent } from './components/pages/case-container/case-container.component';
+import {FhirExplorerDrawer} from "./fhir-validator/providers/fhir-explorer-drawer";
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { CaseContainerComponent } from './components/pages/case-container/case-c
     ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: FhirAuthInterceptor, multi: true },
+    FhirExplorerDrawer
     ],
   bootstrap: [AppComponent]
 })
