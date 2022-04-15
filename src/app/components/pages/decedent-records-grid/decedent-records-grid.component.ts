@@ -4,7 +4,7 @@ import {PageEvent} from '@angular/material/paginator';
 import {MatSort} from "@angular/material/sort";
 import {DecedentGridDTO} from "../../../model/decedent.grid.dto";
 import {DecedentService} from "../../../service/decedent.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {mergeMap, forkJoin, map} from "rxjs";
 
 @Component({
@@ -26,7 +26,7 @@ export class DecedentRecordsGridComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private decedentService: DecedentService,
-    // private constants: ValidatorConstants,
+    private router: Router,
   ) {
   }
 
@@ -75,8 +75,8 @@ export class DecedentRecordsGridComponent implements OnInit {
     });
   }
 
-  onRowClicked(row: any) {
-    console.log(row);
+  onCaseSelected(row: any) {
+    this.router.navigate(['cases/summary/', row.decedentId]);
   }
 
   pageChanged(event: PageEvent) {

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -23,37 +22,49 @@ import {MatCardModule} from "@angular/material/card";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {FhirValidatorModule} from "./fhir-validator/fhir-validator.module";
 import {FhirAuthInterceptor} from "./interceptors/fhir-auth.interceptor";
+import {MatGridListModule} from '@angular/material/grid-list';
+import { CaseSummaryComponent } from './components/pages/case-summary/case-summary.component';
+import { LandingComponent } from './components/landing/landing.component';
+import { CaseContainerComponent } from './components/pages/case-container/case-container.component';
+import {FhirExplorerDrawerService} from "./service/fhir-explorer-drawer.service";
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     DecedentRecordsGridComponent,
+    CaseSummaryComponent,
+    LandingComponent,
+    CaseContainerComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        ReactiveFormsModule,
-        MatIconModule,
-        MatSidenavModule,
-        MatToolbarModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatProgressSpinnerModule,
-        MatSortModule,
-        HttpClientModule,
-        MatRadioModule,
-        FormsModule,
-        MatCardModule,
-        MatSnackBarModule,
-        FhirValidatorModule
+  imports: [
+      BrowserModule,
+      AppRoutingModule,
+      BrowserAnimationsModule,
+      MatFormFieldModule,
+      MatInputModule,
+      MatButtonModule,
+      ReactiveFormsModule,
+      MatIconModule,
+      MatSidenavModule,
+      MatToolbarModule,
+      MatTableModule,
+      MatPaginatorModule,
+      MatProgressSpinnerModule,
+      MatSortModule,
+      HttpClientModule,
+      MatRadioModule,
+      FormsModule,
+      MatCardModule,
+      MatSnackBarModule,
+      FhirValidatorModule,
+      MatGridListModule,
+      MatExpansionModule
     ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: FhirAuthInterceptor, multi: true },
+    FhirExplorerDrawerService
     ],
   bootstrap: [AppComponent]
 })

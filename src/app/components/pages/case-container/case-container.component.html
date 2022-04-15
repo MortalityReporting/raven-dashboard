@@ -1,0 +1,24 @@
+<mat-drawer-container>
+
+  <mat-drawer #drawer
+              class="drawer"
+              mode="side"
+              opened="true"
+              position="end">
+
+    <mat-toolbar class="header">
+      <span class="content-spacer"></span>
+      <mat-icon class="close" (click)="drawer.close()">close</mat-icon>
+    </mat-toolbar>
+
+    <div class="main contents">
+      drawer opened: {{drawer.opened}}
+      <div>Contents xxxxxx</div>
+      <div style="height: 1000px">&nbsp;</div>
+    </div>
+
+  </mat-drawer>
+
+  <app-case-summary></app-case-summary>
+
+</mat-drawer-container>

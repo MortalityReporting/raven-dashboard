@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'
 
 @Injectable()
+// Add: US Core Patient, US Core Practitioner,
 export class ValidatorConstants {
 
   PROFILE_LIST = [

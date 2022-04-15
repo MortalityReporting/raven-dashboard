@@ -13,13 +13,24 @@ export class DecedentService {
 
   getDecedentConditionRecords(decedent: any):  Observable<any> {
     // Headers are added in the FHIR Auth Interceptor
-    return this.http.get(this.getFhirServerBaseURL() + "Observation?patient=" + decedent.resource.id + "&code=81956-5").pipe( map((result: any) => result));
+    return this.http.get(this.getFhirServerBaseURL() + "Observation?patient=" + decedent.resource.id + "&code=81956-5")
+      .pipe( map((result: any) => result));
   }
+
   getDecedentRecords():  Observable<any> {
     // Headers are added in the FHIR Auth Interceptor
-    return this.http.get(this.getFhirServerBaseURL() + "Patient").pipe( map((result: any) => (
-      result.entry as Object[]
+    return this.http.get(this.getFhirServerBaseURL() + "Patient")
+      .pipe( map((result: any) => (
+        result.entry as Object[]
     )));
+  }
+
+  getComposition(subjectId: string): Observable<any> {
+    return this.http.get(this.getFhirServerBaseURL() + "Composition?subject=" + subjectId);
+  }
+
+  getDocumentBundle(compositionId: string): Observable<any> {
+    return this.http.get(this.getFhirServerBaseURL() + "Composition/" + compositionId + "/$document");
   }
 
   getFhirServerBaseURL(): string {

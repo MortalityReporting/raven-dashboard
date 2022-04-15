@@ -14,7 +14,7 @@ textarea {
   font-size: 13px;
   line-height: 16px;
   width:96%;
-  white-space: nowrap;
+  /*white-space: nowrap;*/
 }
 
 .validator-response {
@@ -79,8 +79,6 @@ pre {
 }
 
 td.mat-cell {
-  padding-left: 1em !important;
-  padding-right: 1em !important;
   font-size: 13px;
   font-family: monospace;
 }
@@ -112,5 +110,34 @@ td , th {
 
 #severity-column-header {
   min-width:80px
+}
+
+table {
+  width: 100%;
+}
+
+tr.text-value-row {
+  height: 0;
+}
+
+.validation-result-row td {
+  border-bottom-width: 0;
+}
+
+.validation-result-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.validation-result-text-value {
+  padding: 16px;
+}
+
+.expanded-row {
+  background-color: #FAFAFF;
+}
+
+.table-row {
+  font-weight: bold;
 }
 

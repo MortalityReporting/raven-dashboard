@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="option-card-container">
+    <mat-grid-list cols="3" rowHeight="1:1">
+      <mat-grid-tile>
+        <button mat-raised-button color="primary" class="menu-item" (click)="onBtnClick('/cases');">Cases</button>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <button mat-raised-button color="primary" class="menu-item" (click)="onBtnClick('/fhir-validator');">FHIR Validator</button>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <button mat-raised-button color="primary" class="menu-item" (click)="onBtnClick('/');">Import Case</button>
+      </mat-grid-tile>
+      <mat-grid-tile>
+          <button mat-raised-button color="primary" class="menu-item" (click)="onBtnClick('/');">EDRS Search</button>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <button mat-raised-button color="primary" class="menu-item" (click)="onBtnClick('/');">Workflow<br/>Simulator</button>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <button mat-raised-button color="primary" class="menu-item" (click)="onBtnClick('/');">DB Convertor</button>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>
