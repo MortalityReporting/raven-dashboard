@@ -1,7 +1,8 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {MatDrawer} from "@angular/material/sidenav";
-import {FhirExplorerDrawer} from "../../../fhir-validator/providers/fhir-explorer-drawer";
+import {FhirExplorerDrawerService} from "../../../service/fhir-explorer-drawer.service";
+
 
 @Component({
   selector: 'app-case-container',
@@ -13,7 +14,7 @@ export class CaseContainerComponent implements OnInit, AfterViewInit {
   @ViewChild('resultViewerSidenav') public drawer: MatDrawer;
 
   constructor(private route: ActivatedRoute,
-              private fhirExplorerDrawer: FhirExplorerDrawer
+              private fhirExplorerDrawerService: FhirExplorerDrawerService
 
   ) { }
 
@@ -22,7 +23,7 @@ export class CaseContainerComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.fhirExplorerDrawer.setDrawer(this.drawer);
+    this.fhirExplorerDrawerService.setDrawer(this.drawer);
   }
 
 }

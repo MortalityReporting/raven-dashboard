@@ -1,11 +1,11 @@
-import {Injectable} from "@angular/core";
+import { Injectable } from '@angular/core';
 import {MatDrawer} from "@angular/material/sidenav";
 
 @Injectable({
   providedIn: 'root'
 })
+export class FhirExplorerDrawerService {
 
-export class FhirExplorerDrawer {
   private drawer: MatDrawer;
 
   constructor() { }

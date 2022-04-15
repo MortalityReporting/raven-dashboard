@@ -76,7 +76,7 @@ export class DecedentRecordsGridComponent implements OnInit {
   }
 
   onCaseSelected(row: any) {
-    this.router.navigate(['cases/summary/', 123]);
+    this.router.navigate(['cases/summary/', row.decedentId]);
   }
 
   pageChanged(event: PageEvent) {
