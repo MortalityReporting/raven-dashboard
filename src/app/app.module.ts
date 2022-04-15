@@ -26,7 +26,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { CaseSummaryComponent } from './components/pages/case-summary/case-summary.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { CaseContainerComponent } from './components/pages/case-container/case-container.component';
-import {FhirExplorerDrawerService} from "./service/fhir-explorer-drawer.service";
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -58,7 +58,8 @@ import {FhirExplorerDrawerService} from "./service/fhir-explorer-drawer.service"
       MatCardModule,
       MatSnackBarModule,
       FhirValidatorModule,
-      MatGridListModule
+      MatGridListModule,
+      MatExpansionModule
     ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: FhirAuthInterceptor, multi: true },
