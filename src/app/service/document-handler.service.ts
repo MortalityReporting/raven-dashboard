@@ -6,6 +6,7 @@ import {CaseSummary, CauseAndManner, Circumstances, Demographics} from "../model
 import {CaseHeader} from "../model/case-summary-models/case.header";
 import {TrackingNumber} from "../model/mdi/tracking.number";
 import {TerminologyHandlerService} from "./terminology-handler.service";
+import * as profile from "../model/mdi/profile.list"
 
 @Injectable({
   providedIn: 'root'
@@ -61,7 +62,7 @@ export class DocumentHandlerService {
     let summary: CaseSummary = new CaseSummary();
     summary.demographics = this.generateDemographics(documentBundle, patientResource);
     summary.circumstances = this.generateCircumstances(documentBundle, compositionResource);
-    summary.causeAndManner = this.generateCauseAndManner(documentBundle);
+    summary.causeAndManner = this.generateCauseAndManner(documentBundle, compositionResource);
     return summary;
   }
 
@@ -82,23 +83,29 @@ export class DocumentHandlerService {
     demographics.race = this.getDecedentRaceText(extensions);
     demographics.ethnicity = this.getDecedentEthnicityText(extensions);
 
+    // TODO: Add handling for ODH USual Work and Other Identifiers (missing data)
+
     return demographics;
   }
 
   generateCircumstances(documentBundle: any, compositionResource: any): Circumstances {
     let circumstances: Circumstances = new Circumstances();
+    let circumstancesSection = compositionResource.section.find((section: any) => section.code.coding.some((coding: any) => coding.code === "circumstances"));
+
+    let deathLocationResource = this.findDeathLocation(documentBundle, compositionResource, circumstancesSection);
+    circumstances.deathLocation = deathLocationResource.name || "Unknown";
+
     circumstances.workInjury = "" // TODO: Missing data, once available fix.
     circumstances.pregnancy = "" // TODO: Missing data, once available fix.
     circumstances.tobaccoUseContributed = "" // TODO: Missing data, once available fix.
 
-    let deathLocationResource = this.findDeathLocation(documentBundle, compositionResource);
-    circumstances.deathLocation = deathLocationResource.name || "Unknown" // TODO: Missing data, once available fix.
     return circumstances;
   }
 
-  generateCauseAndManner(documentBundle: any): CauseAndManner {
+  generateCauseAndManner(documentBundle: any, compositionResource: any): CauseAndManner {
     let causeAndManner: CauseAndManner = new CauseAndManner();
-
+    let causeAndMannerSection = compositionResource.section.find((section: any) => section.code.coding.some((coding: any) => coding.code === "cause-manner"));
+    console.log(causeAndMannerSection)
     return causeAndManner;
   }
 
@@ -113,12 +120,17 @@ export class DocumentHandlerService {
 
   // Find Death Date Profile (singleton) by profile name.
   findDeathDate(documentBundle: any): any {
-    return documentBundle.entry.find((entry: any) => entry.resource.meta.profile.includes("http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date")).resource;
+    console.log(profile.Obs_DeathDate)
+    return documentBundle.entry.find((entry: any) => entry.resource.meta.profile.includes(profile.Obs_DeathDate)).resource;
+  }
+
+  // Find Manner of Death Profile (singleton) by profile name.
+  findMannerOfDeath(documentBundle: any): any {
+    return documentBundle.entry.find((entry: any) => entry.resource.meta.profile.includes(profile.Obs_MannerOfDeath)).resource;
   }
 
   // Find Death Location Resource (US Core Location Profile) through the Composition.section reference.
-  findDeathLocation(documentBundle: any, compositionResource: any): any {
-    let circumstancesSection = compositionResource.section.find((section: any) => section.code.coding.some((coding: any) => coding.code === "circumstances"));
+  findDeathLocation(documentBundle: any, compositionResource: any, circumstancesSection: any): any {
     let deathLocationResourceId = (circumstancesSection.entry.find((entry: any) => entry.reference.startsWith("Location"))).reference;
     let deathLocationResource = this.findResourceById(documentBundle, deathLocationResourceId);
     // TODO: Add handling for reference from death date?

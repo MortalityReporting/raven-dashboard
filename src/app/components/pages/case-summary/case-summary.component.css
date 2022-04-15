@@ -32,7 +32,6 @@ mat-card {
 .summary-section {
   border: black 1px solid;
   box-shadow: 1px 1px 2px black;
-  margin: 20px;
 }
 .summary-section-title {
   border-bottom: black 1px solid;
@@ -53,4 +52,29 @@ mat-card {
 .alias-table td {
   border: 1px black solid;
   padding: 5px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 10px;
+  margin: 0;
+}
+
+li {
+  padding: 5px;
+}
+
+li mat-icon {
+  position: relative;
+  top: 5px;
+  left: 5px;
+  padding-right: 5px;
+}
+
+.section-button-wrapper {
+  display: flex;
+}
+
+button {
+  margin: 5px;
 }
