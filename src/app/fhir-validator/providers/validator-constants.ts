@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core'
 
 @Injectable()
-// Add: US Core Patient, US Core Practitioner,
+//TODO: how are these sorted?
+
+// The profiles can be found here https://build.fhir.org/ig/HL7/fhir-mdi-ig/toc.html
 export class ValidatorConstants {
 
   PROFILE_LIST = [
@@ -21,6 +23,8 @@ export class ValidatorConstants {
     { name : "DiagnosticReport - Toxicology Lab Result to MDI",    url: "http://hl7.org/fhir/us/mdi/StructureDefinition/DiagnosticReport-toxicology-to-mdi"},
     { name : "Specimen - Toxicology Lab",                          url: "http://hl7.org/fhir/us/mdi/StructureDefinition/Specimen-toxicology-lab"},
     { name : "Observation - Toxicology Lab Result",                url: "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-toxicology-lab-result"},
+    { name : "Resource Profile: US Core Practitioner Profile",     url: "http://hl7.org/fhir/us/core/STU4/StructureDefinition-us-core-practitioner.html#root"},
+    { name : "Resource Profile: US Core Patient Profile",          url: "https://hl7.org/fhir/us/core/STU4/StructureDefinition-us-core-patient.html#root"},
   ];
 
 }
