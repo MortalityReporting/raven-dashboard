@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
+import {FhirExplorerDrawerService} from "../../service/fhir-explorer-drawer.service";
 
 @Component({
   selector: 'app-header',
@@ -10,6 +11,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private fhirExplorerDrawerService: FhirExplorerDrawerService
   ) { }
 
   onTitleClick() {
@@ -19,4 +21,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onToggle() {
+    this.fhirExplorerDrawerService.toggle();
+  }
 }

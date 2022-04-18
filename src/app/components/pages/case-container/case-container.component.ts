@@ -11,7 +11,7 @@ import {FhirExplorerDrawerService} from "../../../service/fhir-explorer-drawer.s
 })
 export class CaseContainerComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('resultViewerSidenav') public drawer: MatDrawer;
+  @ViewChild('drawer') public drawer: MatDrawer;
 
   constructor(private route: ActivatedRoute,
               private fhirExplorerDrawerService: FhirExplorerDrawerService
