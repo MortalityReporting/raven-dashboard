@@ -13,7 +13,9 @@
 
     <div class="main contents">
       drawer opened: {{drawer.opened}}
-      <div>Contents xxxxxx</div>
+      <div>Contents xxxxxx
+        <pre>{{ fhirResource$ | async | json }}</pre>
+      </div>
       <div style="height: 1000px">&nbsp;</div>
     </div>
 

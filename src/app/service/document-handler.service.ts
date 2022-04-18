@@ -14,6 +14,7 @@ import {
   Obs_MannerOfDeath,
   Obs_TobaccoUseContributedToDeath
 } from "../model/mdi/profile.list"
+import {FhirResourceProviderService} from "./fhir-resource-provider.service";
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,7 @@ export class DocumentHandlerService {
   private caseSummary = new Subject<CaseSummary>();
   caseSummary$ = this.caseSummary.asObservable();
 
-  constructor(private http: HttpClient, private decedentService: DecedentService, private terminologyService: TerminologyHandlerService) {}
+  constructor(private http: HttpClient, private fhirResourceProvider: FhirResourceProviderService, private decedentService: DecedentService, private terminologyService: TerminologyHandlerService) {}
 
   getDocumentBundle(compositionId: string) {
     return this.http.get(this.decedentService.getFhirServerBaseURL() + "Composition/" + compositionId + "/$document").pipe(
@@ -39,6 +40,7 @@ export class DocumentHandlerService {
         let patientResource = this.findResourceById(documentBundle, this.subjectId);
         this.caseHeader.next(this.createCaseHeader(documentBundle, patientResource, compositionResource));
         this.caseSummary.next(this.createCaseSummary(documentBundle, patientResource, compositionResource));
+        this.fhirResourceProvider.setSelectedFhirResource(documentBundle);
       })
     );
   }
