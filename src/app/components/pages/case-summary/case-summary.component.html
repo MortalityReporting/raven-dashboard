@@ -2,7 +2,9 @@
   <mat-toolbar-row class="primary-light">
     Subject Name: <input type="text" value="{{ (caseHeader$ | async)?.fullName}}" readonly>
     <span class="content-spacer"> </span>
-    Date/Time of Death: <input type="text" value="{{ (caseHeader$ | async)?.deathDate}}" readonly>
+    Date/Time of Death:
+    <input type="text" value="{{ (caseHeader$ | async)?.deathDate}}" readonly>
+    <input type="text" value="{{ (caseHeader$ | async)?.deathTime}}" readonly>
     <span class="content-spacer"> </span>
     Gender: <input type="text" value="{{ (caseHeader$ | async)?.gender}}" readonly>
   </mat-toolbar-row>

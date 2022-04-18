@@ -1,12 +1,19 @@
-import { Injectable } from '@angular/core';
-import { Subject, map } from "rxjs";
+import {Injectable} from '@angular/core';
+import {map, Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {DecedentService} from "./decedent.service";
 import {CaseSummary, CauseAndManner, Circumstances, Demographics} from "../model/case-summary-models/case.summary";
 import {CaseHeader} from "../model/case-summary-models/case.header";
 import {TrackingNumber} from "../model/mdi/tracking.number";
 import {TerminologyHandlerService} from "./terminology-handler.service";
-import * as profile from "../model/mdi/profile.list"
+import {
+  Obs_DeathDate,
+  Obs_DeathInjuryEventOccurredAtWork,
+  Obs_DecedentPregnancy,
+  Obs_HowDeathInjuryOccurred,
+  Obs_MannerOfDeath,
+  Obs_TobaccoUseContributedToDeath
+} from "../model/mdi/profile.list"
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +21,7 @@ import * as profile from "../model/mdi/profile.list"
 export class DocumentHandlerService {
 
   private subjectId: string;
+  private defaultString: string = "VALUE NOT FOUND";
 
   private caseHeader = new Subject<CaseHeader>();
   caseHeader$ = this.caseHeader.asObservable();
@@ -35,10 +43,6 @@ export class DocumentHandlerService {
     );
   }
 
-  getSourceResourceByFieldId(fieldId: string) {
-    return ''
-  }
-
   // -------------------------
   // Case Header Functions
   // -------------------------
@@ -46,10 +50,12 @@ export class DocumentHandlerService {
   createCaseHeader(documentBundle: any, patientResource: any, compositionResource: any): CaseHeader {
     let caseHeader = new CaseHeader();
     caseHeader.fullName = this.getPatientOfficialName(patientResource);
-    let genderString = patientResource.gender || "Unknown";
+    let genderString = patientResource.gender || this.defaultString;
     caseHeader.gender = genderString.substring(0,1).toUpperCase() + genderString.substring(1);
-    let deathDateResource = this.findDeathDate(documentBundle);
-    caseHeader.deathDate = deathDateResource.valueDateTime || "Unknown";
+    let deathDateResource = this.findResourceByProfileName(documentBundle, Obs_DeathDate);
+    let splitDateTime = deathDateResource.valueDateTime.split("T"); //TODO: Add more handling to this for other forms of dateTime?
+    caseHeader.deathDate = splitDateTime[0] || this.defaultString;
+    caseHeader.deathTime = splitDateTime[1] || this.defaultString;
     caseHeader.trackingNumber = this.getTrackingNumber(compositionResource);
     return caseHeader;
   }
@@ -70,9 +76,9 @@ export class DocumentHandlerService {
     let demographics: Demographics = new Demographics();
 
     // Setup Basic Demographics from Patient Resource Directly
-    demographics.aliases = patientResource.name;
-    demographics.gender = patientResource.gender || "Unknown";
-    demographics.birthDate = patientResource.birthDate;
+    demographics.aliases = patientResource.name || this.defaultString;
+    demographics.gender = patientResource.gender || this.defaultString;
+    demographics.birthDate = patientResource.birthDate || this.defaultString;
 
     // Setup Identifiers
     demographics.ssn = this.getSocialSecurityNumber(patientResource);
@@ -93,11 +99,11 @@ export class DocumentHandlerService {
     let circumstancesSection = compositionResource.section.find((section: any) => section.code.coding.some((coding: any) => coding.code === "circumstances"));
 
     let deathLocationResource = this.findDeathLocation(documentBundle, compositionResource, circumstancesSection);
-    circumstances.deathLocation = deathLocationResource.name || "Unknown";
+    circumstances.deathLocation = deathLocationResource?.name || this.defaultString;
 
-    circumstances.workInjury = "" // TODO: Missing data, once available fix.
-    circumstances.pregnancy = "" // TODO: Missing data, once available fix.
-    circumstances.tobaccoUseContributed = "" // TODO: Missing data, once available fix.
+    circumstances.workInjury = this.findResourceByProfileName(documentBundle, Obs_DeathInjuryEventOccurredAtWork)?.valueCodeableConcept?.coding[0]?.display || this.defaultString; // TODO: Missing data, once available fix.
+    circumstances.pregnancy = this.findResourceByProfileName(documentBundle, Obs_DecedentPregnancy)?.valueCodeableConcept?.coding[0]?.display || this.defaultString; // TODO: Missing data, once available fix.
+    circumstances.tobaccoUseContributed = this.findResourceByProfileName(documentBundle, Obs_TobaccoUseContributedToDeath)?.valueCodeableConcept?.coding[0]?.display || this.defaultString;; // TODO: Missing data, once available fix.
 
     return circumstances;
   }
@@ -106,6 +112,10 @@ export class DocumentHandlerService {
     let causeAndManner: CauseAndManner = new CauseAndManner();
     let causeAndMannerSection = compositionResource.section.find((section: any) => section.code.coding.some((coding: any) => coding.code === "cause-manner"));
     console.log(causeAndMannerSection)
+
+    // TODO: Refactor this to use section and no index, and pull from term server instead of relying on display.
+    causeAndManner.mannerOfDeath = this.findResourceByProfileName(documentBundle, Obs_MannerOfDeath)?.valueCodeableConcept?.coding[0]?.display || this.defaultString;
+    causeAndManner.howDeathInjuryOccurred = this.findResourceByProfileName(documentBundle, Obs_HowDeathInjuryOccurred).valueString;
     return causeAndManner;
   }
 
@@ -115,26 +125,19 @@ export class DocumentHandlerService {
 
   // This function should be used whenever possible to go off of absolute references to the full URL within the Document Bundle.
   findResourceById(documentBundle: any, resourceId: string): any {
-    return (documentBundle.entry.find((entry: any) => entry.fullUrl === resourceId)).resource;
+    return (documentBundle.entry.find((entry: any) => entry.fullUrl === resourceId))?.resource || undefined;
   }
 
-  // Find Death Date Profile (singleton) by profile name.
-  findDeathDate(documentBundle: any): any {
-    console.log(profile.Obs_DeathDate)
-    return documentBundle.entry.find((entry: any) => entry.resource.meta.profile.includes(profile.Obs_DeathDate)).resource;
-  }
-
-  // Find Manner of Death Profile (singleton) by profile name.
-  findMannerOfDeath(documentBundle: any): any {
-    return documentBundle.entry.find((entry: any) => entry.resource.meta.profile.includes(profile.Obs_MannerOfDeath)).resource;
+  // For singleton profiles, this function can be used to find the resource by the profile name. ID should be preferred whenever available.
+  findResourceByProfileName(documentBundle: any, profileName: string): any {
+    return documentBundle.entry.find((entry: any) => entry.resource.meta.profile.includes(profileName))?.resource || undefined;
   }
 
   // Find Death Location Resource (US Core Location Profile) through the Composition.section reference.
   findDeathLocation(documentBundle: any, compositionResource: any, circumstancesSection: any): any {
-    let deathLocationResourceId = (circumstancesSection.entry.find((entry: any) => entry.reference.startsWith("Location"))).reference;
-    let deathLocationResource = this.findResourceById(documentBundle, deathLocationResourceId);
+    let deathLocationResourceId = (circumstancesSection.entry.find((entry: any) => entry.reference.startsWith("Location")))?.reference || undefined;
     // TODO: Add handling for reference from death date?
-    return deathLocationResource;
+    return this.findResourceById(documentBundle, deathLocationResourceId);
   }
 
   // Filter Bundle Entries by Patient Resource.
@@ -188,7 +191,7 @@ export class DocumentHandlerService {
   getSocialSecurityNumber(patientResource: any): string {
     let identifierList = patientResource.identifier;
     let ssnIdentifier = (identifierList.filter((identifier: any) => identifier.system === "http://hl7.org/fhir/sid/us-ssn"))[0];
-    return ssnIdentifier?.value || "Unknown";
+    return ssnIdentifier?.value || this.defaultString;
   }
 
   // Get Race Text from Patient Extension
@@ -205,9 +208,4 @@ export class DocumentHandlerService {
     return textExtension?.valueString || "Unknown";
   }
 
-  // Get Death Location
-  getDeathLocation(documentBundle: any): string {
-    // TODO:
-    return ""
-  }
 }
