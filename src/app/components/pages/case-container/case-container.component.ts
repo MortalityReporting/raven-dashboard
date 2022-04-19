@@ -1,10 +1,7 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {MatDrawer} from "@angular/material/sidenav";
 import {FhirExplorerDrawerService} from "../../../service/fhir-explorer-drawer.service";
-import {FhirResourceProviderService} from "../../../service/fhir-resource-provider.service";
-import {Observable} from "rxjs";
-import {FhirResource} from "../../../model/fhir/fhir.resource";
 
 
 @Component({
@@ -12,20 +9,13 @@ import {FhirResource} from "../../../model/fhir/fhir.resource";
   templateUrl: './case-container.component.html',
   styleUrls: ['./case-container.component.css']
 })
-export class CaseContainerComponent implements OnInit, AfterViewInit {
+export class CaseContainerComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @ViewChild('resultViewerSidenav') public drawer: MatDrawer;
-
-  JSON: any; // TODO: For Testing, remove.
-  fhirResource$: Observable<FhirResource>; // TODO: For Testing, remove.
+  @ViewChild('drawer') public drawer: MatDrawer;
 
   constructor(private route: ActivatedRoute,
-              private fhirExplorerDrawerService: FhirExplorerDrawerService,
-              private fhirResourceProvider: FhirResourceProviderService
-  ) {
-    this.JSON = JSON; // TODO: For Testing, remove.
-    this.fhirResource$ = this.fhirResourceProvider.fhirResource$; // TODO: For Testing, remove.
-  }
+              private fhirExplorerDrawerService: FhirExplorerDrawerService
+  ) { }
 
   ngOnInit(): void {
     let subjectId = this.route.snapshot.params['id'];
@@ -33,6 +23,10 @@ export class CaseContainerComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.fhirExplorerDrawerService.setDrawer(this.drawer);
+  }
+
+  ngOnDestroy(): void {
+    this.fhirExplorerDrawerService.destroy();
   }
 
 }

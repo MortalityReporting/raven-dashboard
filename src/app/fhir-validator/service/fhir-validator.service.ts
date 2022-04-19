@@ -8,6 +8,9 @@ import {map} from "rxjs/operators";
 })
 export class FhirValidatorService {
 
+  private prodUri = "https://gt-apps.hdap.gatech.edu/HL7ValidatorService/fhir/Bundle/$validate";
+  private localhostUri = "http://127.0.0.1:8080/fhir/Bundle/$validate";
+
   constructor( private http: HttpClient) { }
 
   getUiValidationMessages(fhirResource: any, resourceFormat: string): string {
@@ -92,7 +95,7 @@ export class FhirValidatorService {
         }
       ]
     }
-    return this.http.post("http://127.0.0.1:8080/fhir/Bundle/$validate", requestData).pipe( map((result: any) => (
+    return this.http.post(this.prodUri, requestData).pipe( map((result: any) => (
       result as Object
     )));
   }

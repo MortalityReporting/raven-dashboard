@@ -28,6 +28,8 @@ import { LandingComponent } from './components/landing/landing.component';
 import { CaseContainerComponent } from './components/pages/case-container/case-container.component';
 import {FhirExplorerDrawerService} from "./service/fhir-explorer-drawer.service";
 import {MatExpansionModule} from '@angular/material/expansion';
+import { FhirExplorerComponent } from './components/fhir-explorer/fhir-explorer.component';
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 @NgModule({
   declarations: [
@@ -37,31 +39,33 @@ import {MatExpansionModule} from '@angular/material/expansion';
     CaseSummaryComponent,
     LandingComponent,
     CaseContainerComponent,
+    FhirExplorerComponent,
   ],
   imports: [
-      BrowserModule,
-      AppRoutingModule,
-      BrowserAnimationsModule,
-      MatFormFieldModule,
-      MatInputModule,
-      MatButtonModule,
-      ReactiveFormsModule,
-      MatIconModule,
-      MatSidenavModule,
-      MatToolbarModule,
-      MatTableModule,
-      MatPaginatorModule,
-      MatProgressSpinnerModule,
-      MatSortModule,
-      HttpClientModule,
-      MatRadioModule,
-      FormsModule,
-      MatCardModule,
-      MatSnackBarModule,
-      FhirValidatorModule,
-      MatGridListModule,
-      MatExpansionModule
-    ],
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatSortModule,
+    HttpClientModule,
+    MatRadioModule,
+    FormsModule,
+    MatCardModule,
+    MatSnackBarModule,
+    FhirValidatorModule,
+    MatGridListModule,
+    MatExpansionModule,
+    MatButtonToggleModule
+  ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: FhirAuthInterceptor, multi: true },
     FhirExplorerDrawerService

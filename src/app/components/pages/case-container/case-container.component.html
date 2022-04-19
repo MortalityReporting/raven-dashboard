@@ -1,26 +1,20 @@
-<mat-drawer-container>
-
+<mat-drawer-container autosize>
   <mat-drawer #drawer
               class="drawer"
               mode="side"
-              opened="true"
               position="end">
-
     <mat-toolbar class="header">
       <span class="content-spacer"></span>
       <mat-icon class="close" (click)="drawer.close()">close</mat-icon>
     </mat-toolbar>
 
     <div class="main contents">
-      drawer opened: {{drawer.opened}}
-      <div>Contents xxxxxx
-        <pre>{{ fhirResource$ | async | json }}</pre>
-      </div>
-      <div style="height: 1000px">&nbsp;</div>
+      <app-fhir-explorer></app-fhir-explorer>
     </div>
-
   </mat-drawer>
 
-  <app-case-summary></app-case-summary>
+  <mat-drawer-content>
+    <app-case-summary></app-case-summary>
+  </mat-drawer-content>
 
 </mat-drawer-container>

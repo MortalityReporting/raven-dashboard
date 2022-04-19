@@ -21,6 +21,9 @@
     </a>
 
     <span class="content-spacer"></span>
+    <a *ngIf="fhirExplorerDrawerService.isInstantiated();" mat-raised-button color="accent" (click)="onToggle()">
+      Toggle FHIR Explorer
+    </a>
 
     <a mat-button  [routerLink]="'/about'">
       About
