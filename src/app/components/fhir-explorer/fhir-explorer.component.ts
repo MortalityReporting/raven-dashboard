@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {DocumentHandlerService} from "../../service/document-handler.service";
 import {Observable} from "rxjs";
-import {CaseSummary} from "../../model/case-summary-models/case.summary";
+import {FhirResource} from "../../model/fhir/fhir.resource";
+import {FhirResourceProviderService} from "../../service/fhir-resource-provider.service";
 
 @Component({
   selector: 'app-fhir-explorer',
@@ -11,14 +12,20 @@ import {CaseSummary} from "../../model/case-summary-models/case.summary";
 export class FhirExplorerComponent implements OnInit {
 
   selectedStructure: string = 'json';
-  caseSummary$: Observable<CaseSummary>;
+
+  JSON: any; // TODO: For Testing, remove.
+  fhirResource$: Observable<FhirResource>; // TODO: For Testing, remove.
+
 
   constructor(
-    public documentHandler: DocumentHandlerService
-  ) { }
+    public documentHandler: DocumentHandlerService,
+    private fhirResourceProvider: FhirResourceProviderService
+  ) {
+    this.JSON = JSON; // TODO: For Testing, remove.
+    this.fhirResource$ = this.fhirResourceProvider.fhirResource$; // TODO: For Testing, remove.
+  }
 
   ngOnInit(): void {
-    this.caseSummary$ = this.documentHandler.caseSummary$;
   }
 
 }
