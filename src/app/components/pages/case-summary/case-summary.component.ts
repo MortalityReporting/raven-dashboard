@@ -14,7 +14,7 @@ import {MatAccordion} from "@angular/material/expansion";
   styleUrls: ['./case-summary.component.css']
 })
 export class CaseSummaryComponent implements OnInit {
-  @ViewChild(MatAccordion) accordian: MatAccordion;
+  @ViewChild(MatAccordion) accordion: MatAccordion;
 
   caseHeader$: Observable<CaseHeader>;
   caseSummary$: Observable<CaseSummary>;
