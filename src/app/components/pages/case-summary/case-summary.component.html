@@ -16,16 +16,49 @@
     Authors (DROP DOWN PLACEHOLDER)
   </mat-toolbar-row>
 </mat-toolbar>
-<mat-sidenav-container>
+<mat-sidenav-container [autosize]="autosize">
   <mat-sidenav mode="side" opened>
     <ul>
-      <li><mat-icon>person</mat-icon> Demographics</li>
-      <li><mat-icon>travel_explore</mat-icon> Circumstances</li>
-      <li><mat-icon>question_mark</mat-icon> Cause and Manner of Death</li>
-      <li><mat-icon>medical_services</mat-icon> Relevant Medical History</li>
-      <li><mat-icon>description</mat-icon> Exam and Autopsy Notes</li>
-      <li><mat-icon>speaker_notes</mat-icon> Narratives</li>
-      <li><mat-icon>assignment</mat-icon> Death Certificate</li>
+      <li>
+        <mat-icon>person</mat-icon>
+        <span *ngIf="sidenavExpanded"> Demographics</span>
+      </li>
+      <li>
+        <mat-icon>travel_explore</mat-icon>
+        <span *ngIf="sidenavExpanded"> Circumstances</span>
+      </li>
+      <li>
+        <mat-icon>question_mark</mat-icon>
+        <span *ngIf="sidenavExpanded"> Cause and Manner of Death</span>
+      </li>
+      <li>
+        <mat-icon>medical_services</mat-icon>
+        <span *ngIf="sidenavExpanded"> Relevant Medical History</span>
+      </li>
+      <li>
+        <mat-icon>description</mat-icon>
+        <span *ngIf="sidenavExpanded"> Exam and Autopsy Notes</span>
+      </li>
+      <li>
+        <mat-icon>speaker_notes</mat-icon>
+        <span *ngIf="sidenavExpanded"> Narratives</span>
+      </li>
+      <li>
+        <mat-icon>assignment</mat-icon> <span *ngIf="sidenavExpanded"> Death Certificate</span>
+      </li>
+      <hr/>
+      <li  *ngIf="sidenavExpanded" (click)="onSidenavResize(false);" matTooltip="Collapse Side Menu">
+        <mat-icon aria-label="Expand Side Menu"
+                  style="cursor: pointer">
+          chevron_left
+        </mat-icon> Collapse content
+      </li>
+      <li *ngIf="!sidenavExpanded" (click)="onSidenavResize(true);" matTooltip="Expand Side Menu">
+        <mat-icon  aria-label="Collapse Side Menu"
+                  style="cursor: pointer" >
+          chevron_right
+        </mat-icon>
+      </li>
     </ul>
   </mat-sidenav>
   <mat-sidenav-content>

@@ -17,6 +17,8 @@ export class CaseSummaryComponent implements OnInit {
   caseHeader$: Observable<CaseHeader>;
   caseSummary$: Observable<CaseSummary>;
   documentBundle$: Observable<any>;
+  sidenavExpanded = false;
+  autosize: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,5 +37,11 @@ export class CaseSummaryComponent implements OnInit {
 
     this.caseHeader$ = this.documentHandler.caseHeader$;
     this.caseSummary$ = this.documentHandler.caseSummary$;
+  }
+
+  onSidenavResize(expanded: boolean) {
+    this.sidenavExpanded = expanded;
+    this.autosize = true;
+    setTimeout(() => this.autosize = false, 1);
   }
 }
