@@ -19,7 +19,9 @@ button {
   padding: 5px;
 }
 
-
+.case-summary-content-wrapper {
+  padding: 20px;
+}
 /** Alias Table Styling **/
 .alias-table {
   width: 100%;
@@ -32,3 +34,4 @@ button {
   border: 1px black solid;
   padding: 5px;
 }
+
