@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {MatDrawer} from "@angular/material/sidenav";
+import {MatDrawer, MatDrawerMode} from "@angular/material/sidenav";
 import {FhirExplorerDrawerService} from "../../../service/fhir-explorer-drawer.service";
 
 
@@ -12,6 +12,8 @@ import {FhirExplorerDrawerService} from "../../../service/fhir-explorer-drawer.s
 export class CaseContainerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('drawer') public drawer: MatDrawer;
+  drawerMode : MatDrawerMode = 'side';
+  drawerWidth = "30%"
 
   constructor(private route: ActivatedRoute,
               private fhirExplorerDrawerService: FhirExplorerDrawerService
@@ -29,4 +31,7 @@ export class CaseContainerComponent implements OnInit, AfterViewInit, OnDestroy 
     this.fhirExplorerDrawerService.destroy();
   }
 
+  setDrawerWidth(drawerWidth: string): void {
+    this.drawerWidth = drawerWidth;
+  }
 }
