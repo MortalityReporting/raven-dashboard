@@ -1,22 +1,23 @@
 <mat-drawer-container hasBackdrop=false>
   <mat-drawer #drawer
               class="drawer"
-              [mode]="drawerMode"
+              mode="side"
               draggable="true"
               position="end"
               [ngStyle]="{'width': drawerWidth}">
     <mat-toolbar class="header">
-      <mat-icon (click)="setDrawerWidth('60%');" aria-label="Expand the fhir explorer"
-                style="cursor: pointer" matTooltip="Expand the FHIR Explorer">
+      <mat-icon *ngIf="drawerCollapsed" (click)="setDrawerWidth('60%');" aria-label="Expand FHIR explorer"
+                style="cursor: pointer" matTooltip="Expand FHIR Explorer">
         chevron_left
       </mat-icon>
-      <mat-icon (click)="setDrawerWidth('30%');" aria-label="Collapse the fhir explorer"
+      <mat-icon *ngIf="!drawerCollapsed" (click)="setDrawerWidth('30%');" aria-label="Collapse FHIR explorer"
                 style="cursor: pointer" matTooltip="Collapse the FHIR Explorer">
         chevron_right
       </mat-icon>
       <span class="content-spacer"></span>
-      <mat-icon (click)="setDrawerWidth('30%'); drawer.close()" aria-label="Close the fhir explorer"
-                style="cursor: pointer" matTooltip="Close the FHIR Explorer">
+      <mat-icon (click)="setDrawerWidth('30%'); drawer.close(); drawerCollapsed=true;"
+                aria-label="Close FHIR explorer"
+                style="cursor: pointer" matTooltip="Close FHIR Explorer">
         close
       </mat-icon>
     </mat-toolbar>
