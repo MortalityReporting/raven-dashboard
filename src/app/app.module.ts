@@ -32,6 +32,7 @@ import { FhirExplorerComponent } from './components/fhir-explorer/fhir-explorer.
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import { CaseSummaryContentComponent } from './components/pages/case-summary/case-summary-content/case-summary-content.component';
 import { SetFhirExplorerDirective } from './directives/set-fhir-explorer.directive';
+import { CaseSummaryContentFieldComponent } from './components/pages/case-summary/case-summary-content-field/case-summary-content-field.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { SetFhirExplorerDirective } from './directives/set-fhir-explorer.directi
     FhirExplorerComponent,
     CaseSummaryContentComponent,
     SetFhirExplorerDirective,
+    CaseSummaryContentFieldComponent,
   ],
   imports: [
     BrowserModule,
