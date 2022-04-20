@@ -15,6 +15,7 @@ import {
   Obs_TobaccoUseContributedToDeath
 } from "../model/mdi/profile.list"
 import {FhirResourceProviderService} from "./fhir-resource-provider.service";
+import {FhirResource} from "../model/fhir/fhir.resource";
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,10 @@ export class DocumentHandlerService {
 
   private subjectId: string;
   private defaultString: string = "VALUE NOT FOUND";
+
+  // TODO: Refactor this in conjunction with directive.
+  private currentDocumentBundle: any;
+  private currentCompositionResource: any;
 
   private caseHeader = new Subject<CaseHeader>();
   caseHeader$ = this.caseHeader.asObservable();
@@ -34,8 +39,9 @@ export class DocumentHandlerService {
   getDocumentBundle(compositionId: string) {
     return this.http.get(this.decedentService.getFhirServerBaseURL() + "Composition/" + compositionId + "/$document").pipe(
       map((documentBundle: any) => {
-        console.log(documentBundle)
+        this.currentDocumentBundle = documentBundle;
         let compositionResource = this.findResourceById(documentBundle, "Composition/" + compositionId);
+        this.currentCompositionResource = compositionResource;
         this.subjectId = compositionResource.subject.reference
         let patientResource = this.findResourceById(documentBundle, this.subjectId);
         this.caseHeader.next(this.createCaseHeader(documentBundle, patientResource, compositionResource));
@@ -55,7 +61,8 @@ export class DocumentHandlerService {
     let genderString = patientResource.gender || this.defaultString;
     caseHeader.gender = genderString.substring(0,1).toUpperCase() + genderString.substring(1);
     let deathDateResource = this.findResourceByProfileName(documentBundle, Obs_DeathDate);
-    let splitDateTime = deathDateResource.valueDateTime.split("T"); //TODO: Add more handling to this for other forms of dateTime?
+    console.log(deathDateResource);
+    let splitDateTime = deathDateResource?.valueDateTime?.split("T") || []; //TODO: Add more handling to this for other forms of dateTime?
     caseHeader.deathDate = splitDateTime[0] || this.defaultString;
     caseHeader.deathTime = splitDateTime[1] || this.defaultString;
     caseHeader.trackingNumber = this.getTrackingNumber(compositionResource);
@@ -98,7 +105,7 @@ export class DocumentHandlerService {
 
   generateCircumstances(documentBundle: any, compositionResource: any): Circumstances {
     let circumstances: Circumstances = new Circumstances();
-    let circumstancesSection = compositionResource.section.find((section: any) => section.code.coding.some((coding: any) => coding.code === "circumstances"));
+    let circumstancesSection = this.getSection(compositionResource, "circumstances");
 
     let deathLocationResource = this.findDeathLocation(documentBundle, compositionResource, circumstancesSection);
     circumstances.deathLocation = deathLocationResource?.name || this.defaultString;
@@ -117,7 +124,7 @@ export class DocumentHandlerService {
 
     // TODO: Refactor this to use section and no index, and pull from term server instead of relying on display.
     causeAndManner.mannerOfDeath = this.findResourceByProfileName(documentBundle, Obs_MannerOfDeath)?.valueCodeableConcept?.coding[0]?.display || this.defaultString;
-    causeAndManner.howDeathInjuryOccurred = this.findResourceByProfileName(documentBundle, Obs_HowDeathInjuryOccurred).valueString;
+    causeAndManner.howDeathInjuryOccurred = this.findResourceByProfileName(documentBundle, Obs_HowDeathInjuryOccurred)?.valueString || this.defaultString;
     return causeAndManner;
   }
 
@@ -126,17 +133,17 @@ export class DocumentHandlerService {
   // -------------------------
 
   // This function should be used whenever possible to go off of absolute references to the full URL within the Document Bundle.
-  findResourceById(documentBundle: any, resourceId: string): any {
+  findResourceById(documentBundle: any = this.currentDocumentBundle, resourceId: string): any {
     return (documentBundle.entry.find((entry: any) => entry.fullUrl === resourceId))?.resource || undefined;
   }
 
   // For singleton profiles, this function can be used to find the resource by the profile name. ID should be preferred whenever available.
-  findResourceByProfileName(documentBundle: any, profileName: string): any {
+  findResourceByProfileName(documentBundle: any = this.currentDocumentBundle, profileName: string): any {
     return documentBundle.entry.find((entry: any) => entry.resource.meta.profile.includes(profileName))?.resource || undefined;
   }
 
   // Find Death Location Resource (US Core Location Profile) through the Composition.section reference.
-  findDeathLocation(documentBundle: any, compositionResource: any, circumstancesSection: any): any {
+  findDeathLocation(documentBundle: any = this.currentDocumentBundle, compositionResource: any, circumstancesSection: any): any {
     let deathLocationResourceId = (circumstancesSection.entry.find((entry: any) => entry.reference.startsWith("Location")))?.reference || undefined;
     // TODO: Add handling for reference from death date?
     return this.findResourceById(documentBundle, deathLocationResourceId);
@@ -150,6 +157,15 @@ export class DocumentHandlerService {
   // Filter Bundle Entries by Observation Resource.
   filterObservationResources(documentBundle: any): any {
     return documentBundle.entry.filter((entry: any) => entry.resource.resourceType === "Observation");
+  }
+
+  // -------------------------
+  // Get Sections
+  // -------------------------
+
+  getSection(compositionResource: any = this.currentCompositionResource, sectionName: string): any {
+    console.log(compositionResource);
+    return compositionResource.section.find((section: any) => section.code.coding.some((coding: any) => coding.code === sectionName));
   }
 
   // -------------------------

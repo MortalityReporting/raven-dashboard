@@ -30,6 +30,8 @@ import {FhirExplorerDrawerService} from "./service/fhir-explorer-drawer.service"
 import {MatExpansionModule} from '@angular/material/expansion';
 import { FhirExplorerComponent } from './components/fhir-explorer/fhir-explorer.component';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import { CaseSummaryContentComponent } from './components/pages/case-summary/case-summary-content/case-summary-content.component';
+import { SetFhirExplorerDirective } from './directives/set-fhir-explorer.directive';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
     LandingComponent,
     CaseContainerComponent,
     FhirExplorerComponent,
+    CaseSummaryContentComponent,
+    SetFhirExplorerDirective,
   ],
   imports: [
     BrowserModule,

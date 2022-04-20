@@ -16,8 +16,6 @@ export class FhirResourceProviderService {
   }
 
   setSelectedFhirResource(fhirResource: any) {
-    console.log("Setting Selected FHIR Resource...");
-    console.log(fhirResource);
     this.fhirResource.next(fhirResource);
   }
 }
