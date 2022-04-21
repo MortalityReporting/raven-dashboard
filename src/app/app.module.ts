@@ -33,6 +33,7 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import { CaseSummaryContentComponent } from './components/pages/case-summary/case-summary-content/case-summary-content.component';
 import { SetFhirExplorerDirective } from './directives/set-fhir-explorer.directive';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { CaseSummaryContentFieldComponent } from './components/pages/case-summary/case-summary-content-field/case-summary-content-field.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     FhirExplorerComponent,
     CaseSummaryContentComponent,
     SetFhirExplorerDirective,
+    CaseSummaryContentFieldComponent,
   ],
   imports: [
     BrowserModule,

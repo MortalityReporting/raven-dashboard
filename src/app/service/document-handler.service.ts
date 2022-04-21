@@ -226,4 +226,8 @@ export class DocumentHandlerService {
     return textExtension?.valueString || "Unknown";
   }
 
+  getCurrentSubjectResource(): any {
+    return this.findResourceById(undefined, this.subjectId);
+  }
+
 }

@@ -11,13 +11,34 @@
         <mat-panel-title>Demographics</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="summary-section-body">
-        SSN: <input type="text" value="{{ (caseSummary$ | async)?.demographics.ssn}}" readonly><br/>
-        Other Identifiers: <br/>
-        Gender: <input type="text" value="{{ (caseSummary$ | async)?.demographics.gender}}" readonly><br/>
-        Date of Birth: <input type="text" value="{{ (caseSummary$ | async)?.demographics.birthDate}}" readonly><br/>
-        Race: <input type="text" value="{{ (caseSummary$ | async)?.demographics.race}}" readonly><br/>
-        Ethnicity: <input type="text" value="{{ (caseSummary$ | async)?.demographics.ethnicity}}" readonly><br/>
-        Aliases:
+        <div class="summary-section-grid">
+          <div class="grid-row">
+            <div class="grid-col-1">
+              <app-case-summary-content-field [label]="'Social Security Number'" [value]="(caseSummary$ | async)?.demographics.ssn" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
+            </div>
+            <div class="grid-col-1">
+              (TODO: Other Identifiers Here)
+            </div>
+          </div>
+          <div class="grid-row">
+            <div class="grid-col-1">
+              <app-case-summary-content-field [label]="'Gender'" [value]="(caseSummary$ | async)?.demographics.gender" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
+            </div>
+            <div class="grid-col-1">
+              <app-case-summary-content-field [label]="'Date of Birth'" [value]="(caseSummary$ | async)?.demographics.birthDate" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
+            </div>
+          </div>
+          <div class="grid-row">
+            <div class="grid-col-1">
+              <app-case-summary-content-field [label]="'Race'" [value]="(caseSummary$ | async)?.demographics.race" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
+            </div>
+            <div class="grid-col-1">
+              <app-case-summary-content-field [label]="'Ethnicity'" [value]="(caseSummary$ | async)?.demographics.ethnicity" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
+            </div>
+          </div>
+        </div>
+
+        Aliases: (TODO: Implement Component for Alias Table)
         <table class="alias-table">
           <tr>
             <th>Given Name(s)</th>
@@ -40,18 +61,34 @@
             </td>
           </tr>
         </table>
-        Occupation History:
+        Occupation History: (TODO: Implement Component for Occupation Table)
       </div>
     </mat-expansion-panel>
+
     <mat-expansion-panel class="summary-section" id="circumstances" [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>Circumstances</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="summary-section-body">
-        Death Location: <input type="text" value="{{ (caseSummary$ | async)?.circumstances.deathLocation}}" readonly appSetFhirExplorer [title]="'deathLocation'"><br/>
-        Injury at Work: <input type="text" value="{{ (caseSummary$ | async)?.circumstances.workInjury}}" readonly appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-injury-at-work'"><br/>
-        Tobacco Use Contributed to Death: <input type="text" value="{{ (caseSummary$ | async)?.circumstances.tobaccoUseContributed}}" readonly><br/>
-        Decedent Pregnancy Status: <input type="text" value="{{ (caseSummary$ | async)?.circumstances.pregnancy}}" readonly><br/>
+
+        <div class="summary-section-grid">
+          <div class="grid-row">
+            <div class="grid-col-1">
+              <app-case-summary-content-field [label]="'Death Location'" [value]="(caseSummary$ | async)?.circumstances.deathLocation" appSetFhirExplorer [title]="'deathLocation'"></app-case-summary-content-field>
+            </div>
+            <div class="grid-col-1">
+              <app-case-summary-content-field [label]="'Injury/Event Occurred at Work'" [value]="(caseSummary$ | async)?.circumstances.workInjury" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-injury-at-work'"></app-case-summary-content-field>
+            </div>
+          </div>
+          <div class="grid-row">
+            <div class="grid-col-1">
+              <app-case-summary-content-field [label]="'Tobacco Use Contributed to Death'" [value]="(caseSummary$ | async)?.circumstances.tobaccoUseContributed" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-tobacco-use-contributed-to-death'"></app-case-summary-content-field>
+            </div>
+            <div class="grid-col-1">
+              <app-case-summary-content-field [label]="'Decedent Pregnancy Status'" [value]="(caseSummary$ | async)?.circumstances.pregnancy" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-decedent-pregnancy'"></app-case-summary-content-field>
+            </div>
+          </div>
+        </div>
       </div>
     </mat-expansion-panel>
     <mat-expansion-panel class="summary-section" id="causeAndManner" [expanded]="true">
@@ -59,10 +96,19 @@
         <mat-panel-title>Cause and Manner of Death</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="summary-section-body">
+        <div class="summary-section-grid">
+          <div class="grid-row">
+            <div class="grid-col-1">
+              <app-case-summary-content-field [label]="'Manner of Death'" [value]="(caseSummary$ | async)?.causeAndManner.mannerOfDeath" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-manner-of-death'"></app-case-summary-content-field>
+            </div>
+            <div class="grid-col-1">
+              <app-case-summary-content-field [label]="'How Death Injury Occurred'" [value]="(caseSummary$ | async)?.causeAndManner.howDeathInjuryOccurred" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"></app-case-summary-content-field>
+            </div>
+          </div>
+        </div>
+
         Cause of Death Pathway: <br/>
         Conditions Contributing to Death: <br/>
-        Manner of Death: <input type="text" value="{{ (caseSummary$ | async)?.causeAndManner.mannerOfDeath}}" readonly><br/>
-        How Death Injury Occurred: <input type="text" value="{{ (caseSummary$ | async)?.causeAndManner.howDeathInjuryOccurred}}" readonly><br/>
       </div>
     </mat-expansion-panel>
     <mat-expansion-panel class="summary-section" id="medicalHistory">

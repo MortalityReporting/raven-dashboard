@@ -22,6 +22,29 @@ button {
 .case-summary-content-wrapper {
   padding: 20px;
 }
+
+.summary-section-grid {
+}
+
+.summary-section-grid .grid-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.summary-section-grid .grid-col-1 {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.summary-section-grid .grid-col-2 {
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+}
+
 /** Alias Table Styling **/
 .alias-table {
   width: 100%;

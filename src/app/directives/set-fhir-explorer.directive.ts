@@ -23,6 +23,9 @@ export class SetFhirExplorerDirective {
           let deathLocationResource = this.documentHandler.findDeathLocation(undefined, undefined, circumstancesSection);
           this.fhirResourceProvider.setSelectedFhirResource(deathLocationResource);
           break;
+        case "subject":
+          this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.getCurrentSubjectResource());
+          break;
       }
     }
   }
