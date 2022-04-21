@@ -39,7 +39,8 @@
         </mat-select>
       </mat-form-field>
 
-      <span style="margin-left: 1em">
+      <!--TODO we need to decided if we want to show the link to the profiles here-->
+      <span *ngIf=false style="margin-left: 1em">
         <button [disabled]="!selectedProfile" mat-mini-fab color="primary" aria-label="Go to profile url."
           (click)="onSelectedProfileLink(selectedProfile)">
           <mat-icon>link</mat-icon>
@@ -132,6 +133,9 @@
               <mat-icon *ngIf="validationResultItem.severity === 'Warning'"
                         class="warning-color">warning
               </mat-icon>
+              <mat-icon *ngIf="validationResultItem.severity === 'Information'"
+                        class="success-color">info
+              </mat-icon>
             </td>
           </ng-container>
 
@@ -178,6 +182,7 @@
       </div>
 
       <!--Errors and warning highlights in the actual resource-->
+      <button mat-button (click)="onFilterResults('Warning')">Filter</button>
       <div class="top-spacer">
         <pre style="width: 100%">
           <div class="validator-response" style="border-style: solid; border-width: thin;" [innerHTML]="parsedFhirResource">

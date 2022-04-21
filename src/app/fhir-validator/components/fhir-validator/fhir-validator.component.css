@@ -66,14 +66,6 @@ textarea {
   text-align:right;
 }
 
-.warning-mark {
-  background-color: #fff2cc;
-}
-
-.error-mark {
-  background-color: #ffcccc;
-}
-
 pre {
   white-space: pre-wrap;
 }
