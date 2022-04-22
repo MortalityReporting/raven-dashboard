@@ -72,7 +72,7 @@ export class FhirValidatorService {
     return formatted.substring(1, formatted.length-3);
   }
 
-  validateFhirResource(fhirResource: any, resourceFormat: string , selectedProfile: any):  Observable<any> {
+  validateFhirResourceTemp(fhirResource: any, resourceFormat: string , selectedProfile: any):  Observable<any> {
 
    const requestData = {
       "resourceType": "Parameters",
@@ -95,7 +95,13 @@ export class FhirValidatorService {
         }
       ]
     }
-    return this.http.post(this.prodUri, requestData).pipe( map((result: any) => (
+    return this.http.post(this.localhostUri, requestData).pipe( map((result: any) => (
+      result as Object
+    )));
+  }
+
+  validateFhirResource(fhirResource: any, resourceFormat: string , selectedProfile: any):  Observable<any> {
+    return this.http.get('./assets/data/validator-response.json').pipe( map((result: any) => (
       result as Object
     )));
   }

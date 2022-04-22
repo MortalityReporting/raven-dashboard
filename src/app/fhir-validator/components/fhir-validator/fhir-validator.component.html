@@ -109,6 +109,26 @@
 
     <div *ngIf="hasBackendValidationErrors && !isLoading">
       <div class="top-spacer">
+        <div (click)="onFilterResults()">
+          <mat-button-toggle-group name="severity level filter" [formControl]="severityLevel"
+                                   aria-label="severity level filter" multiple style="width: 100%">
+            <mat-button-toggle style="width: 33%" value="error">
+              <mat-icon class="danger-color">error</mat-icon>
+              Error
+            </mat-button-toggle>
+            <mat-button-toggle style="width: 33%" value="warning">
+              <mat-icon class="warning-color">warning</mat-icon>
+              Warning
+            </mat-button-toggle>
+            <mat-button-toggle style="width: 34%" value="info">
+              <mat-icon class="success-color">info</mat-icon>
+              Info
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+        <div>
+         Level Selected{{ severityLevel.value }}
+        </div>
 
         <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
 
@@ -181,8 +201,6 @@
 
       </div>
 
-      <!--Errors and warning highlights in the actual resource-->
-      <button mat-button (click)="onFilterResults('Warning')">Filter</button>
       <div class="top-spacer">
         <pre style="width: 100%">
           <div class="validator-response" style="border-style: solid; border-width: thin;" [innerHTML]="parsedFhirResource">

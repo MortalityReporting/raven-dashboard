@@ -97,11 +97,11 @@ td , th {
 }
 
 #location-column-header {
-  min-width:100px
+  min-width:200px
 }
 
 #severity-column-header {
-  min-width:80px
+  min-width: 300px
 }
 
 table {

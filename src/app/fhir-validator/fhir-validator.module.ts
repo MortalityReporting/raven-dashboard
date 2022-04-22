@@ -21,6 +21,7 @@ import {MatRadioModule} from "@angular/material/radio";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {ValidatorConstants} from "./providers/validator-constants";
 import {MatSelectModule} from "@angular/material/select";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 
 
@@ -29,29 +30,30 @@ import {MatSelectModule} from "@angular/material/select";
     declarations: [
         FhirValidatorComponent
     ],
-    imports: [
-        CommonModule,
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        ReactiveFormsModule,
-        MatIconModule,
-        MatSidenavModule,
-        MatToolbarModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatProgressSpinnerModule,
-        MatSortModule,
-        HttpClientModule,
-        MatRadioModule,
-        FormsModule,
-        MatCardModule,
-        MatSnackBarModule,
-        MatSelectModule,
-    ],
+  imports: [
+    CommonModule,
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatSortModule,
+    HttpClientModule,
+    MatRadioModule,
+    FormsModule,
+    MatCardModule,
+    MatSnackBarModule,
+    MatSelectModule,
+    MatButtonToggleModule,
+  ],
     exports: [
         FhirValidatorComponent
     ],
