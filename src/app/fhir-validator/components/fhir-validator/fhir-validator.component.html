@@ -110,7 +110,7 @@
     <div *ngIf="hasBackendValidationErrors && !isLoading">
       <div class="top-spacer">
         <div (click)="onFilterResults()">
-          <mat-button-toggle-group name="severity level filter" [formControl]="severityLevel"
+          <mat-button-toggle-group name="severity level filter" [formControl]="selectedSeverityLevel"
                                    aria-label="severity level filter" multiple style="width: 100%">
             <mat-button-toggle style="width: 33%" value="error">
               <mat-icon class="danger-color">error</mat-icon>
@@ -126,11 +126,12 @@
             </mat-button-toggle>
           </mat-button-toggle-group>
         </div>
-        <div>
-         Level Selected{{ severityLevel.value }}
+
+        <div  *ngIf="selectedSeverityLevel.value.length === 0">
+         Please select severity level to see the result.
         </div>
 
-        <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
+        <table mat-table [dataSource]="dataSource" multiTemplateDataRows *ngIf="selectedSeverityLevel.value.length > 0">
 
           <ng-container matColumnDef="toggle">
             <th mat-header-cell *matHeaderCellDef (click)="toggle()">

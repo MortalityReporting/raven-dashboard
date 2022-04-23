@@ -43,7 +43,7 @@ export class FhirValidatorComponent implements OnInit {
   apiErrorResponse: any = [];
   selectedProfile: any;
   allExpanded = true;
-  severityLevel = new FormControl();
+  selectedSeverityLevel = new FormControl(['warning', 'info', 'error']);
   dataSource = new MatTableDataSource(
     [
       {
@@ -337,8 +337,8 @@ export class FhirValidatorComponent implements OnInit {
   }
 
   onFilterResults() {
-    console.log(this.severityLevel.value);
-    this.dataSource.filter = this.severityLevel.value.join(',');
+    console.log(this.selectedSeverityLevel.value);
+    this.dataSource.filter = this.selectedSeverityLevel.value.join(',');
   }
 
   private getFilterPredicate() {
