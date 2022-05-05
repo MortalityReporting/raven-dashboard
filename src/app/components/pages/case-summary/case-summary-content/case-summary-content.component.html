@@ -30,6 +30,13 @@
           </div>
           <div class="grid-row">
             <div class="grid-col-1">
+              <app-case-summary-content-field [label]="'Marital Status'" [value]="(caseSummary$ | async)?.demographics.maritalStatus" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
+            </div>
+            <div class="grid-col-1">
+            </div>
+          </div>
+          <div class="grid-row">
+            <div class="grid-col-1">
               <app-case-summary-content-field [label]="'Race'" [value]="(caseSummary$ | async)?.demographics.race" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
             </div>
             <div class="grid-col-1">

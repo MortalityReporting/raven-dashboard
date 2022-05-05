@@ -19,6 +19,7 @@ export class Demographics {
   identifiers: Identifier[]; // Other non-SSN Identifiers present
   race: string; // TODO: Setup FHIR Type
   ethnicity: string; // TODO: Setup FHIR Type
+  maritalStatus: string;
   usualWork: UsualWork;
 }
 

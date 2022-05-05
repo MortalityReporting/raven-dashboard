@@ -88,6 +88,7 @@ export class DocumentHandlerService {
     demographics.aliases = patientResource.name || this.defaultString;
     demographics.gender = patientResource.gender || this.defaultString;
     demographics.birthDate = patientResource.birthDate || this.defaultString;
+    demographics.maritalStatus = patientResource.maritalStatus || this.defaultString;
 
     // Setup Identifiers
     demographics.ssn = this.getSocialSecurityNumber(patientResource);
