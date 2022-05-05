@@ -145,7 +145,7 @@ export class DocumentHandlerService {
 
   // Find Death Location Resource (US Core Location Profile) through the Composition.section reference.
   findDeathLocation(documentBundle: any = this.currentDocumentBundle, compositionResource: any, circumstancesSection: any): any {
-    let deathLocationResourceId = (circumstancesSection.entry.find((entry: any) => entry.reference.startsWith("Location")))?.reference || undefined;
+    let deathLocationResourceId = (circumstancesSection?.entry?.find((entry: any) => entry.reference.startsWith("Location")))?.reference || undefined;
     // TODO: Add handling for reference from death date?
     return this.findResourceById(documentBundle, deathLocationResourceId);
   }
@@ -177,14 +177,14 @@ export class DocumentHandlerService {
   getTrackingNumber(compositionResource: any): TrackingNumber {
     let trackingNumber = new TrackingNumber();
     let extensions = compositionResource.extension;
-    let trackingNumberExtension = extensions.find((extension: any) => extension.url === "http://hl7.org/fhir/us/mdi/StructureDefinition/Extension-tracking-number");
+    let trackingNumberExtension = extensions?.find((extension: any) => extension.url === "http://hl7.org/fhir/us/mdi/StructureDefinition/Extension-tracking-number");
     let valueIdentifier = trackingNumberExtension?.valueIdentifier;
-    trackingNumber.value = valueIdentifier.value || "Tracking Number Not Specified";
+    trackingNumber.value = valueIdentifier?.value || "Tracking Number Not Specified";
 
     if (valueIdentifier?.type?.text) {
       trackingNumber.type = valueIdentifier.type.text;
     }
-    else if (valueIdentifier.type?.coding[0].code) {
+    else if (valueIdentifier?.type?.coding[0].code) {
       let code = valueIdentifier.type?.coding[0].code;
       trackingNumber.type = this.terminologyService.mapMdiCodeToDisplay(code);
     }
@@ -197,12 +197,17 @@ export class DocumentHandlerService {
   // Build a full name from Patient official use name
   getPatientOfficialName(patientResource: any): string {
     let nameList = patientResource.name;
-    let firstOfficialName = (nameList.filter((humanName: any) => humanName.use === "official"))[0];
+    let firstOrOfficialName = (nameList.filter((humanName: any) => humanName.use === "official"))[0];
+
+    // If No Official Name is Found, use First HumanName in List
+    if (firstOrOfficialName === undefined) {
+      firstOrOfficialName = nameList[0]
+    }
     let fullName = "";
-    firstOfficialName.given.forEach((name: any) => {
+    firstOrOfficialName.given.forEach((name: any) => {
       fullName = fullName + name + " "
     });
-    fullName = fullName + firstOfficialName.family;
+    fullName = fullName + firstOrOfficialName.family;
     return fullName;
   }
 
