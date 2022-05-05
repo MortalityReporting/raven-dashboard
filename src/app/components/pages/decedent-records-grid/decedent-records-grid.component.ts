@@ -36,7 +36,7 @@ export class DecedentRecordsGridComponent implements OnInit {
     decedentDTO.firstName = entry.resource?.name[0]?.given[0];
     decedentDTO.lastName = entry.resource?.name[0]?.family;
     decedentDTO.gender = entry.resource?.gender;
-    decedentDTO.system = entry.resource?.identifier[0]?.system;
+    decedentDTO.system = entry.resource?.identifier[0]?.system || null;
     decedentDTO.age = this.getAgeFromDob(new Date(entry.resource?.birthDate));
     return decedentDTO;
   }
@@ -52,7 +52,7 @@ export class DecedentRecordsGridComponent implements OnInit {
             this.decedentService.getDecedentConditionRecords(decedentRecord).pipe(
               map((observation: any) => {
                 decedentRecord = this.mapToDto(decedentRecord);
-                decedentRecord.tod = observation?.entry[0]?.resource?.effectiveDateTime;
+                decedentRecord.tod = observation?.entry ? observation?.entry[0]?.resource?.effectiveDateTime : null;
                 decedentRecord.index = i + 1;
                 return decedentRecord;
               })
