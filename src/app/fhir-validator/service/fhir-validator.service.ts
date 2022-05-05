@@ -8,7 +8,8 @@ import {map} from "rxjs/operators";
 })
 export class FhirValidatorService {
 
-  private prodUri = "https://gt-apps.hdap.gatech.edu/HL7ValidatorService/fhir/Bundle/$validate";
+  private prodUri = "https://gt-apps.hdap.gatech.edu/HL7ValidatorService/fhir";
+ // private prodUri = "https://gt-apps.hdap.gatech.edu/HL7ValidatorService/fhir/Bundle/$validate";
   private localhostUri = "http://127.0.0.1:8080/fhir/Bundle/$validate";
 
   constructor( private http: HttpClient) { }
@@ -72,7 +73,7 @@ export class FhirValidatorService {
     return formatted.substring(1, formatted.length-3);
   }
 
-  validateFhirResourceTemp(fhirResource: any, resourceFormat: string , selectedProfile: any):  Observable<any> {
+  validateFhirResourceOldRev(fhirResource: any, resourceFormat: string , selectedProfile: any):  Observable<any> {
 
    const requestData = {
       "resourceType": "Parameters",
@@ -100,8 +101,32 @@ export class FhirValidatorService {
     )));
   }
 
-  validateFhirResource(fhirResource: any, resourceFormat: string , selectedProfile: any):  Observable<any> {
+  validateFhirResourceTemp(fhirResource: any, resourceFormat: string , selectedProfile: any):  Observable<any> {
     return this.http.get('./assets/data/validator-response.json').pipe( map((result: any) => (
+      result as Object
+    )));
+  }
+
+  validateFhirResource(fhirResource: any, resourceFormat: string , selectedProfile: any):  Observable<any> {
+
+    const requestData = {
+      "resourceType": "Parameters",
+      "parameter": [
+        {
+          "name": "ig",
+          "valueString": "hl7.fhir.us.mdi#current"
+        },
+        {
+          "name": "format",
+          "valueString": resourceFormat
+        },
+        {
+          "name": "resource",
+          "resource": fhirResource,
+        }
+      ]
+    }
+    return this.http.post(this.prodUri + '/'+ fhirResource.resourceType + "/$validate", requestData).pipe( map((result: any) => (
       result as Object
     )));
   }
