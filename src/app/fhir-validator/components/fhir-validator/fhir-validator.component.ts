@@ -43,7 +43,7 @@ export class FhirValidatorComponent implements OnInit {
   apiErrorResponse: any = [];
   selectedProfile: any;
   allExpanded = true;
-  selectedSeverityLevel = new FormControl(['warning', 'info', 'error']);
+  selectedSeverityLevel = new FormControl(['warning', 'error']);
   dataSource = new MatTableDataSource(
     [
       {
