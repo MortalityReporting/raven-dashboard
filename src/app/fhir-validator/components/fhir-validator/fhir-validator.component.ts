@@ -283,6 +283,7 @@ export class FhirValidatorComponent implements OnInit {
     this.isLoading = true;
     this.parsedFhirResource = null;
     this.apiErrorResponse = null;
+    fhirResource = JSON.parse(fhirResource);
     this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat, selectedProfile).subscribe({
       next: (response) => {
         if(false){ //TODO we still don't know exactly what a valid fhir resource response looks like
@@ -337,7 +338,6 @@ export class FhirValidatorComponent implements OnInit {
   }
 
   onFilterResults() {
-    console.log(this.selectedSeverityLevel.value);
     this.dataSource.filter = this.selectedSeverityLevel.value.join(',');
   }
 
