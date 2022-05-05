@@ -45,7 +45,7 @@ import { CaseSummaryContentFieldComponent } from './components/pages/case-summar
     FhirExplorerComponent,
     CaseSummaryContentComponent,
     SetFhirExplorerDirective,
-    CaseSummaryContentFieldComponent,
+    CaseSummaryContentFieldComponent
   ],
   imports: [
     BrowserModule,
