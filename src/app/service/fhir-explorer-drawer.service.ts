@@ -25,4 +25,13 @@ export class FhirExplorerDrawerService {
   public toggle(): void {
     this.drawer.toggle();
   }
+
+  public isInstantiated(): boolean{
+    return !!this.drawer;
+  }
+
+  public destroy() {
+    this.drawer = null;
+  }
+
 }

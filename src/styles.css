@@ -78,6 +78,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background-color: #ffcccc;
 }
 
+.info-mark {
+  background-color: #dcedc8;
+}
+
 /* Color Shades */
 .primary-light {
   background-color: #9fa8da;

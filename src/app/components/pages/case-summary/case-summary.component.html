@@ -2,7 +2,9 @@
   <mat-toolbar-row class="primary-light">
     Subject Name: <input type="text" value="{{ (caseHeader$ | async)?.fullName}}" readonly>
     <span class="content-spacer"> </span>
-    Date/Time of Death: <input type="text" value="{{ (caseHeader$ | async)?.deathDate}}" readonly>
+    Date/Time of Death:
+    <input type="text" value="{{ (caseHeader$ | async)?.deathDate}}" readonly>
+    <input type="text" value="{{ (caseHeader$ | async)?.deathTime}}" readonly>
     <span class="content-spacer"> </span>
     Gender: <input type="text" value="{{ (caseHeader$ | async)?.gender}}" readonly>
   </mat-toolbar-row>
@@ -14,111 +16,52 @@
     Authors (DROP DOWN PLACEHOLDER)
   </mat-toolbar-row>
 </mat-toolbar>
-<mat-sidenav-container>
+<mat-sidenav-container [autosize]="autosize">
   <mat-sidenav mode="side" opened>
     <ul>
-      <li><mat-icon>person</mat-icon> Demographics</li>
-      <li><mat-icon>travel_explore</mat-icon> Circumstances</li>
-      <li><mat-icon>question_mark</mat-icon> Cause and Manner of Death</li>
-      <li><mat-icon>medical_services</mat-icon> Relevant Medical History</li>
-      <li><mat-icon>description</mat-icon> Exam and Autopsy Notes</li>
-      <li><mat-icon>speaker_notes</mat-icon> Narratives</li>
-      <li><mat-icon>assignment</mat-icon> Death Certificate</li>
+      <li>
+        <mat-icon>person</mat-icon>
+        <span *ngIf="sidenavExpanded"> Demographics</span>
+      </li>
+      <li>
+        <mat-icon>travel_explore</mat-icon>
+        <span *ngIf="sidenavExpanded"> Circumstances</span>
+      </li>
+      <li>
+        <mat-icon>question_mark</mat-icon>
+        <span *ngIf="sidenavExpanded"> Cause and Manner of Death</span>
+      </li>
+      <li>
+        <mat-icon>medical_services</mat-icon>
+        <span *ngIf="sidenavExpanded"> Relevant Medical History</span>
+      </li>
+      <li>
+        <mat-icon>description</mat-icon>
+        <span *ngIf="sidenavExpanded"> Exam and Autopsy Notes</span>
+      </li>
+      <li>
+        <mat-icon>speaker_notes</mat-icon>
+        <span *ngIf="sidenavExpanded"> Narratives</span>
+      </li>
+      <li>
+        <mat-icon>assignment</mat-icon> <span *ngIf="sidenavExpanded"> Death Certificate</span>
+      </li>
+      <hr/>
+      <li  *ngIf="sidenavExpanded" (click)="onSidenavResize(false);" matTooltip="Collapse Side Menu">
+        <mat-icon aria-label="Expand Side Menu"
+                  style="cursor: pointer">
+          chevron_left
+        </mat-icon> Collapse content
+      </li>
+      <li *ngIf="!sidenavExpanded" (click)="onSidenavResize(true);" matTooltip="Expand Side Menu">
+        <mat-icon  aria-label="Collapse Side Menu"
+                  style="cursor: pointer" >
+          chevron_right
+        </mat-icon>
+      </li>
     </ul>
   </mat-sidenav>
   <mat-sidenav-content>
-    <div class="container">
-      <div class="section-button-wrapper">
-        <span class="content-spacer"></span>
-        <button mat-flat-button color="primary" (click)="accordian.openAll()">Expand All Sections</button>
-        <button mat-flat-button color="primary" (click)="accordian.closeAll()">Collapse All Sections</button>
-        <span class="content-spacer"></span>
-      </div>
-      <mat-accordion multi>
-        <mat-expansion-panel class="summary-section" id="demographics" [expanded]="true">
-          <mat-expansion-panel-header>
-            <mat-panel-title>Demographics</mat-panel-title>
-          </mat-expansion-panel-header>
-          <div class="summary-section-body">
-            SSN: <input type="text" value="{{ (caseSummary$ | async)?.demographics.ssn}}" readonly><br/>
-            Other Identifiers: <br/>
-            Gender: <input type="text" value="{{ (caseSummary$ | async)?.demographics.gender}}" readonly><br/>
-            Date of Birth: <input type="text" value="{{ (caseSummary$ | async)?.demographics.birthDate}}" readonly><br/>
-            Race: <input type="text" value="{{ (caseSummary$ | async)?.demographics.race}}" readonly><br/>
-            Ethnicity: <input type="text" value="{{ (caseSummary$ | async)?.demographics.ethnicity}}" readonly><br/>
-            Aliases:
-            <table class="alias-table">
-              <tr>
-                <th>Given Name(s)</th>
-                <th>Family Name</th>
-                <th>Use</th>
-                <th>Period</th>
-              </tr>
-              <tr *ngFor="let alias of (caseSummary$ | async)?.demographics.aliases;">
-                <td>
-                    <span *ngFor="let givenName of alias.given;"> {{givenName}} </span>
-                </td>
-                <td>
-                  {{alias.family}}
-                </td>
-                <td>
-                  {{alias.use}}
-                </td>
-                <td>
-                  {{alias.period?.start || "Unknown"}} - {{alias.period?.end || "Unknown"}}
-                </td>
-              </tr>
-            </table>
-            Occupation History:
-          </div>
-        </mat-expansion-panel>
-        <mat-expansion-panel class="summary-section" id="circumstances" [expanded]="true">
-          <mat-expansion-panel-header>
-            <mat-panel-title>Circumstances</mat-panel-title>
-          </mat-expansion-panel-header>
-          <div class="summary-section-body">
-            Death Location: <input type="text" value="{{ (caseSummary$ | async)?.circumstances.deathLocation}}" readonly><br/>
-            Injury at Work: <input type="text" value="{{ (caseSummary$ | async)?.circumstances.workInjury}}" readonly><br/>
-            Tobacco Use Contributed to Death: <input type="text" value="{{ (caseSummary$ | async)?.circumstances.tobaccoUseContributed}}" readonly><br/>
-            Decedent Pregnancy Status: <input type="text" value="{{ (caseSummary$ | async)?.circumstances.pregnancy}}" readonly><br/>
-          </div>
-        </mat-expansion-panel>
-        <mat-expansion-panel class="summary-section" id="causeAndManner" [expanded]="true">
-          <mat-expansion-panel-header>
-            <mat-panel-title>Cause and Manner of Death</mat-panel-title>
-          </mat-expansion-panel-header>
-          <div class="summary-section-body">
-            Cause of Death Pathway: <br/>
-            Conditions Contributing to Death: <br/>
-            Manner of Death: <input type="text" value="{{ (caseSummary$ | async)?.causeAndManner.mannerOfDeath}}" readonly><br/>
-            How Death Injury Occurred: <input type="text" value="{{ (caseSummary$ | async)?.causeAndManner.howDeathInjuryOccurred}}" readonly><br/>
-          </div>
-        </mat-expansion-panel>
-        <mat-expansion-panel class="summary-section" id="medicalHistory">
-          <mat-expansion-panel-header>
-            <mat-panel-title>Relevant Medical History</mat-panel-title>
-          </mat-expansion-panel-header>
-          <div class="summary-section-body">Not Yet Implemented</div>
-        </mat-expansion-panel>
-        <mat-expansion-panel class="summary-section" id="examAndAutopsy">
-          <mat-expansion-panel-header>
-            <mat-panel-title>Exam and Autopsy Notes</mat-panel-title>
-          </mat-expansion-panel-header>
-          <div class="summary-section-body">Not Yet Implemented</div>
-        </mat-expansion-panel>
-        <mat-expansion-panel class="summary-section" id="narratives">
-          <mat-expansion-panel-header>
-            <mat-panel-title>Narratives</mat-panel-title>
-          </mat-expansion-panel-header>
-          <div class="summary-section-body">Not Yet Implemented</div>
-        </mat-expansion-panel>
-        <mat-expansion-panel class="summary-section" id="deathCertificate">
-          <mat-expansion-panel-header>
-            <mat-panel-title>Death Certificate</mat-panel-title>
-          </mat-expansion-panel-header>
-          <div class="summary-section-body">Not Yet Implemented</div>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </div>
+    <app-case-summary-content [caseSummary$]="caseSummary$"></app-case-summary-content>
   </mat-sidenav-content>
 </mat-sidenav-container>

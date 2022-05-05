@@ -4,5 +4,6 @@ export class CaseHeader {
   fullName: string;
   gender: string;
   deathDate: string;
+  deathTime: string;
   trackingNumber: TrackingNumber;
 }

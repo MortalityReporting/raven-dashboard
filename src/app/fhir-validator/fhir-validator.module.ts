@@ -21,14 +21,15 @@ import {MatRadioModule} from "@angular/material/radio";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {ValidatorConstants} from "./providers/validator-constants";
 import {MatSelectModule} from "@angular/material/select";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 
 
 
 @NgModule({
-  declarations: [
-    FhirValidatorComponent
-  ],
+    declarations: [
+        FhirValidatorComponent
+    ],
   imports: [
     CommonModule,
     BrowserModule,
@@ -51,10 +52,14 @@ import {MatSelectModule} from "@angular/material/select";
     MatCardModule,
     MatSnackBarModule,
     MatSelectModule,
+    MatButtonToggleModule,
   ],
+    exports: [
+        FhirValidatorComponent
+    ],
 
-  providers: [
-    ValidatorConstants
-  ]
+    providers: [
+        ValidatorConstants
+    ]
 })
 export class FhirValidatorModule { }

@@ -39,7 +39,8 @@
         </mat-select>
       </mat-form-field>
 
-      <span style="margin-left: 1em">
+      <!--TODO we need to decided if we want to show the link to the profiles here-->
+      <span *ngIf=false style="margin-left: 1em">
         <button [disabled]="!selectedProfile" mat-mini-fab color="primary" aria-label="Go to profile url."
           (click)="onSelectedProfileLink(selectedProfile)">
           <mat-icon>link</mat-icon>
@@ -108,8 +109,29 @@
 
     <div *ngIf="hasBackendValidationErrors && !isLoading">
       <div class="top-spacer">
+        <div (click)="onFilterResults()">
+          <mat-button-toggle-group name="severity level filter" [formControl]="selectedSeverityLevel"
+                                   aria-label="severity level filter" multiple style="width: 100%">
+            <mat-button-toggle style="width: 33%" value="error">
+              <mat-icon class="danger-color">error</mat-icon>
+              Error
+            </mat-button-toggle>
+            <mat-button-toggle style="width: 33%" value="warning">
+              <mat-icon class="warning-color">warning</mat-icon>
+              Warning
+            </mat-button-toggle>
+            <mat-button-toggle style="width: 34%" value="info">
+              <mat-icon class="success-color">info</mat-icon>
+              Info
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
 
-        <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
+        <div  *ngIf="selectedSeverityLevel.value.length === 0">
+         Please select severity level to see the result.
+        </div>
+
+        <table mat-table [dataSource]="dataSource" multiTemplateDataRows *ngIf="selectedSeverityLevel.value.length > 0">
 
           <ng-container matColumnDef="toggle">
             <th mat-header-cell *matHeaderCellDef (click)="toggle()">
@@ -131,6 +153,9 @@
               </mat-icon>
               <mat-icon *ngIf="validationResultItem.severity === 'Warning'"
                         class="warning-color">warning
+              </mat-icon>
+              <mat-icon *ngIf="validationResultItem.severity === 'Information'"
+                        class="success-color">info
               </mat-icon>
             </td>
           </ng-container>
@@ -177,7 +202,6 @@
 
       </div>
 
-      <!--Errors and warning highlights in the actual resource-->
       <div class="top-spacer">
         <pre style="width: 100%">
           <div class="validator-response" style="border-style: solid; border-width: thin;" [innerHTML]="parsedFhirResource">

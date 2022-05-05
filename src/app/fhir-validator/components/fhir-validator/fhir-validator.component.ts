@@ -5,6 +5,7 @@ import {FhirValidatorService} from "../../service/fhir-validator.service";
 import {ValidatorConstants} from "../../providers/validator-constants";
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatTableDataSource} from "@angular/material/table";
+import {FormControl} from "@angular/forms";
 
 export interface WarningError {
   severity: string;
@@ -42,6 +43,7 @@ export class FhirValidatorComponent implements OnInit {
   apiErrorResponse: any = [];
   selectedProfile: any;
   allExpanded = true;
+  selectedSeverityLevel = new FormControl(['warning', 'error']);
   dataSource = new MatTableDataSource(
     [
       {
@@ -75,6 +77,7 @@ export class FhirValidatorComponent implements OnInit {
     ]
   );
 
+
   constructor(
     private fhirValidatorService: FhirValidatorService,
     private _snackBar: MatSnackBar,
@@ -84,30 +87,25 @@ export class FhirValidatorComponent implements OnInit {
   ) {
   }
 
-  // It is important the format is working with "best effort"
-  // That is it may or may not format the text properly and require extensive testing to validate its operation.
-  onFormatInput() {
-    this.isFormattingPerformedRendered = true;
-
+  formatFhirResource(){
     if(this.fhirResource
       && (this.fhirValidatorService.isXmlString(this.fhirResource) || this.fhirValidatorService.isJsonString(this.fhirResource)))
     {
       if(this.resourceFormat === 'json' && this.fhirValidatorService.isJsonString(this.fhirResource)){
         this.fhirResource = this.fhirValidatorService.beautifyJSON(this.fhirResource);
-        setTimeout(() => this.isFormattingPerformedRendered = false, 2000);
       }
       else if(this.resourceFormat === 'xml' && this.fhirValidatorService.isXmlString(this.fhirResource)){
         this.fhirResource = this.fhirValidatorService.beautifyXML(this.fhirResource);
-        setTimeout(() => this.isFormattingPerformedRendered = false, 2000);
-      }
-      else {
-        setTimeout(() => this.isFormattingPerformedRendered = false, 2000);
       }
     }
-    else {
-      this.isFormattingPerformedRendered = true;
-      setTimeout(() => this.isFormattingPerformedRendered = false, 2000);
-    }
+  }
+
+  // It is important the format is working with "best effort"
+  // That is it may or may not format the text properly and require extensive testing to validate its operation.
+  onFormatInput() {
+    this.formatFhirResource()
+    this.isFormattingPerformedRendered = true;
+    setTimeout(() => this.isFormattingPerformedRendered = false, 2000);
   }
 
   ngOnInit(): void {
@@ -150,6 +148,7 @@ export class FhirValidatorComponent implements OnInit {
       reader.readAsText(file, "UTF-8");
       reader.onload = () => {
         this.fhirResource = reader.result as string;
+        this.formatFhirResource();
       }
       reader.onerror = () => {
         this._snackBar.open("Unable to open the file.", 'x' ,{
@@ -198,21 +197,12 @@ export class FhirValidatorComponent implements OnInit {
     }
   }
 
-  getErrorLineNumbers(apiResponse: any): number[]{
+  getLineNumbersBySeverity(apiResponse: any, severity: string): number[]{
     if(!apiResponse || apiResponse.length === 0){
       return null;
     }
     return apiResponse
-      .filter((element: any) => element.severity == 'Error')
-      .map((element: any) => this.getLineNumberFromLocation(element.location) - 1);
-  };
-
-  getWarningWarningLineNumber(apiResponse: any): number[]{
-    if(!apiResponse || apiResponse.length === 0){
-      return null;
-    }
-    return apiResponse
-      .filter((element: any) => element.severity == 'Warning')
+      .filter((element: any) => element.severity == severity)
       .map((element: any) => this.getLineNumberFromLocation(element.location) - 1);
   };
 
@@ -228,10 +218,11 @@ export class FhirValidatorComponent implements OnInit {
 
   renderAPIValidationErrors(apiResponse: any) {
 
-    const errorLineNumbers = this.getErrorLineNumbers(apiResponse);
-    const warningLineNumbers = this.getWarningWarningLineNumber(apiResponse);
+    const errorLineNumbers = this.getLineNumbersBySeverity(apiResponse, 'Error');
+    const warningLineNumbers = this.getLineNumbersBySeverity(apiResponse, 'Warning');
+    const infoLineNumbers = this.getLineNumbersBySeverity(apiResponse, 'Information');
 
-    if(errorLineNumbers?.length > 0 || warningLineNumbers?.length > 0){
+    if(errorLineNumbers?.length > 0 || warningLineNumbers?.length > 0 || infoLineNumbers.length > 0){
       this.hasBackendValidationErrors = true;
       this.validationErrorStr = "Please see the validation errors below.";
       this.isErrorMsgRendered = true;
@@ -239,17 +230,23 @@ export class FhirValidatorComponent implements OnInit {
 
     const lines = this.fhirResource.split('\n');
     lines.forEach((line, i) => {
+      let offsetLine = i + 1;
       const sanitized = this.escapeHtml(line);
       if(!this.parsedFhirResource){
         this.parsedFhirResource = '';
       }
       if(errorLineNumbers?.indexOf(i) != -1){
-        let tempText = '<span class="error-mark" id="error' + i + '">' + sanitized + '</span>';
+        let tempText = '<span class="error-mark" id="mark' + offsetLine + '">' + sanitized + '</span>';
         this.parsedFhirResource += tempText;
         this.parsedFhirResource += '\n';
       }
       else if(warningLineNumbers?.indexOf(i) != -1){
-        let tempText = '<span class="warning-mark" id="warning' + i + '">' + sanitized + '</span>';
+        let tempText = '<span class="warning-mark" id="mark' + offsetLine + '">' + sanitized + '</span>';
+        this.parsedFhirResource += tempText;
+        this.parsedFhirResource += '\n';
+      }
+      else if(infoLineNumbers?.indexOf(i) != -1){
+        let tempText = '<span class="info-mark" id="mark' + offsetLine + '">' + sanitized + '</span>';
         this.parsedFhirResource += tempText;
         this.parsedFhirResource += '\n';
       }
@@ -265,7 +262,9 @@ export class FhirValidatorComponent implements OnInit {
   }
 
   scrollToElement(location: string ): void {
+    console.log(location);
     const element = document.querySelector(location);
+    console.log(element);
     if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
@@ -276,7 +275,7 @@ export class FhirValidatorComponent implements OnInit {
 
   // When the user selects a location from the errors and warning results, we want to scroll the page to that location
   onLocationSelected(response: any): void {
-    let locationId = ('#'+ response.severity + this.getLineNumberFromLocation(response.location)).toLowerCase();
+    let locationId = ('#mark' + this.getLineNumberFromLocation(response.location)).toLowerCase();
     this.scrollToElement(locationId);
   }
 
@@ -291,11 +290,22 @@ export class FhirValidatorComponent implements OnInit {
         }
         else {
           response.forEach((element: any) => element.message = element.message .replace(/,(?=[^\s])/g, ", "));
+
+          // sort by line numbers
+          response = response.sort((a: any, b: any) => {
+            return this.getLineNumberFromLocation(a.location) - this.getLineNumberFromLocation(b.location);
+          });
           this.dataSource.data = response.map((element: any) => {
             let result: WarningError = Object.assign({}, element);
               result.expanded = true;
               return result});
           this.apiErrorResponse = response;
+
+          // this.dataSource.filterPredicate =
+          //   (data: any, filter: string) => data.severity.indexOf(filter) != -1;
+
+          this.dataSource.filterPredicate = this.getFilterPredicate();
+
           this.renderAPIValidationErrors(response);
         }
       },
@@ -307,7 +317,7 @@ export class FhirValidatorComponent implements OnInit {
         });
         this.isLoading = false;
       },
-      complete:  () => {
+      complete: () => {
         this.isLoading = false;
       }
     });
@@ -324,5 +334,24 @@ export class FhirValidatorComponent implements OnInit {
   toggle() {
     this.allExpanded = !this.allExpanded;
     this.dataSource.data.forEach(item => item.expanded = this.allExpanded);
+  }
+
+  onFilterResults() {
+    console.log(this.selectedSeverityLevel.value);
+    this.dataSource.filter = this.selectedSeverityLevel.value.join(',');
+  }
+
+  private getFilterPredicate() {
+    return function (row: any, filters: string) {
+      let matchFilter: boolean = false;
+      const filterArray = filters.split(',');
+      filterArray.forEach((filter: string) => {
+        if(row.severity.toLowerCase().indexOf(filter.toLowerCase())!= -1){
+            matchFilter = true;
+          }
+        }
+      )
+      return matchFilter;
+    };
   }
 }
