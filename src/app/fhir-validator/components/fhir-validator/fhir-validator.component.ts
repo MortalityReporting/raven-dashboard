@@ -41,56 +41,20 @@ export class FhirValidatorComponent implements OnInit {
   displayedColumns: string[] = ['toggle', 'icon', 'severity', 'fhirPath', 'location'];
   isLoading = false;
   apiErrorResponse: any = [];
-  selectedProfile: any;
   allExpanded = true;
   selectedSeverityLevel = new FormControl(['warning', 'error']);
-  dataSource = new MatTableDataSource(
-    [
-      {
-        "severity": "Warning",
-        "fhirPath": "Patient.address[0].state",
-        "location": "(line 4, col24)",
-        "message": "The value provided ('Texas') is not in the value set http://hl7.org/fhir/us/core/ValueSet/us-core-usps-state (http://hl7.org/fhir/us/core/ValueSet/us-core-usps-state), and a code should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable)  (error message = The code \"Texas\" is not valid in the system https://www.usps.com/; The code provided (https://www.usps.com/#Texas) is not valid in the value set 'UspsTwoLetterAlphabeticCodes' (from http://tx.fhir.org/r4))\r\n",
-        "expanded": true
-      },
-      {
-        "severity": "Warning",
-        "fhirPath": "Patient.address[0].use",
-        "location": "(line 6, col6)",
-        "message": "ValueSet http://hl7.org/fhir/ValueSet/address-use|4.0.1 not found by validator",
-        "expanded": true
-      },
-      {
-        "severity": "Error",
-        "fhirPath": "Patient.identifier[0].type",
-        "location": "(line 9, col20)",
-        "message": "None of the codings provided are in the value set http://hl7.org/fhir/ValueSet/identifier-type (http://hl7.org/fhir/ValueSet/identifier-type), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://cbsig.chai.gatech.edu/CodeSystem/cbs-temp-code-system#Local-Record-ID)",
-        "expanded": true,
-      },
-      {
-        "severity": "Error",
-        "fhirPath": "Patient.identifier[0].type",
-        "location": "(line 17, col20)",
-        "message": "None of the codings provided are in the value set http://hl7.org/fhir/ValueSet/identifier-type (http://hl7.org/fhir/ValueSet/identifier-type), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://cbsig.chai.gatech.edu/CodeSystem/cbs-temp-code-system#Local-Record-ID)",
-        "expanded": true,
-      }
-    ]
-  );
-
+  dataSource = new MatTableDataSource([]);
 
   constructor(
     private fhirValidatorService: FhirValidatorService,
     private _snackBar: MatSnackBar,
     private sanitized: DomSanitizer,
     public constants: ValidatorConstants,
-
   ) {
   }
 
   formatFhirResource(){
-    if(this.fhirResource
-      && (this.fhirValidatorService.isXmlString(this.fhirResource) || this.fhirValidatorService.isJsonString(this.fhirResource)))
-    {
+    if(this.fhirResource){
       if(this.resourceFormat === 'json' && this.fhirValidatorService.isJsonString(this.fhirResource)){
         this.fhirResource = this.fhirValidatorService.beautifyJSON(this.fhirResource);
       }
@@ -169,7 +133,7 @@ export class FhirValidatorComponent implements OnInit {
     }
   }
 
-  validateFhirResource(fhirResource: any, resourceFormat: string, selectedProfile: any) {
+  validateFhirResource(fhirResource: any, resourceFormat: string) {
 
     this.validationErrorStr = this.fhirValidatorService.getUiValidationMessages(fhirResource, resourceFormat);
     if(this.validationErrorStr){
@@ -179,7 +143,7 @@ export class FhirValidatorComponent implements OnInit {
     }
     else {
       // The UI validation passed successfully, and we execute the backend validation.
-      this.executeAPIValidation(fhirResource, resourceFormat ,selectedProfile);
+      this.executeAPIValidation(fhirResource, resourceFormat);
     }
   }
 
@@ -279,12 +243,12 @@ export class FhirValidatorComponent implements OnInit {
     this.scrollToElement(locationId);
   }
 
-  private executeAPIValidation(fhirResource: any, resourceFormat: string, selectedProfile: any) {
+  private executeAPIValidation(fhirResource: any, resourceFormat: string) {
     this.isLoading = true;
     this.parsedFhirResource = null;
     this.apiErrorResponse = null;
     fhirResource = JSON.parse(fhirResource);
-    this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat, selectedProfile).subscribe({
+    this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat).subscribe({
       next: (response) => {
         if(false){ //TODO we still don't know exactly what a valid fhir resource response looks like
 
@@ -296,15 +260,14 @@ export class FhirValidatorComponent implements OnInit {
           response = response.sort((a: any, b: any) => {
             return this.getLineNumberFromLocation(a.location) - this.getLineNumberFromLocation(b.location);
           });
+
           this.dataSource.data = response.map((element: any) => {
             let result: WarningError = Object.assign({}, element);
-              result.expanded = true;
-              return result});
+            result.expanded = true;
+            return result
+          });
+
           this.apiErrorResponse = response;
-
-          // this.dataSource.filterPredicate =
-          //   (data: any, filter: string) => data.severity.indexOf(filter) != -1;
-
           this.dataSource.filterPredicate = this.getFilterPredicate();
 
           this.renderAPIValidationErrors(response);
@@ -322,14 +285,6 @@ export class FhirValidatorComponent implements OnInit {
         this.isLoading = false;
       }
     });
-  }
-
-  onSelectProfile(event: any) {
-    this.selectedProfile = event.value;
-  }
-
-  onSelectedProfileLink(selectedProfile: any) {
-    window.open(selectedProfile.url);
   }
 
   toggle() {

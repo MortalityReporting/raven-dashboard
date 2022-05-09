@@ -29,24 +29,6 @@
         </mat-radio-button>
       </mat-radio-group>
 
-      <!-- Profile selection -->
-      <mat-form-field style="margin-bottom: -1.25em; margin-left: 1em; width: 40%"  appearance="outline">
-        <mat-label>Select Profile</mat-label>
-        <mat-select  (selectionChange)="onSelectProfile($event)" [disabled]="isLoading">
-          <mat-option *ngFor="let profile of constants.PROFILE_LIST" [value]="profile">
-            {{profile.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <!--TODO we need to decided if we want to show the link to the profiles here-->
-      <span *ngIf=false style="margin-left: 1em">
-        <button [disabled]="!selectedProfile" mat-mini-fab color="primary" aria-label="Go to profile url."
-          (click)="onSelectedProfileLink(selectedProfile)">
-          <mat-icon>link</mat-icon>
-        </button>
-      </span>
-
       <!--File upload widget-->
       <input type="file" class="file-input" (click)="fileUpload.value=null" (change)="onFileSelected($event)" #fileUpload>
       <span style="float: right; margin-top: 1em" class="file-upload">
@@ -98,8 +80,8 @@
         </button>
         <span style="margin-left: 10px">
           <button mat-raised-button color="accent" class="button"
-                  [disabled]="isLoading || !selectedProfile"
-                  (click)="validateFhirResource(fhirResource, resourceFormat, selectedProfile)">
+                  [disabled]="isLoading"
+                  (click)="validateFhirResource(fhirResource, resourceFormat)">
             <mat-icon>send</mat-icon>
             Submit
           </button>

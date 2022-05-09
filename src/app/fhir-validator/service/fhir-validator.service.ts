@@ -107,7 +107,7 @@ export class FhirValidatorService {
     )));
   }
 
-  validateFhirResource(fhirResource: any, resourceFormat: string , selectedProfile: any):  Observable<any> {
+  validateFhirResource(fhirResource: any, resourceFormat: string):  Observable<any> {
 
     const requestData = {
       "resourceType": "Parameters",
