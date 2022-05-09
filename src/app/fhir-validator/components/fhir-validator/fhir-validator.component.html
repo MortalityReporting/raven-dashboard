@@ -11,14 +11,14 @@
     </mat-card-header>
 
     <!--Actions available above the FHIR validator input textarea-->
-    <div>
+    <div class="row-button-wrapper">
 
       <!--Select JSON/XML radio group-->
       <mat-radio-group [(ngModel)]="resourceFormat" [disabled]=isLoading>
         <mat-radio-button
           value="json"
           [checked]="resourceFormat =='json'"
-          (select)="resourceFormat = 'format'">
+          (select)="resourceFormat = 'json'">
           JSON
         </mat-radio-button>
         <mat-radio-button
@@ -29,16 +29,17 @@
         </mat-radio-button>
       </mat-radio-group>
 
+      <span class="content-spacer"></span>
+
       <!--File upload widget-->
       <input type="file" class="file-input" (click)="fileUpload.value=null" (change)="onFileSelected($event)" #fileUpload>
-      <span style="float: right; margin-top: 1em" class="file-upload">
-      {{fileName}}
-        <button mat-raised-button color="primary" class="upload-btn"
-          (click)="clearUI(); fileUpload.click();" [disabled]=isLoading>
-          <mat-icon>upload</mat-icon>
-          Upload
-        </button>
-      </span>
+      <span style="font-family: monospace; margin-right: 1em">{{fileName}}</span>
+      <button mat-raised-button color="primary" class="upload-btn"
+              (click)="clearUI(); fileUpload.click();" [disabled]=isLoading>
+        <mat-icon>upload</mat-icon>
+        Upload
+      </button>
+
     </div>
 
     <!-- FHIR validator text editor-->
@@ -53,32 +54,32 @@
     </div>
 
     <!--Actions available below the FHIR validator input textarea-->
-    <div id="spaced-content">
-      <span class="align-left">
-        <button
-          mat-raised-button color="primary" class="button"
-          (click)="onFormatInput();"
-          [disabled]="!fhirResource || isLoading">
-          <mat-icon>code</mat-icon>
-          Format Input
-        </button>
-        <span class="md-primary-color" *ngIf="isFormattingPerformedRendered" style="margin-left: 1em">Formatting Attempted.</span>
-      </span>
+    <div class="row-button-wrapper ">
 
-      <span class="align-center" style="margin-top:7px">
-        <span class="danger-color" *ngIf="!!validationErrorStr">{{validationErrorStr}}</span>
-        <span class="success-color" *ngIf="isValidResourceMsgRendered"> This is a valid FHIR resource.</span>
-      </span>
+      <button
+        mat-raised-button color="primary" class="button"
+        (click)="onFormatInput();"
+        [disabled]="!fhirResource || isLoading">
+        <mat-icon>code</mat-icon>
+        Format Input
+      </button>
+      <span class="md-primary-color" *ngIf="isFormattingPerformedRendered" style="margin-left: 1em">Formatting Attempted.</span>
 
-      <span class="align-right">
-        <button
-          mat-raised-button color="success" class="button"
-          (click)="onClear()"
-          [disabled]=this.isLoading>
-          <mat-icon>clear</mat-icon>
-          Clear Validator
-        </button>
-        <span style="margin-left: 10px">
+      <span class="content-spacer"></span>
+
+      <span class="danger-color" *ngIf="!!validationErrorStr">{{validationErrorStr}}</span>
+      <span class="success-color" *ngIf="isValidResourceMsgRendered"> This is a valid FHIR resource.</span>
+
+      <span class="content-spacer"></span>
+
+      <button
+        mat-raised-button color="success" class="button"
+        (click)="onClear()"
+        [disabled]=this.isLoading>
+        <mat-icon>clear</mat-icon>
+        Clear Validator
+      </button>
+      <span style="margin-left: 1em">
           <button mat-raised-button color="accent" class="button"
                   [disabled]="isLoading"
                   (click)="validateFhirResource(fhirResource, resourceFormat)">
@@ -86,7 +87,6 @@
             Submit
           </button>
         </span>
-      </span>
     </div>
 
     <div *ngIf="hasBackendValidationErrors && !isLoading">
