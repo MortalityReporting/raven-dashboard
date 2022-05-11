@@ -24,7 +24,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatCheckboxModule} from "@angular/material/checkbox";
-
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 
@@ -57,6 +57,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     MatButtonToggleModule,
     MatChipsModule,
     MatCheckboxModule,
+    MatTooltipModule
   ],
     exports: [
         FhirValidatorComponent

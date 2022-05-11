@@ -321,4 +321,16 @@ export class FhirValidatorComponent implements OnInit {
     this.isLoading = false;
   }
 
+  checkExpandCollapseAllStatus() {
+    // When all elements are collapsed we want to change the expansion icon to render "expand all"
+    // When all elements are expanded we want to change the expansion icon to "collapse all"
+    // This will save extra unnecessary click for the user
+    const expandedElementsCount = this.dataSource.data.filter(element => element.expanded).length;
+    if(expandedElementsCount === this.dataSource.data.length){
+      this.allExpanded = true;
+    }
+    else if(expandedElementsCount === 0){
+      this.allExpanded = false;
+    }
+  }
 }

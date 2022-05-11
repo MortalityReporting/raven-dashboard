@@ -72,7 +72,7 @@ import { CaseSummaryContentFieldComponent } from './components/pages/case-summar
     MatGridListModule,
     MatExpansionModule,
     MatButtonToggleModule,
-    MatTooltipModule
+    MatTooltipModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: FhirAuthInterceptor, multi: true },
