@@ -14,3 +14,7 @@
   margin-top: 64px; /* height of header */
   padding: 16px;
 }
+
+mat-drawer-container {
+  height: 90%;
+}

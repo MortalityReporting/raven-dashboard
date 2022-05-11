@@ -54,39 +54,47 @@
     </div>
 
     <!--Actions available below the FHIR validator input textarea-->
-    <div class="row-button-wrapper ">
+    <div class="row-button-wrapper" *ngIf="!isLoading">
 
       <button
-        mat-raised-button color="primary" class="button"
+        mat-raised-button color="primary"
         (click)="onFormatInput();"
-        [disabled]="!fhirResource || isLoading">
+        [disabled]="!fhirResource">
         <mat-icon>code</mat-icon>
         Format Input
       </button>
       <span class="md-primary-color" *ngIf="isFormattingPerformedRendered" style="margin-left: 1em">Formatting Attempted.</span>
 
       <span class="content-spacer"></span>
-
-      <span class="danger-color" *ngIf="!!validationErrorStr">{{validationErrorStr}}</span>
-      <span class="success-color" *ngIf="isValidResourceMsgRendered"> This is a valid FHIR resource.</span>
+      <span *ngIf="validationFinished">
+        <span class="danger-color" *ngIf="!!validationErrorStr">{{validationErrorStr}}</span>
+        <span class="success-color" *ngIf="isValidResource"> This is a valid FHIR resource.</span>
+      </span>
 
       <span class="content-spacer"></span>
 
       <button
         mat-raised-button color="success" class="button"
-        (click)="onClear()"
-        [disabled]=this.isLoading>
+        (click)="onClear()">
         <mat-icon>clear</mat-icon>
         Clear Validator
       </button>
+
       <span style="margin-left: 1em">
-          <button mat-raised-button color="accent" class="button"
-                  [disabled]="isLoading"
+        <button mat-raised-button color="accent" class="button"
                   (click)="validateFhirResource(fhirResource, resourceFormat)">
-            <mat-icon>send</mat-icon>
-            Submit
-          </button>
-        </span>
+          <mat-icon>send</mat-icon>
+          Submit
+        </button>
+      </span>
+    </div>
+
+    <div class="row-button-wrapper top-spacer" *ngIf="isLoading">
+      <span class="content-spacer"></span>
+      <button  mat-raised-button color="warn" (click)="onCancelValidation()">
+        <mat-icon>cancel</mat-icon>
+        Cancel Validation
+      </button>
     </div>
 
     <div *ngIf="hasBackendValidationErrors && !isLoading">
@@ -94,17 +102,21 @@
         <div (click)="onFilterResults()">
           <mat-button-toggle-group name="severity level filter" [formControl]="selectedSeverityLevel"
                                    aria-label="severity level filter" multiple style="width: 100%">
-            <mat-button-toggle style="width: 33%" value="error">
-              <mat-icon class="danger-color">error</mat-icon>
+            <mat-button-toggle style="width: 25%" value="error">
+              <mat-icon>error</mat-icon>
               Error
             </mat-button-toggle>
-            <mat-button-toggle style="width: 33%" value="warning">
-              <mat-icon class="warning-color">warning</mat-icon>
+            <mat-button-toggle style="width: 25%" value="warning">
+              <mat-icon>warning</mat-icon>
               Warning
             </mat-button-toggle>
-            <mat-button-toggle style="width: 34%" value="info">
-              <mat-icon class="success-color">info</mat-icon>
+            <mat-button-toggle style="width: 25%" value="info">
+              <mat-icon>info</mat-icon>
               Info
+            </mat-button-toggle>
+            <mat-button-toggle style="width: 25%" value="note">
+              <mat-icon>edit_note</mat-icon>
+              Note
             </mat-button-toggle>
           </mat-button-toggle-group>
         </div>

@@ -6,6 +6,7 @@ import {ValidatorConstants} from "../../providers/validator-constants";
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatTableDataSource} from "@angular/material/table";
 import {FormControl} from "@angular/forms";
+import {Subscription} from "rxjs";
 
 export interface WarningError {
   severity: string;
@@ -33,9 +34,7 @@ export class FhirValidatorComponent implements OnInit {
   resourceFormat = 'json';
   fileName: string;
   validationErrorStr: string;
-  isErrorMsgRendered = false;
   isFormattingPerformedRendered = false;
-  isValidResourceMsgRendered = false;
   hasBackendValidationErrors = false;
   parsedFhirResource : any;
   displayedColumns: string[] = ['toggle', 'icon', 'severity', 'fhirPath', 'location'];
@@ -44,6 +43,9 @@ export class FhirValidatorComponent implements OnInit {
   allExpanded = true;
   selectedSeverityLevel = new FormControl(['warning', 'error']);
   dataSource = new MatTableDataSource([]);
+  validatorSubscription$: Subscription;
+  validationFinished = false;
+  isValidResource = false;
 
   constructor(
     private fhirValidatorService: FhirValidatorService,
@@ -80,11 +82,12 @@ export class FhirValidatorComponent implements OnInit {
     this.fileName=''
     this.validationErrorStr = '';
     this.isFormattingPerformedRendered = false;
-    this.isErrorMsgRendered = false;
-    this.isValidResourceMsgRendered = false;
+    this.isValidResource = false;
     this.parsedFhirResource = null;
     this.apiErrorResponse = null;
     this.hasBackendValidationErrors = false;
+    this.isValidResource = false;
+    this.validationFinished = false;
   }
 
   onClear(){
@@ -138,8 +141,8 @@ export class FhirValidatorComponent implements OnInit {
     this.validationErrorStr = this.fhirValidatorService.getUiValidationMessages(fhirResource, resourceFormat);
     if(this.validationErrorStr){
       //see if we can find any obvious issues with the resource here
-      this.isErrorMsgRendered = true;
-      this.isValidResourceMsgRendered = false;
+      this.isValidResource = false;
+      this.validationFinished = true;
     }
     else {
       // The UI validation passed successfully, and we execute the backend validation.
@@ -185,11 +188,11 @@ export class FhirValidatorComponent implements OnInit {
     const errorLineNumbers = this.getLineNumbersBySeverity(apiResponse, 'Error');
     const warningLineNumbers = this.getLineNumbersBySeverity(apiResponse, 'Warning');
     const infoLineNumbers = this.getLineNumbersBySeverity(apiResponse, 'Information');
+    const noteLineNumbers = this.getLineNumbersBySeverity(apiResponse, 'Note');
 
     if(errorLineNumbers?.length > 0 || warningLineNumbers?.length > 0 || infoLineNumbers.length > 0){
       this.hasBackendValidationErrors = true;
       this.validationErrorStr = "Please see the validation errors below.";
-      this.isErrorMsgRendered = true;
     }
 
     const lines = this.fhirResource.split('\n');
@@ -214,21 +217,21 @@ export class FhirValidatorComponent implements OnInit {
         this.parsedFhirResource += tempText;
         this.parsedFhirResource += '\n';
       }
+      else if(noteLineNumbers?.indexOf(i) != -1){
+        let tempText = '<span class="note-mark" id="mark' + offsetLine + '">' + sanitized + '</span>';
+        this.parsedFhirResource += tempText;
+        this.parsedFhirResource += '\n';
+      }
       else {
         this.parsedFhirResource += sanitized;
         this.parsedFhirResource += '\n';
       }
     });
     this.parsedFhirResource = this.sanitized.bypassSecurityTrustHtml(this.parsedFhirResource);
-    if(!this.hasBackendValidationErrors){
-      this.isValidResourceMsgRendered = true;
-    }
   }
 
   scrollToElement(location: string ): void {
-    console.log(location);
     const element = document.querySelector(location);
-    console.log(element);
     if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
@@ -238,6 +241,7 @@ export class FhirValidatorComponent implements OnInit {
   }
 
   // When the user selects a location from the errors and warning results, we want to scroll the page to that location
+
   onLocationSelected(response: any): void {
     let locationId = ('#mark' + this.getLineNumberFromLocation(response.location)).toLowerCase();
     this.scrollToElement(locationId);
@@ -248,12 +252,14 @@ export class FhirValidatorComponent implements OnInit {
     this.parsedFhirResource = null;
     this.apiErrorResponse = null;
     fhirResource = JSON.parse(fhirResource);
-    this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat).subscribe({
+    this.validatorSubscription$ = this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat).subscribe({
       next: (response) => {
-        if(false){ //TODO we still don't know exactly what a valid fhir resource response looks like
-
+        this.validationFinished = true;
+        if(response?.length === 1 && response[0].severity === "Information" && response[0].message === "ALL OK"){
+          this.isValidResource = true;
         }
         else {
+          this.isValidResource = false;
           response.forEach((element: any) => element.message = element.message .replace(/,(?=[^\s])/g, ", "));
 
           // sort by line numbers
@@ -296,7 +302,7 @@ export class FhirValidatorComponent implements OnInit {
     this.dataSource.filter = this.selectedSeverityLevel.value.join(',');
   }
 
-  private getFilterPredicate() {
+  getFilterPredicate() {
     return function (row: any, filters: string) {
       let matchFilter: boolean = false;
       const filterArray = filters.split(',');
@@ -309,4 +315,10 @@ export class FhirValidatorComponent implements OnInit {
       return matchFilter;
     };
   }
+
+  onCancelValidation (){
+    this.validatorSubscription$.unsubscribe();
+    this.isLoading = false;
+  }
+
 }

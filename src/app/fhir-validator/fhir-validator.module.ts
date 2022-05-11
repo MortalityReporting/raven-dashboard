@@ -22,6 +22,8 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {ValidatorConstants} from "./providers/validator-constants";
 import {MatSelectModule} from "@angular/material/select";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatChipsModule} from "@angular/material/chips";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 
@@ -53,6 +55,8 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
     MatSnackBarModule,
     MatSelectModule,
     MatButtonToggleModule,
+    MatChipsModule,
+    MatCheckboxModule,
   ],
     exports: [
         FhirValidatorComponent
