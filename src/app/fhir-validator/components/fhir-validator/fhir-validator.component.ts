@@ -41,11 +41,18 @@ export class FhirValidatorComponent implements OnInit {
   isLoading = false;
   apiErrorResponse: any = [];
   allExpanded = true;
-  selectedSeverityLevel = new FormControl(['warning', 'error']);
+  severityLevels = new FormControl(['warning', 'error', 'info', 'note']);
   dataSource = new MatTableDataSource([]);
   validatorSubscription$: Subscription;
   validationFinished = false;
   isValidResource = false;
+
+  severityLevelsSelectionList = [
+    {name: 'Error', selected: true},
+    {name: 'Warning', selected: true},
+    {name: 'Info', selected: true},
+    {name: 'Note', selected: true},
+  ];
 
   constructor(
     private fhirValidatorService: FhirValidatorService,
@@ -190,7 +197,11 @@ export class FhirValidatorComponent implements OnInit {
     const infoLineNumbers = this.getLineNumbersBySeverity(apiResponse, 'Information');
     const noteLineNumbers = this.getLineNumbersBySeverity(apiResponse, 'Note');
 
-    if(errorLineNumbers?.length > 0 || warningLineNumbers?.length > 0 || infoLineNumbers.length > 0){
+    if(errorLineNumbers?.length > 0
+      || warningLineNumbers?.length > 0
+      || infoLineNumbers?.length > 0
+      || noteLineNumbers?.length > 0)
+    {
       this.hasBackendValidationErrors = true;
       this.validationErrorStr = "Please see the validation errors below.";
     }
@@ -260,7 +271,7 @@ export class FhirValidatorComponent implements OnInit {
         }
         else {
           this.isValidResource = false;
-          response.forEach((element: any) => element.message = element.message .replace(/,(?=[^\s])/g, ", "));
+          response?.forEach((element: any) => element.message = element.message .replace(/,(?=[^\s])/g, ", "));
 
           // sort by line numbers
           response = response.sort((a: any, b: any) => {
@@ -299,7 +310,7 @@ export class FhirValidatorComponent implements OnInit {
   }
 
   onFilterResults() {
-    this.dataSource.filter = this.selectedSeverityLevel.value.join(',');
+    this.dataSource.filter = this.severityLevels.value.join(',');
   }
 
   getFilterPredicate() {
@@ -332,5 +343,22 @@ export class FhirValidatorComponent implements OnInit {
     else if(expandedElementsCount === 0){
       this.allExpanded = false;
     }
+  }
+
+  isFilterEnabled(severity: string) {
+    return !!this.dataSource.data.find(element => element.severity.toLowerCase() === severity.toLowerCase());
+  }
+
+  onSeverityLevelFilterChange(level: any) {
+    this.dataSource.filter = this.severityLevelsSelectionList
+      .filter(level=> level.selected)
+      .map(level => level.name)
+      .join(',');
+  }
+
+  getCount(level: any) {
+    return this.dataSource.data
+      .filter(element => element.severity.toLowerCase() === level.name.toLowerCase())
+      .length;
   }
 }
