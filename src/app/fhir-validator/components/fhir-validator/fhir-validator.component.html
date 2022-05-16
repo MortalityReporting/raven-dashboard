@@ -11,14 +11,14 @@
     </mat-card-header>
 
     <!--Actions available above the FHIR validator input textarea-->
-    <div>
+    <div class="row-button-wrapper">
 
       <!--Select JSON/XML radio group-->
       <mat-radio-group [(ngModel)]="resourceFormat" [disabled]=isLoading>
         <mat-radio-button
           value="json"
           [checked]="resourceFormat =='json'"
-          (select)="resourceFormat = 'format'">
+          (select)="resourceFormat = 'json'">
           JSON
         </mat-radio-button>
         <mat-radio-button
@@ -29,34 +29,17 @@
         </mat-radio-button>
       </mat-radio-group>
 
-      <!-- Profile selection -->
-      <mat-form-field style="margin-bottom: -1.25em; margin-left: 1em; width: 40%"  appearance="outline">
-        <mat-label>Select Profile</mat-label>
-        <mat-select  (selectionChange)="onSelectProfile($event)" [disabled]="isLoading">
-          <mat-option *ngFor="let profile of constants.PROFILE_LIST" [value]="profile">
-            {{profile.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <!--TODO we need to decided if we want to show the link to the profiles here-->
-      <span *ngIf=false style="margin-left: 1em">
-        <button [disabled]="!selectedProfile" mat-mini-fab color="primary" aria-label="Go to profile url."
-          (click)="onSelectedProfileLink(selectedProfile)">
-          <mat-icon>link</mat-icon>
-        </button>
-      </span>
+      <span class="content-spacer"></span>
 
       <!--File upload widget-->
       <input type="file" class="file-input" (click)="fileUpload.value=null" (change)="onFileSelected($event)" #fileUpload>
-      <span style="float: right; margin-top: 1em" class="file-upload">
-      {{fileName}}
-        <button mat-raised-button color="primary" class="upload-btn"
-          (click)="clearUI(); fileUpload.click();" [disabled]=isLoading>
-          <mat-icon>upload</mat-icon>
-          Upload
-        </button>
-      </span>
+      <span style="font-family: monospace; margin-right: 1em">{{fileName}}</span>
+      <button mat-raised-button color="primary" class="upload-btn"
+              (click)="clearUI(); fileUpload.click();" [disabled]=isLoading>
+        <mat-icon>upload</mat-icon>
+        Upload
+      </button>
+
     </div>
 
     <!-- FHIR validator text editor-->
@@ -71,77 +54,110 @@
     </div>
 
     <!--Actions available below the FHIR validator input textarea-->
-    <div id="spaced-content">
-      <span class="align-left">
-        <button
-          mat-raised-button color="primary" class="button"
-          (click)="onFormatInput();"
-          [disabled]="!fhirResource || isLoading">
-          <mat-icon>code</mat-icon>
-          Format Input
-        </button>
-        <span class="md-primary-color" *ngIf="isFormattingPerformedRendered" style="margin-left: 1em">Formatting Attempted.</span>
-      </span>
+    <div class="row-button-wrapper" *ngIf="!isLoading">
 
-      <span class="align-center" style="margin-top:7px">
+      <button
+        mat-raised-button color="primary"
+        (click)="onFormatInput();"
+        [disabled]="!fhirResource">
+        <mat-icon>code</mat-icon>
+        Format Input
+      </button>
+      <span class="md-primary-color" *ngIf="isFormattingPerformedRendered" style="margin-left: 1em">Formatting Attempted.</span>
+
+      <span class="content-spacer"></span>
+      <span *ngIf="validationFinished">
         <span class="danger-color" *ngIf="!!validationErrorStr">{{validationErrorStr}}</span>
-        <span class="success-color" *ngIf="isValidResourceMsgRendered"> This is a valid FHIR resource.</span>
+        <span class="success-color" *ngIf="isValidResource"> This is a valid FHIR resource.</span>
       </span>
 
-      <span class="align-right">
-        <button
-          mat-raised-button color="success" class="button"
-          (click)="onClear()"
-          [disabled]=this.isLoading>
-          <mat-icon>clear</mat-icon>
-          Clear Validator
+      <span class="content-spacer"></span>
+
+      <button
+        mat-raised-button color="success" class="button"
+        (click)="onClear()">
+        <mat-icon>clear</mat-icon>
+        Clear Validator
+      </button>
+
+      <span style="margin-left: 1em">
+        <button mat-raised-button color="accent" class="button"
+                  (click)="validateFhirResource(fhirResource, resourceFormat)">
+          <mat-icon>send</mat-icon>
+          Submit
         </button>
-        <span style="margin-left: 10px">
-          <button mat-raised-button color="accent" class="button"
-                  [disabled]="isLoading || !selectedProfile"
-                  (click)="validateFhirResource(fhirResource, resourceFormat, selectedProfile)">
-            <mat-icon>send</mat-icon>
-            Submit
-          </button>
-        </span>
       </span>
     </div>
 
+    <div class="row-button-wrapper top-spacer" *ngIf="isLoading">
+      <span class="content-spacer"></span>
+      <button  mat-raised-button color="warn" (click)="onCancelValidation()">
+        <mat-icon>cancel</mat-icon>
+        Cancel Validation
+      </button>
+    </div>
+
     <div *ngIf="hasBackendValidationErrors && !isLoading">
+
       <div class="top-spacer">
+        <span style="margin-right: 1em" *ngFor="let level of severityLevelsSelectionList">
+          <mat-checkbox
+            [(ngModel)]="level.selected"
+            (change)="onSeverityLevelFilterChange(level)"
+            [disabled]="!isFilterEnabled(level.name)">
+            {{level.name}} ({{getCount(level)}})
+          </mat-checkbox>
+        </span>
+      </div>
+
+      <div class="top-spacer">
+
+        <!-- A row of filter buttons. We may have to change the style-->
         <div (click)="onFilterResults()">
-          <mat-button-toggle-group name="severity level filter" [formControl]="selectedSeverityLevel"
+          <mat-button-toggle-group name="severity level filter" [formControl]="severityLevels"
                                    aria-label="severity level filter" multiple style="width: 100%">
-            <mat-button-toggle style="width: 33%" value="error">
-              <mat-icon class="danger-color">error</mat-icon>
+            <mat-button-toggle style="width: 25%" value="error" [disabled]="!isFilterEnabled('Error')">
+              <mat-icon>error</mat-icon>
               Error
             </mat-button-toggle>
-            <mat-button-toggle style="width: 33%" value="warning">
-              <mat-icon class="warning-color">warning</mat-icon>
+            <mat-button-toggle style="width: 25%" value="warning" [disabled]="!isFilterEnabled('Warning')">
+              <mat-icon>warning</mat-icon>
               Warning
             </mat-button-toggle>
-            <mat-button-toggle style="width: 34%" value="info">
-              <mat-icon class="success-color">info</mat-icon>
+            <mat-button-toggle style="width: 25%" value="info" [disabled]="!isFilterEnabled('Info')">
+              <mat-icon>info</mat-icon>
               Info
+            </mat-button-toggle>
+            <mat-button-toggle style="width: 25%" value="note" [disabled]="!isFilterEnabled('Note')">
+              <mat-icon>edit_note</mat-icon>
+              Note
             </mat-button-toggle>
           </mat-button-toggle-group>
         </div>
 
-        <div  *ngIf="selectedSeverityLevel.value.length === 0">
+        <div  *ngIf="severityLevels.value.length === 0">
          Please select severity level to see the result.
         </div>
 
-        <table mat-table [dataSource]="dataSource" multiTemplateDataRows *ngIf="selectedSeverityLevel.value.length > 0">
+        <table mat-table [dataSource]="dataSource" multiTemplateDataRows *ngIf="severityLevels.value.length > 0">
 
           <ng-container matColumnDef="toggle">
             <th mat-header-cell *matHeaderCellDef (click)="toggle()">
-              <mat-icon *ngIf="!allExpanded">expand_more</mat-icon>
-              <mat-icon *ngIf="allExpanded">expand_less</mat-icon>
+              <mat-icon *ngIf="!allExpanded" style="cursor: pointer" matTooltip="Expand All" aria-label="expand all">
+                expand_more
+              </mat-icon>
+              <mat-icon *ngIf="allExpanded" style="cursor: pointer" matTooltip="Collapse All" aria-label="collapse all">
+                expand_less
+              </mat-icon>
             </th>
             <td mat-cell *matCellDef="let validationResultItem" class="pointer"
-                (click)="validationResultItem.expanded = !validationResultItem.expanded">
-              <mat-icon matTooltip="Expand" *ngIf="!validationResultItem.expanded">expand_more</mat-icon>
-              <mat-icon matTooltip="Expand" *ngIf="validationResultItem.expanded">expand_less</mat-icon>
+                (click)="validationResultItem.expanded = !validationResultItem.expanded; checkExpandCollapseAllStatus()">
+              <mat-icon *ngIf="!validationResultItem.expanded" aria-label="expand">
+                expand_more
+              </mat-icon>
+              <mat-icon *ngIf="validationResultItem.expanded" aria-label="collapse">
+                expand_less
+              </mat-icon>
             </td>
           </ng-container>
 
@@ -156,6 +172,9 @@
               </mat-icon>
               <mat-icon *ngIf="validationResultItem.severity === 'Information'"
                         class="success-color">info
+              </mat-icon>
+              <mat-icon *ngIf="validationResultItem.severity === 'Note'"
+                        class="md-primary-color">edit_note
               </mat-icon>
             </td>
           </ng-container>

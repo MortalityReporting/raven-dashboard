@@ -82,6 +82,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background-color: #dcedc8;
 }
 
+.note-mark {
+  background-color: #e3f2fd;
+}
+
 /* Color Shades */
 .primary-light {
   background-color: #9fa8da;

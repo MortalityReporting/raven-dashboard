@@ -13,7 +13,7 @@ textarea {
   margin-top: 20px;
   font-size: 13px;
   line-height: 16px;
-  width:96%;
+  width: 96%;
   /*white-space: nowrap;*/
 }
 
@@ -28,7 +28,7 @@ textarea {
   margin-top: 20px;
   font-size: 13px;
   line-height: 16px;
-  width:96%;
+  width: 96%;
   font-family: monospace;
   background-color: #F8F8F8;
   white-space: pre;
@@ -53,18 +53,6 @@ textarea {
 /* TODO we can do a better css here especially if we go with responsive design */
 #spaced-content {display:flex; flex-flow:row wrap;}
 
-.align-left {
-  width:33.33333%;
-  text-align:left;
-}
-.align-center {
-  width:33.33333%;
-  text-align:center;
-}
-.align-right {
-  width:33.33333%;
-  text-align:right;
-}
 
 pre {
   white-space: pre-wrap;
@@ -143,3 +131,7 @@ tr.text-value-row {
   border: 1px solid #7986cb;
 }
 
+.row-button-wrapper {
+  display: flex;
+  align-items:center;
+}

@@ -6,6 +6,7 @@ import {ValidatorConstants} from "../../providers/validator-constants";
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatTableDataSource} from "@angular/material/table";
 import {FormControl} from "@angular/forms";
+import {Subscription} from "rxjs";
 
 export interface WarningError {
   severity: string;
@@ -33,64 +34,36 @@ export class FhirValidatorComponent implements OnInit {
   resourceFormat = 'json';
   fileName: string;
   validationErrorStr: string;
-  isErrorMsgRendered = false;
   isFormattingPerformedRendered = false;
-  isValidResourceMsgRendered = false;
   hasBackendValidationErrors = false;
   parsedFhirResource : any;
   displayedColumns: string[] = ['toggle', 'icon', 'severity', 'fhirPath', 'location'];
   isLoading = false;
   apiErrorResponse: any = [];
-  selectedProfile: any;
   allExpanded = true;
-  selectedSeverityLevel = new FormControl(['warning', 'error']);
-  dataSource = new MatTableDataSource(
-    [
-      {
-        "severity": "Warning",
-        "fhirPath": "Patient.address[0].state",
-        "location": "(line 4, col24)",
-        "message": "The value provided ('Texas') is not in the value set http://hl7.org/fhir/us/core/ValueSet/us-core-usps-state (http://hl7.org/fhir/us/core/ValueSet/us-core-usps-state), and a code should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable)  (error message = The code \"Texas\" is not valid in the system https://www.usps.com/; The code provided (https://www.usps.com/#Texas) is not valid in the value set 'UspsTwoLetterAlphabeticCodes' (from http://tx.fhir.org/r4))\r\n",
-        "expanded": true
-      },
-      {
-        "severity": "Warning",
-        "fhirPath": "Patient.address[0].use",
-        "location": "(line 6, col6)",
-        "message": "ValueSet http://hl7.org/fhir/ValueSet/address-use|4.0.1 not found by validator",
-        "expanded": true
-      },
-      {
-        "severity": "Error",
-        "fhirPath": "Patient.identifier[0].type",
-        "location": "(line 9, col20)",
-        "message": "None of the codings provided are in the value set http://hl7.org/fhir/ValueSet/identifier-type (http://hl7.org/fhir/ValueSet/identifier-type), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://cbsig.chai.gatech.edu/CodeSystem/cbs-temp-code-system#Local-Record-ID)",
-        "expanded": true,
-      },
-      {
-        "severity": "Error",
-        "fhirPath": "Patient.identifier[0].type",
-        "location": "(line 17, col20)",
-        "message": "None of the codings provided are in the value set http://hl7.org/fhir/ValueSet/identifier-type (http://hl7.org/fhir/ValueSet/identifier-type), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://cbsig.chai.gatech.edu/CodeSystem/cbs-temp-code-system#Local-Record-ID)",
-        "expanded": true,
-      }
-    ]
-  );
+  severityLevels = new FormControl(['warning', 'error', 'info', 'note']);
+  dataSource = new MatTableDataSource([]);
+  validatorSubscription$: Subscription;
+  validationFinished = false;
+  isValidResource = false;
 
+  severityLevelsSelectionList = [
+    {name: 'Error', selected: true},
+    {name: 'Warning', selected: true},
+    {name: 'Info', selected: true},
+    {name: 'Note', selected: true},
+  ];
 
   constructor(
     private fhirValidatorService: FhirValidatorService,
     private _snackBar: MatSnackBar,
     private sanitized: DomSanitizer,
     public constants: ValidatorConstants,
-
   ) {
   }
 
   formatFhirResource(){
-    if(this.fhirResource
-      && (this.fhirValidatorService.isXmlString(this.fhirResource) || this.fhirValidatorService.isJsonString(this.fhirResource)))
-    {
+    if(this.fhirResource){
       if(this.resourceFormat === 'json' && this.fhirValidatorService.isJsonString(this.fhirResource)){
         this.fhirResource = this.fhirValidatorService.beautifyJSON(this.fhirResource);
       }
@@ -116,11 +89,12 @@ export class FhirValidatorComponent implements OnInit {
     this.fileName=''
     this.validationErrorStr = '';
     this.isFormattingPerformedRendered = false;
-    this.isErrorMsgRendered = false;
-    this.isValidResourceMsgRendered = false;
+    this.isValidResource = false;
     this.parsedFhirResource = null;
     this.apiErrorResponse = null;
     this.hasBackendValidationErrors = false;
+    this.isValidResource = false;
+    this.validationFinished = false;
   }
 
   onClear(){
@@ -169,17 +143,17 @@ export class FhirValidatorComponent implements OnInit {
     }
   }
 
-  validateFhirResource(fhirResource: any, resourceFormat: string, selectedProfile: any) {
+  validateFhirResource(fhirResource: any, resourceFormat: string) {
 
     this.validationErrorStr = this.fhirValidatorService.getUiValidationMessages(fhirResource, resourceFormat);
     if(this.validationErrorStr){
       //see if we can find any obvious issues with the resource here
-      this.isErrorMsgRendered = true;
-      this.isValidResourceMsgRendered = false;
+      this.isValidResource = false;
+      this.validationFinished = true;
     }
     else {
       // The UI validation passed successfully, and we execute the backend validation.
-      this.executeAPIValidation(fhirResource, resourceFormat ,selectedProfile);
+      this.executeAPIValidation(fhirResource, resourceFormat);
     }
   }
 
@@ -221,11 +195,15 @@ export class FhirValidatorComponent implements OnInit {
     const errorLineNumbers = this.getLineNumbersBySeverity(apiResponse, 'Error');
     const warningLineNumbers = this.getLineNumbersBySeverity(apiResponse, 'Warning');
     const infoLineNumbers = this.getLineNumbersBySeverity(apiResponse, 'Information');
+    const noteLineNumbers = this.getLineNumbersBySeverity(apiResponse, 'Note');
 
-    if(errorLineNumbers?.length > 0 || warningLineNumbers?.length > 0 || infoLineNumbers.length > 0){
+    if(errorLineNumbers?.length > 0
+      || warningLineNumbers?.length > 0
+      || infoLineNumbers?.length > 0
+      || noteLineNumbers?.length > 0)
+    {
       this.hasBackendValidationErrors = true;
       this.validationErrorStr = "Please see the validation errors below.";
-      this.isErrorMsgRendered = true;
     }
 
     const lines = this.fhirResource.split('\n');
@@ -250,21 +228,21 @@ export class FhirValidatorComponent implements OnInit {
         this.parsedFhirResource += tempText;
         this.parsedFhirResource += '\n';
       }
+      else if(noteLineNumbers?.indexOf(i) != -1){
+        let tempText = '<span class="note-mark" id="mark' + offsetLine + '">' + sanitized + '</span>';
+        this.parsedFhirResource += tempText;
+        this.parsedFhirResource += '\n';
+      }
       else {
         this.parsedFhirResource += sanitized;
         this.parsedFhirResource += '\n';
       }
     });
     this.parsedFhirResource = this.sanitized.bypassSecurityTrustHtml(this.parsedFhirResource);
-    if(!this.hasBackendValidationErrors){
-      this.isValidResourceMsgRendered = true;
-    }
   }
 
   scrollToElement(location: string ): void {
-    console.log(location);
     const element = document.querySelector(location);
-    console.log(element);
     if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
@@ -274,37 +252,39 @@ export class FhirValidatorComponent implements OnInit {
   }
 
   // When the user selects a location from the errors and warning results, we want to scroll the page to that location
+
   onLocationSelected(response: any): void {
     let locationId = ('#mark' + this.getLineNumberFromLocation(response.location)).toLowerCase();
     this.scrollToElement(locationId);
   }
 
-  private executeAPIValidation(fhirResource: any, resourceFormat: string, selectedProfile: any) {
+  private executeAPIValidation(fhirResource: any, resourceFormat: string) {
     this.isLoading = true;
     this.parsedFhirResource = null;
     this.apiErrorResponse = null;
     fhirResource = JSON.parse(fhirResource);
-    this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat, selectedProfile).subscribe({
+    this.validatorSubscription$ = this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat).subscribe({
       next: (response) => {
-        if(false){ //TODO we still don't know exactly what a valid fhir resource response looks like
-
+        this.validationFinished = true;
+        if(response?.length === 1 && response[0].severity === "Information" && response[0].message === "ALL OK"){
+          this.isValidResource = true;
         }
         else {
-          response.forEach((element: any) => element.message = element.message .replace(/,(?=[^\s])/g, ", "));
+          this.isValidResource = false;
+          response?.forEach((element: any) => element.message = element.message .replace(/,(?=[^\s])/g, ", "));
 
           // sort by line numbers
           response = response.sort((a: any, b: any) => {
             return this.getLineNumberFromLocation(a.location) - this.getLineNumberFromLocation(b.location);
           });
+
           this.dataSource.data = response.map((element: any) => {
             let result: WarningError = Object.assign({}, element);
-              result.expanded = true;
-              return result});
+            result.expanded = true;
+            return result
+          });
+
           this.apiErrorResponse = response;
-
-          // this.dataSource.filterPredicate =
-          //   (data: any, filter: string) => data.severity.indexOf(filter) != -1;
-
           this.dataSource.filterPredicate = this.getFilterPredicate();
 
           this.renderAPIValidationErrors(response);
@@ -324,24 +304,16 @@ export class FhirValidatorComponent implements OnInit {
     });
   }
 
-  onSelectProfile(event: any) {
-    this.selectedProfile = event.value;
-  }
-
-  onSelectedProfileLink(selectedProfile: any) {
-    window.open(selectedProfile.url);
-  }
-
   toggle() {
     this.allExpanded = !this.allExpanded;
     this.dataSource.data.forEach(item => item.expanded = this.allExpanded);
   }
 
   onFilterResults() {
-    this.dataSource.filter = this.selectedSeverityLevel.value.join(',');
+    this.dataSource.filter = this.severityLevels.value.join(',');
   }
 
-  private getFilterPredicate() {
+  getFilterPredicate() {
     return function (row: any, filters: string) {
       let matchFilter: boolean = false;
       const filterArray = filters.split(',');
@@ -353,5 +325,40 @@ export class FhirValidatorComponent implements OnInit {
       )
       return matchFilter;
     };
+  }
+
+  onCancelValidation (){
+    this.validatorSubscription$.unsubscribe();
+    this.isLoading = false;
+  }
+
+  checkExpandCollapseAllStatus() {
+    // When all elements are collapsed we want to change the expansion icon to render "expand all"
+    // When all elements are expanded we want to change the expansion icon to "collapse all"
+    // This will save extra unnecessary click for the user
+    const expandedElementsCount = this.dataSource.data.filter(element => element.expanded).length;
+    if(expandedElementsCount === this.dataSource.data.length){
+      this.allExpanded = true;
+    }
+    else if(expandedElementsCount === 0){
+      this.allExpanded = false;
+    }
+  }
+
+  isFilterEnabled(severity: string) {
+    return !!this.dataSource.data.find(element => element.severity.toLowerCase() === severity.toLowerCase());
+  }
+
+  onSeverityLevelFilterChange(level: any) {
+    this.dataSource.filter = this.severityLevelsSelectionList
+      .filter(level=> level.selected)
+      .map(level => level.name)
+      .join(',');
+  }
+
+  getCount(level: any) {
+    return this.dataSource.data
+      .filter(element => element.severity.toLowerCase() === level.name.toLowerCase())
+      .length;
   }
 }
