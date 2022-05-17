@@ -268,23 +268,23 @@ export class FhirValidatorComponent implements OnInit {
           this.isValidResource = false;
           this.validationErrorStr = "Please see the validation errors below.";
         }
-          response?.forEach((element: any) => element.message = element.message .replace(/,(?=[^\s])/g, ", "));
+        response?.forEach((element: any) => element.message = element.message.replace(/,(?=[^\s])/g, ", "));
 
-          // sort by line numbers
-          response = response.sort((a: any, b: any) => {
-            return this.getLineNumberFromLocation(a.location) - this.getLineNumberFromLocation(b.location);
-          });
+        // sort by line numbers
+        response = response.sort((a: any, b: any) => {
+          return this.getLineNumberFromLocation(a.location) - this.getLineNumberFromLocation(b.location);
+        });
 
-          this.dataSource.data = response.map((element: any) => {
-            let result: WarningError = Object.assign({}, element);
-            result.expanded = true;
-            return result
-          });
+        this.dataSource.data = response.map((element: any) => {
+          let result: WarningError = Object.assign({}, element);
+          result.expanded = true;
+          return result
+        });
 
-          this.dataSource.filterPredicate = this.getFilterPredicate();
+        this.dataSource.filterPredicate = this.getFilterPredicate();
 
-          this.renderAPIResponseData(response);
-   //     }
+        this.renderAPIResponseData(response);
+
       },
       error: () => {
         this._snackBar.open("Server error occurred.", 'x' ,{
