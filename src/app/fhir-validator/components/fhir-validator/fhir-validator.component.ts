@@ -41,18 +41,12 @@ export class FhirValidatorComponent implements OnInit {
   isLoading = false;
   apiErrorResponse: any = [];
   allExpanded = true;
-  severityLevels = new FormControl(['warning', 'error', 'info', 'note']);
+  severityLevels: string[] = ['error', 'warning', 'info', 'note'];
+  severityLevelsFormControl = new FormControl(this.severityLevels);
   dataSource = new MatTableDataSource([]);
   validatorSubscription$: Subscription;
   validationFinished = false;
   isValidResource = false;
-
-  severityLevelsSelectionList = [
-    {name: 'Error', selected: true},
-    {name: 'Warning', selected: true},
-    {name: 'Info', selected: true},
-    {name: 'Note', selected: true},
-  ];
 
   constructor(
     private fhirValidatorService: FhirValidatorService,
@@ -95,6 +89,7 @@ export class FhirValidatorComponent implements OnInit {
     this.hasBackendValidationErrors = false;
     this.isValidResource = false;
     this.validationFinished = false;
+    this.isLoading = false;
   }
 
   onClear(){
@@ -144,6 +139,9 @@ export class FhirValidatorComponent implements OnInit {
   }
 
   validateFhirResource(fhirResource: any, resourceFormat: string) {
+
+    this.isValidResource = true;
+    this.hasBackendValidationErrors = false;
 
     this.validationErrorStr = this.fhirValidatorService.getUiValidationMessages(fhirResource, resourceFormat);
     if(this.validationErrorStr){
@@ -310,7 +308,7 @@ export class FhirValidatorComponent implements OnInit {
   }
 
   onFilterResults() {
-    this.dataSource.filter = this.severityLevels.value.join(',');
+    this.dataSource.filter = this.severityLevelsFormControl.value.join(',');
   }
 
   getFilterPredicate() {
@@ -329,7 +327,7 @@ export class FhirValidatorComponent implements OnInit {
 
   onCancelValidation (){
     this.validatorSubscription$.unsubscribe();
-    this.isLoading = false;
+    this.clearUI();
   }
 
   checkExpandCollapseAllStatus() {
@@ -349,16 +347,16 @@ export class FhirValidatorComponent implements OnInit {
     return !!this.dataSource.data.find(element => element.severity.toLowerCase() === severity.toLowerCase());
   }
 
-  onSeverityLevelFilterChange(level: any) {
-    this.dataSource.filter = this.severityLevelsSelectionList
-      .filter(level=> level.selected)
-      .map(level => level.name)
-      .join(',');
-  }
-
   getCount(level: any) {
     return this.dataSource.data
-      .filter(element => element.severity.toLowerCase() === level.name.toLowerCase())
+      .filter(element => element.severity.toLowerCase() === level.toLowerCase())
       .length;
+  }
+
+  // We don't want the checkboxes for the filters to work independently form the buttons.
+  // Therefore, the status of the checkboxes can ony change based on the status of the button group
+  // and does not change whe the user selects and deselects the checkbox itself
+  onCheckboxSelected(event: MouseEvent) {
+    event.preventDefault();
   }
 }

@@ -97,49 +97,32 @@
       </button>
     </div>
 
+
     <div *ngIf="hasBackendValidationErrors && !isLoading">
-
-      <div class="top-spacer">
-        <span style="margin-right: 1em" *ngFor="let level of severityLevelsSelectionList">
-          <mat-checkbox
-            [(ngModel)]="level.selected"
-            (change)="onSeverityLevelFilterChange(level)"
-            [disabled]="!isFilterEnabled(level.name)">
-            {{level.name}} ({{getCount(level)}})
-          </mat-checkbox>
-        </span>
-      </div>
-
       <div class="top-spacer">
 
-        <!-- A row of filter buttons. We may have to change the style-->
         <div (click)="onFilterResults()">
-          <mat-button-toggle-group name="severity level filter" [formControl]="severityLevels"
+          <mat-button-toggle-group name="severity level filter" [formControl]="severityLevelsFormControl"
                                    aria-label="severity level filter" multiple style="width: 100%">
-            <mat-button-toggle style="width: 25%" value="error" [disabled]="!isFilterEnabled('Error')">
-              <mat-icon>error</mat-icon>
-              Error
-            </mat-button-toggle>
-            <mat-button-toggle style="width: 25%" value="warning" [disabled]="!isFilterEnabled('Warning')">
-              <mat-icon>warning</mat-icon>
-              Warning
-            </mat-button-toggle>
-            <mat-button-toggle style="width: 25%" value="info" [disabled]="!isFilterEnabled('Info')">
-              <mat-icon>info</mat-icon>
-              Info
-            </mat-button-toggle>
-            <mat-button-toggle style="width: 25%" value="note" [disabled]="!isFilterEnabled('Note')">
-              <mat-icon>edit_note</mat-icon>
-              Note
+
+            <mat-button-toggle style="width: 25%" *ngFor="let level of severityLevels" [value]="level" [disabled]="!isFilterEnabled(level)">
+              <mat-checkbox
+                color="primary"
+                [checked]="severityLevelsFormControl?.value.indexOf(level) != -1"
+                (click)="onCheckboxSelected($event)"
+                [disabled]="!isFilterEnabled(level)"
+              >
+              </mat-checkbox>
+              {{level | titlecase }} ({{getCount(level)}})
             </mat-button-toggle>
           </mat-button-toggle-group>
         </div>
 
-        <div  *ngIf="severityLevels.value.length === 0">
+        <div  *ngIf="severityLevelsFormControl.value.length === 0">
          Please select severity level to see the result.
         </div>
 
-        <table mat-table [dataSource]="dataSource" multiTemplateDataRows *ngIf="severityLevels.value.length > 0">
+        <table mat-table [dataSource]="dataSource" multiTemplateDataRows *ngIf="severityLevelsFormControl.value.length > 0">
 
           <ng-container matColumnDef="toggle">
             <th mat-header-cell *matHeaderCellDef (click)="toggle()">
