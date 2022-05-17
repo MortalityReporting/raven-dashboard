@@ -35,13 +35,13 @@ export class FhirValidatorComponent implements OnInit {
   fileName: string;
   validationErrorStr: string;
   isFormattingPerformedRendered = false;
-  hasBackendValidationErrors = false;
+  hasResponseData = false;
   parsedFhirResource : any;
   displayedColumns: string[] = ['toggle', 'icon', 'severity', 'fhirPath', 'location'];
   isLoading = false;
-  apiErrorResponse: any = [];
+  apiResponse: any = [];
   allExpanded = true;
-  severityLevels: string[] = ['error', 'warning', 'info', 'note'];
+  severityLevels: string[] = ['error', 'warning', 'information', 'note'];
   severityLevelsFormControl = new FormControl(this.severityLevels);
   dataSource = new MatTableDataSource([]);
   validatorSubscription$: Subscription;
@@ -85,8 +85,7 @@ export class FhirValidatorComponent implements OnInit {
     this.isFormattingPerformedRendered = false;
     this.isValidResource = false;
     this.parsedFhirResource = null;
-    this.apiErrorResponse = null;
-    this.hasBackendValidationErrors = false;
+    this.hasResponseData = false;
     this.isValidResource = false;
     this.validationFinished = false;
     this.isLoading = false;
@@ -141,7 +140,7 @@ export class FhirValidatorComponent implements OnInit {
   validateFhirResource(fhirResource: any, resourceFormat: string) {
 
     this.isValidResource = true;
-    this.hasBackendValidationErrors = false;
+    this.hasResponseData = false;
 
     this.validationErrorStr = this.fhirValidatorService.getUiValidationMessages(fhirResource, resourceFormat);
     if(this.validationErrorStr){
@@ -188,7 +187,7 @@ export class FhirValidatorComponent implements OnInit {
       .replace(/'/g, "&#039;");
   }
 
-  renderAPIValidationErrors(apiResponse: any) {
+  renderAPIResponseData(apiResponse: any) {
 
     const errorLineNumbers = this.getLineNumbersBySeverity(apiResponse, 'Error');
     const warningLineNumbers = this.getLineNumbersBySeverity(apiResponse, 'Warning');
@@ -200,8 +199,7 @@ export class FhirValidatorComponent implements OnInit {
       || infoLineNumbers?.length > 0
       || noteLineNumbers?.length > 0)
     {
-      this.hasBackendValidationErrors = true;
-      this.validationErrorStr = "Please see the validation errors below.";
+      this.hasResponseData = true;
     }
 
     const lines = this.fhirResource.split('\n');
@@ -259,7 +257,6 @@ export class FhirValidatorComponent implements OnInit {
   private executeAPIValidation(fhirResource: any, resourceFormat: string) {
     this.isLoading = true;
     this.parsedFhirResource = null;
-    this.apiErrorResponse = null;
     fhirResource = JSON.parse(fhirResource);
     this.validatorSubscription$ = this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat).subscribe({
       next: (response) => {
@@ -269,6 +266,8 @@ export class FhirValidatorComponent implements OnInit {
         }
         else {
           this.isValidResource = false;
+          this.validationErrorStr = "Please see the validation errors below.";
+        }
           response?.forEach((element: any) => element.message = element.message .replace(/,(?=[^\s])/g, ", "));
 
           // sort by line numbers
@@ -282,11 +281,10 @@ export class FhirValidatorComponent implements OnInit {
             return result
           });
 
-          this.apiErrorResponse = response;
           this.dataSource.filterPredicate = this.getFilterPredicate();
 
-          this.renderAPIValidationErrors(response);
-        }
+          this.renderAPIResponseData(response);
+   //     }
       },
       error: () => {
         this._snackBar.open("Server error occurred.", 'x' ,{
