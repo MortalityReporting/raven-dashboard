@@ -121,10 +121,6 @@ tr.text-value-row {
   font-weight: bold;
 }
 
-.mat-button-toggle {
-  background-color: whitesmoke;
-}
-
 .mat-button-toggle-checked {
   color: #303f9f;
   background-color: #e8eaf6;
@@ -134,4 +130,14 @@ tr.text-value-row {
 .row-button-wrapper {
   display: flex;
   align-items:center;
+}
+
+mat-button-toggle{
+  font-weight: bold;
+}
+
+.mat-button-toggle-disabled {
+  background-color: whitesmoke;
+  color: #252525;
+  border: 1px solid whitesmoke;
 }
