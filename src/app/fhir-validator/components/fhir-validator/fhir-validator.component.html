@@ -66,8 +66,8 @@
       <span class="md-primary-color" *ngIf="isFormattingPerformedRendered" style="margin-left: 1em">Formatting Attempted.</span>
 
       <span class="content-spacer"></span>
-      <span *ngIf="validationFinished">
-        <span class="danger-color" *ngIf="!!validationErrorStr">{{validationErrorStr}}</span>
+      <span *ngIf="validationFinished" style="font-size: large; font-weight: bold">
+        <span class="danger-color" *ngIf="!!validationErrorStr && !isValidResource">{{validationErrorStr}}</span>
         <span class="success-color" *ngIf="isValidResource"> This is a valid FHIR resource.</span>
       </span>
 
@@ -98,7 +98,7 @@
     </div>
 
 
-    <div *ngIf="hasBackendValidationErrors && !isLoading">
+    <div *ngIf="hasResponseData && !isLoading">
       <div class="top-spacer">
 
         <div (click)="onFilterResults()">
