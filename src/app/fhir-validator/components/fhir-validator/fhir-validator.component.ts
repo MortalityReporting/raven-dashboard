@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {DomSanitizer} from "@angular/platform-browser";
 import {FhirValidatorService} from "../../service/fhir-validator.service";
 import {ValidatorConstants} from "../../providers/validator-constants";
@@ -7,6 +6,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatTableDataSource} from "@angular/material/table";
 import {FormControl} from "@angular/forms";
 import {Subscription} from "rxjs";
+import {UtilsService} from "../../service/utils.service";
 
 export interface WarningError {
   severity: string;
@@ -14,7 +14,6 @@ export interface WarningError {
   location: string;
   expanded: boolean;
 }
-
 
 @Component({
   selector: 'app-fhir-validator',
@@ -28,6 +27,7 @@ export interface WarningError {
     ]),
   ],
 })
+
 export class FhirValidatorComponent implements OnInit {
 
   fhirResource: string ='';
@@ -47,12 +47,13 @@ export class FhirValidatorComponent implements OnInit {
   validatorSubscription$: Subscription;
   validationFinished = false;
   isValidResource = false;
+  fileMaxSize = 100000;
 
   constructor(
     private fhirValidatorService: FhirValidatorService,
-    private _snackBar: MatSnackBar,
     private sanitized: DomSanitizer,
     public constants: ValidatorConstants,
+    private utilsService: UtilsService
   ) {
   }
 
@@ -72,7 +73,8 @@ export class FhirValidatorComponent implements OnInit {
   onFormatInput() {
     this.formatFhirResource()
     this.isFormattingPerformedRendered = true;
-    setTimeout(() => this.isFormattingPerformedRendered = false, 2000);
+    //setTimeout(() => this.isFormattingPerformedRendered = false, 2000);
+    this.utilsService.showSuccessMessage("Formatting Attempted.");
   }
 
   ngOnInit(): void {
@@ -100,40 +102,36 @@ export class FhirValidatorComponent implements OnInit {
     const file:File = event.target.files[0];
 
     if (file) {
-
-      // auto toggle the file type radio buttons
-      if (file.type === "text/xml"){
-        this.resourceFormat = 'xml';
+      if(file.size > this.fileMaxSize){
+        console.error("File too big")
+        this.utilsService.showErrorMessage("This file is too large.");
       }
-      else if ("application/json"){
-        this.resourceFormat = 'json';
-      }
+      else {
+        // auto toggle the file type radio buttons
+        if (file.type === "text/xml") {
+          this.resourceFormat = 'xml';
+        } else if ("application/json") {
+          this.resourceFormat = 'json';
+        }
 
-      // set the filename in the UI
-      this.fileName = file.name;
+        // set the filename in the UI
+        this.fileName = file.name;
+        console.log(file);
 
-      const reader = new FileReader();
-      reader.readAsText(file, "UTF-8");
-      reader.onload = () => {
-        this.fhirResource = reader.result as string;
-        this.formatFhirResource();
-      }
-      reader.onerror = () => {
-        this._snackBar.open("Unable to open the file.", 'x' ,{
-          horizontalPosition: 'center',
-          verticalPosition: 'top',
-          panelClass: ['error-color']
-        });
+        const reader = new FileReader();
+        reader.readAsText(file, "UTF-8");
+        reader.onload = () => {
+          this.fhirResource = reader.result as string;
+          this.formatFhirResource();
+        }
+        reader.onerror = () => {
+          this.utilsService.showErrorMessage("Unable to open the file.");
+        }
       }
 
     }
     else {
-      this._snackBar.open("Unable to open the file.", 'x' ,{
-        horizontalPosition: 'center',
-        verticalPosition: 'top',
-        duration: 3000,
-        panelClass: ['danger-color']
-      });
+      this.utilsService.showErrorMessage("Unable to open the file.");
     }
   }
 
@@ -287,11 +285,7 @@ export class FhirValidatorComponent implements OnInit {
 
       },
       error: () => {
-        this._snackBar.open("Server error occurred.", 'x' ,{
-          horizontalPosition: 'center',
-          verticalPosition: 'top',
-          panelClass: ['error-color']
-        });
+        this.utilsService.showErrorMessage("Server error occurred.");
         this.isLoading = false;
       },
       complete: () => {

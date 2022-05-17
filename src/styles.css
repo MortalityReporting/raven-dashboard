@@ -91,5 +91,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background-color: #9fa8da;
 }
 
+.mat-snack-bar-container {
+  margin-top: 10em !important;
+}
 
+.mat-simple-snackbar {
+  color: whitesmoke !important;
+}
 
