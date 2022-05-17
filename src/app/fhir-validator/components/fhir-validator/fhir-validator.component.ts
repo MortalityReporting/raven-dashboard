@@ -319,7 +319,7 @@ export class FhirValidatorComponent implements OnInit {
 
   onCancelValidation (){
     this.validatorSubscription$.unsubscribe();
-    this.clearUI();
+    this.isLoading = false;
   }
 
   checkExpandCollapseAllStatus() {
