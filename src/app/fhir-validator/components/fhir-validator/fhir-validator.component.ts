@@ -73,7 +73,6 @@ export class FhirValidatorComponent implements OnInit {
   onFormatInput() {
     this.formatFhirResource()
     this.isFormattingPerformedRendered = true;
-    //setTimeout(() => this.isFormattingPerformedRendered = false, 2000);
     this.utilsService.showSuccessMessage("Formatting Attempted.");
   }
 
@@ -104,7 +103,7 @@ export class FhirValidatorComponent implements OnInit {
     if (file) {
       if(file.size > this.fileMaxSize){
         console.error("File too big")
-        this.utilsService.showErrorMessage("This file is too large.");
+        this.utilsService.showErrorMessage("This file exceeds " + this.fileMaxSize + " and cannot be processed");
       }
       else {
         // auto toggle the file type radio buttons
@@ -116,7 +115,6 @@ export class FhirValidatorComponent implements OnInit {
 
         // set the filename in the UI
         this.fileName = file.name;
-        console.log(file);
 
         const reader = new FileReader();
         reader.readAsText(file, "UTF-8");
@@ -246,7 +244,6 @@ export class FhirValidatorComponent implements OnInit {
   }
 
   // When the user selects a location from the errors and warning results, we want to scroll the page to that location
-
   onLocationSelected(response: any): void {
     let locationId = ('#mark' + this.getLineNumberFromLocation(response.location)).toLowerCase();
     this.scrollToElement(locationId);
@@ -255,8 +252,18 @@ export class FhirValidatorComponent implements OnInit {
   private executeAPIValidation(fhirResource: any, resourceFormat: string) {
     this.isLoading = true;
     this.parsedFhirResource = null;
-    fhirResource = JSON.parse(fhirResource);
-    this.validatorSubscription$ = this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat).subscribe({
+    let resourceType: string = null;
+
+    if(this.resourceFormat === "json"){
+      fhirResource = JSON.parse(fhirResource);
+      resourceType = fhirResource.resourceType;
+    }
+    else if(this.resourceFormat === "xml"){
+      let fhirResourceXML = new DOMParser().parseFromString(fhirResource, 'text/xml');
+      resourceType = fhirResourceXML.childNodes[0].nodeName;
+    }
+
+    this.validatorSubscription$ = this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat, resourceType).subscribe({
       next: (response) => {
         this.validationFinished = true;
         if(response?.length === 1 && response[0].severity === "Information" && response[0].message === "ALL OK"){

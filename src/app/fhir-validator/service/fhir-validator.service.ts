@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {map} from "rxjs/operators";
 
 @Injectable({
@@ -107,7 +107,7 @@ export class FhirValidatorService {
     )));
   }
 
-  validateFhirResource(fhirResource: any, resourceFormat: string):  Observable<any> {
+  validateFhirResource(fhirResource: any, resourceFormat: string, resourceType: string):  Observable<any> {
 
     const requestData = {
       "resourceType": "Parameters",
@@ -126,7 +126,7 @@ export class FhirValidatorService {
         }
       ]
     }
-    return this.http.post(this.prodUri + '/'+ fhirResource.resourceType + "/$validate", requestData).pipe( map((result: any) => (
+    return this.http.post(this.prodUri + '/'+ resourceType + "/$validate", requestData).pipe( map((result: any) => (
       result as Object
     )));
   }
