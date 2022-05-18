@@ -101,8 +101,8 @@ export class FhirValidatorService {
     )));
   }
 
-  validateFhirResourceTemp(fhirResource: any, resourceFormat: string , selectedProfile: any):  Observable<any> {
-    return this.http.get('./assets/data/validator-response.json').pipe( map((result: any) => (
+  validateFhirResourceTemp(fhirResource: any, resourceFormat: string, resourceType: string):  Observable<any> {
+    return this.http.get('./assets/data/valid_resource_response.json').pipe( map((result: any) => (
       result as Object
     )));
   }
