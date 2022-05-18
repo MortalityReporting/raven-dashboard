@@ -32,7 +32,8 @@
       <span class="content-spacer"></span>
 
       <!--File upload widget-->
-      <input type="file" class="file-input" (click)="fileUpload.value=null" (change)="onFileSelected($event)" #fileUpload>
+      <input type="file" class="file-input" (click)="fileUpload.value=null" accept="text/*,.json"
+             (change)="onFileSelected($event)" #fileUpload>
       <span style="font-family: monospace; margin-right: 1em">{{fileName}}</span>
       <button mat-raised-button color="primary" class="upload-btn"
               (click)="clearUI(); fileUpload.click();" [disabled]=isLoading>
