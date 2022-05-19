@@ -351,11 +351,4 @@ export class FhirValidatorComponent implements OnInit {
       .filter(element => element.severity.toLowerCase() === level.toLowerCase())
       .length;
   }
-
-  // We don't want the checkboxes for the filters to work independently form the buttons.
-  // Therefore, the status of the checkboxes can ony change based on the status of the button group
-  // and does not change whe the user selects and deselects the checkbox itself
-  onCheckboxSelected(event: MouseEvent) {
-    event.preventDefault();
-  }
 }

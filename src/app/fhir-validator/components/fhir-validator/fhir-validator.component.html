@@ -109,8 +109,9 @@
               <mat-checkbox
                 color="primary"
                 [checked]="severityLevelsFormControl?.value.indexOf(level) != -1"
-                (click)="onCheckboxSelected($event)"
+                (click)="onFilterResults()"
                 [disabled]="!isFilterEnabled(level)"
+                [disableRipple]="true"
               >
               </mat-checkbox>
               {{level | titlecase }} ({{getCount(level)}})
