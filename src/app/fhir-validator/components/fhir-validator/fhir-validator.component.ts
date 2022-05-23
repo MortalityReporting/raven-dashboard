@@ -48,6 +48,7 @@ export class FhirValidatorComponent implements OnInit {
   validationFinished = false;
   isValidResource = false;
   fileMaxSize = 100000;
+  xmlnsType = 'http://hl7.org/fhir'
 
   constructor(
     private fhirValidatorService: FhirValidatorService,
@@ -185,10 +186,10 @@ export class FhirValidatorComponent implements OnInit {
 
   renderAPIResponseData(apiResponse: any) {
 
-    const errorLineNumbers = this.getLineNumbersBySeverity(apiResponse, 'Error');
-    const warningLineNumbers = this.getLineNumbersBySeverity(apiResponse, 'Warning');
-    const infoLineNumbers = this.getLineNumbersBySeverity(apiResponse, 'Information');
-    const noteLineNumbers = this.getLineNumbersBySeverity(apiResponse, 'Note');
+    const errorLineNumbers = this.getLineNumbersBySeverity(apiResponse.issues, 'Error');
+    const warningLineNumbers = this.getLineNumbersBySeverity(apiResponse.issues, 'Warning');
+    const infoLineNumbers = this.getLineNumbersBySeverity(apiResponse.issues, 'Information');
+    const noteLineNumbers = this.getLineNumbersBySeverity(apiResponse.issues, 'Note');
 
     if(errorLineNumbers?.length > 0
       || warningLineNumbers?.length > 0
@@ -197,9 +198,10 @@ export class FhirValidatorComponent implements OnInit {
     {
       this.hasResponseData = true;
     }
+    this.parsedFhirResource = apiResponse.formattedResource;
 
-    const lines = this.fhirResource.split('\n');
-    lines.forEach((line, i) => {
+    const lines = apiResponse.formattedResource.split('\n');
+    lines.forEach((line: string, i: number) => {
       let offsetLine = i + 1;
       const sanitized = this.escapeHtml(line);
       if(!this.parsedFhirResource){
@@ -231,6 +233,40 @@ export class FhirValidatorComponent implements OnInit {
       }
     });
     this.parsedFhirResource = this.sanitized.bypassSecurityTrustHtml(this.parsedFhirResource);
+
+    // const lines = this.fhirResource.split('\n');
+    // lines.forEach((line, i) => {
+    //   let offsetLine = i + 1;
+    //   const sanitized = this.escapeHtml(line);
+    //   if(!this.parsedFhirResource){
+    //     this.parsedFhirResource = '';
+    //   }
+    //   if(errorLineNumbers?.indexOf(i) != -1){
+    //     let tempText = '<span class="error-mark" id="mark' + offsetLine + '">' + sanitized + '</span>';
+    //     this.parsedFhirResource += tempText;
+    //     this.parsedFhirResource += '\n';
+    //   }
+    //   else if(warningLineNumbers?.indexOf(i) != -1){
+    //     let tempText = '<span class="warning-mark" id="mark' + offsetLine + '">' + sanitized + '</span>';
+    //     this.parsedFhirResource += tempText;
+    //     this.parsedFhirResource += '\n';
+    //   }
+    //   else if(infoLineNumbers?.indexOf(i) != -1){
+    //     let tempText = '<span class="info-mark" id="mark' + offsetLine + '">' + sanitized + '</span>';
+    //     this.parsedFhirResource += tempText;
+    //     this.parsedFhirResource += '\n';
+    //   }
+    //   else if(noteLineNumbers?.indexOf(i) != -1){
+    //     let tempText = '<span class="note-mark" id="mark' + offsetLine + '">' + sanitized + '</span>';
+    //     this.parsedFhirResource += tempText;
+    //     this.parsedFhirResource += '\n';
+    //   }
+    //   else {
+    //     this.parsedFhirResource += sanitized;
+    //     this.parsedFhirResource += '\n';
+    //   }
+    // });
+    // this.parsedFhirResource = this.sanitized.bypassSecurityTrustHtml(this.parsedFhirResource);
   }
 
   scrollToElement(location: string ): void {
@@ -260,30 +296,32 @@ export class FhirValidatorComponent implements OnInit {
     }
     else if(this.resourceFormat === "xml"){
       let fhirResourceXML = new DOMParser().parseFromString(fhirResource, 'text/xml');
-      // resourceType = fhirResourceXML.childNodes[0].nodeName;
-      // console.log(resourceType);
-      // console.log(fhirResourceXML.getElementsByTagName(resourceType).getAttribute("xmlns"));
-      // console.log(fhirResourceXML.childNodes[0].nodeType);
+      resourceType = fhirResourceXML.childNodes[0].nodeName;
+      console.log(resourceType);
+      console.log(fhirResourceXML.querySelector(resourceType).getAttribute('xmlns'));
+      console.log(fhirResourceXML.childNodes[0].nodeType);
     }
 
     this.validatorSubscription$ = this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat, resourceType).subscribe({
       next: (response) => {
         this.validationFinished = true;
-        if(response?.length === 1 && response[0].severity === "Information" && response[0].message === "ALL OK"){
+        console.log(response);
+        let issues = response.issues;
+        if(issues.length === 1 && issues[0].severity === "Information" && issues[0]?.message === "ALL OK"){
           this.isValidResource = true;
         }
         else {
           this.isValidResource = false;
           this.validationErrorStr = "Please see the validation errors below.";
         }
-        response?.forEach((element: any) => element.message = element.message.replace(/,(?=[^\s])/g, ", "));
+        issues.forEach((element: any) => element.message = element.message.replace(/,(?=[^\s])/g, ", "));
 
         // sort by line numbers
-        response = response.sort((a: any, b: any) => {
+        issues = issues.sort((a: any, b: any) => {
           return this.getLineNumberFromLocation(a.location) - this.getLineNumberFromLocation(b.location);
         });
 
-        this.dataSource.data = response.map((element: any) => {
+        this.dataSource.data = issues.map((element: any) => {
           let result: WarningError = Object.assign({}, element);
           result.expanded = true;
           return result
