@@ -260,7 +260,10 @@ export class FhirValidatorComponent implements OnInit {
     }
     else if(this.resourceFormat === "xml"){
       let fhirResourceXML = new DOMParser().parseFromString(fhirResource, 'text/xml');
-      resourceType = fhirResourceXML.childNodes[0].nodeName;
+      // resourceType = fhirResourceXML.childNodes[0].nodeName;
+      // console.log(resourceType);
+      // console.log(fhirResourceXML.getElementsByTagName(resourceType).getAttribute("xmlns"));
+      // console.log(fhirResourceXML.childNodes[0].nodeType);
     }
 
     this.validatorSubscription$ = this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat, resourceType).subscribe({
