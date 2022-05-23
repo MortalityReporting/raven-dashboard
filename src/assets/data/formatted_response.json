@@ -1,0 +1,41 @@
+{
+  "issues": [
+    {
+      "severity": "Error",
+      "fhirPath": "Observation.component[0].code",
+      "location": "(line 13, col18)",
+      "message": "The pattern [system http://loinc.org, code 80616-6, and display 'null'] defined in the profile http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date not found. Issues: [ValidationMessage[level=ERROR,type=VALUE,location=Observation.component[0].code.coding.code,message=Value is '80123-6' but must be '80616-6']]"
+    },
+    {
+      "severity": "Error",
+      "fhirPath": "Observation.component[0].code.coding[0]",
+      "location": "(line 13, col20)",
+      "message": "The code \"80123-6\" is not valid in the system http://loinc.org; The code provided (http://loinc.org#80123-6) is not valid in the value set 'All codes known to the system' (from http://tx.fhir.org/r4) for 'http://loinc.org#80123-6'"
+    },
+    {
+      "severity": "Error",
+      "fhirPath": "Observation",
+      "location": "(line 1, col2)",
+      "message": "Observation.code: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/Observation)"
+    },
+    {
+      "severity": "Error",
+      "fhirPath": "Observation",
+      "location": "(line 1, col2)",
+      "message": "Observation.code: minimum required = 1, but only found 0 (from http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date)"
+    },
+    {
+      "severity": "Error",
+      "fhirPath": "Observation",
+      "location": "(line 1, col2)",
+      "message": "Observation.effective[x]: minimum required = 1, but only found 0 (from http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date)"
+    },
+    {
+      "severity": "Error",
+      "fhirPath": "Observation",
+      "location": "(line 1, col2)",
+      "message": "Observation.subject: minimum required = 1, but only found 0 (from http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date)"
+    }
+  ],
+  "formattedResource": "{\n  \"resourceType\": \"Observation\",\n  \"id\": \"observation-death-date-j-rogers\",\n  \"meta\": {\n    \"versionId\": \"1\",\n    \"lastUpdated\": \"2022-02-17T03:30:31.175+00:00\",\n    \"source\": \"#HxNQbdXHR9YLhjG8\",\n    \"profile\": [ \"http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date\" ]\n  },\n  \"status\": \"final\",\n  \"component\": [ {\n    \"code\": {\n      \"coding\": [ {\n        \"system\": \"http://loinc.org\",\n        \"code\": \"80123-6\",\n        \"display\": \"Date and time pronounced dead [US Standard Certificate of Death]\"\n      } ]\n    },\n    \"valueDateTime\": \"2022-01-04T05:30:00-05:00\"\n  } ]\n}"
+}
