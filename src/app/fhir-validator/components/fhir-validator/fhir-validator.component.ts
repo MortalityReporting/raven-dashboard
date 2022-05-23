@@ -198,37 +198,40 @@ export class FhirValidatorComponent implements OnInit {
     {
       this.hasResponseData = true;
     }
-    this.parsedFhirResource = apiResponse.formattedResource;
+   // this.parsedFhirResource = apiResponse.formattedResource;
 
-    const lines = apiResponse.formattedResource.split('\n');
+    let lines = apiResponse.formattedResource.split('\\n');
+    console.log(lines);
+    lines = apiResponse.formattedResource.split('\n');
     lines.forEach((line: string, i: number) => {
+      console.log(line);
       let offsetLine = i + 1;
-      const sanitized = this.escapeHtml(line);
+     // const sanitized = this.escapeHtml(line);
       if(!this.parsedFhirResource){
         this.parsedFhirResource = '';
       }
       if(errorLineNumbers?.indexOf(i) != -1){
-        let tempText = '<span class="error-mark" id="mark' + offsetLine + '">' + sanitized + '</span>';
+        let tempText = '<span class="error-mark" id="mark' + offsetLine + '">' + line + '</span>';
         this.parsedFhirResource += tempText;
         this.parsedFhirResource += '\n';
       }
       else if(warningLineNumbers?.indexOf(i) != -1){
-        let tempText = '<span class="warning-mark" id="mark' + offsetLine + '">' + sanitized + '</span>';
+        let tempText = '<span class="warning-mark" id="mark' + offsetLine + '">' + line + '</span>';
         this.parsedFhirResource += tempText;
         this.parsedFhirResource += '\n';
       }
       else if(infoLineNumbers?.indexOf(i) != -1){
-        let tempText = '<span class="info-mark" id="mark' + offsetLine + '">' + sanitized + '</span>';
+        let tempText = '<span class="info-mark" id="mark' + offsetLine + '">' + line + '</span>';
         this.parsedFhirResource += tempText;
         this.parsedFhirResource += '\n';
       }
       else if(noteLineNumbers?.indexOf(i) != -1){
-        let tempText = '<span class="note-mark" id="mark' + offsetLine + '">' + sanitized + '</span>';
+        let tempText = '<span class="note-mark" id="mark' + offsetLine + '">' + line + '</span>';
         this.parsedFhirResource += tempText;
         this.parsedFhirResource += '\n';
       }
       else {
-        this.parsedFhirResource += sanitized;
+        this.parsedFhirResource += line;
         this.parsedFhirResource += '\n';
       }
     });

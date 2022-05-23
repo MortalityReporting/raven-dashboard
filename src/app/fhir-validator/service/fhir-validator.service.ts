@@ -101,13 +101,13 @@ export class FhirValidatorService {
     )));
   }
 
-  validateFhirResourceTemp(fhirResource: any, resourceFormat: string, resourceType: string):  Observable<any> {
+  validateFhirResource(fhirResource: any, resourceFormat: string, resourceType: string):  Observable<any> {
     return this.http.get('./assets/data/formatted_response.json').pipe( map((result: any) => (
       result as Object
     )));
   }
 
-  validateFhirResource(fhirResource: any, resourceFormat: string, resourceType: string):  Observable<any> {
+  validateFhirResourceTemp(fhirResource: any, resourceFormat: string, resourceType: string):  Observable<any> {
 
     if (resourceFormat === 'json') {
       const requestData = {
