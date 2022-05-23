@@ -18,48 +18,72 @@
 </mat-toolbar>
 <mat-sidenav-container [autosize]="autosize">
   <mat-sidenav mode="side" opened>
-    <ul>
-      <li>
-        <mat-icon>person</mat-icon>
-        <span *ngIf="sidenavExpanded"> Demographics</span>
-      </li>
-      <li>
-        <mat-icon>travel_explore</mat-icon>
-        <span *ngIf="sidenavExpanded"> Circumstances</span>
-      </li>
-      <li>
-        <mat-icon>question_mark</mat-icon>
-        <span *ngIf="sidenavExpanded"> Cause and Manner of Death</span>
-      </li>
-      <li>
-        <mat-icon>medical_services</mat-icon>
-        <span *ngIf="sidenavExpanded"> Relevant Medical History</span>
-      </li>
-      <li>
-        <mat-icon>description</mat-icon>
-        <span *ngIf="sidenavExpanded"> Exam and Autopsy Notes</span>
-      </li>
-      <li>
-        <mat-icon>speaker_notes</mat-icon>
-        <span *ngIf="sidenavExpanded"> Narratives</span>
-      </li>
-      <li>
-        <mat-icon>assignment</mat-icon> <span *ngIf="sidenavExpanded"> Death Certificate</span>
-      </li>
+    <mat-nav-list>
+
+      <mat-list-item>
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Demographics' : ''" matTooltipPosition="right">
+          person
+        </mat-icon>
+        <span *ngIf="sidenavExpanded">&nbsp;Demographics</span>
+      </mat-list-item>
+
+      <mat-list-item>
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Circumstances' : ''" matTooltipPosition="right">
+          travel_explore
+        </mat-icon>
+        <span *ngIf="sidenavExpanded">&nbsp;Circumstances</span>
+      </mat-list-item>
+
+      <mat-list-item>
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Cause and Manner of Death' : ''" matTooltipPosition="right">
+          question_mark
+        </mat-icon>
+        <span *ngIf="sidenavExpanded">&nbsp;Cause and Manner of Death</span>
+      </mat-list-item>
+
+      <mat-list-item>
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Relevant Medical History' : ''" matTooltipPosition="right">
+          medical_services
+        </mat-icon>
+        <span *ngIf="sidenavExpanded">&nbsp;Relevant Medical History</span>
+      </mat-list-item>
+
+      <mat-list-item>
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Exam and Autopsy Notes' : ''" matTooltipPosition="right">
+          description
+        </mat-icon>
+        <span *ngIf="sidenavExpanded">&nbsp;Exam and Autopsy Notes</span>
+      </mat-list-item>
+
+      <mat-list-item>
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Narratives' : ''" matTooltipPosition="right">
+          speaker_notes
+        </mat-icon>
+        <span *ngIf="sidenavExpanded">&nbsp;Narratives</span>
+      </mat-list-item>
+
+      <mat-list-item>
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Death Certificate' : ''" matTooltipPosition="right">
+          assignment
+        </mat-icon>
+        <span *ngIf="sidenavExpanded">&nbsp;Death Certificate</span>
+      </mat-list-item>
       <hr/>
-      <li  *ngIf="sidenavExpanded" (click)="onSidenavResize(false);" matTooltip="Collapse Side Menu">
-        <mat-icon aria-label="Expand Side Menu"
-                  style="cursor: pointer">
+
+      <mat-list-item *ngIf="sidenavExpanded" (click)="onSidenavResize(false);" >
+        <mat-icon aria-label="Collapse Side Menu">
           chevron_left
-        </mat-icon> Collapse content
-      </li>
-      <li *ngIf="!sidenavExpanded" (click)="onSidenavResize(true);" matTooltip="Expand Side Menu">
-        <mat-icon  aria-label="Collapse Side Menu"
-                  style="cursor: pointer" >
+        </mat-icon>&nbsp;
+        Collapse Menu
+      </mat-list-item>
+
+      <mat-list-item *ngIf="!sidenavExpanded" (click)="onSidenavResize(true);">
+        <mat-icon aria-label="Expand Side Menu" matTooltip="Expand Side Menu" matTooltipPosition="right">
           chevron_right
         </mat-icon>
-      </li>
-    </ul>
+      </mat-list-item>
+
+    </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <app-case-summary-content [caseSummary$]="caseSummary$"></app-case-summary-content>

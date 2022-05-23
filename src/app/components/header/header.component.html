@@ -1,35 +1,32 @@
-<mat-sidenav-container>
+<mat-toolbar color="primary">
 
-  <mat-toolbar color="primary">
+  <span style="cursor: pointer"><h1 (click)="onTitleClick();">Raven 2.0 Logo</h1></span>
 
-    <span style="cursor: pointer"><h1 (click)="onTitleClick();">Raven 2.0 Logo</h1></span>
+  <a mat-button [routerLink]="'/cases'">
+    Cases
+  </a>
 
-    <a mat-button [routerLink]="'/cases'">
-      Cases
-    </a>
+  <a mat-button [routerLink]="'/fhir-validator'">
+    FHIR Validator
+  </a>
 
-    <a mat-button [routerLink]="'/fhir-validator'">
-      FHIR Validator
-    </a>
+  <a mat-button [routerLink]="'/'">
+    Import
+  </a>
 
-    <a mat-button [routerLink]="'/'">
-      Import
-    </a>
+  <a mat-button [routerLink]="'/'">
+    Search
+  </a>
 
-    <a mat-button [routerLink]="'/'">
-      Search
-    </a>
+  <span class="content-spacer"></span>
+  <a *ngIf="fhirExplorerDrawerService.isInstantiated();" mat-raised-button color="accent" (click)="onToggle()">
+    Toggle FHIR Explorer
+  </a>
 
-    <span class="content-spacer"></span>
-    <a *ngIf="fhirExplorerDrawerService.isInstantiated();" mat-raised-button color="accent" (click)="onToggle()">
-      Toggle FHIR Explorer
-    </a>
+  <a mat-button [routerLink]="'/about'">
+    About
+  </a>
 
-    <a mat-button  [routerLink]="'/about'">
-      About
-    </a>
+</mat-toolbar>
 
-  </mat-toolbar>
-
-</mat-sidenav-container>
 

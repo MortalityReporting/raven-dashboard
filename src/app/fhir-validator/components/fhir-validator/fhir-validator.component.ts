@@ -260,7 +260,10 @@ export class FhirValidatorComponent implements OnInit {
     }
     else if(this.resourceFormat === "xml"){
       let fhirResourceXML = new DOMParser().parseFromString(fhirResource, 'text/xml');
-      resourceType = fhirResourceXML.childNodes[0].nodeName;
+      // resourceType = fhirResourceXML.childNodes[0].nodeName;
+      // console.log(resourceType);
+      // console.log(fhirResourceXML.getElementsByTagName(resourceType).getAttribute("xmlns"));
+      // console.log(fhirResourceXML.childNodes[0].nodeType);
     }
 
     this.validatorSubscription$ = this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat, resourceType).subscribe({
@@ -350,12 +353,5 @@ export class FhirValidatorComponent implements OnInit {
     return this.dataSource.data
       .filter(element => element.severity.toLowerCase() === level.toLowerCase())
       .length;
-  }
-
-  // We don't want the checkboxes for the filters to work independently form the buttons.
-  // Therefore, the status of the checkboxes can ony change based on the status of the button group
-  // and does not change whe the user selects and deselects the checkbox itself
-  onCheckboxSelected(event: MouseEvent) {
-    event.preventDefault();
   }
 }

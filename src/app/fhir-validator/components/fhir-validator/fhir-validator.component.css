@@ -3,7 +3,8 @@
 */
 
 textarea {
-  background: url(http://i.imgur.com/2cOaJ.png);
+  /* original image downloaded from http://i.imgur.com/2cOaJ.png */
+  background: url(../../assets/2cOaJ.png);
   background-attachment: local;
   background-repeat: no-repeat;
   padding-left: 35px;
@@ -18,7 +19,8 @@ textarea {
 }
 
 .validator-response {
-  background: url(http://i.imgur.com/2cOaJ.png);
+  /* original image downloaded from http://i.imgur.com/2cOaJ.png */
+  background: url(../../assets/2cOaJ.png);
   background-attachment: local;
   background-repeat: no-repeat;
   padding-left: 35px;

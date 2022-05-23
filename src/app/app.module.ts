@@ -34,6 +34,7 @@ import { CaseSummaryContentComponent } from './components/pages/case-summary/cas
 import { SetFhirExplorerDirective } from './directives/set-fhir-explorer.directive';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { CaseSummaryContentFieldComponent } from './components/pages/case-summary/case-summary-content-field/case-summary-content-field.component';
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
   declarations: [
@@ -48,32 +49,33 @@ import { CaseSummaryContentFieldComponent } from './components/pages/case-summar
     SetFhirExplorerDirective,
     CaseSummaryContentFieldComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatProgressSpinnerModule,
-    MatSortModule,
-    HttpClientModule,
-    MatRadioModule,
-    FormsModule,
-    MatCardModule,
-    MatSnackBarModule,
-    FhirValidatorModule,
-    MatGridListModule,
-    MatExpansionModule,
-    MatButtonToggleModule,
-    MatTooltipModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatProgressSpinnerModule,
+        MatSortModule,
+        HttpClientModule,
+        MatRadioModule,
+        FormsModule,
+        MatCardModule,
+        MatSnackBarModule,
+        FhirValidatorModule,
+        MatGridListModule,
+        MatExpansionModule,
+        MatButtonToggleModule,
+        MatTooltipModule,
+        MatListModule,
+    ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: FhirAuthInterceptor, multi: true },
     FhirExplorerDrawerService

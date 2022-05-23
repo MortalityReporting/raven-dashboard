@@ -109,26 +109,63 @@ export class FhirValidatorService {
 
   validateFhirResource(fhirResource: any, resourceFormat: string, resourceType: string):  Observable<any> {
 
-    const requestData = {
-      "resourceType": "Parameters",
-      "parameter": [
-        {
-          "name": "ig",
-          "valueString": "hl7.fhir.us.mdi#current"
-        },
-        {
-          "name": "format",
-          "valueString": resourceFormat
-        },
-        {
-          "name": "resource",
-          "resource": fhirResource,
-        }
-      ]
+    if (resourceFormat === 'json') {
+      const requestData = {
+        "resourceType": "Parameters",
+        "parameter": [
+          {
+            "name": "ig",
+            "valueString": "hl7.fhir.us.mdi#current"
+          },
+          {
+            "name": "resource",
+            "resource": fhirResource,
+          }
+        ]
+      }
+
+      return this.http.post(this.prodUri + "/$validate", requestData).pipe(map((result: any) => (
+        result as Object
+      )));
     }
-    return this.http.post(this.prodUri + '/'+ resourceType + "/$validate", requestData).pipe( map((result: any) => (
-      result as Object
-    )));
+
+    else if(resourceFormat === 'xml'){
+
+      const requestData =
+      `<?xml version="1.0" encoding="UTF-8"?>
+      <Parameters xmlns="http://hl7.org/fhir">
+        <parameter>
+          <name value="ig" />
+          <valueString value="hl7.fhir.us.mdi#current" />
+        </parameter>
+        <parameter>
+          <name value="resource" />
+            <resource>
+              ${fhirResource}
+            </resource>
+          </parameter>
+      </Parameters>`;
+      let headers = new HttpHeaders()
+        .set('Content-Type', 'application/fhir+xml');
+
+      return this.http.get('./assets/data/valid_resource_response.json').pipe( map((result: any) => (
+        result as Object
+      )));
+
+
+      // return this.http.post(this.prodUri + "/$validate", requestData, {headers: headers}).pipe(map((result: any) => (
+      //   result as Object
+      // )));
+
+    }
+
+    else {
+      console.error("Unrecognized resource type. " +
+        "Resource type can only be JSON or XML, not other resource can be validated");
+      return null;
+    }
+
   }
+
 
 }
