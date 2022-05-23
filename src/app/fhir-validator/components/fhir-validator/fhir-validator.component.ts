@@ -174,16 +174,6 @@ export class FhirValidatorComponent implements OnInit {
       .map((element: any) => this.getLineNumberFromLocation(element.location) - 1);
   };
 
-  escapeHtml(str: string): string {
-    // We escape all html tags in order to render the html as text in the innerHTML div
-    return str
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-  }
-
   renderAPIResponseData(apiResponse: any) {
 
     const errorLineNumbers = this.getLineNumbersBySeverity(apiResponse.issues, 'Error');
@@ -198,15 +188,11 @@ export class FhirValidatorComponent implements OnInit {
     {
       this.hasResponseData = true;
     }
-   // this.parsedFhirResource = apiResponse.formattedResource;
 
-    let lines = apiResponse.formattedResource.split('\\n');
-    console.log(lines);
-    lines = apiResponse.formattedResource.split('\n');
+    let lines = apiResponse.formattedResource.split('\n');
     lines.forEach((line: string, i: number) => {
-      console.log(line);
+
       let offsetLine = i + 1;
-     // const sanitized = this.escapeHtml(line);
       if(!this.parsedFhirResource){
         this.parsedFhirResource = '';
       }
@@ -236,40 +222,6 @@ export class FhirValidatorComponent implements OnInit {
       }
     });
     this.parsedFhirResource = this.sanitized.bypassSecurityTrustHtml(this.parsedFhirResource);
-
-    // const lines = this.fhirResource.split('\n');
-    // lines.forEach((line, i) => {
-    //   let offsetLine = i + 1;
-    //   const sanitized = this.escapeHtml(line);
-    //   if(!this.parsedFhirResource){
-    //     this.parsedFhirResource = '';
-    //   }
-    //   if(errorLineNumbers?.indexOf(i) != -1){
-    //     let tempText = '<span class="error-mark" id="mark' + offsetLine + '">' + sanitized + '</span>';
-    //     this.parsedFhirResource += tempText;
-    //     this.parsedFhirResource += '\n';
-    //   }
-    //   else if(warningLineNumbers?.indexOf(i) != -1){
-    //     let tempText = '<span class="warning-mark" id="mark' + offsetLine + '">' + sanitized + '</span>';
-    //     this.parsedFhirResource += tempText;
-    //     this.parsedFhirResource += '\n';
-    //   }
-    //   else if(infoLineNumbers?.indexOf(i) != -1){
-    //     let tempText = '<span class="info-mark" id="mark' + offsetLine + '">' + sanitized + '</span>';
-    //     this.parsedFhirResource += tempText;
-    //     this.parsedFhirResource += '\n';
-    //   }
-    //   else if(noteLineNumbers?.indexOf(i) != -1){
-    //     let tempText = '<span class="note-mark" id="mark' + offsetLine + '">' + sanitized + '</span>';
-    //     this.parsedFhirResource += tempText;
-    //     this.parsedFhirResource += '\n';
-    //   }
-    //   else {
-    //     this.parsedFhirResource += sanitized;
-    //     this.parsedFhirResource += '\n';
-    //   }
-    // });
-    // this.parsedFhirResource = this.sanitized.bypassSecurityTrustHtml(this.parsedFhirResource);
   }
 
   scrollToElement(location: string ): void {
