@@ -143,3 +143,25 @@ mat-button-toggle{
   color: #252525;
   border: 1px solid whitesmoke;
 }
+
+.mat-column-toggle {
+  width:5% !important;
+}
+
+.mat-column-icon {
+  width:5% !important;
+}
+
+.mat-column-severity {
+  width:10% !important;
+}
+
+.mat-column-fhirPath{
+  width:70% !important;
+}
+
+.mat-column-location {
+  width:10% !important;
+}
+
+

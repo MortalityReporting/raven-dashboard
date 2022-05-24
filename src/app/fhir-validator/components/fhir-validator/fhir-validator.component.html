@@ -107,9 +107,17 @@
 
             <mat-button-toggle style="width: 25%" *ngFor="let level of severityLevels" [value]="level" [disabled]="!isFilterEnabled(level)">
               <mat-checkbox
+                *ngIf="severityLevelsFormControl?.value.indexOf(level) != -1"
                 color="primary"
-                [checked]="severityLevelsFormControl?.value.indexOf(level) != -1"
-                (click)="onFilterResults()"
+                [checked]=true
+                [disabled]="!isFilterEnabled(level)"
+                [disableRipple]="true"
+              >
+              </mat-checkbox>
+              <mat-checkbox
+                *ngIf="severityLevelsFormControl?.value.indexOf(level) === -1"
+                color="primary"
+                [checked]=false
                 [disabled]="!isFilterEnabled(level)"
                 [disableRipple]="true"
               >

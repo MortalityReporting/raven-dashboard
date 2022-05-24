@@ -260,7 +260,7 @@ export class FhirValidatorComponent implements OnInit {
     this.validatorSubscription$ = this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat, resourceType).subscribe({
       next: (response) => {
         this.validationFinished = true;
-        console.log(response);
+
         let issues = response.issues;
         if(issues.length === 1 && issues[0].severity === "Information" && issues[0]?.message === "ALL OK"){
           this.isValidResource = true;
@@ -346,5 +346,10 @@ export class FhirValidatorComponent implements OnInit {
     return this.dataSource.data
       .filter(element => element.severity.toLowerCase() === level.toLowerCase())
       .length;
+  }
+
+  onSelectionChange(level: string) {
+    console.log(level);
+    console.log(this.severityLevelsFormControl?.value.indexOf(level) != -1);
   }
 }
