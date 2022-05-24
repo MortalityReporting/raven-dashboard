@@ -348,8 +348,4 @@ export class FhirValidatorComponent implements OnInit {
       .length;
   }
 
-  onSelectionChange(level: string) {
-    console.log(level);
-    console.log(this.severityLevelsFormControl?.value.indexOf(level) != -1);
-  }
 }
