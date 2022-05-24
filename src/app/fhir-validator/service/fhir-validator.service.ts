@@ -21,15 +21,31 @@ export class FhirValidatorService {
     }
     else if (resourceFormat === 'json'){
       if(!this.isJsonString(fhirResource)){
+        // Could not parse the resource at all. It is not a valid JSON as far as the js parser is concerned.
         return "Invalid json format detected.";
       }
       else if(!JSON.parse(fhirResource).resourceType){
         return "Missing required resourceType property.";
       }
     }
-    else if (resourceFormat === 'xml' && !this.isXmlString(fhirResource)){
-      return "Invalid xml format detected.";
+    else if (resourceFormat === 'xml') {
+      if(!this.isXmlString(fhirResource)){
+        // Could not parse the resource at all. It is not a valid XML as far as the js parser is concerned.
+        return "Invalid xml format detected.";
+      }
+      else {
+        // TODO we may need to to some error handling here
+        let fhirResourceXML = new DOMParser().parseFromString(fhirResource, 'text/xml');
+        const resourceType = fhirResourceXML.childNodes[0].nodeName;
+        const xmlnsAttribute  = fhirResourceXML.querySelector(resourceType).getAttribute('xmlns');
+
+        // all FHIR resources should have xmlns="http://hl7.org/fhir"
+        if(!xmlnsAttribute || xmlnsAttribute != 'http://hl7.org/fhir'){
+          return "Invalid or missing xmlns attribute.";
+        }
+      }
     }
+    // did not find any obvious errors, so returning nothing
     return null;
   }
 
@@ -107,10 +123,15 @@ export class FhirValidatorService {
     )));
   }
 
-  validateFhirResource(fhirResource: any, resourceFormat: string, resourceType: string):  Observable<any> {
+  validateFhirResource(fhirResource: any, resourceFormat: string):  Observable<any> {
 
+    let headers = null;
+    let requestData = null;
+
+    // Requests are formed in order to be consumed by the API.
+    // Note that requestData is nothing but a wrapper to the request and should never change.
     if (resourceFormat === 'json') {
-      const requestData = {
+     requestData = {
         "resourceType": "Parameters",
         "parameter": [
           {
@@ -124,14 +145,12 @@ export class FhirValidatorService {
         ]
       }
 
-      return this.http.post(this.prodUri + "/$validate", requestData).pipe(map((result: any) => (
-        result as Object
-      )));
+      headers = new HttpHeaders()
+        .set('Content-Type', 'application/fhir+json');
     }
+    else if (resourceFormat === 'xml'){
 
-    else if(resourceFormat === 'xml'){
-
-      const requestData =
+      requestData =
       `<?xml version="1.0" encoding="UTF-8"?>
       <Parameters xmlns="http://hl7.org/fhir">
         <parameter>
@@ -145,25 +164,13 @@ export class FhirValidatorService {
             </resource>
           </parameter>
       </Parameters>`;
-      let headers = new HttpHeaders()
+      headers = new HttpHeaders()
         .set('Content-Type', 'application/fhir+xml');
-
-      return this.http.get('./assets/data/valid_resource_response.json').pipe( map((result: any) => (
-        result as Object
-      )));
-
-
-      // return this.http.post(this.prodUri + "/$validate", requestData, {headers: headers}).pipe(map((result: any) => (
-      //   result as Object
-      // )));
-
     }
 
-    else {
-      console.error("Unrecognized resource type. " +
-        "Resource type can only be JSON or XML, not other resource can be validated");
-      return null;
-    }
+    return this.http.post(this.prodUri + "/$validate", requestData, {headers: headers}).pipe(map((result: any) => (
+      result as Object
+    )));
 
   }
 

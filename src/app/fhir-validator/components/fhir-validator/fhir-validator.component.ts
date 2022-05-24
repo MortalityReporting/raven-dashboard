@@ -243,21 +243,17 @@ export class FhirValidatorComponent implements OnInit {
   private executeAPIValidation(fhirResource: any, resourceFormat: string) {
     this.isLoading = true;
     this.parsedFhirResource = null;
-    let resourceType: string = null;
+    this.validationFinished = false;
 
     if(this.resourceFormat === "json"){
       fhirResource = JSON.parse(fhirResource);
-      resourceType = fhirResource.resourceType;
     }
     else if(this.resourceFormat === "xml"){
       let fhirResourceXML = new DOMParser().parseFromString(fhirResource, 'text/xml');
-      resourceType = fhirResourceXML.childNodes[0].nodeName;
-      console.log(resourceType);
-      console.log(fhirResourceXML.querySelector(resourceType).getAttribute('xmlns'));
-      console.log(fhirResourceXML.childNodes[0].nodeType);
+      fhirResource = fhirResourceXML.documentElement.outerHTML;
     }
 
-    this.validatorSubscription$ = this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat, resourceType).subscribe({
+    this.validatorSubscription$ = this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat).subscribe({
       next: (response) => {
         this.validationFinished = true;
 
@@ -287,9 +283,10 @@ export class FhirValidatorComponent implements OnInit {
         this.renderAPIResponseData(response);
 
       },
-      error: () => {
+      error: (value) => {
         this.utilsService.showErrorMessage("Server error occurred.");
         this.isLoading = false;
+        console.error(value);
       },
       complete: () => {
         this.isLoading = false;
