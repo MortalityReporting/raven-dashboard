@@ -9,6 +9,13 @@
     <mat-card-header>
       <mat-card-title>FHIR Validator</mat-card-title>
     </mat-card-header>
+    <div style="border-style: solid; border-width: 1px; margin-top: 1em; margin-bottom: 1em; border-color: #d32f2f" *ngIf="serverErrorDetected">
+      <button mat-button class="close-button" color="accent" aria-label="Close" disableRipple (click)="onCloseServerErrorMessage()">
+        <mat-icon>close</mat-icon>
+      </button>
+      <div style="color: #d32f2f; margin-left: 1em; margin-top: 1em"><h2>Server Error Response Status: {{this.serverErrorStatus}}</h2></div>
+      <div style="margin-left: 1em; margin-bottom: 1em; font-family: monospace" *ngFor="let serverError of serverErrorList" [innerText]="serverError.diagnostics"></div>
+    </div>
 
     <!--Actions available above the FHIR validator input textarea-->
     <div class="row-button-wrapper">

@@ -48,7 +48,9 @@ export class FhirValidatorComponent implements OnInit {
   validationFinished = false;
   isValidResource = false;
   fileMaxSize = 100000;
-  xmlnsType = 'http://hl7.org/fhir'
+  serverErrorDetected = false;
+  serverErrorList: any [];
+  serverErrorStatus: string;
 
   constructor(
     private fhirValidatorService: FhirValidatorService,
@@ -91,6 +93,9 @@ export class FhirValidatorComponent implements OnInit {
     this.isValidResource = false;
     this.validationFinished = false;
     this.isLoading = false;
+    this.serverErrorDetected = false;
+    this.serverErrorList = [];
+    this.serverErrorStatus = '';
   }
 
   onClear(){
@@ -138,6 +143,9 @@ export class FhirValidatorComponent implements OnInit {
 
     this.isValidResource = true;
     this.hasResponseData = false;
+    this.serverErrorList = [];
+    this.serverErrorStatus = '';
+    this.serverErrorDetected = false;
 
     this.validationErrorStr = this.fhirValidatorService.getUiValidationMessages(fhirResource, resourceFormat);
     if(this.validationErrorStr){
@@ -243,21 +251,17 @@ export class FhirValidatorComponent implements OnInit {
   private executeAPIValidation(fhirResource: any, resourceFormat: string) {
     this.isLoading = true;
     this.parsedFhirResource = null;
-    let resourceType: string = null;
+    this.validationFinished = false;
 
     if(this.resourceFormat === "json"){
       fhirResource = JSON.parse(fhirResource);
-      resourceType = fhirResource.resourceType;
     }
     else if(this.resourceFormat === "xml"){
       let fhirResourceXML = new DOMParser().parseFromString(fhirResource, 'text/xml');
-      resourceType = fhirResourceXML.childNodes[0].nodeName;
-      console.log(resourceType);
-      console.log(fhirResourceXML.querySelector(resourceType).getAttribute('xmlns'));
-      console.log(fhirResourceXML.childNodes[0].nodeType);
+      fhirResource = fhirResourceXML.documentElement.outerHTML;
     }
 
-    this.validatorSubscription$ = this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat, resourceType).subscribe({
+    this.validatorSubscription$ = this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat).subscribe({
       next: (response) => {
         this.validationFinished = true;
 
@@ -287,9 +291,15 @@ export class FhirValidatorComponent implements OnInit {
         this.renderAPIResponseData(response);
 
       },
-      error: () => {
+      error: (err) => {
         this.utilsService.showErrorMessage("Server error occurred.");
         this.isLoading = false;
+        this.serverErrorDetected = true;
+        this.serverErrorStatus = err.status;
+        if(err?.error?.issue){
+          this.serverErrorList = err.error.issue;
+        }
+        console.error(err);
       },
       complete: () => {
         this.isLoading = false;
@@ -348,4 +358,9 @@ export class FhirValidatorComponent implements OnInit {
       .length;
   }
 
+  onCloseServerErrorMessage() {
+    this.serverErrorDetected = false;
+    this.serverErrorList = [];
+    this.serverErrorStatus = '';
+  }
 }
