@@ -164,4 +164,9 @@ mat-button-toggle{
   width:10% !important;
 }
 
+.close-button{
+  float: right;
+  right:-8px;
+}
+
 
