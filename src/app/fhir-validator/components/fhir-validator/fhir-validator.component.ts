@@ -292,7 +292,6 @@ export class FhirValidatorComponent implements OnInit {
 
       },
       error: (err) => {
-        this.utilsService.showErrorMessage("Server error occurred.");
         this.isLoading = false;
         this.serverErrorDetected = true;
         this.serverErrorStatus = err.status;

@@ -89,34 +89,6 @@ export class FhirValidatorService {
     return formatted.substring(1, formatted.length-3);
   }
 
-  validateFhirResourceOldRev(fhirResource: any, resourceFormat: string , selectedProfile: any):  Observable<any> {
-
-   const requestData = {
-      "resourceType": "Parameters",
-      "parameter": [
-        {
-          "name": "ig",
-          "valueString": "hl7.fhir.us.mdi#current"
-        },
-        {
-          "name": "profile",
-          "valueString": selectedProfile.url
-        },
-        {
-          "name": "format",
-          "valueString": resourceFormat
-        },
-        {
-          "name": "sourceContent",
-          "valueString": encodeURIComponent(fhirResource),
-        }
-      ]
-    }
-    return this.http.post(this.localhostUri, requestData).pipe( map((result: any) => (
-      result as Object
-    )));
-  }
-
   validateFhirResourceTemp(fhirResource: any, resourceFormat: string, resourceType: string):  Observable<any> {
     return this.http.get('./assets/data/formatted_response.json').pipe( map((result: any) => (
       result as Object
