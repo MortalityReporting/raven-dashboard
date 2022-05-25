@@ -169,4 +169,22 @@ mat-button-toggle{
   right:-8px;
 }
 
+#server-error-message-container {
+  border-style: solid;
+  border-width: 1px;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  border-color: #d32f2f;
+}
 
+#server-error-status {
+  color: #d32f2f;
+  margin-left: 1em;
+  margin-top: 1em
+}
+
+#server-error-message-text {
+  margin-left: 1em;
+  margin-bottom: 1em;
+  font-family: monospace
+}
