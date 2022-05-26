@@ -9,8 +9,7 @@ import {map} from "rxjs/operators";
 export class FhirValidatorService {
 
   private prodUri = "https://gt-apps.hdap.gatech.edu/HL7ValidatorService/fhir";
- // private prodUri = "https://gt-apps.hdap.gatech.edu/HL7ValidatorService/fhir/Bundle/$validate";
-  private localhostUri = "http://127.0.0.1:8080/fhir/Bundle/$validate";
+  //private prodUri = "http://127.0.0.1:8080/fhir/$validate";
 
   constructor( private http: HttpClient) { }
 
