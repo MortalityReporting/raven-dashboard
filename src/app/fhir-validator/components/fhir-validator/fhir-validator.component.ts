@@ -161,8 +161,6 @@ export class FhirValidatorComponent implements OnInit {
   }
 
   onPasteFhirResource(event: ClipboardEvent) {
-    // If no text is present in the textarea (this.fhirResource is empty) we toggle the  radio buttons
-    // based on the input text format.
     this.fileName = '';
     if(!this.fhirResource) {
       this.clearUI();
