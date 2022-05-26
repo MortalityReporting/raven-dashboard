@@ -146,6 +146,7 @@ export class FhirValidatorComponent implements OnInit {
     this.serverErrorList = [];
     this.serverErrorStatus = '';
     this.serverErrorDetected = false;
+    this.severityLevelsFormControl.patchValue(this.severityLevels);
 
     this.validationErrorStr = this.fhirValidatorService.getUiValidationMessages(fhirResource, resourceFormat);
     if(this.validationErrorStr){
@@ -160,16 +161,15 @@ export class FhirValidatorComponent implements OnInit {
   }
 
   onPasteFhirResource(event: ClipboardEvent) {
-    // If no text is present in the textarea (this.fhirResource is empty) we toggle the  radio buttons
-    // based on the input text format.
+    this.fileName = '';
     if(!this.fhirResource) {
       this.clearUI();
-      let text = event.clipboardData.getData('text');
-      if (this.fhirValidatorService.isJsonString(text)) {
-        this.resourceFormat = 'json';
-      } else if (this.fhirValidatorService.isXmlString(text)) {
-        this.resourceFormat = 'xml';
-      }
+    }
+    let text = event.clipboardData.getData('text');
+    if (this.fhirValidatorService.isJsonString(text)) {
+      this.resourceFormat = 'json';
+    } else if (this.fhirValidatorService.isXmlString(text)) {
+      this.resourceFormat = 'xml';
     }
   }
 

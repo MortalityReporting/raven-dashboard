@@ -13,7 +13,7 @@
       <button mat-button class="close-button" color="accent" aria-label="Close" disableRipple (click)="onCloseServerErrorMessage()">
         <mat-icon>close</mat-icon>
       </button>
-      <div id="server-error-status"><h2>Server Error Response Status: {{this.serverErrorStatus}}</h2></div>
+      <div id="server-error-status"><h2>Server Error Response Status: {{ serverErrorStatus }}</h2></div>
       <div id="server-error-message-text" *ngFor="let serverError of serverErrorList" [innerText]="serverError.diagnostics"></div>
     </div>
 
