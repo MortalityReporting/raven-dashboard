@@ -8,7 +8,7 @@ import {FormControl} from "@angular/forms";
 import {Subscription} from "rxjs";
 import {UtilsService} from "../../service/utils.service";
 
-export interface WarningError {
+export interface ResponseItem {
   severity: string;
   message: string;
   location: string;
@@ -201,35 +201,46 @@ export class FhirValidatorComponent implements OnInit {
     lines.forEach((line: string, i: number) => {
 
       let offsetLine = i + 1;
+      const sanitized = this.escapeHtml(line);
       if(!this.parsedFhirResource){
         this.parsedFhirResource = '';
       }
       if(errorLineNumbers?.indexOf(i) != -1){
-        let tempText = '<span class="error-mark" id="mark' + offsetLine + '">' + line + '</span>';
+        let tempText = '<span class="error-mark" id="mark' + offsetLine + '">' + sanitized + '</span>';
         this.parsedFhirResource += tempText;
         this.parsedFhirResource += '\n';
       }
       else if(warningLineNumbers?.indexOf(i) != -1){
-        let tempText = '<span class="warning-mark" id="mark' + offsetLine + '">' + line + '</span>';
+        let tempText = '<span class="warning-mark" id="mark' + offsetLine + '">' + sanitized + '</span>';
         this.parsedFhirResource += tempText;
         this.parsedFhirResource += '\n';
       }
       else if(infoLineNumbers?.indexOf(i) != -1){
-        let tempText = '<span class="info-mark" id="mark' + offsetLine + '">' + line + '</span>';
+        let tempText = '<span class="info-mark" id="mark' + offsetLine + '">' + sanitized + '</span>';
         this.parsedFhirResource += tempText;
         this.parsedFhirResource += '\n';
       }
       else if(noteLineNumbers?.indexOf(i) != -1){
-        let tempText = '<span class="note-mark" id="mark' + offsetLine + '">' + line + '</span>';
+        let tempText = '<span class="note-mark" id="mark' + offsetLine + '">' + sanitized + '</span>';
         this.parsedFhirResource += tempText;
         this.parsedFhirResource += '\n';
       }
       else {
-        this.parsedFhirResource += line;
+        this.parsedFhirResource += sanitized;
         this.parsedFhirResource += '\n';
       }
     });
     this.parsedFhirResource = this.sanitized.bypassSecurityTrustHtml(this.parsedFhirResource);
+  }
+
+  escapeHtml(str: string): string {
+    // We escape all html tags in order to render the html as text in the innerHTML div
+    return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
   }
 
   scrollToElement(location: string ): void {
@@ -239,7 +250,7 @@ export class FhirValidatorComponent implements OnInit {
 
   getLineNumberFromLocation(locationStr: string): number {
     // We grab the location from response
-    return parseInt (locationStr.split(",")[0].replace( /^\D+/g, ''));
+    return (locationStr?.length > 0) ? parseInt (locationStr.split(",")[0].replace( /^\D+/g, '')) : null;
   }
 
   // When the user selects a location from the errors and warning results, we want to scroll the page to that location
@@ -281,7 +292,7 @@ export class FhirValidatorComponent implements OnInit {
         });
 
         this.dataSource.data = issues.map((element: any) => {
-          let result: WarningError = Object.assign({}, element);
+          let result: ResponseItem = Object.assign({}, element);
           result.expanded = true;
           return result
         });
