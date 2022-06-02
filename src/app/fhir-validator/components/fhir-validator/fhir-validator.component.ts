@@ -28,29 +28,27 @@ export interface ResponseItem {
   ],
 })
 
-export class FhirValidatorComponent implements OnInit {
+export class FhirValidatorComponent {
 
-  fhirResource: string ='';
-  resourceFormat = 'json';
-  fileName: string;
-  validationErrorStr: string;
-  isFormattingPerformedRendered = false;
-  hasResponseData = false;
-  parsedFhirResource : any;
+  fhirResource: string =''; // The Resource as entered by the user.
+  resourceFormat = 'json'; // The resource format could be JSON or XML, with JSON being the default format.
+  fileName: string; // Name of the file uploaded by the user. We need this to render the filename in the UI.
+  validationErrorStr: string; // We use this value to store preliminary error messages or a generic error message.
+  hasResponseData = false;  // Indicates if the response generated any messages. If true, we render the report
+  parsedFhirResource : any; // We store value of the validator result in order to present it to the user.
   displayedColumns: string[] = ['toggle', 'icon', 'severity', 'fhirPath', 'location'];
   isLoading = false;
-  apiResponse: any = [];
-  allExpanded = true;
+  allExpanded = true; // Used to render collapsed/expanded all icon as well as calculate if all results are expanded/collapsed
   severityLevels: string[] = ['error', 'warning', 'information', 'note'];
-  severityLevelsFormControl = new FormControl(this.severityLevels);
-  dataSource = new MatTableDataSource([]);
+  severityLevelsFormControl = new FormControl(this.severityLevels); // A simple form control used for filtering the results.
+  dataSource = new MatTableDataSource([]); // Data source for the report table.
   validatorSubscription$: Subscription;
   validationFinished = false;
-  isValidResource = false;
-  fileMaxSize = 100000;
-  serverErrorDetected = false;
-  serverErrorList: any [];
-  serverErrorStatus: string;
+  isValidResource = false; // We use this to render the success message
+  fileMaxSize = 100000; // Max allowed file size is 100KB
+  serverErrorDetected = false; // Tracks if the server has responded with an error (404, 500). Used to render the error in UI.
+  serverErrorList: any []; // Store the data from the OperationOutcome resource
+  serverErrorStatus: string; // We store the error response status here (i.e. 404, 500)
 
   constructor(
     private fhirValidatorService: FhirValidatorService,
@@ -75,22 +73,16 @@ export class FhirValidatorComponent implements OnInit {
   // That is it may or may not format the text properly and require extensive testing to validate its operation.
   onFormatInput() {
     this.formatFhirResource()
-    this.isFormattingPerformedRendered = true;
     this.utilsService.showSuccessMessage("Formatting Attempted.");
-  }
-
-  ngOnInit(): void {
   }
 
   clearUI(){
     this.fhirResource='';
     this.fileName=''
     this.validationErrorStr = '';
-    this.isFormattingPerformedRendered = false;
     this.isValidResource = false;
     this.parsedFhirResource = null;
     this.hasResponseData = false;
-    this.isValidResource = false;
     this.validationFinished = false;
     this.isLoading = false;
     this.serverErrorDetected = false;
