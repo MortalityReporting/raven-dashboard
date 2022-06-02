@@ -45,7 +45,7 @@ export class FhirValidatorComponent {
   validatorSubscription$: Subscription;
   validationFinished = false;
   isValidResource = false; // We use this to render the success message
-  fileMaxSize = 100000; // Max allowed file size is 100KB
+  maxFileSize = 100000; // Max allowed file size is 100KB
   serverErrorDetected = false; // Tracks if the server has responded with an error (404, 500). Used to render the error in UI.
   serverErrorList: any []; // Store the data from the OperationOutcome resource
   serverErrorStatus: string; // We store the error response status here (i.e. 404, 500)
@@ -99,9 +99,9 @@ export class FhirValidatorComponent {
     const file:File = event.target.files[0];
 
     if (file) {
-      if(file.size > this.fileMaxSize){
+      if(file.size > this.maxFileSize){
         console.error("File too big")
-        this.utilsService.showErrorMessage("This file exceeds " + this.fileMaxSize + " and cannot be processed");
+        this.utilsService.showErrorMessage("This file exceeds " + this.maxFileSize /  1000 + "kb and cannot be processed");
       }
       else {
         // auto toggle the file type radio buttons
