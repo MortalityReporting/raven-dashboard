@@ -132,7 +132,7 @@ export class FhirValidatorComponent {
   }
 
   validateFhirResource(fhirResource: any, resourceFormat: string) {
-
+    // Set the stage for the validation. Reset variables to default values.
     this.isValidResource = true;
     this.hasResponseData = false;
     this.serverErrorList = [];
@@ -174,6 +174,11 @@ export class FhirValidatorComponent {
       .map((element: any) => this.getLineNumberFromLocation(element.location) - 1);
   };
 
+  /*
+  * Parsing the response text to render properly in the validation report.
+  * Extract each severity level and add styling to it.
+  * Sanitize the html so it can be properly rendered in the UI by the framework.
+   */
   renderAPIResponseData(apiResponse: any) {
 
     const errorLineNumbers = this.getLineNumbersBySeverity(apiResponse.issues, 'Error');
@@ -252,6 +257,8 @@ export class FhirValidatorComponent {
   }
 
   private executeAPIValidation(fhirResource: any, resourceFormat: string) {
+
+    // Reset values to default state prior to validation.
     this.isLoading = true;
     this.parsedFhirResource = null;
     this.validationFinished = false;
@@ -276,6 +283,9 @@ export class FhirValidatorComponent {
           this.isValidResource = false;
           this.validationErrorStr = "Please see the validation errors below.";
         }
+
+        // Some strings produced by the validator are long and miss spaces. This could break the UI validation report.
+        // Therefore, we insert a space after each coma found in the validation response text.
         issues.forEach((element: any) => element.message = element.message.replace(/,(?=[^\s])/g, ", "));
 
         // sort by line numbers
@@ -283,6 +293,8 @@ export class FhirValidatorComponent {
           return this.getLineNumberFromLocation(a.location) - this.getLineNumberFromLocation(b.location);
         });
 
+        // mat each item of the response to an object and make sure that the results are in expanded state in the
+        // UI validation report.
         this.dataSource.data = issues.map((element: any) => {
           let result: ResponseItem = Object.assign({}, element);
           result.expanded = true;
@@ -338,9 +350,11 @@ export class FhirValidatorComponent {
   }
 
   checkExpandCollapseAllStatus() {
-    // When all elements are collapsed we want to change the expansion icon to render "expand all"
-    // When all elements are expanded we want to change the expansion icon to "collapse all"
-    // This will save extra unnecessary click for the user
+    /*
+    * When all elements are collapsed we want to change the expansion icon to render "expand all"
+    * When all elements are expanded we want to change the expansion icon to "collapse all"
+    * This will save extra unnecessary click for the user
+    */
     const expandedElementsCount = this.dataSource.data.filter(element => element.expanded).length;
     if(expandedElementsCount === this.dataSource.data.length){
       this.allExpanded = true;
