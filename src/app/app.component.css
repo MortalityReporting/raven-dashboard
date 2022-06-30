@@ -1,0 +1,25 @@
+.flex-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+}
+
+.header-wrapper {
+  flex: 0;
+}
+
+.content-wrapper {
+  flex: 1;
+}
+
+app-bundle-browser {
+  flex: 1 1 auto !important;
+}
+
+.router-outlet-wrapper {
+  flex: 1 1 0;
+  overflow-y: auto;
+}

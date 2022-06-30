@@ -25,5 +25,5 @@ li mat-icon {
 
 /*This is probably not the best way to make the sidenav not scrollable*/
 mat-sidenav-container {
-  height: 85%;
+  height: 100%;
 }
