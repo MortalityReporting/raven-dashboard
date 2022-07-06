@@ -50,6 +50,10 @@ export class FhirValidatorComponent {
   serverErrorList: any []; // Store the data from the OperationOutcome resource
   serverErrorStatus: string; // We store the error response status here (i.e. 404, 500)
 
+  //TODO remove this code when the API returns a timeout error
+  serverTimoutDetected = false;
+  SERVER_TIMEOUT_INTERVAL = 240000; //four minutes
+
   constructor(
     private fhirValidatorService: FhirValidatorService,
     private sanitized: DomSanitizer,
@@ -88,6 +92,7 @@ export class FhirValidatorComponent {
     this.serverErrorDetected = false;
     this.serverErrorList = [];
     this.serverErrorStatus = '';
+    this.serverTimoutDetected = false;
   }
 
   onClear(){
@@ -138,6 +143,7 @@ export class FhirValidatorComponent {
     this.serverErrorList = [];
     this.serverErrorStatus = '';
     this.serverErrorDetected = false;
+    this.serverTimoutDetected = false;
     this.severityLevelsFormControl.patchValue(this.severityLevels);
 
     this.validationErrorStr = this.fhirValidatorService.getUiValidationMessages(fhirResource, resourceFormat);
@@ -271,7 +277,8 @@ export class FhirValidatorComponent {
       fhirResource = fhirResourceXML.documentElement.outerHTML;
     }
 
-    this.validatorSubscription$ = this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat).subscribe({
+    this.validatorSubscription$ = this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat)
+      .subscribe({
       next: (response) => {
         this.validationFinished = true;
 
@@ -319,6 +326,16 @@ export class FhirValidatorComponent {
         this.isLoading = false;
       }
     });
+
+    //TODO make sure to remove this function when the server side timeout is implemented.
+    setTimeout(
+      () => {
+        this.validatorSubscription$.unsubscribe();
+        this.isLoading = false;
+        this.serverTimoutDetected = true;
+      }, this.SERVER_TIMEOUT_INTERVAL
+    );
+
   }
 
   toggle() {

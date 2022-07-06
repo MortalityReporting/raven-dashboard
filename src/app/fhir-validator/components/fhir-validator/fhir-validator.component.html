@@ -11,12 +11,20 @@
     </mat-card-header>
 
     <!-- The section below renders error messages returned by the validator.-->
-    <div id=server-error-message-container *ngIf="serverErrorDetected">
+    <div class=server-error-message-container *ngIf="serverErrorDetected">
       <button mat-button class="close-button" color="accent" aria-label="Close" disableRipple (click)="onCloseServerErrorMessage()">
         <mat-icon>close</mat-icon>
       </button>
-      <div id="server-error-status"><h2>Server Error Response Status: {{ serverErrorStatus }}</h2></div>
-      <div id="server-error-message-text" *ngFor="let serverError of serverErrorList" [innerText]="serverError.diagnostics"></div>
+      <div class="server-error-status"><h2>Server Error Response Status: {{ serverErrorStatus }}</h2></div>
+      <div class="server-error-message-text" *ngFor="let serverError of serverErrorList" [innerText]="serverError.diagnostics"></div>
+    </div>
+
+    <!-- TODO remove this code when the API code is updated to return 408 on request timeout -->
+    <div class=server-error-message-container *ngIf="serverTimoutDetected">
+      <button mat-button class="close-button" color="accent" aria-label="Close" disableRipple (click)="serverTimoutDetected = false">
+        <mat-icon>close</mat-icon>
+      </button>
+      <div class="server-error-status"><h2>Server Timeout Error.</h2></div>
     </div>
 
     <!--Actions available above the FHIR validator input textarea-->
