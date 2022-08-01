@@ -1,0 +1,48 @@
+<div class="container top-spacer">
+  <mat-card class="mat-elevation-z8" style="paddin-right: 2em; padding-left: 2em;  padding-bottom: 2em">
+
+    <mat-radio-group style="margin-top: 2em; margin-bottom: 2em"
+      aria-label="select import method"
+      class="radio-group"
+      [(ngModel)]="selectedInputOption">
+      <label id="radio-button-label">Import from: </label>
+      <mat-radio-button class="radio-button" *ngFor="let inputOption of inputOptions" [value]="inputOption">
+        {{inputOption}}
+      </mat-radio-button>
+    </mat-radio-group>
+
+    <div>
+      1. Select a FHIR JSON or XML file to upload and preview or paste your FHIR Bundle directly in the provided area.
+      <div style="margin-left: 15px; margin-right: 15px">
+        Contents must be a complete MDI Document Bundle or Toxicology Bundle.
+        <div class="top-spacer">
+          <input type="file" class="file-input" (click)="fileUpload.value=null"
+                 accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                 (change)="onFileSelected($event)" #fileUpload>
+          <span id="filename">{{fileName}}</span>
+          <button mat-raised-button color="primary" class="upload-btn"
+                  (click)="clearUI(); fileUpload.click();" [disabled]=isLoading>
+            <mat-icon>post_add</mat-icon>
+            Select File
+          </button>
+        </div>
+        <div class="top-spacer">
+          <textarea matInput rows="30" style="width:100%; border-color: #78909c" placeholder="text">
+
+          </textarea>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="top-spacer">
+      2. Submit your Bundle to the Raven FHIR Sever.
+      <div style="margin-left: 15px; margin-top: 10px">
+          <button mat-raised-button color="accent">
+            <mat-icon>send</mat-icon> Submit
+          </button>
+      </div>
+    </div>
+  </mat-card>
+
+</div>

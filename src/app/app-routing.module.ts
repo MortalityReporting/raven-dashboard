@@ -4,6 +4,7 @@ import {DecedentRecordsGridComponent} from "./components/pages/decedent-records-
 import {FhirValidatorComponent} from "./fhir-validator/components/fhir-validator/fhir-validator.component";
 import {LandingComponent} from "./components/landing/landing.component";
 import {CaseContainerComponent} from "./components/pages/case-container/case-container.component";
+import {ImportCaseComponent} from "./components/pages/import-case/import-case.component";
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'cases/summary/:id',
     component: CaseContainerComponent
+  },
+  {
+    path: 'import-case',
+    component: ImportCaseComponent
   },
   { // Do not add any paths below this point, this path MUST ALWAYS be the last path!
     path: '**', redirectTo: ''

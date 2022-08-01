@@ -35,6 +35,7 @@ import { SetFhirExplorerDirective } from './directives/set-fhir-explorer.directi
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { CaseSummaryContentFieldComponent } from './components/pages/case-summary/case-summary-content-field/case-summary-content-field.component';
 import {MatListModule} from "@angular/material/list";
+import { ImportCaseComponent } from './components/pages/import-case/import-case.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import {MatListModule} from "@angular/material/list";
     FhirExplorerComponent,
     CaseSummaryContentComponent,
     SetFhirExplorerDirective,
-    CaseSummaryContentFieldComponent
+    CaseSummaryContentFieldComponent,
+    ImportCaseComponent
   ],
     imports: [
         BrowserModule,
