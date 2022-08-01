@@ -28,29 +28,31 @@ export interface ResponseItem {
   ],
 })
 
-export class FhirValidatorComponent implements OnInit {
+export class FhirValidatorComponent {
 
-  fhirResource: string ='';
-  resourceFormat = 'json';
-  fileName: string;
-  validationErrorStr: string;
-  isFormattingPerformedRendered = false;
-  hasResponseData = false;
-  parsedFhirResource : any;
+  fhirResource: string =''; // The Resource as entered by the user.
+  resourceFormat = 'json'; // The resource format could be JSON or XML, with JSON being the default format.
+  fileName: string; // Name of the file uploaded by the user. We need this to render the filename in the UI.
+  validationErrorStr: string; // We use this value to store preliminary error messages or a generic error message.
+  hasResponseData = false;  // Indicates if the response generated any messages. If true, we render the report
+  parsedFhirResource : any; // We store value of the validator result in order to present it to the user.
   displayedColumns: string[] = ['toggle', 'icon', 'severity', 'fhirPath', 'location'];
   isLoading = false;
-  apiResponse: any = [];
-  allExpanded = true;
+  allExpanded = true; // Used to render collapsed/expanded all icon as well as calculate if all results are expanded/collapsed
   severityLevels: string[] = ['error', 'warning', 'information', 'note'];
-  severityLevelsFormControl = new FormControl(this.severityLevels);
-  dataSource = new MatTableDataSource([]);
+  severityLevelsFormControl = new FormControl(this.severityLevels); // A simple form control used for filtering the results.
+  dataSource = new MatTableDataSource([]); // Data source for the report table.
   validatorSubscription$: Subscription;
   validationFinished = false;
-  isValidResource = false;
-  fileMaxSize = 100000;
-  serverErrorDetected = false;
-  serverErrorList: any [];
-  serverErrorStatus: string;
+  isValidResource = false; // We use this to render the success message
+  maxFileSize = 100000; // Max allowed file size is 100KB
+  serverErrorDetected = false; // Tracks if the server has responded with an error (404, 500). Used to render the error in UI.
+  serverErrorList: any []; // Store the data from the OperationOutcome resource
+  serverErrorStatus: string; // We store the error response status here (i.e. 404, 500)
+
+  //TODO remove this code when the API returns a timeout error
+  serverTimoutDetected = false;
+  SERVER_TIMEOUT_INTERVAL = 240000; //four minutes
 
   constructor(
     private fhirValidatorService: FhirValidatorService,
@@ -75,27 +77,22 @@ export class FhirValidatorComponent implements OnInit {
   // That is it may or may not format the text properly and require extensive testing to validate its operation.
   onFormatInput() {
     this.formatFhirResource()
-    this.isFormattingPerformedRendered = true;
     this.utilsService.showSuccessMessage("Formatting Attempted.");
-  }
-
-  ngOnInit(): void {
   }
 
   clearUI(){
     this.fhirResource='';
     this.fileName=''
     this.validationErrorStr = '';
-    this.isFormattingPerformedRendered = false;
     this.isValidResource = false;
     this.parsedFhirResource = null;
     this.hasResponseData = false;
-    this.isValidResource = false;
     this.validationFinished = false;
     this.isLoading = false;
     this.serverErrorDetected = false;
     this.serverErrorList = [];
     this.serverErrorStatus = '';
+    this.serverTimoutDetected = false;
   }
 
   onClear(){
@@ -107,9 +104,9 @@ export class FhirValidatorComponent implements OnInit {
     const file:File = event.target.files[0];
 
     if (file) {
-      if(file.size > this.fileMaxSize){
+      if(file.size > this.maxFileSize){
         console.error("File too big")
-        this.utilsService.showErrorMessage("This file exceeds " + this.fileMaxSize + " and cannot be processed");
+        this.utilsService.showErrorMessage("This file exceeds " + this.maxFileSize /  1000 + "kb and cannot be processed");
       }
       else {
         // auto toggle the file type radio buttons
@@ -140,12 +137,13 @@ export class FhirValidatorComponent implements OnInit {
   }
 
   validateFhirResource(fhirResource: any, resourceFormat: string) {
-
+    // Set the stage for the validation. Reset variables to default values.
     this.isValidResource = true;
     this.hasResponseData = false;
     this.serverErrorList = [];
     this.serverErrorStatus = '';
     this.serverErrorDetected = false;
+    this.serverTimoutDetected = false;
     this.severityLevelsFormControl.patchValue(this.severityLevels);
 
     this.validationErrorStr = this.fhirValidatorService.getUiValidationMessages(fhirResource, resourceFormat);
@@ -182,6 +180,11 @@ export class FhirValidatorComponent implements OnInit {
       .map((element: any) => this.getLineNumberFromLocation(element.location) - 1);
   };
 
+  /*
+  * Parsing the response text to render properly in the validation report.
+  * Extract each severity level and add styling to it.
+  * Sanitize the html so it can be properly rendered in the UI by the framework.
+   */
   renderAPIResponseData(apiResponse: any) {
 
     const errorLineNumbers = this.getLineNumbersBySeverity(apiResponse.issues, 'Error');
@@ -260,6 +263,8 @@ export class FhirValidatorComponent implements OnInit {
   }
 
   private executeAPIValidation(fhirResource: any, resourceFormat: string) {
+
+    // Reset values to default state prior to validation.
     this.isLoading = true;
     this.parsedFhirResource = null;
     this.validationFinished = false;
@@ -272,7 +277,8 @@ export class FhirValidatorComponent implements OnInit {
       fhirResource = fhirResourceXML.documentElement.outerHTML;
     }
 
-    this.validatorSubscription$ = this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat).subscribe({
+    this.validatorSubscription$ = this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat)
+      .subscribe({
       next: (response) => {
         this.validationFinished = true;
 
@@ -284,6 +290,9 @@ export class FhirValidatorComponent implements OnInit {
           this.isValidResource = false;
           this.validationErrorStr = "Please see the validation errors below.";
         }
+
+        // Some strings produced by the validator are long and miss spaces. This could break the UI validation report.
+        // Therefore, we insert a space after each coma found in the validation response text.
         issues.forEach((element: any) => element.message = element.message.replace(/,(?=[^\s])/g, ", "));
 
         // sort by line numbers
@@ -291,6 +300,8 @@ export class FhirValidatorComponent implements OnInit {
           return this.getLineNumberFromLocation(a.location) - this.getLineNumberFromLocation(b.location);
         });
 
+        // mat each item of the response to an object and make sure that the results are in expanded state in the
+        // UI validation report.
         this.dataSource.data = issues.map((element: any) => {
           let result: ResponseItem = Object.assign({}, element);
           result.expanded = true;
@@ -315,6 +326,16 @@ export class FhirValidatorComponent implements OnInit {
         this.isLoading = false;
       }
     });
+
+    //TODO make sure to remove this function when the server side timeout is implemented.
+    setTimeout(
+      () => {
+        this.validatorSubscription$.unsubscribe();
+        this.isLoading = false;
+        this.serverTimoutDetected = true;
+      }, this.SERVER_TIMEOUT_INTERVAL
+    );
+
   }
 
   toggle() {
@@ -346,9 +367,11 @@ export class FhirValidatorComponent implements OnInit {
   }
 
   checkExpandCollapseAllStatus() {
-    // When all elements are collapsed we want to change the expansion icon to render "expand all"
-    // When all elements are expanded we want to change the expansion icon to "collapse all"
-    // This will save extra unnecessary click for the user
+    /*
+    * When all elements are collapsed we want to change the expansion icon to render "expand all"
+    * When all elements are expanded we want to change the expansion icon to "collapse all"
+    * This will save extra unnecessary click for the user
+    */
     const expandedElementsCount = this.dataSource.data.filter(element => element.expanded).length;
     if(expandedElementsCount === this.dataSource.data.length){
       this.allExpanded = true;

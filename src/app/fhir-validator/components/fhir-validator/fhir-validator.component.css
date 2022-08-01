@@ -25,9 +25,6 @@ textarea {
   background-repeat: no-repeat;
   padding-left: 35px;
   padding-top: 10px;
-  border-color: #ccc;
-  margin-bottom: 20px;
-  margin-top: 20px;
   font-size: 13px;
   line-height: 16px;
   width: 96%;
@@ -36,6 +33,9 @@ textarea {
   white-space: pre;
   overflow-x: auto;
   overflow-y: hidden;
+  border-color: #ccc;
+  border-style: solid;
+  border-width: thin;
 }
 
 .mat-radio-button {
@@ -169,7 +169,7 @@ mat-button-toggle{
   right:-8px;
 }
 
-#server-error-message-container {
+.server-error-message-container {
   border-style: solid;
   border-width: 1px;
   margin-top: 1em;
@@ -177,14 +177,23 @@ mat-button-toggle{
   border-color: #d32f2f;
 }
 
-#server-error-status {
+.server-error-status {
   color: #d32f2f;
   margin-left: 1em;
   margin-top: 1em
 }
 
-#server-error-message-text {
+.server-error-message-text {
   margin-left: 1em;
   margin-bottom: 1em;
   font-family: monospace
 }
+
+#filename {
+  font-family: monospace; margin-right: 1em;
+}
+
+#format-toggle-buttons {
+  width: 25%;
+}
+
