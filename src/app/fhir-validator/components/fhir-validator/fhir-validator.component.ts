@@ -6,7 +6,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatTableDataSource} from "@angular/material/table";
 import {FormControl} from "@angular/forms";
 import {Subscription} from "rxjs";
-import {UtilsService} from "../../service/utils.service";
+import {UtilsService} from "../../../service/utils.service";
 
 export interface ResponseItem {
   severity: string;

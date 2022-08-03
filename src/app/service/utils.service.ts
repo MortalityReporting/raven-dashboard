@@ -25,4 +25,24 @@ export class UtilsService {
     });
   }
 
+  isJsonString(str: string): boolean {
+    try {
+      JSON.parse(str.trim());
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
+
+  isXmlString(str: string): boolean {
+    try {
+      const parser = new DOMParser();
+      const theDom = parser.parseFromString(str?.trim(), 'application/xml');
+      return !(theDom.getElementsByTagName('parsererror').length > 0);
+    }
+    catch (e) {
+      return false;
+    }
+  }
+
 }

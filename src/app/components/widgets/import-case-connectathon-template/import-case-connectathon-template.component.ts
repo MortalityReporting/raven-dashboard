@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ImportCaseService} from "../../../service/import-case.service";
-import {UtilsService} from "../../../fhir-validator/service/utils.service";
+import {UtilsService} from "../../../service/utils.service";
 
 @Component({
   selector: 'app-import-case-connectathon-template',

@@ -5,7 +5,7 @@
 
     <div class="top-spacer">
       <input type="file" class="file-input" (click)="fileUpload.value=null"
-             accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+             accept="text/*,.json"
              (change)="onFileSelected($event)" #fileUpload>
       <button mat-raised-button color="success" class="upload-btn"
               (click)="clearUI(); fileUpload.click();" [disabled]=isLoading>
@@ -16,8 +16,9 @@
     </div>
 
     <div class="top-spacer">
-          <textarea matInput rows="30" style="width:100%; border-color: #78909c" placeholder="text">
-          </textarea>
+      <textarea matInput rows="30" style="width:100%; border-color: #78909c" placeholder="text"
+                [(ngModel)]="fileContent">
+      </textarea>
     </div>
 
   </div>
