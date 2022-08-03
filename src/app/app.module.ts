@@ -36,6 +36,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { CaseSummaryContentFieldComponent } from './components/pages/case-summary/case-summary-content-field/case-summary-content-field.component';
 import {MatListModule} from "@angular/material/list";
 import { ImportCaseComponent } from './components/pages/import-case/import-case.component';
+import { ImportCaseFhirRecordComponent } from './components/widgets/import-case-fhir-record/import-case-fhir-record.component';
+import { ImportCaseConnectathonTemplateComponent } from './components/widgets/import-case-connectathon-template/import-case-connectathon-template.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { ImportCaseComponent } from './components/pages/import-case/import-case.
     CaseSummaryContentComponent,
     SetFhirExplorerDirective,
     CaseSummaryContentFieldComponent,
-    ImportCaseComponent
+    ImportCaseComponent,
+    ImportCaseFhirRecordComponent,
+    ImportCaseConnectathonTemplateComponent
   ],
     imports: [
         BrowserModule,

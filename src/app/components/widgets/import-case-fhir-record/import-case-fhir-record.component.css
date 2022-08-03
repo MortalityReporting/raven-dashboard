@@ -1,0 +1,7 @@
+.file-input {
+  display: none;
+}
+
+#filename {
+  font-family: monospace; margin-left: 1em;
+}
