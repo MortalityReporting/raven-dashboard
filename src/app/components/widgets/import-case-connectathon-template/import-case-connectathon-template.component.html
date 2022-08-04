@@ -29,6 +29,44 @@
 
   <div class="top-spacer">
     3. Review your record(s) below in a summary or as the generated FHIR Document.
+    <div>
+      <div class="row">
+        <div class="column" style="margin-right: 1em">
+          <table mat-table [dataSource]="dataSource"  class="mat-elevation-z1">
+
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef> # </th>
+              <td mat-cell *matCellDef="let case"> {{case.id}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Name </th>
+              <td mat-cell *matCellDef="let case"> {{case.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let case"> {{case.status}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+        <div class="column" style="margin-left: 1em">
+          <mat-tab-group  class="mat-elevation-z1">
+            <!-- Case Narrative -->
+            <mat-tab label="Case Narrative">
+              <div style="margin: 1em" [innerHTML]="caseNarrative"></div>
+            </mat-tab>
+            <mat-tab label="FHIR Bundle"> FHIR Bundle Content</mat-tab>
+            <mat-tab label="Server Response"> Server Response Content</mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+
   </div>
+
 
 </div>
