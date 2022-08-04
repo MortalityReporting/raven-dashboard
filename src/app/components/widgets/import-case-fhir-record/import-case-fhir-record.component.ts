@@ -7,18 +7,16 @@ import {UtilsService} from "../../../service/utils.service";
   templateUrl: './import-case-fhir-record.component.html',
   styleUrls: ['./import-case-fhir-record.component.css']
 })
-export class ImportCaseFhirRecordComponent implements OnInit {
+export class ImportCaseFhirRecordComponent {
 
   isLoading: boolean = false;
   file: File = null;
   MAX_FILE_SIZE = 100000; // Max allowed file size is 100KB
   fileContent: string;
+  errorMessage: string;
 
   constructor(private importCaseService: ImportCaseService,
               private utilsService: UtilsService) { }
-
-  ngOnInit(): void {
-  }
 
   onFileSelected(event: any) {
 
@@ -30,6 +28,7 @@ export class ImportCaseFhirRecordComponent implements OnInit {
     else if (this.file.size > this.MAX_FILE_SIZE){
       console.error("File too big")
       this.utilsService.showErrorMessage("This file exceeds " + this.MAX_FILE_SIZE /  1000 + "kb and cannot be processed");
+      this.errorMessage = '';
     }
     else {
 
@@ -46,12 +45,24 @@ export class ImportCaseFhirRecordComponent implements OnInit {
 
   clearUI() {
     // TODO reset the UI to it's initial state.
+    this.errorMessage = '';
   }
 
   onSubmit() {
+    this.errorMessage = '';
+
+    // The user has not entered any content or uploaded a file.
+    if(!this.fileContent){
+      this.errorMessage = "You must paste content or upload a file.";
+      return;
+    }
+
     let fileType = null;
-    if(this.file?.type){
-      fileType = this.file.type;
+    if(this.file?.type && this.file?.type ==='text/xml'){
+      fileType = 'xml';
+    }
+    if(this.file?.type && this.file?.type ==='application/json'){
+      fileType = 'json';
     }
     else if (this.utilsService.isXmlString(this.fileContent)){
       fileType = 'xml';
@@ -59,7 +70,7 @@ export class ImportCaseFhirRecordComponent implements OnInit {
     else if (this.utilsService.isJsonString(this.fileContent)){
       fileType = 'json';
     }
-    else {
+    else { // The code cannot recognize the file type or the text entered by the user as JSON or XML.
       this.utilsService.showErrorMessage("Unable to recognise the text format or the file type. " +
         "Only xml and json formats are acceptable.")
       console.error("Only json and xml are acceptable file formats!");

@@ -16,11 +16,11 @@
     </div>
 
     <div class="top-spacer">
-      <textarea matInput rows="30" style="width:100%; border-color: #78909c" placeholder="text"
+      <textarea matInput rows="30" style="width:100%; border-color: #78909c"
                 [(ngModel)]="fileContent">
       </textarea>
     </div>
-
+    <mat-error *ngIf="errorMessage">{{errorMessage}}</mat-error>
   </div>
 </div>
 
