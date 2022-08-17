@@ -6,7 +6,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatTableDataSource} from "@angular/material/table";
 import {FormControl} from "@angular/forms";
 import {Subscription} from "rxjs";
-import {UtilsService} from "../../service/utils.service";
+import {UtilsService} from "../../../service/utils.service";
 
 export interface ResponseItem {
   severity: string;
@@ -283,7 +283,7 @@ export class FhirValidatorComponent {
         this.validationFinished = true;
 
         let issues = response.issues;
-        if(issues.length === 1 && issues[0].severity === "Information" && issues[0]?.message === "ALL OK"){
+        if(issues && issues.length === 1 && issues[0].severity === "Information" && issues[0]?.message === "ALL OK"){
           this.isValidResource = true;
         }
         else {
@@ -330,9 +330,11 @@ export class FhirValidatorComponent {
     //TODO make sure to remove this function when the server side timeout is implemented.
     setTimeout(
       () => {
-        this.validatorSubscription$.unsubscribe();
-        this.isLoading = false;
-        this.serverTimoutDetected = true;
+        if(this.isLoading) {
+          this.validatorSubscription$.unsubscribe();
+          this.isLoading = false;
+          this.serverTimoutDetected = true;
+        }
       }, this.SERVER_TIMEOUT_INTERVAL
     );
 

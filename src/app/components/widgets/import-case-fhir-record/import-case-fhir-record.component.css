@@ -1,0 +1,13 @@
+#filename {
+  font-family: monospace; margin-left: 1em;
+}
+
+#text-editor {
+  width:100%;
+  border-color: #78909c
+}
+
+.content-offset {
+  margin-left: 1em;
+  margin-right: 1em
+}

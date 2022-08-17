@@ -1,0 +1,17 @@
+.radio-group {
+  display: flex;
+  flex-direction: row;
+  margin: 15px 0;
+  align-items: flex-start;
+}
+
+.radio-button {
+  margin: 5px;
+}
+
+#radio-button-label {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 10px;
+  font-weight: bold;
+}
