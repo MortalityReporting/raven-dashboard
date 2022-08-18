@@ -20,14 +20,18 @@ export class Demographics {
   race: string; // TODO: Setup FHIR Type
   ethnicity: string; // TODO: Setup FHIR Type
   maritalStatus: string;
-  usualWork: UsualWork;
+  usualWork: UsualWork[];
+
+  constructor() {
+    this.usualWork = new Array();
+  }
 }
 
 export class Circumstances {
   deathLocation: string;
   workInjury: string;
   tobaccoUseContributed: string;
-  pregnancy: string;
+  pregnancy: string;  
 }
 
 // Individual Resources and Parts
@@ -36,6 +40,12 @@ export class UsualWork {
   occupation: string;
   industry: string;
   duration: string;
+
+  constructor( occupation: string, industry: string )
+  {
+    this.occupation = occupation;
+    this.industry = industry;
+  }
 }
 
 export class CauseAndManner {

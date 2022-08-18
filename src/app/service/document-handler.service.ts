@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {map, Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {DecedentService} from "./decedent.service";
-import {CaseSummary, CauseAndManner, CauseOfDeathCondition, Circumstances, Demographics} from "../model/case-summary-models/case.summary";
+import {CaseSummary, CauseAndManner, CauseOfDeathCondition, Circumstances, Demographics, UsualWork} from "../model/case-summary-models/case.summary";
 import {CaseHeader} from "../model/case-summary-models/case.header";
 import {TrackingNumber} from "../model/mdi/tracking.number";
 import {TerminologyHandlerService} from "./terminology-handler.service";
@@ -57,7 +57,8 @@ export class DocumentHandlerService {
   // -------------------------
 
   createCaseHeader(documentBundle: any, patientResource: any, compositionResource: any): CaseHeader {
-    let caseHeader = new CaseHeader();
+
+    let caseHeader = new CaseHeader();    
     caseHeader.fullName = this.getPatientOfficialName(patientResource);
     let genderString = patientResource.gender || this.defaultString;
     caseHeader.gender = genderString.substring(0,1).toUpperCase() + genderString.substring(1);
@@ -76,15 +77,15 @@ export class DocumentHandlerService {
 
   createCaseSummary(documentBundle: any, patientResource: any, compositionResource: any): CaseSummary {
     let summary: CaseSummary = new CaseSummary();
-    summary.demographics = this.generateDemographics(documentBundle, patientResource);
+    summary.demographics = this.generateDemographics(documentBundle, compositionResource, patientResource);
     summary.circumstances = this.generateCircumstances(documentBundle, compositionResource);
     summary.causeAndManner = this.generateCauseAndManner(documentBundle, compositionResource);
     return summary;
   }
 
-  generateDemographics(documentBundle: any, patientResource: any): Demographics {
+  generateDemographics(documentBundle: any, compositionResource: any, patientResource: any): Demographics {
     let demographics: Demographics = new Demographics();
-
+    
     // Setup Basic Demographics from Patient Resource Directly
     demographics.aliases = patientResource.name || this.defaultString;
     demographics.gender = patientResource.gender || this.defaultString;
@@ -101,6 +102,17 @@ export class DocumentHandlerService {
     demographics.ethnicity = this.getDecedentEthnicityText(extensions);
 
     // TODO: Add handling for ODH USual Work and Other Identifiers (missing data)
+
+    let demographicsSection = this.getSection(compositionResource, "demographics");
+
+    demographicsSection.entry.map(( entry: any ) => {
+
+      let observation = this.findResourceById(documentBundle, entry.reference );
+
+      demographics.usualWork.push( new UsualWork( observation?.valueCodeableConcept.text, observation?.component[0].valueCodeableConcept.text ));
+    });
+
+    console.log( demographics );
 
     return demographics;
   }
