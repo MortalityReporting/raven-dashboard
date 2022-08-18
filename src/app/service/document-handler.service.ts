@@ -122,10 +122,8 @@ export class DocumentHandlerService {
   generateCauseAndManner(documentBundle: any, compositionResource: any): CauseAndManner {
     let causeAndManner: CauseAndManner = new CauseAndManner();
     
-    // let causeAndMannerSection = compositionResource.section.find((section: any) => section.code.coding.some((coding: any) => coding.code === "cause-manner"));
-    
+    // let causeAndMannerSection = compositionResource.section.find((section: any) => section.code.coding.some((coding: any) => coding.code === "cause-manner"));    
     // console.log(causeAndMannerSection)
-
     // TODO: Refactor this to use section and no index, and pull from term server instead of relying on display.
 
     causeAndManner.mannerOfDeath = this.findResourceByProfileName(documentBundle, Obs_MannerOfDeath)?.valueCodeableConcept?.coding[0]?.display || this.defaultString;
@@ -139,14 +137,15 @@ export class DocumentHandlerService {
 
       let condition = this.findResourceById(documentBundle, entry.item.reference );
 
-      console.log( condition );
-
-      let causeOfDeathCondition: CauseOfDeathCondition = new CauseOfDeathCondition();
-
-      causeOfDeathCondition.value = condition.code.text;
-      causeOfDeathCondition.interval = condition.onsetAge?.value || ""
-
-      causeAndManner.causeOfDeathConditions.push( causeOfDeathCondition );
+      if (condition?.resourceType == "Condition")
+      {
+        console.log( condition );
+  
+        if (condition.code?.text)
+        {
+          causeAndManner.causeOfDeathConditions.push( new CauseOfDeathCondition( condition.code.text, condition.onsetAge?.value || "" ));    
+        }
+      }
     });
 
     return causeAndManner;

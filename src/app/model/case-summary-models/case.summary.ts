@@ -52,6 +52,11 @@ export class CauseAndManner {
 export class CauseOfDeathCondition {
   value: CodeableConcept;
   interval: Interval;
+
+  constructor( value: CodeableConcept, interval: Interval ) {    
+    this.value = value;
+    this.interval = interval;
+  }
 }
 
 export class Interval {
