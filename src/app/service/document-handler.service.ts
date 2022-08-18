@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {map, Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {DecedentService} from "./decedent.service";
-import {CaseSummary, CauseAndManner, Circumstances, Demographics} from "../model/case-summary-models/case.summary";
+import {CaseSummary, CauseAndManner, CauseOfDeathCondition, Circumstances, Demographics} from "../model/case-summary-models/case.summary";
 import {CaseHeader} from "../model/case-summary-models/case.header";
 import {TrackingNumber} from "../model/mdi/tracking.number";
 import {TerminologyHandlerService} from "./terminology-handler.service";
@@ -12,7 +12,8 @@ import {
   Obs_DecedentPregnancy,
   Obs_HowDeathInjuryOccurred,
   Obs_MannerOfDeath,
-  Obs_TobaccoUseContributedToDeath
+  Obs_TobaccoUseContributedToDeath,
+  List_CauseOfDeathPathway,
 } from "../model/mdi/profile.list"
 import {FhirResourceProviderService} from "./fhir-resource-provider.service";
 import {FhirResource} from "../model/fhir/fhir.resource";
@@ -121,11 +122,27 @@ export class DocumentHandlerService {
   generateCauseAndManner(documentBundle: any, compositionResource: any): CauseAndManner {
     let causeAndManner: CauseAndManner = new CauseAndManner();
     let causeAndMannerSection = compositionResource.section.find((section: any) => section.code.coding.some((coding: any) => coding.code === "cause-manner"));
+    
     console.log(causeAndMannerSection)
 
     // TODO: Refactor this to use section and no index, and pull from term server instead of relying on display.
+    causeAndManner.causeOfDeathConditions = new Array(0);
     causeAndManner.mannerOfDeath = this.findResourceByProfileName(documentBundle, Obs_MannerOfDeath)?.valueCodeableConcept?.coding[0]?.display || this.defaultString;
     causeAndManner.howDeathInjuryOccurred = this.findResourceByProfileName(documentBundle, Obs_HowDeathInjuryOccurred)?.valueString || this.defaultString;
+
+    let causeOfDeathPathway = this.findResourceByProfileName(documentBundle, List_CauseOfDeathPathway);
+
+    causeOfDeathPathway.entry.map(( entry: any) => {
+
+      let condition = this.findResourceById(documentBundle, entry.item.reference );
+
+      let causeOfDeathCondition: CauseOfDeathCondition = new CauseOfDeathCondition();
+
+      causeOfDeathCondition.value = condition.code.text;
+
+      causeAndManner.causeOfDeathConditions.push( causeOfDeathCondition );
+    });
+
     return causeAndManner;
   }
 
