@@ -15,7 +15,7 @@ export class CaseSummaryContentComponent implements OnInit {
   profiles: any = Profiles;
 
   constructor() {
-    console.log(this.profiles.Obs_DeathInjuryEventOccurredAtWork)
+    // console.log(this.profiles.Obs_DeathInjuryEventOccurredAtWork)
   }
 
   ngOnInit(): void {

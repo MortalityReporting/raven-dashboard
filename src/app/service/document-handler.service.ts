@@ -62,7 +62,7 @@ export class DocumentHandlerService {
     let genderString = patientResource.gender || this.defaultString;
     caseHeader.gender = genderString.substring(0,1).toUpperCase() + genderString.substring(1);
     let deathDateResource = this.findResourceByProfileName(documentBundle, Obs_DeathDate);
-    console.log(deathDateResource);
+    // console.log(deathDateResource);
     let splitDateTime = deathDateResource?.valueDateTime?.split("T") || []; //TODO: Add more handling to this for other forms of dateTime?
     caseHeader.deathDate = splitDateTime[0] || this.defaultString;
     caseHeader.deathTime = splitDateTime[1] || this.defaultString;
@@ -121,24 +121,30 @@ export class DocumentHandlerService {
 
   generateCauseAndManner(documentBundle: any, compositionResource: any): CauseAndManner {
     let causeAndManner: CauseAndManner = new CauseAndManner();
-    let causeAndMannerSection = compositionResource.section.find((section: any) => section.code.coding.some((coding: any) => coding.code === "cause-manner"));
     
-    console.log(causeAndMannerSection)
+    // let causeAndMannerSection = compositionResource.section.find((section: any) => section.code.coding.some((coding: any) => coding.code === "cause-manner"));
+    
+    // console.log(causeAndMannerSection)
 
     // TODO: Refactor this to use section and no index, and pull from term server instead of relying on display.
-    causeAndManner.causeOfDeathConditions = new Array(0);
+
     causeAndManner.mannerOfDeath = this.findResourceByProfileName(documentBundle, Obs_MannerOfDeath)?.valueCodeableConcept?.coding[0]?.display || this.defaultString;
     causeAndManner.howDeathInjuryOccurred = this.findResourceByProfileName(documentBundle, Obs_HowDeathInjuryOccurred)?.valueString || this.defaultString;
 
     let causeOfDeathPathway = this.findResourceByProfileName(documentBundle, List_CauseOfDeathPathway);
 
+    console.log( causeOfDeathPathway );
+
     causeOfDeathPathway.entry.map(( entry: any) => {
 
       let condition = this.findResourceById(documentBundle, entry.item.reference );
 
+      console.log( condition );
+
       let causeOfDeathCondition: CauseOfDeathCondition = new CauseOfDeathCondition();
 
       causeOfDeathCondition.value = condition.code.text;
+      causeOfDeathCondition.interval = condition.onsetAge?.value || ""
 
       causeAndManner.causeOfDeathConditions.push( causeOfDeathCondition );
     });
@@ -182,7 +188,7 @@ export class DocumentHandlerService {
   // -------------------------
 
   getSection(compositionResource: any = this.currentCompositionResource, sectionName: string): any {
-    console.log(compositionResource);
+    // console.log(compositionResource);
     return compositionResource.section.find((section: any) => section.code.coding.some((coding: any) => coding.code === sectionName));
   }
 

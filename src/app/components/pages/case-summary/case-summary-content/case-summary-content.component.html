@@ -114,8 +114,26 @@
           </div>
         </div>
 
-        Cause of Death Pathway: <br/>
-        Conditions Contributing to Death: <br/>
+        <!-- <br/> Cause of Death Pathway: <br/> -->
+        <!-- <br/> Conditions Contributing to Death: <br/> -->
+
+        <br/>
+        
+        <table class="alias-table">
+          <tr>
+            <th>Cause of Death</th>
+            <th>Onset to Death</th>
+          </tr>
+          <tr *ngFor="let condition of (caseSummary$ | async)?.causeAndManner.causeOfDeathConditions;">
+            <td>
+              {{condition.value}}
+            </td>
+            <td>
+              {{condition.interval}}
+            </td>
+          </tr>
+        </table>
+
       </div>
     </mat-expansion-panel>
     <mat-expansion-panel class="summary-section" id="medicalHistory">
