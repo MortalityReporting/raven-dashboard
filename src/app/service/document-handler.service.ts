@@ -105,12 +105,15 @@ export class DocumentHandlerService {
 
     let demographicsSection = this.getSection(compositionResource, "demographics");
 
-    demographicsSection.entry.map(( entry: any ) => {
+    if (demographicsSection != null) {
+      
+      demographicsSection.entry.map(( entry: any ) => {
 
-      let observation = this.findResourceById(documentBundle, entry.reference );
-
-      demographics.usualWork.push( new UsualWork( observation?.valueCodeableConcept.text, observation?.component[0].valueCodeableConcept.text ));
-    });
+        let observation = this.findResourceById(documentBundle, entry.reference );
+  
+        demographics.usualWork.push( new UsualWork( observation?.valueCodeableConcept?.text, observation?.component[0].valueCodeableConcept.text ));
+      });  
+    }
 
     console.log( demographics );
 
