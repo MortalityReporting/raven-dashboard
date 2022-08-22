@@ -45,7 +45,10 @@
           </div>
         </div>
 
-        Aliases: (TODO: Implement Component for Alias Table)
+        <!-- Aliases: (TODO: Implement Component for Alias Table) -->
+
+        <br/>
+        
         <table class="alias-table">
           <tr>
             <th>Given Name(s)</th>
@@ -68,7 +71,26 @@
             </td>
           </tr>
         </table>
-        Occupation History: (TODO: Implement Component for Occupation Table)
+
+        <!-- Occupation History: (TODO: Implement Component for Occupation Table) -->
+
+        <br/>
+
+        <table class="alias-table">
+          <tr>
+            <th>Occupation</th>
+            <th>Industry</th>
+          </tr>
+          <tr *ngFor="let usualWork of (caseSummary$ | async)?.demographics.usualWork;">
+            <td>
+              {{usualWork.occupation}}
+            </td>
+            <td>
+              {{usualWork.industry}}
+            </td>
+          </tr>
+        </table>
+
       </div>
     </mat-expansion-panel>
 
