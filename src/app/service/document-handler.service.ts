@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {map, Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {DecedentService} from "./decedent.service";
-import {CaseSummary, CauseAndManner, CauseOfDeathCondition, Circumstances, Demographics, UsualWork} from "../model/case-summary-models/case.summary";
+import {CaseSummary, CauseAndManner, CauseOfDeathCondition, Circumstances, Demographics, UsualWork, Interval} from "../model/case-summary-models/case.summary";
 import {CaseHeader} from "../model/case-summary-models/case.header";
 import {TrackingNumber} from "../model/mdi/tracking.number";
 import {TerminologyHandlerService} from "./terminology-handler.service";
@@ -152,13 +152,23 @@ export class DocumentHandlerService {
 
       let condition = this.findResourceById(documentBundle, entry.item.reference );
 
+      var units = "";
+
+      switch (condition.onsetAge?.unit)
+      {
+        case 'd': units = "days"; break;
+        case 'mo': units = "months"; break;
+        case 'a': units = "years"; break;
+      }
+
       if (condition?.resourceType == "Condition")
       {
         console.log( condition );
   
         if (condition.code?.text)
         {
-          causeAndManner.causeOfDeathConditions.push( new CauseOfDeathCondition( condition.code.text, condition.onsetAge?.value || "" ));    
+          let text = condition.onsetAge?.value + " " + units;
+          causeAndManner.causeOfDeathConditions.push( new CauseOfDeathCondition( condition.code.text, new Interval( text )));    
         }
       }
     });

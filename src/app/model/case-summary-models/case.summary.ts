@@ -71,4 +71,9 @@ export class CauseOfDeathCondition {
 
 export class Interval {
   text: string; // Either equals valueString directly, or if valueQuantity (value + " " + unit).
+
+  constructor( text: string )
+  {
+    this.text = text;
+  }
 }
