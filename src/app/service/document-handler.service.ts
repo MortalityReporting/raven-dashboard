@@ -152,22 +152,26 @@ export class DocumentHandlerService {
 
       let condition = this.findResourceById(documentBundle, entry.item.reference );
 
-      var units = "";
-
-      switch (condition.onsetAge?.unit)
-      {
-        case 'd': units = "days"; break;
-        case 'mo': units = "months"; break;
-        case 'a': units = "years"; break;
-      }
-
       if (condition?.resourceType == "Condition")
       {
         console.log( condition );
   
         if (condition.code?.text)
         {
-          let text = condition.onsetAge?.value + " " + units;
+          let text = this.defaultString;
+
+          if (condition.onsetAge != null)
+          {
+            text = condition.onsetAge?.value;
+            
+            switch (condition.onsetAge?.unit)
+            {
+              case 'd': text += " days"; break;
+              case 'mo': text += " months"; break;
+              case 'a': text += " years"; break;
+            }            
+          }
+
           causeAndManner.causeOfDeathConditions.push( new CauseOfDeathCondition( condition.code.text, new Interval( text )));    
         }
       }
