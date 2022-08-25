@@ -13,8 +13,15 @@
     <input type="text" value="{{ (caseHeader$ | async)?.trackingNumber?.value}}" readonly>
     <input type="text" value="{{ (caseHeader$ | async)?.trackingNumber?.type}}" readonly>
     <span class="content-spacer"> </span>
-    Authors (DROP DOWN PLACEHOLDER)
-  </mat-toolbar-row>
+    <mat-form-field>
+      <mat-label>Authors</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let author of (caseHeader$ | async)?.authors;">
+          {{ author }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>    
+</mat-toolbar-row>
 </mat-toolbar>
 <mat-sidenav-container [autosize]="autosize">
   <mat-sidenav mode="side" opened>

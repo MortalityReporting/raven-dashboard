@@ -48,7 +48,7 @@ export class DocumentHandlerService {
         this.caseHeader.next(this.createCaseHeader(documentBundle, patientResource, compositionResource));
         this.caseSummary.next(this.createCaseSummary(documentBundle, patientResource, compositionResource));
         this.fhirResourceProvider.setCompositionId(compositionId);
-        this.fhirResourceProvider.setSelectedFhirResource(documentBundle);
+        this.fhirResourceProvider.setSelectedFhirResource(documentBundle);               
       })
     );
   }
@@ -69,6 +69,18 @@ export class DocumentHandlerService {
     caseHeader.deathDate = splitDateTime[0] || this.defaultString;
     caseHeader.deathTime = splitDateTime[1] || this.defaultString;
     caseHeader.trackingNumber = this.getTrackingNumber(compositionResource);
+
+    let authorRefs = compositionResource.author;
+
+    authorRefs.map(( ref: any ) => {
+
+      let practitioner = this.findResourceById(documentBundle, ref.reference );
+
+      let author = practitioner.name[0].given[0] + " " + practitioner.name[0].family
+
+      caseHeader.authors.push( author );
+    });  
+
     return caseHeader;
   }
 
@@ -116,8 +128,6 @@ export class DocumentHandlerService {
       });  
     }
 
-    console.log( demographics );
-
     return demographics;
   }
 
@@ -147,16 +157,12 @@ export class DocumentHandlerService {
 
     let causeOfDeathPathway = this.findResourceByProfileName(documentBundle, List_CauseOfDeathPathway);
 
-    console.log( causeOfDeathPathway );
-
     causeOfDeathPathway.entry.map(( entry: any) => {
 
       let condition = this.findResourceById(documentBundle, entry.item.reference );
 
       if (condition?.resourceType == "Condition")
       {
-        console.log( condition );
-  
         if (condition.code?.text)
         {
           let text = this.defaultString;

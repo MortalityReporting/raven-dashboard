@@ -32,10 +32,6 @@ export class FhirExplorerComponent implements OnInit {
   }
 
   onToggleClick() {
-    this.fetchResource();
-  }
-
-  fetchResource() {
 
     // Alternative implementation: POST https://gt-apps.hdap.gatech.edu/HL7ValidatorService/fhir/$translate
     //
