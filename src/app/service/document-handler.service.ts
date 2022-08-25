@@ -48,6 +48,7 @@ export class DocumentHandlerService {
         this.caseHeader.next(this.createCaseHeader(documentBundle, patientResource, compositionResource));
         this.caseSummary.next(this.createCaseSummary(documentBundle, patientResource, compositionResource));
         this.fhirResourceProvider.setSelectedFhirResource(documentBundle);
+        this.fhirResourceProvider.setCompositionId(compositionId);
       })
     );
   }

@@ -11,11 +11,19 @@ export class FhirResourceProviderService {
   private fhirResource = new Subject<FhirResource>();
   fhirResource$ = this.fhirResource.asObservable();
 
+  compostionId: string;
+
   constructor() {
 
   }
 
+  setCompositionId( compositionId: string )
+  {    
+    this.compostionId = compositionId;
+  }
+
   setSelectedFhirResource(fhirResource: any) {
+    console.log( fhirResource );
     this.fhirResource.next(fhirResource);
   }
 }
