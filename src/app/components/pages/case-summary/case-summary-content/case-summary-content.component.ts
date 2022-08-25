@@ -7,12 +7,14 @@ import { Profiles } from "../../../../model/mdi/profile.list";
 @Component({
   selector: 'app-case-summary-content',
   templateUrl: './case-summary-content.component.html',
-  styleUrls: ['./case-summary-content.component.css']
+  styleUrls: ['./case-summary-content.component.css'],
 })
 export class CaseSummaryContentComponent implements OnInit {
   @Input() caseSummary$: Observable<CaseSummary>;
   @ViewChild(MatAccordion) accordion: MatAccordion;
   profiles: any = Profiles;
+  ids = ["ID-1", "ID-2", "ID-3"];
+  selectedId = "ID-1";
 
   constructor() {
     // console.log(this.profiles.Obs_DeathInjuryEventOccurredAtWork)

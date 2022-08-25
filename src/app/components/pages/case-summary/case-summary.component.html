@@ -13,10 +13,10 @@
     <input type="text" value="{{ (caseHeader$ | async)?.trackingNumber?.value}}" readonly>
     <input type="text" value="{{ (caseHeader$ | async)?.trackingNumber?.type}}" readonly>
     <span class="content-spacer"> </span>
+    Authors:
     <mat-form-field>
-      <mat-label>Authors</mat-label>
-      <mat-select>
-        <mat-option *ngFor="let author of (caseHeader$ | async)?.authors;">
+      <mat-select value={{selectedAuthor}}>
+        <mat-option class="mat-option" *ngFor="let author of (caseHeader$ | async)?.authors;" value="{{selectedAuthor}}">
           {{ author }}
         </mat-option>
       </mat-select>

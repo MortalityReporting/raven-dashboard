@@ -19,6 +19,7 @@ export class CaseSummaryComponent implements OnInit {
   documentBundle$: Observable<any>;
   sidenavExpanded = false;
   autosize: boolean = false;
+  selectedAuthor = "undefined";
 
   constructor(
     private route: ActivatedRoute,
@@ -37,6 +38,11 @@ export class CaseSummaryComponent implements OnInit {
 
     this.caseHeader$ = this.documentHandler.caseHeader$;
     this.caseSummary$ = this.documentHandler.caseSummary$;
+
+    // this.caseHeader$.subscribe( resource => {
+    //   this.selectedAuthor = resource.authors[0];
+    //   console.log( this.selectedAuthor );
+    // })
   }
 
   onSidenavResize(expanded: boolean) {

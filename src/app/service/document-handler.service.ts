@@ -81,6 +81,9 @@ export class DocumentHandlerService {
       caseHeader.authors.push( author );
     });  
 
+    caseHeader.authors.push( "Jane Doe" );
+    caseHeader.authors.push( "John Doe" );
+
     return caseHeader;
   }
 

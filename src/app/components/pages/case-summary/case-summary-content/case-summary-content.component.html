@@ -17,7 +17,14 @@
               <app-case-summary-content-field [label]="'Social Security Number'" [value]="(caseSummary$ | async)?.demographics.ssn" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
             </div>
             <div class="grid-col-1">
-              (TODO: Other Identifiers Here)
+              <mat-form-field>
+                <mat-label>Other Identifiers</mat-label>
+                <mat-select value={{selectedId}}>
+                  <mat-option *ngFor="let id of ids;" value={{selectedId}}>
+                    {{ id }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>    
             </div>
           </div>
           <div class="grid-row">
