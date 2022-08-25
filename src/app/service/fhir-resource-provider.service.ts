@@ -23,7 +23,6 @@ export class FhirResourceProviderService {
   }
 
   setSelectedFhirResource(fhirResource: any) {
-    console.log( fhirResource );
     this.fhirResource.next(fhirResource);
   }
 }
