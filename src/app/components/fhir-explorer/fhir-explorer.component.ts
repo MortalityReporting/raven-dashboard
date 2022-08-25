@@ -23,7 +23,8 @@ export class FhirExplorerComponent implements OnInit {
     private fhirResourceProvider: FhirResourceProviderService,
   ) {
     this.fhirResourceProvider.fhirResource$.subscribe( resource => {
-      this.fetchResource();
+
+      this.fhirResource = JSON.stringify( resource, null, 2 );
     })
   };
 
@@ -35,12 +36,6 @@ export class FhirExplorerComponent implements OnInit {
   }
 
   fetchResource() {
-
-    let format = '?_format=application/fhir+' + this.selectedStructure;
-
-    const options  = {
-      responseType: 'text' as 'text',
-    };
 
     // Alternative implementation: POST https://gt-apps.hdap.gatech.edu/HL7ValidatorService/fhir/$translate
     //
@@ -57,9 +52,15 @@ export class FhirExplorerComponent implements OnInit {
     //
     // where parameter[0].resource is {} the actual resource you want to convert to XML.
 
+    let format = '?_format=application/fhir+' + this.selectedStructure;
+
+    const options  = {
+      responseType: 'text' as 'text',
+    };
+
     this.httpClient.get(this.decedentService.getFhirServerBaseURL() + "Composition/" + this.fhirResourceProvider.compostionId + "/$document" + format, options ).subscribe( resource => {
 
       this.fhirResource = resource;
-    })
-  }  
+    })  
+}  
 }
