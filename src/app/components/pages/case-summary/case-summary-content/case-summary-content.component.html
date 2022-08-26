@@ -1,12 +1,12 @@
 <div class="case-summary-content-wrapper">
   <div class="section-button-wrapper">
     <span class="content-spacer"></span>
-    <button mat-flat-button color="primary" (click)="accordion.openAll()">Expand All Sections</button>
-    <button mat-flat-button color="primary" (click)="accordion.closeAll()">Collapse All Sections</button>
+    <button mat-flat-button color="primary" (click)="onOpenAll()">Expand All Sections</button>
+    <button mat-flat-button color="primary" (click)="onCloseAll()">Collapse All Sections</button>
     <span class="content-spacer"></span>
   </div>
   <mat-accordion multi>
-    <mat-expansion-panel class="summary-section" id="demographics" [expanded]="demographicsExpanded">
+    <mat-expansion-panel class="summary-section" id="demographics" [expanded]="demographicsExpanded" (click)="onItemClick()">
       <mat-expansion-panel-header>
         <mat-panel-title>Demographics</mat-panel-title>
       </mat-expansion-panel-header>

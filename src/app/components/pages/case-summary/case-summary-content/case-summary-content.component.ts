@@ -30,4 +30,33 @@ export class CaseSummaryContentComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  onOpenAll() {
+    this.demographicsExpanded= true;
+    this.circumstancesExpanded = true;
+    this.causeAndMannerExpanded = true;
+    this.medicalHistoryExpanded = true;
+    this.examNotesExpanded = true;
+    this.narrativesExpanded = true;
+    this.deathCertificateExpanded = true;
+
+    this.accordion.openAll()    
+  }
+
+  onCloseAll() {
+    this.demographicsExpanded= false;
+    this.circumstancesExpanded = false;
+    this.causeAndMannerExpanded = false;
+    this.medicalHistoryExpanded = false;
+    this.examNotesExpanded = false;
+    this.narrativesExpanded = false;
+    this.deathCertificateExpanded = false;
+
+    this.accordion.closeAll()
+  }
+
+  onItemClick() {
+
+    console.log( this.demographicsExpanded );
+  }
 }
