@@ -12,15 +12,22 @@ import { Profiles } from "../../../../model/mdi/profile.list";
 export class CaseSummaryContentComponent implements OnInit {
   @Input() caseSummary$: Observable<CaseSummary>;
   @ViewChild(MatAccordion) accordion: MatAccordion;
+
+  demographicsExpanded: boolean = true;
+  circumstancesExpanded: boolean = true;
+  causeAndMannerExpanded: boolean = true;
+  medicalHistoryExpanded: boolean = true;
+  examNotesExpanded: boolean = true;
+  narrativesExpanded: boolean = true;
+  deathCertificateExpanded: boolean = true;
+
   profiles: any = Profiles;
   ids = ["ID-1", "ID-2", "ID-3"];
   selectedId = "ID-1";
 
   constructor() {
-    // console.log(this.profiles.Obs_DeathInjuryEventOccurredAtWork)
   }
 
   ngOnInit(): void {
   }
-
 }

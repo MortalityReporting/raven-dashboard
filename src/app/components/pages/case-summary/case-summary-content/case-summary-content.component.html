@@ -6,7 +6,7 @@
     <span class="content-spacer"></span>
   </div>
   <mat-accordion multi>
-    <mat-expansion-panel class="summary-section" id="demographics" [expanded]="true">
+    <mat-expansion-panel class="summary-section" id="demographics" [expanded]="demographicsExpanded">
       <mat-expansion-panel-header>
         <mat-panel-title>Demographics</mat-panel-title>
       </mat-expansion-panel-header>
@@ -101,7 +101,7 @@
       </div>
     </mat-expansion-panel>
 
-    <mat-expansion-panel class="summary-section" id="circumstances" [expanded]="true">
+    <mat-expansion-panel class="summary-section" id="circumstances" [expanded]="circumstancesExpanded">
       <mat-expansion-panel-header>
         <mat-panel-title>Circumstances</mat-panel-title>
       </mat-expansion-panel-header>
@@ -127,7 +127,7 @@
         </div>
       </div>
     </mat-expansion-panel>
-    <mat-expansion-panel class="summary-section" id="causeAndManner" [expanded]="true">
+    <mat-expansion-panel class="summary-section" id="causeAndManner" [expanded]="causeAndMannerExpanded">
       <mat-expansion-panel-header>
         <mat-panel-title>Cause and Manner of Death</mat-panel-title>
       </mat-expansion-panel-header>
@@ -165,25 +165,25 @@
 
       </div>
     </mat-expansion-panel>
-    <mat-expansion-panel class="summary-section" id="medicalHistory">
+    <mat-expansion-panel class="summary-section" id="medicalHistory" [expanded]="medicalHistoryExpanded">
       <mat-expansion-panel-header>
         <mat-panel-title>Relevant Medical History</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="summary-section-body">Not Yet Implemented</div>
     </mat-expansion-panel>
-    <mat-expansion-panel class="summary-section" id="examAndAutopsy">
+    <mat-expansion-panel class="summary-section" id="examAndAutopsy" [expanded]="examNotesExpanded">
       <mat-expansion-panel-header>
         <mat-panel-title>Exam and Autopsy Notes</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="summary-section-body">Not Yet Implemented</div>
     </mat-expansion-panel>
-    <mat-expansion-panel class="summary-section" id="narratives">
+    <mat-expansion-panel class="summary-section" id="narratives" [expanded]="narrativesExpanded">
       <mat-expansion-panel-header>
         <mat-panel-title>Narratives</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="summary-section-body">Not Yet Implemented</div>
     </mat-expansion-panel>
-    <mat-expansion-panel class="summary-section" id="deathCertificate">
+    <mat-expansion-panel class="summary-section" id="deathCertificate" [expanded]="deathCertificateExpanded">
       <mat-expansion-panel-header>
         <mat-panel-title>Death Certificate</mat-panel-title>
       </mat-expansion-panel-header>
