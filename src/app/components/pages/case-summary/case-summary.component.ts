@@ -30,7 +30,9 @@ export class CaseSummaryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
     let subjectId = this.route.snapshot.params['id'];
+
     this.decedentService.getComposition(subjectId).subscribe(
       {next: (composition: any) => {
           this.documentBundle$ = this.documentHandler.getDocumentBundle(composition.entry[0].resource.id);
@@ -40,6 +42,16 @@ export class CaseSummaryComponent implements OnInit {
 
     this.caseHeader$ = this.documentHandler.caseHeader$;
     this.caseSummary$ = this.documentHandler.caseSummary$;
+
+    this.decedentService.getDecedentRecords().subscribe( results => {
+      results.map( result => {
+        if (result.resource.id == subjectId) {
+          this.caseSummary$.subscribe( caseSummary => {
+            caseSummary.narratives = result.resource.text.div;
+          })
+        }
+      })
+    })
   }
   
   onSidenavResize(expanded: boolean) {
@@ -49,6 +61,7 @@ export class CaseSummaryComponent implements OnInit {
   }
 
   onItemClick(id: string) {
+
     this.caseSummaryContentComponent.demographicsExpanded = false;
     this.caseSummaryContentComponent.circumstancesExpanded = false;
     this.caseSummaryContentComponent.causeAndMannerExpanded = false;

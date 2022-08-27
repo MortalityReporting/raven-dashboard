@@ -181,7 +181,7 @@
       <mat-expansion-panel-header>
         <mat-panel-title>Narratives</mat-panel-title>
       </mat-expansion-panel-header>
-      <div class="summary-section-body">Not Yet Implemented</div>
+      <div class="summary-section-body" [innerHTML]="(caseSummary$ | async)?.narratives"></div>
     </mat-expansion-panel>
     <mat-expansion-panel class="summary-section" id="deathCertificate" [expanded]="deathCertificateExpanded">
       <mat-expansion-panel-header>
