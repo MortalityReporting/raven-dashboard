@@ -55,13 +55,11 @@ export class FhirExplorerComponent implements OnInit {
   }
 
   onToggleClick() {
-    if (this.selectedStructure === "xml") {    
-      this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.getCurrentSubjectResource());
-      this.fetchXml();
-    } else if (this.selectedStructure === "json") {
-      this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.getCurrentSubjectResource());
-    } else if (this.selectedStructure === "narrative") {
+    if (this.selectedStructure === "narrative") {
       this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.getCurrentSubjectResource().text);
     }
-}  
+    else {
+      this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.getCurrentSubjectResource());
+    }
+  }  
 }
