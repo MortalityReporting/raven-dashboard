@@ -5,4 +5,8 @@
     <mat-button-toggle value="xml" style="width: 34%">XML</mat-button-toggle>
   </mat-button-toggle-group>
 </section>
-<pre> {{ formattedText }} </pre>
+<pre *ngIf="!isNarrative()"> {{ formattedText }} </pre>
+<div *ngIf="isNarrative()">
+  <br>
+  <div [innerHTML]="formattedText"></div>
+</div>

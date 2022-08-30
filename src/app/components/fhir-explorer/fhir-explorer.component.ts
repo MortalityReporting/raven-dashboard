@@ -54,9 +54,13 @@ export class FhirExplorerComponent implements OnInit {
     });
   }
 
+  isNarrative() : boolean {
+    return this.selectedStructure === 'narrative';
+  }
+
   onToggleClick() {
     if (this.selectedStructure === "narrative") {
-      this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.getCurrentSubjectResource().text);
+      this.formattedText = this.documentHandler.getCurrentSubjectResource().text.div;
     }
     else {
       this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.getCurrentSubjectResource());
