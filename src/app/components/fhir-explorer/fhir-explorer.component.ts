@@ -3,8 +3,7 @@ import {Observable} from "rxjs";
 import {FhirResource} from "../../model/fhir/fhir.resource";
 import {FhirResourceProviderService} from "../../service/fhir-resource-provider.service";
 import {HttpClient} from "@angular/common/http";
-import {DecedentService} from "../../service/decedent.service";
-import { JsonPipe } from '@angular/common';
+import {DocumentHandlerService} from "../../service/document-handler.service";
 
 @Component({
   selector: 'app-fhir-explorer',
@@ -13,50 +12,55 @@ import { JsonPipe } from '@angular/common';
 })
 export class FhirExplorerComponent implements OnInit {
 
-  fhirResource: FhirResource;
-  fhirResource$: Observable<FhirResource>; // TODO: For Testing, remove.
+  formattedText: string;
+  jsonResource: FhirResource;
   selectedStructure: string = 'json';
+  fhirResource$: Observable<FhirResource>; // TODO: For Testing, remove.
   
   constructor(
     private httpClient: HttpClient,
-    private decedentService: DecedentService,
+    private documentHandler: DocumentHandlerService,
     private fhirResourceProvider: FhirResourceProviderService,
   ) {
-    this.fhirResourceProvider.fhirResource$.subscribe( resource => {
+      this.fhirResourceProvider.fhirResource$.subscribe( resource => {
 
-      this.fhirResource = JSON.stringify( resource, null, 2 );
+      this.jsonResource = resource;
+      
+      if (this.selectedStructure === "xml") {
+        this.fetchXml();
+      } else {
+        this.formattedText = JSON.stringify( resource, null, 2 );
+      }
     })
   };
 
   ngOnInit(): void {
   }
 
-  onToggleClick() {
-
-    // Alternative implementation: POST https://gt-apps.hdap.gatech.edu/HL7ValidatorService/fhir/$translate
-    //
-    // with payload
-    // {
-    //   "resourceType": "Parameters",
-    //   "parameter": [
-    //       {
-    //           "name": "resource",
-    //           "resource": {}
-    //       }
-    //   ]
-    // }
-    //
-    // where parameter[0].resource is {} the actual resource you want to convert to XML.
-
-    let format = '?_format=application/fhir+' + this.selectedStructure;
+  fetchXml() {
+    const body = {"resourceType": "Parameters", "parameter": [
+      {
+        "name": "resource",
+        "resource": this.jsonResource
+      }
+    ]};
 
     const options  = {
       responseType: 'text' as 'text',
     };
 
-    this.httpClient.get(this.decedentService.getFhirServerBaseURL() + "Composition/" + this.fhirResourceProvider.compostionId + "/$document" + format, options ).subscribe( resource => {
+    this.httpClient.post("https://apps.hdap.gatech.edu/HL7ValidatorService/fhir/$translate", body, options ).subscribe( response => {
+      this.formattedText = response as string;
+    });
+  }
 
-      this.fhirResource = resource;
-    })  
+  onToggleClick() {
+    if (this.selectedStructure === "xml") {      
+      this.fetchXml();
+    } else if (this.selectedStructure === "json") {
+      this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.getCurrentSubjectResource());
+    } else if (this.selectedStructure === "narrative") {
+      this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.getCurrentSubjectResource().text);
+    }
 }  
 }

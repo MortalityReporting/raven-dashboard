@@ -1,8 +1,8 @@
 <section>
   <mat-button-toggle-group [(ngModel)]="selectedStructure" (click)="onToggleClick();" style="width: 100%">
-    <mat-button-toggle value="structure" style="width: 33%">Structure</mat-button-toggle>
+    <mat-button-toggle value="narrative" style="width: 33%">Narrative</mat-button-toggle>
     <mat-button-toggle value="json" style="width: 33%">JSON</mat-button-toggle>
     <mat-button-toggle value="xml" style="width: 34%">XML</mat-button-toggle>
   </mat-button-toggle-group>
 </section>
-<pre> {{ fhirResource }} </pre>
+<pre> {{ formattedText }} </pre>

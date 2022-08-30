@@ -54,9 +54,4 @@ export class CaseSummaryContentComponent implements OnInit {
 
     this.accordion.closeAll()
   }
-
-  onItemClick() {
-
-    console.log( this.demographicsExpanded );
-  }
 }
