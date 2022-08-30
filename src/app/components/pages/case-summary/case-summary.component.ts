@@ -43,14 +43,8 @@ export class CaseSummaryComponent implements OnInit {
     this.caseHeader$ = this.documentHandler.caseHeader$;
     this.caseSummary$ = this.documentHandler.caseSummary$;
 
-    this.decedentService.getDecedentRecords().subscribe( results => {
-      results.map( result => {
-        if (result.resource.id == subjectId) {
-          this.caseSummary$.subscribe( caseSummary => {
-            caseSummary.narratives = result.resource.text.div;
-          })
-        }
-      })
+    this.caseSummary$.subscribe( caseSummary => {
+      caseSummary.narratives = this.documentHandler.getCurrentSubjectResource().text.div;
     })
   }
   
