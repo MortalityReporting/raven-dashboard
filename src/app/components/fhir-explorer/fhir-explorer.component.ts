@@ -13,7 +13,7 @@ import {DocumentHandlerService} from "../../service/document-handler.service";
 export class FhirExplorerComponent implements OnInit {
 
   formattedText: string;
-  jsonResource: FhirResource;
+  fhirResource: FhirResource;
   selectedStructure: string = 'json';
   fhirResource$: Observable<FhirResource>; // TODO: For Testing, remove.
   
@@ -24,7 +24,7 @@ export class FhirExplorerComponent implements OnInit {
   ) {
       this.fhirResourceProvider.fhirResource$.subscribe( resource => {
 
-      this.jsonResource = resource;
+      this.fhirResource = resource;
       
       if (this.selectedStructure === "xml") {
         this.fetchXml();
@@ -41,7 +41,7 @@ export class FhirExplorerComponent implements OnInit {
     const body = {"resourceType": "Parameters", "parameter": [
       {
         "name": "resource",
-        "resource": this.jsonResource
+        "resource": this.fhirResource
       }
     ]};
 
@@ -55,7 +55,8 @@ export class FhirExplorerComponent implements OnInit {
   }
 
   onToggleClick() {
-    if (this.selectedStructure === "xml") {      
+    if (this.selectedStructure === "xml") {    
+      this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.getCurrentSubjectResource());
       this.fetchXml();
     } else if (this.selectedStructure === "json") {
       this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.getCurrentSubjectResource());
