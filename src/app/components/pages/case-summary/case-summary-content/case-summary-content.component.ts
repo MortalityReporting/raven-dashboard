@@ -14,12 +14,12 @@ export class CaseSummaryContentComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
   demographicsExpanded: boolean = true;
-  circumstancesExpanded: boolean = true;
-  causeAndMannerExpanded: boolean = true;
-  medicalHistoryExpanded: boolean = true;
-  examNotesExpanded: boolean = true;
-  narrativesExpanded: boolean = true;
-  deathCertificateExpanded: boolean = true;
+  circumstancesExpanded: boolean = false;
+  causeAndMannerExpanded: boolean = false;
+  medicalHistoryExpanded: boolean = false;
+  examNotesExpanded: boolean = false;
+  narrativesExpanded: boolean = false;
+  deathCertificateExpanded: boolean = false;
 
   profiles: any = Profiles;
   ids = ["ID-1", "ID-2", "ID-3"];

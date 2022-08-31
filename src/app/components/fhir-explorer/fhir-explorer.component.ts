@@ -4,6 +4,7 @@ import {FhirResource} from "../../model/fhir/fhir.resource";
 import {FhirResourceProviderService} from "../../service/fhir-resource-provider.service";
 import {HttpClient} from "@angular/common/http";
 import {DocumentHandlerService} from "../../service/document-handler.service";
+import {FhirExplorerService} from 'src/app/service/fhir-explorer.service';
 
 @Component({
   selector: 'app-fhir-explorer',
@@ -20,6 +21,7 @@ export class FhirExplorerComponent implements OnInit {
   constructor(
     private httpClient: HttpClient,
     private documentHandler: DocumentHandlerService,
+    private fhirExplorerService: FhirExplorerService,
     private fhirResourceProvider: FhirResourceProviderService,
   ) {
       this.fhirResourceProvider.fhirResource$.subscribe( resource => {
@@ -27,7 +29,9 @@ export class FhirExplorerComponent implements OnInit {
       this.fhirResource = resource;
       
       if (this.selectedStructure === "xml") {
-        this.fetchXml();
+        this.fhirExplorerService.translateToXml( this.fhirResource ).subscribe( response => {
+          this.formattedText = response;
+        })
       } else {
         this.formattedText = JSON.stringify( resource, null, 2 );
       }
@@ -35,23 +39,6 @@ export class FhirExplorerComponent implements OnInit {
   };
 
   ngOnInit(): void {
-  }
-
-  fetchXml() {
-    const body = {"resourceType": "Parameters", "parameter": [
-      {
-        "name": "resource",
-        "resource": this.fhirResource
-      }
-    ]};
-
-    const options  = {
-      responseType: 'text' as 'text',
-    };
-
-    this.httpClient.post("https://apps.hdap.gatech.edu/HL7ValidatorService/fhir/$translate", body, options ).subscribe( response => {
-      this.formattedText = response as string;
-    });
   }
 
   isNarrative() : boolean {

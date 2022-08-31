@@ -21,7 +21,7 @@ export class CaseSummaryComponent implements OnInit {
   documentBundle$: Observable<any>;
   sidenavExpanded = false;
   autosize: boolean = false;
-  selectedAuthor = "undefined";
+  selectedAuthor = "VALUE NOT FOUND";
 
   constructor(
     private route: ActivatedRoute,
@@ -65,13 +65,13 @@ export class CaseSummaryComponent implements OnInit {
     this.caseSummaryContentComponent.deathCertificateExpanded = false;
     
     switch (id) {
-    case "demographics": this.caseSummaryContentComponent.demographicsExpanded = true; break;
-    case "circumstances": this.caseSummaryContentComponent.circumstancesExpanded = true; break;
-    case "causeAndManner": this.caseSummaryContentComponent.causeAndMannerExpanded = true; break;
-    case "medicalHistory": this.caseSummaryContentComponent.medicalHistoryExpanded = true; break;
-    case "examNotes": this.caseSummaryContentComponent.examNotesExpanded = true; break;
-    case "narratives": this.caseSummaryContentComponent.narrativesExpanded = true; break;
-    case "deathCertificate": this.caseSummaryContentComponent.deathCertificateExpanded = true; break;
+      case "demographics": this.caseSummaryContentComponent.demographicsExpanded = true; break;
+      case "circumstances": this.caseSummaryContentComponent.circumstancesExpanded = true; break;
+      case "causeAndManner": this.caseSummaryContentComponent.causeAndMannerExpanded = true; break;
+      case "medicalHistory": this.caseSummaryContentComponent.medicalHistoryExpanded = true; break;
+      case "examNotes": this.caseSummaryContentComponent.examNotesExpanded = true; break;
+      case "narratives": this.caseSummaryContentComponent.narrativesExpanded = true; break;
+      case "deathCertificate": this.caseSummaryContentComponent.deathCertificateExpanded = true; break;
     }
   }
 }
