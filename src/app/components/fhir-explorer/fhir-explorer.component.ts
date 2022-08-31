@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import {DocumentHandlerService} from "../../service/document-handler.service";
+import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
 import {FhirResource} from "../../model/fhir/fhir.resource";
 import {FhirResourceProviderService} from "../../service/fhir-resource-provider.service";
+import {HttpClient} from "@angular/common/http";
+import {DocumentHandlerService} from "../../service/document-handler.service";
+import {FhirExplorerService} from 'src/app/service/fhir-explorer.service';
 
 @Component({
   selector: 'app-fhir-explorer',
@@ -11,21 +13,44 @@ import {FhirResourceProviderService} from "../../service/fhir-resource-provider.
 })
 export class FhirExplorerComponent implements OnInit {
 
+  formattedText: string;
+  fhirResource: FhirResource;
   selectedStructure: string = 'json';
-
-  JSON: any; // TODO: For Testing, remove.
   fhirResource$: Observable<FhirResource>; // TODO: For Testing, remove.
-
-
+  
   constructor(
-    public documentHandler: DocumentHandlerService,
-    private fhirResourceProvider: FhirResourceProviderService
+    private httpClient: HttpClient,
+    private documentHandler: DocumentHandlerService,
+    private fhirExplorerService: FhirExplorerService,
+    private fhirResourceProvider: FhirResourceProviderService,
   ) {
-    this.JSON = JSON; // TODO: For Testing, remove.
-    this.fhirResource$ = this.fhirResourceProvider.fhirResource$; // TODO: For Testing, remove.
-  }
+      this.fhirResourceProvider.fhirResource$.subscribe( resource => {
+
+      this.fhirResource = resource;
+      
+      if (this.selectedStructure === "xml") {
+        this.fhirExplorerService.translateToXml( this.fhirResource ).subscribe( response => {
+          this.formattedText = response;
+        })
+      } else {
+        this.formattedText = JSON.stringify( resource, null, 2 );
+      }
+    })
+  };
 
   ngOnInit(): void {
   }
 
+  isNarrative() : boolean {
+    return this.selectedStructure === 'narrative';
+  }
+
+  onToggleClick() {
+    if (this.selectedStructure === "narrative") {
+      this.formattedText = this.documentHandler.getCurrentSubjectResource().text.div;
+    }
+    else {
+      this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.getCurrentSubjectResource());
+    }
+  }  
 }

@@ -47,6 +47,7 @@ import {
   ImportCaseConnectathonTemplateComponent
 } from './components/widgets/import-case-connectathon-template/import-case-connectathon-template.component';
 import {MatTabsModule} from "@angular/material/tabs";
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -91,6 +92,7 @@ import {MatTabsModule} from "@angular/material/tabs";
     MatTooltipModule,
     MatListModule,
     MatTabsModule,
+    MatSelectModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: FhirAuthInterceptor, multi: true},

@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {map, Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {DecedentService} from "./decedent.service";
-import {CaseSummary, CauseAndManner, Circumstances, Demographics} from "../model/case-summary-models/case.summary";
+import {CaseSummary, CauseAndManner, CauseOfDeathCondition, Circumstances, Demographics, UsualWork, Interval} from "../model/case-summary-models/case.summary";
 import {CaseHeader} from "../model/case-summary-models/case.header";
 import {TrackingNumber} from "../model/mdi/tracking.number";
 import {TerminologyHandlerService} from "./terminology-handler.service";
@@ -12,7 +12,8 @@ import {
   Obs_DecedentPregnancy,
   Obs_HowDeathInjuryOccurred,
   Obs_MannerOfDeath,
-  Obs_TobaccoUseContributedToDeath
+  Obs_TobaccoUseContributedToDeath,
+  List_CauseOfDeathPathway,
 } from "../model/mdi/profile.list"
 import {FhirResourceProviderService} from "./fhir-resource-provider.service";
 import {FhirResource} from "../model/fhir/fhir.resource";
@@ -46,7 +47,8 @@ export class DocumentHandlerService {
         let patientResource = this.findResourceById(documentBundle, this.subjectId);
         this.caseHeader.next(this.createCaseHeader(documentBundle, patientResource, compositionResource));
         this.caseSummary.next(this.createCaseSummary(documentBundle, patientResource, compositionResource));
-        this.fhirResourceProvider.setSelectedFhirResource(documentBundle);
+        this.fhirResourceProvider.setCompositionId(compositionId);
+        this.fhirResourceProvider.setSelectedFhirResource(documentBundle);               
       })
     );
   }
@@ -56,16 +58,32 @@ export class DocumentHandlerService {
   // -------------------------
 
   createCaseHeader(documentBundle: any, patientResource: any, compositionResource: any): CaseHeader {
-    let caseHeader = new CaseHeader();
+
+    let caseHeader = new CaseHeader();    
     caseHeader.fullName = this.getPatientOfficialName(patientResource);
     let genderString = patientResource.gender || this.defaultString;
     caseHeader.gender = genderString.substring(0,1).toUpperCase() + genderString.substring(1);
     let deathDateResource = this.findResourceByProfileName(documentBundle, Obs_DeathDate);
-    console.log(deathDateResource);
+    // console.log(deathDateResource);
     let splitDateTime = deathDateResource?.valueDateTime?.split("T") || []; //TODO: Add more handling to this for other forms of dateTime?
     caseHeader.deathDate = splitDateTime[0] || this.defaultString;
     caseHeader.deathTime = splitDateTime[1] || this.defaultString;
     caseHeader.trackingNumber = this.getTrackingNumber(compositionResource);
+
+    let authorRefs = compositionResource.author;
+
+    authorRefs.map(( ref: any ) => {
+
+      let practitioner = this.findResourceById(documentBundle, ref.reference );
+
+      let author = practitioner.name[0].given[0] + " " + practitioner.name[0].family
+
+      caseHeader.authors.push( author );
+    });  
+
+    caseHeader.authors.push( "Jane Doe" );
+    caseHeader.authors.push( "John Doe" );
+
     return caseHeader;
   }
 
@@ -75,15 +93,15 @@ export class DocumentHandlerService {
 
   createCaseSummary(documentBundle: any, patientResource: any, compositionResource: any): CaseSummary {
     let summary: CaseSummary = new CaseSummary();
-    summary.demographics = this.generateDemographics(documentBundle, patientResource);
+    summary.demographics = this.generateDemographics(documentBundle, compositionResource, patientResource);
     summary.circumstances = this.generateCircumstances(documentBundle, compositionResource);
     summary.causeAndManner = this.generateCauseAndManner(documentBundle, compositionResource);
     return summary;
   }
 
-  generateDemographics(documentBundle: any, patientResource: any): Demographics {
+  generateDemographics(documentBundle: any, compositionResource: any, patientResource: any): Demographics {
     let demographics: Demographics = new Demographics();
-
+    
     // Setup Basic Demographics from Patient Resource Directly
     demographics.aliases = patientResource.name || this.defaultString;
     demographics.gender = patientResource.gender || this.defaultString;
@@ -100,6 +118,18 @@ export class DocumentHandlerService {
     demographics.ethnicity = this.getDecedentEthnicityText(extensions);
 
     // TODO: Add handling for ODH USual Work and Other Identifiers (missing data)
+
+    let demographicsSection = this.getSection(compositionResource, "demographics");
+
+    if (demographicsSection != null) {
+      
+      demographicsSection.entry.map(( entry: any ) => {
+
+        let observation = this.findResourceById(documentBundle, entry.reference );
+  
+        demographics.usualWork.push( new UsualWork( observation?.valueCodeableConcept?.text, observation?.component[0].valueCodeableConcept.text ));
+      });  
+    }
 
     return demographics;
   }
@@ -120,12 +150,43 @@ export class DocumentHandlerService {
 
   generateCauseAndManner(documentBundle: any, compositionResource: any): CauseAndManner {
     let causeAndManner: CauseAndManner = new CauseAndManner();
-    let causeAndMannerSection = compositionResource.section.find((section: any) => section.code.coding.some((coding: any) => coding.code === "cause-manner"));
-    console.log(causeAndMannerSection)
-
+    
+    // let causeAndMannerSection = compositionResource.section.find((section: any) => section.code.coding.some((coding: any) => coding.code === "cause-manner"));    
+    // console.log(causeAndMannerSection)
     // TODO: Refactor this to use section and no index, and pull from term server instead of relying on display.
+
     causeAndManner.mannerOfDeath = this.findResourceByProfileName(documentBundle, Obs_MannerOfDeath)?.valueCodeableConcept?.coding[0]?.display || this.defaultString;
     causeAndManner.howDeathInjuryOccurred = this.findResourceByProfileName(documentBundle, Obs_HowDeathInjuryOccurred)?.valueString || this.defaultString;
+
+    let causeOfDeathPathway = this.findResourceByProfileName(documentBundle, List_CauseOfDeathPathway);
+
+    causeOfDeathPathway.entry.map(( entry: any) => {
+
+      let condition = this.findResourceById(documentBundle, entry.item.reference );
+
+      if (condition?.resourceType == "Condition")
+      {
+        if (condition.code?.text)
+        {
+          let text = this.defaultString;
+
+          if (condition.onsetAge != null)
+          {
+            text = condition.onsetAge?.value;
+            
+            switch (condition.onsetAge?.unit)
+            {
+              case 'd': text += " days"; break;
+              case 'mo': text += " months"; break;
+              case 'a': text += " years"; break;
+            }            
+          }
+
+          causeAndManner.causeOfDeathConditions.push( new CauseOfDeathCondition( condition.code.text, new Interval( text )));    
+        }
+      }
+    });
+
     return causeAndManner;
   }
 
@@ -165,7 +226,7 @@ export class DocumentHandlerService {
   // -------------------------
 
   getSection(compositionResource: any = this.currentCompositionResource, sectionName: string): any {
-    console.log(compositionResource);
+    // console.log(compositionResource);
     return compositionResource.section.find((section: any) => section.code.coding.some((coding: any) => coding.code === sectionName));
   }
 

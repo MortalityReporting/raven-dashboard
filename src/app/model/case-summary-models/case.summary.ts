@@ -20,14 +20,18 @@ export class Demographics {
   race: string; // TODO: Setup FHIR Type
   ethnicity: string; // TODO: Setup FHIR Type
   maritalStatus: string;
-  usualWork: UsualWork;
+  usualWork: UsualWork[];
+
+  constructor() {
+    this.usualWork = new Array();
+  }
 }
 
 export class Circumstances {
   deathLocation: string;
   workInjury: string;
   tobaccoUseContributed: string;
-  pregnancy: string;
+  pregnancy: string;  
 }
 
 // Individual Resources and Parts
@@ -36,20 +40,40 @@ export class UsualWork {
   occupation: string;
   industry: string;
   duration: string;
+
+  constructor( occupation: string, industry: string )
+  {
+    this.occupation = occupation;
+    this.industry = industry;
+  }
 }
 
 export class CauseAndManner {
-  causeOfDeath: CauseOfDeathCondition[];
+  causeOfDeathConditions: CauseOfDeathCondition[];
   contributingConditions: string[]; // TODO: Does this need a model?
   mannerOfDeath: string;
   howDeathInjuryOccurred: string;
+
+  constructor() {
+    this.causeOfDeathConditions = new Array();
+  }
 }
 
 export class CauseOfDeathCondition {
   value: CodeableConcept;
   interval: Interval;
+
+  constructor( value: CodeableConcept, interval: Interval ) {    
+    this.value = value;
+    this.interval = interval;
+  }
 }
 
 export class Interval {
   text: string; // Either equals valueString directly, or if valueQuantity (value + " " + unit).
+
+  constructor( text: string )
+  {
+    this.text = text;
+  }
 }

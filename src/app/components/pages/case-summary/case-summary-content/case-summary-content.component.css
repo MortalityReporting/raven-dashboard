@@ -45,6 +45,10 @@ button {
   flex: 2;
 }
 
+.mat-form-field {
+  margin-left: 10px;
+}
+
 /** Alias Table Styling **/
 .alias-table {
   width: 100%;

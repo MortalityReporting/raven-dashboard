@@ -23,6 +23,11 @@ li mat-icon {
   z-index: 9999;
 }
 
+.mat-form-field {
+  margin-left: 10px;
+  font-size: 15px;
+}
+
 /*This is probably not the best way to make the sidenav not scrollable*/
 mat-sidenav-container {
   height: 100%;

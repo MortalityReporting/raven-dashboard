@@ -1,12 +1,12 @@
 <div class="case-summary-content-wrapper">
   <div class="section-button-wrapper">
     <span class="content-spacer"></span>
-    <button mat-flat-button color="primary" (click)="accordion.openAll()">Expand All Sections</button>
-    <button mat-flat-button color="primary" (click)="accordion.closeAll()">Collapse All Sections</button>
+    <button mat-flat-button color="primary" (click)="onOpenAll()">Expand All Sections</button>
+    <button mat-flat-button color="primary" (click)="onCloseAll()">Collapse All Sections</button>
     <span class="content-spacer"></span>
   </div>
   <mat-accordion multi>
-    <mat-expansion-panel class="summary-section" id="demographics" [expanded]="true">
+    <mat-expansion-panel class="summary-section" id="demographics" [expanded]="demographicsExpanded">
       <mat-expansion-panel-header>
         <mat-panel-title>Demographics</mat-panel-title>
       </mat-expansion-panel-header>
@@ -17,7 +17,14 @@
               <app-case-summary-content-field [label]="'Social Security Number'" [value]="(caseSummary$ | async)?.demographics.ssn" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
             </div>
             <div class="grid-col-1">
-              (TODO: Other Identifiers Here)
+              <mat-form-field>
+                <mat-label>Other Identifiers</mat-label>
+                <mat-select value={{selectedId}}>
+                  <mat-option *ngFor="let id of ids;" value={{selectedId}}>
+                    {{ id }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>    
             </div>
           </div>
           <div class="grid-row">
@@ -45,7 +52,10 @@
           </div>
         </div>
 
-        Aliases: (TODO: Implement Component for Alias Table)
+        <!-- Aliases: (TODO: Implement Component for Alias Table) -->
+
+        <br/>
+        
         <table class="alias-table">
           <tr>
             <th>Given Name(s)</th>
@@ -68,11 +78,30 @@
             </td>
           </tr>
         </table>
-        Occupation History: (TODO: Implement Component for Occupation Table)
+
+        <!-- Occupation History: (TODO: Implement Component for Occupation Table) -->
+
+        <br/>
+
+        <table class="alias-table">
+          <tr>
+            <th>Occupation</th>
+            <th>Industry</th>
+          </tr>
+          <tr *ngFor="let usualWork of (caseSummary$ | async)?.demographics.usualWork;">
+            <td>
+              {{usualWork.occupation}}
+            </td>
+            <td>
+              {{usualWork.industry}}
+            </td>
+          </tr>
+        </table>
+
       </div>
     </mat-expansion-panel>
 
-    <mat-expansion-panel class="summary-section" id="circumstances" [expanded]="true">
+    <mat-expansion-panel class="summary-section" id="circumstances" [expanded]="circumstancesExpanded">
       <mat-expansion-panel-header>
         <mat-panel-title>Circumstances</mat-panel-title>
       </mat-expansion-panel-header>
@@ -98,7 +127,7 @@
         </div>
       </div>
     </mat-expansion-panel>
-    <mat-expansion-panel class="summary-section" id="causeAndManner" [expanded]="true">
+    <mat-expansion-panel class="summary-section" id="causeAndManner" [expanded]="causeAndMannerExpanded">
       <mat-expansion-panel-header>
         <mat-panel-title>Cause and Manner of Death</mat-panel-title>
       </mat-expansion-panel-header>
@@ -114,29 +143,47 @@
           </div>
         </div>
 
-        Cause of Death Pathway: <br/>
-        Conditions Contributing to Death: <br/>
+        <!-- <br/> Cause of Death Pathway: <br/> -->
+        <!-- <br/> Conditions Contributing to Death: <br/> -->
+
+        <br/>
+        
+        <table class="alias-table">
+          <tr>
+            <th>Cause of Death</th>
+            <th>Onset to Death</th>
+          </tr>
+          <tr *ngFor="let condition of (caseSummary$ | async)?.causeAndManner?.causeOfDeathConditions;">
+            <td>
+              {{condition.value}}
+            </td>
+            <td>
+              {{condition.interval.text}}
+            </td>
+          </tr>
+        </table>
+
       </div>
     </mat-expansion-panel>
-    <mat-expansion-panel class="summary-section" id="medicalHistory">
+    <mat-expansion-panel class="summary-section" id="medicalHistory" [expanded]="medicalHistoryExpanded">
       <mat-expansion-panel-header>
         <mat-panel-title>Relevant Medical History</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="summary-section-body">Not Yet Implemented</div>
     </mat-expansion-panel>
-    <mat-expansion-panel class="summary-section" id="examAndAutopsy">
+    <mat-expansion-panel class="summary-section" id="examAndAutopsy" [expanded]="examNotesExpanded">
       <mat-expansion-panel-header>
         <mat-panel-title>Exam and Autopsy Notes</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="summary-section-body">Not Yet Implemented</div>
     </mat-expansion-panel>
-    <mat-expansion-panel class="summary-section" id="narratives">
+    <mat-expansion-panel class="summary-section" id="narratives" [expanded]="narrativesExpanded">
       <mat-expansion-panel-header>
         <mat-panel-title>Narratives</mat-panel-title>
       </mat-expansion-panel-header>
-      <div class="summary-section-body">Not Yet Implemented</div>
+      <div class="summary-section-body" [innerHTML]="(caseSummary$ | async)?.narratives"></div>
     </mat-expansion-panel>
-    <mat-expansion-panel class="summary-section" id="deathCertificate">
+    <mat-expansion-panel class="summary-section" id="deathCertificate" [expanded]="deathCertificateExpanded">
       <mat-expansion-panel-header>
         <mat-panel-title>Death Certificate</mat-panel-title>
       </mat-expansion-panel-header>
