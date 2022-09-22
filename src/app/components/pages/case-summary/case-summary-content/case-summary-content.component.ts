@@ -44,7 +44,7 @@ export class CaseSummaryContentComponent implements OnInit {
       {
         let author = caseHeader.authors[0];
         
-        this.line1 = author.givenName + " " + author.familyName + "  License #: " + author.license + "  Phone # " + author.phoneNumber;
+        this.line1 = author.givenName + " " + author.familyName + "  License #: " + author.license + " Phone #: " + author.phoneNumber;
         this.line2 = author.line;
         this.line3 = author.city + ", " + author.state + "  " + author.postalCode;
       }

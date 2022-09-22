@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {map, Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {DecedentService} from "./decedent.service";
-import {CaseSummary, CauseAndManner, CauseOfDeathPart1, CauseOfDeathCondition, Circumstances, Jurisdiction, Demographics, UsualWork, Interval} from "../model/case-summary-models/case.summary";
+import {CaseSummary, CauseAndManner, CauseOfDeathPart1, Circumstances, Jurisdiction, Demographics, UsualWork} from "../model/case-summary-models/case.summary";
 import {Author, CaseHeader} from "../model/case-summary-models/case.header";
 import {TrackingNumber} from "../model/mdi/tracking.number";
 import {TerminologyHandlerService} from "./terminology-handler.service";
@@ -15,10 +15,8 @@ import {
   Obs_TobaccoUseContributedToDeath,
   Obs_CauseOfDeathPart1,
   Obs_CauseOfDeathPart2,
-  List_CauseOfDeathPathway,
 } from "../model/mdi/profile.list"
 import {FhirResourceProviderService} from "./fhir-resource-provider.service";
-import {FhirResource} from "../model/fhir/fhir.resource";
 
 @Injectable({
   providedIn: 'root'
@@ -76,22 +74,20 @@ export class DocumentHandlerService {
     caseHeader.deathTime = splitDateTime[1] || this.defaultString;
     caseHeader.trackingNumbers = this.getTrackingNumbers(compositionResource);
 
-    let authorRefs = compositionResource.author;
-
-    authorRefs.map(( ref: any ) => {
+    compositionResource.author?.map(( ref: any ) => {
 
       let practitioner = this.findResourceById(documentBundle, ref.reference );
-
+      
       let author = new Author();
 
-      author.license = practitioner.identifier[0].value;
-      author.familyName = practitioner.name[0].family;
-      author.givenName = practitioner.name[0].given;
-      author.phoneNumber = practitioner.telecom[0].value;
-      author.line = practitioner.address[0].line[0];
-      author.city = practitioner.address[0].city;
-      author.state = practitioner.address[0].state;
-      author.postalCode = practitioner.address[0].postalCode;
+      author.license = practitioner?.identifier != null ? practitioner.identifier[0].value : undefined;
+      author.familyName = practitioner?.name[0].family;
+      author.givenName = practitioner?.name[0].given;
+      author.phoneNumber = practitioner?.telecom != null ? practitioner.telecom[0].value : undefined;
+      author.line = practitioner?.address != null ? practitioner.address[0].line[0] : undefined;
+      author.city = practitioner?.address != null ? practitioner.address[0].city : undefined;
+      author.state = practitioner?.address != null ? practitioner.address[0].state : undefined;
+      author.postalCode = practitioner?.address != null ? practitioner.address[0].postalCode : undefined;
 
       caseHeader.authors.push( author );
     });  
@@ -165,14 +161,11 @@ export class DocumentHandlerService {
 
     let jurisdiction: Jurisdiction = new Jurisdiction();
     let jurisdictionSection = this.getSection(compositionResource, "jurisdiction");
-
     let observation = this.findJurisdictionObservation(documentBundle, compositionResource, jurisdictionSection);
 
     jurisdiction.typeOfDeathLocation = this.defaultString;
-    jurisdiction.establishmentApproach = this.defaultString;
-        
-    let dateTime = observation?.effectiveDateTime?.replace( "T", " " ) || this.defaultString;
-    jurisdiction.deathDateTime = dateTime;
+    jurisdiction.establishmentApproach = this.defaultString;        
+    jurisdiction.deathDateTime = observation?.effectiveDateTime?.replace( "T", " " ) || this.defaultString;
     jurisdiction.pronouncedDateTime = observation?.component?.valueDateTime || this.defaultString;
 
     return jurisdiction;
@@ -294,7 +287,7 @@ export class DocumentHandlerService {
         
     let trackingNumbers = new Array();
 
-    trackingNumberExtensions.map(( item: any ) => {
+    trackingNumberExtensions?.map(( item: any ) => {
 
       let trackingNumber = new TrackingNumber();
 
