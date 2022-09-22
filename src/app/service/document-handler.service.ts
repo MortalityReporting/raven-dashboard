@@ -177,56 +177,53 @@ export class DocumentHandlerService {
     
     let causeAndMannerSection = compositionResource.section.find((section: any) => section.code.coding.some((coding: any) => coding.code === "cause-manner"));    
 
-    if (causeAndMannerSection != null) 
-    {      
-      causeAndMannerSection.entry.map(( entry: any) => 
+    causeAndMannerSection?.entry.map(( entry: any) => 
+    {
+      let observation = this.findResourceById(documentBundle, entry.reference );
+
+      if (observation != null) 
       {
-        let observation = this.findResourceById(documentBundle, entry.reference );
-  
-        if (observation != null) 
+        let length = observation.meta?.profile?.length || 0;
+
+        if (length > 0)
         {
-          let length = observation.meta?.profile?.length || 0;
+          let profile = observation.meta.profile[0];
 
-          if (length > 0)
+          if (profile === Obs_CauseOfDeathPart1) 
           {
-            let profile = observation.meta.profile[0];
-
-            if (profile == Obs_CauseOfDeathPart1) 
+            let causeOfDeathPart1 = new CauseOfDeathPart1();
+    
+            observation.component?.map(( entry: any ) => 
             {
-              let causeOfDeathPart1 = new CauseOfDeathPart1();
-      
-              observation.component?.map(( entry: any ) => 
-              {
-                if (entry.valueString != null) {
-                  causeOfDeathPart1.interval = entry.valueString;
-                }
-              })
-        
-              causeOfDeathPart1.event = observation.valueCodeableConcept?.text || undefined;
-        
-              causeAndManner.causeOfDeathPart1.push( causeOfDeathPart1 );  
-            }
-            else if (profile == Obs_CauseOfDeathPart2)
-            {
-              causeAndManner.causeOfDeathPart2.push( observation.valueCodeableConcept?.text || this.defaultString );
-            }              
-            else if (profile == Obs_MannerOfDeath)
-            {
-              let coding = observation.valueCodeableConcept?.coding;
-
-              if (coding != null && coding.length > 0)
-              {
-                causeAndManner.mannerOfDeath = coding[0]?.display
+              if (entry.valueString != null) {
+                causeOfDeathPart1.interval = entry.valueString;
               }
-            }              
-            else if (profile == Obs_HowDeathInjuryOccurred)
+            })
+      
+            causeOfDeathPart1.event = observation.valueCodeableConcept?.text || undefined;
+      
+            causeAndManner.causeOfDeathPart1.push( causeOfDeathPart1 );  
+          }
+          else if (profile === Obs_CauseOfDeathPart2)
+          {
+            causeAndManner.causeOfDeathPart2.push( observation.valueCodeableConcept?.text || this.defaultString );
+          }              
+          else if (profile === Obs_MannerOfDeath)
+          {
+            let coding = observation.valueCodeableConcept?.coding;
+
+            if (coding != null && coding.length > 0)
             {
-              causeAndManner.howDeathInjuryOccurred =observation.valueString || this.defaultString;
+              causeAndManner.mannerOfDeath = coding[0]?.display
             }
+          }              
+          else if (profile === Obs_HowDeathInjuryOccurred)
+          {
+            causeAndManner.howDeathInjuryOccurred =observation.valueString || this.defaultString;
           }
         }
-      });  
-    }
+      }
+    });  
 
     return causeAndManner;
   }
