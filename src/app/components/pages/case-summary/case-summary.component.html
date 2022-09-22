@@ -10,8 +10,8 @@
   </mat-toolbar-row>
   <mat-toolbar-row>
     Tracking Number/Type:
-    <input type="text" value="{{ (caseHeader$ | async)?.trackingNumber?.value}}" readonly>
-    <input type="text" value="{{ (caseHeader$ | async)?.trackingNumber?.type}}" readonly>
+    <input type="text" value="{{ (caseHeader$ | async)?.trackingNumbers[0]?.value}}" readonly>
+    <input type="text" value="{{ (caseHeader$ | async)?.trackingNumbers[0]?.type}}" readonly>
     <span class="content-spacer"> </span>
     Authors:
     <mat-form-field>

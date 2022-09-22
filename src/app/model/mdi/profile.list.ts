@@ -15,7 +15,8 @@ export const Obs_DecedentPregnancy: string = "http://hl7.org/fhir/us/mdi/Structu
 export const Obs_HowDeathInjuryOccurred: string = "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred";
 export const Obs_MannerOfDeath: string = "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-manner-of-death";
 export const Obs_TobaccoUseContributedToDeath: string = "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-tobacco-use-contributed-to-death";
-
+export const Obs_CauseOfDeathPart1: string = "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-cause-of-death-part1";
+export const Obs_CauseOfDeathPart2: string = "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-contributing-cause-of-death-part2";
 
 export enum Profiles {
   Obs_DeathInjuryEventOccurredAtWork = "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-injury-at-work"

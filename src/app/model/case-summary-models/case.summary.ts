@@ -1,6 +1,7 @@
 import {HumanName} from "../fhir/types/human.name";
 import {Identifier} from "../fhir/types/identifier";
 import {CodeableConcept} from "../fhir/types/codeable.cocept";
+import { stringify } from "querystring";
 
 export class CaseSummary {
   demographics: Demographics;
@@ -57,14 +58,23 @@ export class UsualWork {
 }
 
 export class CauseAndManner {
+  causeOfDeathPart1: CauseOfDeathPart1[];
+  causeOfDeathPart2: String[];
   causeOfDeathConditions: CauseOfDeathCondition[];
   contributingConditions: string[]; // TODO: Does this need a model?
   mannerOfDeath: string;
   howDeathInjuryOccurred: string;
 
   constructor() {
+    this.causeOfDeathPart1 = new Array();
+    this.causeOfDeathPart2 = new Array();
     this.causeOfDeathConditions = new Array();
   }
+}
+
+export class CauseOfDeathPart1 {
+  event: string;
+  interval: string;
 }
 
 export class CauseOfDeathCondition {

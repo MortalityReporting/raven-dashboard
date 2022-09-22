@@ -18,21 +18,18 @@
               <div class="content-field-label">
                 <p><u>Tracking Numbers</u></p>
               </div>
-              <app-case-summary-content-field [label]="(caseHeader$ | async)?.trackingNumber?.type" [value]="(caseHeader$ | async)?.trackingNumber?.value" appSetFhirExplorer [title]="'full name'"></app-case-summary-content-field>
+              <div *ngFor="let trackingNumber of (caseHeader$ | async)?.trackingNumbers">
+                <app-case-summary-content-field [label]="trackingNumber.type" [value]="trackingNumber.value" appSetFhirExplorer [title]="'tracking number'"></app-case-summary-content-field>
+              </div>
             </div>
             <div class="grid-col-1">
               <div class="content-field-label">
                 <p><u>Chief ME/C</u></p>
               </div>
               <div>
-                <app-case-summary-content-field [label]="'Full Name'" [value]="" appSetFhirExplorer [title]="'full name'"></app-case-summary-content-field>
-                <app-case-summary-content-field [label]="'License #'" [value]="" appSetFhirExplorer [title]="'license #'"></app-case-summary-content-field>
-                <app-case-summary-content-field [label]="'Phone #'" [value]="" appSetFhirExplorer [title]="'phone #'"></app-case-summary-content-field>
-                <app-case-summary-content-field [label]="'Address Line 1'" [value]="" appSetFhirExplorer [title]="'address line 1'"></app-case-summary-content-field>
-                <app-case-summary-content-field [label]="'Address Line 2'" [value]="" appSetFhirExplorer [title]="'address line 2'"></app-case-summary-content-field>
-                <app-case-summary-content-field [label]="'City'" [value]="" appSetFhirExplorer [title]="'city'"></app-case-summary-content-field>
-                <app-case-summary-content-field [label]="'State'" [value]="" appSetFhirExplorer [title]="'state'"></app-case-summary-content-field>
-                <app-case-summary-content-field [label]="'Zip'" [value]="" appSetFhirExplorer [title]="'zip'"></app-case-summary-content-field>
+                {{line1}}<br>
+                {{line2}}<br>
+                {{line3}}
               </div>
             </div>
           </div>
@@ -174,12 +171,12 @@
                   <th>Event</th>
                   <th>Interval</th>
                 </tr>
-                <tr *ngFor="let condition of (caseSummary$ | async)?.causeAndManner?.causeOfDeathConditions;">
+                <tr *ngFor="let cause of (caseSummary$ | async)?.causeAndManner?.causeOfDeathPart1">
                   <td>
-                    {{condition.value}}
+                    {{cause.event}}
                   </td>
                   <td>
-                    {{condition.interval.text}}
+                    {{cause.interval}}
                   </td>
                 </tr>
               </table>      
@@ -200,9 +197,9 @@
                 <tr>
                   <th>Event</th>
                 </tr>
-                <tr *ngFor="let condition of (caseSummary$ | async)?.causeAndManner?.causeOfDeathConditions;">
+                <tr *ngFor="let cause of (caseSummary$ | async)?.causeAndManner?.causeOfDeathPart2;">
                   <td>
-                    {{condition.value}}
+                    {{cause}}
                   </td>
                 </tr>
               </table>      

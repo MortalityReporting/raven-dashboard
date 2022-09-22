@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Observable} from "rxjs";
 import {CaseSummary} from "../../../../model/case-summary-models/case.summary";
-import {CaseHeader} from "../../../../model/case-summary-models/case.header";
+import {Author, CaseHeader} from "../../../../model/case-summary-models/case.header";
 import {MatAccordion} from "@angular/material/expansion";
 import {Profiles} from "../../../../model/mdi/profile.list";
 
@@ -15,6 +15,10 @@ export class CaseSummaryContentComponent implements OnInit {
   @Input() caseSummary$: Observable<CaseSummary>;
   @ViewChild(MatAccordion) accordion: MatAccordion;
   
+  line1: string;
+  line2: string;
+  line3: string;
+
   caseAdminInfoExpanded: boolean = true;
   demographicsExpanded: boolean = false;
   circumstancesExpanded: boolean = false;
@@ -33,6 +37,18 @@ export class CaseSummaryContentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.caseHeader$.subscribe( caseHeader => {
+
+      if (caseHeader.authors != null)
+      {
+        let author = caseHeader.authors[0];
+        
+        this.line1 = author.givenName + " " + author.familyName + "  License #: " + author.license + "  Phone # " + author.phoneNumber;
+        this.line2 = author.line;
+        this.line3 = author.city + ", " + author.state + "  " + author.postalCode;
+      }
+    });
   }
 
   onItemClick( id: any )
