@@ -5,6 +5,7 @@ import {CodeableConcept} from "../fhir/types/codeable.cocept";
 export class CaseSummary {
   demographics: Demographics;
   circumstances: Circumstances;
+  jurisdiction: Jurisdiction;
   causeAndManner: CauseAndManner;
   medicalHistory: string = "Not Implemented"; // TODO: Implement.
   examAndAutopsy: string = "Not Implemented"; // TODO: Implement.
@@ -32,6 +33,13 @@ export class Circumstances {
   workInjury: string;
   tobaccoUseContributed: string;
   pregnancy: string;  
+}
+
+export class Jurisdiction {
+  deathDateTime: string;
+  pronouncedDateTime: string;
+  establishmentApproach: string;
+  typeOfDeathLocation: string;
 }
 
 // Individual Resources and Parts

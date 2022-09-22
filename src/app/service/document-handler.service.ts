@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {map, Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {DecedentService} from "./decedent.service";
-import {CaseSummary, CauseAndManner, CauseOfDeathCondition, Circumstances, Demographics, UsualWork, Interval} from "../model/case-summary-models/case.summary";
+import {CaseSummary, CauseAndManner, CauseOfDeathCondition, Circumstances, Jurisdiction, Demographics, UsualWork, Interval} from "../model/case-summary-models/case.summary";
 import {CaseHeader} from "../model/case-summary-models/case.header";
 import {TrackingNumber} from "../model/mdi/tracking.number";
 import {TerminologyHandlerService} from "./terminology-handler.service";
@@ -32,8 +32,12 @@ export class DocumentHandlerService {
 
   private caseHeader = new Subject<CaseHeader>();
   caseHeader$ = this.caseHeader.asObservable();
+
   private caseSummary = new Subject<CaseSummary>();
   caseSummary$ = this.caseSummary.asObservable();
+
+  private patientResource = new Subject<any>();
+  patientResource$ = this.patientResource.asObservable();
 
   constructor(private http: HttpClient, private fhirResourceProvider: FhirResourceProviderService, private decedentService: DecedentService, private terminologyService: TerminologyHandlerService) {}
 
@@ -45,6 +49,7 @@ export class DocumentHandlerService {
         this.currentCompositionResource = compositionResource;
         this.subjectId = compositionResource.subject.reference
         let patientResource = this.findResourceById(documentBundle, this.subjectId);
+        this.patientResource.next(patientResource);
         this.caseHeader.next(this.createCaseHeader(documentBundle, patientResource, compositionResource));
         this.caseSummary.next(this.createCaseSummary(documentBundle, patientResource, compositionResource));
         this.fhirResourceProvider.setCompositionId(compositionId);
@@ -64,7 +69,6 @@ export class DocumentHandlerService {
     let genderString = patientResource.gender || this.defaultString;
     caseHeader.gender = genderString.substring(0,1).toUpperCase() + genderString.substring(1);
     let deathDateResource = this.findResourceByProfileName(documentBundle, Obs_DeathDate);
-    // console.log(deathDateResource);
     let splitDateTime = deathDateResource?.valueDateTime?.split("T") || []; //TODO: Add more handling to this for other forms of dateTime?
     caseHeader.deathDate = splitDateTime[0] || this.defaultString;
     caseHeader.deathTime = splitDateTime[1] || this.defaultString;
@@ -95,6 +99,7 @@ export class DocumentHandlerService {
     let summary: CaseSummary = new CaseSummary();
     summary.demographics = this.generateDemographics(documentBundle, compositionResource, patientResource);
     summary.circumstances = this.generateCircumstances(documentBundle, compositionResource);
+    summary.jurisdiction = this.generateJurisdiction(documentBundle, compositionResource);
     summary.causeAndManner = this.generateCauseAndManner(documentBundle, compositionResource);
     return summary;
   }
@@ -146,6 +151,23 @@ export class DocumentHandlerService {
     circumstances.tobaccoUseContributed = this.findResourceByProfileName(documentBundle, Obs_TobaccoUseContributedToDeath)?.valueCodeableConcept?.coding[0]?.display || this.defaultString;; // TODO: Missing data, once available fix.
 
     return circumstances;
+  }
+
+  generateJurisdiction(documentBundle: any, compositionResource: any): Jurisdiction {
+
+    let jurisdiction: Jurisdiction = new Jurisdiction();
+    let jurisdictionSection = this.getSection(compositionResource, "jurisdiction");
+
+    let observation = this.findJurisdictionObservation(documentBundle, compositionResource, jurisdictionSection);
+
+    jurisdiction.typeOfDeathLocation = this.defaultString;
+    jurisdiction.establishmentApproach = this.defaultString;
+        
+    let dateTime = observation?.effectiveDateTime?.replace( "T", " " ) || this.defaultString;
+    jurisdiction.deathDateTime = dateTime;
+    jurisdiction.pronouncedDateTime = observation?.component?.valueDateTime || this.defaultString;
+
+    return jurisdiction;
   }
 
   generateCauseAndManner(documentBundle: any, compositionResource: any): CauseAndManner {
@@ -209,6 +231,11 @@ export class DocumentHandlerService {
     let deathLocationResourceId = (circumstancesSection?.entry?.find((entry: any) => entry.reference.startsWith("Location")))?.reference || undefined;
     // TODO: Add handling for reference from death date?
     return this.findResourceById(documentBundle, deathLocationResourceId);
+  }
+
+  findJurisdictionObservation(documentBundle: any = this.currentDocumentBundle, compositionResource: any, jurisdictionSection: any): any {
+    let id = (jurisdictionSection?.entry?.find((entry: any) => entry.reference.startsWith("Observation")))?.reference || undefined;
+    return this.findResourceById(documentBundle, id);
   }
 
   // Filter Bundle Entries by Patient Resource.

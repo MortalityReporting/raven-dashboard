@@ -6,7 +6,7 @@
     <input type="text" value="{{ (caseHeader$ | async)?.deathDate}}" readonly>
     <input type="text" value="{{ (caseHeader$ | async)?.deathTime}}" readonly>
     <span class="content-spacer"> </span>
-    Gender: <input type="text" value="{{ (caseHeader$ | async)?.gender}}" readonly>
+    Social Security Number: <input type="text" value="{{ (caseSummary$ | async)?.demographics.ssn}}" readonly>
   </mat-toolbar-row>
   <mat-toolbar-row>
     Tracking Number/Type:
@@ -27,6 +27,13 @@
   <mat-sidenav mode="side" opened>
     <mat-nav-list>
 
+      <mat-list-item (click)="onItemClick('caseAdminInfo');">
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Case Admininstration Information' : ''" matTooltipPosition="right">
+          info
+        </mat-icon>
+        <span *ngIf="sidenavExpanded">&nbsp;Case Administration Info</span>
+      </mat-list-item>
+
       <mat-list-item (click)="onItemClick('demographics');">
         <mat-icon [matTooltip]="!sidenavExpanded ? 'Demographics' : ''" matTooltipPosition="right">
           person
@@ -39,6 +46,13 @@
           travel_explore
         </mat-icon>
         <span *ngIf="sidenavExpanded">&nbsp;Circumstances</span>
+      </mat-list-item>
+
+      <mat-list-item (click)="onItemClick('jurisdiction');">
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Jurisdiction' : ''" matTooltipPosition="right">
+          gavel
+        </mat-icon>
+        <span *ngIf="sidenavExpanded">&nbsp;Jurisdiction</span>
       </mat-list-item>
 
       <mat-list-item (click)="onItemClick('causeAndManner');">
@@ -94,6 +108,7 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <app-case-summary-content 
+    [caseHeader$]="caseHeader$"
     [caseSummary$]="caseSummary$" 
     ></app-case-summary-content>
   </mat-sidenav-content>
