@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable, Subject} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {map} from "rxjs/operators";
 
@@ -10,6 +10,25 @@ export class FhirValidatorService {
 
   private prodUri = "https://gt-apps.hdap.gatech.edu/HL7ValidatorService/fhir";
   //private prodUri = "http://127.0.0.1:8080/fhir/$validate";
+
+  private isValid = new Subject<boolean>();
+  private hasExecuted = new Subject<boolean>();
+
+  setValid(value: boolean){
+    this.isValid.next(value);
+  }
+
+  isValidResourceFound(): Observable<boolean>{
+    return this.isValid.asObservable();
+  }
+
+  isValidationExecuted(): Observable<boolean>{
+    return this.hasExecuted.asObservable();
+  }
+
+  setValidationFinished(value: boolean){
+    this.hasExecuted.next(value);
+  }
 
   constructor( private http: HttpClient) { }
 

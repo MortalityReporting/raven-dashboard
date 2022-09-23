@@ -15,15 +15,12 @@
       <span id="filename">{{file?.name}}</span>
     </div>
 
-    <div class="top-spacer">
-      <textarea matInput rows="30" id="text-editor"
-                [(ngModel)]="fileContent">
-      </textarea>
-    </div>
-    <mat-error *ngIf="errorMessage">{{errorMessage}}</mat-error>
+    <app-fhir-validator [isStandalone]=false [fhirResource]="fileContent"></app-fhir-validator>
+
   </div>
 </div>
 
+{{fhirValidatorFinished}} {{isValidResource}}
 <div class="top-spacer">
   2. Submit your Bundle to the Raven FHIR Sever.
   <div class="content-offset top-spacer">

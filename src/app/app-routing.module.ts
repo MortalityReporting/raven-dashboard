@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {DecedentRecordsGridComponent} from "./components/pages/decedent-records-grid/decedent-records-grid.component";
-import {FhirValidatorComponent} from "./fhir-validator/components/fhir-validator/fhir-validator.component";
 import {LandingComponent} from "./components/landing/landing.component";
 import {CaseContainerComponent} from "./components/pages/case-container/case-container.component";
 import {ImportCaseComponent} from "./components/pages/import-case/import-case.component";
+import {FhirValidatorComponent} from "./fhir-validator/components/fhir-validator/fhir-validator.component";
 
 const routes: Routes = [
   {

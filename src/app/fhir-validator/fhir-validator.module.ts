@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FhirValidatorComponent } from './components/fhir-validator/fhir-validator.component';
+import { ValidatorCoreComponent } from './components/validator-core/validator-core.component';
 import {MatCardModule} from "@angular/material/card";
 import {BrowserModule} from "@angular/platform-browser";
 import {AppRoutingModule} from "../app-routing.module";
@@ -26,12 +26,14 @@ import {MatChipsModule} from "@angular/material/chips";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDividerModule} from "@angular/material/divider";
+import { FhirValidatorComponent } from './components/fhir-validator/fhir-validator.component'
 
 
 
 @NgModule({
     declarations: [
-        FhirValidatorComponent
+        ValidatorCoreComponent,
+        FhirValidatorComponent,
     ],
   imports: [
     CommonModule,
@@ -61,9 +63,10 @@ import {MatDividerModule} from "@angular/material/divider";
     MatTooltipModule,
     MatDividerModule
   ],
-    exports: [
-        FhirValidatorComponent
-    ],
+  exports: [
+    ValidatorCoreComponent,
+    FhirValidatorComponent
+  ],
 
     providers: [
         ValidatorConstants
