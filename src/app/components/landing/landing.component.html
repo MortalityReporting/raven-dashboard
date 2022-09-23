@@ -1,24 +1,199 @@
 <div class="container">
-  <div class="option-card-container">
-    <mat-grid-list cols="3" rowHeight="1:1">
-      <mat-grid-tile>
-        <button mat-raised-button color="primary" class="menu-item" (click)="onBtnClick('/cases');">Cases</button>
-      </mat-grid-tile>
-      <mat-grid-tile>
-        <button mat-raised-button color="primary" class="menu-item" (click)="onBtnClick('/fhir-validator');">FHIR Validator</button>
-      </mat-grid-tile>
-      <mat-grid-tile>
-        <button mat-raised-button color="primary" class="menu-item" (click)="onBtnClick('/import-case');">Import Case</button>
-      </mat-grid-tile>
-      <mat-grid-tile>
-          <button mat-raised-button color="primary" class="menu-item" (click)="onBtnClick('/');">EDRS Search</button>
-      </mat-grid-tile>
-      <mat-grid-tile>
-        <button mat-raised-button color="primary" class="menu-item" (click)="onBtnClick('/');">Workflow<br/>Simulator</button>
-      </mat-grid-tile>
-      <mat-grid-tile>
-        <button mat-raised-button color="primary" class="menu-item" (click)="onBtnClick('/');">DB Convertor</button>
-      </mat-grid-tile>
-    </mat-grid-list>
+  <div class="option-tile-container">
+
+    <div class="flex-row">
+      <div class="flex-cell">
+        <mat-card (click)="onBtnClick('/cases');">
+          <mat-card-header>
+            <mat-card-title>
+              Case Viewer
+            </mat-card-title>
+          </mat-card-header>
+          <img src="assets/menu-viewer.png" class="card-image">
+          <mat-card-content>
+            <p>
+              View records on the Raven FHIR Server and be able to explore their underlying FHIR Resource structures.
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="flex-cell">
+        <mat-card class="feature-in-progress">
+          <mat-card-header>
+            <mat-card-title>
+              Import Case
+            </mat-card-title>
+          </mat-card-header>
+          <img src="assets/menu-underconstruction.png" class="card-image">
+          <mat-card-content>
+            <p>
+              <strong>(Feature Under Development)</strong>
+            </p>
+            <p>
+              Import a record to the Raven FHIR Server for use in other features.
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+    </div>
+    <div class="flex-row">
+      <div class="row-spacer">
+      </div>
+    </div>
+    <div class="flex-row">
+      <div class="flex-cell">
+        <mat-card (click)="onBtnClick('/fhir-validator');">
+          <mat-card-header>
+            <mat-card-title>
+              FHIR Validator
+            </mat-card-title>
+          </mat-card-header>
+          <img src="assets/menu-validator.png" class="card-image">
+          <mat-card-content>
+            <p>
+              Validate against the structure definitions for MDI FHIR Document Bundles or individual Resources and Profiles.
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="flex-cell">
+        <mat-card class="feature-in-progress">
+          <mat-card-header>
+            <mat-card-title>
+              Record Comparison
+            </mat-card-title>
+          </mat-card-header>
+          <img src="assets/menu-underconstruction.png" class="card-image">
+          <mat-card-content>
+            <p>
+              <strong>(Feature Under Development)</strong>
+            </p>
+            <p>
+              Compare a user generated FHIR record against a known valid example from Raven.
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+    </div>
+    <div class="flex-row">
+      <div class="row-spacer">
+      </div>
+    </div>
+    <div class="flex-row">
+      <div class="flex-cell">
+        <mat-card class="feature-in-progress">
+          <mat-card-header>
+            <mat-card-title>
+              Workflow Simulator
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              <strong>(Feature Under Development)</strong>
+            </p>
+            <p>
+              Move through steps of one of several test scenarios for various MDI related workflows,
+              such as CMS to EDRS or a Toxicology Lab to CMS. The workflow simulator integrates other features.
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+    <div class="flex-row">
+      <div class="row-spacer">
+      </div>
+    </div>
+    <div class="flex-row">
+      <div class="flex-cell zulip-cell">
+        <mat-card>
+          <mat-card-content onclick="window.open('https://chat.fhir.org','_blank')">
+            <div class="zulip-row">
+              <div class="zulip-text">
+                For Information on the MDI IG, join the conversation in the FHIR Zulip chat!
+                <em>https://chat.fhir.org in the #Medicolegal Death Investigation Stream</em>
+              </div>
+              <div class="zulip-icon">
+                <mat-icon>open_in_new</mat-icon>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+
   </div>
 </div>
+
+<!--        <div class="option-tile" (click)="onBtnClick('/fhir-validator');">-->
+<!--          <div class="option-tile-header">-->
+<!--            FHIR Validator-->
+<!--          </div>-->
+<!--          <div class="option-tile-content">-->
+<!--            <p>-->
+<!--              Validate MDI FHIR Document Bundles or individual Resources and Profiles.-->
+<!--            </p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </mat-grid-tile>-->
+<!--      <mat-grid-tile>-->
+<!--        <div class="option-tile feature-in-progress">-->
+<!--          <div class="option-tile-header">-->
+<!--            Comparison-->
+<!--          </div>-->
+<!--          <div class="option-tile-content">-->
+<!--            <p>-->
+<!--              <strong>(Feature Under Development)</strong><br>-->
+<!--              Compare a user generated FHIR record against a known valid example from Raven.-->
+<!--            </p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </mat-grid-tile>-->
+<!--      <mat-grid-tile>-->
+<!--        &lt;!&ndash; Spacer Tile for Row &ndash;&gt;-->
+<!--      </mat-grid-tile>-->
+<!--      <mat-grid-tile class="label-tile">-->
+<!--        Workflows-->
+<!--      </mat-grid-tile>-->
+<!--      <mat-grid-tile [colspan]="3">-->
+<!--        <div class="option-tile feature-in-progress">-->
+<!--          <div class="option-tile-header">-->
+<!--            Workflow Simulator-->
+<!--          </div>-->
+<!--          <div class="option-tile-content">-->
+<!--            <p>-->
+<!--              <strong>(Feature Under Development)</strong><br>-->
+<!--              Move through steps of one of several test scenarios for various MDI related workflows, such as CMS to EDRS or a Toxicology Lab to CMS.-->
+<!--              The workflow simulator integrates other features.-->
+<!--            </p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </mat-grid-tile>-->
+<!--    </mat-grid-list>-->
+
+<!--  </div>-->
+
+<!--  <div class="option-card-container">-->
+<!--    <mat-grid-list cols="3" rowHeight="1:1">-->
+<!--      <mat-grid-tile>-->
+<!--        <button mat-raised-button color="primary" class="menu-item" (click)="onBtnClick('/cases');">Case Viewer</button>-->
+<!--      </mat-grid-tile>-->
+<!--      <mat-grid-tile>-->
+<!--        <button mat-raised-button color="primary" class="menu-item" (click)="onBtnClick('/fhir-validator');">FHIR Validator</button>-->
+<!--      </mat-grid-tile>-->
+<!--      <mat-grid-tile>-->
+<!--        <button mat-raised-button color="primary" class="menu-item" (click)="onBtnClick('/import-case');">Import Case</button>-->
+<!--      </mat-grid-tile>-->
+<!--      <mat-grid-tile>-->
+<!--          <button mat-raised-button color="primary" class="menu-item" (click)="onBtnClick('/');">EDRS Search</button>-->
+<!--      </mat-grid-tile>-->
+<!--      <mat-grid-tile>-->
+<!--        <button mat-raised-button color="primary" class="menu-item" (click)="onBtnClick('/');">Workflow<br/>Simulator</button>-->
+<!--      </mat-grid-tile>-->
+<!--      <mat-grid-tile>-->
+<!--        <button mat-raised-button color="primary" class="menu-item" (click)="onBtnClick('/');">DB Convertor</button>-->
+<!--      </mat-grid-tile>-->
+<!--    </mat-grid-list>-->
+<!--  </div>-->
+<!--</div>-->
