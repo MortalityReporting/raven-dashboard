@@ -18,6 +18,7 @@ export class DecedentRecordsGridComponent implements OnInit {
   displayedColumns: string[] = ['index', 'firstName', 'lastName', 'gender',  'tod', 'system'];
   decedentGridDtoList: DecedentGridDTO[];
   isLoading = true;
+  isComparison = false;
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -42,6 +43,8 @@ export class DecedentRecordsGridComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  
+    this.isComparison = this.route.snapshot.routeConfig.path === "cases/comparison";
 
     this.isLoading = true;
 
@@ -76,7 +79,11 @@ export class DecedentRecordsGridComponent implements OnInit {
   }
 
   onCaseSelected(row: any) {
-    this.router.navigate(['cases/summary/', row.decedentId]);
+    if (this.isComparison) {
+      this.router.navigate(['cases/comparison/', row.decedentId]);
+    } else {
+      this.router.navigate(['cases/summary/', row.decedentId]);
+    }
   }
 
   pageChanged(event: PageEvent) {

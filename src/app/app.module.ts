@@ -24,6 +24,9 @@ import {FhirValidatorModule} from "./fhir-validator/fhir-validator.module";
 import {FhirAuthInterceptor} from "./interceptors/fhir-auth.interceptor";
 import {MatGridListModule} from '@angular/material/grid-list';
 import {CaseSummaryComponent} from './components/pages/case-summary/case-summary.component';
+import {CaseComparisonComponent} from './components/pages/case-comparison/case-comparison.component';
+import {CaseComparisonContentComponent} from './components/pages/case-comparison/case-comparison-content/case-comparison-content.component';
+import {CaseComparisonContentFieldComponent} from './components/pages/case-comparison/case-comparison-content-field/case-comparison-content-field.component';
 import {LandingComponent} from './components/landing/landing.component';
 import {CaseContainerComponent} from './components/pages/case-container/case-container.component';
 import {FhirExplorerDrawerService} from "./service/fhir-explorer-drawer.service";
@@ -55,10 +58,13 @@ import {MatSelectModule} from '@angular/material/select';
     HeaderComponent,
     DecedentRecordsGridComponent,
     CaseSummaryComponent,
+    CaseComparisonComponent,
     LandingComponent,
     CaseContainerComponent,
     FhirExplorerComponent,
     CaseSummaryContentComponent,
+    CaseComparisonContentComponent,
+    CaseComparisonContentFieldComponent,
     SetFhirExplorerDirective,
     CaseSummaryContentFieldComponent,
     ImportCaseComponent,

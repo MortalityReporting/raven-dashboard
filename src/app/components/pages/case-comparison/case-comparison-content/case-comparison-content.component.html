@@ -1,0 +1,70 @@
+<div class="case-summary-content-wrapper">
+  <mat-accordion multi>
+
+    <mat-expansion-panel class="summary-section" id="caseAdminInfo" [expanded]="caseAdminInfoExpanded" >
+      <mat-expansion-panel-header (click)="onItemClick( 'caseAdminInfo' )">
+        <mat-panel-title>Case Administration Information</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="summary-section-body">Not Yet Implemented</div>
+    </mat-expansion-panel>    
+    
+    <mat-expansion-panel class="summary-section" id="demographics" [expanded]="demographicsExpanded">
+      <mat-expansion-panel-header (click)="onItemClick( 'demographics' )">
+        <mat-panel-title>Demographics</mat-panel-title>
+      </mat-expansion-panel-header>
+      
+      <app-case-comparison-content-field title="Name" rows="10" resource="US Core Patient" fhirPath="Patient.name" actualValue={{jsonString(patientResource?.name)}} expectedValue="Expected Value"></app-case-comparison-content-field><br>
+      <app-case-comparison-content-field title="Race" rows="20" resource="US Core Patient" fhirPath="Patient.extension" actualValue={{jsonString(patientResource?.extension)}} expectedValue="Expected Value"></app-case-comparison-content-field>      
+    
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="summary-section" id="circumstances" [expanded]="circumstancesExpanded">
+      <mat-expansion-panel-header (click)="onItemClick( 'circumstances' )">
+        <mat-panel-title>Circumstances</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="summary-section-body">Not Yet Implemented</div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="summary-section" id="jurisdiction" [expanded]="jurisdictionExpanded">
+      <mat-expansion-panel-header (click)="onItemClick( 'jurisdiction' )">
+        <mat-panel-title>Jurisdiction</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="summary-section-body">Not Yet Implemented</div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="summary-section" id="causeAndManner" [expanded]="causeAndMannerExpanded">
+      <mat-expansion-panel-header (click)="onItemClick( 'causeAndManner' )">
+        <mat-panel-title>Cause and Manner of Death</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="summary-section-body">Not Yet Implemented</div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="summary-section" id="medicalHistory" [expanded]="medicalHistoryExpanded">
+      <mat-expansion-panel-header (click)="onItemClick( 'medicalHistory' )">
+        <mat-panel-title>Relevant Medical History</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="summary-section-body">Not Yet Implemented</div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="summary-section" id="examAndAutopsy" [expanded]="examNotesExpanded">
+      <mat-expansion-panel-header (click)="onItemClick( 'examNotes' )">
+        <mat-panel-title>Exam and Autopsy Notes</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="summary-section-body">Not Yet Implemented</div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="summary-section" id="narratives" [expanded]="narrativesExpanded">
+      <mat-expansion-panel-header (click)="onItemClick( 'narratives' )">
+        <mat-panel-title>Narratives</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="summary-section-body" [innerHTML]="(caseSummary$ | async)?.narratives"></div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="summary-section" id="deathCertificate" [expanded]="deathCertificateExpanded">
+      <mat-expansion-panel-header (click)="onItemClick( 'deathCertificate' )">
+        <mat-panel-title>Death Certificate</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="summary-section-body">Not Yet Implemented</div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

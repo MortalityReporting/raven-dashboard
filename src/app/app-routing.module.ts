@@ -4,6 +4,7 @@ import {DecedentRecordsGridComponent} from "./components/pages/decedent-records-
 import {FhirValidatorComponent} from "./fhir-validator/components/fhir-validator/fhir-validator.component";
 import {LandingComponent} from "./components/landing/landing.component";
 import {CaseContainerComponent} from "./components/pages/case-container/case-container.component";
+import {CaseComparisonComponent} from "./components/pages/case-comparison/case-comparison.component";
 import {ImportCaseComponent} from "./components/pages/import-case/import-case.component";
 
 const routes: Routes = [
@@ -16,12 +17,20 @@ const routes: Routes = [
     component: DecedentRecordsGridComponent
   },
   {
+    path: 'cases/comparison',
+    component: DecedentRecordsGridComponent
+  },
+  {
     path: 'fhir-validator',
     component: FhirValidatorComponent
   },
   {
     path: 'cases/summary/:id',
     component: CaseContainerComponent
+  },
+  {
+    path: 'cases/comparison/:id',
+    component: CaseComparisonComponent
   },
   {
     path: 'import-case',
