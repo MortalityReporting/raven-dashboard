@@ -1,7 +1,6 @@
 import {HumanName} from "../fhir/types/human.name";
 import {Identifier} from "../fhir/types/identifier";
 import {CodeableConcept} from "../fhir/types/codeable.cocept";
-import { stringify } from "querystring";
 
 export class CaseSummary {
   demographics: Demographics;
@@ -25,7 +24,7 @@ export class Demographics {
   usualWork: UsualWork[];
 
   constructor() {
-    this.usualWork = new Array();
+    this.usualWork = [];
   }
 }
 
@@ -33,7 +32,7 @@ export class Circumstances {
   deathLocation: string;
   workInjury: string;
   tobaccoUseContributed: string;
-  pregnancy: string;  
+  pregnancy: string;
 }
 
 export class Jurisdiction {
@@ -66,9 +65,9 @@ export class CauseAndManner {
   howDeathInjuryOccurred: string;
 
   constructor() {
-    this.causeOfDeathPart1 = new Array();
-    this.causeOfDeathPart2 = new Array();
-    this.causeOfDeathConditions = new Array();
+    this.causeOfDeathPart1 = [];
+    this.causeOfDeathPart2 = [];
+    this.causeOfDeathConditions = [];
   }
 }
 
@@ -81,7 +80,7 @@ export class CauseOfDeathCondition {
   value: CodeableConcept;
   interval: Interval;
 
-  constructor( value: CodeableConcept, interval: Interval ) {    
+  constructor( value: CodeableConcept, interval: Interval ) {
     this.value = value;
     this.interval = interval;
   }
