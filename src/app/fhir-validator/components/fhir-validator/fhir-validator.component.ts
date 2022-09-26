@@ -283,7 +283,7 @@ export class FhirValidatorComponent {
         this.validationFinished = true;
 
         let issues = response.issues;
-        if(issues && issues.length === 1 && issues[0].severity === "Information" && issues[0]?.message === "ALL OK"){
+        if(issues && issues.length === 1 && issues[0].severity === "Information" && issues[0]?.message.toLowerCase() === "ALL OK".toLowerCase()){
           this.isValidResource = true;
         }
         else {
