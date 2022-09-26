@@ -67,16 +67,16 @@ export class ImportCaseFhirRecordComponent implements OnInit{
     this.errorMessage = '';
 
     // The user has not entered any content or uploaded a file.
-    if(!this.fileContent){
-      this.errorMessage = "You must paste content or upload a file.";
-      return;
-    }
+    // if(!this.fileContent){
+    //   this.errorMessage = "You must paste content or upload a file.";
+    //   return;
+    // }
     this.validator.validateFhirResource();
 
     this.validationExecuted$.pipe(
       combineLatestWith(this.validResourceFound$)
     ).subscribe(([executed, valid]) => {
-      if(executed && executed){
+      if(executed && valid){
         //
         console.log("Valid resource found, submit to backend.")
       }
