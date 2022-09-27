@@ -13,9 +13,8 @@
         <mat-panel-title>Demographics</mat-panel-title>
       </mat-expansion-panel-header>
       
-      <app-case-comparison-content-field title="Name" rows="10" resource="US Core Patient" fhirPath="Patient.name" actualValue={{jsonString(patientResource?.name)}} expectedValue="Expected Value"></app-case-comparison-content-field><br>
-      <app-case-comparison-content-field title="Race" rows="20" resource="US Core Patient" fhirPath="Patient.extension" actualValue={{jsonString(patientResource?.extension)}} expectedValue="Expected Value"></app-case-comparison-content-field>      
-    
+      <app-case-comparison-content-field title="Name" rows="10" resource="US Core Patient" fhirPath="Patient.name" actual={{patientActual}} expected={{patientExpected}} difference={{patientDifference}}></app-case-comparison-content-field><br>
+      
     </mat-expansion-panel>
 
     <mat-expansion-panel class="summary-section" id="circumstances" [expanded]="circumstancesExpanded">

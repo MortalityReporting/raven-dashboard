@@ -52,6 +52,10 @@
     background:salmon;
 }
 
-  .text-area {
+.text-area {
     width: 100%;
-  }
+}
+
+.border {
+    border:1px solid black;
+}

@@ -22,14 +22,23 @@
         <div class="grid-col-1">
           <div [ngClass]="{'valid' : true,'invalid' : false}"><input type="text" value="Expected Value" readonly></div>
         </div>
+        <div class="grid-col-1">
+          <div [ngClass]="{'valid' : true,'invalid' : false}"><input type="text" value="Difference" readonly></div>
+        </div>
       </div>
       <br>
       <div class="grid-row">
         <div class="grid-col-1">
-          <div><textarea class="text-area" rows={{rows}} readonly>{{actualValue}}</textarea></div>
+          <!-- <div><textarea class="text-area" rows={{rows}} readonly>{{actual}}</textarea></div> -->
+          <div class="border"><pre>{{actual}}</pre></div>
         </div>
         <div class="grid-col-1">
-          <div><textarea class="text-area" rows={{rows}} readonly>{{expectedValue}}</textarea></div>
+          <!-- <div><textarea class="text-area" rows={{rows}} readonly>{{expected}}</textarea></div> -->
+          <div class="border"><pre>{{expected}}</pre></div>
+        </div>
+        <div class="grid-col-1">
+          <!-- <div class="summary-section-body" [innerHTML]="difference"></div> -->
+          <div class="border" [innerHTML]="difference"></div>
         </div>
       </div>
     </div>

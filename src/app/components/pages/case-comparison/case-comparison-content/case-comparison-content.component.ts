@@ -3,6 +3,7 @@ import {Observable} from "rxjs";
 import {CaseSummary} from "../../../../model/case-summary-models/case.summary";
 import {CaseHeader} from "../../../../model/case-summary-models/case.header";
 import {MatAccordion} from "@angular/material/expansion";
+import * as Diff from 'diff';
 
 @Component({
   selector: 'app-case-comparison-content',
@@ -27,12 +28,76 @@ export class CaseComparisonContentComponent implements OnInit {
 
   patientResource: any;
 
+  patientActual: string;
+  patientExpected: string;
+  patientDifference: string;
+
   constructor() {
   }
 
   ngOnInit(): void {
     this.patientResource$.subscribe( patientResource => {
       this.patientResource = patientResource;
+
+      let oldObj = {
+        "name": [{
+          "use": "official",
+          "family": "Rogers",
+          "given": "Jasmine",
+        } ],
+        "gender": "female",
+        "birthDate": "1966-06-15",
+        "address": [ {
+          "use": "home",
+          "line": [ "400 Windstream Street" ],
+          "city": "Atlanta",
+          "district": "Fulton",
+          "state": "GA"
+       }]
+      }
+
+      let newObj = {
+        "nome": [{
+          "use": "official",
+          "family": "Rogers",
+          "given": "Jasmine",
+        } ],
+        "gender": "male",
+        "birthDate": "1966-06-15",
+        "address": [ {
+          "use": "home",
+          "line": [ "400 Windstream Street" ],
+          "city": "Atlanta",
+          "district": "Fulton",
+          "state": "GA"
+        }]
+      }
+
+      this.patientActual = JSON.stringify( oldObj, null, 4 );
+      this.patientExpected = JSON.stringify( newObj, null, 4 );
+
+      let parts = Diff.diffChars( this.patientActual, this.patientExpected );
+
+      var html = "<pre>";
+
+      parts.map( part => {
+        let span = "<span>";
+
+        if (part.added != undefined && part.added == true)
+        {
+          span = '<span class="diff-added-color">';
+        }
+        else if (part.removed != undefined && part.removed == true)
+        {
+          span = '<span class="diff-removed-color">';
+        }
+
+        html += span + part.value + '</span>';
+      });
+
+      html += "</pre>";
+      
+      this.patientDifference = html;
     });
   }
 

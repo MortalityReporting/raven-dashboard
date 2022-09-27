@@ -10,8 +10,9 @@ export class CaseComparisonContentFieldComponent implements OnInit {
   @Input() title: string;
   @Input() resource: string;
   @Input() fhirPath: string;
-  @Input() actualValue: string;
-  @Input() expectedValue: string;
+  @Input() actual: string;
+  @Input() expected: string;
+  @Input() difference: string;
 
   constructor() { }
 
