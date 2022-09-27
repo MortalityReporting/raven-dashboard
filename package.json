@@ -1,5 +1,5 @@
 {
-  "name": "raven2-dashboard",
+  "name": "raven",
   "version": "0.1.0",
   "scripts": {
     "ng": "ng",

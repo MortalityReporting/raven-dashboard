@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "raven2-dashboard": {
+    "raven": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/raven-dashboard-2",
+            "outputPath": "dist/raven",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -71,14 +71,14 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "raven2-dashboard:build"
+            "browserTarget": "raven:build",
           },
           "configurations": {
             "production": {
-              "browserTarget": "raven2-dashboard:build:production"
+              "browserTarget": "raven:build:production"
             },
             "development": {
-              "browserTarget": "raven2-dashboard:build:development"
+              "browserTarget": "raven:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -86,7 +86,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "raven2-dashboard:build"
+            "browserTarget": "raven:build"
           }
         },
         "test": {
@@ -110,5 +110,5 @@
       }
     }
   },
-  "defaultProject": "raven-dashboard-2"
+  "defaultProject": "raven"
 }
