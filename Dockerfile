@@ -9,6 +9,6 @@ RUN npm ci && npm run build -- --base-href $BASE_HREF
 # stage 2
 
 FROM nginx:1.23.1-alpine
-COPY --from=build /app/dist/raven-dashboard-2 /usr/share/nginx/html/raven2/
+COPY --from=build /app/dist/raven /usr/share/nginx/html/raven/
 COPY --from=build /app/nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
