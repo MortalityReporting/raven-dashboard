@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {FhirExplorerDrawerService} from "../../service/fhir-explorer-drawer.service";
+import { environment } from "../../../environments/environment";
 
 @Component({
   selector: 'app-header',
@@ -8,6 +9,7 @@ import {FhirExplorerDrawerService} from "../../service/fhir-explorer-drawer.serv
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  version = environment.VERSION
 
   constructor(
     private router: Router,

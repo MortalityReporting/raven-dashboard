@@ -1,9 +1,12 @@
 <mat-toolbar color="primary">
+  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
 
-  <span style="cursor: pointer"><h1 (click)="onTitleClick();">Raven 2.0 Logo</h1></span>
+  <span style="cursor: pointer"><h1 (click)="onTitleClick();">Raven 2</h1></span>
 
   <a mat-button [routerLink]="'/cases'">
-    Cases
+    Case Viewer
   </a>
 
   <a mat-button [routerLink]="'/cases/comparison'">
@@ -14,22 +17,31 @@
     FHIR Validator
   </a>
 
-  <a mat-button [routerLink]="'/'">
-    Import
-  </a>
-
-  <a mat-button [routerLink]="'/'">
-    Search
-  </a>
+  <!-- Add links to major features as they are implemented here. -->
 
   <span class="content-spacer"></span>
+  <span class="version-label">Version: {{ version }}</span>
   <a *ngIf="fhirExplorerDrawerService.isInstantiated();" mat-raised-button color="accent" (click)="onToggle()">
     Toggle FHIR Explorer
   </a>
 
-  <a mat-button [routerLink]="'/about'">
-    About
-  </a>
+
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item [routerLink]="'/'">
+      <span>Return to Home</span>
+    </button>
+    <mat-divider></mat-divider>
+    <button mat-menu-item onclick="window.open('https://ravendocs.readthedocs.io/en/latest/','_blank')">
+      <span>Documentation</span>
+    </button>
+    <button mat-menu-item onclick="window.open('https://github.com/MortalityReporting','_blank')">
+      <span>Mortality Reporting GitHub</span>
+    </button>
+    <mat-divider></mat-divider>
+    <button mat-menu-item onclick="window.open('https://chat.fhir.org','_blank')">
+      <span>FHIR Zulip Chat</span>
+    </button>
+  </mat-menu>
 
 </mat-toolbar>
 
