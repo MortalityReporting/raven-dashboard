@@ -1,60 +1,65 @@
-
 /** Collapse/Expand Button Styling **/
 .section-button-wrapper {
-    display: flex;
-  }
+  display: flex;
+}
   
-  button {
-    margin: 5px;
-  }
+button {
+  margin: 5px;
+}
   
-  /** Summary Section Styling **/
+/** Summary Section Styling **/
   
-  .summary-section {
-    border: black 1px solid;
-    box-shadow: 1px 1px 2px black;
-  }
+.summary-section {
+  border: black 1px solid;
+  box-shadow: 1px 1px 2px black;
+}
   
-  .summary-section-body {
-    padding: 5px;
-  }
+.summary-section-body {
+  padding: 5px;
+}
   
-  .case-summary-content-wrapper {
-    padding: 20px;
-  }
+.case-summary-content-wrapper {
+  padding: 20px;
+}
     
-  .summary-section-grid .grid-row {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 100%;
-  }
+.summary-section-grid .grid-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
   
-  .summary-section-grid .grid-col-1 {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-  }
+.summary-section-grid .grid-col-1 {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
   
-  .summary-section-grid .grid-col-2 {
-    display: flex;
-    flex-direction: column;
-    flex: 2;
-  }
+.summary-section-grid .grid-col-2 {
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+}
   
-  .mat-form-field {
-    margin-left: 10px;
-  }
+.mat-form-field {
+  margin-left: 10px;
+}
   
-  /** Alias Table Styling **/
-  .alias-table {
-    width: 100%;
-    border: 1px black solid;
-  }
-  .alias-table th {
-    text-decoration: underline;
-  }
-  .alias-table td {
-    border: 1px black solid;
-    padding: 5px;
-  }
+/** Alias Table Styling **/
+.alias-table {
+  width: 100%;
+  border: 1px black solid;
+}
+
+.alias-table th {
+  text-decoration: underline;
+}
+
+.alias-table td {
+  border: 1px black solid;
+  padding: 5px;
+}
+
+.border {
+  border:1px solid black;
+}

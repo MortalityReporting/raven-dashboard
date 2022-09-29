@@ -1,6 +1,35 @@
 <div class="case-summary-content-wrapper">
-  <mat-accordion multi>
+  <div class="summary-section-grid">
+    <div class="grid-row">
+      <div class="grid-col-1">
+        User Document Bundle
+      </div>
+      <div class="grid-col-1">
+        Select a Test Case to compare to
+      </div>
+    </div>
 
+    <br>
+    
+    <div class="grid-row">
+      <div class="grid-col-1">
+        <textarea placeholder="Paste your Document Bundle here."></textarea>
+      </div>
+      <div class="grid-col-1">
+        <mat-form-field>
+          <mat-select value={{selectedTestCase()}}>
+            <mat-option class="mat-option" *ngFor="let testCase of testCases" value={{selectedTestCase()}}>
+              {{ testCase.givenName + " " + testCase.familyName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>    
+      </div>
+    </div>
+  </div>
+  
+  <br>
+
+  <mat-accordion multi>
     <mat-expansion-panel class="summary-section" id="caseAdminInfo" [expanded]="caseAdminInfoExpanded" >
       <mat-expansion-panel-header (click)="onItemClick( 'caseAdminInfo' )">
         <mat-panel-title>Case Administration Information</mat-panel-title>

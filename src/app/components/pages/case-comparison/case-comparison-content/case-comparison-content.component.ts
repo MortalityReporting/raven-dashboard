@@ -32,10 +32,20 @@ export class CaseComparisonContentComponent implements OnInit {
   patientExpected: string;
   patientDifference: string;
 
+  testCases = [
+    {
+      givenName: "Whago",
+      familyName: "Brox"
+    }
+  ]
+
+  _selectedTestCase = this.testCases[0];
+
   constructor() {
-  }
+  } 
 
   ngOnInit(): void {
+
     this.patientResource$.subscribe( patientResource => {
       this.patientResource = patientResource;
 
@@ -101,8 +111,8 @@ export class CaseComparisonContentComponent implements OnInit {
     });
   }
 
-  jsonString( object: any ): string {   
-    return JSON.stringify( object, null, 2 );
+  selectedTestCase(): string {
+    return this._selectedTestCase.givenName + " " + this._selectedTestCase.familyName;
   }
 
   onItemClick( id: any )
