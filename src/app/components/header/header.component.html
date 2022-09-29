@@ -3,7 +3,7 @@
     <mat-icon>more_vert</mat-icon>
   </button>
 
-  <span style="cursor: pointer"><h1 (click)="onTitleClick();">Raven 2</h1></span>
+  <span style="cursor: pointer"><h1 (click)="onTitleClick();">Raven</h1></span>
 
   <a mat-button [routerLink]="'/cases'">
     Case Viewer
@@ -16,6 +16,7 @@
   <!-- Add links to major features as they are implemented here. -->
 
   <span class="content-spacer"></span>
+  <span class="version-label">Version: {{ version }}</span>
   <a *ngIf="fhirExplorerDrawerService.isInstantiated();" mat-raised-button color="accent" (click)="onToggle()">
     Toggle FHIR Explorer
   </a>
