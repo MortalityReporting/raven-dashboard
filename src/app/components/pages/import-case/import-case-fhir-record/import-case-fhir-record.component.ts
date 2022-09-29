@@ -1,9 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ImportCaseService} from "../../../service/import-case.service";
-import {UtilsService} from "../../../service/utils.service";
-import {ValidatorCoreComponent} from "../../../fhir-validator/components/validator-core/validator-core.component";
-import {FhirValidatorComponent} from "../../../fhir-validator/components/fhir-validator/fhir-validator.component";
-import {FhirValidatorService} from "../../../fhir-validator/service/fhir-validator.service";
+import {ImportCaseService} from "../../../../service/import-case.service";
+import {UtilsService} from "../../../../service/utils.service";
+import {ValidatorCoreComponent} from "../../../../fhir-validator/components/validator-core/validator-core.component";
+import {FhirValidatorComponent} from "../../../../fhir-validator/components/fhir-validator/fhir-validator.component";
+import {FhirValidatorService} from "../../../../fhir-validator/service/fhir-validator.service";
 import {combineLatestWith, forkJoin, Observable} from "rxjs";
 import {combineLatest} from "rxjs-compat/operator/combineLatest";
 
@@ -24,7 +24,8 @@ export class ImportCaseFhirRecordComponent implements OnInit{
   fhirValidatorFinished: boolean = false;
   isValidResource: boolean = false;
   validationExecuted$: Observable<boolean>;
-  validResourceFound$: Observable<boolean>
+  validResourceFound$: Observable<boolean>;
+  fhirResource: any;
 
   constructor(private importCaseService: ImportCaseService,
               private utilsService: UtilsService,
@@ -54,6 +55,7 @@ export class ImportCaseFhirRecordComponent implements OnInit{
         this.utilsService.showErrorMessage("Unable to open the file.");
       }
     }
+
   }
 
   clearUI() {
@@ -85,7 +87,13 @@ export class ImportCaseFhirRecordComponent implements OnInit{
 
   ngOnInit(): void {
     this.validationExecuted$ = this.fhirValidatorService.isValidationExecuted();
-    this.validResourceFound$=  this.fhirValidatorService.isValidResourceFound();
+    this.validResourceFound$ = this.fhirValidatorService.isValidResourceFound();
+    this.fhirValidatorService.getFhirResource().subscribe({
+      next: value => {
+        console.log(value);
+        this.fhirResource = value;
+      }
+    })
   }
 
 

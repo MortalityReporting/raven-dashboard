@@ -63,6 +63,7 @@
 <div class="textarea-wrapper">
       <textarea
         rows="30"
+        (ngModelChange)="onFhirRecordChanged($event)"
         [(ngModel)]="fhirResource"
         [ngStyle]="{'border-color': (!!validationErrorStr) ? 'red': null }"
         (paste)="onPasteFhirResource($event)"

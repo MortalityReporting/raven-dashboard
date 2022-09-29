@@ -13,6 +13,7 @@ export class FhirValidatorService {
 
   private isValid = new Subject<boolean>();
   private hasExecuted = new Subject<boolean>();
+  private fhirResource = new Subject<any>();
 
   setValid(value: boolean){
     this.isValid.next(value);
@@ -28,6 +29,13 @@ export class FhirValidatorService {
 
   setValidationFinished(value: boolean){
     this.hasExecuted.next(value);
+  }
+
+  setFhirResource(value: any){
+    this.fhirResource.next(value);
+  }
+  getFhirResource(): Observable<any>{
+    return this.fhirResource.asObservable();
   }
 
   constructor( private http: HttpClient) { }

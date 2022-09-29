@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {DomSanitizer} from "@angular/platform-browser";
 import {FhirValidatorService} from "../../service/fhir-validator.service";
 import {ValidatorConstants} from "../../providers/validator-constants";
@@ -28,16 +28,16 @@ export interface ResponseItem {
   ],
 })
 
-export class ValidatorCoreComponent implements OnInit  {
+export class ValidatorCoreComponent implements OnInit, OnChanges {
 
   @Input() isStandalone: boolean = true;
-  @Input()fhirResource: string =''; // The Resource as entered by the user.
+  @Input() fhirResource: string = ''; // The Resource as entered by the user.
 
   resourceFormat = 'json'; // The resource format could be JSON or XML, with JSON being the default format.
   fileName: string; // Name of the file uploaded by the user. We need this to render the filename in the UI.
   validationErrorStr: string; // We use this value to store preliminary error messages or a generic error message.
   hasResponseData = false;  // Indicates if the response generated any messages. If true, we render the report
-  parsedFhirResource : any; // We store value of the validator result in order to present it to the user.
+  parsedFhirResource: any; // We store value of the validator result in order to present it to the user.
   displayedColumns: string[] = ['toggle', 'icon', 'severity', 'fhirPath', 'location'];
   isLoading = false;
   allExpanded = true; // Used to render collapsed/expanded all icon as well as calculate if all results are expanded/collapsed
@@ -64,6 +64,12 @@ export class ValidatorCoreComponent implements OnInit  {
   ) {
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['fhirResource'].currentValue){
+      this.fhirValidatorService.setFhirResource(changes['fhirResource'].currentValue);
+    }
+  }
+
   ngOnInit(): void {
       this.fhirValidatorService.setValid(false);
       this.fhirValidatorService.setValidationFinished(false);
@@ -73,9 +79,11 @@ export class ValidatorCoreComponent implements OnInit  {
     if(this.fhirResource){
       if(this.resourceFormat === 'json' && this.fhirValidatorService.isJsonString(this.fhirResource)){
         this.fhirResource = this.fhirValidatorService.beautifyJSON(this.fhirResource);
+        this.fhirValidatorService.setFhirResource(this.fhirResource);
       }
       else if(this.resourceFormat === 'xml' && this.fhirValidatorService.isXmlString(this.fhirResource)){
         this.fhirResource = this.fhirValidatorService.beautifyXML(this.fhirResource);
+        this.fhirValidatorService.setFhirResource(this.fhirResource);
       }
     }
   }
@@ -131,6 +139,7 @@ export class ValidatorCoreComponent implements OnInit  {
         reader.readAsText(file, "UTF-8");
         reader.onload = () => {
           this.fhirResource = reader.result as string;
+          this.fhirValidatorService.setFhirResource(this.fhirResource);
           this.formatFhirResource();
         }
         reader.onerror = () => {
@@ -419,5 +428,9 @@ export class ValidatorCoreComponent implements OnInit  {
     this.serverErrorDetected = false;
     this.serverErrorList = [];
     this.serverErrorStatus = '';
+  }
+
+  onFhirRecordChanged(fhirResource: any) {
+    this.fhirValidatorService.setFhirResource(fhirResource);
   }
 }

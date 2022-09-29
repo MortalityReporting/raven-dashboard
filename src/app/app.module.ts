@@ -42,10 +42,10 @@ import {MatListModule} from "@angular/material/list";
 import {ImportCaseComponent} from './components/pages/import-case/import-case.component';
 import {
   ImportCaseFhirRecordComponent
-} from './components/widgets/import-case-fhir-record/import-case-fhir-record.component';
+} from './components/pages/import-case/import-case-fhir-record/import-case-fhir-record.component';
 import {
   ImportCaseConnectathonTemplateComponent
-} from './components/widgets/import-case-connectathon-template/import-case-connectathon-template.component';
+} from './components/pages/import-case/import-case-connectathon-template/import-case-connectathon-template.component';
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatSelectModule} from '@angular/material/select';
 import {MatMenuModule} from '@angular/material/menu';

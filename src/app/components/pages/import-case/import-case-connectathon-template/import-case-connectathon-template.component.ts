@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ImportCaseService} from "../../../service/import-case.service";
-import {UtilsService} from "../../../service/utils.service";
+import {ImportCaseService} from "../../../../service/import-case.service";
+import {UtilsService} from "../../../../service/utils.service";
 
 
 //TODO: Remove this code. It is only for testing the table.
