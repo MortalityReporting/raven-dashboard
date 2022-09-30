@@ -15,8 +15,11 @@
       <span id="filename">{{file?.name}}</span>
     </div>
 
-    <app-fhir-validator [isStandalone]=false [fhirResource]="fileContent"></app-fhir-validator>
+    <app-fhir-validator [isStandalone]=false></app-fhir-validator>
 
+  </div>
+  <div class="error-text mat-error">
+    {{preconditionError}}
   </div>
 </div>
 

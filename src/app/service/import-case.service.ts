@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from "rxjs/operators";
+import {environment} from "../../environments/environment";
 
 
 @Injectable({
@@ -41,6 +42,12 @@ export class ImportCaseService {
 
     let data = null;
     return this.http.post(this.baseApiUrl,  content, {headers: headers}).pipe(map((result: any) => (
+      result as Object
+    )));
+  }
+
+  importResource(fhirResource): Observable<any> {
+    return this.http.post( environment.ravenFhirServer, fhirResource).pipe(map((result: any) => (
       result as Object
     )));
   }

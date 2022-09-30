@@ -9,9 +9,10 @@ import {ValidatorCoreComponent} from "../validator-core/validator-core.component
 export class FhirValidatorComponent implements OnInit {
 
   @Input() isStandalone: boolean = true;
-  @Input() fhirResource: string = '';
+  @Input() renderValidationDetails: any;
 
   @ViewChild(ValidatorCoreComponent) validatorCore: FhirValidatorComponent;
+
 
   constructor() { }
 

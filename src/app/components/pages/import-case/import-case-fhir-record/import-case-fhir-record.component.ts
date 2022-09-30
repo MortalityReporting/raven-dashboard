@@ -1,11 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ImportCaseService} from "../../../../service/import-case.service";
 import {UtilsService} from "../../../../service/utils.service";
-import {ValidatorCoreComponent} from "../../../../fhir-validator/components/validator-core/validator-core.component";
 import {FhirValidatorComponent} from "../../../../fhir-validator/components/fhir-validator/fhir-validator.component";
 import {FhirValidatorService} from "../../../../fhir-validator/service/fhir-validator.service";
-import {combineLatestWith, forkJoin, Observable} from "rxjs";
-import {combineLatest} from "rxjs-compat/operator/combineLatest";
+import {combineLatestWith, Observable} from "rxjs";
+import {ValidationResults} from "../../../../fhir-validator/domain/ValidationResoults";
 
 @Component({
   selector: 'app-import-case-fhir-record',
@@ -24,8 +23,9 @@ export class ImportCaseFhirRecordComponent implements OnInit{
   fhirValidatorFinished: boolean = false;
   isValidResource: boolean = false;
   validationExecuted$: Observable<boolean>;
-  validResourceFound$: Observable<boolean>;
+  validationResult$: Observable<ValidationResults>;
   fhirResource: any;
+  preconditionError: string = '';
 
   constructor(private importCaseService: ImportCaseService,
               private utilsService: UtilsService,
@@ -50,6 +50,7 @@ export class ImportCaseFhirRecordComponent implements OnInit{
       reader.readAsText(this.file, "UTF-8");
       reader.onload = () => {
         this.fileContent = reader.result as string;
+        this.fhirValidatorService.setFhirResource(this.fileContent);
       }
       reader.onerror = () => {
         this.utilsService.showErrorMessage("Unable to open the file.");
@@ -68,17 +69,21 @@ export class ImportCaseFhirRecordComponent implements OnInit{
     this.isValidResource = false;
     this.errorMessage = '';
 
-    // The user has not entered any content or uploaded a file.
-    // if(!this.fileContent){
-    //   this.errorMessage = "You must paste content or upload a file.";
-    //   return;
-    // }
-    this.validator.validateFhirResource();
+    this.preconditionError = this.getValidationPreconditionErrors(this.fhirResource);
+
+    this.getValidationPreconditionErrors(this.fhirResource);
+    //this.validator.validateFhirResource();
+
+    this.importCaseService.importResource(this.fhirResource).subscribe({
+      next: value => console.log(value),
+      error: err => console.error(err)
+    });
 
     this.validationExecuted$.pipe(
-      combineLatestWith(this.validResourceFound$)
-    ).subscribe(([executed, valid]) => {
-      if(executed && valid){
+      combineLatestWith(this.validationResult$)
+    ).subscribe(([executed, validationResults]) => {
+      console.log(validationResults);
+      if(executed && validationResults){
         //
         console.log("Valid resource found, submit to backend.")
       }
@@ -87,15 +92,32 @@ export class ImportCaseFhirRecordComponent implements OnInit{
 
   ngOnInit(): void {
     this.validationExecuted$ = this.fhirValidatorService.isValidationExecuted();
-    this.validResourceFound$ = this.fhirValidatorService.isValidResourceFound();
+    this.validationResult$ = this.fhirValidatorService.getValidationResults();
     this.fhirValidatorService.getFhirResource().subscribe({
       next: value => {
+        this.preconditionError = '';
         console.log(value);
         this.fhirResource = value;
       }
     })
   }
 
-
-
+  private getValidationPreconditionErrors(resource: any): string {
+    if(!resource){
+      const error = ("Please upload or paste a resource.");
+      console.error(error);
+      return error;
+    }
+    else if(resource.resourceType !== "Bundle"){
+      const error = ("Resource type must be Bundle.");
+      console.error(error);
+      return error;
+    }
+    else if(resource.meta.profile[0] !== "http://hl7.org/fhir/us/mdi/StructureDefinition/Bundle-document-mdi-to-edrs"){
+      const error = ("Resource type must be Bundle.");
+      console.error(error);
+      return error;
+    }
+    else return null
+  }
 }

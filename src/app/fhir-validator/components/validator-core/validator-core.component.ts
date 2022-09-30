@@ -7,6 +7,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {FormControl} from "@angular/forms";
 import {Subscription} from "rxjs";
 import {UtilsService} from "../../../service/utils.service";
+import {ValidationResults} from "../../domain/ValidationResoults";
 
 export interface ResponseItem {
   severity: string;
@@ -31,8 +32,9 @@ export interface ResponseItem {
 export class ValidatorCoreComponent implements OnInit, OnChanges {
 
   @Input() isStandalone: boolean = true;
-  @Input() fhirResource: string = ''; // The Resource as entered by the user.
+  @Input() renderValidationDetails: boolean = true;
 
+  fhirResource: string = ''; // The Resource.
   resourceFormat = 'json'; // The resource format could be JSON or XML, with JSON being the default format.
   fileName: string; // Name of the file uploaded by the user. We need this to render the filename in the UI.
   validationErrorStr: string; // We use this value to store preliminary error messages or a generic error message.
@@ -51,6 +53,7 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
   serverErrorDetected = false; // Tracks if the server has responded with an error (404, 500). Used to render the error in UI.
   serverErrorList: any []; // Store the data from the OperationOutcome resource
   serverErrorStatus: string; // We store the error response status here (i.e. 404, 500)
+  validationResults: ValidationResults = {};
 
   //TODO remove this code when the API returns a timeout error
   serverTimoutDetected = false;
@@ -65,14 +68,20 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes['fhirResource'].currentValue){
-      this.fhirValidatorService.setFhirResource(changes['fhirResource'].currentValue);
-    }
+    // if(changes['fhirResource'].currentValue){
+    //   this.fhirValidatorService.setFhirResource(changes['fhirResource'].currentValue);
+    // }
   }
 
   ngOnInit(): void {
-      this.fhirValidatorService.setValid(false);
       this.fhirValidatorService.setValidationFinished(false);
+
+      //Track the fhir resource injected from parent other components.
+      this.fhirValidatorService.getFhirResource().subscribe({
+        next: value => this.fhirResource = value
+      });
+
+      this.fhirValidatorService.setValidationResults({});
   }
 
   formatFhirResource(){
@@ -109,6 +118,7 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
     this.serverErrorStatus = '';
     this.serverTimoutDetected = false;
     this.fhirValidatorService.setValidationFinished(false);
+    this.fhirValidatorService.setValidationResults({});
   }
 
   onClear(){
@@ -163,7 +173,7 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
     }
 
     if(!fhirResource || !(resourceFormat === 'json' || resourceFormat === 'xml')){
-      console.error("Invalid data passed to the validator.")
+      console.error("Invalid data passed to the validator.");
     }
     this.isValidResource = true;
     this.hasResponseData = false;
@@ -178,8 +188,8 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
       //see if we can find any obvious issues with the resource here
       this.isValidResource = false;
       this.validationFinished = true;
-      this.fhirValidatorService.setValid(false);
       this.fhirValidatorService.setValidationFinished(true);
+      this.fhirValidatorService.setValidationResults({hasBasicErrors: true, isValid: false})
     }
     else {
       // The UI validation passed successfully, and we execute the backend validation.
@@ -315,12 +325,12 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
         let issues = response.issues;
         if(issues.length === 1 && issues[0].severity === "Information" && issues[0]?.message.toLowerCase() === "ALL OK".toLowerCase()){
           this.isValidResource = true;
-          this.fhirValidatorService.setValid(true);
+          this.fhirValidatorService.setValidationResults({isValid: true})
         }
         else {
           this.isValidResource = false;
           this.validationErrorStr = "Please see the validation errors below.";
-          this.fhirValidatorService.setValid(false);
+          this.setValidatorResponse(response);
         }
 
         // Some strings produced by the validator are long and miss spaces. This could break the UI validation report.
@@ -431,6 +441,27 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
   }
 
   onFhirRecordChanged(fhirResource: any) {
-    this.fhirValidatorService.setFhirResource(fhirResource);
+    this.fhirValidatorService.setFhirResource(JSON.parse(fhirResource));
+  }
+
+  private setValidatorResponse(apiResponse: any) {
+    const errorsCount = apiResponse.filter((element: any) => element.severity == 'Error')?.length || 0;
+    const warningsCount = apiResponse.filter((element: any) => element.severity == 'Warning')?.length || 0;
+    const infoCount = apiResponse.filter((element: any) => element.severity == 'Information')?.length || 0;
+    const notesCount = apiResponse.filter((element: any) => element.severity == 'Note')?.length || 0;
+
+    let validationResult: ValidationResults = {};
+    validationResult.errorsCount = errorsCount;
+    validationResult.warningsCount = warningsCount;
+    validationResult.notesCount = notesCount;
+    validationResult.infoCount = infoCount;
+
+    if(errorsCount > 0){
+      validationResult.isValid = false;
+    }
+    else {
+      validationResult.isValid = false;
+    }
+    this.fhirValidatorService.setValidationResults(validationResult);
   }
 }
