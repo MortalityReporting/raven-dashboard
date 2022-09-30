@@ -2,15 +2,15 @@ import * as Diff from 'diff';
 import {DiffValue} from '../diff-value';
 import {ObservationDiff} from './observation.diff';
 
-export class ObservationTobaccoUseDiff extends ObservationDiff { 
-    status: DiffValue;
+export class ObservationCauseOfDeathPart2Diff extends ObservationDiff { 
+    performer: DiffValue;
     valueCodeableConcept: DiffValue;
 
     constructor()
     {
         super();
 
-        this.status = new DiffValue();
+        this.performer = new DiffValue();
         this.valueCodeableConcept = new DiffValue();
     }
 
@@ -19,9 +19,9 @@ export class ObservationTobaccoUseDiff extends ObservationDiff {
         super.doDiff( actual, expected );
 
         try {      
-            this.status.actual = JSON.stringify( actual.status, null, 4 );
-            this.status.expected = JSON.stringify( expected.status, null, 4 );
-            [this.status.state,this.status.difference] = DiffValue.doDiff( Diff.diffChars( this.status.actual, this.status.expected ));  
+            this.performer.actual = JSON.stringify( actual.performer, null, 4 );
+            this.performer.expected = JSON.stringify( expected.performer, null, 4 );
+            [this.performer.state,this.performer.difference] = DiffValue.doDiff( Diff.diffChars( this.performer.actual, this.performer.expected ));  
 
             this.valueCodeableConcept.actual = JSON.stringify( actual.valueCodeableConcept, null, 4 );
             this.valueCodeableConcept.expected = JSON.stringify( expected.valueCodeableConcept, null, 4 );

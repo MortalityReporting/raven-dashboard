@@ -6,7 +6,6 @@ export class ObservationDiff {
     id: DiffValue;
     meta: DiffValue;
     resourceType: DiffValue;
-    status: DiffValue;
     subject: DiffValue;
 
     constructor()
@@ -15,7 +14,6 @@ export class ObservationDiff {
         this.id = new DiffValue();
         this.meta = new DiffValue();
         this.resourceType = new DiffValue();
-        this.status = new DiffValue();
         this.subject = new DiffValue();
     }
 
@@ -37,10 +35,6 @@ export class ObservationDiff {
             this.resourceType.actual = JSON.stringify( actual.resourceType, null, 4 );
             this.resourceType.expected = JSON.stringify( expected.resourceType, null, 4 );
             [this.resourceType.state,this.resourceType.difference] = DiffValue.doDiff( Diff.diffChars( this.resourceType.actual, this.resourceType.expected ));  
-
-            this.status.actual = JSON.stringify( actual.status, null, 4 );
-            this.status.expected = JSON.stringify( expected.status, null, 4 );
-            [this.status.state,this.status.difference] = DiffValue.doDiff( Diff.diffChars( this.status.actual, this.status.expected ));  
 
             this.subject.actual = JSON.stringify( actual.subject, null, 4 );
             this.subject.expected = JSON.stringify( expected.subject, null, 4 );

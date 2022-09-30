@@ -4,12 +4,14 @@ import {ObservationDiff} from './observation.diff';
 
 export class ObservationDeathDateDiff extends ObservationDiff { 
     effectiveDateTime: DiffValue;
+    status: DiffValue;
     valueDateTime: DiffValue;
 
     constructor()
     {
         super();
 
+        this.status = new DiffValue();
         this.effectiveDateTime = new DiffValue();
         this.valueDateTime = new DiffValue();
     }
@@ -18,7 +20,11 @@ export class ObservationDeathDateDiff extends ObservationDiff {
     {    
         super.doDiff( actual, expected );
 
-        try {      
+        try {  
+            this.status.actual = JSON.stringify( actual.status, null, 4 );
+            this.status.expected = JSON.stringify( expected.status, null, 4 );
+            [this.status.state,this.status.difference] = DiffValue.doDiff( Diff.diffChars( this.status.actual, this.status.expected ));  
+
             this.effectiveDateTime.actual = JSON.stringify( actual.effectiveDateTime, null, 4 );
             this.effectiveDateTime.expected = JSON.stringify( expected.effectiveDateTime, null, 4 );
             [this.effectiveDateTime.state,this.effectiveDateTime.difference] = DiffValue.doDiff( Diff.diffChars( this.effectiveDateTime.actual, this.effectiveDateTime.expected ));  
