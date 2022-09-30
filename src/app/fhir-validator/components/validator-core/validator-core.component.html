@@ -151,13 +151,22 @@
       </mat-button-toggle-group>
     </div>
 
+    <div class="top-spacer" *ngIf="!isStandalone">
+      <button mat-raised-button color=primary  *ngIf="!renderValidationDetails" (click)="renderValidationDetails = true">
+        <mat-icon>expand_more</mat-icon> Expand Validation Results
+      </button>
+      <button mat-raised-button color=primary *ngIf="renderValidationDetails" (click)="renderValidationDetails = false">
+        <mat-icon>expand_less</mat-icon> Collapse Validation Results
+      </button>
+    </div>
+
     <div *ngIf="severityLevelsFormControl.value.length === 0">
       Please select severity level to see the result.
     </div>
 
     <table
       mat-table [dataSource]="dataSource" multiTemplateDataRows
-      *ngIf="severityLevelsFormControl.value.length > 0">
+      *ngIf="severityLevelsFormControl.value.length > 0 && renderValidationDetails">
 
       <!-- First column contains expand/collapse widget. The user can chose to expand/collapse all rows,
        as well as expand/collapse individual rows. Note that the expand/collapse all can be toggled automatically
@@ -252,7 +261,7 @@
 
   <!-- Resource as returned from the validator. Note that the resource returned from the validator may be
    formatted differently then the resource we sent to the validator. -->
-  <div class="top-spacer">
+  <div class="top-spacer" *ngIf="renderValidationDetails">
         <pre style="width: 100%">
           <div class="validator-response" [innerHTML]="parsedFhirResource"></div>
         </pre>

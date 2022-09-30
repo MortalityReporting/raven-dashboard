@@ -445,10 +445,10 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
   }
 
   private setValidatorResponse(apiResponse: any) {
-    const errorsCount = apiResponse.filter((element: any) => element.severity == 'Error')?.length || 0;
-    const warningsCount = apiResponse.filter((element: any) => element.severity == 'Warning')?.length || 0;
-    const infoCount = apiResponse.filter((element: any) => element.severity == 'Information')?.length || 0;
-    const notesCount = apiResponse.filter((element: any) => element.severity == 'Note')?.length || 0;
+    const errorsCount = apiResponse.issues.filter((element: any) => element.severity == 'Error')?.length || 0;
+    const warningsCount = apiResponse.issues.filter((element: any) => element.severity == 'Warning')?.length || 0;
+    const infoCount = apiResponse.issues.filter((element: any) => element.severity == 'Information')?.length || 0;
+    const notesCount = apiResponse.issues.filter((element: any) => element.severity == 'Note')?.length || 0;
 
     let validationResult: ValidationResults = {};
     validationResult.errorsCount = errorsCount;
@@ -460,7 +460,7 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
       validationResult.isValid = false;
     }
     else {
-      validationResult.isValid = false;
+      validationResult.isValid = true;
     }
     this.fhirValidatorService.setValidationResults(validationResult);
   }

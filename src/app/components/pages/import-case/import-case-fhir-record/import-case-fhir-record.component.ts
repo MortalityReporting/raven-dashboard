@@ -72,12 +72,12 @@ export class ImportCaseFhirRecordComponent implements OnInit{
     this.preconditionError = this.getValidationPreconditionErrors(this.fhirResource);
 
     this.getValidationPreconditionErrors(this.fhirResource);
-    //this.validator.validateFhirResource();
+    this.validator.validateFhirResource();
 
-    this.importCaseService.importResource(this.fhirResource).subscribe({
-      next: value => console.log(value),
-      error: err => console.error(err)
-    });
+    // this.importCaseService.importResource(this.fhirResource).subscribe({
+    //   next: value => console.log(value),
+    //   error: err => console.error(err)
+    // });
 
     this.validationExecuted$.pipe(
       combineLatestWith(this.validationResult$)
@@ -96,7 +96,6 @@ export class ImportCaseFhirRecordComponent implements OnInit{
     this.fhirValidatorService.getFhirResource().subscribe({
       next: value => {
         this.preconditionError = '';
-        console.log(value);
         this.fhirResource = value;
       }
     })
