@@ -42,6 +42,16 @@
     width: 100%;
 }
 
+.valid {
+    width: 100%;
+    background:aquamarine;
+}
+
+.invalid {
+    width: 100%;
+    background:salmon;
+}
+
 .valid input {
     width: 100%;
     background:aquamarine;
@@ -58,4 +68,8 @@
 
 .border {
     border:1px solid black;
+}
+
+.header {
+    background: aquamarine;
 }

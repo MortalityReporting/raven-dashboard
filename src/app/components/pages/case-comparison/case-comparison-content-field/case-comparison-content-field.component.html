@@ -1,5 +1,5 @@
 <mat-expansion-panel class="summary-section" id="name" [expanded]="false">
-  <mat-expansion-panel-header>
+  <mat-expansion-panel-header class={{state}}>
     <mat-panel-title>{{title}}</mat-panel-title>
   </mat-expansion-panel-header>
   <div class="summary-section-body">
@@ -17,13 +17,13 @@
     <div class="summary-section-grid">
       <div class="grid-row">
         <div class="grid-col-1">
-          <div [ngClass]="{'valid' : true,'invalid' : false}"><input type="text" value="Actual Value" readonly></div>
+          <div class={{state}}><input type="text" value="Actual Value" readonly></div>
         </div>
         <div class="grid-col-1">
-          <div [ngClass]="{'valid' : true,'invalid' : false}"><input type="text" value="Expected Value" readonly></div>
+          <div class={{state}}><input type="text" value="Expected Value" readonly></div>
         </div>
         <div class="grid-col-1">
-          <div [ngClass]="{'valid' : true,'invalid' : false}"><input type="text" value="Difference" readonly></div>
+          <div class={{state}}><input type="text" value="Difference" readonly></div>
         </div>
       </div>
       <br>
