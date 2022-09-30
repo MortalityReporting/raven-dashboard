@@ -34,7 +34,17 @@
       <mat-expansion-panel-header (click)="onItemClick( 'caseAdminInfo' )">
         <mat-panel-title>Case Administration Information</mat-panel-title>
       </mat-expansion-panel-header>
-      <div class="summary-section-body">Not Yet Implemented</div>
+      <app-case-comparison-content-field state={{mdiToEdrs.author.state}} title="Author" resource="Composition MDI TO EDRS" fhirPath="author" actual={{mdiToEdrs.author.actual}} expected={{mdiToEdrs.author.expected}} difference={{mdiToEdrs.author.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{mdiToEdrs.date.state}} title="Date" resource="Composition MDI TO EDRS" fhirPath="date" actual={{mdiToEdrs.date.actual}} expected={{mdiToEdrs.date.expected}} difference={{mdiToEdrs.date.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{mdiToEdrs.extension.state}} title="Extension" resource="Composition MDI TO EDRS" fhirPath="extension" actual={{mdiToEdrs.extension.actual}} expected={{mdiToEdrs.extension.expected}} difference={{mdiToEdrs.extension.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{mdiToEdrs.id.state}} title="Id" resource="Composition MDI TO EDRS" fhirPath="id" actual={{mdiToEdrs.id.actual}} expected={{mdiToEdrs.id.expected}} difference={{mdiToEdrs.id.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{mdiToEdrs.identifier.state}} title="Identifier" resource="Composition MDI TO EDRS" fhirPath="identifier" actual={{mdiToEdrs.identifier.actual}} expected={{mdiToEdrs.identifier.expected}} difference={{mdiToEdrs.identifier.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{mdiToEdrs.meta.state}} title="Meta" resource="Composition MDI TO EDRS" fhirPath="meta" actual={{mdiToEdrs.meta.actual}} expected={{mdiToEdrs.meta.expected}} difference={{mdiToEdrs.meta.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{mdiToEdrs.resourceType.state}} title="ResourceType" resource="Composition MDI TO EDRS" fhirPath="resourceType" actual={{mdiToEdrs.resourceType.actual}} expected={{mdiToEdrs.resourceType.expected}} difference={{mdiToEdrs.resourceType.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{mdiToEdrs.section.state}} title="Section" resource="Composition MDI TO EDRS" fhirPath="section" actual={{mdiToEdrs.section.actual}} expected={{mdiToEdrs.section.expected}} difference={{mdiToEdrs.section.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{mdiToEdrs.status.state}} title="Status" resource="Composition MDI TO EDRS" fhirPath="status" actual={{mdiToEdrs.status.actual}} expected={{mdiToEdrs.status.expected}} difference={{mdiToEdrs.status.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{mdiToEdrs.subject.state}} title="Subject" resource="Composition MDI TO EDRS" fhirPath="subject" actual={{mdiToEdrs.subject.actual}} expected={{mdiToEdrs.subject.expected}} difference={{mdiToEdrs.subject.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{mdiToEdrs.type.state}} title="Type" resource="Composition MDI TO EDRS" fhirPath="type" actual={{mdiToEdrs.type.actual}} expected={{mdiToEdrs.type.expected}} difference={{mdiToEdrs.type.difference}}></app-case-comparison-content-field>
     </mat-expansion-panel>    
     
     <mat-expansion-panel class="summary-section" id="demographics" [expanded]="demographicsExpanded">
@@ -58,28 +68,50 @@
       <mat-expansion-panel-header (click)="onItemClick( 'circumstances' )">
         <mat-panel-title>Circumstances</mat-panel-title>
       </mat-expansion-panel-header>
-      <div class="summary-section-body">Not Yet Implemented</div>
+      <app-case-comparison-content-field state={{location.address.state}} title="Address" resource="US Core Location" fhirPath="Location.address" actual={{location.address.actual}} expected={{location.address.expected}} difference={{location.address.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{location.id.state}} title="Id" resource="US Core Location" fhirPath="Location.id" actual={{location.id.actual}} expected={{location.id.expected}} difference={{location.id.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{location.meta.state}} title="Meta" resource="US Core Location" fhirPath="Location.meta" actual={{location.meta.actual}} expected={{location.meta.expected}} difference={{location.meta.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{location.resourceType.state}} title="ResourceType" resource="US Core Location" fhirPath="Location.resourceType" actual={{location.resourceType.actual}} expected={{location.resourceType.expected}} difference={{location.resourceType.difference}}></app-case-comparison-content-field>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="summary-section" id="jurisdiction" [expanded]="jurisdictionExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'jurisdiction' )">
         <mat-panel-title>Jurisdiction</mat-panel-title>
       </mat-expansion-panel-header>
-      <div class="summary-section-body">Not Yet Implemented</div>
+      <app-case-comparison-content-field state={{tobaccoUse.code.state}} title="Code" resource="Observation Tobacco Use" fhirPath="code" actual={{tobaccoUse.code.actual}} expected={{tobaccoUse.code.expected}} difference={{tobaccoUse.code.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{tobaccoUse.id.state}} title="Id" resource="Observation Tobacco Use" fhirPath="id" actual={{tobaccoUse.id.actual}} expected={{tobaccoUse.id.expected}} difference={{tobaccoUse.id.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{tobaccoUse.meta.state}} title="Meta" resource="Observation Tobacco Use" fhirPath="meta" actual={{tobaccoUse.meta.actual}} expected={{tobaccoUse.meta.expected}} difference={{tobaccoUse.meta.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{tobaccoUse.resourceType.state}} title="ResourceType" resource="Observation Tobacco Use" fhirPath="resourceType" actual={{tobaccoUse.resourceType.actual}} expected={{tobaccoUse.resourceType.expected}} difference={{tobaccoUse.resourceType.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{tobaccoUse.status.state}} title="Status" resource="Observation Tobacco Use" fhirPath="status" actual={{tobaccoUse.status.actual}} expected={{tobaccoUse.status.expected}} difference={{tobaccoUse.status.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{tobaccoUse.subject.state}} title="Subject" resource="Observation Tobacco Use" fhirPath="subject" actual={{tobaccoUse.subject.actual}} expected={{tobaccoUse.subject.expected}} difference={{tobaccoUse.subject.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{tobaccoUse.valueCodeableConcept.state}} title="ValueCodeableConcept" resource="Observation Tobacco Use" fhirPath="valueCodeableConcept" actual={{tobaccoUse.valueCodeableConcept.actual}} expected={{tobaccoUse.valueCodeableConcept.expected}} difference={{tobaccoUse.valueCodeableConcept.difference}}></app-case-comparison-content-field>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="summary-section" id="causeAndManner" [expanded]="causeAndMannerExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'causeAndManner' )">
         <mat-panel-title>Cause and Manner of Death</mat-panel-title>
       </mat-expansion-panel-header>
-      <div class="summary-section-body">Not Yet Implemented</div>
+      <app-case-comparison-content-field state={{pregnancy.code.state}} title="Code" resource="Observation Pregnancy" fhirPath="code" actual={{pregnancy.code.actual}} expected={{pregnancy.code.expected}} difference={{pregnancy.code.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{pregnancy.id.state}} title="Id" resource="Observation Pregnancy" fhirPath="id" actual={{pregnancy.id.actual}} expected={{pregnancy.id.expected}} difference={{pregnancy.id.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{pregnancy.meta.state}} title="Meta" resource="Observation Pregnancy" fhirPath="meta" actual={{pregnancy.meta.actual}} expected={{pregnancy.meta.expected}} difference={{pregnancy.meta.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{pregnancy.resourceType.state}} title="ResourceType" resource="Observation Pregnancy" fhirPath="resourceType" actual={{pregnancy.resourceType.actual}} expected={{pregnancy.resourceType.expected}} difference={{pregnancy.resourceType.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{pregnancy.status.state}} title="Status" resource="Observation Pregnancy" fhirPath="status" actual={{pregnancy.status.actual}} expected={{pregnancy.status.expected}} difference={{pregnancy.status.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{pregnancy.subject.state}} title="Subject" resource="Observation Pregnancy" fhirPath="subject" actual={{pregnancy.subject.actual}} expected={{pregnancy.subject.expected}} difference={{pregnancy.subject.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{pregnancy.valueCodeableConcept.state}} title="ValueCodeableConcept" resource="Observation Pregnancy" fhirPath="valueCodeableConcept" actual={{pregnancy.valueCodeableConcept.actual}} expected={{pregnancy.valueCodeableConcept.expected}} difference={{tobaccoUse.valueCodeableConcept.difference}}></app-case-comparison-content-field>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="summary-section" id="medicalHistory" [expanded]="medicalHistoryExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'medicalHistory' )">
         <mat-panel-title>Relevant Medical History</mat-panel-title>
       </mat-expansion-panel-header>
-      <div class="summary-section-body">Not Yet Implemented</div>
+      <app-case-comparison-content-field state={{deathDate.code.state}} title="Code" resource="Observation Death Date" fhirPath="code" actual={{deathDate.code.actual}} expected={{deathDate.code.expected}} difference={{deathDate.code.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{deathDate.code.state}} title="EffectiveDeathDate" resource="Observation Death Date" fhirPath="effectiveDeathDate" actual={{deathDate.effectiveDateTime.actual}} expected={{deathDate.effectiveDateTime.expected}} difference={{deathDate.effectiveDateTime.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{deathDate.id.state}} title="Id" resource="Observation Death Date" fhirPath="id" actual={{deathDate.id.actual}} expected={{deathDate.id.expected}} difference={{deathDate.id.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{deathDate.meta.state}} title="Meta" resource="Observation Death Date" fhirPath="meta" actual={{deathDate.meta.actual}} expected={{deathDate.meta.expected}} difference={{deathDate.meta.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{deathDate.resourceType.state}} title="ResourceType" resource="Observation Death Date" fhirPath="resourceType" actual={{deathDate.resourceType.actual}} expected={{deathDate.resourceType.expected}} difference={{deathDate.resourceType.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{deathDate.status.state}} title="Status" resource="Observation Death Date" fhirPath="status" actual={{deathDate.status.actual}} expected={{deathDate.status.expected}} difference={{deathDate.status.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{deathDate.subject.state}} title="Subject" resource="Observation Death Date" fhirPath="subject" actual={{deathDate.subject.actual}} expected={{deathDate.subject.expected}} difference={{deathDate.subject.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{deathDate.valueDateTime.state}} title="ValueDateTime" resource="Observation Death Date" fhirPath="valueDateTime" actual={{deathDate.valueDateTime.actual}} expected={{deathDate.valueDateTime.expected}} difference={{deathDate.valueDateTime.difference}}></app-case-comparison-content-field>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="summary-section" id="examAndAutopsy" [expanded]="examNotesExpanded">

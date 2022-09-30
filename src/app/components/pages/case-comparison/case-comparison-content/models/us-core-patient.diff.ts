@@ -1,7 +1,7 @@
 import * as Diff from 'diff';
-import {DiffValue} from './diff-value';
+import {DiffValue} from '../diff-value';
 
-export class PatientDiff {    
+export class USCorePatientDiff {    
     resourceType: DiffValue;
     id: DiffValue;
     text: DiffValue;
@@ -25,43 +25,43 @@ export class PatientDiff {
         this.address = new DiffValue();
     }
 
-    doDiff( actualPatient: any, expectedPatient: any )
+    doDiff( actual: any, expected: any )
     {    
         try {      
-            this.resourceType.actual = JSON.stringify( actualPatient.resourceType, null, 4 );
-            this.resourceType.expected = JSON.stringify( expectedPatient.resourceType, null, 4 );
+            this.resourceType.actual = JSON.stringify( actual.resourceType, null, 4 );
+            this.resourceType.expected = JSON.stringify( expected.resourceType, null, 4 );
             [this.resourceType.state,this.resourceType.difference] = DiffValue.doDiff( Diff.diffChars( this.resourceType.actual, this.resourceType.expected ));  
 
-            this.id.actual = JSON.stringify( actualPatient.id, null, 4 );
-            this.id.expected = JSON.stringify( expectedPatient.id, null, 4 );
+            this.id.actual = JSON.stringify( actual.id, null, 4 );
+            this.id.expected = JSON.stringify( expected.id, null, 4 );
             [this.id.state,this.id.difference] = DiffValue.doDiff( Diff.diffChars( this.id.actual, this.id.expected ));  
 
-            this.text.actual = JSON.stringify( actualPatient.text, null, 4 );
-            this.text.expected = JSON.stringify( expectedPatient.text, null, 4 );
+            this.text.actual = JSON.stringify( actual.text, null, 4 );
+            this.text.expected = JSON.stringify( expected.text, null, 4 );
             [this.text.state,this.text.difference] = DiffValue.doDiff( Diff.diffChars( this.text.actual, this.text.expected ));  
 
-            this.identifier.actual = JSON.stringify( actualPatient.identifier, null, 4 );
-            this.identifier.expected = JSON.stringify( expectedPatient.identifier, null, 4 );
+            this.identifier.actual = JSON.stringify( actual.identifier, null, 4 );
+            this.identifier.expected = JSON.stringify( expected.identifier, null, 4 );
             [this.identifier.state,this.identifier.difference] = DiffValue.doDiff( Diff.diffChars( this.identifier.actual, this.identifier.expected ));  
 
-            this.extension.actual = JSON.stringify( actualPatient.extension, null, 4 );
-            this.extension.expected = JSON.stringify( expectedPatient.extension, null, 4 );
+            this.extension.actual = JSON.stringify( actual.extension, null, 4 );
+            this.extension.expected = JSON.stringify( expected.extension, null, 4 );
             [this.extension.state,this.extension.difference] = DiffValue.doDiff( Diff.diffChars( this.extension.actual, this.extension.expected ));  
 
-            this.name.actual = JSON.stringify( actualPatient.name, null, 4 );
-            this.name.expected = JSON.stringify( expectedPatient.name, null, 4 );
+            this.name.actual = JSON.stringify( actual.name, null, 4 );
+            this.name.expected = JSON.stringify( expected.name, null, 4 );
             [this.name.state,this.name.difference] = DiffValue.doDiff( Diff.diffChars( this.name.actual, this.name.expected ));  
 
-            this.gender.actual = JSON.stringify( actualPatient.gender, null, 4 );
-            this.gender.expected = JSON.stringify( expectedPatient.gender, null, 4 );
+            this.gender.actual = JSON.stringify( actual.gender, null, 4 );
+            this.gender.expected = JSON.stringify( expected.gender, null, 4 );
             [this.gender.state,this.gender.difference] = DiffValue.doDiff( Diff.diffChars( this.gender.actual, this.gender.expected ));  
 
-            this.birthDate.actual = JSON.stringify( actualPatient.birthDate, null, 4 );
-            this.birthDate.expected = JSON.stringify( expectedPatient.birthDate, null, 4 );
+            this.birthDate.actual = JSON.stringify( actual.birthDate, null, 4 );
+            this.birthDate.expected = JSON.stringify( expected.birthDate, null, 4 );
             [this.birthDate.state,this.birthDate.difference] = DiffValue.doDiff( Diff.diffChars( this.birthDate.actual, this.birthDate.expected ));  
 
-            this.address.actual = JSON.stringify( actualPatient.address, null, 4 );
-            this.address.expected = JSON.stringify( expectedPatient.address, null, 4 );
+            this.address.actual = JSON.stringify( actual.address, null, 4 );
+            this.address.expected = JSON.stringify( expected.address, null, 4 );
             [this.address.state,this.address.difference] = DiffValue.doDiff( Diff.diffChars( this.address.actual, this.address.expected ));  
         } catch(e) {
             console.log(e);
