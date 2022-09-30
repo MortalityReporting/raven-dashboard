@@ -49,6 +49,7 @@ import {
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatSelectModule} from '@angular/material/select';
 import {MatMenuModule} from '@angular/material/menu';
+import {ConformationDialogComponent} from "./components/widgets/conformation-dialog/conformation-dialog.component";
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import {MatMenuModule} from '@angular/material/menu';
     CaseSummaryContentFieldComponent,
     ImportCaseComponent,
     ImportCaseFhirRecordComponent,
-    ImportCaseConnectathonTemplateComponent
+    ImportCaseConnectathonTemplateComponent,
+    ConformationDialogComponent
   ],
   imports: [
     BrowserModule,
