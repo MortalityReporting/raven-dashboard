@@ -18,7 +18,7 @@ const routes: Routes = [
   },
   {
     path: 'cases/comparison',
-    component: DecedentRecordsGridComponent
+    component: CaseComparisonComponent
   },
   {
     path: 'fhir-validator',
@@ -27,10 +27,6 @@ const routes: Routes = [
   {
     path: 'cases/summary/:id',
     component: CaseContainerComponent
-  },
-  {
-    path: 'cases/comparison/:id',
-    component: CaseComparisonComponent
   },
   {
     path: 'import-case',

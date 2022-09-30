@@ -32,14 +32,14 @@ export class CaseComparisonComponent implements OnInit {
 
   ngOnInit(): void {
 
-    let subjectId = this.route.snapshot.params['id'];
+    // let subjectId = this.route.snapshot.params['id'];
 
-    this.decedentService.getComposition(subjectId).subscribe(
-      {next: (composition: any) => {
-          this.documentBundle$ = this.documentHandler.getDocumentBundle(composition.entry[0].resource.id);
-          this.documentBundle$.subscribe();
-        }}
-    );
+    // this.decedentService.getComposition(subjectId).subscribe(
+    //   {next: (composition: any) => {
+    //       this.documentBundle$ = this.documentHandler.getDocumentBundle(composition.entry[0].resource.id);
+    //       this.documentBundle$.subscribe();
+    //     }}
+    // );
 
     this.caseHeader$ = this.documentHandler.caseHeader$;
     this.caseSummary$ = this.documentHandler.caseSummary$;

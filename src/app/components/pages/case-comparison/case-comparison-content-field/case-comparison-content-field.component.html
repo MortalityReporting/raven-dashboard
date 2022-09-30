@@ -1,4 +1,4 @@
-<mat-expansion-panel class="summary-section" id="name" [expanded]="true">
+<mat-expansion-panel class="summary-section" id="name" [expanded]="false">
   <mat-expansion-panel-header>
     <mat-panel-title>{{title}}</mat-panel-title>
   </mat-expansion-panel-header>
@@ -29,15 +29,12 @@
       <br>
       <div class="grid-row">
         <div class="grid-col-1">
-          <!-- <div><textarea class="text-area" rows={{rows}} readonly>{{actual}}</textarea></div> -->
           <div class="border"><pre>{{actual}}</pre></div>
         </div>
         <div class="grid-col-1">
-          <!-- <div><textarea class="text-area" rows={{rows}} readonly>{{expected}}</textarea></div> -->
           <div class="border"><pre>{{expected}}</pre></div>
         </div>
         <div class="grid-col-1">
-          <!-- <div class="summary-section-body" [innerHTML]="difference"></div> -->
           <div class="border" [innerHTML]="difference"></div>
         </div>
       </div>

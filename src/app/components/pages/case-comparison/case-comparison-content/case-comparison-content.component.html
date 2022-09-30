@@ -13,7 +13,7 @@
     
     <div class="grid-row">
       <div class="grid-col-1">
-        <textarea placeholder="Paste your Document Bundle here."></textarea>
+        <textarea class="textarea" placeholder="Paste your Document Bundle here." (input)="onValueChange($event)"></textarea>
       </div>
       <div class="grid-col-1">
         <mat-form-field>
@@ -42,7 +42,15 @@
         <mat-panel-title>Demographics</mat-panel-title>
       </mat-expansion-panel-header>
       
-      <app-case-comparison-content-field title="Name" rows="10" resource="US Core Patient" fhirPath="Patient.name" actual={{patientActual}} expected={{patientExpected}} difference={{patientDifference}}></app-case-comparison-content-field><br>
+      <app-case-comparison-content-field title="ResourceType" resource="US Core Patient" fhirPath="Patient.resourceType" actual={{patient.resourceType.actual}} expected={{patient.resourceType.expected}} difference={{patient.resourceType.difference}}></app-case-comparison-content-field><br>
+      <app-case-comparison-content-field title="Id" resource="US Core Patient" fhirPath="Patient.id" actual={{patient.id.actual}} expected={{patient.id.expected}} difference={{patient.id.difference}}></app-case-comparison-content-field><br>
+      <app-case-comparison-content-field title="Text" resource="US Core Patient" fhirPath="Patient.text" actual={{patient.text.actual}} expected={{patient.text.expected}} difference={{patient.text.difference}}></app-case-comparison-content-field><br>
+      <app-case-comparison-content-field title="Extension" resource="US Core Patient" fhirPath="Patient.extension" actual={{patient.extension.actual}} expected={{patient.extension.expected}} difference={{patient.extension.difference}}></app-case-comparison-content-field><br>
+      <app-case-comparison-content-field title="Identifier" resource="US Core Patient" fhirPath="Patient.identifier" actual={{patient.identifier.actual}} expected={{patient.identifier.expected}} difference={{patient.identifier.difference}}></app-case-comparison-content-field><br>
+      <app-case-comparison-content-field title="Name" resource="US Core Patient" fhirPath="Patient.name" actual={{patient.name.actual}} expected={{patient.name.expected}} difference={{patient.name.difference}}></app-case-comparison-content-field><br>
+      <app-case-comparison-content-field title="Gender" resource="US Core Patient" fhirPath="Patient.gender" actual={{patient.gender.actual}} expected={{patient.gender.expected}} difference={{patient.gender.difference}}></app-case-comparison-content-field><br>
+      <app-case-comparison-content-field title="BirthDate" resource="US Core Patient" fhirPath="Patient.birthDate" actual={{patient.birthDate.actual}} expected={{patient.birthDate.expected}} difference={{patient.birthDate.difference}}></app-case-comparison-content-field><br>
+      <app-case-comparison-content-field title="Address" resource="US Core Patient" fhirPath="Patient.address" actual={{patient.address.actual}} expected={{patient.address.expected}} difference={{patient.address.difference}}></app-case-comparison-content-field><br>
       
     </mat-expansion-panel>
 
@@ -85,7 +93,7 @@
       <mat-expansion-panel-header (click)="onItemClick( 'narratives' )">
         <mat-panel-title>Narratives</mat-panel-title>
       </mat-expansion-panel-header>
-      <div class="summary-section-body" [innerHTML]="(caseSummary$ | async)?.narratives"></div>
+      <div class="summary-section-body">Not Yet Implemented</div>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="summary-section" id="deathCertificate" [expanded]="deathCertificateExpanded">
