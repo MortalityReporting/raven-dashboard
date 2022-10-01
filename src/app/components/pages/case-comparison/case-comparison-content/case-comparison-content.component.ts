@@ -1,16 +1,18 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatAccordion} from "@angular/material/expansion";
-import {DocumentHandlerService} from "../../../../service/document-handler.service";
-import {Comp_MDItoEDRS, Obs_CauseOfDeathPart1, Obs_CauseOfDeathPart2, Obs_DeathDate, Obs_DecedentPregnancy, Obs_MannerOfDeath, Obs_TobaccoUseContributedToDeath, USCoreLocation, USCorePatient, USCorePractitioner} from "../../../../model/mdi/profile.list"
-import {ExpectedDocument} from './expected-document';
-import {USCorePatientDiff} from './models/us-core-patient.diff';
-import {CompositionMdiToEdrsDiff} from './models/composition-mdi-to-edrs.diff';
-import {USCoreLocationDiff} from './models/us-core-location.diff';
-import {ObservationTobaccoUseDiff} from './models/observation-tobacco-use.diff';
-import {ObservationDecedentPregnancyDiff} from './models/observation_decedent-pregnancy.diff';
-import {ObservationDeathDateDiff} from './models/observation-death-date.diff';
-import {ObservationCauseOfDeathPart2Diff} from './models/observation-cause-of-death-part-2.diff';
-import {ObservationMannerOfDeathDiff} from './models/observation-manner-of-death.diff';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatAccordion } from "@angular/material/expansion";
+import { DocumentHandlerService } from "../../../../service/document-handler.service";
+import { Comp_MDItoEDRS, Obs_CauseOfDeathPart1, Obs_CauseOfDeathPart2, Obs_DeathDate, Obs_DecedentPregnancy, Obs_MannerOfDeath, Obs_TobaccoUseContributedToDeath, USCoreLocation, USCorePatient, USCorePractitioner } from "../../../../model/mdi/profile.list"
+import { ExpectedDocument } from './expected-document';
+import { USCorePatientDiff } from './models/us-core-patient.diff';
+import { CompositionMdiToEdrsDiff } from './models/composition-mdi-to-edrs.diff';
+import { USCoreLocationDiff } from './models/us-core-location.diff';
+import { ObservationTobaccoUseDiff } from './models/observation-tobacco-use.diff';
+import { ObservationDecedentPregnancyDiff } from './models/observation_decedent-pregnancy.diff';
+import { ObservationDeathDateDiff } from './models/observation-death-date.diff';
+import { ObservationMannerOfDeathDiff } from './models/observation-manner-of-death.diff';
+import { USCorePractitionerDiff } from './models/us-core-practitioner.diff';
+import { ObservationCauseOfDeathPart1Diff } from './models/observation-cause-of-death-part-1.diff';
+import { ObservationCauseOfDeathPart2Diff } from './models/observation-cause-of-death-part-2.diff';
 
 @Component({
   selector: 'app-case-comparison-content',
@@ -38,8 +40,10 @@ export class CaseComparisonContentComponent implements OnInit {
   tobaccoUse: ObservationTobaccoUseDiff = new ObservationTobaccoUseDiff();
   pregnancy: ObservationDecedentPregnancyDiff = new ObservationDecedentPregnancyDiff();
   deathDate: ObservationDeathDateDiff = new ObservationDeathDateDiff();
+  causeOfDeath1List: ObservationCauseOfDeathPart1Diff[] = [];
   causeOfDeath2: ObservationCauseOfDeathPart2Diff = new ObservationCauseOfDeathPart2Diff();
   mannerOfDeath: ObservationMannerOfDeathDiff = new ObservationMannerOfDeathDiff();
+  practitioner: USCorePractitionerDiff = new USCorePractitionerDiff();
 
   expectedDocument = new ExpectedDocument().value;
 
@@ -110,8 +114,19 @@ export class CaseComparisonContentComponent implements OnInit {
         let expectedDeathDate = this.documentHandler.findResourceByProfileName( this.expectedDocument, Obs_DeathDate );
         this.deathDate.doDiff( actualDeathDate, expectedDeathDate );
 
-        let actualCauseOfDeath1 = this.documentHandler.findResourceByProfileName( actualDocument, Obs_CauseOfDeathPart1 );
-        console.log( actualCauseOfDeath1 );
+        this.causeOfDeath1List = [];
+        let actualCauseOfDeath1List = this.documentHandler.findResourcesByProfileName( actualDocument, Obs_CauseOfDeathPart1 );
+        let expectedCauseOfDeath1List = this.documentHandler.findResourcesByProfileName( this.expectedDocument, Obs_CauseOfDeathPart1 );
+
+        for (let i = 0; i < actualCauseOfDeath1List.length; i++) {
+          let causeOfDeath1 = new ObservationCauseOfDeathPart1Diff();
+          let actualCauseOfDeath1 = actualCauseOfDeath1List[i];
+          let expectedCauseOfDeath1 = expectedCauseOfDeath1List[i];
+          causeOfDeath1.doDiff( actualCauseOfDeath1, expectedCauseOfDeath1 );
+          this.causeOfDeath1List.push( causeOfDeath1 );
+        }
+
+        console.log( this.causeOfDeath1List );
 
         this.causeOfDeath2 = new ObservationCauseOfDeathPart2Diff();
         let actualCauseOfDeath2 = this.documentHandler.findResourceByProfileName( actualDocument, Obs_CauseOfDeathPart2 );
@@ -128,8 +143,10 @@ export class CaseComparisonContentComponent implements OnInit {
         let expectedPatient = this.documentHandler.findResourceByProfileName( this.expectedDocument, USCorePatient );  
         this.patient.doDiff( actualPatient, expectedPatient );        
 
-        let actuaProvider = this.documentHandler.findResourceByProfileName( actualDocument, USCorePractitioner );
-        console.log( actuaProvider );
+        this.practitioner = new USCorePractitionerDiff();
+        let actualPractitioner = this.documentHandler.findResourceByProfileName( actualDocument, USCorePractitioner );
+        let expectedPractitioner = this.documentHandler.findResourceByProfileName( this.expectedDocument, USCorePractitioner );
+        this.practitioner.doDiff( actualPractitioner, expectedPractitioner );        
 
       } catch(e) {
         console.log(e);
