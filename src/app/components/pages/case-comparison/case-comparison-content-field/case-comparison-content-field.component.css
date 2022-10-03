@@ -44,22 +44,22 @@
 
 .valid {
     width: 100%;
-    background:aquamarine;
+    background:green;
 }
 
 .invalid {
     width: 100%;
-    background:salmon;
+    background:red;
 }
 
 .valid input {
     width: 100%;
-    background:aquamarine;
+    background:green;
 }
 
 .invalid input {
     width: 100%;
-    background:salmon;
+    background:red;
 }
 
 .text-area {
@@ -71,5 +71,5 @@
 }
 
 .header {
-    background: aquamarine;
+    background: green;
 }

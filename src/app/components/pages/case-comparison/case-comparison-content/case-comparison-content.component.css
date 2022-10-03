@@ -68,3 +68,11 @@ button {
   /* will prevent resizing horizontally */
   resize: vertical;
 }
+
+.valid {
+  color:green;
+}
+
+.invalid {
+  color:red;
+}
