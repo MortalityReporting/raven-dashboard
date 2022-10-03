@@ -131,6 +131,22 @@
       <app-case-comparison-content-field state={{deathDate.valueDateTime.state}} title="ValueDateTime" resource="Observation Death Date" fhirPath="valueDateTime" actual={{deathDate.valueDateTime.actual}} expected={{deathDate.valueDateTime.expected}} difference={{deathDate.valueDateTime.difference}}></app-case-comparison-content-field>
     </mat-expansion-panel>
 
+    <div *ngFor="let causeOfDeath1 of causeOfDeath1List">
+      <mat-expansion-panel class="summary-section" id="narratives" [expanded]="narrativesExpanded">
+        <mat-expansion-panel-header (click)="onItemClick( 'narratives' )">
+          <mat-panel-title>Observation Cause of Death Part 1</mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-case-comparison-content-field state={{causeOfDeath1.code.state}} title="Code" resource="Observation Cause of Death Part 1" fhirPath="code" actual={{causeOfDeath1.code.actual}} expected={{causeOfDeath1.code.expected}} difference={{causeOfDeath1.code.difference}}></app-case-comparison-content-field>
+        <app-case-comparison-content-field state={{causeOfDeath1.component.state}} title="Component" resource="Observation Cause of Death Part 1" fhirPath="component" actual={{causeOfDeath1.component.actual}} expected={{causeOfDeath1.component.expected}} difference={{causeOfDeath1.component.difference}}></app-case-comparison-content-field>
+        <app-case-comparison-content-field state={{causeOfDeath1.id.state}} title="Id" resource="Observation Cause of Death Part 1" fhirPath="id" actual={{causeOfDeath1.id.actual}} expected={{causeOfDeath1.id.expected}} difference={{causeOfDeath1.id.difference}}></app-case-comparison-content-field>
+        <app-case-comparison-content-field state={{causeOfDeath1.meta.state}} title="Meta" resource="Observation Cause of Death Part 1" fhirPath="meta" actual={{causeOfDeath1.meta.actual}} expected={{causeOfDeath1.meta.expected}} difference={{causeOfDeath1.meta.difference}}></app-case-comparison-content-field>
+        <app-case-comparison-content-field state={{causeOfDeath1.performer.state}} title="Performer" resource="Observation Cause of Death Part 1" fhirPath="performer" actual={{causeOfDeath1.performer.actual}} expected={{causeOfDeath1.performer.expected}} difference={{causeOfDeath1.performer.difference}}></app-case-comparison-content-field>
+        <app-case-comparison-content-field state={{causeOfDeath1.resourceType.state}} title="ResourceType" resource="Observation Cause of Death Part 1" fhirPath="resourceType" actual={{causeOfDeath1.resourceType.actual}} expected={{causeOfDeath1.resourceType.expected}} difference={{causeOfDeath1.resourceType.difference}}></app-case-comparison-content-field>
+        <app-case-comparison-content-field state={{causeOfDeath1.subject.state}} title="Subject" resource="Observation Cause of Death Part 1" fhirPath="subject" actual={{causeOfDeath1.subject.actual}} expected={{causeOfDeath1.subject.expected}} difference={{causeOfDeath1.subject.difference}}></app-case-comparison-content-field>
+        <app-case-comparison-content-field state={{causeOfDeath1.valueCodeableConcept.state}} title="ValueCodeableConcept" resource="Observation Cause of Death Part 1" fhirPath="valueCodeableConcept" actual={{causeOfDeath1.valueCodeableConcept.actual}} expected={{causeOfDeath1.valueCodeableConcept.expected}} difference={{causeOfDeath2.valueCodeableConcept.difference}}></app-case-comparison-content-field>
+        </mat-expansion-panel>  
+    </div>
+
     <mat-expansion-panel class="summary-section" id="examAndAutopsy" [expanded]="examNotesExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'examNotes' )">
         <!-- <mat-panel-title>Exam and Autopsy Notes</mat-panel-title> -->
@@ -159,5 +175,6 @@
       <app-case-comparison-content-field state={{mannerOfDeath.subject.state}} title="Subject" resource="Observation Manner of Death" fhirPath="subject" actual={{mannerOfDeath.subject.actual}} expected={{mannerOfDeath.subject.expected}} difference={{mannerOfDeath.subject.difference}}></app-case-comparison-content-field>
       <app-case-comparison-content-field state={{mannerOfDeath.valueCodeableConcept.state}} title="ValueCodeableConcept" resource="Observation Manner of Death" fhirPath="valueCodeableConcept" actual={{mannerOfDeath.valueCodeableConcept.actual}} expected={{mannerOfDeath.valueCodeableConcept.expected}} difference={{mannerOfDeath.valueCodeableConcept.difference}}></app-case-comparison-content-field>
     </mat-expansion-panel>
+
   </mat-accordion>
 </div>
