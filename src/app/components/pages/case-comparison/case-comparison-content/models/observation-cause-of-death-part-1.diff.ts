@@ -1,19 +1,19 @@
 import * as Diff from 'diff';
-import {DiffValue} from '../diff-value';
+import {DiffType} from '../diff-type';
 import {ObservationDiff} from './observation.diff';
 
 export class ObservationCauseOfDeathPart1Diff extends ObservationDiff { 
-    component: DiffValue;
-    performer: DiffValue;    
-    valueCodeableConcept: DiffValue;
+    component: DiffType;
+    performer: DiffType;    
+    valueCodeableConcept: DiffType;
     
     constructor()
     {
         super();
 
-        this.component = new DiffValue();
-        this.performer = new DiffValue();
-        this.valueCodeableConcept = new DiffValue();
+        this.component = new DiffType();
+        this.performer = new DiffType();
+        this.valueCodeableConcept = new DiffType();
     }
 
     override doDiff( actual: any, expected: any )
@@ -23,15 +23,15 @@ export class ObservationCauseOfDeathPart1Diff extends ObservationDiff {
         try {      
             this.component.actual = JSON.stringify( actual.component, null, 4 );
             this.component.expected = JSON.stringify( expected.component, null, 4 );
-            [this.component.state,this.component.difference] = DiffValue.doDiff( Diff.diffChars( this.component.expected, this.component.actual ));  
+            [this.component.state,this.component.difference] = DiffType.doDiff( Diff.diffChars( this.component.expected, this.component.actual ));  
 
             this.performer.actual = JSON.stringify( actual.performer, null, 4 );
             this.performer.expected = JSON.stringify( expected.performer, null, 4 );
-            [this.performer.state,this.performer.difference] = DiffValue.doDiff( Diff.diffChars( this.performer.expected, this.performer.actual ));  
+            [this.performer.state,this.performer.difference] = DiffType.doDiff( Diff.diffChars( this.performer.expected, this.performer.actual ));  
 
             this.valueCodeableConcept.actual = JSON.stringify( actual.valueCodeableConcept, null, 4 );
             this.valueCodeableConcept.expected = JSON.stringify( expected.valueCodeableConcept, null, 4 );
-            [this.valueCodeableConcept.state,this.valueCodeableConcept.difference] = DiffValue.doDiff( Diff.diffChars( this.valueCodeableConcept.expected, this.valueCodeableConcept.actual ));  
+            [this.valueCodeableConcept.state,this.valueCodeableConcept.difference] = DiffType.doDiff( Diff.diffChars( this.valueCodeableConcept.expected, this.valueCodeableConcept.actual ));  
 
             let state =
                 this.state === 'valid' &&

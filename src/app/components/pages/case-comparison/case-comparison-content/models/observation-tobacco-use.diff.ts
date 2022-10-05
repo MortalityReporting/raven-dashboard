@@ -1,17 +1,17 @@
 import * as Diff from 'diff';
-import {DiffValue} from '../diff-value';
+import {DiffType} from '../diff-type';
 import {ObservationDiff} from './observation.diff';
 
 export class ObservationTobaccoUseDiff extends ObservationDiff { 
-    status: DiffValue;
-    valueCodeableConcept: DiffValue;
+    status: DiffType;
+    valueCodeableConcept: DiffType;
     
     constructor()
     {
         super();
 
-        this.status = new DiffValue();
-        this.valueCodeableConcept = new DiffValue();
+        this.status = new DiffType();
+        this.valueCodeableConcept = new DiffType();
     }
 
     override doDiff( actual: any, expected: any )
@@ -21,11 +21,11 @@ export class ObservationTobaccoUseDiff extends ObservationDiff {
         try {      
             this.status.actual = JSON.stringify( actual.status, null, 4 );
             this.status.expected = JSON.stringify( expected.status, null, 4 );
-            [this.status.state,this.status.difference] = DiffValue.doDiff( Diff.diffChars( this.status.expected, this.status.actual ));  
+            [this.status.state,this.status.difference] = DiffType.doDiff( Diff.diffChars( this.status.expected, this.status.actual ));  
 
             this.valueCodeableConcept.actual = JSON.stringify( actual.valueCodeableConcept, null, 4 );
             this.valueCodeableConcept.expected = JSON.stringify( expected.valueCodeableConcept, null, 4 );
-            [this.valueCodeableConcept.state,this.valueCodeableConcept.difference] = DiffValue.doDiff( Diff.diffChars( this.valueCodeableConcept.expected, this.valueCodeableConcept.actual ));  
+            [this.valueCodeableConcept.state,this.valueCodeableConcept.difference] = DiffType.doDiff( Diff.diffChars( this.valueCodeableConcept.expected, this.valueCodeableConcept.actual ));  
 
             let state = 
                 this.state === 'valid' &&

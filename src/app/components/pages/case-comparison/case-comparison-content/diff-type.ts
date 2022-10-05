@@ -1,4 +1,4 @@
-export class DiffValue
+export class DiffType
 {
     state: string;
     actual: string;
