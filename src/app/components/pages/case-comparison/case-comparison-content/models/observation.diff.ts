@@ -8,11 +8,11 @@ export class ObservationDiff {
     resourceType: DiffType;
     subject: DiffType;
 
-    state: string;
+    style: string;
 
     constructor()
     {
-        this.state = 'invalid';
+        this.style = 'invalid';
         this.code = new DiffType();
         this.id = new DiffType();
         this.meta = new DiffType();
@@ -25,32 +25,32 @@ export class ObservationDiff {
         try {      
             this.code.actual = JSON.stringify( actual.code, null, 4 );
             this.code.expected = JSON.stringify( expected.code, null, 4 );
-            [this.code.state,this.code.difference] = DiffType.doDiff( Diff.diffChars( this.code.expected, this.code.actual ));  
+            [this.code.style,this.code.difference] = DiffType.doDiff( Diff.diffChars( this.code.expected, this.code.actual ));  
 
             this.id.actual = JSON.stringify( actual.id, null, 4 );
             this.id.expected = JSON.stringify( expected.id, null, 4 );
-            [this.id.state,this.id.difference] = DiffType.doDiff( Diff.diffChars( this.id.expected, this.id.actual ));  
+            [this.id.style,this.id.difference] = DiffType.doDiff( Diff.diffChars( this.id.expected, this.id.actual ));  
 
             this.meta.actual = JSON.stringify( actual.meta, null, 4 );
             this.meta.expected = JSON.stringify( expected.meta, null, 4 );
-            [this.meta.state,this.meta.difference] = DiffType.doDiff( Diff.diffChars( this.meta.expected, this.meta.actual ));  
+            [this.meta.style,this.meta.difference] = DiffType.doDiff( Diff.diffChars( this.meta.expected, this.meta.actual ));  
 
             this.resourceType.actual = JSON.stringify( actual.resourceType, null, 4 );
             this.resourceType.expected = JSON.stringify( expected.resourceType, null, 4 );
-            [this.resourceType.state,this.resourceType.difference] = DiffType.doDiff( Diff.diffChars( this.resourceType.expected, this.resourceType.actual ));  
+            [this.resourceType.style,this.resourceType.difference] = DiffType.doDiff( Diff.diffChars( this.resourceType.expected, this.resourceType.actual ));  
 
             this.subject.actual = JSON.stringify( actual.subject, null, 4 );
             this.subject.expected = JSON.stringify( expected.subject, null, 4 );
-            [this.subject.state,this.subject.difference] = DiffType.doDiff( Diff.diffChars( this.subject.expected, this.subject.actual ));  
+            [this.subject.style,this.subject.difference] = DiffType.doDiff( Diff.diffChars( this.subject.expected, this.subject.actual ));  
 
-            let state = 
-                this.code.state === 'valid' &&
-                this.id.state === 'valid' &&
-                this.meta.state === 'valid' &&
-                this.resourceType.state === 'valid' &&
-                this.subject.state === 'valid';
+            let style = 
+                this.code.style === 'valid' &&
+                this.id.style === 'valid' &&
+                this.meta.style === 'valid' &&
+                this.resourceType.style === 'valid' &&
+                this.subject.style === 'valid';
 
-            this.state = state ? 'valid' : 'invalid';
+            this.style = style ? 'valid' : 'invalid';
         } catch(e) {
             console.log(e);
         }

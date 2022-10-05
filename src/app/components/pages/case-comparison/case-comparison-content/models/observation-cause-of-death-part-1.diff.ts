@@ -23,23 +23,23 @@ export class ObservationCauseOfDeathPart1Diff extends ObservationDiff {
         try {      
             this.component.actual = JSON.stringify( actual.component, null, 4 );
             this.component.expected = JSON.stringify( expected.component, null, 4 );
-            [this.component.state,this.component.difference] = DiffType.doDiff( Diff.diffChars( this.component.expected, this.component.actual ));  
+            [this.component.style,this.component.difference] = DiffType.doDiff( Diff.diffChars( this.component.expected, this.component.actual ));  
 
             this.performer.actual = JSON.stringify( actual.performer, null, 4 );
             this.performer.expected = JSON.stringify( expected.performer, null, 4 );
-            [this.performer.state,this.performer.difference] = DiffType.doDiff( Diff.diffChars( this.performer.expected, this.performer.actual ));  
+            [this.performer.style,this.performer.difference] = DiffType.doDiff( Diff.diffChars( this.performer.expected, this.performer.actual ));  
 
             this.valueCodeableConcept.actual = JSON.stringify( actual.valueCodeableConcept, null, 4 );
             this.valueCodeableConcept.expected = JSON.stringify( expected.valueCodeableConcept, null, 4 );
-            [this.valueCodeableConcept.state,this.valueCodeableConcept.difference] = DiffType.doDiff( Diff.diffChars( this.valueCodeableConcept.expected, this.valueCodeableConcept.actual ));  
+            [this.valueCodeableConcept.style,this.valueCodeableConcept.difference] = DiffType.doDiff( Diff.diffChars( this.valueCodeableConcept.expected, this.valueCodeableConcept.actual ));  
 
-            let state =
-                this.state === 'valid' &&
-                this.component.state === 'valid' &&
-                this.performer.state === 'valid' &&
-                this.valueCodeableConcept.state === 'valid'
+            let style =
+                this.style === 'valid' &&
+                this.component.style === 'valid' &&
+                this.performer.style === 'valid' &&
+                this.valueCodeableConcept.style === 'valid'
         
-            this.state = state ? 'valid' : 'invalid';
+            this.style = style ? 'valid' : 'invalid';
         } catch(e) {
             console.log(e);
         }

@@ -7,11 +7,11 @@ export class USCoreLocationDiff {
     meta: DiffType;
     resourceType: DiffType;
 
-    state: string = 'invalid';
+    style: string = 'invalid';
 
     constructor()
     {
-        this.state = 'invalid';
+        this.style = 'invalid';
         this.address = new DiffType();
         this.id = new DiffType();
         this.meta = new DiffType();
@@ -23,27 +23,27 @@ export class USCoreLocationDiff {
         try {      
             this.address.actual = JSON.stringify( actual.address, null, 4 );
             this.address.expected = JSON.stringify( expected.address, null, 4 );
-            [this.address.state,this.address.difference] = DiffType.doDiff( Diff.diffChars( this.address.expected, this.address.actual ));  
+            [this.address.style,this.address.difference] = DiffType.doDiff( Diff.diffChars( this.address.expected, this.address.actual ));  
 
             this.id.actual = JSON.stringify( actual.id, null, 4 );
             this.id.expected = JSON.stringify( expected.id, null, 4 );
-            [this.id.state,this.id.difference] = DiffType.doDiff( Diff.diffChars( this.id.expected, this.id.actual ));  
+            [this.id.style,this.id.difference] = DiffType.doDiff( Diff.diffChars( this.id.expected, this.id.actual ));  
 
             this.meta.actual = JSON.stringify( actual.meta, null, 4 );
             this.meta.expected = JSON.stringify( expected.meta, null, 4 );
-            [this.meta.state,this.meta.difference] = DiffType.doDiff( Diff.diffChars( this.meta.expected, this.meta.actual ));  
+            [this.meta.style,this.meta.difference] = DiffType.doDiff( Diff.diffChars( this.meta.expected, this.meta.actual ));  
 
             this.resourceType.actual = JSON.stringify( actual.resourceType, null, 4 );
             this.resourceType.expected = JSON.stringify( expected.resourceType, null, 4 );
-            [this.resourceType.state,this.resourceType.difference] = DiffType.doDiff( Diff.diffChars( this.resourceType.expected, this.resourceType.actual ));  
+            [this.resourceType.style,this.resourceType.difference] = DiffType.doDiff( Diff.diffChars( this.resourceType.expected, this.resourceType.actual ));  
 
-            let state = 
-                this.address.state === 'valid' &&
-                this.id.state === 'valid' &&
-                this.meta.state === 'valid' &&
-                this.resourceType.state === 'valid'
+            let style = 
+                this.address.style === 'valid' &&
+                this.id.style === 'valid' &&
+                this.meta.style === 'valid' &&
+                this.resourceType.style === 'valid'
         
-            this.state = state ? 'valid' : 'invalid';
+            this.style = style ? 'valid' : 'invalid';
 
         } catch(e) {
             console.log(e);
