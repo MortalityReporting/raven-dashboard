@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ImportCaseService} from "../../../../service/import-case.service";
 import {UtilsService} from "../../../../service/utils.service";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 
 //TODO: Remove this code. It is only for testing the table.
@@ -27,7 +28,8 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
   caseNarrative: string = `<div><div class=\"hapiHeaderText\"> Achim-Uwe <b>BERGMANNSBERG </b></div><table class=\"hapiPropertyTable\"><tbody><tr><td>Identifier</td><td>Pat-473</td></tr><tr><td>Address</td><td><span>Luebeck </span></td></tr><tr><td>Date of birth</td><td><span>04 June 1802</span></td></tr></tbody></table></div>`;
 
   constructor(private importCaseService: ImportCaseService,
-              private utilsService: UtilsService) { }
+              private utilsService: UtilsService,
+              private http:HttpClient) { }
 
   ngOnInit(): void {
   }
