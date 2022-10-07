@@ -51,6 +51,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatMenuModule} from '@angular/material/menu';
 import {ConformationDialogComponent} from "./components/widgets/conformation-dialog/conformation-dialog.component";
 import {MatDialogModule} from "@angular/material/dialog";
+import {ClipboardModule} from "@angular/cdk/clipboard";
 
 @NgModule({
   declarations: [
@@ -98,6 +99,7 @@ import {MatDialogModule} from "@angular/material/dialog";
     MatTabsModule,
     MatSelectModule,
     MatMenuModule,
+    ClipboardModule,
     MatDialogModule,
   ],
   providers: [
