@@ -3,8 +3,10 @@ import {ImportCaseService} from "../../../../service/import-case.service";
 import {UtilsService} from "../../../../service/utils.service";
 import {FhirValidatorComponent} from "../../../../fhir-validator/components/fhir-validator/fhir-validator.component";
 import {FhirValidatorService} from "../../../../fhir-validator/service/fhir-validator.service";
-import {combineLatestWith, Observable} from "rxjs";
+import {Observable} from "rxjs";
 import {ValidationResults} from "../../../../fhir-validator/domain/ValidationResoults";
+import {MatDialog} from "@angular/material/dialog";
+import {openConformationDialog} from "../../../widgets/conformation-dialog/conformation-dialog.component";
 
 @Component({
   selector: 'app-import-case-fhir-record',
@@ -26,10 +28,12 @@ export class ImportCaseFhirRecordComponent implements OnInit{
   validationResult$: Observable<ValidationResults>;
   fhirResource: any;
   preconditionError: string = '';
+  invalidResourceFound = false;
 
   constructor(private importCaseService: ImportCaseService,
               private utilsService: UtilsService,
-              private fhirValidatorService: FhirValidatorService) { }
+              private fhirValidatorService: FhirValidatorService,
+              private dialog: MatDialog) { }
 
   onFileSelected(event: any) {
     this.validator.clearUI();
@@ -59,6 +63,13 @@ export class ImportCaseFhirRecordComponent implements OnInit{
 
   }
 
+  importCase(){
+    this.importCaseService.importResource(this.fhirResource).subscribe({
+      next: value => console.log(value),
+      error: err => console.error(err)
+    });
+  }
+
   clearUI() {
     // TODO reset the UI to it's initial state.
     this.errorMessage = '';
@@ -71,32 +82,38 @@ export class ImportCaseFhirRecordComponent implements OnInit{
 
     this.preconditionError = this.getValidationPreconditionErrors(this.fhirResource);
 
-    this.getValidationPreconditionErrors(this.fhirResource);
-    this.validator.validateFhirResource();
-
-    // this.importCaseService.importResource(this.fhirResource).subscribe({
-    //   next: value => console.log(value),
-    //   error: err => console.error(err)
-    // });
-
-    this.validationExecuted$.pipe(
-      combineLatestWith(this.validationResult$)
-    ).subscribe(([executed, validationResults]) => {
-      console.log(validationResults);
-      if(executed && validationResults){
-        //
-        console.log("Valid resource found, submit to backend.")
-      }
-    });
+    const preconditionErrors = this.getValidationPreconditionErrors(this.fhirResource);
+    if(!preconditionErrors){
+      this.validator.validateFhirResource();
+    }
+    this.validationResult$.subscribe({
+      next: value => {
+        console.log(value);
+        if (value.isValid) {
+          this.importCase();
+        } else {
+          console.log(this.invalidResourceFound);
+          this.invalidResourceFound = true;
+        }
+      }});
   }
 
   ngOnInit(): void {
-    this.validationExecuted$ = this.fhirValidatorService.isValidationExecuted();
     this.validationResult$ = this.fhirValidatorService.getValidationResults();
     this.fhirValidatorService.getFhirResource().subscribe({
       next: value => {
         this.preconditionError = '';
         this.fhirResource = value;
+        this.invalidResourceFound = false;
+      }
+    })
+
+    this.fhirValidatorService.isResourcePasted().subscribe({
+      next: value => {
+        if(value){
+          this.file = null;
+          this.invalidResourceFound = false;
+        }
       }
     })
   }
@@ -107,16 +124,46 @@ export class ImportCaseFhirRecordComponent implements OnInit{
       console.error(error);
       return error;
     }
+    else if(!this.fhirValidatorService.isJson(resource)){
+      const error = ("The resource is not a valid json.");
+      console.error(error);
+      console.log(resource);
+      return error;
+    }
     else if(resource.resourceType !== "Bundle"){
       const error = ("Resource type must be Bundle.");
       console.error(error);
       return error;
     }
-    else if(resource.meta.profile[0] !== "http://hl7.org/fhir/us/mdi/StructureDefinition/Bundle-document-mdi-to-edrs"){
-      const error = ("Resource type must be Bundle.");
+    else if(!resource.meta?.profile?.[0] || resource.meta.profile[0] !== "http://hl7.org/fhir/us/mdi/StructureDefinition/Bundle-document-mdi-to-edrs"){
+      const error = ("Invalid MDI.");
       console.error(error);
       return error;
     }
     else return null
+  }
+
+  onSubmitInvalidRecord() {
+    openConformationDialog(
+      this.dialog,
+      {
+        title: "Import Invalid Resource",
+        content: "Invalid records may behave unexpectedly. Do you want to proceed?",
+        primaryActionBtnTitle: "Submit",
+        secondaryActionBtnTitle: "Cancel",
+        width: "25em",
+        height: "15em",
+        isPrimaryButtonLeft: true
+      })
+      .subscribe(
+        action => {
+          if (action == 'primaryAction') {
+            this.importCase();
+          }
+          else if(action == 'secondaryAction'){
+            console.log('primary selected');
+          }
+        }
+      );
   }
 }

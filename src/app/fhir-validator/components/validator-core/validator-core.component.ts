@@ -74,8 +74,6 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-      this.fhirValidatorService.setValidationFinished(false);
-
       //Track the fhir resource injected from parent other components.
       this.fhirValidatorService.getFhirResource().subscribe({
         next: value => this.fhirResource = value
@@ -86,7 +84,7 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
 
   formatFhirResource(){
     if(this.fhirResource){
-      if(this.resourceFormat === 'json' && this.fhirValidatorService.isJsonString(this.fhirResource)){
+      if(this.resourceFormat === 'json' && this.fhirValidatorService.isJson(this.fhirResource)){
         this.fhirResource = this.fhirValidatorService.beautifyJSON(this.fhirResource);
         this.fhirValidatorService.setFhirResource(this.fhirResource);
       }
@@ -117,7 +115,6 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
     this.serverErrorList = [];
     this.serverErrorStatus = '';
     this.serverTimoutDetected = false;
-    this.fhirValidatorService.setValidationFinished(false);
     this.fhirValidatorService.setValidationResults({});
   }
 
@@ -188,7 +185,6 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
       //see if we can find any obvious issues with the resource here
       this.isValidResource = false;
       this.validationFinished = true;
-      this.fhirValidatorService.setValidationFinished(true);
       this.fhirValidatorService.setValidationResults({hasBasicErrors: true, isValid: false})
     }
     else {
@@ -199,11 +195,12 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
 
   onPasteFhirResource(event: ClipboardEvent) {
     this.fileName = '';
+    this.fhirValidatorService.setResourcePasted(true);
     if(!this.fhirResource) {
       this.clearUI();
     }
     let text = event.clipboardData.getData('text');
-    if (this.fhirValidatorService.isJsonString(text)) {
+    if (this.fhirValidatorService.isJson(text)) {
       this.resourceFormat = 'json';
     } else if (this.fhirValidatorService.isXmlString(text)) {
       this.resourceFormat = 'xml';
@@ -307,7 +304,6 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
     this.isLoading = true;
     this.parsedFhirResource = null;
     this.validationFinished = false;
-    this.fhirValidatorService.setValidationFinished(false);
 
     if(this.resourceFormat === "json"){
       fhirResource = JSON.parse(fhirResource);
@@ -321,7 +317,6 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
       .subscribe({
       next: (response) => {
         this.validationFinished = true;
-        this.fhirValidatorService.setValidationFinished(true);
         let issues = response.issues;
         if(issues.length === 1 && issues[0].severity === "Information" && issues[0]?.message.toLowerCase() === "ALL OK".toLowerCase()){
           this.isValidResource = true;
@@ -441,7 +436,13 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
   }
 
   onFhirRecordChanged(fhirResource: any) {
-    this.fhirValidatorService.setFhirResource(JSON.parse(fhirResource));
+    if(this.fhirValidatorService.isJson(fhirResource)){
+      this.fhirValidatorService.setFhirResource(JSON.parse(fhirResource));
+    }
+    else {
+      this.fhirValidatorService.setFhirResource(fhirResource);
+    }
+
   }
 
   private setValidatorResponse(apiResponse: any) {
