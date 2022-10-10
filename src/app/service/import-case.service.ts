@@ -46,6 +46,10 @@ export class ImportCaseService {
     )));
   }
 
+  getMockResponse(): Observable<any> {
+    return this.http.get('../../assets/data/export_to_excel_response.json')
+  }
+
   importResource(fhirResource): Observable<any> {
     return this.http.post( environment.ravenFhirServer, fhirResource).pipe(map((result: any) => (
       result as Object

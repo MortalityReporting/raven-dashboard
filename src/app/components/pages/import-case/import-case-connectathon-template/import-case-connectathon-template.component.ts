@@ -1,17 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ImportCaseService} from "../../../../service/import-case.service";
 import {UtilsService} from "../../../../service/utils.service";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-
-
-//TODO: Remove this code. It is only for testing the table.
-const CASE_DATA = [
-  {id: 1, name: "George Burdell", status: "Complete"},
-  {id: 2, name: "Georgia Burdell", status: "Complete"},
-  {id: 3, name: "John Doe", status: "Error"},
-  {id: 4, name: "Jane Doe", status: "Error"},
-  {id: 5, name: "Richard Smith", status: "Complete"},
-]
+import {HttpClient} from "@angular/common/http";
+import {MatTableDataSource} from "@angular/material/table";
 
 @Component({
   selector: 'app-import-case-connectathon-template',
@@ -21,11 +12,11 @@ const CASE_DATA = [
 export class ImportCaseConnectathonTemplateComponent implements OnInit {
 
   isLoading: boolean = false;
+  selectedCase: any;
   file: File = null;
   MAX_FILE_SIZE = 100000; // Max allowed file size is 100KB
-  displayedColumns: string[] = ['id', 'name', 'status'];
-  dataSource = CASE_DATA;
-  caseNarrative: string = `<div><div class=\"hapiHeaderText\"> Achim-Uwe <b>BERGMANNSBERG </b></div><table class=\"hapiPropertyTable\"><tbody><tr><td>Identifier</td><td>Pat-473</td></tr><tr><td>Address</td><td><span>Luebeck </span></td></tr><tr><td>Date of birth</td><td><span>04 June 1802</span></td></tr></tbody></table></div>`;
+  displayedColumns: string[] = ['name', 'status', 'state'];
+  dataSource = new MatTableDataSource<any>();
 
   constructor(private importCaseService: ImportCaseService,
               private utilsService: UtilsService,
@@ -55,9 +46,25 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
   onSubmit() {
     if(this.file) {
       this.isLoading = true;
-      this.importCaseService.uploadFile(this.file).subscribe({
+      // this.importCaseService.uploadFile(this.file).subscribe({
+      //   next: value => {
+      //     this.isLoading = false
+      //   },
+      //   error: err => {
+      //     console.error(err);
+      //     this.isLoading = false;
+      //     this.utilsService.showErrorMessage("Error uploading file " + this.file?.name);
+      //     this.file = null;
+      //   }
+      // });
+      this.importCaseService.getMockResponse().subscribe({
         next: value => {
-          this.isLoading = false
+          this.isLoading = false;
+          console.log(value);
+          this.dataSource = new MatTableDataSource(value);
+          if(value?.length > 0){
+            this.selectedCase = value[0];
+          }
         },
         error: err => {
           console.error(err);
