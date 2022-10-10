@@ -29,7 +29,8 @@ export class MappingsComponent implements OnInit, OnChanges {
         FHIRResource: value.fields[key].FHIRResource,
       }})
         .sort((a,b) => (a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1))
-        .sort((a,b) => (a.status.toLowerCase() > b.status.toLowerCase() ? -1 : 1));
+        .sort((a,b) => (a.status.toLowerCase() > b.status.toLowerCase() ? -1 : 1))
+        .filter(value => value.status !== 'success');
       this.dataSource.data = this.mappedData;
     }
   }
