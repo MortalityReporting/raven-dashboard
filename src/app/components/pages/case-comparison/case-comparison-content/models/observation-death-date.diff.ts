@@ -7,30 +7,32 @@ export class ObservationDeathDateDiff extends ObservationDiff {
     status: DiffType;
     valueDateTime: DiffType;
     
-    constructor()
+    constructor( actual: any, expected: any )
     {
-        super();
+        super( actual, expected );
 
         this.status = new DiffType();
         this.effectiveDateTime = new DiffType();
         this.valueDateTime = new DiffType();
+
+        this.doDiff();
     }
 
-    override doDiff( actual: any, expected: any )
+    override doDiff()
     {    
-        super.doDiff( actual, expected );
+        super.doDiff();
 
         try {  
-            this.status.actual = JSON.stringify( actual.status, null, 4 );
-            this.status.expected = JSON.stringify( expected.status, null, 4 );
+            this.status.actual = JSON.stringify( this.actual.status, null, 4 );
+            this.status.expected = JSON.stringify( this.expected.status, null, 4 );
             [this.status.style,this.status.difference] = DiffType.doDiff( Diff.diffChars( this.status.expected, this.status.actual ));  
 
-            this.effectiveDateTime.actual = JSON.stringify( actual.effectiveDateTime, null, 4 );
-            this.effectiveDateTime.expected = JSON.stringify( expected.effectiveDateTime, null, 4 );
+            this.effectiveDateTime.actual = JSON.stringify( this.actual.effectiveDateTime, null, 4 );
+            this.effectiveDateTime.expected = JSON.stringify( this.expected.effectiveDateTime, null, 4 );
             [this.effectiveDateTime.style,this.effectiveDateTime.difference] = DiffType.doDiff( Diff.diffChars( this.effectiveDateTime.expected, this.effectiveDateTime.actual ));  
 
-            this.valueDateTime.actual = JSON.stringify( actual.valueDateTime, null, 4 );
-            this.valueDateTime.expected = JSON.stringify( expected.valueDateTime, null, 4 );
+            this.valueDateTime.actual = JSON.stringify( this.actual.valueDateTime, null, 4 );
+            this.valueDateTime.expected = JSON.stringify( this.expected.valueDateTime, null, 4 );
             [this.valueDateTime.style,this.valueDateTime.difference] = DiffType.doDiff( Diff.diffChars( this.valueDateTime.expected, this.valueDateTime.actual ));  
 
             let style =

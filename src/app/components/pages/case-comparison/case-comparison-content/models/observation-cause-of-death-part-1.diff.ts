@@ -7,30 +7,32 @@ export class ObservationCauseOfDeathPart1Diff extends ObservationDiff {
     performer: DiffType;    
     valueCodeableConcept: DiffType;
     
-    constructor()
+    constructor( actual: any, expected: any )
     {
-        super();
+        super( actual, expected );
 
         this.component = new DiffType();
         this.performer = new DiffType();
         this.valueCodeableConcept = new DiffType();
+
+        this.doDiff();
     }
 
-    override doDiff( actual: any, expected: any )
+    override doDiff()
     {    
-        super.doDiff( actual, expected );
+        super.doDiff();
 
         try {      
-            this.component.actual = JSON.stringify( actual.component, null, 4 );
-            this.component.expected = JSON.stringify( expected.component, null, 4 );
+            this.component.actual = JSON.stringify( this.actual.component, null, 4 );
+            this.component.expected = JSON.stringify( this.expected.component, null, 4 );
             [this.component.style,this.component.difference] = DiffType.doDiff( Diff.diffChars( this.component.expected, this.component.actual ));  
 
-            this.performer.actual = JSON.stringify( actual.performer, null, 4 );
-            this.performer.expected = JSON.stringify( expected.performer, null, 4 );
+            this.performer.actual = JSON.stringify( this.actual.performer, null, 4 );
+            this.performer.expected = JSON.stringify( this.expected.performer, null, 4 );
             [this.performer.style,this.performer.difference] = DiffType.doDiff( Diff.diffChars( this.performer.expected, this.performer.actual ));  
 
-            this.valueCodeableConcept.actual = JSON.stringify( actual.valueCodeableConcept, null, 4 );
-            this.valueCodeableConcept.expected = JSON.stringify( expected.valueCodeableConcept, null, 4 );
+            this.valueCodeableConcept.actual = JSON.stringify( this.actual.valueCodeableConcept, null, 4 );
+            this.valueCodeableConcept.expected = JSON.stringify( this.expected.valueCodeableConcept, null, 4 );
             [this.valueCodeableConcept.style,this.valueCodeableConcept.difference] = DiffType.doDiff( Diff.diffChars( this.valueCodeableConcept.expected, this.valueCodeableConcept.actual ));  
 
             let style =
