@@ -83,6 +83,10 @@ export class CaseComparisonContentComponent implements OnInit {
     }
   }
 
+  expectedMdiToEdrs: any;
+  expectedPractitioner: any;
+  caseAdminInfoStyle = '';
+
   onValueChange(event: Event) {  
     const value = (event.target as any).value;
 
@@ -92,8 +96,8 @@ export class CaseComparisonContentComponent implements OnInit {
 
         this.mdiToEdrs = new CompositionMdiToEdrsDiff();
         let actualMdiToEdrs = this.documentHandler.findResourceByProfileName( actualDocument, Comp_MDItoEDRS );
-        let expectedMdiToEdrs = this.documentHandler.findResourceByProfileName( this.expectedDocument, Comp_MDItoEDRS );
-        this.mdiToEdrs.doDiff( actualMdiToEdrs, expectedMdiToEdrs );        
+        this.expectedMdiToEdrs = this.documentHandler.findResourceByProfileName( this.expectedDocument, Comp_MDItoEDRS );
+        this.mdiToEdrs.doDiff( actualMdiToEdrs, this.expectedMdiToEdrs );        
 
         this.location = new USCoreLocationDiff();
         let actualLocation = this.documentHandler.findResourceByProfileName( actualDocument, USCoreLocation );
@@ -126,8 +130,6 @@ export class CaseComparisonContentComponent implements OnInit {
           this.causeOfDeath1List.push( causeOfDeath1 );
         }
 
-        console.log( this.causeOfDeath1List );
-
         this.causeOfDeath2 = new ObservationCauseOfDeathPart2Diff();
         let actualCauseOfDeath2 = this.documentHandler.findResourceByProfileName( actualDocument, Obs_CauseOfDeathPart2 );
         let expectedCauseOfDeath2 = this.documentHandler.findResourceByProfileName( this.expectedDocument, Obs_CauseOfDeathPart2 );
@@ -145,8 +147,16 @@ export class CaseComparisonContentComponent implements OnInit {
 
         this.practitioner = new USCorePractitionerDiff();
         let actualPractitioner = this.documentHandler.findResourceByProfileName( actualDocument, USCorePractitioner );
-        let expectedPractitioner = this.documentHandler.findResourceByProfileName( this.expectedDocument, USCorePractitioner );
-        this.practitioner.doDiff( actualPractitioner, expectedPractitioner );        
+        this.expectedPractitioner = this.documentHandler.findResourceByProfileName( this.expectedDocument, USCorePractitioner );
+        this.practitioner.doDiff( actualPractitioner, this.expectedPractitioner );        
+
+        this.caseAdminInfoStyle = ( 
+          this.mdiToEdrs.extension.style === 'valid' &&
+          this.practitioner.name.style === 'valid' &&
+          this.practitioner.identifier.style === 'valid' &&
+          this.practitioner.telecom.style === 'valid' &&
+          this.practitioner.address.style === 'valid'
+        ) ? 'valid' : 'invalid';
 
       } catch(e) {
         console.log(e);

@@ -4,6 +4,7 @@ import {DiffType} from '../diff-type';
 export class USCorePractitionerDiff {    
     address: DiffType;
     id: DiffType;
+    identifier: DiffType;
     meta: DiffType;
     name: DiffType;
     resourceType: DiffType;
@@ -16,6 +17,7 @@ export class USCorePractitionerDiff {
         this.style = 'invalid';
         this.address = new DiffType();
         this.id = new DiffType();
+        this.identifier = new DiffType();
         this.meta = new DiffType();
         this.name = new DiffType();
         this.resourceType = new DiffType();
@@ -32,6 +34,10 @@ export class USCorePractitionerDiff {
             this.id.actual = JSON.stringify( actual.id, null, 4 );
             this.id.expected = JSON.stringify( expected.id, null, 4 );
             [this.id.style,this.id.difference] = DiffType.doDiff( Diff.diffChars( this.id.expected, this.id.actual ));  
+
+            this.identifier.actual = JSON.stringify( actual.identifier, null, 4 );
+            this.identifier.expected = JSON.stringify( expected.identifier, null, 4 );
+            [this.identifier.style,this.identifier.difference] = DiffType.doDiff( Diff.diffChars( this.identifier.expected, this.identifier.actual ));  
 
             this.meta.actual = JSON.stringify( actual.meta, null, 4 );
             this.meta.expected = JSON.stringify( expected.meta, null, 4 );
