@@ -17,6 +17,8 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
   MAX_FILE_SIZE = 100000; // Max allowed file size is 100KB
   displayedColumns: string[] = ['name', 'status', 'state'];
   dataSource = new MatTableDataSource<any>();
+  isExportSuccessful: boolean = false;
+  errorsGenerated: boolean = false;
 
   constructor(private importCaseService: ImportCaseService,
               private utilsService: UtilsService,
@@ -45,19 +47,10 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
 
   onSubmit() {
     if(this.file) {
+      this.isExportSuccessful = false;
+      this.errorsGenerated = false;
       this.isLoading = true;
-      // this.importCaseService.uploadFile(this.file).subscribe({
-      //   next: value => {
-      //     this.isLoading = false
-      //   },
-      //   error: err => {
-      //     console.error(err);
-      //     this.isLoading = false;
-      //     this.utilsService.showErrorMessage("Error uploading file " + this.file?.name);
-      //     this.file = null;
-      //   }
-      // });
-      this.importCaseService.getMockResponse().subscribe({
+      this.importCaseService.uploadFile(this.file).subscribe({
         next: value => {
           this.isLoading = false;
           console.log(value);
@@ -65,12 +58,14 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
           if(value?.length > 0){
             this.selectedCase = value[0];
           }
+          this.isExportSuccessful = true;
         },
         error: err => {
           console.error(err);
           this.isLoading = false;
           this.utilsService.showErrorMessage("Error uploading file " + this.file?.name);
           this.file = null;
+          this.errorsGenerated = true;
         }
       });
     }

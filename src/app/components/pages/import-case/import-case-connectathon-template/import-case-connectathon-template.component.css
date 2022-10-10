@@ -2,16 +2,20 @@
   font-family: monospace; margin-left: 1em;
 }
 
-.row {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 100%;
+.selected-row{
+  background:#f0ebff;
 }
 
-.column {
+.wrapper {
   display: flex;
-  flex-direction: column;
-  flex-basis: 100%;
-  flex: 1;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
 }
+
+.table-container {
+  position: relative;
+  min-height: 100px;
+  max-height: 400px;
+  overflow: auto;
+}
+
