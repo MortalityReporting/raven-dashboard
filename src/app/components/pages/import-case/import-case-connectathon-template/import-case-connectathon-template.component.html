@@ -8,10 +8,14 @@
              (change)="onFileSelected($event)" #fileUpload>
       <button mat-raised-button color="success" class="upload-btn"
               (click)="clearUI(); fileUpload.click();" [disabled]=isLoading>
-        <mat-icon>post_add</mat-icon>
-        Select File
+        <mat-icon>upload_file</mat-icon>
+        Select Excel File
       </button>
       <span id="filename">{{file?.name}}</span>
+      <button mat-raised-button (click)="onDownloadTemplate();" style="margin-left: 2rem" [disabled]=isLoading>
+        <mat-icon>file_download</mat-icon>
+        Download Excel Template
+      </button>
     </div>
 
   </div>
@@ -19,11 +23,17 @@
   <div class="top-spacer">
     2. Submit your Bundle to the Raven FHIR Sever.
     <div style="margin-left: 15px; margin-top: 10px">
-      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="isLoading || !file?.name">
+      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="isLoading">
         <mat-icon>send</mat-icon>
         Submit
       </button>
     </div>
+  </div>
+
+
+  <div *ngIf="errorsGenerated" class="error-container">
+    <div> Error: {{ error?.error?.error }} Status: {{ error?.status }} </div>
+    <div> Error Message: {{ error?.error?.message }} </div>
   </div>
 
   <div class="top-spacer">
@@ -54,6 +64,10 @@
               [ngClass]="{'selected-row': row == selectedCase}"
               style="cursor: pointer"
           ></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell">No records loaded.</td>
+          </tr>
+
         </table>
 
       </div>
@@ -65,11 +79,11 @@
           <mat-tab label="FHIR Bundle">
             <div class="table-container"><pre> {{selectedCase?.fhirBundle | json}} </pre></div>
           </mat-tab>
-          <mat-tab label="Server Response"> Server Response Content</mat-tab>
         </mat-tab-group>
       </div>
     </div>
-
-
+  </div>
+  <div class="spinner-container" *ngIf="isLoading">
+    <mat-spinner [diameter]="70"></mat-spinner>
   </div>
 </div>

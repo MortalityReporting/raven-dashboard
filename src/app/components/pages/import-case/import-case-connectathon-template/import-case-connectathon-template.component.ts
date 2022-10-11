@@ -19,15 +19,16 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
   isExportSuccessful: boolean = false;
   errorsGenerated: boolean = false;
+  error: any;
 
   constructor(private importCaseService: ImportCaseService,
-              private utilsService: UtilsService,
-              private http:HttpClient) { }
+              private utilsService: UtilsService) { }
 
   ngOnInit(): void {
   }
 
   onFileSelected(event: any) {
+    this.utilsService.closeNotification();
 
     this.file = event.target.files[0];
 
@@ -38,6 +39,11 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
       console.error("File too big")
       this.utilsService.showErrorMessage("This file exceeds " + this.MAX_FILE_SIZE /  1000 + "kb and cannot be processed");
     }
+    else {
+      this.selectedCase = null;
+      this.isExportSuccessful = false;
+      this.errorsGenerated = false;
+    }
 
   }
 
@@ -46,22 +52,27 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
   }
 
   onSubmit() {
+    this.utilsService.closeNotification();
     if(this.file) {
       this.isExportSuccessful = false;
       this.errorsGenerated = false;
       this.isLoading = true;
+      this.error = null;
       this.importCaseService.uploadFile(this.file).subscribe({
         next: value => {
           this.isLoading = false;
-          console.log(value);
           this.dataSource = new MatTableDataSource(value);
           if(value?.length > 0){
             this.selectedCase = value[0];
+          }
+          else {
+            this.selectedCase = null;
           }
           this.isExportSuccessful = true;
         },
         error: err => {
           console.error(err);
+          this.error = err;
           this.isLoading = false;
           this.utilsService.showErrorMessage("Error uploading file " + this.file?.name);
           this.file = null;
@@ -75,4 +86,12 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
 
   }
 
+  onDownloadTemplate(){
+    const link = document.createElement('a');
+    document.body.appendChild(link);
+    link.href = 'https://gtvault-my.sharepoint.com/:x:/g/personal/mriley7_gatech_edu/EW6MPoLovyROhAxtk4tjqkkBNzn0SstRhs_g4OOwBhcPIA?e=oL0Ci5';
+    link.target="_blank";
+    link.click();
+    document.body.removeChild(link);
+  }
 }
