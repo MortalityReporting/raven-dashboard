@@ -67,7 +67,7 @@
       <mat-expansion-panel-header (click)="onItemClick( 'jurisdiction' )">
         <mat-panel-title class={{jurisdictionStyle}}>Jurisdiction</mat-panel-title>
       </mat-expansion-panel-header>
-      <app-case-comparison-content-field state="invalid" title="Death Date/Time" resource="UNKNOWN" fhirPath="UNKNOWN" actual="UNDEFINED" expected="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{deathDate.effectiveDateTime.style}} title="Death Date/Time" resource="Observation-death-date" fhirPath="{{deathDate.expected.effectiveDateTime.res}}.address" actual={{deathDate.effectiveDateTime.actual}} expected={{deathDate.effectiveDateTime.expected}} difference={{deathDate.effectiveDateTime.difference}}></app-case-comparison-content-field>
       <app-case-comparison-content-field state="invalid" title="Pronounced Date/Time" resource="UNKNOWN" fhirPath="UNKNOWN" actual="UNDEFINED" expected="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>
       <app-case-comparison-content-field state="invalid" title="Establishment Approach" resource="UNKNOWN" fhirPath="UNKNOWN" actual="UNDEFINED" expected="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>
       <app-case-comparison-content-field state="invalid" title="Type of Death Location" resource="UNKNOWN" fhirPath="UNKNOWN" actual="UNDEFINED" expected="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>

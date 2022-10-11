@@ -92,6 +92,7 @@ export class CaseComparisonContentComponent implements OnInit {
   examAndHistoryStyle = 'invalid';
   narrativesStyle = 'invalid';
   deathCertificateStyle = 'invalid';
+  deathDateStyle = 'invalid';
 
   onValueChange(event: Event) {  
     const value = (event.target as any).value;
@@ -164,6 +165,10 @@ export class CaseComparisonContentComponent implements OnInit {
           this.location.address.style === 'valid' &&
           this.tobaccoUse.valueCodeableConcept.style === 'valid' &&
           this.pregnancy.valueCodeableConcept.style === 'valid'
+        ) ? 'valid' : 'invalid';
+
+        this.jurisdictionStyle = ( 
+          this.deathDate.effectiveDateTime.style === 'valid' 
         ) ? 'valid' : 'invalid';
 
       } catch(e) {
