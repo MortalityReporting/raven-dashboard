@@ -46,9 +46,8 @@
         <mat-panel-title class={{demographicsStyle}}>Demographics</mat-panel-title>
       </mat-expansion-panel-header>      
       <app-case-comparison-content-field state={{patient.gender.style}} title="Legal Sex at Death" resource="US Core Patient" fhirPath="{{patient.expected.resourceType}}.gender" actual={{patient.gender.actual}} difference={{patient.gender.difference}}></app-case-comparison-content-field>
-      <app-case-comparison-content-field state="invalid" title="Social Security Number" resource="UNKNOWN" fhirPath="UNKNOWN" actual={{patient.identifier.actual}} difference={{patient.identifier.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{patient.identifier.style}} title="Social Security Number" resource="US Core Patient" fhirPath="{{patient.expected.resourceType}}.identifier" actual={{patient.identifier.actual}} difference={{patient.identifier.difference}}></app-case-comparison-content-field>
       <app-case-comparison-content-field state={{patient.birthDate.style}} title="Date of Birth" resource="US Core Patient" fhirPath="{{patient.expected.resourceType}}.birthDate" actual={{patient.birthDate.actual}} difference={{patient.birthDate.difference}}></app-case-comparison-content-field>      
-      <app-case-comparison-content-field state="invalid" title="Marital Status" resource="UNKNOWN" fhirPath="UNKNOWN" actual="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>
       <app-case-comparison-content-field state={{patient.extension.style}} title="Extension" resource="US Core Patient" fhirPath="{{patient.expected.resourceType}}.extension" actual={{patient.extension.actual}} difference={{patient.extension.difference}}></app-case-comparison-content-field>
       <app-case-comparison-content-field state={{patient.address.style}} title="Residence" resource="US Core Patient" fhirPath="{{patient.expected.resourceType}}.address" actual={{patient.address.actual}} difference={{patient.address.difference}}></app-case-comparison-content-field>      
     </mat-expansion-panel>
@@ -108,7 +107,7 @@
       <mat-expansion-panel-header (click)="onItemClick( 'narratives' )">
         <mat-panel-title class={{narrativesStyle}}>Narratives</mat-panel-title>
       </mat-expansion-panel-header>
-      <app-case-comparison-content-field state={{patient.text.style}} title="Not Yet Implemented" resource="UNKNOWN" fhirPath="UNKNOWN" actual={{patient.text.actual}} difference={{patient.text.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state="invalid" title="Not Yet Implemented" resource="UNKNOWN" fhirPath="UNKNOWN" actual="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>
     </mat-expansion-panel>
   </mat-accordion>
 </div>

@@ -456,6 +456,16 @@ export class ExpectedDocument {
         "identifier": [ {
           "type": {
             "coding": [ {
+              "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+              "code": "MR",
+              "display": "Medical Record Number"
+            } ]
+          },
+          "system": "http://hl7.org/fhir/sid/us-ssn",
+          "value": "555-11-1234"
+        }, {
+            "type": {
+            "coding": [ {
               "system": "urn:mdi:temporary:code",
               "code": "1000007",
               "display": "Case Number"
