@@ -13,6 +13,7 @@ import { ObservationMannerOfDeathDiff } from './models/observation-manner-of-dea
 import { USCorePractitionerDiff } from './models/us-core-practitioner.diff';
 import { ObservationCauseOfDeathPart1Diff } from './models/observation-cause-of-death-part-1.diff';
 import { ObservationCauseOfDeathPart2Diff } from './models/observation-cause-of-death-part-2.diff';
+import { CauseOfDeathPart1 } from 'src/app/model/case-summary-models/case.summary';
 
 @Component({
   selector: 'app-case-comparison-content',
@@ -170,6 +171,30 @@ export class CaseComparisonContentComponent implements OnInit {
         this.jurisdictionStyle = ( 
           this.deathDate.effectiveDateTime.style === 'valid' 
         ) ? 'valid' : 'invalid';
+
+        this.causeAndMannerStyle = 'valid';
+
+        for (let i = 0; i < actualCauseOfDeath1List.length; i++) {
+          let causeOfDeath1 = new ObservationCauseOfDeathPart1Diff( actualCauseOfDeath1List[i], expectedCauseOfDeath1List[i] );
+          if (causeOfDeath1.valueCodeableConcept.style === 'invalid')
+          {
+            this.causeAndMannerStyle = 'invalid';
+          }
+          if (causeOfDeath1.component.style === 'invalid')
+          {
+            this.causeAndMannerStyle = 'invalid';
+          }
+        }
+
+        if (this.causeOfDeath2.valueCodeableConcept.style === 'invalid' )
+        {
+          this.causeAndMannerStyle = 'invalid';
+        }
+
+        if (this.mannerOfDeath.valueCodeableConcept.style === 'invalid' )
+        {
+          this.causeAndMannerStyle = 'invalid';
+        }
 
       } catch(e) {
         console.log(e);
