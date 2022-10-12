@@ -89,9 +89,13 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
   onDownloadTemplate(){
     const link = document.createElement('a');
     document.body.appendChild(link);
-    link.href = 'https://gtvault-my.sharepoint.com/:x:/g/personal/mriley7_gatech_edu/EW6MPoLovyROhAxtk4tjqkkBNzn0SstRhs_g4OOwBhcPIA?e=oL0Ci5';
+    link.href = 'https://github.com/MortalityReporting/raven-import-and-submit-api/blob/master/MDI_Raven_Excel_Schema.xlsx?raw=true';
     link.target="_blank";
     link.click();
     document.body.removeChild(link);
+  }
+
+  scrollToTop(el: HTMLDivElement) {
+    el.scrollTop = 0;
   }
 }
