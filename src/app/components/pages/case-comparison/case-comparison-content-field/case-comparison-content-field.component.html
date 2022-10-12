@@ -20,9 +20,6 @@
           <div class={{state}}><input type="text" value="Actual Value" readonly></div>
         </div>
         <div class="grid-col-1">
-          <div class={{state}}><input type="text" value="Expected Value" readonly></div>
-        </div>
-        <div class="grid-col-1">
           <div class={{state}}><input type="text" value="Difference" readonly></div>
         </div>
       </div>
@@ -30,9 +27,6 @@
       <div class="grid-row">
         <div class="grid-col-1">
           <div class="border"><pre>{{actual}}</pre></div>
-        </div>
-        <div class="grid-col-1">
-          <div class="border"><pre>{{expected}}</pre></div>
         </div>
         <div class="grid-col-1">
           <div class="border" [innerHTML]="difference"></div>
