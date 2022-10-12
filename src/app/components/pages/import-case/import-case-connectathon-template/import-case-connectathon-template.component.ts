@@ -3,6 +3,9 @@ import {ImportCaseService} from "../../../../service/import-case.service";
 import {UtilsService} from "../../../../service/utils.service";
 import {HttpClient} from "@angular/common/http";
 import {MatTableDataSource} from "@angular/material/table";
+import {openConformationDialog} from "../../../widgets/conformation-dialog/conformation-dialog.component";
+import {openModal} from "../../../widgets/modal/modal.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-import-case-connectathon-template',
@@ -22,7 +25,8 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
   error: any;
 
   constructor(private importCaseService: ImportCaseService,
-              private utilsService: UtilsService) { }
+              private utilsService: UtilsService,
+              private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
@@ -58,7 +62,8 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
       this.errorsGenerated = false;
       this.isLoading = true;
       this.error = null;
-      this.importCaseService.uploadFile(this.file).subscribe({
+      // this.importCaseService.uploadFile(this.file).subscribe({
+        this.importCaseService.getMockResponse().subscribe({
         next: value => {
           this.isLoading = false;
           this.dataSource = new MatTableDataSource(value);
@@ -97,5 +102,15 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
 
   scrollToTop(el: HTMLDivElement) {
     el.scrollTop = 0;
+  }
+
+  onExpandFhirBundle() {
+    openModal(
+      this.dialog,
+      {
+        title: "MDI FHIR Bundle",
+        content: this.selectedCase?.fhirBundle,
+      })
+      .subscribe();
   }
 }

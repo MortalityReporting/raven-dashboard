@@ -82,8 +82,15 @@
           <mat-tab label="Mappings">
             <app-mappings [fhirBundle]="selectedCase"></app-mappings>
           </mat-tab>
-          <mat-tab label="FHIR Bundle">
-            <div class="table-container" #fhirBundle><pre> {{selectedCase?.fhirBundle | json}} </pre></div>
+          <mat-tab label="MDI FHIR Bundle">
+            <div class="table-container" #fhirBundle>
+              <div style="margin-left: 1rem; margin-top: 1rem">
+                <button mat-stroked-button color="primary" (click)="onExpandFhirBundle()">
+                  <mat-icon>open_in_full</mat-icon>
+                </button>
+              </div>
+              <div><pre> {{selectedCase?.fhirBundle | json}} </pre></div>
+            </div>
           </mat-tab>
         </mat-tab-group>
       </div>

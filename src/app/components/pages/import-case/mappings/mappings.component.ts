@@ -12,7 +12,7 @@ export class MappingsComponent implements OnInit, OnChanges {
   displayedColumns: string[] = ['name', 'value', 'status'];
   dataSource = new MatTableDataSource<any>();
   selectedFilter: string = 'Show Mapped';
-  filters: string[] = ['Show Mapped', 'Show Unmapped', 'Show All'];
+  filters: string[] = ['Show Mapped', 'Show Not Mapped', 'Show All'];
   mappedData: any[];
   constructor() { }
 
@@ -29,6 +29,14 @@ export class MappingsComponent implements OnInit, OnChanges {
         value: value.fields[key].value,
         FHIRResource: value.fields[key].FHIRResource,
       }})
+        .map( value =>
+        {
+          if(value.status.toLowerCase() === 'unmapped'){
+            value.status = 'Not Mapped';
+            return value;
+          }
+          else return value;
+        })
         .sort((a,b) => (a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1))
         .sort((a,b) => (a.status.toLowerCase() > b.status.toLowerCase() ? -1 : 1))
         .filter(value => value.status !== 'success');

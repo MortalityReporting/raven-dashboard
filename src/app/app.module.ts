@@ -53,6 +53,7 @@ import {ConformationDialogComponent} from "./components/widgets/conformation-dia
 import {MatDialogModule} from "@angular/material/dialog";
 import {ClipboardModule} from "@angular/cdk/clipboard";
 import { MappingsComponent } from './components/pages/import-case/mappings/mappings.component';
+import { ModalComponent } from './components/widgets/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { MappingsComponent } from './components/pages/import-case/mappings/mappi
     ImportCaseFhirRecordComponent,
     ImportCaseConnectathonTemplateComponent,
     ConformationDialogComponent,
-    MappingsComponent
+    MappingsComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
