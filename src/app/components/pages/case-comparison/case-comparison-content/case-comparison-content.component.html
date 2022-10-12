@@ -46,7 +46,7 @@
         <mat-panel-title class={{demographicsStyle}}>Demographics</mat-panel-title>
       </mat-expansion-panel-header>      
       <app-case-comparison-content-field state={{patient.gender.style}} title="Legal Sex at Death" resource="US Core Patient" fhirPath="{{patient.expected.resourceType}}.gender" actual={{patient.gender.actual}} expected={{patient.gender.expected}} difference={{patient.gender.difference}}></app-case-comparison-content-field>
-      <app-case-comparison-content-field state="invalid" title="Social Security Number" resource="UNKNOWN" fhirPath="UNKNOWN" actual="UNDEFINED" expected="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>
+      <app-case-comparison-content-field state="invalid" title="Social Security Number" resource="UNKNOWN" fhirPath="UNKNOWN" actual={{patient.identifier.actual}} expected={{patient.identifier.expected}} difference={{patient.identifier.difference}}></app-case-comparison-content-field>
       <app-case-comparison-content-field state={{patient.birthDate.style}} title="Date of Birth" resource="US Core Patient" fhirPath="{{patient.expected.resourceType}}.birthDate" actual={{patient.birthDate.actual}} expected={{patient.birthDate.expected}} difference={{patient.birthDate.difference}}></app-case-comparison-content-field>      
       <app-case-comparison-content-field state="invalid" title="Marital Status" resource="UNKNOWN" fhirPath="UNKNOWN" actual="UNDEFINED" expected="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>
       <app-case-comparison-content-field state={{patient.extension.style}} title="Extension" resource="US Core Patient" fhirPath="{{patient.expected.resourceType}}.extension" actual={{patient.extension.actual}} expected={{patient.extension.expected}} difference={{patient.extension.difference}}></app-case-comparison-content-field>
@@ -109,13 +109,6 @@
         <mat-panel-title class={{narrativesStyle}}>Narratives</mat-panel-title>
       </mat-expansion-panel-header>
       <app-case-comparison-content-field state={{patient.text.style}} title="Not Yet Implemented" resource="UNKNOWN" fhirPath="UNKNOWN" actual={{patient.text.actual}} expected={{patient.text.expected}} difference={{patient.text.difference}}></app-case-comparison-content-field>
-    </mat-expansion-panel>
-
-    <mat-expansion-panel class="summary-section" id="deathCertificate" [expanded]="deathCertificateExpanded">
-      <mat-expansion-panel-header (click)="onItemClick( 'deathCertificate' )">
-        <mat-panel-title class={{deathCertificateStyle}}>Death Certificate</mat-panel-title>
-      </mat-expansion-panel-header>
-      <app-case-comparison-content-field state="invalid" title="Not Yet Implemented" resource="UNKNOWN" fhirPath="UNKNOWN" actual="UNDEFINED" expected="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>
     </mat-expansion-panel>
   </mat-accordion>
 </div>
