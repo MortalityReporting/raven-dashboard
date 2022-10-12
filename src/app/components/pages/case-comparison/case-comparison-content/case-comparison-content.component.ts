@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatAccordion } from "@angular/material/expansion";
 import { DocumentHandlerService } from "../../../../service/document-handler.service";
-import { Comp_MDItoEDRS, Obs_CauseOfDeathPart1, Obs_CauseOfDeathPart2, Obs_DeathDate, Obs_DecedentPregnancy, Obs_MannerOfDeath, Obs_TobaccoUseContributedToDeath, USCoreLocation, USCorePatient, USCorePractitioner } from "../../../../model/mdi/profile.list"
 import { ExpectedDocument } from './expected-document';
 import { USCorePatientDiff } from './models/us-core-patient.diff';
 import { CompositionMdiToEdrsDiff } from './models/composition-mdi-to-edrs.diff';
@@ -13,7 +12,18 @@ import { ObservationMannerOfDeathDiff } from './models/observation-manner-of-dea
 import { USCorePractitionerDiff } from './models/us-core-practitioner.diff';
 import { ObservationCauseOfDeathPart1Diff } from './models/observation-cause-of-death-part-1.diff';
 import { ObservationCauseOfDeathPart2Diff } from './models/observation-cause-of-death-part-2.diff';
-import { CauseOfDeathPart1 } from 'src/app/model/case-summary-models/case.summary';
+import { 
+  Comp_MDItoEDRS, 
+  Obs_CauseOfDeathPart1, 
+  Obs_CauseOfDeathPart2, 
+  Obs_DeathDate, 
+  Obs_DecedentPregnancy, 
+  Obs_MannerOfDeath, 
+  Obs_TobaccoUseContributedToDeath, 
+  USCoreLocation, 
+  USCorePatient, 
+  USCorePractitioner
+} from "../../../../model/mdi/profile.list"
 
 @Component({
   selector: 'app-case-comparison-content',
@@ -65,6 +75,7 @@ export class CaseComparisonContentComponent implements OnInit {
   }
 
   selectedTestCase(): string {
+    console.log( this._selectedTestCase );
     return this._selectedTestCase.givenName + " " + this._selectedTestCase.familyName;
   }
 
