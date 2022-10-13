@@ -27,12 +27,15 @@ export class FhirExplorerComponent implements OnInit {
       this.fhirResourceProvider.fhirResource$.subscribe( resource => {
 
       this.fhirResource = resource;
-
-      if (this.selectedStructure === "xml") {
+      if(this.selectedStructure === "narrative"){
+        this.formattedText = this.documentHandler.getCurrentSubjectResource().text.div;
+      }
+      else if (this.selectedStructure === "xml") {
         this.fhirExplorerService.translateToXml( this.fhirResource ).subscribe( response => {
           this.formattedText = response;
         })
-      } else {
+      }
+      else {
         this.formattedText = JSON.stringify( resource, null, 2 );
       }
     })
