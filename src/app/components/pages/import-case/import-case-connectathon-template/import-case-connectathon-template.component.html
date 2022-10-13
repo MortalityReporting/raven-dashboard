@@ -84,8 +84,10 @@
           </mat-tab>
           <mat-tab label="MDI FHIR Bundle">
             <div class="table-container" #fhirBundle>
-              <div style="margin-left: 1rem; margin-top: 1rem">
-                <button mat-stroked-button color="primary" (click)="onExpandFhirBundle()">
+              <div style="position:fixed; margin-left: 30rem; margin-top: 1.2rem">
+                <button mat-stroked-button color="primary" (click)="onExpandFhirBundle()"
+                        matTooltip="Expand the FHIR Bundle content"
+                        aria-label="Expand the FHIR Bundle content">
                   <mat-icon>open_in_full</mat-icon>
                 </button>
               </div>

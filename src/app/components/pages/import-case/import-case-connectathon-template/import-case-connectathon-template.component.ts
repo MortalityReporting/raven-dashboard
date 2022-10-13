@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ImportCaseService} from "../../../../service/import-case.service";
 import {UtilsService} from "../../../../service/utils.service";
-import {HttpClient} from "@angular/common/http";
 import {MatTableDataSource} from "@angular/material/table";
-import {openConformationDialog} from "../../../widgets/conformation-dialog/conformation-dialog.component";
 import {openModal} from "../../../widgets/modal/modal.component";
 import {MatDialog} from "@angular/material/dialog";
 
@@ -62,8 +60,7 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
       this.errorsGenerated = false;
       this.isLoading = true;
       this.error = null;
-      // this.importCaseService.uploadFile(this.file).subscribe({
-        this.importCaseService.getMockResponse().subscribe({
+      this.importCaseService.uploadFile(this.file).subscribe({
         next: value => {
           this.isLoading = false;
           this.dataSource = new MatTableDataSource(value);
@@ -86,9 +83,8 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
       });
     }
     else {
-      //TODO upload something else
+      this.utilsService.showErrorMessage("Please select a file to upload")
     }
-
   }
 
   onDownloadTemplate(){
@@ -110,6 +106,7 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
       {
         title: "MDI FHIR Bundle",
         content: this.selectedCase?.fhirBundle,
+        contentType: 'json'
       })
       .subscribe();
   }

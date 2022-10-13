@@ -1,6 +1,8 @@
 <h2 mat-dialog-title>{{ title }}</h2>
 <mat-dialog-content class="mat-typography">
-  <pre>{{content | json}}</pre>
+  <div *ngIf="contentType === 'json'"><pre>{{content | json}}</pre></div>
+  <div *ngIf="contentType === 'html'" [innerHtml]="content"></div>
+  <div *ngIf="!contentType || contentType === 'text'">{{ content }}</div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-raised-button mat-dialog-close cdkFocusInitial>Close</button>
