@@ -13,11 +13,11 @@
 
     <div class="grid-row">
       <div class="grid-col-1">
-        <textarea class="textarea" placeholder="Paste your Document Bundle here." (input)="onValueChange($event)"></textarea>
+        <textarea class="textarea" placeholder="Paste your Document Bundle here." (input)="onActualCompositionChanged($event)"></textarea>
       </div>
       <div class="grid-col-1">
         <mat-form-field>
-          <mat-select (selectionChange)="selectionChange($event)" value={{selectedTestCase.compositionId}}>
+          <mat-select (selectionChange)="onExpectedCompositionChanged($event)" value={{selectedTestCase.compositionId}}>
             <mat-option class="mat-option" *ngFor="let testCase of testCases" value="{{testCase.compositionId}}">
               {{ testCase.display }}
             </mat-option>

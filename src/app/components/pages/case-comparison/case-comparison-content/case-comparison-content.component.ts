@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatAccordion } from "@angular/material/expansion";
 import { DocumentHandlerService } from "../../../../service/document-handler.service";
-import { ExpectedDocument } from './expected-document';
 import { USCorePatientDiff } from './models/us-core-patient.diff';
 import { CompositionMdiToEdrsDiff } from './models/composition-mdi-to-edrs.diff';
 import { USCoreLocationDiff } from './models/us-core-location.diff';
@@ -25,7 +24,6 @@ import {
   USCorePatient, 
   USCorePractitioner
 } from "../../../../model/mdi/profile.list"
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-case-comparison-content',
@@ -44,6 +42,9 @@ export class CaseComparisonContentComponent implements OnInit {
     {"compositionId": "c926f394-e442-4135-92bc-1e70e8a09b91", "display": "Whago C Brox"},
   ]
 
+  patientResource: any;
+  actualDocument: any;
+  expectedDocument: any; 
   selectedTestCase = this.testCases[0];
 
   caseAdminInfoExpanded: boolean = false;
@@ -55,10 +56,6 @@ export class CaseComparisonContentComponent implements OnInit {
   examNotesExpanded: boolean = false;
   narrativesExpanded: boolean = false;
   deathCertificateExpanded: boolean = false;
-
-  patientResource: any;
-  actualDocument: any;
-  expectedDocument: any; 
 
   patient: USCorePatientDiff = new USCorePatientDiff( undefined, undefined );
   mdiToEdrs: CompositionMdiToEdrsDiff = new CompositionMdiToEdrsDiff( undefined, undefined );
@@ -76,13 +73,11 @@ export class CaseComparisonContentComponent implements OnInit {
     private documentHandler: DocumentHandlerService
   ) { }
 
-  documentBundle$: Observable<any>;
-
   ngOnInit(): void 
   {
     this.isLoading = true;
 
-    this.decedentService.getDocumentBundle("c926f394-e442-4135-92bc-1e70e8a09b91").subscribe(
+    this.decedentService.getDocumentBundle(this.selectedTestCase.compositionId).subscribe(
       {next: (documentBundle: any) => {
         this.expectedDocument = documentBundle;
         this.isLoading = false;
@@ -90,7 +85,7 @@ export class CaseComparisonContentComponent implements OnInit {
     });
   }
 
-  selectionChange( event: any )
+  onExpectedCompositionChanged( event: any )
   {    
     this.isLoading = true;
 
@@ -132,7 +127,7 @@ export class CaseComparisonContentComponent implements OnInit {
   deathCertificateStyle = 'invalid';
   deathDateStyle = 'invalid';
 
-  onValueChange(event: Event) 
+  onActualCompositionChanged(event: Event) 
   {  
     try 
     {
