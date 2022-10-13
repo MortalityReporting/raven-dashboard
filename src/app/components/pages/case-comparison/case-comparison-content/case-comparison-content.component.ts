@@ -35,6 +35,8 @@ import { Observable } from 'rxjs';
 export class CaseComparisonContentComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
   
+  isLoading = false;
+
   testCases = [
     {"compositionId": "c926f394-e442-4135-92bc-1e70e8a09b91", "display": "Whago C Brox"},
     {"compositionId": "358a3a7d-6011-463c-ad59-0077ad482b64", "display": "Brenda Estrat"},
@@ -78,20 +80,27 @@ export class CaseComparisonContentComponent implements OnInit {
 
   ngOnInit(): void 
   {
+    this.isLoading = true;
+
     this.decedentService.getDocumentBundle("c926f394-e442-4135-92bc-1e70e8a09b91").subscribe(
       {next: (documentBundle: any) => {
         this.expectedDocument = documentBundle;
-        console.log( this.expectedDocument );
+        this.isLoading = false;
       }
     });
   }
 
   selectionChange( event: any )
   {    
+    this.isLoading = true;
+
     this.decedentService.getDocumentBundle(event.value).subscribe(
       {next: (documentBundle: any) => {
         this.expectedDocument = documentBundle;
         this.dodiff();
+      },
+      complete:  () => {
+        this.isLoading = false
       }
     });
   }
