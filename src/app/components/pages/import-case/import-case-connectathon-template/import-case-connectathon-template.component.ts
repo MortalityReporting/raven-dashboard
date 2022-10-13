@@ -60,6 +60,7 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
       this.errorsGenerated = false;
       this.isLoading = true;
       this.error = null;
+      //this.importCaseService.getMockResponse().subscribe({
       this.importCaseService.uploadFile(this.file).subscribe({
         next: value => {
           this.isLoading = false;
