@@ -20,6 +20,10 @@ export class FhirValidatorComponent implements OnInit {
     this.validatorCore.validateFhirResource(resource, recourseFormat);
   }
 
+  clearValidationErrors(){
+    this.validatorCore.clearValidationErrors();
+  }
+
   clearUI(){
     this.validatorCore.clearUI();
   }

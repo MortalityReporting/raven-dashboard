@@ -26,12 +26,12 @@
 <div class="top-spacer">
   2. Submit your Bundle to the Raven FHIR Sever.
   <div class="content-offset top-spacer">
-    <button mat-raised-button color="primary" (click)="onSubmit()" *ngIf="!invalidResourceFound">
+    <button mat-raised-button color="primary" (click)="onSubmit()" *ngIf="!invalidResourceFound || preconditionError">
       <mat-icon>send</mat-icon>
       Submit
     </button>
-
-    <button mat-raised-button color="warn" (click)="onSubmitInvalidRecord()" *ngIf="invalidResourceFound">
+    <button mat-raised-button color="warn" (click)="onSubmitInvalidRecord()"
+            *ngIf="invalidResourceFound && !preconditionError && !isLoading">
       <mat-icon>send</mat-icon>
       Submit Invalid Record
     </button>

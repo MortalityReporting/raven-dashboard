@@ -105,17 +105,7 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
   clearUI(){
     this.fhirResource='';
     this.fileName=''
-    this.validationErrorStr = '';
-    this.isValidResource = false;
-    this.parsedFhirResource = null;
-    this.hasResponseData = false;
-    this.validationFinished = false;
-    this.isLoading = false;
-    this.serverErrorDetected = false;
-    this.serverErrorList = [];
-    this.serverErrorStatus = '';
-    this.serverTimoutDetected = false;
-    this.fhirValidatorService.setValidationResults({});
+    this.clearValidationErrors();
   }
 
   onClear(){
@@ -464,5 +454,19 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
       validationResult.isValid = true;
     }
     this.fhirValidatorService.setValidationResults(validationResult);
+  }
+
+  clearValidationErrors(){
+    this.validationErrorStr = '';
+    this.isValidResource = false;
+    this.parsedFhirResource = null;
+    this.hasResponseData = false;
+    this.validationFinished = false;
+    this.isLoading = false;
+    this.serverErrorDetected = false;
+    this.serverErrorList = [];
+    this.serverErrorStatus = '';
+    this.serverTimoutDetected = false;
+    this.fhirValidatorService.setValidationResults({});
   }
 }
