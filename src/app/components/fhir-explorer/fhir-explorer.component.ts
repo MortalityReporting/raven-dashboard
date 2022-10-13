@@ -5,6 +5,7 @@ import {FhirResourceProviderService} from "../../service/fhir-resource-provider.
 import {HttpClient} from "@angular/common/http";
 import {DocumentHandlerService} from "../../service/document-handler.service";
 import {FhirExplorerService} from 'src/app/service/fhir-explorer.service';
+import {UtilsService} from "../../service/utils.service";
 
 @Component({
   selector: 'app-fhir-explorer',
@@ -23,6 +24,7 @@ export class FhirExplorerComponent implements OnInit {
     private documentHandler: DocumentHandlerService,
     private fhirExplorerService: FhirExplorerService,
     private fhirResourceProvider: FhirResourceProviderService,
+    private utilsService: UtilsService
   ) {
       this.fhirResourceProvider.fhirResource$.subscribe( resource => {
 
@@ -55,5 +57,9 @@ export class FhirExplorerComponent implements OnInit {
     else {
       this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.getCurrentSubjectResource());
     }
+  }
+
+  onCopyToClipboard(formattedText: string) {
+    this.utilsService.showSuccessMessage("Content copied to clipboard.")
   }
 }

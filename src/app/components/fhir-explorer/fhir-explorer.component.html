@@ -10,8 +10,9 @@
   </div>
   <div class="col-right" style="margin-top: 0.5rem" align="center">
     <button mat-button color="primary" matTooltip="Copy content to clipboard"
-            [disabled]="selectedStructure==='narrative'"
-            [cdkCopyToClipboard]="formattedText">
+            [disabled]="selectedStructure==='narrative' || !this.formattedText"
+            [cdkCopyToClipboard]="formattedText"
+            (click)="onCopyToClipboard(formattedText)">
       <mat-icon>content_copy</mat-icon>
     </button>
   </div>

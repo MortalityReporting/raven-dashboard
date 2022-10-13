@@ -9,10 +9,12 @@ import {DomSanitizer} from "@angular/platform-browser";
 })
 export class ModalComponent implements OnInit {
 
-  content: any;
-  title: string = null;
-  private sanitizer: DomSanitizer;
-  contentType: string;
+  content: any; // The content of the modal (the modal should render html)
+  private sanitizer: DomSanitizer; // We meed tje sanitizer to render html content
+
+  title: string = null; // The title of the modal
+
+  contentType: string; // Different types of content require different rendering. See the html code.
 
   constructor(
     private dialogRef: MatDialogRef<any>,
