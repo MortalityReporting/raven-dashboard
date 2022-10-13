@@ -38,7 +38,7 @@ export class MappingsComponent implements OnInit, OnChanges {
           else return value;
         })
         .sort((a,b) => (a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1))
-        .sort((a,b) => (a.status.toLowerCase() > b.status.toLowerCase() ? -1 : 1))
+        .sort((a,b) => (a.status.toLowerCase() > b.status.toLowerCase() ? 1 : -1))
         .filter(value => value.status !== 'success');
       this.dataSource.data = this.mappedData.filter(element => element.status === "mapped");
       this.selectedFilter = this.filters[0];
