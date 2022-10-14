@@ -11,7 +11,7 @@ import {environment} from "../../environments/environment";
 export class ImportCaseService {
 
   // API url
-  baseApiUrl = "https://some.url"
+  importFileUrl = "https://apps.hdap.gatech.edu/raven-import-and-submit-api/upload-xlsx-file"
 
   constructor(private http:HttpClient) { }
 
@@ -21,7 +21,7 @@ export class ImportCaseService {
 
     formData.append("file", file, file.name);
 
-    return this.http.post(this.baseApiUrl, formData)
+    return this.http.post(this.importFileUrl, formData)
   }
 
   uploadFileContent(content, contentFormat): Observable<any>{
@@ -41,9 +41,13 @@ export class ImportCaseService {
     }
 
     let data = null;
-    return this.http.post(this.baseApiUrl,  content, {headers: headers}).pipe(map((result: any) => (
+    return this.http.post(this.importFileUrl,  content, {headers: headers}).pipe(map((result: any) => (
       result as Object
     )));
+  }
+
+  getMockResponse(): Observable<any> {
+    return this.http.get('../../assets/data/export_to_excel_response.json')
   }
 
   importResource(fhirResource): Observable<any> {

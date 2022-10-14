@@ -52,6 +52,8 @@ import {MatMenuModule} from '@angular/material/menu';
 import {ConformationDialogComponent} from "./components/widgets/conformation-dialog/conformation-dialog.component";
 import {MatDialogModule} from "@angular/material/dialog";
 import {ClipboardModule} from "@angular/cdk/clipboard";
+import { MappingsComponent } from './components/pages/import-case/mappings/mappings.component';
+import { ModalComponent } from './components/widgets/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +70,9 @@ import {ClipboardModule} from "@angular/cdk/clipboard";
     ImportCaseComponent,
     ImportCaseFhirRecordComponent,
     ImportCaseConnectathonTemplateComponent,
-    ConformationDialogComponent
+    ConformationDialogComponent,
+    MappingsComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
