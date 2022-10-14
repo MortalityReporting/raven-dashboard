@@ -20,7 +20,7 @@
           {{ author.givenName + " " + author.familyName }}
         </mat-option>
       </mat-select>
-    </mat-form-field>    
+    </mat-form-field>
 </mat-toolbar-row>
 </mat-toolbar>
 <mat-sidenav-container [autosize]="autosize">
@@ -82,13 +82,6 @@
         </mat-icon>
         <span *ngIf="sidenavExpanded">&nbsp;Narratives</span>
       </mat-list-item>
-
-      <mat-list-item (click)="onItemClick('deathCertificate');">
-        <mat-icon [matTooltip]="!sidenavExpanded ? 'Death Certificate' : ''" matTooltipPosition="right">
-          assignment
-        </mat-icon>
-        <span *ngIf="sidenavExpanded">&nbsp;Death Certificate</span>
-      </mat-list-item>
       <hr/>
 
       <mat-list-item *ngIf="sidenavExpanded" (click)="onSidenavResize(false);" >
@@ -107,9 +100,9 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <app-case-summary-content 
+    <app-case-summary-content
     [caseHeader$]="caseHeader$"
-    [caseSummary$]="caseSummary$" 
+    [caseSummary$]="caseSummary$"
     ></app-case-summary-content>
   </mat-sidenav-content>
 </mat-sidenav-container>

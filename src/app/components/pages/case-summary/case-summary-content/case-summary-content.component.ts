@@ -14,7 +14,7 @@ export class CaseSummaryContentComponent implements OnInit {
   @Input() caseHeader$: Observable<CaseHeader>;
   @Input() caseSummary$: Observable<CaseSummary>;
   @ViewChild(MatAccordion) accordion: MatAccordion;
-  
+
   line1: string;
   line2: string;
   line3: string;
@@ -27,7 +27,6 @@ export class CaseSummaryContentComponent implements OnInit {
   medicalHistoryExpanded: boolean = false;
   examNotesExpanded: boolean = false;
   narrativesExpanded: boolean = false;
-  deathCertificateExpanded: boolean = false;
 
   profiles: any = Profiles;
   ids = ["ID-1", "ID-2", "ID-3"];
@@ -43,7 +42,7 @@ export class CaseSummaryContentComponent implements OnInit {
       if (caseHeader.authors != null)
       {
         let author = caseHeader.authors[0];
-        
+
         this.line1 = author.givenName + " " + author.familyName + "  License #: " + author.license + " Phone #: " + author.phoneNumber;
         this.line2 = author.line;
         this.line3 = author.city + ", " + author.state + "  " + author.postalCode;
@@ -52,10 +51,10 @@ export class CaseSummaryContentComponent implements OnInit {
   }
 
   onItemClick( id: any )
-  {  
+  {
     switch  (id)
     {
-      case 'caseAdminInfo': this.caseAdminInfoExpanded = !this.caseAdminInfoExpanded; break;      
+      case 'caseAdminInfo': this.caseAdminInfoExpanded = !this.caseAdminInfoExpanded; break;
       case 'demographics': this.demographicsExpanded = !this.demographicsExpanded; break;
       case 'circumstances':  this.circumstancesExpanded = !this.circumstancesExpanded; break;
       case 'jurisdiction': this.jurisdictionExpanded = !this.jurisdictionExpanded; break;
@@ -63,7 +62,6 @@ export class CaseSummaryContentComponent implements OnInit {
       case 'medicalHistory': this.medicalHistoryExpanded = !this.medicalHistoryExpanded; break;
       case 'examNotes': this.examNotesExpanded = !this.examNotesExpanded; break;
       case 'narratives': this.narrativesExpanded = !this.narrativesExpanded; break;
-      case 'deathCertificate': this.deathCertificateExpanded = !this.deathCertificateExpanded; break;
     }
   }
 
@@ -76,9 +74,8 @@ export class CaseSummaryContentComponent implements OnInit {
     this.medicalHistoryExpanded = true;
     this.examNotesExpanded = true;
     this.narrativesExpanded = true;
-    this.deathCertificateExpanded = true;
 
-    this.accordion.openAll()    
+    this.accordion.openAll()
   }
 
   onCloseAll() {
@@ -90,7 +87,6 @@ export class CaseSummaryContentComponent implements OnInit {
     this.medicalHistoryExpanded = false;
     this.examNotesExpanded = false;
     this.narrativesExpanded = false;
-    this.deathCertificateExpanded = false;
 
     this.accordion.closeAll()
   }

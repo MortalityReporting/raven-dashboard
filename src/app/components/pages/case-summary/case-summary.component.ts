@@ -1,12 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {DecedentService} from "../../../service/decedent.service";
 import {DocumentHandlerService} from "../../../service/document-handler.service";
-import {BehaviorSubject, Observable, Subject} from "rxjs";
-import {map} from "rxjs-compat/operator/map";
+import {Observable} from "rxjs";
 import {CaseHeader} from "../../../model/case-summary-models/case.header";
 import {CaseSummary} from "../../../model/case-summary-models/case.summary";
-import {MatAccordion} from "@angular/material/expansion";
 import {CaseSummaryContentComponent} from "./case-summary-content/case-summary-content.component";
 
 @Component({
@@ -47,7 +45,7 @@ export class CaseSummaryComponent implements OnInit {
       caseSummary.narratives = this.documentHandler.getCurrentSubjectResource().text.div;
     })
   }
-  
+
   onSidenavResize(expanded: boolean) {
     this.sidenavExpanded = expanded;
     this.autosize = true;
@@ -67,7 +65,6 @@ export class CaseSummaryComponent implements OnInit {
       case "medicalHistory": shouldOpen = !this.caseSummaryContentComponent.medicalHistoryExpanded; break;
       case "examNotes": shouldOpen = !this.caseSummaryContentComponent.examNotesExpanded; break;
       case "narratives": shouldOpen = !this.caseSummaryContentComponent.narrativesExpanded; break;
-      case "deathCertificate": shouldOpen = !this.caseSummaryContentComponent.deathCertificateExpanded; break;
     }
 
     this.caseSummaryContentComponent.caseAdminInfoExpanded = false;
@@ -78,8 +75,7 @@ export class CaseSummaryComponent implements OnInit {
     this.caseSummaryContentComponent.medicalHistoryExpanded = false;
     this.caseSummaryContentComponent.examNotesExpanded = false;
     this.caseSummaryContentComponent.narrativesExpanded = false;
-    this.caseSummaryContentComponent.deathCertificateExpanded = false;
-    
+
     if (shouldOpen)
     {
       this.caseSummaryContentComponent.onItemClick(id);
