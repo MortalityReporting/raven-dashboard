@@ -96,7 +96,7 @@ export class USCorePatientDiff {
             this.style = style ? 'valid' : 'invalid';
 
         } catch(e) {
-            console.log(e);
+//            console.log(e);
         }
     }
 }

@@ -43,7 +43,7 @@ export class ObservationCauseOfDeathPart1Diff extends ObservationDiff {
         
             this.style = style ? 'valid' : 'invalid';
         } catch(e) {
-            console.log(e);
+//            console.log(e);
         }
     }
 }
