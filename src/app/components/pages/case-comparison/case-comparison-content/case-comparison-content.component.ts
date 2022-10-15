@@ -13,7 +13,7 @@ import { ObservationCauseOfDeathPart1Diff } from './models/observation-cause-of-
 import { ObservationCauseOfDeathPart2Diff } from './models/observation-cause-of-death-part-2.diff';
 import { DecedentService } from "../../../../service/decedent.service";
 import { CaseComparisonDialogComponent } from '../case-comparison-dialog/case-comparison-dialog.component';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 import { 
   Comp_MDItoEDRS, 
@@ -58,7 +58,6 @@ export class CaseComparisonContentComponent implements OnInit {
   medicalHistoryExpanded: boolean = false;
   examNotesExpanded: boolean = false;
   narrativesExpanded: boolean = false;
-  deathCertificateExpanded: boolean = false;
 
   patient: USCorePatientDiff = new USCorePatientDiff( undefined, undefined );
   mdiToEdrs: CompositionMdiToEdrsDiff = new CompositionMdiToEdrsDiff( undefined, undefined );
@@ -143,7 +142,6 @@ export class CaseComparisonContentComponent implements OnInit {
       case 'medicalHistory': this.medicalHistoryExpanded = !this.medicalHistoryExpanded; break;
       case 'examAndAutopsy': this.examNotesExpanded = !this.examNotesExpanded; break;
       case 'narratives': this.narrativesExpanded = !this.narrativesExpanded; break;
-      case 'deathCertificate': this.deathCertificateExpanded = !this.deathCertificateExpanded; break;
     }
   }
 
@@ -169,7 +167,6 @@ export class CaseComparisonContentComponent implements OnInit {
     this.medicalHistoryStyle = 'invalid';
     this.examAndHistoryStyle = 'invalid';
     this.narrativesStyle = 'invalid';
-    this.deathCertificateStyle = 'invalid';
     this.deathDateStyle = 'invalid';
   }
 
