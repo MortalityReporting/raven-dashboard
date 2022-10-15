@@ -3,8 +3,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'case-comparison-dialog',
-  templateUrl: 'case-comparison-dialog.html',
-  styleUrls: ['./case-comparison-dialog.css'],
+  templateUrl: 'case-comparison-dialog.component.html',
+  styleUrls: ['./case-comparison-dialog.component.css'],
 })
 export class CaseComparisonDialogComponent {
   text: string = undefined;
