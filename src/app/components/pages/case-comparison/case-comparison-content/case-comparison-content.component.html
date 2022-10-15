@@ -13,7 +13,7 @@
 
     <div class="grid-row">
       <div class="grid-col-1">
-        <textarea class="textarea" placeholder="Paste your Document Bundle here." (input)="onActualCompositionChanged($event)"></textarea>
+        <button mat-flat-button color="primary" (click)="onInputBundleClick()">Input User MDI FHIR Bundle</button>
       </div>
       <div class="grid-col-1">
         <mat-form-field>
@@ -46,7 +46,7 @@
         <mat-panel-title class={{demographicsStyle}}>Demographics</mat-panel-title>
       </mat-expansion-panel-header>      
       <app-case-comparison-content-field state={{patient.gender.style}} title="Legal Sex at Death" resource="US Core Patient" fhirPath="{{patient.expected?.resourceType}}.gender" actual={{patient.gender.actual}} difference={{patient.gender.difference}}></app-case-comparison-content-field>
-      <app-case-comparison-content-field state={{patient.identifier.style}} title="Social Security Number" resource="US Core Patient" fhirPath="{{patient?.expected.resourceType}}.identifier" actual={{patient.identifier.actual}} difference={{patient.identifier.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{patient.identifier.style}} title="Social Security Number" resource="US Core Patient" fhirPath="{{patient.expected?.resourceType}}.identifier" actual={{patient.identifier.actual}} difference={{patient.identifier.difference}}></app-case-comparison-content-field>
       <app-case-comparison-content-field state={{patient.birthDate.style}} title="Date of Birth" resource="US Core Patient" fhirPath="{{patient.expected?.resourceType}}.birthDate" actual={{patient.birthDate.actual}} difference={{patient.birthDate.difference}}></app-case-comparison-content-field>      
       <app-case-comparison-content-field state={{patient.extension.style}} title="Extension" resource="US Core Patient" fhirPath="{{patient.expected?.resourceType}}.extension" actual={{patient.extension.actual}} difference={{patient.extension.difference}}></app-case-comparison-content-field>
       <app-case-comparison-content-field state={{patient.address.style}} title="Residence" resource="US Core Patient" fhirPath="{{patient.expected?.resourceType}}.address" actual={{patient.address.actual}} difference={{patient.address.difference}}></app-case-comparison-content-field>      
@@ -58,8 +58,8 @@
       </mat-expansion-panel-header>
       <app-case-comparison-content-field state={{location.address.style}} title="Death Location" resource="US Core Location" fhirPath="{{location.expected?.resourceType}}.address" actual={{location.address.actual}} difference={{location.address.difference}}></app-case-comparison-content-field>
       <app-case-comparison-content-field state="invalid" title="Injury/Event Occurred at Work" resource="UNKNOWN" fhirPath="UNKNOWN" actual="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>
-      <app-case-comparison-content-field state={{tobaccoUse.valueCodeableConcept.style}} title="Tobacco Use Contributed to Death" resource="Observation-tobacco-use" fhirPath="{{tobaccoUse.expected.resourceType}}.valueCodeableConcept" actual={{tobaccoUse.valueCodeableConcept.actual}} difference={{tobaccoUse.valueCodeableConcept.difference}}></app-case-comparison-content-field>
-      <app-case-comparison-content-field state={{pregnancy.valueCodeableConcept.style}} title="Decedent Pregnancy Status" resource="Observation-decedent-pregnancy" fhirPath="{{pregnancy.expected.resourceType}}.valueCodeableConcept" actual={{pregnancy.valueCodeableConcept.actual}} difference={{pregnancy.valueCodeableConcept.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{tobaccoUse.valueCodeableConcept.style}} title="Tobacco Use Contributed to Death" resource="Observation-tobacco-use" fhirPath="{{tobaccoUse.expected?.resourceType}}.valueCodeableConcept" actual={{tobaccoUse.valueCodeableConcept.actual}} difference={{tobaccoUse.valueCodeableConcept.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{pregnancy.valueCodeableConcept.style}} title="Decedent Pregnancy Status" resource="Observation-decedent-pregnancy" fhirPath="{{pregnancy.expected?.resourceType}}.valueCodeableConcept" actual={{pregnancy.valueCodeableConcept.actual}} difference={{pregnancy.valueCodeableConcept.difference}}></app-case-comparison-content-field>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="summary-section" id="jurisdiction" [expanded]="jurisdictionExpanded">

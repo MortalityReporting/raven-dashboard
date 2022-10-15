@@ -8,6 +8,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule} from '@angular/material/dialog'
 import {MatIconModule} from "@angular/material/icon";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatToolbarModule} from "@angular/material/toolbar";
@@ -53,6 +54,8 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {MatSelectModule} from '@angular/material/select';
 import {MatMenuModule} from '@angular/material/menu';
 
+import { CaseComparisonDialogComponent } from './components/pages/case-comparison/case-comparison-dialog/case-comparison-dialog.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,6 +82,7 @@ import {MatMenuModule} from '@angular/material/menu';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatDialogModule,    
     ReactiveFormsModule,
     MatIconModule,
     MatSidenavModule,
@@ -106,7 +110,8 @@ import {MatMenuModule} from '@angular/material/menu';
     {provide: HTTP_INTERCEPTORS, useClass: FhirAuthInterceptor, multi: true},
     FhirExplorerDrawerService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [CaseComparisonDialogComponent],
 })
 export class AppModule {
 }
