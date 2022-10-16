@@ -140,7 +140,7 @@ export class CaseComparisonContentComponent implements OnInit {
       case 'jurisdiction': this.jurisdictionExpanded = !this.jurisdictionExpanded; break;
       case 'causeAndManner': this.causeAndMannerExpanded = !this.causeAndMannerExpanded; break;
       case 'medicalHistory': this.medicalHistoryExpanded = !this.medicalHistoryExpanded; break;
-      case 'examAndAutopsy': this.examNotesExpanded = !this.examNotesExpanded; break;
+      case 'examNotes': this.examNotesExpanded = !this.examNotesExpanded; break;
       case 'narratives': this.narrativesExpanded = !this.narrativesExpanded; break;
     }
   }
