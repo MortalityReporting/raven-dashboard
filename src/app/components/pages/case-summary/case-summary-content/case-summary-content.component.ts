@@ -16,9 +16,10 @@ export class CaseSummaryContentComponent implements OnInit {
   @Input() caseSummary$: Observable<CaseSummary>;
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
-  line1: string;
-  line2: string;
-  line3: string;
+  name: string;
+  licence: string;
+  phone:string;
+  addressLine: string;
 
   caseAdminInfoExpanded: boolean = true;
   demographicsExpanded: boolean = false;
@@ -33,6 +34,8 @@ export class CaseSummaryContentComponent implements OnInit {
   ids = ["ID-1", "ID-2", "ID-3"];
   selectedId = "ID-1";
 
+  author: any;
+
   constructor(
     private fhirResourceProviderService: FhirResourceProviderService
   ) {
@@ -41,14 +44,15 @@ export class CaseSummaryContentComponent implements OnInit {
   ngOnInit(): void {
 
     this.caseHeader$.subscribe( caseHeader => {
-
+      console.log(caseHeader);
       if (caseHeader.authors != null)
       {
         let author = caseHeader.authors[0];
-
-        this.line1 = author.givenName + " " + author.familyName + "  License #: " + author.license + " Phone #: " + author.phoneNumber;
-        this.line2 = author.line;
-        this.line3 = author.city + ", " + author.state + "  " + author.postalCode;
+        this.author = caseHeader.authors[0];
+        this.name = `${this.author.givenName[0] ?? ''} ${this.author.familyName ?? ''}`;
+        this.licence = this.author.license ?? '';
+        this.phone = this.author.phoneNumber ?? '';
+        this.addressLine = `${author.line}\n${this.author.city ? this.author.city + ', ' : ''} ${this.author.state ?? ''} ${this.author.postalCode ?? ''}`
       }
     });
   }
@@ -96,5 +100,11 @@ export class CaseSummaryContentComponent implements OnInit {
 
   onNotImplementedItemSelected() {
     this.fhirResourceProviderService.setSelectedFhirResource(null);
+  }
+
+  onAuthorSelected() {
+    if(this.author){
+      this.fhirResourceProviderService.setSelectedFhirResource(this.author);
+    }
   }
 }

@@ -26,10 +26,20 @@
               <div class="content-field-label">
                 <p><u>Chief ME/C</u></p>
               </div>
-              <div>
-                {{line1}}<br>
-                {{line2}}<br>
-                {{line3}}
+              <div (click)="onAuthorSelected()">
+                <div style="padding: 5px; width: 60%">
+                  <span><input type="text" value="{{name}}" readonly style="width: 30%"></span>
+                  <span style="float: right">
+                    <label style="margin-right: 5px">Lic#</label><input type="text" value="{{licence}}" readonly>
+                  </span>
+                </div>
+                <div style="padding: 5px; width: 60%">
+                  <span style="margin-right: 5px"><label>Phone#</label></span>
+                  <input type="text" value="{{phone}}" readonly style="width: 75%; float: right;">
+                </div>
+                <div style="padding: 5px; width: 60%">
+                  <textarea type="text" value="{{addressLine}}" readonly rows="3" style="width: 100%; margin-right: 5px"></textarea>
+                </div>
               </div>
             </div>
           </div>
