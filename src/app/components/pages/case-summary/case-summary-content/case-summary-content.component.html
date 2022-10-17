@@ -35,8 +35,8 @@
           </div>
         </div>
       </div>
-    </mat-expansion-panel>    
-    
+    </mat-expansion-panel>
+
     <mat-expansion-panel class="summary-section" id="demographics" [expanded]="demographicsExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'demographics' )">
         <mat-panel-title>Demographics</mat-panel-title>
@@ -66,7 +66,7 @@
             <div class="grid-col-1">
               <app-case-summary-content-field [label]="'Ethnicity'" [value]="(caseSummary$ | async)?.demographics.ethnicity" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
             </div>
-          </div>          
+          </div>
           <br/>
           Residence
         </div>
@@ -96,7 +96,7 @@
               <app-case-summary-content-field [label]="'Country'" [value]="" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
             </div>
           </div>
-        </div>        
+        </div>
       </div>
     </mat-expansion-panel>
 
@@ -179,7 +179,7 @@
                     {{cause.interval}}
                   </td>
                 </tr>
-              </table>      
+              </table>
             </div>
           </div>
         </div>
@@ -202,13 +202,13 @@
                     {{cause}}
                   </td>
                 </tr>
-              </table>      
+              </table>
             </div>
           </div>
         </div>
 
         <br/>
-        
+
         <div class="summary-section-grid">
           <div class="grid-row">
             <div class="grid-col-1">
@@ -235,7 +235,7 @@
             </div>
           </div>
         </div>
-        <br/>        
+        <br/>
       </div>
 
     </mat-expansion-panel>
@@ -243,21 +243,21 @@
       <mat-expansion-panel-header (click)="onItemClick( 'medicalHistory' )">
         <mat-panel-title>Relevant Medical History</mat-panel-title>
       </mat-expansion-panel-header>
-      <div class="summary-section-body">Not Yet Implemented</div>
+      <div class="summary-section-body" (click)="onNotImplementedItemSelected()">Not Yet Implemented</div>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="summary-section" id="examAndAutopsy" [expanded]="examNotesExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'examNotes' )">
         <mat-panel-title>Exam and Autopsy Notes</mat-panel-title>
       </mat-expansion-panel-header>
-      <div class="summary-section-body">Not Yet Implemented</div>
+      <div class="summary-section-body" (click)="onNotImplementedItemSelected()">Not Yet Implemented</div>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="summary-section" id="narratives" [expanded]="narrativesExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'narratives' )">
         <mat-panel-title>Narratives</mat-panel-title>
       </mat-expansion-panel-header>
-      <div class="summary-section-body">Not Yet Implemented</div>
+      <div class="summary-section-body" (click)="onNotImplementedItemSelected()">Not Yet Implemented</div>
     </mat-expansion-panel>
 
   </mat-accordion>

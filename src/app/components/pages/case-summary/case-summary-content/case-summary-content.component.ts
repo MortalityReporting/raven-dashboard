@@ -4,6 +4,7 @@ import {CaseSummary} from "../../../../model/case-summary-models/case.summary";
 import {Author, CaseHeader} from "../../../../model/case-summary-models/case.header";
 import {MatAccordion} from "@angular/material/expansion";
 import {Profiles} from "../../../../model/mdi/profile.list";
+import {FhirResourceProviderService} from "../../../../service/fhir-resource-provider.service";
 
 @Component({
   selector: 'app-case-summary-content',
@@ -32,7 +33,9 @@ export class CaseSummaryContentComponent implements OnInit {
   ids = ["ID-1", "ID-2", "ID-3"];
   selectedId = "ID-1";
 
-  constructor() {
+  constructor(
+    private fhirResourceProviderService: FhirResourceProviderService
+  ) {
   }
 
   ngOnInit(): void {
@@ -89,5 +92,9 @@ export class CaseSummaryContentComponent implements OnInit {
     this.narrativesExpanded = false;
 
     this.accordion.closeAll()
+  }
+
+  onNotImplementedItemSelected() {
+    this.fhirResourceProviderService.setSelectedFhirResource(null);
   }
 }
