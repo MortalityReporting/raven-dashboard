@@ -31,6 +31,9 @@ export class SetFhirExplorerDirective {
         case "subject":
           this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.getCurrentSubjectResource());
           break;
+        case "document":
+          this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.getCurrentDocumentBundle());
+          break;
       }
     }
   }
