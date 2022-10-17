@@ -8,7 +8,7 @@ export class CaseSummary {
   jurisdiction: Jurisdiction;
   causeAndManner: CauseAndManner;
   medicalHistory: string = "Not Implemented"; // TODO: Implement.
-  examAndAutopsy: string = "Not Implemented"; // TODO: Implement.
+  examAndAutopsy: Autopsy;
   narratives: string = "Not Implemented"; // TODO: Implement.
 }
 
@@ -40,6 +40,11 @@ export class Jurisdiction {
   pronouncedDateTime: string;
   establishmentApproach: string;
   typeOfDeathLocation: string;
+}
+
+export class Autopsy {
+  performed: string;
+  resultsAvailable: string;
 }
 
 // Individual Resources and Parts
