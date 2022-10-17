@@ -31,16 +31,6 @@ export class CaseComparisonComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    // let subjectId = this.route.snapshot.params['id'];
-
-    // this.decedentService.getComposition(subjectId).subscribe(
-    //   {next: (composition: any) => {
-    //       this.documentBundle$ = this.documentHandler.getDocumentBundle(composition.entry[0].resource.id);
-    //       this.documentBundle$.subscribe();
-    //     }}
-    // );
-
     this.caseHeader$ = this.documentHandler.caseHeader$;
     this.caseSummary$ = this.documentHandler.caseSummary$;
     this.patientResource$ = this.documentHandler.patientResource$;
@@ -69,7 +59,6 @@ export class CaseComparisonComponent implements OnInit {
       case "medicalHistory": shouldOpen = !this.caseComparisonContentComponent.medicalHistoryExpanded; break;
       case "examNotes": shouldOpen = !this.caseComparisonContentComponent.examNotesExpanded; break;
       case "narratives": shouldOpen = !this.caseComparisonContentComponent.narrativesExpanded; break;
-      case "deathCertificate": shouldOpen = !this.caseComparisonContentComponent.deathCertificateExpanded; break;
     }
 
     this.caseComparisonContentComponent.caseAdminInfoExpanded = false;
@@ -80,10 +69,8 @@ export class CaseComparisonComponent implements OnInit {
     this.caseComparisonContentComponent.medicalHistoryExpanded = false;
     this.caseComparisonContentComponent.examNotesExpanded = false;
     this.caseComparisonContentComponent.narrativesExpanded = false;
-    this.caseComparisonContentComponent.deathCertificateExpanded = false;
     
-    if (shouldOpen)
-    {
+    if (shouldOpen) {
       this.caseComparisonContentComponent.onItemClick(id);
     }
   }

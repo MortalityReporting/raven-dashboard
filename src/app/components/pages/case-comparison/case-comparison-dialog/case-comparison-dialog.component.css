@@ -1,0 +1,8 @@
+.text-area {
+    min-width: 400px;
+    min-height: 400px;
+}
+
+.mat-dialog-actions {
+    padding-top: 10px;
+}

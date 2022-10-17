@@ -12,6 +12,9 @@ import { USCorePractitionerDiff } from './models/us-core-practitioner.diff';
 import { ObservationCauseOfDeathPart1Diff } from './models/observation-cause-of-death-part-1.diff';
 import { ObservationCauseOfDeathPart2Diff } from './models/observation-cause-of-death-part-2.diff';
 import { DecedentService } from "../../../../service/decedent.service";
+import { CaseComparisonDialogComponent } from '../case-comparison-dialog/case-comparison-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+
 import { 
   Comp_MDItoEDRS, 
   Obs_CauseOfDeathPart1, 
@@ -43,7 +46,7 @@ export class CaseComparisonContentComponent implements OnInit {
   ]
 
   patientResource: any;
-  actualDocument: any;
+  actualDocument: any = undefined;
   expectedDocument: any; 
   selectedTestCase = this.testCases[0];
 
@@ -55,7 +58,6 @@ export class CaseComparisonContentComponent implements OnInit {
   medicalHistoryExpanded: boolean = false;
   examNotesExpanded: boolean = false;
   narrativesExpanded: boolean = false;
-  deathCertificateExpanded: boolean = false;
 
   patient: USCorePatientDiff = new USCorePatientDiff( undefined, undefined );
   mdiToEdrs: CompositionMdiToEdrsDiff = new CompositionMdiToEdrsDiff( undefined, undefined );
@@ -68,13 +70,24 @@ export class CaseComparisonContentComponent implements OnInit {
   mannerOfDeath: ObservationMannerOfDeathDiff = new ObservationMannerOfDeathDiff( undefined, undefined );
   practitioner: USCorePractitionerDiff = new USCorePractitionerDiff( undefined, undefined );
 
+  demographicsStyle = 'invalid';
+  circumstancesStyle = 'invalid';
+  caseAdminInfoStyle = 'invalid';
+  jurisdictionStyle = 'invalid';
+  causeAndMannerStyle = 'invalid';
+  medicalHistoryStyle = 'invalid';
+  examAndHistoryStyle = 'invalid';
+  narrativesStyle = 'invalid';
+  deathCertificateStyle = 'invalid';
+  deathDateStyle = 'invalid';
+
   constructor(
+    private dialog: MatDialog,
     private decedentService: DecedentService,
     private documentHandler: DocumentHandlerService
   ) { }
 
-  ngOnInit(): void 
-  {
+  ngOnInit(): void {
     this.isLoading = true;
 
     this.decedentService.getDocumentBundle(this.selectedTestCase.compositionId).subscribe(
@@ -85,8 +98,7 @@ export class CaseComparisonContentComponent implements OnInit {
     });
   }
 
-  onExpectedCompositionChanged( event: any )
-  {    
+  onExpectedCompositionChanged( event: any ) {    
     this.isLoading = true;
 
     this.decedentService.getDocumentBundle(event.value).subscribe(
@@ -100,49 +112,65 @@ export class CaseComparisonContentComponent implements OnInit {
     });
   }
 
-  onItemClick( id: any )
-  {  
-    switch (id)
-    {
+  onActualCompositionChanged(event: Event) {  
+    try {
+      this.actualDocument = JSON.parse( (event.target as any).value );
+      this.dodiff();
+    } catch(e) {
+      console.log(e);
+    }
+  }
+
+  onInputBundleClick() {    
+    const dialogRef = this.dialog.open( CaseComparisonDialogComponent, {data: this.actualDocument}).afterClosed().subscribe( data => {
+      if (data === undefined) {
+        this.clearCase();
+      } else {
+        this.actualDocument = JSON.parse( data );
+          this.dodiff();      
+      }
+    });
+  }
+
+  onItemClick( id: any ) {  
+    switch (id) {
       case 'caseAdminInfo': this.caseAdminInfoExpanded = !this.caseAdminInfoExpanded; break;      
       case 'demographics': this.demographicsExpanded = !this.demographicsExpanded; break;
       case 'circumstances':  this.circumstancesExpanded = !this.circumstancesExpanded; break;
       case 'jurisdiction': this.jurisdictionExpanded = !this.jurisdictionExpanded; break;
       case 'causeAndManner': this.causeAndMannerExpanded = !this.causeAndMannerExpanded; break;
       case 'medicalHistory': this.medicalHistoryExpanded = !this.medicalHistoryExpanded; break;
-      case 'examAndAutopsy': this.examNotesExpanded = !this.examNotesExpanded; break;
+      case 'examNotes': this.examNotesExpanded = !this.examNotesExpanded; break;
       case 'narratives': this.narrativesExpanded = !this.narrativesExpanded; break;
-      case 'deathCertificate': this.deathCertificateExpanded = !this.deathCertificateExpanded; break;
     }
   }
 
-  demographicsStyle = 'invalid';
-  circumstancesStyle = 'invalid';
-  caseAdminInfoStyle = 'invalid';
-  jurisdictionStyle = 'invalid';
-  causeAndMannerStyle = 'invalid';
-  medicalHistoryStyle = 'invalid';
-  examAndHistoryStyle = 'invalid';
-  narrativesStyle = 'invalid';
-  deathCertificateStyle = 'invalid';
-  deathDateStyle = 'invalid';
+  clearCase() {    
+    this.actualDocument = undefined;
 
-  onActualCompositionChanged(event: Event) 
-  {  
-    try 
-    {
-      this.actualDocument = JSON.parse( (event.target as any).value );
+    this.patient = new USCorePatientDiff( undefined, undefined );
+    this.mdiToEdrs = new CompositionMdiToEdrsDiff( undefined, undefined );
+    this.location = new USCoreLocationDiff( undefined, undefined );
+    this.tobaccoUse = new ObservationTobaccoUseDiff( undefined, undefined );
+    this.pregnancy = new ObservationDecedentPregnancyDiff( undefined, undefined );
+    this.deathDate = new ObservationDeathDateDiff( undefined, undefined );
+    this.causeOfDeath1List = [];
+    this.causeOfDeath2 = new ObservationCauseOfDeathPart2Diff( undefined, undefined );
+    this.mannerOfDeath = new ObservationMannerOfDeathDiff( undefined, undefined );
+    this.practitioner = new USCorePractitionerDiff( undefined, undefined );
 
-      this.dodiff();
-    } 
-    catch(e) 
-    {
-      console.log(e);
-    }
+    this.demographicsStyle = 'invalid';
+    this.circumstancesStyle = 'invalid';
+    this.caseAdminInfoStyle = 'invalid';
+    this.jurisdictionStyle = 'invalid';
+    this.causeAndMannerStyle = 'invalid';
+    this.medicalHistoryStyle = 'invalid';
+    this.examAndHistoryStyle = 'invalid';
+    this.narrativesStyle = 'invalid';
+    this.deathDateStyle = 'invalid';
   }
 
-  dodiff() 
-  {
+  dodiff() {
     try {
       this.mdiToEdrs = new CompositionMdiToEdrsDiff(
         this.documentHandler.findResourceByProfileName( this.actualDocument, Comp_MDItoEDRS ),

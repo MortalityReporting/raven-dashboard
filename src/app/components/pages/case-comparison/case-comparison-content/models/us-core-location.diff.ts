@@ -54,7 +54,7 @@ export class USCoreLocationDiff {
             this.style = style ? 'valid' : 'invalid';
 
         } catch(e) {
-            console.log(e);
+//            console.log(e);
         }
     }
 }

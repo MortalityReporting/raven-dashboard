@@ -36,7 +36,7 @@ export class ObservationTobaccoUseDiff extends ObservationDiff {
 
             this.style = style ? 'valid' : 'invalid';
         } catch(e) {
-            console.log(e);
+//            console.log(e);
         }
     }
 }
