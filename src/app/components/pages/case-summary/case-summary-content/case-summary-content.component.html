@@ -183,10 +183,10 @@
                   <th>Interval</th>
                 </tr>
                 <tr *ngFor="let cause of (caseSummary$ | async)?.causeAndManner?.causeOfDeathPart1">
-                  <td>
+                  <td appSetFhirExplorer [observation]="cause.id">
                     {{cause.event}}
                   </td>
-                  <td>
+                  <td appSetFhirExplorer [observation]="cause.id">
                     {{cause.interval}}
                   </td>
                 </tr>
@@ -201,7 +201,7 @@
           <div class="grid-row">
             <div class="grid-col-1">
               <div>PART II</div>
-              <div>Contributiing Cause</div>
+              <div>Contributing Cause</div>
             </div>
             <div class="grid-col-6">
               <table class="alias-table">
@@ -209,8 +209,8 @@
                   <th>Event</th>
                 </tr>
                 <tr *ngFor="let cause of (caseSummary$ | async)?.causeAndManner?.causeOfDeathPart2;">
-                  <td>
-                    {{cause}}
+                  <td appSetFhirExplorer [observation]="cause.id">
+                    {{cause.value}}
                   </td>
                 </tr>
               </table>
@@ -261,8 +261,18 @@
       <mat-expansion-panel-header (click)="onItemClick( 'examNotes' )">
         <mat-panel-title>Exam and Autopsy Notes</mat-panel-title>
       </mat-expansion-panel-header>
-      <div class="summary-section-body" (click)="onNotImplementedItemSelected()">Not Yet Implemented</div>
-    </mat-expansion-panel>
+      <div class="summary-section-body">
+        <div class="summary-section-grid">
+          <div class="grid-row">
+            <div class="grid-col-1">
+              <app-case-summary-content-field [label]="'Autopsy Performed?'" [value]="(caseSummary$ | async)?.examAndAutopsy.performed" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-autopsy-performed-indicator'"></app-case-summary-content-field>
+            </div>
+            <div class="grid-col-1">
+              <app-case-summary-content-field [label]="'Results Available?'" [value]="(caseSummary$ | async)?.examAndAutopsy.resultsAvailable" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-autopsy-performed-indicator'"></app-case-summary-content-field>
+            </div>
+          </div>
+        </div>
+      </div>    </mat-expansion-panel>
 
     <mat-expansion-panel class="summary-section" id="narratives" [expanded]="narrativesExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'narratives' )">

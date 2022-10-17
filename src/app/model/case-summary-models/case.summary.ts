@@ -8,7 +8,7 @@ export class CaseSummary {
   jurisdiction: Jurisdiction;
   causeAndManner: CauseAndManner;
   medicalHistory: string = "Not Implemented"; // TODO: Implement.
-  examAndAutopsy: string = "Not Implemented"; // TODO: Implement.
+  examAndAutopsy: Autopsy;
   narratives: string = "Not Implemented"; // TODO: Implement.
 }
 
@@ -42,6 +42,11 @@ export class Jurisdiction {
   typeOfDeathLocation: string;
 }
 
+export class Autopsy {
+  performed: string;
+  resultsAvailable: string;
+}
+
 // Individual Resources and Parts
 
 export class UsualWork {
@@ -58,7 +63,7 @@ export class UsualWork {
 
 export class CauseAndManner {
   causeOfDeathPart1: CauseOfDeathPart1[];
-  causeOfDeathPart2: String[];
+  causeOfDeathPart2: CauseOfDeathPart2[];
   causeOfDeathConditions: CauseOfDeathCondition[];
   contributingConditions: string[]; // TODO: Does this need a model?
   mannerOfDeath: string;
@@ -72,8 +77,14 @@ export class CauseAndManner {
 }
 
 export class CauseOfDeathPart1 {
+  id: string;
   event: string;
   interval: string;
+}
+
+export class CauseOfDeathPart2 {
+  id: string;
+  value: string;
 }
 
 export class CauseOfDeathCondition {
