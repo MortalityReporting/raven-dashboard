@@ -11,15 +11,15 @@ export class FhirResourceProviderService {
   private fhirResource = new Subject<FhirResource>();
   fhirResource$ = this.fhirResource.asObservable();
 
-  compostionId: string;
+  compositionId: string;
 
   constructor() {
 
   }
 
   setCompositionId( compositionId: string )
-  {    
-    this.compostionId = compositionId;
+  {
+    this.compositionId = compositionId;
   }
 
   setSelectedFhirResource(fhirResource: any) {

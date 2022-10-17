@@ -242,6 +242,18 @@ export class DocumentHandlerService {
     return documentBundle.entry.find((entry: any) => entry.resource.meta.profile.includes(profileName))?.resource || undefined;
   }
 
+  findResourcesByProfileName(documentBundle: any = this.currentDocumentBundle, profileName: string): any[] {
+    let items = [];
+    
+    documentBundle.entry.map( (entry: any) => {
+      if (entry.resource.meta.profile.includes(profileName)) {
+        items.push( entry.resource );
+      }
+    })
+    
+    return items;
+  }
+
   // Find Death Location Resource (US Core Location Profile) through the Composition.section reference.
   findDeathLocation(documentBundle: any = this.currentDocumentBundle, compositionResource: any, circumstancesSection: any): any {
     let deathLocationResourceId = (circumstancesSection?.entry?.find((entry: any) => entry.reference.startsWith("Location")))?.reference || undefined;

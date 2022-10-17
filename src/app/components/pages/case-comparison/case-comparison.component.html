@@ -1,28 +1,3 @@
-<mat-toolbar class="tool-bars">
-  <mat-toolbar-row class="primary-light">
-    Subject Name: <input type="text" value="{{ (caseHeader$ | async)?.fullName}}" readonly>
-    <span class="content-spacer"> </span>
-    Date/Time of Death:
-    <input type="text" value="{{ (caseHeader$ | async)?.deathDate}}" readonly>
-    <input type="text" value="{{ (caseHeader$ | async)?.deathTime}}" readonly>
-    <span class="content-spacer"> </span>
-    Social Security Number: <input type="text" value="{{ (caseSummary$ | async)?.demographics.ssn}}" readonly>
-  </mat-toolbar-row>
-  <mat-toolbar-row>
-    Tracking Number/Type:
-    <input type="text" value="{{ (caseHeader$ | async)?.trackingNumbers[0]?.value}}" readonly>
-    <input type="text" value="{{ (caseHeader$ | async)?.trackingNumbers[0]?.type}}" readonly>
-    <span class="content-spacer"> </span>
-    Authors:
-    <mat-form-field>
-      <mat-select value={{selectedAuthor}}>
-        <mat-option class="mat-option" *ngFor="let author of (caseHeader$ | async)?.authors;" value="{{selectedAuthor}}">
-          {{ author.givenName + " " + author.familyName }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-</mat-toolbar-row>
-</mat-toolbar>
 <mat-sidenav-container [autosize]="autosize">
   <mat-sidenav mode="side" opened>
     <mat-nav-list>
@@ -82,7 +57,6 @@
         </mat-icon>
         <span *ngIf="sidenavExpanded">&nbsp;Narratives</span>
       </mat-list-item>
-      <hr/>
 
       <mat-list-item *ngIf="sidenavExpanded" (click)="onSidenavResize(false);" >
         <mat-icon aria-label="Collapse Side Menu">
@@ -100,9 +74,7 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <app-case-summary-content
-    [caseHeader$]="caseHeader$"
-    [caseSummary$]="caseSummary$"
-    ></app-case-summary-content>
+    <app-case-comparison-content 
+    ></app-case-comparison-content>
   </mat-sidenav-content>
 </mat-sidenav-container>
