@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable, Subject} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {map} from "rxjs/operators";
+import {ValidationResults} from "../domain/ValidationResoults";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,33 @@ export class FhirValidatorService {
 
   private prodUri = "https://gt-apps.hdap.gatech.edu/HL7ValidatorService/fhir";
   //private prodUri = "http://127.0.0.1:8080/fhir/$validate";
+  private fhirResource = new Subject<any>();
+  private validationResults = new Subject<ValidationResults>();
+  private resourcePasted = new Subject<boolean>();
+
+  setValidationResults(value: ValidationResults){
+    this.validationResults.next(value);
+  }
+
+  setFhirResource(value: any){
+    this.fhirResource.next(value);
+  }
+
+  getFhirResource(): Observable<any>{
+    return this.fhirResource.asObservable();
+  }
+
+  getValidationResults() : Observable<ValidationResults>{
+    return this.validationResults.asObservable();
+  }
+
+  isResourcePasted(): Observable<boolean>{
+    return this.resourcePasted.asObservable();
+  }
+
+  setResourcePasted(value: boolean){
+    return this.resourcePasted.next(value);
+  }
 
   constructor( private http: HttpClient) { }
 
@@ -19,7 +47,7 @@ export class FhirValidatorService {
       return "Please enter a FHIR resource for validation.";
     }
     else if (resourceFormat === 'json'){
-      if(!this.isJsonString(fhirResource)){
+      if(!this.isJson(fhirResource)){
         // Could not parse the resource at all. It is not a valid JSON as far as the js parser is concerned.
         return "Invalid json format detected.";
       }
@@ -48,7 +76,9 @@ export class FhirValidatorService {
     return null;
   }
 
-  isJsonString(str: string): boolean {
+  isJson(str: any): boolean {
+    if (typeof str != 'string')
+      str = JSON.stringify(str);
     try {
       JSON.parse(str.trim());
     } catch (e) {

@@ -15,21 +15,26 @@
       <span id="filename">{{file?.name}}</span>
     </div>
 
-    <div class="top-spacer">
-      <textarea matInput rows="30" id="text-editor"
-                [(ngModel)]="fileContent">
-      </textarea>
-    </div>
-    <mat-error *ngIf="errorMessage">{{errorMessage}}</mat-error>
+    <app-fhir-validator [isStandalone]=false></app-fhir-validator>
+
+  </div>
+  <div class="error-text mat-error">
+    {{preconditionError}}
   </div>
 </div>
 
 <div class="top-spacer">
   2. Submit your Bundle to the Raven FHIR Sever.
   <div class="content-offset top-spacer">
-    <button mat-raised-button color="primary"  (click)="onSubmit()">
+    <button mat-raised-button color="primary" (click)="onSubmit()" *ngIf="!invalidResourceFound || preconditionError">
       <mat-icon>send</mat-icon>
       Submit
     </button>
+    <button mat-raised-button color="warn" (click)="onSubmitInvalidRecord()"
+            *ngIf="invalidResourceFound && !preconditionError && !isLoading">
+      <mat-icon>send</mat-icon>
+      Submit Invalid Record
+    </button>
+
   </div>
 </div>

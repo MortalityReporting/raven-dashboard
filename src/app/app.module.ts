@@ -46,13 +46,18 @@ import {MatListModule} from "@angular/material/list";
 import {ImportCaseComponent} from './components/pages/import-case/import-case.component';
 import {
   ImportCaseFhirRecordComponent
-} from './components/widgets/import-case-fhir-record/import-case-fhir-record.component';
+} from './components/pages/import-case/import-case-fhir-record/import-case-fhir-record.component';
 import {
   ImportCaseConnectathonTemplateComponent
-} from './components/widgets/import-case-connectathon-template/import-case-connectathon-template.component';
+} from './components/pages/import-case/import-case-connectathon-template/import-case-connectathon-template.component';
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatSelectModule} from '@angular/material/select';
 import {MatMenuModule} from '@angular/material/menu';
+import {ConformationDialogComponent} from "./components/widgets/conformation-dialog/conformation-dialog.component";
+import {MatDialogModule} from "@angular/material/dialog";
+import {ClipboardModule} from "@angular/cdk/clipboard";
+import { MappingsComponent } from './components/pages/import-case/mappings/mappings.component';
+import { ModalComponent } from './components/widgets/modal/modal.component';
 
 import { CaseComparisonDialogComponent } from './components/pages/case-comparison/case-comparison-dialog/case-comparison-dialog.component';
 
@@ -73,7 +78,10 @@ import { CaseComparisonDialogComponent } from './components/pages/case-compariso
     CaseSummaryContentFieldComponent,
     ImportCaseComponent,
     ImportCaseFhirRecordComponent,
-    ImportCaseConnectathonTemplateComponent
+    ImportCaseConnectathonTemplateComponent,
+    ConformationDialogComponent,
+    MappingsComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
@@ -104,7 +112,9 @@ import { CaseComparisonDialogComponent } from './components/pages/case-compariso
     MatListModule,
     MatTabsModule,
     MatSelectModule,
-    MatMenuModule
+    MatMenuModule,
+    ClipboardModule,
+    MatDialogModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: FhirAuthInterceptor, multi: true},
