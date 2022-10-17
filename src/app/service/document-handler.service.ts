@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {map, Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {DecedentService} from "./decedent.service";
-import {CaseSummary, CauseAndManner, CauseOfDeathPart1, Circumstances, Jurisdiction, Demographics, UsualWork} from "../model/case-summary-models/case.summary";
+import {CaseSummary, CauseAndManner, CauseOfDeathPart1, Circumstances, Jurisdiction, Demographics, UsualWork, CauseOfDeathPart2} from "../model/case-summary-models/case.summary";
 import {Author, CaseHeader} from "../model/case-summary-models/case.header";
 import {TrackingNumber} from "../model/mdi/tracking.number";
 import {TerminologyHandlerService} from "./terminology-handler.service";
@@ -200,13 +200,18 @@ export class DocumentHandlerService {
               }
             })
       
+            causeOfDeathPart1.id = entry.reference;
             causeOfDeathPart1.event = observation.valueCodeableConcept?.text || undefined;
       
             causeAndManner.causeOfDeathPart1.push( causeOfDeathPart1 );  
           }
           else if (profile === Obs_CauseOfDeathPart2)
           {
-            causeAndManner.causeOfDeathPart2.push( observation.valueCodeableConcept?.text || this.defaultString );
+            let causeOfDeathPart2 = new CauseOfDeathPart2();
+
+            causeOfDeathPart2.id = entry.reference
+            causeOfDeathPart2.value = observation.valueCodeableConcept?.text || this.defaultString;
+            causeAndManner.causeOfDeathPart2.push( causeOfDeathPart2 );
           }              
           else if (profile === Obs_MannerOfDeath)
           {
@@ -381,6 +386,10 @@ export class DocumentHandlerService {
 
   getCurrentSubjectResource(): any {
     return this.findResourceById(undefined, this.subjectId);
+  }
+
+  getObservationResource(id: any): any {
+    return this.findResourceById(undefined, id);
   }
 
 }
