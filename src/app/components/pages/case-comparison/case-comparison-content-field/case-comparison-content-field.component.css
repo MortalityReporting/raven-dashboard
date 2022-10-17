@@ -13,7 +13,7 @@
     flex-wrap: wrap;
     width: 100%;
 }
-  
+
 .summary-section-grid .grid-col-1 {
     display: flex;
     flex-direction: column;
@@ -25,41 +25,41 @@
     flex-direction: row;
     border: 1px black dashed;
 }
-  
+
 .content-field-label {
     padding: 5px;
     display: flex;
     flex: 1;
 }
-  
+
 .content-field-value {
     padding: 5px;
     display: flex;
     flex: 1;
 }
-  
+
 .content-field-value input {
     width: 100%;
 }
 
 .valid {
     width: 100%;
-    background:green;
+    background: #a5d6a7;
 }
 
 .invalid {
     width: 100%;
-    background:red;
+    background: #ef9a9a;
 }
 
 .valid input {
     width: 100%;
-    background:green;
+    background: #a5d6a7;
 }
 
 .invalid input {
     width: 100%;
-    background:red;
+    background: #ef9a9a;
 }
 
 .text-area {

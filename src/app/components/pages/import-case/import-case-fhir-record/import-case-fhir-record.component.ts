@@ -24,7 +24,6 @@ export class ImportCaseFhirRecordComponent implements OnInit{
   errorMessage: string;
   fhirValidatorFinished: boolean = false;
   isValidResource: boolean = false;
-  validationExecuted$: Observable<boolean>;
   validationResult$: Observable<ValidationResults>;
   fhirResource: any;
   preconditionError: string = '';
@@ -64,13 +63,17 @@ export class ImportCaseFhirRecordComponent implements OnInit{
   }
 
   importCase(){
+    this.isLoading = true;
     this.importCaseService.importResource(this.fhirResource).subscribe({
       next: value => {
-        this.utilsService.showSuccessMessage("The resource was imported successfully.")
+        this.utilsService.showSuccessMessage("The resource was imported successfully.");
+        this.clearUI();
+        this.isLoading = false;
       },
       error: err => {
         this.utilsService.showErrorMessage("A server error occurred while importing the resource.")
         console.error(err);
+        this.isLoading = false;
       }
     });
   }
@@ -78,6 +81,11 @@ export class ImportCaseFhirRecordComponent implements OnInit{
   clearUI() {
     // TODO reset the UI to it's initial state.
     this.errorMessage = '';
+    this.invalidResourceFound = false;
+    this.fileContent = null;
+    this.fhirResource = null;
+    this.preconditionError = '';
+    this.validator.clearUI();
   }
 
   onSubmit() {
@@ -98,7 +106,7 @@ export class ImportCaseFhirRecordComponent implements OnInit{
         this.isLoading = false;
         if (value.isValid) {
           this.importCase();
-        } else {
+        } else if(Object.keys(value).length){
           console.log(this.invalidResourceFound);
           this.invalidResourceFound = true;
         }
