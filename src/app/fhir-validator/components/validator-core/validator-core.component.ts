@@ -1,13 +1,12 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {DomSanitizer} from "@angular/platform-browser";
 import {FhirValidatorService} from "../../service/fhir-validator.service";
-import {ValidatorConstants} from "../../providers/validator-constants";
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatTableDataSource} from "@angular/material/table";
 import {FormControl} from "@angular/forms";
 import {Subscription} from "rxjs";
 import {UtilsService} from "../../../service/utils.service";
-import {ValidationResults} from "../../domain/ValidationResoults";
+import {ValidationResults} from "../../domain/ValidationResults";
 
 export interface ResponseItem {
   severity: string;
@@ -53,7 +52,6 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
   serverErrorDetected = false; // Tracks if the server has responded with an error (404, 500). Used to render the error in UI.
   serverErrorList: any []; // Store the data from the OperationOutcome resource
   serverErrorStatus: string; // We store the error response status here (i.e. 404, 500)
-  validationResults: ValidationResults = {};
 
   //TODO remove this code when the API returns a timeout error
   serverTimoutDetected = false;
@@ -62,7 +60,6 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
   constructor(
     private fhirValidatorService: FhirValidatorService,
     private sanitized: DomSanitizer,
-    public constants: ValidatorConstants,
     private utilsService: UtilsService,
   ) {
   }
@@ -301,6 +298,7 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
     this.scrollToElement(locationId);
   }
 
+  // Sends fhir resource to be validated, renders response
   private executeAPIValidation(fhirResource: any, resourceFormat: string) {
 
     // Reset values to default state prior to validation.
@@ -456,12 +454,7 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
     validationResult.notesCount = notesCount;
     validationResult.infoCount = infoCount;
 
-    if(errorsCount > 0){
-      validationResult.isValid = false;
-    }
-    else {
-      validationResult.isValid = true;
-    }
+    validationResult.isValid = errorsCount <= 0;
     this.fhirValidatorService.setValidationResults(validationResult);
   }
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable, Subject} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {map} from "rxjs/operators";
-import {ValidationResults} from "../domain/ValidationResoults";
+import {ValidationResults} from "../domain/ValidationResults";
 
 @Injectable({
   providedIn: 'root'
@@ -114,12 +114,6 @@ export class FhirValidatorService {
       }
     });
     return formatted.substring(1, formatted.length-3);
-  }
-
-  validateFhirResourceTemp(fhirResource: any, resourceFormat: string, resourceType: string):  Observable<any> {
-    return this.http.get('./assets/data/formatted_response.json').pipe( map((result: any) => (
-      result as Object
-    )));
   }
 
   validateFhirResource(fhirResource: any, resourceFormat: string):  Observable<any> {

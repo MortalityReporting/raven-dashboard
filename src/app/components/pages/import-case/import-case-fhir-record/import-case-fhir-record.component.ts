@@ -4,7 +4,7 @@ import {UtilsService} from "../../../../service/utils.service";
 import {FhirValidatorComponent} from "../../../../fhir-validator/components/fhir-validator/fhir-validator.component";
 import {FhirValidatorService} from "../../../../fhir-validator/service/fhir-validator.service";
 import {combineLatestWith, Observable} from "rxjs";
-import {ValidationResults} from "../../../../fhir-validator/domain/ValidationResoults";
+import {ValidationResults} from "../../../../fhir-validator/domain/ValidationResults";
 
 @Component({
   selector: 'app-import-case-fhir-record',
