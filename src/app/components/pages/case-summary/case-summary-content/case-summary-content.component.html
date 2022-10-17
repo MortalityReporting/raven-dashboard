@@ -172,10 +172,10 @@
                   <th>Interval</th>
                 </tr>
                 <tr *ngFor="let cause of (caseSummary$ | async)?.causeAndManner?.causeOfDeathPart1">
-                  <td>
+                  <td appSetFhirExplorer [observation]="cause.id">
                     {{cause.event}}
                   </td>
-                  <td>
+                  <td appSetFhirExplorer [observation]="cause.id">
                     {{cause.interval}}
                   </td>
                 </tr>
@@ -198,8 +198,8 @@
                   <th>Event</th>
                 </tr>
                 <tr *ngFor="let cause of (caseSummary$ | async)?.causeAndManner?.causeOfDeathPart2;">
-                  <td>
-                    {{cause}}
+                  <td appSetFhirExplorer [observation]="cause.id">
+                    {{cause.value}}
                   </td>
                 </tr>
               </table>

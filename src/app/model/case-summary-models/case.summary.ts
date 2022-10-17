@@ -63,7 +63,7 @@ export class UsualWork {
 
 export class CauseAndManner {
   causeOfDeathPart1: CauseOfDeathPart1[];
-  causeOfDeathPart2: String[];
+  causeOfDeathPart2: CauseOfDeathPart2[];
   causeOfDeathConditions: CauseOfDeathCondition[];
   contributingConditions: string[]; // TODO: Does this need a model?
   mannerOfDeath: string;
@@ -77,8 +77,14 @@ export class CauseAndManner {
 }
 
 export class CauseOfDeathPart1 {
+  id: string;
   event: string;
   interval: string;
+}
+
+export class CauseOfDeathPart2 {
+  id: string;
+  value: string;
 }
 
 export class CauseOfDeathCondition {

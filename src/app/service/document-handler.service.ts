@@ -6,6 +6,7 @@ import {
   CaseSummary,
   CauseAndManner,
   CauseOfDeathPart1,
+  CauseOfDeathPart2,
   Circumstances,
   Jurisdiction,
   Demographics,
@@ -210,13 +211,18 @@ export class DocumentHandlerService {
               }
             })
 
+            causeOfDeathPart1.id = entry.reference;
             causeOfDeathPart1.event = observation.valueCodeableConcept?.text || undefined;
 
             causeAndManner.causeOfDeathPart1.push( causeOfDeathPart1 );
           }
           else if (profile === Obs_CauseOfDeathPart2)
           {
-            causeAndManner.causeOfDeathPart2.push( observation.valueCodeableConcept?.text || this.defaultString );
+            let causeOfDeathPart2 = new CauseOfDeathPart2();
+            causeOfDeathPart2.id = entry.reference;
+            causeOfDeathPart2.value = observation.valueCodeableConcept?.text || this.defaultString;
+
+            causeAndManner.causeOfDeathPart2.push( causeOfDeathPart2 );
           }
           else if (profile === Obs_MannerOfDeath)
           {
@@ -405,6 +411,10 @@ export class DocumentHandlerService {
   }
   getCurrentSubjectResource(): any {
     return this.findResourceById(undefined, this.subjectId);
+  }
+
+  getObservationResource(id: any): any {
+    return this.findResourceById(undefined, id);
   }
 
 }

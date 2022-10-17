@@ -40,10 +40,6 @@ export class CaseSummaryComponent implements OnInit {
 
     this.caseHeader$ = this.documentHandler.caseHeader$;
     this.caseSummary$ = this.documentHandler.caseSummary$;
-
-    this.caseSummary$.subscribe( caseSummary => {
-      caseSummary.narratives = this.documentHandler.getCurrentSubjectResource().text.div;
-    })
   }
 
   onSidenavResize(expanded: boolean) {

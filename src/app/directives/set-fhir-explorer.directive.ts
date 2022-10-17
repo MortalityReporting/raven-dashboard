@@ -8,6 +8,7 @@ import {DocumentHandlerService} from "../service/document-handler.service";
 export class SetFhirExplorerDirective {
   @Input() profile: string;
   @Input() title: string;
+  @Input() observation: string;
 
   @HostListener('click', ['$event']) onClick(event: any) {
     console.log(event);
@@ -15,6 +16,10 @@ export class SetFhirExplorerDirective {
     console.log(this.profile);
     if (this.profile) {
       this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.findResourceByProfileName(undefined, this.profile));
+    }
+    else if (this.observation)
+    {
+      this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.findResourceById(undefined, this.observation));
     }
     else if (this.title) {
       switch (this.title) {
