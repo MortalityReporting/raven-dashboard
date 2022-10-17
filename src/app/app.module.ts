@@ -54,7 +54,6 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {MatSelectModule} from '@angular/material/select';
 import {MatMenuModule} from '@angular/material/menu';
 import {ConformationDialogComponent} from "./components/widgets/conformation-dialog/conformation-dialog.component";
-import {MatDialogModule} from "@angular/material/dialog";
 import {ClipboardModule} from "@angular/cdk/clipboard";
 import { MappingsComponent } from './components/pages/import-case/mappings/mappings.component';
 import { ModalComponent } from './components/widgets/modal/modal.component';
@@ -90,7 +89,7 @@ import { CaseComparisonDialogComponent } from './components/pages/case-compariso
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatDialogModule,    
+    MatDialogModule,
     ReactiveFormsModule,
     MatIconModule,
     MatSidenavModule,
