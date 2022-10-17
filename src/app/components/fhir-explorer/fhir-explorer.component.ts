@@ -58,7 +58,9 @@ export class FhirExplorerComponent implements OnInit {
       this.formattedText = this.documentHandler.getCurrentSubjectResource().text.div;
     }
     else {
-      this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.getCurrentSubjectResource());
+      // TODO not sure why this is a good idea and we need to fix this code ASAP
+      const resource = this.documentHandler.getCurrentSubjectResource();
+      this.fhirResourceProvider.setSelectedFhirResource(this.fhirResource);
     }
   }
 
