@@ -26,7 +26,7 @@
               <div class="content-field-label">
                 <p><u>Chief ME/C</u></p>
               </div>
-              <div (click)="onAuthorSelected()">
+              <div (click)="onAuthorSelected()" *ngIf="author">
                 <div style="padding: 5px; width: 100%">
                   <span><input type="text" value="{{name}}" readonly style="width: 40%"></span>
                   <span style="float: right">
