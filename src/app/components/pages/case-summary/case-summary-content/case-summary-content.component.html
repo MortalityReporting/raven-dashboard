@@ -19,27 +19,29 @@
                 <p><u>Tracking Numbers</u></p>
               </div>
               <div *ngFor="let trackingNumber of (caseHeader$ | async)?.trackingNumbers">
-                <app-case-summary-content-field [label]="trackingNumber.type" [value]="trackingNumber.value" appSetFhirExplorer [title]="'tracking number'"></app-case-summary-content-field>
+                <app-case-summary-content-field [label]="trackingNumber.type" [value]="trackingNumber.value" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Composition-mdi-to-edrs'"></app-case-summary-content-field>
               </div>
             </div>
             <div class="grid-col-1">
               <div class="content-field-label">
                 <p><u>Chief ME/C</u></p>
               </div>
-              <div (click)="onAuthorSelected()" *ngIf="author">
+              <div *ngIf="author">
                 <div style="padding: 5px; width: 100%">
-                  <span><input type="text" value="{{name}}" readonly style="width: 40%"></span>
+                  <span><label style="margin-right: 5px">Name: </label>
+                    <input type="text" value="{{name}}" appSetFhirExplorer [title]="'certifier'" readonly style="width: 40%"></span>
                   <span style="float: right">
-                    <label style="margin-right: 5px">Lic#</label>
-                    <input type="text" value="{{licence}}" readonly style="width: 70%; float: right">
+                    <label style="margin-right: 5px">LIC: </label>
+                    <input type="text" value="{{license}}" appSetFhirExplorer [title]="'certifier'" readonly style="width: 70%; float: right">
                   </span>
                 </div>
                 <div style="padding: 5px; width: 100%">
-                  <span style="margin-right: 5px"><label>Phone#</label></span>
-                  <input type="text" value="{{phone}}" readonly style="width: 75%; float: right;">
+                  <span style="margin-right: 5px"><label>Phone #: </label></span>
+                  <input type="text" value="{{phone}}" appSetFhirExplorer [title]="'certifier'" readonly style="width: 75%; float: right;">
                 </div>
                 <div style="padding: 5px; width: 100%">
-                  <textarea type="text" value="{{addressLine}}" readonly rows="3" style="width: 100%; margin-right: 5px"></textarea>
+                  <span style="margin-right: 5px"><label>Address: </label></span>
+                  <textarea type="text" value="{{addressLine}}" appSetFhirExplorer [title]="'certifier'" readonly rows="3" style="width: 100%; margin-right: 5px"></textarea>
                 </div>
               </div>
             </div>
@@ -56,7 +58,7 @@
         <div class="summary-section-grid">
           <div class="grid-row">
             <div class="grid-col-1">
-              <app-case-summary-content-field [label]="'Legal Sex at Death'" [value]="" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
+              <app-case-summary-content-field [label]="'Legal Sex at Death'" [value]="(caseSummary$ | async)?.demographics.gender" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
             </div>
             <div class="grid-col-1">
               <app-case-summary-content-field [label]="'Social Security Number'" [value]="(caseSummary$ | async)?.demographics.ssn" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
@@ -65,9 +67,6 @@
           <div class="grid-row">
             <div class="grid-col-1">
               <app-case-summary-content-field [label]="'Date of Birth'" [value]="(caseSummary$ | async)?.demographics.birthDate" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
-            </div>
-            <div class="grid-col-1">
-              <!-- <app-case-summary-content-field [label]="'Marital Status'" [value]="(caseSummary$ | async)?.demographics.maritalStatus" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field> -->
             </div>
           </div>
           <div class="grid-row">
@@ -87,24 +86,24 @@
         <div class="summary-section-grid">
           <div class="grid-row">
             <div class="grid-col-1">
-              <app-case-summary-content-field [label]="'Address Line 1'" [value]="" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
+              <app-case-summary-content-field [label]="'Address Line 1'" [value]="(caseSummary$ | async)?.demographics?.address?.line1" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
             </div>
             <div class="grid-col-1">
-              <app-case-summary-content-field [label]="'Address Line 2'" [value]="" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
+              <app-case-summary-content-field [label]="'Address Line 2'" [value]="(caseSummary$ | async)?.demographics?.address?.line2" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
             </div>
           </div>
           <div class="grid-row">
             <div class="grid-col-1">
-              <app-case-summary-content-field [label]="'City'" [value]="" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
+              <app-case-summary-content-field [label]="'City'" [value]="(caseSummary$ | async)?.demographics.address.city" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
             </div>
             <div class="grid-col-1">
-              <app-case-summary-content-field [label]="'State'" [value]="" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
+              <app-case-summary-content-field [label]="'State'" [value]="(caseSummary$ | async)?.demographics.address.state" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
             </div>
             <div class="grid-col-1">
-              <app-case-summary-content-field [label]="'Zip Code'" [value]="" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
+              <app-case-summary-content-field [label]="'Zip Code'" [value]="(caseSummary$ | async)?.demographics.address.zip" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
             </div>
             <div class="grid-col-1">
-              <app-case-summary-content-field [label]="'Country'" [value]="" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
+              <app-case-summary-content-field [label]="'Country'" [value]="(caseSummary$ | async)?.demographics.address.country" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
             </div>
           </div>
         </div>
@@ -122,7 +121,7 @@
               <app-case-summary-content-field [label]="'Death Location'" [value]="(caseSummary$ | async)?.circumstances.deathLocation" appSetFhirExplorer [title]="'deathLocation'"></app-case-summary-content-field>
             </div>
             <div class="grid-col-1">
-              <app-case-summary-content-field [label]="'Injury/Event Occurred at Work'" [value]="(caseSummary$ | async)?.circumstances.workInjury" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-injury-at-work'"></app-case-summary-content-field>
+              <app-case-summary-content-field [label]="'Injury/Event Occurred at Work'" [value]="(caseSummary$ | async)?.circumstances.workInjury" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"></app-case-summary-content-field>
             </div>
           </div>
           <div class="grid-row">
@@ -145,18 +144,18 @@
         <div class="summary-section-grid">
           <div class="grid-row">
             <div class="grid-col-1">
-              <app-case-summary-content-field [label]="'Death Date/Time'" [value]="(caseSummary$ | async)?.jurisdiction.deathDateTime" appSetFhirExplorer [title]="'deathLocation'"></app-case-summary-content-field>
+              <app-case-summary-content-field [label]="'Death Date/Time'" [value]="(caseSummary$ | async)?.jurisdiction.deathDateTime" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date'"></app-case-summary-content-field>
             </div>
             <div class="grid-col-1">
-              <app-case-summary-content-field [label]="'Pronounced Date/Time'" [value]="(caseSummary$ | async)?.jurisdiction.pronouncedDateTime" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-injury-at-work'"></app-case-summary-content-field>
+              <app-case-summary-content-field [label]="'Pronounced Date/Time'" [value]="(caseSummary$ | async)?.jurisdiction.pronouncedDateTime" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date'"></app-case-summary-content-field>
             </div>
           </div>
           <div class="grid-row">
             <div class="grid-col-1">
-              <app-case-summary-content-field [label]="'Establishment Approach'" [value]="(caseSummary$ | async)?.jurisdiction.establishmentApproach" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-tobacco-use-contributed-to-death'"></app-case-summary-content-field>
+              <app-case-summary-content-field [label]="'Establishment Approach'" [value]="(caseSummary$ | async)?.jurisdiction.establishmentApproach" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date'"></app-case-summary-content-field>
             </div>
             <div class="grid-col-1">
-              <app-case-summary-content-field [label]="'Type of Death Location'" [value]="(caseSummary$ | async)?.jurisdiction.typeOfDeathLocation" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-decedent-pregnancy'"></app-case-summary-content-field>
+              <app-case-summary-content-field [label]="'Type of Death Location'" [value]="(caseSummary$ | async)?.jurisdiction.typeOfDeathLocation" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date'"></app-case-summary-content-field>
             </div>
           </div>
         </div>
@@ -234,12 +233,12 @@
               <app-case-summary-content-field [label]="'How Injury Occurred'" [value]="(caseSummary$ | async)?.causeAndManner.howDeathInjuryOccurred" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"></app-case-summary-content-field>
             </div>
             <div class="grid-col-1">
-              <app-case-summary-content-field [label]="'Injury Date/Time'" [value]="" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-manner-of-death'"></app-case-summary-content-field>
+              <app-case-summary-content-field [label]="'Injury Date/Time'" [value]="" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"></app-case-summary-content-field>
             </div>
           </div>
           <div class="grid-row">
             <div class="grid-col-1">
-              <app-case-summary-content-field [label]="'Injury/Event Occurred at Work'" [value]="" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-manner-of-death'"></app-case-summary-content-field>
+              <app-case-summary-content-field [label]="'Injury/Event Occurred at Work'" [value]="" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"></app-case-summary-content-field>
             </div>
             <div class="grid-col-1">
               <app-case-summary-content-field [label]="'Transportation Role'" [value]="" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"></app-case-summary-content-field>
@@ -278,7 +277,7 @@
       <mat-expansion-panel-header (click)="onItemClick( 'narratives' )">
         <mat-panel-title>Narratives</mat-panel-title>
       </mat-expansion-panel-header>
-      <div class="summary-section-body" [innerHTML]="(caseSummary$ | async)?.narratives">Not Yet Implemented</div>
+      <div class="summary-section-body" (click)="onNotImplementedItemSelected()">Not Yet Implemented</div>
     </mat-expansion-panel>
 
   </mat-accordion>

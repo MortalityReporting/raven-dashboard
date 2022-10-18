@@ -1,6 +1,7 @@
 import {HumanName} from "../fhir/types/human.name";
 import {Identifier} from "../fhir/types/identifier";
 import {CodeableConcept} from "../fhir/types/codeable.cocept";
+import {Address} from "../fhir/types/address";
 
 export class CaseSummary {
   demographics: Demographics;
@@ -22,6 +23,7 @@ export class Demographics {
   ethnicity: string; // TODO: Setup FHIR Type
   maritalStatus: string;
   usualWork: UsualWork[];
+  address: Address;
 
   constructor() {
     this.usualWork = [];

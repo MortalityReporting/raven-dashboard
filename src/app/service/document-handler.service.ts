@@ -27,6 +27,7 @@ import {
   Obs_CauseOfDeathPart2,
 } from "../model/mdi/profile.list"
 import {FhirResourceProviderService} from "./fhir-resource-provider.service";
+import {Address} from "../model/fhir/types/address";
 
 @Injectable({
   providedIn: 'root'
@@ -121,12 +122,21 @@ export class DocumentHandlerService {
 
   generateDemographics(documentBundle: any, compositionResource: any, patientResource: any): Demographics {
     let demographics: Demographics = new Demographics();
+    console.log(demographics)
 
     // Setup Basic Demographics from Patient Resource Directly
     demographics.aliases = patientResource.name || this.defaultString;
     demographics.gender = patientResource.gender || this.defaultString;
     demographics.birthDate = patientResource.birthDate || this.defaultString;
     demographics.maritalStatus = patientResource.maritalStatus || this.defaultString;
+
+    demographics.address = new Address();
+    demographics.address.line1 = patientResource.address?.[0]?.line?.[0] || this.defaultString;
+    demographics.address.line2 = patientResource.address?.[0]?.line?.[1] || this.defaultString;
+    demographics.address.city = patientResource.address?.[0]?.city || this.defaultString;
+    demographics.address.state = patientResource.address?.[0]?.state || this.defaultString;
+    demographics.address.zip = patientResource.address?.[0]?.postalCode || this.defaultString;
+    demographics.address.country = patientResource.address?.[0]?.country || this.defaultString;
 
     // Setup Identifiers
     demographics.ssn = this.getSocialSecurityNumber(patientResource);
@@ -266,6 +276,9 @@ export class DocumentHandlerService {
 
   // For singleton profiles, this function can be used to find the resource by the profile name. ID should be preferred whenever available.
   findResourceByProfileName(documentBundle: any = this.currentDocumentBundle, profileName: string): any {
+    const profile = documentBundle.entry.find((entry: any) => entry.resource.meta.profile.includes(profileName))?.resource;
+    console.log(profile)
+    console.log(profileName)
     return documentBundle.entry.find((entry: any) => entry.resource.meta.profile.includes(profileName))?.resource || undefined;
   }
 
@@ -409,8 +422,17 @@ export class DocumentHandlerService {
   getCurrentDocumentBundle(): any {
     return this.currentDocumentBundle;
   }
+
   getCurrentSubjectResource(): any {
     return this.findResourceById(undefined, this.subjectId);
+  }
+
+  getCertifier(): any {
+    let certifierId = this.currentCompositionResource?.author?.[0]?.reference;
+    console.log(certifierId);
+    let test = this.findResourceById(this.currentDocumentBundle, certifierId);
+    console.log(test)
+    return test;
   }
 
   getObservationResource(id: any): any {
