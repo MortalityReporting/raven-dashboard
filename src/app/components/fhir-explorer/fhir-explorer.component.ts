@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from "rxjs";
-import {FhirResource} from "../../model/fhir/fhir.resource";
 import {FhirResourceProviderService} from "../../service/fhir-resource-provider.service";
 import {HttpClient} from "@angular/common/http";
 import {DocumentHandlerService} from "../../service/document-handler.service";
@@ -15,7 +13,7 @@ import {UtilsService} from "../../service/utils.service";
 export class FhirExplorerComponent implements OnInit {
 
   formattedText: string;
-  fhirResource: FhirResource;
+  fhirResource: any;
   selectedStructure: string = "narrative";
 
   constructor(
@@ -33,7 +31,9 @@ export class FhirExplorerComponent implements OnInit {
         this.formattedText = '';
       }
       else if(this.selectedStructure == "narrative"){
-        this.formattedText = this.documentHandler.getCurrentSubjectResource()?.text?.div;
+        // TODO, not sure where this comes from
+        //this.formattedText = this.documentHandler.getCurrentSubjectResource()?.text?.div;
+        this.formattedText = this.fhirResource?.text?.div;
       }
       else if (this.selectedStructure === "xml") {
         this.fhirExplorerService.translateToXml( this.fhirResource ).subscribe( response => {
@@ -55,7 +55,8 @@ export class FhirExplorerComponent implements OnInit {
 
   onToggleClick() {
     if (this.selectedStructure === "narrative") {
-      this.formattedText = this.documentHandler.getCurrentSubjectResource().text.div;
+      this.formattedText = this.fhirResource?.text?.div;
+      //this.formattedText = this.documentHandler.getCurrentSubjectResource().text.div;
     }
     else {
       // TODO not sure why this is a good idea and we need to fix this code ASAP !!!
