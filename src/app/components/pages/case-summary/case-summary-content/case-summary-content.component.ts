@@ -17,7 +17,7 @@ export class CaseSummaryContentComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
   name: string = "VALUE NOT FOUND";
-  licence: string = "VALUE NOT FOUND";
+  license: string = "VALUE NOT FOUND";
   phone:string = "VALUE NOT FOUND";
   addressLine: string = "VALUE NOT FOUND";
 
@@ -50,7 +50,7 @@ export class CaseSummaryContentComponent implements OnInit {
         let author = caseHeader.authors[0];
         this.author = caseHeader.authors[0];
         this.name = `${this.author.givenName[0] ?? ''} ${this.author.familyName ?? ''}`;
-        this.licence = this.author.license ?? '';
+        this.license = this.author.license ?? '';
         this.phone = this.author.phoneNumber ?? '';
         this.addressLine = `${author.line}\n${this.author.city ? this.author.city + ', ' : ''} ${this.author.state ?? ''} ${this.author.postalCode ?? ''}`
       }
