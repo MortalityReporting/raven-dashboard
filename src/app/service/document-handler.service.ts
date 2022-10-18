@@ -147,20 +147,6 @@ export class DocumentHandlerService {
     demographics.race = this.getDecedentRaceText(extensions);
     demographics.ethnicity = this.getDecedentEthnicityText(extensions);
 
-    // TODO: Add handling for ODH USual Work and Other Identifiers (missing data)
-
-    let demographicsSection = this.getSection(compositionResource, "demographics");
-
-    if (demographicsSection != null) {
-
-      demographicsSection.entry.map(( entry: any ) => {
-
-        let observation = this.findResourceById(documentBundle, entry.reference );
-
-        demographics.usualWork.push( new UsualWork( observation?.valueCodeableConcept?.text, observation?.component[0].valueCodeableConcept.text ));
-      });
-    }
-
     return demographics;
   }
 

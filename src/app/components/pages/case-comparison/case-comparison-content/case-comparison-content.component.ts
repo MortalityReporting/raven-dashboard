@@ -15,16 +15,16 @@ import { DecedentService } from "../../../../service/decedent.service";
 import { CaseComparisonDialogComponent } from '../case-comparison-dialog/case-comparison-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
-import { 
-  Comp_MDItoEDRS, 
-  Obs_CauseOfDeathPart1, 
-  Obs_CauseOfDeathPart2, 
-  Obs_DeathDate, 
-  Obs_DecedentPregnancy, 
-  Obs_MannerOfDeath, 
-  Obs_TobaccoUseContributedToDeath, 
-  USCoreLocation, 
-  USCorePatient, 
+import {
+  Comp_MDItoEDRS,
+  Obs_CauseOfDeathPart1,
+  Obs_CauseOfDeathPart2,
+  Obs_DeathDate,
+  Obs_DecedentPregnancy,
+  Obs_MannerOfDeath,
+  Obs_TobaccoUseContributedToDeath,
+  USCoreLocation,
+  USCorePatient,
   USCorePractitioner
 } from "../../../../model/mdi/profile.list"
 
@@ -35,19 +35,19 @@ import {
 })
 export class CaseComparisonContentComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
-  
+
   isLoading = false;
 
   testCases = [
-    {"compositionId": "c926f394-e442-4135-92bc-1e70e8a09b91", "display": "Whago C Brox"},
+    {"compositionId": "ff3563ad-0d8b-4bc3-8e69-5ae900222534", "display": "Whago C Brox"},
     {"compositionId": "358a3a7d-6011-463c-ad59-0077ad482b64", "display": "Brenda Estrat"},
-    {"compositionId": "f6651a25-0296-4de0-8bd0-00d720607e1b", "display": "Erica Stevens"}, 
+    {"compositionId": "f6651a25-0296-4de0-8bd0-00d720607e1b", "display": "Erica Stevens"},
     {"compositionId": "c926f394-e442-4135-92bc-1e70e8a09b91", "display": "Whago C Brox"},
   ]
 
   patientResource: any;
   actualDocument: any = undefined;
-  expectedDocument: any; 
+  expectedDocument: any;
   selectedTestCase = this.testCases[0];
 
   caseAdminInfoExpanded: boolean = false;
@@ -98,7 +98,7 @@ export class CaseComparisonContentComponent implements OnInit {
     });
   }
 
-  onExpectedCompositionChanged( event: any ) {    
+  onExpectedCompositionChanged( event: any ) {
     this.isLoading = true;
 
     this.decedentService.getDocumentBundle(event.value).subscribe(
@@ -112,7 +112,7 @@ export class CaseComparisonContentComponent implements OnInit {
     });
   }
 
-  onActualCompositionChanged(event: Event) {  
+  onActualCompositionChanged(event: Event) {
     try {
       this.actualDocument = JSON.parse( (event.target as any).value );
       this.dodiff();
@@ -121,20 +121,20 @@ export class CaseComparisonContentComponent implements OnInit {
     }
   }
 
-  onInputBundleClick() {    
+  onInputBundleClick() {
     const dialogRef = this.dialog.open( CaseComparisonDialogComponent, {data: this.actualDocument}).afterClosed().subscribe( data => {
       if (data === undefined) {
         this.clearCase();
       } else {
         this.actualDocument = JSON.parse( data );
-          this.dodiff();      
+          this.dodiff();
       }
     });
   }
 
-  onItemClick( id: any ) {  
+  onItemClick( id: any ) {
     switch (id) {
-      case 'caseAdminInfo': this.caseAdminInfoExpanded = !this.caseAdminInfoExpanded; break;      
+      case 'caseAdminInfo': this.caseAdminInfoExpanded = !this.caseAdminInfoExpanded; break;
       case 'demographics': this.demographicsExpanded = !this.demographicsExpanded; break;
       case 'circumstances':  this.circumstancesExpanded = !this.circumstancesExpanded; break;
       case 'jurisdiction': this.jurisdictionExpanded = !this.jurisdictionExpanded; break;
@@ -145,7 +145,7 @@ export class CaseComparisonContentComponent implements OnInit {
     }
   }
 
-  clearCase() {    
+  clearCase() {
     this.actualDocument = undefined;
 
     this.patient = new USCorePatientDiff( undefined, undefined );
@@ -179,7 +179,7 @@ export class CaseComparisonContentComponent implements OnInit {
       this.location = new USCoreLocationDiff(
         this.documentHandler.findResourceByProfileName( this.actualDocument, USCoreLocation ),
         this.documentHandler.findResourceByProfileName( this.expectedDocument, USCoreLocation ));
-      
+
       this.tobaccoUse = new ObservationTobaccoUseDiff(
         this.documentHandler.findResourceByProfileName( this.actualDocument, Obs_TobaccoUseContributedToDeath ),
         this.documentHandler.findResourceByProfileName( this.expectedDocument, Obs_TobaccoUseContributedToDeath ));
@@ -208,16 +208,16 @@ export class CaseComparisonContentComponent implements OnInit {
       this.mannerOfDeath = new ObservationMannerOfDeathDiff(
         this.documentHandler.findResourceByProfileName( this.actualDocument, Obs_MannerOfDeath ),
         this.documentHandler.findResourceByProfileName( this.expectedDocument, Obs_MannerOfDeath ));
-      
+
       this.patient = new USCorePatientDiff(
         this.documentHandler.findResourceByProfileName( this.actualDocument, USCorePatient ),
-        this.documentHandler.findResourceByProfileName( this.expectedDocument, USCorePatient ));  
+        this.documentHandler.findResourceByProfileName( this.expectedDocument, USCorePatient ));
 
       this.practitioner = new USCorePractitionerDiff(
         this.documentHandler.findResourceByProfileName( this.actualDocument, USCorePractitioner ),
         this.documentHandler.findResourceByProfileName( this.expectedDocument, USCorePractitioner ));
 
-      this.caseAdminInfoStyle = ( 
+      this.caseAdminInfoStyle = (
         this.mdiToEdrs.extension.style === 'valid' &&
         this.practitioner.name.style === 'valid' &&
         this.practitioner.identifier.style === 'valid' &&
@@ -225,21 +225,21 @@ export class CaseComparisonContentComponent implements OnInit {
         this.practitioner.address.style === 'valid'
       ) ? 'valid' : 'invalid';
 
-      this.demographicsStyle = ( 
+      this.demographicsStyle = (
         this.patient.gender.style === 'valid' &&
         this.patient.birthDate.style === 'valid' &&
         this.patient.extension.style === 'valid' &&
         this.patient.address.style === 'valid'
       ) ? 'valid' : 'invalid';
 
-      this.circumstancesStyle = ( 
+      this.circumstancesStyle = (
         this.location.address.style === 'valid' &&
         this.tobaccoUse.valueCodeableConcept.style === 'valid' &&
         this.pregnancy.valueCodeableConcept.style === 'valid'
       ) ? 'valid' : 'invalid';
 
-      this.jurisdictionStyle = ( 
-        this.deathDate.effectiveDateTime.style === 'valid' 
+      this.jurisdictionStyle = (
+        this.deathDate.effectiveDateTime.style === 'valid'
       ) ? 'valid' : 'invalid';
 
       this.causeAndMannerStyle = 'valid';

@@ -22,12 +22,11 @@ export class Demographics {
   race: string; // TODO: Setup FHIR Type
   ethnicity: string; // TODO: Setup FHIR Type
   maritalStatus: string;
-  usualWork: UsualWork[];
   address: Address;
 
-  constructor() {
-    this.usualWork = [];
-  }
+  // constructor() {
+  //   this.usualWork = [];
+  // }
 }
 
 export class Circumstances {
