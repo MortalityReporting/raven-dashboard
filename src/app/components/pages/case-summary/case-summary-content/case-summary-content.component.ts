@@ -16,10 +16,10 @@ export class CaseSummaryContentComponent implements OnInit {
   @Input() caseSummary$: Observable<CaseSummary>;
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
-  name: string;
-  licence: string;
-  phone:string;
-  addressLine: string;
+  name: string = "VALUE NOT FOUND";
+  licence: string = "VALUE NOT FOUND";
+  phone:string = "VALUE NOT FOUND";
+  addressLine: string = "VALUE NOT FOUND";
 
   caseAdminInfoExpanded: boolean = true;
   demographicsExpanded: boolean = false;
