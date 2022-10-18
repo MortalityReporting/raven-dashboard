@@ -55,7 +55,8 @@ export class FhirExplorerComponent implements OnInit {
 
   onToggleClick() {
     if (this.selectedStructure === "narrative") {
-      this.formattedText = this.documentHandler.getCurrentSubjectResource().text.div;
+      this.formattedText = this.fhirResource?.text?.div;
+      //this.formattedText = this.documentHandler.getCurrentSubjectResource().text.div;
     }
     else {
       // TODO not sure why this is a good idea and we need to fix this code ASAP !!!
