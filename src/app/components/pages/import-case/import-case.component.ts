@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 
 export class ImportCaseComponent implements OnInit {
 
-  inputOptions: string[] = ['FHIR Record', 'Connectathon Template(.XLS File)'];
+  inputOptions: string[] = ['MDI FHIR Document Bundle', 'Connectathon Template (XLSX File)'];
   selectedInputOption: string = this.inputOptions[0];
 
   constructor() { }

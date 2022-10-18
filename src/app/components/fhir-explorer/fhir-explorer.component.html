@@ -1,10 +1,22 @@
-<section>
-  <mat-button-toggle-group [(ngModel)]="selectedStructure" (click)="onToggleClick();" style="width: 100%">
-    <mat-button-toggle value="narrative" style="width: 33%">Narrative</mat-button-toggle>
-    <mat-button-toggle value="json" style="width: 33%">JSON</mat-button-toggle>
-    <mat-button-toggle value="xml" style="width: 34%">XML</mat-button-toggle>
-  </mat-button-toggle-group>
-</section>
+<div class="row">
+  <div class="col-left">
+    <section>
+      <mat-button-toggle-group [(ngModel)]="selectedStructure" (click)="onToggleClick();" style="width: 100%">
+        <mat-button-toggle value="narrative" style="width: 33%">Narrative</mat-button-toggle>
+        <mat-button-toggle value="json" style="width: 33%">JSON</mat-button-toggle>
+        <mat-button-toggle value="xml" style="width: 34%">XML</mat-button-toggle>
+      </mat-button-toggle-group>
+    </section>
+  </div>
+  <div class="col-right" style="margin-top: 0.5rem" align="center">
+    <button mat-button color="primary" matTooltip="Copy content to clipboard"
+            [disabled]="selectedStructure==='narrative' || !this.formattedText"
+            [cdkCopyToClipboard]="formattedText"
+            (click)="onCopyToClipboard(formattedText)">
+      <mat-icon>content_copy</mat-icon>
+    </button>
+  </div>
+</div>
 <pre *ngIf="!isNarrative()"> {{ formattedText }} </pre>
 <div *ngIf="isNarrative()">
   <br>

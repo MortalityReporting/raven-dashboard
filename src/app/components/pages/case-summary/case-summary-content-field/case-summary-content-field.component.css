@@ -1,7 +1,6 @@
 .content-field {
   display: flex;
   flex-direction: row;
-  border: 1px black dashed;
 }
 
 .content-field-label {

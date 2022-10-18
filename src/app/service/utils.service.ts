@@ -13,6 +13,7 @@ export class UtilsService {
       horizontalPosition: 'center',
       verticalPosition: 'top',
       panelClass: ['error-color'],
+      duration: 5000
     });
   }
 
@@ -21,8 +22,12 @@ export class UtilsService {
       horizontalPosition: 'center',
       verticalPosition: 'top',
       panelClass: ['mat-toolbar', 'mat-primary'],
-      duration: 5000
+      duration: 3000
     });
+  }
+
+  closeNotification(){
+    this._snackBar.dismiss();
   }
 
   isJsonString(str: string): boolean {

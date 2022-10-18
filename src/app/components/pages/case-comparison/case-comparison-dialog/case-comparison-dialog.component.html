@@ -1,0 +1,7 @@
+<div mat-dialog-content>
+    <textarea class="text-area" placeholder="Paste your Document Bundle here." (input)="onTextAreaChanged($event)">{{text}}</textarea>
+    <div mat-dialog-actions class="mat-dialog-actions">
+        <button class="mat-raised-button" (click)="onClearButtonClick();">Clear</button>
+        <button class="mat-raised-button mat-primary" (click)="onSaveButtonClick();">Save</button>
+    </div>
+</div>  

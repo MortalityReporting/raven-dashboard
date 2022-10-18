@@ -2,7 +2,17 @@ import {Injectable} from '@angular/core';
 import {map, Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {DecedentService} from "./decedent.service";
-import {CaseSummary, CauseAndManner, CauseOfDeathPart1, Circumstances, Jurisdiction, Demographics, UsualWork} from "../model/case-summary-models/case.summary";
+import {
+  CaseSummary,
+  CauseAndManner,
+  CauseOfDeathPart1,
+  CauseOfDeathPart2,
+  Circumstances,
+  Jurisdiction,
+  Demographics,
+  UsualWork,
+  Autopsy
+} from "../model/case-summary-models/case.summary";
 import {Author, CaseHeader} from "../model/case-summary-models/case.header";
 import {TrackingNumber} from "../model/mdi/tracking.number";
 import {TerminologyHandlerService} from "./terminology-handler.service";
@@ -17,6 +27,7 @@ import {
   Obs_CauseOfDeathPart2,
 } from "../model/mdi/profile.list"
 import {FhirResourceProviderService} from "./fhir-resource-provider.service";
+import {Address} from "../model/fhir/types/address";
 
 @Injectable({
   providedIn: 'root'
@@ -53,7 +64,7 @@ export class DocumentHandlerService {
         this.caseHeader.next(this.createCaseHeader(documentBundle, patientResource, compositionResource));
         this.caseSummary.next(this.createCaseSummary(documentBundle, patientResource, compositionResource));
         this.fhirResourceProvider.setCompositionId(compositionId);
-        this.fhirResourceProvider.setSelectedFhirResource(documentBundle);               
+        this.fhirResourceProvider.setSelectedFhirResource(documentBundle);
       })
     );
   }
@@ -64,7 +75,7 @@ export class DocumentHandlerService {
 
   createCaseHeader(documentBundle: any, patientResource: any, compositionResource: any): CaseHeader {
 
-    let caseHeader = new CaseHeader();    
+    let caseHeader = new CaseHeader();
     caseHeader.fullName = this.getPatientOfficialName(patientResource);
     let genderString = patientResource.gender || this.defaultString;
     caseHeader.gender = genderString.substring(0,1).toUpperCase() + genderString.substring(1);
@@ -77,7 +88,7 @@ export class DocumentHandlerService {
     compositionResource.author?.map(( ref: any ) => {
 
       let practitioner = this.findResourceById(documentBundle, ref.reference );
-      
+
       let author = new Author();
 
       author.license = practitioner?.identifier != null ? practitioner.identifier[0].value : undefined;
@@ -90,7 +101,7 @@ export class DocumentHandlerService {
       author.postalCode = practitioner?.address != null ? practitioner.address[0].postalCode : undefined;
 
       caseHeader.authors.push( author );
-    });  
+    });
 
     return caseHeader;
   }
@@ -105,17 +116,27 @@ export class DocumentHandlerService {
     summary.circumstances = this.generateCircumstances(documentBundle, compositionResource);
     summary.jurisdiction = this.generateJurisdiction(documentBundle, compositionResource);
     summary.causeAndManner = this.generateCauseAndManner(documentBundle, compositionResource);
+    summary.examAndAutopsy = this.generateExamAndAutopsy(documentBundle, compositionResource);
     return summary;
   }
 
   generateDemographics(documentBundle: any, compositionResource: any, patientResource: any): Demographics {
     let demographics: Demographics = new Demographics();
-    
+    console.log(demographics)
+
     // Setup Basic Demographics from Patient Resource Directly
     demographics.aliases = patientResource.name || this.defaultString;
     demographics.gender = patientResource.gender || this.defaultString;
     demographics.birthDate = patientResource.birthDate || this.defaultString;
     demographics.maritalStatus = patientResource.maritalStatus || this.defaultString;
+
+    demographics.address = new Address();
+    demographics.address.line1 = patientResource.address?.[0]?.line?.[0] || this.defaultString;
+    demographics.address.line2 = patientResource.address?.[0]?.line?.[1] || this.defaultString;
+    demographics.address.city = patientResource.address?.[0]?.city || this.defaultString;
+    demographics.address.state = patientResource.address?.[0]?.state || this.defaultString;
+    demographics.address.zip = patientResource.address?.[0]?.postalCode || this.defaultString;
+    demographics.address.country = patientResource.address?.[0]?.country || this.defaultString;
 
     // Setup Identifiers
     demographics.ssn = this.getSocialSecurityNumber(patientResource);
@@ -131,13 +152,13 @@ export class DocumentHandlerService {
     let demographicsSection = this.getSection(compositionResource, "demographics");
 
     if (demographicsSection != null) {
-      
+
       demographicsSection.entry.map(( entry: any ) => {
 
         let observation = this.findResourceById(documentBundle, entry.reference );
-  
+
         demographics.usualWork.push( new UsualWork( observation?.valueCodeableConcept?.text, observation?.component[0].valueCodeableConcept.text ));
-      });  
+      });
     }
 
     return demographics;
@@ -164,7 +185,7 @@ export class DocumentHandlerService {
     let observation = this.findJurisdictionObservation(documentBundle, compositionResource, jurisdictionSection);
 
     jurisdiction.typeOfDeathLocation = this.defaultString;
-    jurisdiction.establishmentApproach = this.defaultString;        
+    jurisdiction.establishmentApproach = this.defaultString;
     jurisdiction.deathDateTime = observation?.effectiveDateTime?.replace( "T", " " ) || this.defaultString;
     jurisdiction.pronouncedDateTime = observation?.component?.valueDateTime || this.defaultString;
 
@@ -172,16 +193,16 @@ export class DocumentHandlerService {
   }
 
   generateCauseAndManner(documentBundle: any, compositionResource: any): CauseAndManner {
-    
-    let causeAndManner: CauseAndManner = new CauseAndManner();
-    
-    let causeAndMannerSection = compositionResource.section.find((section: any) => section.code.coding.some((coding: any) => coding.code === "cause-manner"));    
 
-    causeAndMannerSection?.entry.map(( entry: any) => 
+    let causeAndManner: CauseAndManner = new CauseAndManner();
+
+    let causeAndMannerSection = compositionResource.section.find((section: any) => section.code.coding.some((coding: any) => coding.code === "cause-manner"));
+
+    causeAndMannerSection?.entry.map(( entry: any) =>
     {
       let observation = this.findResourceById(documentBundle, entry.reference );
 
-      if (observation != null) 
+      if (observation != null)
       {
         let length = observation.meta?.profile?.length || 0;
 
@@ -189,25 +210,30 @@ export class DocumentHandlerService {
         {
           let profile = observation.meta.profile[0];
 
-          if (profile === Obs_CauseOfDeathPart1) 
+          if (profile === Obs_CauseOfDeathPart1)
           {
             let causeOfDeathPart1 = new CauseOfDeathPart1();
-    
-            observation.component?.map(( entry: any ) => 
+
+            observation.component?.map(( entry: any ) =>
             {
               if (entry.valueString != null) {
                 causeOfDeathPart1.interval = entry.valueString;
               }
             })
-      
+
+            causeOfDeathPart1.id = entry.reference;
             causeOfDeathPart1.event = observation.valueCodeableConcept?.text || undefined;
-      
-            causeAndManner.causeOfDeathPart1.push( causeOfDeathPart1 );  
+
+            causeAndManner.causeOfDeathPart1.push( causeOfDeathPart1 );
           }
           else if (profile === Obs_CauseOfDeathPart2)
           {
-            causeAndManner.causeOfDeathPart2.push( observation.valueCodeableConcept?.text || this.defaultString );
-          }              
+            let causeOfDeathPart2 = new CauseOfDeathPart2();
+            causeOfDeathPart2.id = entry.reference;
+            causeOfDeathPart2.value = observation.valueCodeableConcept?.text || this.defaultString;
+
+            causeAndManner.causeOfDeathPart2.push( causeOfDeathPart2 );
+          }
           else if (profile === Obs_MannerOfDeath)
           {
             let coding = observation.valueCodeableConcept?.coding;
@@ -216,18 +242,29 @@ export class DocumentHandlerService {
             {
               causeAndManner.mannerOfDeath = coding[0]?.display
             }
-          }              
+          }
           else if (profile === Obs_HowDeathInjuryOccurred)
           {
             causeAndManner.howDeathInjuryOccurred =observation.valueString || this.defaultString;
           }
         }
       }
-    });  
+    });
 
     return causeAndManner;
   }
 
+  generateExamAndAutopsy(documentBundle: any, compositionResource: any): Autopsy {
+    let autopsy: Autopsy = new Autopsy();
+    // let autopsySection = this.getSection(compositionResource, "exam-autopsy");
+    let observation = this.findResourcesByProfileName(documentBundle, "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-autopsy-performed-indicator")[0];
+    let performedValue = observation?.valueCodeableConcept;
+    let availableValue = observation?.component?.[0]?.valueCodeableConcept; // TODO: Switch to search by code. http://loinc.org|69436-4
+    autopsy.performed = performedValue?.text || performedValue?.coding?.[0]?.display || performedValue?.coding?.[0]?.code || this.defaultString;
+    autopsy.resultsAvailable = availableValue?.text || availableValue?.coding?.[0]?.display || availableValue?.coding?.[0]?.code || this.defaultString;
+
+    return autopsy;
+  }
   // -------------------------
   // Find and Filter Functions
   // -------------------------
@@ -239,7 +276,22 @@ export class DocumentHandlerService {
 
   // For singleton profiles, this function can be used to find the resource by the profile name. ID should be preferred whenever available.
   findResourceByProfileName(documentBundle: any = this.currentDocumentBundle, profileName: string): any {
+    const profile = documentBundle.entry.find((entry: any) => entry.resource.meta.profile.includes(profileName))?.resource;
+    console.log(profile)
+    console.log(profileName)
     return documentBundle.entry.find((entry: any) => entry.resource.meta.profile.includes(profileName))?.resource || undefined;
+  }
+
+  findResourcesByProfileName(documentBundle: any = this.currentDocumentBundle, profileName: string): any[] {
+    let items = [];
+
+    documentBundle.entry.map( (entry: any) => {
+      if (entry.resource.meta.profile.includes(profileName)) {
+        items.push( entry.resource );
+      }
+    })
+
+    return items;
   }
 
   // Find Death Location Resource (US Core Location Profile) through the Composition.section reference.
@@ -281,7 +333,7 @@ export class DocumentHandlerService {
   getTrackingNumbers(compositionResource: any): TrackingNumber[] {
     let extensions = compositionResource.extension;
     let trackingNumberExtensions = extensions?.filter((extension: any) => extension.url === "http://hl7.org/fhir/us/mdi/StructureDefinition/Extension-tracking-number");
-        
+
     let trackingNumbers = new Array();
 
     trackingNumberExtensions?.map(( item: any ) => {
@@ -290,7 +342,7 @@ export class DocumentHandlerService {
 
       let valueIdentifier = item?.valueIdentifier;
       trackingNumber.value = valueIdentifier?.value || "Tracking Number Not Specified";
-  
+
       if (valueIdentifier?.type?.text) {
         trackingNumber.type = valueIdentifier.type.text;
       }
@@ -304,7 +356,7 @@ export class DocumentHandlerService {
 
       trackingNumbers.push( trackingNumber );
     });
-    
+
     return trackingNumbers;
   }
 
@@ -315,7 +367,7 @@ export class DocumentHandlerService {
       let trackingNumberExtension = extensions?.find((extension: any) => extension.url === "http://hl7.org/fhir/us/mdi/StructureDefinition/Extension-tracking-number");
       let valueIdentifier = trackingNumberExtension?.valueIdentifier;
       trackingNumber.value = valueIdentifier?.value || "Tracking Number Not Specified";
-  
+
       if (valueIdentifier?.type?.text) {
         trackingNumber.type = valueIdentifier.type.text;
       }
@@ -328,7 +380,7 @@ export class DocumentHandlerService {
       }
       return trackingNumber;
     }
-  
+
   // Build a full name from Patient official use name
   getPatientOfficialName(patientResource: any): string {
     let nameList = patientResource.name;
@@ -367,8 +419,24 @@ export class DocumentHandlerService {
     return textExtension?.valueString || "Unknown";
   }
 
+  getCurrentDocumentBundle(): any {
+    return this.currentDocumentBundle;
+  }
+
   getCurrentSubjectResource(): any {
     return this.findResourceById(undefined, this.subjectId);
+  }
+
+  getCertifier(): any {
+    let certifierId = this.currentCompositionResource?.author?.[0]?.reference;
+    console.log(certifierId);
+    let test = this.findResourceById(this.currentDocumentBundle, certifierId);
+    console.log(test)
+    return test;
+  }
+
+  getObservationResource(id: any): any {
+    return this.findResourceById(undefined, id);
   }
 
 }

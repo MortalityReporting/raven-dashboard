@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from "rxjs";
-import {FhirResource} from "../../model/fhir/fhir.resource";
 import {FhirResourceProviderService} from "../../service/fhir-resource-provider.service";
 import {HttpClient} from "@angular/common/http";
 import {DocumentHandlerService} from "../../service/document-handler.service";
 import {FhirExplorerService} from 'src/app/service/fhir-explorer.service';
+import {UtilsService} from "../../service/utils.service";
 
 @Component({
   selector: 'app-fhir-explorer',
@@ -14,25 +13,34 @@ import {FhirExplorerService} from 'src/app/service/fhir-explorer.service';
 export class FhirExplorerComponent implements OnInit {
 
   formattedText: string;
-  fhirResource: FhirResource;
-  selectedStructure: string = 'json';
-  fhirResource$: Observable<FhirResource>; // TODO: For Testing, remove.
-  
+  fhirResource: any;
+  selectedStructure: string = "narrative";
+
   constructor(
     private httpClient: HttpClient,
     private documentHandler: DocumentHandlerService,
     private fhirExplorerService: FhirExplorerService,
     private fhirResourceProvider: FhirResourceProviderService,
+    private utilsService: UtilsService
   ) {
       this.fhirResourceProvider.fhirResource$.subscribe( resource => {
 
       this.fhirResource = resource;
-      
-      if (this.selectedStructure === "xml") {
+
+      if(!this.fhirResource){
+        this.formattedText = '';
+      }
+      else if(this.selectedStructure == "narrative"){
+        // TODO, not sure where this comes from
+        //this.formattedText = this.documentHandler.getCurrentSubjectResource()?.text?.div;
+        this.formattedText = this.fhirResource?.text?.div;
+      }
+      else if (this.selectedStructure === "xml") {
         this.fhirExplorerService.translateToXml( this.fhirResource ).subscribe( response => {
           this.formattedText = response;
         })
-      } else {
+      }
+      else {
         this.formattedText = JSON.stringify( resource, null, 2 );
       }
     })
@@ -47,10 +55,18 @@ export class FhirExplorerComponent implements OnInit {
 
   onToggleClick() {
     if (this.selectedStructure === "narrative") {
-      this.formattedText = this.documentHandler.getCurrentSubjectResource().text.div;
+      this.formattedText = this.fhirResource?.text?.div;
+      //this.formattedText = this.documentHandler.getCurrentSubjectResource().text.div;
     }
     else {
-      this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.getCurrentSubjectResource());
+      // TODO not sure why this is a good idea and we need to fix this code ASAP !!!
+      // This should do the translation we are doing in the constructor
+      const resource = this.documentHandler.getCurrentSubjectResource();
+      this.fhirResourceProvider.setSelectedFhirResource(this.fhirResource);
     }
-  }  
+  }
+
+  onCopyToClipboard(formattedText: string) {
+    this.utilsService.showSuccessMessage("Content copied to clipboard.")
+  }
 }

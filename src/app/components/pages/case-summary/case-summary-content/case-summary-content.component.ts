@@ -4,6 +4,7 @@ import {CaseSummary} from "../../../../model/case-summary-models/case.summary";
 import {Author, CaseHeader} from "../../../../model/case-summary-models/case.header";
 import {MatAccordion} from "@angular/material/expansion";
 import {Profiles} from "../../../../model/mdi/profile.list";
+import {FhirResourceProviderService} from "../../../../service/fhir-resource-provider.service";
 
 @Component({
   selector: 'app-case-summary-content',
@@ -14,10 +15,11 @@ export class CaseSummaryContentComponent implements OnInit {
   @Input() caseHeader$: Observable<CaseHeader>;
   @Input() caseSummary$: Observable<CaseSummary>;
   @ViewChild(MatAccordion) accordion: MatAccordion;
-  
-  line1: string;
-  line2: string;
-  line3: string;
+
+  name: string = "VALUE NOT FOUND";
+  license: string = "VALUE NOT FOUND";
+  phone:string = "VALUE NOT FOUND";
+  addressLine: string = "VALUE NOT FOUND";
 
   caseAdminInfoExpanded: boolean = true;
   demographicsExpanded: boolean = false;
@@ -27,35 +29,39 @@ export class CaseSummaryContentComponent implements OnInit {
   medicalHistoryExpanded: boolean = false;
   examNotesExpanded: boolean = false;
   narrativesExpanded: boolean = false;
-  deathCertificateExpanded: boolean = false;
 
   profiles: any = Profiles;
   ids = ["ID-1", "ID-2", "ID-3"];
   selectedId = "ID-1";
 
-  constructor() {
+  author: any;
+
+  constructor(
+    private fhirResourceProviderService: FhirResourceProviderService
+  ) {
   }
 
   ngOnInit(): void {
 
     this.caseHeader$.subscribe( caseHeader => {
-
+      console.log(caseHeader);
       if (caseHeader.authors != null)
       {
         let author = caseHeader.authors[0];
-        
-        this.line1 = author.givenName + " " + author.familyName + "  License #: " + author.license + " Phone #: " + author.phoneNumber;
-        this.line2 = author.line;
-        this.line3 = author.city + ", " + author.state + "  " + author.postalCode;
+        this.author = caseHeader.authors[0];
+        this.name = `${this.author.givenName[0] ?? ''} ${this.author.familyName ?? ''}`;
+        this.license = this.author.license ?? '';
+        this.phone = this.author.phoneNumber ?? '';
+        this.addressLine = `${author.line}\n${this.author.city ? this.author.city + ', ' : ''} ${this.author.state ?? ''} ${this.author.postalCode ?? ''}`
       }
     });
   }
 
   onItemClick( id: any )
-  {  
+  {
     switch  (id)
     {
-      case 'caseAdminInfo': this.caseAdminInfoExpanded = !this.caseAdminInfoExpanded; break;      
+      case 'caseAdminInfo': this.caseAdminInfoExpanded = !this.caseAdminInfoExpanded; break;
       case 'demographics': this.demographicsExpanded = !this.demographicsExpanded; break;
       case 'circumstances':  this.circumstancesExpanded = !this.circumstancesExpanded; break;
       case 'jurisdiction': this.jurisdictionExpanded = !this.jurisdictionExpanded; break;
@@ -63,7 +69,6 @@ export class CaseSummaryContentComponent implements OnInit {
       case 'medicalHistory': this.medicalHistoryExpanded = !this.medicalHistoryExpanded; break;
       case 'examNotes': this.examNotesExpanded = !this.examNotesExpanded; break;
       case 'narratives': this.narrativesExpanded = !this.narrativesExpanded; break;
-      case 'deathCertificate': this.deathCertificateExpanded = !this.deathCertificateExpanded; break;
     }
   }
 
@@ -76,9 +81,8 @@ export class CaseSummaryContentComponent implements OnInit {
     this.medicalHistoryExpanded = true;
     this.examNotesExpanded = true;
     this.narrativesExpanded = true;
-    this.deathCertificateExpanded = true;
 
-    this.accordion.openAll()    
+    this.accordion.openAll()
   }
 
   onCloseAll() {
@@ -90,8 +94,17 @@ export class CaseSummaryContentComponent implements OnInit {
     this.medicalHistoryExpanded = false;
     this.examNotesExpanded = false;
     this.narrativesExpanded = false;
-    this.deathCertificateExpanded = false;
 
     this.accordion.closeAll()
+  }
+
+  onNotImplementedItemSelected() {
+    this.fhirResourceProviderService.setSelectedFhirResource(null);
+  }
+
+  onAuthorSelected() {
+    if(this.author){
+      this.fhirResourceProviderService.setSelectedFhirResource(this.author);
+    }
   }
 }

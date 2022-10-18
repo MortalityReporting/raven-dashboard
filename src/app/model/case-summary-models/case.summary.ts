@@ -1,6 +1,7 @@
 import {HumanName} from "../fhir/types/human.name";
 import {Identifier} from "../fhir/types/identifier";
 import {CodeableConcept} from "../fhir/types/codeable.cocept";
+import {Address} from "../fhir/types/address";
 
 export class CaseSummary {
   demographics: Demographics;
@@ -8,7 +9,7 @@ export class CaseSummary {
   jurisdiction: Jurisdiction;
   causeAndManner: CauseAndManner;
   medicalHistory: string = "Not Implemented"; // TODO: Implement.
-  examAndAutopsy: string = "Not Implemented"; // TODO: Implement.
+  examAndAutopsy: Autopsy;
   narratives: string = "Not Implemented"; // TODO: Implement.
 }
 
@@ -22,6 +23,7 @@ export class Demographics {
   ethnicity: string; // TODO: Setup FHIR Type
   maritalStatus: string;
   usualWork: UsualWork[];
+  address: Address;
 
   constructor() {
     this.usualWork = [];
@@ -42,6 +44,11 @@ export class Jurisdiction {
   typeOfDeathLocation: string;
 }
 
+export class Autopsy {
+  performed: string;
+  resultsAvailable: string;
+}
+
 // Individual Resources and Parts
 
 export class UsualWork {
@@ -58,7 +65,7 @@ export class UsualWork {
 
 export class CauseAndManner {
   causeOfDeathPart1: CauseOfDeathPart1[];
-  causeOfDeathPart2: String[];
+  causeOfDeathPart2: CauseOfDeathPart2[];
   causeOfDeathConditions: CauseOfDeathCondition[];
   contributingConditions: string[]; // TODO: Does this need a model?
   mannerOfDeath: string;
@@ -72,8 +79,14 @@ export class CauseAndManner {
 }
 
 export class CauseOfDeathPart1 {
+  id: string;
   event: string;
   interval: string;
+}
+
+export class CauseOfDeathPart2 {
+  id: string;
+  value: string;
 }
 
 export class CauseOfDeathCondition {

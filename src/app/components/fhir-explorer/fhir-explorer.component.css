@@ -1,0 +1,11 @@
+.row {
+  display: flex;  /* aligns all child elements (flex items) in a row */
+}
+
+.col-left {
+  flex: 80;        /* distributes space on the line equally among items */
+}
+
+.col-right {
+  flex: 20;        /* distributes space on the line equally among items */
+}
