@@ -35,7 +35,7 @@ import {Address} from "../model/fhir/types/address";
 export class DocumentHandlerService {
 
   private subjectId: string;
-  private defaultString: string = "VALUE NOT FOUND";
+  public defaultString: string = "VALUE NOT FOUND";
 
   // TODO: Refactor this in conjunction with directive.
   private currentDocumentBundle: any;
