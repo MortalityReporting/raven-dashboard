@@ -68,7 +68,9 @@
             <div class="grid-col-1">
               <app-case-summary-content-field [label]="'Date of Birth'" [value]="(caseSummary$ | async)?.demographics.birthDate" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
             </div>
-          </div>
+            <div class="grid-col-1">
+            </div>
+            </div>
           <div class="grid-row">
             <div class="grid-col-1">
               <app-case-summary-content-field [label]="'Race'" [value]="(caseSummary$ | async)?.demographics.race" appSetFhirExplorer [title]="'subject'"></app-case-summary-content-field>
@@ -225,23 +227,23 @@
               <app-case-summary-content-field [label]="'Manner of Death'" [value]="(caseSummary$ | async)?.causeAndManner.mannerOfDeath" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-manner-of-death'"></app-case-summary-content-field>
             </div>
             <div class="grid-col-1">
-              <app-case-summary-content-field [label]="'Place of Injury'" [value]="" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"></app-case-summary-content-field>
+              <app-case-summary-content-field [label]="'Place of Injury'" [value]="'NOT YET IMPLEMENTED'" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"></app-case-summary-content-field>
             </div>
           </div>
           <div class="grid-row">
             <div class="grid-col-1">
-              <app-case-summary-content-field [label]="'How Injury Occurred'" [value]="" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"></app-case-summary-content-field>
+              <app-case-summary-content-field [label]="'How Injury Occurred'" [value]="'NOT YET IMPLEMENTED'" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"></app-case-summary-content-field>
             </div>
             <div class="grid-col-1">
-              <app-case-summary-content-field [label]="'Injury Date/Time'" [value]="" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"></app-case-summary-content-field>
+              <app-case-summary-content-field [label]="'Injury Date/Time'" [value]="'NOT YET IMPLEMENTED'" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"></app-case-summary-content-field>
             </div>
           </div>
           <div class="grid-row">
             <div class="grid-col-1">
-              <app-case-summary-content-field [label]="'Injury/Event Occurred at Work'" [value]="" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"></app-case-summary-content-field>
+              <app-case-summary-content-field [label]="'Injury/Event Occurred at Work'" [value]="'NOT YET IMPLEMENTED'" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"></app-case-summary-content-field>
             </div>
             <div class="grid-col-1">
-              <app-case-summary-content-field [label]="'Transportation Role'" [value]="" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"></app-case-summary-content-field>
+              <app-case-summary-content-field [label]="'Transportation Role'" [value]="'NOT YET IMPLEMENTED'" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"></app-case-summary-content-field>
             </div>
           </div>
         </div>
