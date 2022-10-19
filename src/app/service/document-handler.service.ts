@@ -272,6 +272,9 @@ export class DocumentHandlerService {
   }
 
   findObservationComponentByCode(observation: any, componentCode: string): any {
+    if(!observation.component || !componentCode){
+      return null;
+    }
     return (observation.component.find((component: any) => component.code.coding[0].code === componentCode)) || undefined;
   }
 
