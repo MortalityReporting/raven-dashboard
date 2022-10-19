@@ -17,8 +17,17 @@
     </button>
   </div>
 </div>
-<pre *ngIf="!isNarrative()"> {{ formattedText }} </pre>
+
+<div *ngIf="!isNarrative()">
+  <span *ngIf="formattedText"><pre> {{ formattedText }} </pre></span>
+  <span *ngIf="!formattedText" style="text-align: center"><pre> No Resource Found </pre></span>
+</div>
+
 <div *ngIf="isNarrative()">
   <br>
-  <div [innerHTML]="formattedText"></div>
+  <div *ngIf="formattedText" [innerHTML]="formattedText"></div>
+  <div *ngIf="!formattedText" style="text-align: center">
+    <span *ngIf="!fhirResource"><pre>Resource Not Found</pre></span>
+    <span *ngIf="fhirResource"><pre>No Narrative Found</pre></span>
+  </div>
 </div>
