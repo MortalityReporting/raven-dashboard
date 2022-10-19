@@ -120,10 +120,10 @@
         <div class="summary-section-grid">
           <div class="grid-row">
             <div class="grid-col-1">
-              <app-case-summary-content-field [label]="'Death Location'" [value]="(caseSummary$ | async)?.circumstances.deathLocation" appSetFhirExplorer [title]="'deathLocation'"></app-case-summary-content-field>
+              <app-case-summary-content-field [label]="'Death Location'" [value]="(caseSummary$ | async)?.circumstances.deathLocation" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Location-death'"></app-case-summary-content-field>
             </div>
             <div class="grid-col-1">
-              <app-case-summary-content-field [label]="'Injury/Event Occurred at Work'" [value]="(caseSummary$ | async)?.circumstances.workInjury" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"></app-case-summary-content-field>
+              <app-case-summary-content-field [label]="'Injury Location'" [value]="(caseSummary$ | async)?.circumstances.injuryLocation" appSetFhirExplorer [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Location-injury'"></app-case-summary-content-field>
             </div>
           </div>
           <div class="grid-row">
@@ -251,6 +251,7 @@
       </div>
 
     </mat-expansion-panel>
+
     <mat-expansion-panel class="summary-section" id="medicalHistory" [expanded]="medicalHistoryExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'medicalHistory' )">
         <mat-panel-title>Relevant Medical History</mat-panel-title>

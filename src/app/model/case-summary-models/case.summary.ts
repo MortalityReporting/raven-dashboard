@@ -31,7 +31,7 @@ export class Demographics {
 
 export class Circumstances {
   deathLocation: string;
-  workInjury: string;
+  injuryLocation: string;
   tobaccoUseContributed: string;
   pregnancy: string;
 }

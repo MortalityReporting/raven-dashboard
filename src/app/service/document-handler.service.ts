@@ -154,10 +154,12 @@ export class DocumentHandlerService {
     let circumstances: Circumstances = new Circumstances();
     let circumstancesSection = this.getSection(compositionResource, "circumstances");
 
-    let deathLocationResource = this.findDeathLocation(documentBundle, compositionResource, circumstancesSection);
-    circumstances.deathLocation = deathLocationResource?.name || this.defaultString;
+    let deathLocationResource = this.findResourceByProfileName(documentBundle, "http://hl7.org/fhir/us/mdi/StructureDefinition/Location-death");
+    let injuryLocationResource = this.findResourceByProfileName(documentBundle, "http://hl7.org/fhir/us/mdi/StructureDefinition/Location-injury");
 
-    circumstances.workInjury = this.findResourceByProfileName(documentBundle, Obs_DeathInjuryEventOccurredAtWork)?.valueCodeableConcept?.coding[0]?.display || this.defaultString; // TODO: Missing data, once available fix.
+    circumstances.deathLocation = deathLocationResource?.name || this.defaultString;
+    circumstances.injuryLocation = injuryLocationResource?.name || this.defaultString;
+
     circumstances.pregnancy = this.findResourceByProfileName(documentBundle, Obs_DecedentPregnancy)?.valueCodeableConcept?.coding[0]?.display || this.defaultString; // TODO: Missing data, once available fix.
     circumstances.tobaccoUseContributed = this.findResourceByProfileName(documentBundle, Obs_TobaccoUseContributedToDeath)?.valueCodeableConcept?.coding[0]?.display || this.defaultString;; // TODO: Missing data, once available fix.
 
@@ -170,10 +172,19 @@ export class DocumentHandlerService {
     let jurisdictionSection = this.getSection(compositionResource, "jurisdiction");
     let observation = this.findJurisdictionObservation(documentBundle, compositionResource, jurisdictionSection);
 
-    jurisdiction.typeOfDeathLocation = this.defaultString;
-    jurisdiction.establishmentApproach = this.defaultString;
+    let typeOfDeathLocationComponent = this.findObservationComponentByCode(observation, "58332-8");
+    console.log(typeOfDeathLocationComponent);
+    let pronouncedDateTimeComponent = this.findObservationComponentByCode(observation, "80616-6");
+    console.log(pronouncedDateTimeComponent);
+    // 58332-8
+
+    jurisdiction.typeOfDeathLocation = typeOfDeathLocationComponent?.valueCodeableConcept?.text ||
+      typeOfDeathLocationComponent?.valueCodeableConcept?.coding?.[0].display || typeOfDeathLocationComponent?.valueCodeableConcept?.coding?.[0].code || this.defaultString;
+    jurisdiction.establishmentApproach = observation?.method?.text || observation?.method?.coding?.[0]?.display || observation?.method?.coding?.[0]?.code || this.defaultString;
     jurisdiction.deathDateTime = observation?.effectiveDateTime?.replace( "T", " " ) || this.defaultString;
-    jurisdiction.pronouncedDateTime = observation?.component?.valueDateTime || this.defaultString;
+
+    // Search for component by code. 80616-6
+    jurisdiction.pronouncedDateTime = pronouncedDateTimeComponent?.valueDateTime || this.defaultString;
 
     return jurisdiction;
   }
@@ -260,6 +271,10 @@ export class DocumentHandlerService {
     return (documentBundle.entry.find((entry: any) => entry.fullUrl === resourceId))?.resource || undefined;
   }
 
+  findObservationComponentByCode(observation: any, componentCode: string): any {
+    return (observation.component.find((component: any) => component.code.coding[0].code === componentCode)) || undefined;
+  }
+
   // For singleton profiles, this function can be used to find the resource by the profile name. ID should be preferred whenever available.
   findResourceByProfileName(documentBundle: any = this.currentDocumentBundle, profileName: string): any {
     const profile = documentBundle.entry.find((entry: any) => entry.resource.meta.profile.includes(profileName))?.resource;
@@ -280,12 +295,18 @@ export class DocumentHandlerService {
     return items;
   }
 
-  // Find Death Location Resource (US Core Location Profile) through the Composition.section reference.
-  findDeathLocation(documentBundle: any = this.currentDocumentBundle, compositionResource: any, circumstancesSection: any): any {
-    let deathLocationResourceId = (circumstancesSection?.entry?.find((entry: any) => entry.reference.startsWith("Location")))?.reference || undefined;
-    // TODO: Add handling for reference from death date?
-    return this.findResourceById(documentBundle, deathLocationResourceId);
-  }
+  // // Find Death Location Resource (US Core Location Profile) through the Composition.section reference.
+  // findDeathLocation(documentBundle: any = this.currentDocumentBundle, compositionResource: any, circumstancesSection: any): any {
+  //   let deathLocationResourceId = (circumstancesSection?.entry?.find((entry: any) => entry.reference.startsWith("Location")))?.reference || undefined;
+  //   // TODO: Add handling for reference from death date?
+  //   return this.findResourceById(documentBundle, deathLocationResourceId);
+  // }
+  //
+  // findDeathLocation(documentBundle: any = this.currentDocumentBundle, compositionResource: any, circumstancesSection: any): any {
+  //   let deathLocationResourceId = (circumstancesSection?.entry?.find((entry: any) => entry.reference.startsWith("Location")))?.reference || undefined;
+  //   // TODO: Add handling for reference from death date?
+  //   return this.findResourceById(documentBundle, deathLocationResourceId);
+  // }
 
   findJurisdictionObservation(documentBundle: any = this.currentDocumentBundle, compositionResource: any, jurisdictionSection: any): any {
     let id = (jurisdictionSection?.entry?.find((entry: any) => entry.reference.startsWith("Observation")))?.reference || undefined;
