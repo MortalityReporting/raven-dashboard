@@ -26,11 +26,6 @@ export class SetFhirExplorerDirective {
         case "certifier":
           this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.getCertifier());
           break;
-        case "deathLocation":
-          let circumstancesSection = this.documentHandler.getSection(undefined, "circumstances");
-          let deathLocationResource = this.documentHandler.findDeathLocation(undefined, undefined, circumstancesSection);
-          this.fhirResourceProvider.setSelectedFhirResource(deathLocationResource);
-          break;
         case "subject":
           this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.getCurrentSubjectResource());
           break;
