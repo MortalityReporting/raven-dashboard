@@ -5,6 +5,7 @@ import {Author, CaseHeader} from "../../../../model/case-summary-models/case.hea
 import {MatAccordion} from "@angular/material/expansion";
 import {Profiles} from "../../../../model/mdi/profile.list";
 import {FhirResourceProviderService} from "../../../../service/fhir-resource-provider.service";
+import {DocumentHandlerService} from "../../../../service/document-handler.service";
 
 @Component({
   selector: 'app-case-summary-content',
@@ -16,10 +17,10 @@ export class CaseSummaryContentComponent implements OnInit {
   @Input() caseSummary$: Observable<CaseSummary>;
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
-  name: string = "VALUE NOT FOUND";
-  license: string = "VALUE NOT FOUND";
-  phone:string = "VALUE NOT FOUND";
-  addressLine: string = "VALUE NOT FOUND";
+  name: string;
+  license: string;
+  phone:string;
+  addressLine: string;
 
   caseAdminInfoExpanded: boolean = true;
   demographicsExpanded: boolean = false;
@@ -37,7 +38,8 @@ export class CaseSummaryContentComponent implements OnInit {
   author: any;
 
   constructor(
-    private fhirResourceProviderService: FhirResourceProviderService
+    private fhirResourceProviderService: FhirResourceProviderService,
+    private documentHandlerService: DocumentHandlerService
   ) {
   }
 
@@ -50,9 +52,15 @@ export class CaseSummaryContentComponent implements OnInit {
         let author = caseHeader.authors[0];
         this.author = caseHeader.authors[0];
         this.name = `${this.author.givenName[0] ?? ''} ${this.author.familyName ?? ''}`;
-        this.license = this.author.license ?? '';
-        this.phone = this.author.phoneNumber ?? '';
-        this.addressLine = `${author.line}\n${this.author.city ? this.author.city + ', ' : ''} ${this.author.state ?? ''} ${this.author.postalCode ?? ''}`
+        if(!this.name?.length){
+          this.name = this.documentHandlerService.defaultString
+        }
+        this.license = this.author.license ?? this.documentHandlerService.defaultString;
+        this.phone = this.author.phoneNumber ?? this.documentHandlerService.defaultString;
+        this.addressLine = `${author.line? author.line + '\n': ''}${this.author.city ? this.author.city + ', ' : ''} ${this.author.state ?? ''} ${this.author.postalCode ?? ''}`
+        if(!this.addressLine?.trim()?.length){
+          this.addressLine = this.documentHandlerService.defaultString;
+        }
       }
     });
   }

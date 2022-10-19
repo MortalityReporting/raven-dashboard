@@ -35,7 +35,7 @@ import {Address} from "../model/fhir/types/address";
 export class DocumentHandlerService {
 
   private subjectId: string;
-  private defaultString: string = "VALUE NOT FOUND";
+  public defaultString: string = "VALUE NOT FOUND";
 
   // TODO: Refactor this in conjunction with directive.
   private currentDocumentBundle: any;
@@ -146,20 +146,6 @@ export class DocumentHandlerService {
     let extensions = patientResource.extension;
     demographics.race = this.getDecedentRaceText(extensions);
     demographics.ethnicity = this.getDecedentEthnicityText(extensions);
-
-    // TODO: Add handling for ODH USual Work and Other Identifiers (missing data)
-
-    let demographicsSection = this.getSection(compositionResource, "demographics");
-
-    if (demographicsSection != null) {
-
-      demographicsSection.entry.map(( entry: any ) => {
-
-        let observation = this.findResourceById(documentBundle, entry.reference );
-
-        demographics.usualWork.push( new UsualWork( observation?.valueCodeableConcept?.text, observation?.component[0].valueCodeableConcept.text ));
-      });
-    }
 
     return demographics;
   }
