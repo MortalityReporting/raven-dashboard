@@ -56,9 +56,7 @@ export class CaseComparisonComponent implements OnInit {
       case "circumstances": shouldOpen = !this.caseComparisonContentComponent.circumstancesExpanded; break;
       case "jurisdiction": shouldOpen = !this.caseComparisonContentComponent.jurisdictionExpanded; break;
       case "causeAndManner": shouldOpen = !this.caseComparisonContentComponent.causeAndMannerExpanded; break;
-      case "medicalHistory": shouldOpen = !this.caseComparisonContentComponent.medicalHistoryExpanded; break;
       case "examNotes": shouldOpen = !this.caseComparisonContentComponent.examNotesExpanded; break;
-      case "narratives": shouldOpen = !this.caseComparisonContentComponent.narrativesExpanded; break;
     }
 
     this.caseComparisonContentComponent.caseAdminInfoExpanded = false;
@@ -66,9 +64,7 @@ export class CaseComparisonComponent implements OnInit {
     this.caseComparisonContentComponent.circumstancesExpanded = false;
     this.caseComparisonContentComponent.jurisdictionExpanded = false;
     this.caseComparisonContentComponent.causeAndMannerExpanded = false;
-    this.caseComparisonContentComponent.medicalHistoryExpanded = false;
     this.caseComparisonContentComponent.examNotesExpanded = false;
-    this.caseComparisonContentComponent.narrativesExpanded = false;
     
     if (shouldOpen) {
       this.caseComparisonContentComponent.onItemClick(id);
