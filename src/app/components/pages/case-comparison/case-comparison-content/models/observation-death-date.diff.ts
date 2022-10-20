@@ -3,9 +3,10 @@ import {DiffType} from '../diff-type';
 import {ObservationDiff} from './observation.diff';
 
 export class ObservationDeathDateDiff extends ObservationDiff { 
-    component: DiffType;
     effectiveDateTime: DiffType;
+    establishmentApproach: DiffType;
     method: DiffType;
+    pronouncedDateTime: DiffType;
     status: DiffType;
     valueDateTime: DiffType;
     
@@ -13,10 +14,11 @@ export class ObservationDeathDateDiff extends ObservationDiff {
     {
         super( actual, expected );
 
-        this.component = new DiffType();
-        this.method = new DiffType();
-        this.status = new DiffType();
         this.effectiveDateTime = new DiffType();
+        this.establishmentApproach = new DiffType();
+        this.method = new DiffType();
+        this.pronouncedDateTime = new DiffType();
+        this.status = new DiffType();
         this.valueDateTime = new DiffType();
 
         this.doDiff();
@@ -27,9 +29,15 @@ export class ObservationDeathDateDiff extends ObservationDiff {
         super.doDiff();
 
         try {  
-            this.component.expected = JSON.stringify( this.expected.component, null, 4 );
-            this.component.actual = JSON.stringify( this.actual.component, null, 4 );
-            [this.component.style,this.component.difference] = DiffType.doDiff( Diff.diffChars( this.component.expected, this.component.actual ));  
+            this.pronouncedDateTime.expected = JSON.stringify( this.expected.component[0], null, 4 );
+            this.pronouncedDateTime.actual = JSON.stringify( this.actual.component[0], null, 4 );
+            [this.pronouncedDateTime.style,this.pronouncedDateTime.difference] = DiffType.doDiff( Diff.diffChars( this.pronouncedDateTime.expected, this.pronouncedDateTime.actual ));  
+        } catch(e) {};
+
+        try {  
+            this.establishmentApproach.expected = JSON.stringify( this.expected.component[1], null, 4 );
+            this.establishmentApproach.actual = JSON.stringify( this.actual.component[1], null, 4 );
+            [this.establishmentApproach.style,this.establishmentApproach.difference] = DiffType.doDiff( Diff.diffChars( this.establishmentApproach.expected, this.establishmentApproach.actual ));  
         } catch(e) {};
 
         try {  

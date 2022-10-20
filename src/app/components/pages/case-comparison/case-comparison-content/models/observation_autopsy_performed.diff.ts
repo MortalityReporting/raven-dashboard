@@ -3,7 +3,7 @@ import {DiffType} from '../diff-type';
 import {ObservationDiff} from './observation.diff';
 
 export class ObservationAutopsyPerformedDiff extends ObservationDiff { 
-    component: DiffType;
+    componentValueCodeableConcept: DiffType;
     status: DiffType;
     valueCodeableConcept: DiffType;
     
@@ -12,7 +12,7 @@ export class ObservationAutopsyPerformedDiff extends ObservationDiff {
         super( actual, expected );
 
         this.style = 'invalid';
-        this.component = new DiffType();
+        this.componentValueCodeableConcept = new DiffType();
         this.status = new DiffType();
         this.valueCodeableConcept = new DiffType();
 
@@ -23,10 +23,14 @@ export class ObservationAutopsyPerformedDiff extends ObservationDiff {
     {    
         super.doDiff();
 
+        try {
+            console.log( this.expected.component[0].valueCodeableConcept );
+        } catch(e) {}
+
         try {      
-            this.component.expected = JSON.stringify( this.expected.component, null, 4 );
-            this.component.actual = JSON.stringify( this.actual.component, null, 4 );
-            [this.component.style,this.component.difference] = DiffType.doDiff( Diff.diffChars( this.component.expected, this.component.actual ));  
+            this.componentValueCodeableConcept.expected = JSON.stringify( this.expected.component[0].valueCodeableConcept, null, 4 );
+            this.componentValueCodeableConcept.actual = JSON.stringify( this.actual.component[0].valueCodeableConcept, null, 4 );
+            [this.componentValueCodeableConcept.style,this.componentValueCodeableConcept.difference] = DiffType.doDiff( Diff.diffChars( this.componentValueCodeableConcept.expected, this.componentValueCodeableConcept.actual ));  
         } catch(e) {};
 
         try {      

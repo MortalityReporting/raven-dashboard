@@ -202,8 +202,6 @@ export class CaseComparisonContentComponent implements OnInit {
         this.documentHandler.findResourceByProfileName( this.actualDocument, Obs_DeathDate ),
         this.documentHandler.findResourceByProfileName( this.expectedDocument, Obs_DeathDate ));
 
-      console.log( this.documentHandler.findResourceByProfileName( this.actualDocument, Obs_DeathDate ));
-
       this.causeOfDeath1List = [];
       let actualCauseOfDeath1List = this.documentHandler.findResourcesByProfileName( this.actualDocument, Obs_CauseOfDeathPart1 );
       let expectedCauseOfDeath1List = this.documentHandler.findResourcesByProfileName( this.expectedDocument, Obs_CauseOfDeathPart1 );
@@ -267,14 +265,14 @@ export class CaseComparisonContentComponent implements OnInit {
       ) ? 'valid' : 'invalid';
 
       this.jurisdictionStyle = (
-        this.deathDate.component.style === 'valid' &&
+        this.deathDate.pronouncedDateTime.style === 'valid' &&
         this.deathDate.effectiveDateTime.style === 'valid' &&
         this.deathDate.method.style === 'valid'
       ) ? 'valid' : 'invalid';
 
       this.examAndAutopsyStyle = (
         this.autopsyPerformed.valueCodeableConcept.style === 'valid' &&
-        this.autopsyPerformed.component.style === 'valid'
+        this.autopsyPerformed.componentValueCodeableConcept.style === 'valid'
       ) ? 'valid' : 'invalid';
 
       this.causeAndMannerStyle = 'valid';
