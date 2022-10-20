@@ -59,9 +59,7 @@ export class CaseComparisonContentComponent implements OnInit {
   circumstancesExpanded: boolean = false;
   jurisdictionExpanded: boolean = false;
   causeAndMannerExpanded: boolean = false;
-  medicalHistoryExpanded: boolean = false;
   examNotesExpanded: boolean = false;
-  narrativesExpanded: boolean = false;
 
   patient: USCorePatientDiff = new USCorePatientDiff( undefined, undefined );
   mdiToEdrs: CompositionMdiToEdrsDiff = new CompositionMdiToEdrsDiff( undefined, undefined );
@@ -148,9 +146,7 @@ export class CaseComparisonContentComponent implements OnInit {
       case 'circumstances':  this.circumstancesExpanded = !this.circumstancesExpanded; break;
       case 'jurisdiction': this.jurisdictionExpanded = !this.jurisdictionExpanded; break;
       case 'causeAndManner': this.causeAndMannerExpanded = !this.causeAndMannerExpanded; break;
-      case 'medicalHistory': this.medicalHistoryExpanded = !this.medicalHistoryExpanded; break;
       case 'examNotes': this.examNotesExpanded = !this.examNotesExpanded; break;
-      case 'narratives': this.narrativesExpanded = !this.narrativesExpanded; break;
     }
   }
 
