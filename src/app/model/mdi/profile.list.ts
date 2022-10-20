@@ -17,9 +17,9 @@ export const Obs_MannerOfDeath: string = "http://hl7.org/fhir/us/mdi/StructureDe
 export const Obs_TobaccoUseContributedToDeath: string = "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-tobacco-use-contributed-to-death";
 export const Obs_CauseOfDeathPart1: string = "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-cause-of-death-part1";
 export const Obs_CauseOfDeathPart2: string = "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-contributing-cause-of-death-part2";
+export const Obs_AutopsyPerformed = "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-autopsy-performed-indicator";
 export const Loc_death: string = "http://hl7.org/fhir/us/mdi/StructureDefinition/Location-death";
 export const Loc_injury: string = "http://hl7.org/fhir/us/mdi/StructureDefinition/Location-injury";
-
 export enum Profiles {
   Obs_DeathInjuryEventOccurredAtWork = "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-injury-at-work"
 }

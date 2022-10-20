@@ -3,7 +3,9 @@ import {DiffType} from '../diff-type';
 import {ObservationDiff} from './observation.diff';
 
 export class ObservationDeathDateDiff extends ObservationDiff { 
+    component: DiffType;
     effectiveDateTime: DiffType;
+    method: DiffType;
     status: DiffType;
     valueDateTime: DiffType;
     
@@ -11,6 +13,8 @@ export class ObservationDeathDateDiff extends ObservationDiff {
     {
         super( actual, expected );
 
+        this.component = new DiffType();
+        this.method = new DiffType();
         this.status = new DiffType();
         this.effectiveDateTime = new DiffType();
         this.valueDateTime = new DiffType();
@@ -21,6 +25,18 @@ export class ObservationDeathDateDiff extends ObservationDiff {
     override doDiff()
     {    
         super.doDiff();
+
+        try {  
+            this.component.expected = JSON.stringify( this.expected.component, null, 4 );
+            this.component.actual = JSON.stringify( this.actual.component, null, 4 );
+            [this.component.style,this.component.difference] = DiffType.doDiff( Diff.diffChars( this.component.expected, this.component.actual ));  
+        } catch(e) {};
+
+        try {  
+            this.method.expected = JSON.stringify( this.expected.method, null, 4 );
+            this.method.actual = JSON.stringify( this.actual.method, null, 4 );
+            [this.method.style,this.method.difference] = DiffType.doDiff( Diff.diffChars( this.method.expected, this.method.actual ));  
+        } catch(e) {};
 
         try {  
             this.status.expected = JSON.stringify( this.expected.status, null, 4 );

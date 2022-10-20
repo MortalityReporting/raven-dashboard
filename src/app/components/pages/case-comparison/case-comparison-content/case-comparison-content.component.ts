@@ -21,6 +21,7 @@ import {
   Comp_MDItoEDRS,
   Loc_death,
   Loc_injury,
+  Obs_AutopsyPerformed,
   Obs_CauseOfDeathPart1,
   Obs_CauseOfDeathPart2,
   Obs_DeathDate,
@@ -31,6 +32,7 @@ import {
   USCorePatient,
   USCorePractitioner
 } from "../../../../model/mdi/profile.list"
+import { ObservationAutopsyPerformedDiff } from './models/observation_autopsy_performed.diff';
 
 @Component({
   selector: 'app-case-comparison-content',
@@ -75,6 +77,7 @@ export class CaseComparisonContentComponent implements OnInit {
   practitioner: USCorePractitionerDiff = new USCorePractitionerDiff( undefined, undefined );
   locationDeath: LocationDeathDiff = new LocationDeathDiff( undefined, undefined );
   locationInjury: LocationInjuryDiff = new LocationInjuryDiff( undefined, undefined );
+  autopsyPerformed: ObservationAutopsyPerformedDiff = new ObservationAutopsyPerformedDiff( undefined, undefined );
 
   demographicsStyle = 'invalid';
   circumstancesStyle = 'invalid';
@@ -86,6 +89,7 @@ export class CaseComparisonContentComponent implements OnInit {
   narrativesStyle = 'invalid';
   deathCertificateStyle = 'invalid';
   deathDateStyle = 'invalid';
+  examAndAutopsyStyle = 'invalid';
 
   constructor(
     private dialog: MatDialog,
@@ -198,6 +202,8 @@ export class CaseComparisonContentComponent implements OnInit {
         this.documentHandler.findResourceByProfileName( this.actualDocument, Obs_DeathDate ),
         this.documentHandler.findResourceByProfileName( this.expectedDocument, Obs_DeathDate ));
 
+      console.log( this.documentHandler.findResourceByProfileName( this.actualDocument, Obs_DeathDate ));
+
       this.causeOfDeath1List = [];
       let actualCauseOfDeath1List = this.documentHandler.findResourcesByProfileName( this.actualDocument, Obs_CauseOfDeathPart1 );
       let expectedCauseOfDeath1List = this.documentHandler.findResourcesByProfileName( this.expectedDocument, Obs_CauseOfDeathPart1 );
@@ -233,6 +239,10 @@ export class CaseComparisonContentComponent implements OnInit {
         this.documentHandler.findResourceByProfileName( this.actualDocument, USCorePractitioner ),
         this.documentHandler.findResourceByProfileName( this.expectedDocument, USCorePractitioner ));
 
+      this.autopsyPerformed = new ObservationAutopsyPerformedDiff(
+        this.documentHandler.findResourceByProfileName( this.actualDocument, Obs_AutopsyPerformed ),
+        this.documentHandler.findResourceByProfileName( this.expectedDocument, Obs_AutopsyPerformed ));
+
       this.caseAdminInfoStyle = (
         this.mdiToEdrs.extension.style === 'valid' &&
         this.practitioner.name.style === 'valid' &&
@@ -242,6 +252,7 @@ export class CaseComparisonContentComponent implements OnInit {
       ) ? 'valid' : 'invalid';
 
       this.demographicsStyle = (
+        this.patient.name.style === 'valid' &&
         this.patient.gender.style === 'valid' &&
         this.patient.birthDate.style === 'valid' &&
         this.patient.extension.style === 'valid' &&
@@ -256,7 +267,14 @@ export class CaseComparisonContentComponent implements OnInit {
       ) ? 'valid' : 'invalid';
 
       this.jurisdictionStyle = (
-        this.deathDate.effectiveDateTime.style === 'valid'
+        this.deathDate.component.style === 'valid' &&
+        this.deathDate.effectiveDateTime.style === 'valid' &&
+        this.deathDate.method.style === 'valid'
+      ) ? 'valid' : 'invalid';
+
+      this.examAndAutopsyStyle = (
+        this.autopsyPerformed.valueCodeableConcept.style === 'valid' &&
+        this.autopsyPerformed.component.style === 'valid'
       ) ? 'valid' : 'invalid';
 
       this.causeAndMannerStyle = 'valid';
