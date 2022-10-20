@@ -4,12 +4,13 @@ import {DiffType} from '../diff-type';
 export class USCorePatientDiff {    
     address: DiffType;
     birthDate: DiffType;
-    extension: DiffType;
+    ethnicity: DiffType;
     gender: DiffType;
     id: DiffType;
     identifier: DiffType;
     meta: DiffType;
     name: DiffType;
+    race: DiffType;
     resourceType: DiffType;
     text: DiffType;
 
@@ -26,12 +27,13 @@ export class USCorePatientDiff {
         this.style = 'invalid';
         this.address = new DiffType();
         this.birthDate = new DiffType();
-        this.extension = new DiffType();
+        this.ethnicity = new DiffType();
         this.gender = new DiffType();
         this.id = new DiffType();
         this.identifier = new DiffType();
         this.meta = new DiffType();
         this.name = new DiffType();
+        this.race = new DiffType();
         this.resourceType = new DiffType();
         this.text = new DiffType();
 
@@ -53,9 +55,15 @@ export class USCorePatientDiff {
         } catch(e) {};
 
         try {
-            this.extension.expected = JSON.stringify( this.expected.extension, null, 4 );
-            this.extension.actual = JSON.stringify( this.actual.extension, null, 4 );
-            [this.extension.style,this.extension.difference] = DiffType.doDiff( Diff.diffChars( this.extension.expected, this.extension.actual ));  
+            this.race.expected = JSON.stringify( this.expected.extension[1].extension[2].valueString, null, 4 );
+            this.race.actual = JSON.stringify( this.actual.extension[1].extension[2].valueString, null, 4 );
+            [this.race.style,this.race.difference] = DiffType.doDiff( Diff.diffChars( this.race.expected, this.race.actual ));  
+        } catch(e) {};
+
+        try {
+            this.ethnicity.expected = JSON.stringify( this.expected.extension[2].extension[2].valueString, null, 4 );
+            this.ethnicity.actual = JSON.stringify( this.actual.extension[2].extension[2].valueString, null, 4 );
+            [this.ethnicity.style,this.ethnicity.difference] = DiffType.doDiff( Diff.diffChars( this.ethnicity.expected, this.ethnicity.actual ));  
         } catch(e) {};
 
         try {

@@ -23,10 +23,6 @@ export class ObservationAutopsyPerformedDiff extends ObservationDiff {
     {    
         super.doDiff();
 
-        try {
-            console.log( this.expected.component[0].valueCodeableConcept );
-        } catch(e) {}
-
         try {      
             this.componentValueCodeableConcept.expected = JSON.stringify( this.expected.component[0].valueCodeableConcept, null, 4 );
             this.componentValueCodeableConcept.actual = JSON.stringify( this.actual.component[0].valueCodeableConcept, null, 4 );

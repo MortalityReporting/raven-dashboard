@@ -45,10 +45,7 @@ export class CaseComparisonContentComponent implements OnInit {
   isLoading = false;
 
   testCases = [
-    {"compositionId": "2f0cb6dc-940a-48d5-b528-4c4511a8008b", "display": "Alice FREEMAN"},
-    {"compositionId": "358a3a7d-6011-463c-ad59-0077ad482b64", "display": "Brenda Estrat"},
-    {"compositionId": "f6651a25-0296-4de0-8bd0-00d720607e1b", "display": "Erica Stevens"},
-    {"compositionId": "ff3563ad-0d8b-4bc3-8e69-5ae900222534", "display": "Whago C Brox"},
+    {"compositionId": "d5eb30e7-f656-424c-8902-ba5c95797872", "display": "Alice FREEMAN"}
   ]
 
   patientResource: any;
@@ -253,7 +250,8 @@ export class CaseComparisonContentComponent implements OnInit {
         this.patient.name.style === 'valid' &&
         this.patient.gender.style === 'valid' &&
         this.patient.birthDate.style === 'valid' &&
-        this.patient.extension.style === 'valid' &&
+        this.patient.ethnicity.style === 'valid' &&
+        this.patient.race.style === 'valid' &&
         this.patient.address.style === 'valid'
       ) ? 'valid' : 'invalid';
 
