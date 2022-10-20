@@ -58,7 +58,7 @@ export class ObservationDiff {
 
             this.style = style ? 'valid' : 'invalid';
         } catch(e) {
-          console.error(e);
+          // console.error(e);
         }
     }
 }
