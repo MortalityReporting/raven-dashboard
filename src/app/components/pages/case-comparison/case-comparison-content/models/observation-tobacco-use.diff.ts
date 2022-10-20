@@ -24,19 +24,12 @@ export class ObservationTobaccoUseDiff extends ObservationDiff {
             this.status.actual = JSON.stringify( this.actual.status, null, 4 );
             this.status.expected = JSON.stringify( this.expected.status, null, 4 );
             [this.status.style,this.status.difference] = DiffType.doDiff( Diff.diffChars( this.status.expected, this.status.actual ));  
+        } catch(e) {};
 
+        try {
             this.valueCodeableConcept.actual = JSON.stringify( this.actual.valueCodeableConcept, null, 4 );
             this.valueCodeableConcept.expected = JSON.stringify( this.expected.valueCodeableConcept, null, 4 );
             [this.valueCodeableConcept.style,this.valueCodeableConcept.difference] = DiffType.doDiff( Diff.diffChars( this.valueCodeableConcept.expected, this.valueCodeableConcept.actual ));  
-
-            let style = 
-                this.style === 'valid' &&
-                this.status.style === 'valid' &&
-                this.valueCodeableConcept.style === 'valid';
-
-            this.style = style ? 'valid' : 'invalid';
-        } catch(e) {
-//            console.log(e);
-        }
+        } catch(e) {};
     }
 }

@@ -1,10 +1,10 @@
 import * as Diff from 'diff';
 import {DiffType} from '../diff-type';
-import {ObservationDiff} from './observation.diff';
+import {LocationDiff} from './location.diff';
 
-export class ObservationDecedentPregnancyDiff extends ObservationDiff { 
+export class LocationDeathDiff extends LocationDiff { 
     status: DiffType;
-    valueCodeableConcept: DiffType;
+    identifier: DiffType;
     
     constructor( actual: any, expected: any )
     {
@@ -12,7 +12,7 @@ export class ObservationDecedentPregnancyDiff extends ObservationDiff {
 
         this.style = 'invalid';
         this.status = new DiffType();
-        this.valueCodeableConcept = new DiffType();
+        this.identifier = new DiffType();
 
         this.doDiff();
     }
@@ -28,9 +28,16 @@ export class ObservationDecedentPregnancyDiff extends ObservationDiff {
         } catch(e) {};
 
         try {
-            this.valueCodeableConcept.actual = JSON.stringify( this.actual.valueCodeableConcept, null, 4 );
-            this.valueCodeableConcept.expected = JSON.stringify( this.expected.valueCodeableConcept, null, 4 );
-            [this.valueCodeableConcept.style,this.valueCodeableConcept.difference] = DiffType.doDiff( Diff.diffChars( this.valueCodeableConcept.expected, this.valueCodeableConcept.actual ));  
+            this.identifier.actual = JSON.stringify( this.actual.identifier, null, 4 );
+            this.identifier.expected = JSON.stringify( this.expected.identifier, null, 4 );
+            [this.identifier.style,this.identifier.difference] = DiffType.doDiff( Diff.diffChars( this.identifier.expected, this.identifier.actual ));  
+        } catch(e) {};
+
+        try {
+            let style =
+                this.style === 'valid' &&
+                this.status.style === 'valid' &&
+                this.identifier.style === 'valid'
         } catch(e) {};
     }
 }

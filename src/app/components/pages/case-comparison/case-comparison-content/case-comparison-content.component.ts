@@ -11,12 +11,16 @@ import { ObservationMannerOfDeathDiff } from './models/observation-manner-of-dea
 import { USCorePractitionerDiff } from './models/us-core-practitioner.diff';
 import { ObservationCauseOfDeathPart1Diff } from './models/observation-cause-of-death-part-1.diff';
 import { ObservationCauseOfDeathPart2Diff } from './models/observation-cause-of-death-part-2.diff';
+import { LocationDeathDiff } from './models/location-death.diff';
+import { LocationInjuryDiff } from './models/location-injury.diff';
 import { DecedentService } from "../../../../service/decedent.service";
 import { CaseComparisonDialogComponent } from '../case-comparison-dialog/case-comparison-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
 import {
   Comp_MDItoEDRS,
+  Loc_death,
+  Loc_injury,
   Obs_CauseOfDeathPart1,
   Obs_CauseOfDeathPart2,
   Obs_DeathDate,
@@ -39,7 +43,7 @@ export class CaseComparisonContentComponent implements OnInit {
   isLoading = false;
 
   testCases = [
-    {"compositionId": "ff3563ad-0d8b-4bc3-8e69-5ae900222534", "display": "Whago C Brox"},
+    {"compositionId": "2f0cb6dc-940a-48d5-b528-4c4511a8008b", "display": "Alice FREEMAN"},
     {"compositionId": "358a3a7d-6011-463c-ad59-0077ad482b64", "display": "Brenda Estrat"},
     {"compositionId": "f6651a25-0296-4de0-8bd0-00d720607e1b", "display": "Erica Stevens"},
     {"compositionId": "c926f394-e442-4135-92bc-1e70e8a09b91", "display": "Whago C Brox"},
@@ -69,6 +73,8 @@ export class CaseComparisonContentComponent implements OnInit {
   causeOfDeath2: ObservationCauseOfDeathPart2Diff = new ObservationCauseOfDeathPart2Diff( undefined, undefined );
   mannerOfDeath: ObservationMannerOfDeathDiff = new ObservationMannerOfDeathDiff( undefined, undefined );
   practitioner: USCorePractitionerDiff = new USCorePractitionerDiff( undefined, undefined );
+  locationDeath: LocationDeathDiff = new LocationDeathDiff( undefined, undefined );
+  locationInjury: LocationInjuryDiff = new LocationInjuryDiff( undefined, undefined );
 
   demographicsStyle = 'invalid';
   circumstancesStyle = 'invalid';
@@ -209,6 +215,14 @@ export class CaseComparisonContentComponent implements OnInit {
         this.documentHandler.findResourceByProfileName( this.actualDocument, Obs_MannerOfDeath ),
         this.documentHandler.findResourceByProfileName( this.expectedDocument, Obs_MannerOfDeath ));
 
+      this.locationDeath = new LocationDeathDiff(
+        this.documentHandler.findResourceByProfileName( this.actualDocument, Loc_death ),
+        this.documentHandler.findResourceByProfileName( this.expectedDocument, Loc_death ));
+
+      this.locationInjury = new LocationInjuryDiff(
+        this.documentHandler.findResourceByProfileName( this.actualDocument, Loc_injury ),
+        this.documentHandler.findResourceByProfileName( this.expectedDocument, Loc_injury ));
+        
       this.patient = new USCorePatientDiff(
         this.documentHandler.findResourceByProfileName( this.actualDocument, USCorePatient ),
         this.documentHandler.findResourceByProfileName( this.expectedDocument, USCorePatient ));
@@ -233,7 +247,8 @@ export class CaseComparisonContentComponent implements OnInit {
       ) ? 'valid' : 'invalid';
 
       this.circumstancesStyle = (
-        this.location.address.style === 'valid' &&
+        this.locationDeath.name.style === 'valid' &&
+        this.locationInjury.name.style === 'valid' &&
         this.tobaccoUse.valueCodeableConcept.style === 'valid' &&
         this.pregnancy.valueCodeableConcept.style === 'valid'
       ) ? 'valid' : 'invalid';

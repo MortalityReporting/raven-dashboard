@@ -25,6 +25,8 @@ import {
   Obs_TobaccoUseContributedToDeath,
   Obs_CauseOfDeathPart1,
   Obs_CauseOfDeathPart2,
+  Loc_death,
+  Loc_injury,
 } from "../model/mdi/profile.list"
 import {FhirResourceProviderService} from "./fhir-resource-provider.service";
 import {Address} from "../model/fhir/types/address";
@@ -154,8 +156,8 @@ export class DocumentHandlerService {
     let circumstances: Circumstances = new Circumstances();
     let circumstancesSection = this.getSection(compositionResource, "circumstances");
 
-    let deathLocationResource = this.findResourceByProfileName(documentBundle, "http://hl7.org/fhir/us/mdi/StructureDefinition/Location-death");
-    let injuryLocationResource = this.findResourceByProfileName(documentBundle, "http://hl7.org/fhir/us/mdi/StructureDefinition/Location-injury");
+    let deathLocationResource = this.findResourceByProfileName(documentBundle, Loc_death);
+    let injuryLocationResource = this.findResourceByProfileName(documentBundle, Loc_injury);
 
     circumstances.deathLocation = deathLocationResource?.name || this.defaultString;
     circumstances.injuryLocation = injuryLocationResource?.name || this.defaultString;
@@ -281,8 +283,6 @@ export class DocumentHandlerService {
   // For singleton profiles, this function can be used to find the resource by the profile name. ID should be preferred whenever available.
   findResourceByProfileName(documentBundle: any = this.currentDocumentBundle, profileName: string): any {
     const profile = documentBundle.entry.find((entry: any) => entry.resource.meta.profile.includes(profileName))?.resource;
-    console.log(profile)
-    console.log(profileName)
     return documentBundle.entry.find((entry: any) => entry.resource.meta.profile.includes(profileName))?.resource || undefined;
   }
 
