@@ -45,7 +45,8 @@ export class CaseComparisonContentComponent implements OnInit {
   isLoading = false;
 
   testCases = [
-    {"compositionId": "d5eb30e7-f656-424c-8902-ba5c95797872", "display": "Alice FREEMAN"}
+    {"compositionId": "4b81ded1-6dc2-43ab-94b4-35b278c3e75f", "display": "Alice FREEMAN"},
+    {"compositionId": "ff3563ad-0d8b-4bc3-8e69-5ae900222534", "display": "Whago C Brox"},
   ]
 
   patientResource: any;
@@ -100,6 +101,7 @@ export class CaseComparisonContentComponent implements OnInit {
     this.decedentService.getDocumentBundle(this.selectedTestCase.compositionId).subscribe(
       {next: (documentBundle: any) => {
         this.expectedDocument = documentBundle;
+        this.dodiff();
         this.isLoading = false;
       }
     });
@@ -180,6 +182,8 @@ export class CaseComparisonContentComponent implements OnInit {
     this.deathDateStyle = 'invalid';
     this.deathDateStyle = 'invalid';
     this.examAndAutopsyStyle = 'invalid';    
+
+    this.dodiff();
   }
 
   dodiff() {
