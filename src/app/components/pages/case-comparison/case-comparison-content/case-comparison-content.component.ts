@@ -165,6 +165,9 @@ export class CaseComparisonContentComponent implements OnInit {
     this.causeOfDeath2 = new ObservationCauseOfDeathPart2Diff( undefined, undefined );
     this.mannerOfDeath = new ObservationMannerOfDeathDiff( undefined, undefined );
     this.practitioner = new USCorePractitionerDiff( undefined, undefined );
+    this.locationDeath = new LocationDeathDiff( undefined, undefined );
+    this.locationInjury = new LocationInjuryDiff( undefined, undefined );
+    this.autopsyPerformed = new ObservationAutopsyPerformedDiff( undefined, undefined );    
 
     this.demographicsStyle = 'invalid';
     this.circumstancesStyle = 'invalid';
@@ -175,6 +178,8 @@ export class CaseComparisonContentComponent implements OnInit {
     this.examAndHistoryStyle = 'invalid';
     this.narrativesStyle = 'invalid';
     this.deathDateStyle = 'invalid';
+    this.deathDateStyle = 'invalid';
+    this.examAndAutopsyStyle = 'invalid';    
   }
 
   dodiff() {
@@ -288,7 +293,7 @@ export class CaseComparisonContentComponent implements OnInit {
           }
         }  
       }
-
+      
       if (this.causeOfDeath2.valueCodeableConcept.style === 'invalid' )
       {
         this.causeAndMannerStyle = 'invalid';
