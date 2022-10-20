@@ -12,6 +12,7 @@
 
 .loading {
   margin-top: 1rem;
+  font-family: monospace;
 }
 
 .loading:after {
