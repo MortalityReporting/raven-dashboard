@@ -17,19 +17,19 @@
     <div class="summary-section-grid">
       <div class="grid-row">
         <div class="grid-col-1">
-          <div class={{state}}><input type="text" value="Actual Value" readonly></div>
+          <div class={{state}}><input type="text" value="Actual" readonly></div>
         </div>
         <div class="grid-col-1">
-          <div class={{state}}><input type="text" value="Difference" readonly></div>
+          <div class={{state}}><input type="text" value="Expected" readonly></div>
         </div>
       </div>
       <br>
       <div class="grid-row">
         <div class="grid-col-1">
-          <div class="border"><pre>{{actual}}</pre></div>
+          <div class="border" [innerHTML]="difference"></div>
         </div>
         <div class="grid-col-1">
-          <div class="border" [innerHTML]="difference"></div>
+          <div class="border"><pre>{{expected}}</pre></div>
         </div>
       </div>
     </div>

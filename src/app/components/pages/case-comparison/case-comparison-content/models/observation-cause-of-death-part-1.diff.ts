@@ -23,27 +23,21 @@ export class ObservationCauseOfDeathPart1Diff extends ObservationDiff {
         super.doDiff();
 
         try {      
-            this.component.actual = JSON.stringify( this.actual.component, null, 4 );
             this.component.expected = JSON.stringify( this.expected.component, null, 4 );
+            this.component.actual = JSON.stringify( this.actual.component, null, 4 );
             [this.component.style,this.component.difference] = DiffType.doDiff( Diff.diffChars( this.component.expected, this.component.actual ));  
+        } catch(e) {};
 
-            this.performer.actual = JSON.stringify( this.actual.performer, null, 4 );
+        try {
             this.performer.expected = JSON.stringify( this.expected.performer, null, 4 );
+            this.performer.actual = JSON.stringify( this.actual.performer, null, 4 );
             [this.performer.style,this.performer.difference] = DiffType.doDiff( Diff.diffChars( this.performer.expected, this.performer.actual ));  
+        } catch(e) {};
 
-            this.valueCodeableConcept.actual = JSON.stringify( this.actual.valueCodeableConcept, null, 4 );
+        try {
             this.valueCodeableConcept.expected = JSON.stringify( this.expected.valueCodeableConcept, null, 4 );
+            this.valueCodeableConcept.actual = JSON.stringify( this.actual.valueCodeableConcept, null, 4 );
             [this.valueCodeableConcept.style,this.valueCodeableConcept.difference] = DiffType.doDiff( Diff.diffChars( this.valueCodeableConcept.expected, this.valueCodeableConcept.actual ));  
-
-            let style =
-                this.style === 'valid' &&
-                this.component.style === 'valid' &&
-                this.performer.style === 'valid' &&
-                this.valueCodeableConcept.style === 'valid'
-        
-            this.style = style ? 'valid' : 'invalid';
-        } catch(e) {
-//            console.log(e);
-        }
+        } catch(e) {};
     }
 }

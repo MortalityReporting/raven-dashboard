@@ -2,8 +2,8 @@ import * as Diff from 'diff';
 import {DiffType} from '../diff-type';
 import {ObservationDiff} from './observation.diff';
 
-export class ObservationMannerOfDeathDiff extends ObservationDiff { 
-    performer: DiffType;
+export class ObservationAutopsyPerformedDiff extends ObservationDiff { 
+    componentValueCodeableConcept: DiffType;
     status: DiffType;
     valueCodeableConcept: DiffType;
     
@@ -11,7 +11,8 @@ export class ObservationMannerOfDeathDiff extends ObservationDiff {
     {
         super( actual, expected );
 
-        this.performer = new DiffType();
+        this.style = 'invalid';
+        this.componentValueCodeableConcept = new DiffType();
         this.status = new DiffType();
         this.valueCodeableConcept = new DiffType();
 
@@ -23,12 +24,12 @@ export class ObservationMannerOfDeathDiff extends ObservationDiff {
         super.doDiff();
 
         try {      
-            this.performer.expected = JSON.stringify( this.expected.performer, null, 4 );
-            this.performer.actual = JSON.stringify( this.actual.performer, null, 4 );
-            [this.performer.style,this.performer.difference] = DiffType.doDiff( Diff.diffChars( this.performer.expected, this.performer.actual ));  
+            this.componentValueCodeableConcept.expected = JSON.stringify( this.expected.component[0].valueCodeableConcept, null, 4 );
+            this.componentValueCodeableConcept.actual = JSON.stringify( this.actual.component[0].valueCodeableConcept, null, 4 );
+            [this.componentValueCodeableConcept.style,this.componentValueCodeableConcept.difference] = DiffType.doDiff( Diff.diffChars( this.componentValueCodeableConcept.expected, this.componentValueCodeableConcept.actual ));  
         } catch(e) {};
 
-        try {
+        try {      
             this.status.expected = JSON.stringify( this.expected.status, null, 4 );
             this.status.actual = JSON.stringify( this.actual.status, null, 4 );
             [this.status.style,this.status.difference] = DiffType.doDiff( Diff.diffChars( this.status.expected, this.status.actual ));  

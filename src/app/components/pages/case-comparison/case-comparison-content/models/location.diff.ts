@@ -1,12 +1,13 @@
 import * as Diff from 'diff';
 import {DiffType} from '../diff-type';
 
-export class ObservationDiff {    
-    code: DiffType;
+export class LocationDiff {    
+    address: DiffType;
     id: DiffType;
     meta: DiffType;
+    name: DiffType;
     resourceType: DiffType;
-    subject: DiffType;
+    type: DiffType;
 
     style: string;
 
@@ -19,19 +20,20 @@ export class ObservationDiff {
         this.expected = expected;
 
         this.style = 'invalid';
-        this.code = new DiffType();
+        this.address = new DiffType();
         this.id = new DiffType();
         this.meta = new DiffType();
+        this.name = new DiffType();
         this.resourceType = new DiffType();
-        this.subject = new DiffType();
+        this.type = new DiffType();
     }
 
     doDiff()
     {    
         try {      
-            this.code.expected = JSON.stringify( this.expected.code, null, 4 );
-            this.code.actual = JSON.stringify( this.actual.code, null, 4 );
-            [this.code.style,this.code.difference] = DiffType.doDiff( Diff.diffChars( this.code.expected, this.code.actual ));  
+            this.address.expected = JSON.stringify( this.expected.address, null, 4 );
+            this.address.actual = JSON.stringify( this.actual.address, null, 4 );
+            [this.address.style,this.address.difference] = DiffType.doDiff( Diff.diffChars( this.address.expected, this.address.actual ));  
         } catch(e) {};
 
         try {
@@ -47,15 +49,21 @@ export class ObservationDiff {
         } catch(e) {};
 
         try {
+            this.name.expected = JSON.stringify( this.expected.name, null, 4 );
+            this.name.actual = JSON.stringify( this.actual.name, null, 4 );
+            [this.name.style,this.name.difference] = DiffType.doDiff( Diff.diffChars( this.name.expected, this.name.actual ));  
+        } catch(e) {};
+
+        try {
             this.resourceType.expected = JSON.stringify( this.expected.resourceType, null, 4 );
             this.resourceType.actual = JSON.stringify( this.actual.resourceType, null, 4 );
             [this.resourceType.style,this.resourceType.difference] = DiffType.doDiff( Diff.diffChars( this.resourceType.expected, this.resourceType.actual ));  
         } catch(e) {};
 
         try {
-            this.subject.expected = JSON.stringify( this.expected.subject, null, 4 );
-            this.subject.actual = JSON.stringify( this.actual.subject, null, 4 );
-            [this.subject.style,this.subject.difference] = DiffType.doDiff( Diff.diffChars( this.subject.expected, this.subject.actual ));  
+            this.type.expected = JSON.stringify( this.expected.type, null, 4 );
+            this.type.actual = JSON.stringify( this.actual.type, null, 4 );
+            [this.type.style,this.type.difference] = DiffType.doDiff( Diff.diffChars( this.type.expected, this.type.actual ));  
         } catch(e) {};
     }
 }

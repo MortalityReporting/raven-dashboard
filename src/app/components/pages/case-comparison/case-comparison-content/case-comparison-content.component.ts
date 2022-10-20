@@ -11,12 +11,17 @@ import { ObservationMannerOfDeathDiff } from './models/observation-manner-of-dea
 import { USCorePractitionerDiff } from './models/us-core-practitioner.diff';
 import { ObservationCauseOfDeathPart1Diff } from './models/observation-cause-of-death-part-1.diff';
 import { ObservationCauseOfDeathPart2Diff } from './models/observation-cause-of-death-part-2.diff';
+import { LocationDeathDiff } from './models/location-death.diff';
+import { LocationInjuryDiff } from './models/location-injury.diff';
 import { DecedentService } from "../../../../service/decedent.service";
 import { CaseComparisonDialogComponent } from '../case-comparison-dialog/case-comparison-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
 import {
   Comp_MDItoEDRS,
+  Loc_death,
+  Loc_injury,
+  Obs_AutopsyPerformed,
   Obs_CauseOfDeathPart1,
   Obs_CauseOfDeathPart2,
   Obs_DeathDate,
@@ -27,6 +32,7 @@ import {
   USCorePatient,
   USCorePractitioner
 } from "../../../../model/mdi/profile.list"
+import { ObservationAutopsyPerformedDiff } from './models/observation_autopsy_performed.diff';
 
 @Component({
   selector: 'app-case-comparison-content',
@@ -39,10 +45,7 @@ export class CaseComparisonContentComponent implements OnInit {
   isLoading = false;
 
   testCases = [
-    {"compositionId": "ff3563ad-0d8b-4bc3-8e69-5ae900222534", "display": "Whago C Brox"},
-    {"compositionId": "358a3a7d-6011-463c-ad59-0077ad482b64", "display": "Brenda Estrat"},
-    {"compositionId": "f6651a25-0296-4de0-8bd0-00d720607e1b", "display": "Erica Stevens"},
-    {"compositionId": "c926f394-e442-4135-92bc-1e70e8a09b91", "display": "Whago C Brox"},
+    {"compositionId": "d5eb30e7-f656-424c-8902-ba5c95797872", "display": "Alice FREEMAN"}
   ]
 
   patientResource: any;
@@ -69,6 +72,9 @@ export class CaseComparisonContentComponent implements OnInit {
   causeOfDeath2: ObservationCauseOfDeathPart2Diff = new ObservationCauseOfDeathPart2Diff( undefined, undefined );
   mannerOfDeath: ObservationMannerOfDeathDiff = new ObservationMannerOfDeathDiff( undefined, undefined );
   practitioner: USCorePractitionerDiff = new USCorePractitionerDiff( undefined, undefined );
+  locationDeath: LocationDeathDiff = new LocationDeathDiff( undefined, undefined );
+  locationInjury: LocationInjuryDiff = new LocationInjuryDiff( undefined, undefined );
+  autopsyPerformed: ObservationAutopsyPerformedDiff = new ObservationAutopsyPerformedDiff( undefined, undefined );
 
   demographicsStyle = 'invalid';
   circumstancesStyle = 'invalid';
@@ -80,6 +86,7 @@ export class CaseComparisonContentComponent implements OnInit {
   narrativesStyle = 'invalid';
   deathCertificateStyle = 'invalid';
   deathDateStyle = 'invalid';
+  examAndAutopsyStyle = 'invalid';
 
   constructor(
     private dialog: MatDialog,
@@ -158,6 +165,9 @@ export class CaseComparisonContentComponent implements OnInit {
     this.causeOfDeath2 = new ObservationCauseOfDeathPart2Diff( undefined, undefined );
     this.mannerOfDeath = new ObservationMannerOfDeathDiff( undefined, undefined );
     this.practitioner = new USCorePractitionerDiff( undefined, undefined );
+    this.locationDeath = new LocationDeathDiff( undefined, undefined );
+    this.locationInjury = new LocationInjuryDiff( undefined, undefined );
+    this.autopsyPerformed = new ObservationAutopsyPerformedDiff( undefined, undefined );    
 
     this.demographicsStyle = 'invalid';
     this.circumstancesStyle = 'invalid';
@@ -168,10 +178,12 @@ export class CaseComparisonContentComponent implements OnInit {
     this.examAndHistoryStyle = 'invalid';
     this.narrativesStyle = 'invalid';
     this.deathDateStyle = 'invalid';
+    this.deathDateStyle = 'invalid';
+    this.examAndAutopsyStyle = 'invalid';    
   }
 
   dodiff() {
-    try {
+    try {      
       this.mdiToEdrs = new CompositionMdiToEdrsDiff(
         this.documentHandler.findResourceByProfileName( this.actualDocument, Comp_MDItoEDRS ),
         this.documentHandler.findResourceByProfileName( this.expectedDocument, Comp_MDItoEDRS ));
@@ -196,9 +208,11 @@ export class CaseComparisonContentComponent implements OnInit {
       let actualCauseOfDeath1List = this.documentHandler.findResourcesByProfileName( this.actualDocument, Obs_CauseOfDeathPart1 );
       let expectedCauseOfDeath1List = this.documentHandler.findResourcesByProfileName( this.expectedDocument, Obs_CauseOfDeathPart1 );
 
-      for (let i = 0; i < actualCauseOfDeath1List.length; i++) {
-        let causeOfDeath1 = new ObservationCauseOfDeathPart1Diff( actualCauseOfDeath1List[i], expectedCauseOfDeath1List[i] );
-        this.causeOfDeath1List.push( causeOfDeath1 );
+      if (actualCauseOfDeath1List != undefined) {
+        for (let i = 0; i < actualCauseOfDeath1List.length; i++) {
+          let causeOfDeath1 = new ObservationCauseOfDeathPart1Diff( actualCauseOfDeath1List[i], expectedCauseOfDeath1List[i] );
+          this.causeOfDeath1List.push( causeOfDeath1 );
+        }  
       }
 
       this.causeOfDeath2 = new ObservationCauseOfDeathPart2Diff(
@@ -209,6 +223,14 @@ export class CaseComparisonContentComponent implements OnInit {
         this.documentHandler.findResourceByProfileName( this.actualDocument, Obs_MannerOfDeath ),
         this.documentHandler.findResourceByProfileName( this.expectedDocument, Obs_MannerOfDeath ));
 
+      this.locationDeath = new LocationDeathDiff(
+        this.documentHandler.findResourceByProfileName( this.actualDocument, Loc_death ),
+        this.documentHandler.findResourceByProfileName( this.expectedDocument, Loc_death ));
+
+      this.locationInjury = new LocationInjuryDiff(
+        this.documentHandler.findResourceByProfileName( this.actualDocument, Loc_injury ),
+        this.documentHandler.findResourceByProfileName( this.expectedDocument, Loc_injury ));
+        
       this.patient = new USCorePatientDiff(
         this.documentHandler.findResourceByProfileName( this.actualDocument, USCorePatient ),
         this.documentHandler.findResourceByProfileName( this.expectedDocument, USCorePatient ));
@@ -216,6 +238,10 @@ export class CaseComparisonContentComponent implements OnInit {
       this.practitioner = new USCorePractitionerDiff(
         this.documentHandler.findResourceByProfileName( this.actualDocument, USCorePractitioner ),
         this.documentHandler.findResourceByProfileName( this.expectedDocument, USCorePractitioner ));
+
+      this.autopsyPerformed = new ObservationAutopsyPerformedDiff(
+        this.documentHandler.findResourceByProfileName( this.actualDocument, Obs_AutopsyPerformed ),
+        this.documentHandler.findResourceByProfileName( this.expectedDocument, Obs_AutopsyPerformed ));
 
       this.caseAdminInfoStyle = (
         this.mdiToEdrs.extension.style === 'valid' &&
@@ -226,36 +252,48 @@ export class CaseComparisonContentComponent implements OnInit {
       ) ? 'valid' : 'invalid';
 
       this.demographicsStyle = (
+        this.patient.name.style === 'valid' &&
         this.patient.gender.style === 'valid' &&
         this.patient.birthDate.style === 'valid' &&
-        this.patient.extension.style === 'valid' &&
+        this.patient.ethnicity.style === 'valid' &&
+        this.patient.race.style === 'valid' &&
         this.patient.address.style === 'valid'
       ) ? 'valid' : 'invalid';
 
       this.circumstancesStyle = (
-        this.location.address.style === 'valid' &&
+        this.locationDeath.name.style === 'valid' &&
+        this.locationInjury.name.style === 'valid' &&
         this.tobaccoUse.valueCodeableConcept.style === 'valid' &&
         this.pregnancy.valueCodeableConcept.style === 'valid'
       ) ? 'valid' : 'invalid';
 
       this.jurisdictionStyle = (
-        this.deathDate.effectiveDateTime.style === 'valid'
+        this.deathDate.pronouncedDateTime.style === 'valid' &&
+        this.deathDate.effectiveDateTime.style === 'valid' &&
+        this.deathDate.method.style === 'valid'
+      ) ? 'valid' : 'invalid';
+
+      this.examAndAutopsyStyle = (
+        this.autopsyPerformed.valueCodeableConcept.style === 'valid' &&
+        this.autopsyPerformed.componentValueCodeableConcept.style === 'valid'
       ) ? 'valid' : 'invalid';
 
       this.causeAndMannerStyle = 'valid';
 
-      for (let i = 0; i < actualCauseOfDeath1List.length; i++) {
-        let causeOfDeath1 = new ObservationCauseOfDeathPart1Diff( actualCauseOfDeath1List[i], expectedCauseOfDeath1List[i] );
-        if (causeOfDeath1.valueCodeableConcept.style === 'invalid')
-        {
-          this.causeAndMannerStyle = 'invalid';
-        }
-        if (causeOfDeath1.component.style === 'invalid')
-        {
-          this.causeAndMannerStyle = 'invalid';
-        }
+      if (actualCauseOfDeath1List != undefined) {
+        for (let i = 0; i < actualCauseOfDeath1List.length; i++) {
+          let causeOfDeath1 = new ObservationCauseOfDeathPart1Diff( actualCauseOfDeath1List[i], expectedCauseOfDeath1List[i] );
+          if (causeOfDeath1.valueCodeableConcept.style === 'invalid')
+          {
+            this.causeAndMannerStyle = 'invalid';
+          }
+          if (causeOfDeath1.component.style === 'invalid')
+          {
+            this.causeAndMannerStyle = 'invalid';
+          }
+        }  
       }
-
+      
       if (this.causeOfDeath2.valueCodeableConcept.style === 'invalid' )
       {
         this.causeAndMannerStyle = 'invalid';
