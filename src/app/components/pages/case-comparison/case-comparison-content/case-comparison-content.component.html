@@ -34,42 +34,42 @@
       <mat-expansion-panel-header (click)="onItemClick( 'caseAdminInfo' )">
         <mat-panel-title class={{caseAdminInfoStyle}}>Case Administration Information</mat-panel-title>
       </mat-expansion-panel-header>
-      <app-case-comparison-content-field state={{mdiToEdrs.extension.style}} title="Tracking Numbers" resource="Composition MDI TO EDRS" fhirPath="{{mdiToEdrs.expected?.resourceType}}.extension" actual={{mdiToEdrs.extension.actual}} difference={{mdiToEdrs.extension.difference}}></app-case-comparison-content-field>
-      <app-case-comparison-content-field state={{practitioner.name.style}} title="Chief ME/C Name" resource="US Core Practitioner" fhirPath="{{practitioner.expected?.resourceType}}.name" actual={{practitioner.name.actual}} difference={{practitioner.name.difference}}></app-case-comparison-content-field>
-      <app-case-comparison-content-field state={{practitioner.identifier.style}} title="Chief ME/C License" resource="US Core Practitioner" fhirPath="{{practitioner.expected?.resourceType}}.identifier" actual={{practitioner.identifier.actual}} difference={{practitioner.identifier.difference}}></app-case-comparison-content-field>
-      <app-case-comparison-content-field state={{practitioner.telecom.style}} title="Chief ME/C Telecom" resource="US Core Practitioner" fhirPath="{{practitioner.expected?.resourceType}}.telecom" actual={{practitioner.telecom.actual}} difference={{practitioner.telecom.difference}}></app-case-comparison-content-field>
-      <app-case-comparison-content-field state={{practitioner.address.style}} title="Chief ME/C Address" resource="US Core Practitioner" fhirPath="{{practitioner.expected?.resourceType}}.address" actual={{practitioner.address.actual}} difference={{practitioner.address.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{mdiToEdrs.extension.style}} title="Tracking Numbers" resource="Composition MDI TO EDRS" fhirPath="{{mdiToEdrs.expected?.resourceType}}.extension" expected={{mdiToEdrs.extension.expected}} difference={{mdiToEdrs.extension.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{practitioner.name.style}} title="Chief ME/C Name" resource="US Core Practitioner" fhirPath="{{practitioner.expected?.resourceType}}.name" expected={{practitioner.name.expected}} difference={{practitioner.name.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{practitioner.identifier.style}} title="Chief ME/C License" resource="US Core Practitioner" fhirPath="{{practitioner.expected?.resourceType}}.identifier" expected={{practitioner.identifier.expected}} difference={{practitioner.identifier.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{practitioner.telecom.style}} title="Chief ME/C Telecom" resource="US Core Practitioner" fhirPath="{{practitioner.expected?.resourceType}}.telecom" expected={{practitioner.telecom.expected}} difference={{practitioner.telecom.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{practitioner.address.style}} title="Chief ME/C Address" resource="US Core Practitioner" fhirPath="{{practitioner.expected?.resourceType}}.address" expected={{practitioner.address.expected}} difference={{practitioner.address.difference}}></app-case-comparison-content-field>
     </mat-expansion-panel>    
     
     <mat-expansion-panel class="summary-section" id="demographics" [expanded]="demographicsExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'demographics' )">
         <mat-panel-title class={{demographicsStyle}}>Demographics</mat-panel-title>
       </mat-expansion-panel-header>      
-      <app-case-comparison-content-field state={{patient.gender.style}} title="Legal Sex at Death" resource="US Core Patient" fhirPath="{{patient.expected?.resourceType}}.gender" actual={{patient.gender.actual}} difference={{patient.gender.difference}}></app-case-comparison-content-field>
-      <app-case-comparison-content-field state={{patient.identifier.style}} title="Social Security Number" resource="US Core Patient" fhirPath="{{patient.expected?.resourceType}}.identifier" actual={{patient.identifier.actual}} difference={{patient.identifier.difference}}></app-case-comparison-content-field>
-      <app-case-comparison-content-field state={{patient.birthDate.style}} title="Date of Birth" resource="US Core Patient" fhirPath="{{patient.expected?.resourceType}}.birthDate" actual={{patient.birthDate.actual}} difference={{patient.birthDate.difference}}></app-case-comparison-content-field>      
-      <app-case-comparison-content-field state={{patient.extension.style}} title="Extension" resource="US Core Patient" fhirPath="{{patient.expected?.resourceType}}.extension" actual={{patient.extension.actual}} difference={{patient.extension.difference}}></app-case-comparison-content-field>
-      <app-case-comparison-content-field state={{patient.address.style}} title="Residence" resource="US Core Patient" fhirPath="{{patient.expected?.resourceType}}.address" actual={{patient.address.actual}} difference={{patient.address.difference}}></app-case-comparison-content-field>      
+      <app-case-comparison-content-field state={{patient.gender.style}} title="Legal Sex at Death" resource="US Core Patient" fhirPath="{{patient.expected?.resourceType}}.gender" expected={{patient.gender.expected}} difference={{patient.gender.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{patient.identifier.style}} title="Social Security Number" resource="US Core Patient" fhirPath="{{patient.expected?.resourceType}}.identifier" expected={{patient.identifier.expected}} difference={{patient.identifier.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{patient.birthDate.style}} title="Date of Birth" resource="US Core Patient" fhirPath="{{patient.expected?.resourceType}}.birthDate" expected={{patient.birthDate.expected}} difference={{patient.birthDate.difference}}></app-case-comparison-content-field>      
+      <app-case-comparison-content-field state={{patient.extension.style}} title="Extension" resource="US Core Patient" fhirPath="{{patient.expected?.resourceType}}.extension" expected={{patient.extension.expected}} difference={{patient.extension.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{patient.address.style}} title="Residence" resource="US Core Patient" fhirPath="{{patient.expected?.resourceType}}.address" expected={{patient.address.expected}} difference={{patient.address.difference}}></app-case-comparison-content-field>      
     </mat-expansion-panel>
     
     <mat-expansion-panel class="summary-section" id="circumstances" [expanded]="circumstancesExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'circumstances' )">
         <mat-panel-title class={{circumstancesStyle}}>Circumstances</mat-panel-title>
       </mat-expansion-panel-header>
-      <app-case-comparison-content-field state={{locationDeath.name.style}} title="Death Location" resource="Location-death" fhirPath="{{locationDeath.expected?.resourceType}}.valueCodeableConcept" actual={{locationDeath.name.actual}} difference={{locationDeath.name.expected}}></app-case-comparison-content-field>
-      <app-case-comparison-content-field state={{locationInjury.name.style}} title="Injury/Event Occurred at Work" resource="Location-injury" fhirPath="{{locationInjury.expected?.resourceType}}.valueCodeableConcept" actual={{locationInjury.name.actual}} difference={{locationInjury.name.expected}}></app-case-comparison-content-field>
-      <app-case-comparison-content-field state={{tobaccoUse.valueCodeableConcept.style}} title="Tobacco Use Contributed to Death" resource="Observation-tobacco-use" fhirPath="{{tobaccoUse.expected?.resourceType}}.valueCodeableConcept" actual={{tobaccoUse.valueCodeableConcept.actual}} difference={{tobaccoUse.valueCodeableConcept.difference}}></app-case-comparison-content-field>
-      <app-case-comparison-content-field state={{pregnancy.valueCodeableConcept.style}} title="Decedent Pregnancy Status" resource="Observation-decedent-pregnancy" fhirPath="{{pregnancy.expected?.resourceType}}.valueCodeableConcept" actual={{pregnancy.valueCodeableConcept.actual}} difference={{pregnancy.valueCodeableConcept.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{locationDeath.name.style}} title="Death Location" resource="Location-death" fhirPath="{{locationDeath.expected?.resourceType}}.valueCodeableConcept" expected={{locationDeath.name.expected}} difference={{locationDeath.name.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{locationInjury.name.style}} title="Injury/Event Occurred at Work" resource="Location-injury" fhirPath="{{locationInjury.expected?.resourceType}}.valueCodeableConcept" expected={{locationInjury.name.expected}} difference={{locationInjury.name.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{tobaccoUse.valueCodeableConcept.style}} title="Tobacco Use Contributed to Death" resource="Observation-tobacco-use" fhirPath="{{tobaccoUse.expected?.resourceType}}.valueCodeableConcept" expected={{tobaccoUse.valueCodeableConcept.expected}} difference={{tobaccoUse.valueCodeableConcept.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{pregnancy.valueCodeableConcept.style}} title="Decedent Pregnancy Status" resource="Observation-decedent-pregnancy" fhirPath="{{pregnancy.expected?.resourceType}}.valueCodeableConcept" expected={{pregnancy.valueCodeableConcept.expected}} difference={{pregnancy.valueCodeableConcept.difference}}></app-case-comparison-content-field>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="summary-section" id="jurisdiction" [expanded]="jurisdictionExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'jurisdiction' )">
         <mat-panel-title class={{jurisdictionStyle}}>Jurisdiction</mat-panel-title>
       </mat-expansion-panel-header>
-      <app-case-comparison-content-field state={{deathDate.effectiveDateTime.style}} title="Death Date/Time" resource="Observation-death-date" fhirPath="{{deathDate.expected?.resourceType}}.effectiveDateTime" actual={{deathDate.effectiveDateTime.actual}} difference={{deathDate.effectiveDateTime.difference}}></app-case-comparison-content-field>
-      <app-case-comparison-content-field state="invalid" title="Pronounced Date/Time" resource="UNKNOWN" fhirPath="UNKNOWN" actual="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>
-      <app-case-comparison-content-field state="invalid" title="Establishment Approach" resource="UNKNOWN" fhirPath="UNKNOWN" actual="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>
-      <app-case-comparison-content-field state="invalid" title="Type of Death Location" resource="UNKNOWN" fhirPath="UNKNOWN" actual="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{deathDate.effectiveDateTime.style}} title="Death Date/Time" resource="Observation-death-date" fhirPath="{{deathDate.expected?.resourceType}}.effectiveDateTime" expected={{deathDate.effectiveDateTime.expected}} difference={{deathDate.effectiveDateTime.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state="invalid" title="Pronounced Date/Time" resource="UNKNOWN" fhirPath="UNKNOWN" expected="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>
+      <app-case-comparison-content-field state="invalid" title="Establishment Approach" resource="UNKNOWN" fhirPath="UNKNOWN" expected="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>
+      <app-case-comparison-content-field state="invalid" title="Type of Death Location" resource="UNKNOWN" fhirPath="UNKNOWN" expected="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="summary-section" id="causeAndManner" [expanded]="causeAndMannerExpanded">
@@ -77,37 +77,37 @@
         <mat-panel-title class={{causeAndMannerStyle}}>Cause and Manner of Death</mat-panel-title>
       </mat-expansion-panel-header>
       <div *ngFor="let causeOfDeath1 of causeOfDeath1List; let i = index">
-        <app-case-comparison-content-field state={{causeOfDeath1.valueCodeableConcept.style}} title="Part 1 Immediate Cause Event {{i+1}}" resource="Observation-cause-of-death-part1" fhirPath="{{causeOfDeath1.expected?.resourceType}}.valueCodeableConcept" actual={{causeOfDeath1.valueCodeableConcept.actual}} difference={{causeOfDeath1.valueCodeableConcept.difference}}></app-case-comparison-content-field>
-        <app-case-comparison-content-field state={{causeOfDeath1.component.style}} title="Part 1 Immediate Cause Interval {{i+1}}" resource="Observation-cause-of-death-part1" fhirPath="{{causeOfDeath1.expected?.resourceType}}.component" actual={{causeOfDeath1.component.actual}} difference={{causeOfDeath1.component.difference}}></app-case-comparison-content-field>
+        <app-case-comparison-content-field state={{causeOfDeath1.valueCodeableConcept.style}} title="Part 1 Immediate Cause Event {{i+1}}" resource="Observation-cause-of-death-part1" fhirPath="{{causeOfDeath1.expected?.resourceType}}.valueCodeableConcept" expected={{causeOfDeath1.valueCodeableConcept.expected}} difference={{causeOfDeath1.valueCodeableConcept.difference}}></app-case-comparison-content-field>
+        <app-case-comparison-content-field state={{causeOfDeath1.component.style}} title="Part 1 Immediate Cause Interval {{i+1}}" resource="Observation-cause-of-death-part1" fhirPath="{{causeOfDeath1.expected?.resourceType}}.component" expected={{causeOfDeath1.component.expected}} difference={{causeOfDeath1.component.difference}}></app-case-comparison-content-field>
       </div>
-      <app-case-comparison-content-field state={{causeOfDeath2.valueCodeableConcept.style}} title="Part 2 Contributing Cause" resource="Observation-cause-of-death-part2" fhirPath="{{mannerOfDeath.expected?.resourceType}}.valueCodeableConcept" actual={{mannerOfDeath.valueCodeableConcept.actual}} difference={{mannerOfDeath.valueCodeableConcept.difference}}></app-case-comparison-content-field>
-      <app-case-comparison-content-field state={{mannerOfDeath.valueCodeableConcept.style}} title="Manner of Death" resource="Observation-manner-of-death" fhirPath="{{mannerOfDeath.expected?.resourceType}}.valueCodeableConcept" actual={{mannerOfDeath.valueCodeableConcept.actual}} difference={{mannerOfDeath.valueCodeableConcept.difference}}></app-case-comparison-content-field>
-      <app-case-comparison-content-field state={{locationDeath.name.style}} title="Place of Injury" resource="Location-death" fhirPath="{{locationDeath.expected?.resourceType}}.valueCodeableConcept" actual={{locationDeath.name.actual}} difference={{locationDeath.name.expected}}></app-case-comparison-content-field>
-      <app-case-comparison-content-field state={{locationInjury.name.style}} title="How Injury Occurred" resource="Location-injury" fhirPath="{{locationInjury.expected?.resourceType}}.valueCodeableConcept" actual={{locationInjury.name.actual}} difference={{locationInjury.name.expected}}></app-case-comparison-content-field>
-      <app-case-comparison-content-field state="invalid" title="Injury Date/Time" resource="UNKNOWN" fhirPath="UNKNOWN" actual="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>
-      <app-case-comparison-content-field state="invalid" title="Injury/Event Occurred at Work" resource="UNKNOWN" fhirPath="UNKNOWN" actual="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>
-      <app-case-comparison-content-field state="invalid" title="Transportation Role" resource="UNKNOWN" fhirPath="UNKNOWN" actual="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{causeOfDeath2.valueCodeableConcept.style}} title="Part 2 Contributing Cause" resource="Observation-cause-of-death-part2" fhirPath="{{mannerOfDeath.expected?.resourceType}}.valueCodeableConcept" expected={{mannerOfDeath.valueCodeableConcept.expected}} difference={{mannerOfDeath.valueCodeableConcept.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{mannerOfDeath.valueCodeableConcept.style}} title="Manner of Death" resource="Observation-manner-of-death" fhirPath="{{mannerOfDeath.expected?.resourceType}}.valueCodeableConcept" expected={{mannerOfDeath.valueCodeableConcept.expected}} difference={{mannerOfDeath.valueCodeableConcept.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{locationDeath.name.style}} title="Place of Injury" resource="Location-death" fhirPath="{{locationDeath.expected?.resourceType}}.valueCodeableConcept" expected={{locationDeath.name.expected}} difference={{locationDeath.name.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{locationInjury.name.style}} title="How Injury Occurred" resource="Location-injury" fhirPath="{{locationInjury.expected?.resourceType}}.valueCodeableConcept" expected={{locationInjury.name.expected}} difference={{locationInjury.name.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state="invalid" title="Injury Date/Time" resource="UNKNOWN" fhirPath="UNKNOWN" expected="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>
+      <app-case-comparison-content-field state="invalid" title="Injury/Event Occurred at Work" resource="UNKNOWN" fhirPath="UNKNOWN" expected="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>
+      <app-case-comparison-content-field state="invalid" title="Transportation Role" resource="UNKNOWN" fhirPath="UNKNOWN" expected="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>
     </mat-expansion-panel>  
 
     <mat-expansion-panel class="summary-section" id="medicalHistory" [expanded]="medicalHistoryExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'medicalHistory' )">
         <mat-panel-title class={{medicalHistoryStyle}}>Relevent Medical History</mat-panel-title>
       </mat-expansion-panel-header>
-      <app-case-comparison-content-field state="invalid" title="Not Yet Implemented" resource="UNKNOWN" fhirPath="UNKNOWN" actual="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>
+      <app-case-comparison-content-field state="invalid" title="Not Yet Implemented" resource="UNKNOWN" fhirPath="UNKNOWN" expected="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="summary-section" id="examAndAutopsy" [expanded]="examNotesExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'examAndAutopsy' )">
         <mat-panel-title class={{examAndHistoryStyle}}>Exam and Autopsy</mat-panel-title>
       </mat-expansion-panel-header>
-      <app-case-comparison-content-field state="invalid" title="Not Yet Implemented" resource="UNKNOWN" fhirPath="UNKNOWN" actual="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>
+      <app-case-comparison-content-field state="invalid" title="Not Yet Implemented" resource="UNKNOWN" fhirPath="UNKNOWN" expected="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>
     </mat-expansion-panel>
     
     <mat-expansion-panel class="summary-section" id="narratives" [expanded]="narrativesExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'narratives' )">
         <mat-panel-title class={{narrativesStyle}}>Narratives</mat-panel-title>
       </mat-expansion-panel-header>
-      <app-case-comparison-content-field state="invalid" title="Not Yet Implemented" resource="UNKNOWN" fhirPath="UNKNOWN" actual="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>
+      <app-case-comparison-content-field state="invalid" title="Not Yet Implemented" resource="UNKNOWN" fhirPath="UNKNOWN" expected="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>
     </mat-expansion-panel>
   </mat-accordion>
 </div>

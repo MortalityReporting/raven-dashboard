@@ -23,20 +23,20 @@ export class ObservationDeathDateDiff extends ObservationDiff {
         super.doDiff();
 
         try {  
-            this.status.actual = JSON.stringify( this.actual.status, null, 4 );
             this.status.expected = JSON.stringify( this.expected.status, null, 4 );
+            this.status.actual = JSON.stringify( this.actual.status, null, 4 );
             [this.status.style,this.status.difference] = DiffType.doDiff( Diff.diffChars( this.status.expected, this.status.actual ));  
         } catch(e) {};
 
         try {
-            this.effectiveDateTime.actual = JSON.stringify( this.actual.effectiveDateTime, null, 4 );
             this.effectiveDateTime.expected = JSON.stringify( this.expected.effectiveDateTime, null, 4 );
+            this.effectiveDateTime.actual = JSON.stringify( this.actual.effectiveDateTime, null, 4 );
             [this.effectiveDateTime.style,this.effectiveDateTime.difference] = DiffType.doDiff( Diff.diffChars( this.effectiveDateTime.expected, this.effectiveDateTime.actual ));  
         } catch(e) {};
 
         try {
-            this.valueDateTime.actual = JSON.stringify( this.actual.valueDateTime, null, 4 );
             this.valueDateTime.expected = JSON.stringify( this.expected.valueDateTime, null, 4 );
+            this.valueDateTime.actual = JSON.stringify( this.actual.valueDateTime, null, 4 );
             [this.valueDateTime.style,this.valueDateTime.difference] = DiffType.doDiff( Diff.diffChars( this.valueDateTime.expected, this.valueDateTime.actual ));  
         } catch(e) {};
     }

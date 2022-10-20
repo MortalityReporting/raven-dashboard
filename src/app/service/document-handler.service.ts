@@ -282,20 +282,26 @@ export class DocumentHandlerService {
 
   // For singleton profiles, this function can be used to find the resource by the profile name. ID should be preferred whenever available.
   findResourceByProfileName(documentBundle: any = this.currentDocumentBundle, profileName: string): any {
-    const profile = documentBundle.entry.find((entry: any) => entry.resource.meta.profile.includes(profileName))?.resource;
-    return documentBundle.entry.find((entry: any) => entry.resource.meta.profile.includes(profileName))?.resource || undefined;
+    try {
+      const profile = documentBundle.entry.find((entry: any) => entry.resource.meta.profile.includes(profileName))?.resource;
+      return documentBundle.entry.find((entry: any) => entry.resource.meta.profile.includes(profileName))?.resource || undefined;  
+    } catch(e) {
+      return undefined;
+    }
   }
 
   findResourcesByProfileName(documentBundle: any = this.currentDocumentBundle, profileName: string): any[] {
-    let items = [];
-
-    documentBundle.entry.map( (entry: any) => {
-      if (entry.resource.meta.profile.includes(profileName)) {
-        items.push( entry.resource );
-      }
-    })
-
-    return items;
+    try {
+      let items = [];
+      documentBundle.entry.map( (entry: any) => {
+        if (entry.resource.meta.profile.includes(profileName)) {
+          items.push( entry.resource );
+        }
+      })
+      return items;  
+    } catch(e) {
+      return undefined;
+    }
   }
 
   // // Find Death Location Resource (US Core Location Profile) through the Composition.section reference.

@@ -46,7 +46,7 @@ export class CaseComparisonContentComponent implements OnInit {
     {"compositionId": "2f0cb6dc-940a-48d5-b528-4c4511a8008b", "display": "Alice FREEMAN"},
     {"compositionId": "358a3a7d-6011-463c-ad59-0077ad482b64", "display": "Brenda Estrat"},
     {"compositionId": "f6651a25-0296-4de0-8bd0-00d720607e1b", "display": "Erica Stevens"},
-    {"compositionId": "c926f394-e442-4135-92bc-1e70e8a09b91", "display": "Whago C Brox"},
+    {"compositionId": "ff3563ad-0d8b-4bc3-8e69-5ae900222534", "display": "Whago C Brox"},
   ]
 
   patientResource: any;
@@ -177,7 +177,7 @@ export class CaseComparisonContentComponent implements OnInit {
   }
 
   dodiff() {
-    try {
+    try {      
       this.mdiToEdrs = new CompositionMdiToEdrsDiff(
         this.documentHandler.findResourceByProfileName( this.actualDocument, Comp_MDItoEDRS ),
         this.documentHandler.findResourceByProfileName( this.expectedDocument, Comp_MDItoEDRS ));
@@ -202,9 +202,11 @@ export class CaseComparisonContentComponent implements OnInit {
       let actualCauseOfDeath1List = this.documentHandler.findResourcesByProfileName( this.actualDocument, Obs_CauseOfDeathPart1 );
       let expectedCauseOfDeath1List = this.documentHandler.findResourcesByProfileName( this.expectedDocument, Obs_CauseOfDeathPart1 );
 
-      for (let i = 0; i < actualCauseOfDeath1List.length; i++) {
-        let causeOfDeath1 = new ObservationCauseOfDeathPart1Diff( actualCauseOfDeath1List[i], expectedCauseOfDeath1List[i] );
-        this.causeOfDeath1List.push( causeOfDeath1 );
+      if (actualCauseOfDeath1List != undefined) {
+        for (let i = 0; i < actualCauseOfDeath1List.length; i++) {
+          let causeOfDeath1 = new ObservationCauseOfDeathPart1Diff( actualCauseOfDeath1List[i], expectedCauseOfDeath1List[i] );
+          this.causeOfDeath1List.push( causeOfDeath1 );
+        }  
       }
 
       this.causeOfDeath2 = new ObservationCauseOfDeathPart2Diff(
@@ -259,16 +261,18 @@ export class CaseComparisonContentComponent implements OnInit {
 
       this.causeAndMannerStyle = 'valid';
 
-      for (let i = 0; i < actualCauseOfDeath1List.length; i++) {
-        let causeOfDeath1 = new ObservationCauseOfDeathPart1Diff( actualCauseOfDeath1List[i], expectedCauseOfDeath1List[i] );
-        if (causeOfDeath1.valueCodeableConcept.style === 'invalid')
-        {
-          this.causeAndMannerStyle = 'invalid';
-        }
-        if (causeOfDeath1.component.style === 'invalid')
-        {
-          this.causeAndMannerStyle = 'invalid';
-        }
+      if (actualCauseOfDeath1List != undefined) {
+        for (let i = 0; i < actualCauseOfDeath1List.length; i++) {
+          let causeOfDeath1 = new ObservationCauseOfDeathPart1Diff( actualCauseOfDeath1List[i], expectedCauseOfDeath1List[i] );
+          if (causeOfDeath1.valueCodeableConcept.style === 'invalid')
+          {
+            this.causeAndMannerStyle = 'invalid';
+          }
+          if (causeOfDeath1.component.style === 'invalid')
+          {
+            this.causeAndMannerStyle = 'invalid';
+          }
+        }  
       }
 
       if (this.causeOfDeath2.valueCodeableConcept.style === 'invalid' )
