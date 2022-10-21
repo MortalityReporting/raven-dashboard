@@ -49,8 +49,8 @@ export class LocationDiff {
         } catch(e) {};
 
         try {
-            this.name.expected = JSON.stringify( this.expected.name, null, 4 );
-            this.name.actual = JSON.stringify( this.actual.name, null, 4 );
+            this.name.expected = '"name": "' + this.expected.name + '"';
+            this.name.actual = '"name": "' + this.expected.name + '"';
             [this.name.style,this.name.difference] = DiffType.doDiff( Diff.diffChars( this.name.expected, this.name.actual ));  
         } catch(e) {};
 

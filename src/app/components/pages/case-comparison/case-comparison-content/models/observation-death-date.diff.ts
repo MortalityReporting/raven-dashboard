@@ -1,24 +1,32 @@
 import * as Diff from 'diff';
 import {DiffType} from '../diff-type';
 import {ObservationDiff} from './observation.diff';
+import { DocumentHandlerService } from "../../../../../service/document-handler.service";
 
 export class ObservationDeathDateDiff extends ObservationDiff { 
     effectiveDateTime: DiffType;
-    establishmentApproach: DiffType;
     method: DiffType;
     pronouncedDateTime: DiffType;
     status: DiffType;
+    typeOfDeathLocation: DiffType;
     valueDateTime: DiffType;
+
+    documentHandler: DocumentHandlerService
     
-    constructor( actual: any, expected: any )
+    constructor(
+        actual: any, 
+        expected: any,
+        documentHandler: DocumentHandlerService
+        )
     {
         super( actual, expected );
 
+        this.documentHandler = documentHandler;
         this.effectiveDateTime = new DiffType();
-        this.establishmentApproach = new DiffType();
         this.method = new DiffType();
         this.pronouncedDateTime = new DiffType();
         this.status = new DiffType();
+        this.typeOfDeathLocation = new DiffType();
         this.valueDateTime = new DiffType();
 
         this.doDiff();
@@ -29,15 +37,23 @@ export class ObservationDeathDateDiff extends ObservationDiff {
         super.doDiff();
 
         try {  
-            this.pronouncedDateTime.expected = JSON.stringify( this.expected.component[0], null, 4 );
-            this.pronouncedDateTime.actual = JSON.stringify( this.actual.component[0], null, 4 );
+            let expectedComponent = this.documentHandler.findObservationComponentByCode(this.expected, "80616-6");
+            this.pronouncedDateTime.expected = '"valueDateTime": "' + expectedComponent.valueDateTime + '"';
+
+            let actualComponent = this.documentHandler.findObservationComponentByCode(this.actual, "80616-6");    
+            this.pronouncedDateTime.actual = '"valueDateTime": "' + actualComponent.valueDateTime + '"';
+
             [this.pronouncedDateTime.style,this.pronouncedDateTime.difference] = DiffType.doDiff( Diff.diffChars( this.pronouncedDateTime.expected, this.pronouncedDateTime.actual ));  
         } catch(e) {};
 
         try {  
-            this.establishmentApproach.expected = JSON.stringify( this.expected.component[1], null, 4 );
-            this.establishmentApproach.actual = JSON.stringify( this.actual.component[1], null, 4 );
-            [this.establishmentApproach.style,this.establishmentApproach.difference] = DiffType.doDiff( Diff.diffChars( this.establishmentApproach.expected, this.establishmentApproach.actual ));  
+            let expectedComponent = this.documentHandler.findObservationComponentByCode(this.expected, "58332-8");
+            this.typeOfDeathLocation.expected = JSON.stringify( expectedComponent.valueCodeableConcept, null, 4 );
+            
+            let actualComponent = this.documentHandler.findObservationComponentByCode(this.actual, "58332-8");    
+            this.typeOfDeathLocation.actual = JSON.stringify( actualComponent.valueCodeableConcept, null, 4 );
+
+            [this.typeOfDeathLocation.style,this.typeOfDeathLocation.difference] = DiffType.doDiff( Diff.diffChars( this.typeOfDeathLocation.expected, this.typeOfDeathLocation.actual ));  
         } catch(e) {};
 
         try {  
@@ -53,8 +69,8 @@ export class ObservationDeathDateDiff extends ObservationDiff {
         } catch(e) {};
 
         try {
-            this.effectiveDateTime.expected = JSON.stringify( this.expected.effectiveDateTime, null, 4 );
-            this.effectiveDateTime.actual = JSON.stringify( this.actual.effectiveDateTime, null, 4 );
+            this.effectiveDateTime.expected = '"effectiveDateTime": "' + this.expected.effectiveDateTime + '"';
+            this.effectiveDateTime.actual = '"effectiveDateTime": "' + this.actual.effectiveDateTime + '"';
             [this.effectiveDateTime.style,this.effectiveDateTime.difference] = DiffType.doDiff( Diff.diffChars( this.effectiveDateTime.expected, this.effectiveDateTime.actual ));  
         } catch(e) {};
 

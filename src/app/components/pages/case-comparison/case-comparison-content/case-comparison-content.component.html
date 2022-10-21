@@ -71,6 +71,7 @@
       <app-case-comparison-content-field state={{deathDate.effectiveDateTime.style}} title="Death Date/Time" resource="Observation-death-date" fhirPath="{{deathDate.expected?.resourceType}}.effectiveDateTime" expected={{deathDate.effectiveDateTime.expected}} difference={{deathDate.effectiveDateTime.difference}}></app-case-comparison-content-field>
       <app-case-comparison-content-field state={{deathDate.pronouncedDateTime.style}} title="Pronounced Date/Time" resource="Observation-death-date" fhirPath="{{deathDate.expected?.resourceType}}.component" expected={{deathDate.pronouncedDateTime.expected}} difference={{deathDate.pronouncedDateTime.difference}}></app-case-comparison-content-field>
       <app-case-comparison-content-field state={{deathDate.method.style}} title="Establishment Approach" resource="Observation-death-date" fhirPath="{{deathDate.expected?.resourceType}}.method" expected={{deathDate.method.expected}} difference={{deathDate.method.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{deathDate.typeOfDeathLocation.style}} title="Type of Death Location" resource="Observation-death-date" fhirPath="{{deathDate.expected?.resourceType}}.valueCodeableConcept" expected={{deathDate.typeOfDeathLocation.expected}} difference={{deathDate.typeOfDeathLocation.difference}}></app-case-comparison-content-field>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="summary-section" id="causeAndManner" [expanded]="causeAndMannerExpanded">
@@ -94,8 +95,8 @@
       <mat-expansion-panel-header (click)="onItemClick( 'examAndAutopsy' )">
         <mat-panel-title class={{examAndAutopsyStyle}}>Exam and Autopsy</mat-panel-title>
       </mat-expansion-panel-header>
-      <app-case-comparison-content-field state={{autopsyPerformed.valueCodeableConcept.style}} title="Results Available" resource="Observation-autopsy-performed-indicator" fhirPath="{{autopsyPerformed.expected?.resourceType}}.valueCodeableConcept" expected={{autopsyPerformed.valueCodeableConcept.expected}} difference={{autopsyPerformed.valueCodeableConcept.difference}}></app-case-comparison-content-field>
-      <app-case-comparison-content-field state={{autopsyPerformed.componentValueCodeableConcept.style}} title="Autopsy Performed" resource="Observation-autopsy-performed-indicator" fhirPath="{{autopsyPerformed.expected?.resourceType}}.component" expected={{autopsyPerformed.componentValueCodeableConcept.expected}} difference={{autopsyPerformed.componentValueCodeableConcept.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{autopsyPerformed.valueCodeableConcept.style}} title="Autopsy Performed" resource="Observation-autopsy-performed-indicator" fhirPath="{{autopsyPerformed.expected?.resourceType}}.valueCodeableConcept" expected={{autopsyPerformed.valueCodeableConcept.expected}} difference={{autopsyPerformed.valueCodeableConcept.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{autopsyPerformed.componentValueCodeableConcept.style}} title="Results Available" resource="Observation-autopsy-performed-indicator" fhirPath="{{autopsyPerformed.expected?.resourceType}}.component" expected={{autopsyPerformed.componentValueCodeableConcept.expected}} difference={{autopsyPerformed.componentValueCodeableConcept.difference}}></app-case-comparison-content-field>
     </mat-expansion-panel>
     
   </mat-accordion>
