@@ -1,9 +1,9 @@
 <div mat-dialog-content>
-  <textarea class="text-area" placeholder="Paste your Document Bundle here."
-            (input)="onTextAreaChanged($event)">{{text}}</textarea>
+  <textarea class="text-area" placeholder="Paste your Document Bundle here." value="{{text}}" (input)="onTextAreaChanged($event)"></textarea>
   <div class="mat-error">{{errorMessage}}</div>
   <div mat-dialog-actions class="mat-dialog-actions">
     <button class="mat-raised-button" (click)="onClearButtonClick();">Clear</button>
+    <button class="mat-raised-button" (click)="onCancelButtonClick();">Cancel</button>
     <button class="mat-raised-button mat-primary" (click)="onSaveButtonClick();">Save</button>
   </div>
 </div>
