@@ -87,10 +87,10 @@
       <mat-card>How Injury Occurred - Not Yet Implemented</mat-card>
       <mat-card>Injury Date/Time - Not Yet Implemented</mat-card>
       <mat-card>Transportation Role - Not Yet Implemented</mat-card>
-<!--      <app-case-comparison-content-field state="invalid" title="How Injury Occurred" resource="UNKNOWN" fhirPath="UNKNOWN" expected="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>-->
-<!--      <app-case-comparison-content-field state="invalid" title="Injury Date/Time" resource="UNKNOWN" fhirPath="UNKNOWN" expected="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>-->
-<!--      <app-case-comparison-content-field state="invalid" title="Injury/Event Occurred at Work" resource="UNKNOWN" fhirPath="UNKNOWN" expected="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>-->
-<!--      <app-case-comparison-content-field state="invalid" title="Transportation Role" resource="UNKNOWN" fhirPath="UNKNOWN" expected="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>-->
+      <!--      <app-case-comparison-content-field state="invalid" title="How Injury Occurred" resource="UNKNOWN" fhirPath="UNKNOWN" expected="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>-->
+      <!--      <app-case-comparison-content-field state="invalid" title="Injury Date/Time" resource="UNKNOWN" fhirPath="UNKNOWN" expected="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>-->
+      <!--      <app-case-comparison-content-field state="invalid" title="Injury/Event Occurred at Work" resource="UNKNOWN" fhirPath="UNKNOWN" expected="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>-->
+      <!--      <app-case-comparison-content-field state="invalid" title="Transportation Role" resource="UNKNOWN" fhirPath="UNKNOWN" expected="UNDEFINED" difference="UNDEFINED"></app-case-comparison-content-field>-->
     </mat-expansion-panel>
 
     <mat-expansion-panel class="summary-section" id="examAndAutopsy" [expanded]="examNotesExpanded">
@@ -103,3 +103,6 @@
 
   </mat-accordion>
 </div>
+<div class="spinner-container" *ngIf="isLoading"><mat-spinner></mat-spinner>
+</div>
+

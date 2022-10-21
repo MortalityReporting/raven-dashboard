@@ -82,3 +82,13 @@ mat-card{
   border-width: 1px !important;
   background-color: whitesmoke !important;
 }
+
+.spinner-container {
+  position: absolute !important;
+  height: 100px;
+  width: 100px;
+  top: 40%;
+  left: 50% !important;
+  margin-left: -50px !important;
+  margin-top: -50px !important;
+}
