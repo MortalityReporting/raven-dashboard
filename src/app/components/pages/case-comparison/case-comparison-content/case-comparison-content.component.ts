@@ -69,7 +69,7 @@ export class CaseComparisonContentComponent implements OnInit {
   location: USCoreLocationDiff = new USCoreLocationDiff( undefined, undefined );
   tobaccoUse: ObservationTobaccoUseDiff = new ObservationTobaccoUseDiff( undefined, undefined );
   pregnancy: ObservationDecedentPregnancyDiff = new ObservationDecedentPregnancyDiff( undefined, undefined );
-  deathDate: ObservationDeathDateDiff = new ObservationDeathDateDiff( undefined, undefined );
+  deathDate: ObservationDeathDateDiff = new ObservationDeathDateDiff( undefined, undefined, undefined );
   causeOfDeath1List: ObservationCauseOfDeathPart1Diff[] = [];
   causeOfDeath2: ObservationCauseOfDeathPart2Diff = new ObservationCauseOfDeathPart2Diff( undefined, undefined );
   mannerOfDeath: ObservationMannerOfDeathDiff = new ObservationMannerOfDeathDiff( undefined, undefined );
@@ -174,7 +174,7 @@ export class CaseComparisonContentComponent implements OnInit {
     this.location = new USCoreLocationDiff( undefined, undefined );
     this.tobaccoUse = new ObservationTobaccoUseDiff( undefined, undefined );
     this.pregnancy = new ObservationDecedentPregnancyDiff( undefined, undefined );
-    this.deathDate = new ObservationDeathDateDiff( undefined, undefined );
+    this.deathDate = new ObservationDeathDateDiff( undefined, undefined, undefined );
     this.causeOfDeath1List = [];
     this.causeOfDeath2 = new ObservationCauseOfDeathPart2Diff( undefined, undefined );
     this.mannerOfDeath = new ObservationMannerOfDeathDiff( undefined, undefined );
@@ -218,7 +218,8 @@ export class CaseComparisonContentComponent implements OnInit {
 
       this.deathDate = new ObservationDeathDateDiff(
         this.documentHandler.findResourceByProfileName( this.actualDocument, Obs_DeathDate ),
-        this.documentHandler.findResourceByProfileName( this.expectedDocument, Obs_DeathDate ));
+        this.documentHandler.findResourceByProfileName( this.expectedDocument, Obs_DeathDate ),
+        this.documentHandler);
 
       this.causeOfDeath1List = [];
       let actualCauseOfDeath1List = this.documentHandler.findResourcesByProfileName( this.actualDocument, Obs_CauseOfDeathPart1 );

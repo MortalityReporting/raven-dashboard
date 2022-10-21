@@ -9,24 +9,32 @@ import {UtilsService} from "../../../../service/utils.service";
 })
 export class CaseComparisonDialogComponent {
   text: string = undefined;
+  originalText: string = undefined;
   errorMessage: string;
 
   constructor(
     @Inject( MAT_DIALOG_DATA) public data: Object,
     private utilsService: UtilsService,
-      public dialogRef: MatDialogRef<CaseComparisonDialogComponent>) {
-        if (data) {
-          this.text = JSON.stringify(data, null, 2);
-      }
+    public dialogRef: MatDialogRef<CaseComparisonDialogComponent>) {
+      if (data) {
+        this.text = JSON.stringify(data, null, 2);
+        this.originalText = JSON.stringify(data, null, 2);
+    }
   }
 
   onTextAreaChanged( event: any ) {
     this.text = (event.target as any).value;
+    console.log( this.text );
     this.errorMessage = '';
   }
 
   onClearButtonClick() {
-    this.dialogRef.close(undefined);
+    this.text = "";
+    this.errorMessage = '';
+  }
+
+  onCancelButtonClick() {
+    this.dialogRef.close(this.originalText);
     this.errorMessage = '';
   }
 

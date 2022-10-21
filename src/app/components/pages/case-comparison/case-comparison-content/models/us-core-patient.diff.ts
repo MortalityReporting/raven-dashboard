@@ -49,26 +49,38 @@ export class USCorePatientDiff {
         } catch(e) {};
 
         try {
-            this.birthDate.expected = JSON.stringify( this.expected.birthDate, null, 4 );
-            this.birthDate.actual = JSON.stringify( this.actual.birthDate, null, 4 );
+            this.birthDate.expected = '"birthDate": "' + this.expected.birthDate + '"';
+            this.birthDate.actual = '"birthDate": "' + this.actual.birthDate + '"';
             [this.birthDate.style,this.birthDate.difference] = DiffType.doDiff( Diff.diffChars( this.birthDate.expected, this.birthDate.actual ));  
         } catch(e) {};
 
         try {
-            this.race.expected = JSON.stringify( this.expected.extension[1].extension[2].valueString, null, 4 );
-            this.race.actual = JSON.stringify( this.actual.extension[1].extension[2].valueString, null, 4 );
+            let extension = this.expected.extension.find((extension: any) => extension.url === "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race");
+            let textExtension = extension.extension.find((extension: any) => extension.url === "text");
+            this.race.expected = '"valueString": "' + textExtension.valueString + '"';
+
+            extension = this.actual.extension.find((extension: any) => extension.url === "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race");
+            textExtension = extension.extension.find((extension: any) => extension.url === "text");
+            this.race.actual = '"valueString": "' + textExtension.valueString + '"';
+            
             [this.race.style,this.race.difference] = DiffType.doDiff( Diff.diffChars( this.race.expected, this.race.actual ));  
         } catch(e) {};
 
         try {
-            this.ethnicity.expected = JSON.stringify( this.expected.extension[2].extension[2].valueString, null, 4 );
-            this.ethnicity.actual = JSON.stringify( this.actual.extension[2].extension[2].valueString, null, 4 );
+            let extension = this.expected.extension.find((extension: any) => extension.url === "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity");
+            let textExtension = extension.extension.find((extension: any) => extension.url === "text");
+            this.ethnicity.expected = '"valueString": "' + textExtension.valueString + '"';
+
+            extension = this.actual.extension.find((extension: any) => extension.url === "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity");
+            textExtension = extension.extension.find((extension: any) => extension.url === "text");
+            this.ethnicity.actual = '"valueString": "' + textExtension.valueString + '"';
+
             [this.ethnicity.style,this.ethnicity.difference] = DiffType.doDiff( Diff.diffChars( this.ethnicity.expected, this.ethnicity.actual ));  
         } catch(e) {};
 
         try {
-            this.gender.expected = JSON.stringify( this.expected.gender, null, 4 );
-            this.gender.actual = JSON.stringify( this.actual.gender, null, 4 );
+            this.gender.expected = '"gender": "' + this.expected.gender + '"';
+            this.gender.actual = '"gender": "' + this.actual.gender + '"';
             [this.gender.style,this.gender.difference] = DiffType.doDiff( Diff.diffChars( this.gender.expected, this.gender.actual ));  
         } catch(e) {};
 
