@@ -34,7 +34,9 @@
 
       <!-- Case Administration Information Section -->
       <mat-expansion-panel-header (click)="onItemClick( 'caseAdminInfo' )">
-        <mat-panel-title [ngClass]="caseAdminInfoStatus">
+        <mat-panel-title>
+          <mat-icon *ngIf="caseAdminInfoStatus=='valid'" class="valid-icon">done</mat-icon>
+          <mat-icon *ngIf="caseAdminInfoStatus=='invalid'" class="invalid-icon">error</mat-icon>
           Case Administration Information
         </mat-panel-title>
       </mat-expansion-panel-header>
@@ -88,7 +90,11 @@
     <!-- Demographics Section -->
     <mat-expansion-panel class="summary-section" id="demographics" [expanded]="demographicsExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'demographics' )">
-        <mat-panel-title [ngClass]="demographicsStatus">Demographics</mat-panel-title>
+        <mat-panel-title>
+          <mat-icon *ngIf="demographicsStatus=='valid'" class="valid-icon">done</mat-icon>
+          <mat-icon *ngIf="demographicsStatus=='invalid'" class="invalid-icon">error</mat-icon>
+          Demographics
+        </mat-panel-title>
       </mat-expansion-panel-header>
 
       <app-case-comparison-content-field
@@ -159,7 +165,9 @@
     <!-- Circumstances Section -->
     <mat-expansion-panel class="summary-section" id="circumstances" [expanded]="circumstancesExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'circumstances' )">
-        <mat-panel-title [ngClass]=circumstancesStatus>
+        <mat-panel-title>
+          <mat-icon *ngIf="circumstancesStatus=='valid'" class="valid-icon">done</mat-icon>
+          <mat-icon *ngIf="circumstancesStatus=='invalid'" class="invalid-icon">error</mat-icon>
           Circumstances
         </mat-panel-title>
       </mat-expansion-panel-header>
@@ -205,7 +213,11 @@
     <!-- Jurisdiction Section -->
     <mat-expansion-panel class="summary-section" id="jurisdiction" [expanded]="jurisdictionExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'jurisdiction' )">
-        <mat-panel-title [ngClass]="jurisdictionStatus">Jurisdiction</mat-panel-title>
+        <mat-panel-title>
+          <mat-icon *ngIf="jurisdictionStatus=='valid'" class="valid-icon">done</mat-icon>
+          <mat-icon *ngIf="jurisdictionStatus=='invalid'" class="invalid-icon">error</mat-icon>
+          Jurisdiction
+        </mat-panel-title>
       </mat-expansion-panel-header>
 
       <app-case-comparison-content-field
@@ -241,7 +253,9 @@
     <mat-expansion-panel class="summary-section" id="causeAndManner" [expanded]="causeAndMannerExpanded">
 
       <mat-expansion-panel-header (click)="onItemClick( 'causeAndManner' )">
-        <mat-panel-title [ngClass]="causeAndMannerStatus">
+        <mat-panel-title>
+          <mat-icon *ngIf="causeAndMannerStatus=='valid'" class="valid-icon">done</mat-icon>
+          <mat-icon *ngIf="causeAndMannerStatus=='invalid'" class="invalid-icon">error</mat-icon>
           Cause and Manner of Death
         </mat-panel-title>
       </mat-expansion-panel-header>
@@ -249,7 +263,7 @@
       <div *ngFor="let causeOfDeath1 of causeOfDeath1List; let i = index">
         <app-case-comparison-content-field
           [state]="causeOfDeath1.valueCodeableConcept.style"
-          [title]="'Part 1 Immediate Cause Event {{i+1}}'"
+          [title]="'Part 1 Immediate Cause Event ' + (i+1)"
           [resource]="'Observation-cause-of-death-part1'"
           [fhirPath]="causeOfDeath1.expected?.resourceType?.valueCodeableConcept"
           [expected]="causeOfDeath1.valueCodeableConcept.expected"
@@ -258,7 +272,7 @@
 
         <app-case-comparison-content-field
           [state]="causeOfDeath1.component.style"
-          [title]="'Part 1 Immediate Cause Interval {{i+1}}'"
+          [title]="'Part 1 Immediate Cause Interval ' + (i+1)"
           [resource]="'Observation-cause-of-death-part1'"
           [fhirPath]="causeOfDeath1.expected?.resourceType?.component"
           [expected]="causeOfDeath1.component.expected"
@@ -301,7 +315,9 @@
     <!-- Exam and Autopsy Section -->
     <mat-expansion-panel class="summary-section" id="examAndAutopsy" [expanded]="examNotesExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'examAndAutopsy' )">
-        <mat-panel-title [ngClass]="examAndAutopsyStatus">
+        <mat-panel-title>
+          <mat-icon *ngIf="examAndAutopsyStatus=='valid'" class="valid-icon">done</mat-icon>
+          <mat-icon *ngIf="examAndAutopsyStatus=='invalid'" class="invalid-icon">error</mat-icon>
           Exam and Autopsy
         </mat-panel-title>
       </mat-expansion-panel-header>
