@@ -30,7 +30,9 @@
   <br>
 
   <mat-accordion multi>
-    <mat-expansion-panel class="summary-section" id="caseAdminInfo" [expanded]="caseAdminInfoExpanded" >
+    <mat-expansion-panel class="summary-section" id="caseAdminInfo" [expanded]="caseAdminInfoExpanded">
+
+      <!-- Case Administration Information Section -->
       <mat-expansion-panel-header (click)="onItemClick( 'caseAdminInfo' )">
         <mat-panel-title [ngClass]="caseAdminInfoStatus">
           Case Administration Information
@@ -83,6 +85,7 @@
 
     </mat-expansion-panel>
 
+    <!-- Demographics Section -->
     <mat-expansion-panel class="summary-section" id="demographics" [expanded]="demographicsExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'demographics' )">
         <mat-panel-title [ngClass]="demographicsStatus">Demographics</mat-panel-title>
@@ -153,6 +156,7 @@
 
     </mat-expansion-panel>
 
+    <!-- Circumstances Section -->
     <mat-expansion-panel class="summary-section" id="circumstances" [expanded]="circumstancesExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'circumstances' )">
         <mat-panel-title [ngClass]=circumstancesStatus>
@@ -198,6 +202,7 @@
 
     </mat-expansion-panel>
 
+    <!-- Jurisdiction Section -->
     <mat-expansion-panel class="summary-section" id="jurisdiction" [expanded]="jurisdictionExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'jurisdiction' )">
         <mat-panel-title [ngClass]="jurisdictionStatus">Jurisdiction</mat-panel-title>
@@ -232,6 +237,7 @@
 
     </mat-expansion-panel>
 
+    <!-- Cause and Manner of Death Section -->
     <mat-expansion-panel class="summary-section" id="causeAndManner" [expanded]="causeAndMannerExpanded">
 
       <mat-expansion-panel-header (click)="onItemClick( 'causeAndManner' )">
@@ -292,6 +298,7 @@
       <mat-card>Transportation Role - Not Yet Implemented</mat-card>
     </mat-expansion-panel>
 
+    <!-- Exam and Autopsy Section -->
     <mat-expansion-panel class="summary-section" id="examAndAutopsy" [expanded]="examNotesExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'examAndAutopsy' )">
         <mat-panel-title [ngClass]="examAndAutopsyStatus">
@@ -322,6 +329,7 @@
 
   </mat-accordion>
 </div>
-<div class="spinner-container" *ngIf="isLoading"><mat-spinner></mat-spinner>
+<div class="spinner-container" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
 </div>
 
