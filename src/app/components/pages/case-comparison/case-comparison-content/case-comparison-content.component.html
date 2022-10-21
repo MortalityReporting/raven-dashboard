@@ -32,7 +32,7 @@
   <mat-accordion multi>
     <mat-expansion-panel class="summary-section" id="caseAdminInfo" [expanded]="caseAdminInfoExpanded" >
       <mat-expansion-panel-header (click)="onItemClick( 'caseAdminInfo' )">
-        <mat-panel-title class={{caseAdminInfoStyle}}>Case Administration Information</mat-panel-title>
+        <mat-panel-title [ngClass]="caseAdminInfoStatus">Case Administration Information</mat-panel-title>
       </mat-expansion-panel-header>
       <app-case-comparison-content-field state={{mdiToEdrs.extension.style}} title="Tracking Numbers" resource="Composition MDI TO EDRS" fhirPath="{{mdiToEdrs.expected?.resourceType}}.extension" expected={{mdiToEdrs.extension.expected}} difference={{mdiToEdrs.extension.difference}}></app-case-comparison-content-field>
       <app-case-comparison-content-field state={{practitioner.name.style}} title="Chief ME/C Name" resource="US Core Practitioner" fhirPath="{{practitioner.expected?.resourceType}}.name" expected={{practitioner.name.expected}} difference={{practitioner.name.difference}}></app-case-comparison-content-field>
@@ -43,7 +43,7 @@
 
     <mat-expansion-panel class="summary-section" id="demographics" [expanded]="demographicsExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'demographics' )">
-        <mat-panel-title class={{demographicsStyle}}>Demographics</mat-panel-title>
+        <mat-panel-title [ngClass]="demographicsStatus">Demographics</mat-panel-title>
       </mat-expansion-panel-header>
       <app-case-comparison-content-field state={{patient.name.style}} title="Name" resource="US Core Patient" fhirPath="{{patient.expected?.resourceType}}.name" expected={{patient.name.expected}} difference={{patient.name.difference}}></app-case-comparison-content-field>
       <app-case-comparison-content-field state={{patient.gender.style}} title="Legal Sex at Death" resource="US Core Patient" fhirPath="{{patient.expected?.resourceType}}.gender" expected={{patient.gender.expected}} difference={{patient.gender.difference}}></app-case-comparison-content-field>
@@ -56,7 +56,7 @@
 
     <mat-expansion-panel class="summary-section" id="circumstances" [expanded]="circumstancesExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'circumstances' )">
-        <mat-panel-title class={{circumstancesStyle}}>Circumstances</mat-panel-title>
+        <mat-panel-title [ngClass]=circumstancesStatus>Circumstances</mat-panel-title>
       </mat-expansion-panel-header>
       <app-case-comparison-content-field state={{locationDeath.name.style}} title="Death Location" resource="Location-death" fhirPath="{{locationDeath.expected?.resourceType}}.valueCodeableConcept" expected={{locationDeath.name.expected}} difference={{locationDeath.name.difference}}></app-case-comparison-content-field>
       <app-case-comparison-content-field state={{locationInjury.name.style}} title="Injury Location" resource="Location-injury" fhirPath="{{locationInjury.expected?.resourceType}}.valueCodeableConcept" expected={{locationInjury.name.expected}} difference={{locationInjury.name.difference}}></app-case-comparison-content-field>
@@ -66,17 +66,16 @@
 
     <mat-expansion-panel class="summary-section" id="jurisdiction" [expanded]="jurisdictionExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'jurisdiction' )">
-        <mat-panel-title class={{jurisdictionStyle}}>Jurisdiction</mat-panel-title>
+        <mat-panel-title [ngClass]="jurisdictionStatus">Jurisdiction</mat-panel-title>
       </mat-expansion-panel-header>
       <app-case-comparison-content-field state={{deathDate.effectiveDateTime.style}} title="Death Date/Time" resource="Observation-death-date" fhirPath="{{deathDate.expected?.resourceType}}.effectiveDateTime" expected={{deathDate.effectiveDateTime.expected}} difference={{deathDate.effectiveDateTime.difference}}></app-case-comparison-content-field>
       <app-case-comparison-content-field state={{deathDate.pronouncedDateTime.style}} title="Pronounced Date/Time" resource="Observation-death-date" fhirPath="{{deathDate.expected?.resourceType}}.component" expected={{deathDate.pronouncedDateTime.expected}} difference={{deathDate.pronouncedDateTime.difference}}></app-case-comparison-content-field>
       <app-case-comparison-content-field state={{deathDate.method.style}} title="Establishment Approach" resource="Observation-death-date" fhirPath="{{deathDate.expected?.resourceType}}.method" expected={{deathDate.method.expected}} difference={{deathDate.method.difference}}></app-case-comparison-content-field>
-      <app-case-comparison-content-field state={{deathDate.typeOfDeathLocation.style}} title="Type of Death Location" resource="Observation-death-date" fhirPath="{{deathDate.expected?.resourceType}}.valueCodeableConcept" expected={{deathDate.typeOfDeathLocation.expected}} difference={{deathDate.typeOfDeathLocation.difference}}></app-case-comparison-content-field>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="summary-section" id="causeAndManner" [expanded]="causeAndMannerExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'causeAndManner' )">
-        <mat-panel-title class={{causeAndMannerStyle}}>Cause and Manner of Death</mat-panel-title>
+        <mat-panel-title [ngClass]="causeAndMannerStatus">Cause and Manner of Death</mat-panel-title>
       </mat-expansion-panel-header>
       <div *ngFor="let causeOfDeath1 of causeOfDeath1List; let i = index">
         <app-case-comparison-content-field state={{causeOfDeath1.valueCodeableConcept.style}} title="Part 1 Immediate Cause Event {{i+1}}" resource="Observation-cause-of-death-part1" fhirPath="{{causeOfDeath1.expected?.resourceType}}.valueCodeableConcept" expected={{causeOfDeath1.valueCodeableConcept.expected}} difference={{causeOfDeath1.valueCodeableConcept.difference}}></app-case-comparison-content-field>
@@ -96,10 +95,10 @@
 
     <mat-expansion-panel class="summary-section" id="examAndAutopsy" [expanded]="examNotesExpanded">
       <mat-expansion-panel-header (click)="onItemClick( 'examAndAutopsy' )">
-        <mat-panel-title class={{examAndAutopsyStyle}}>Exam and Autopsy</mat-panel-title>
+        <mat-panel-title [ngClass]="examAndAutopsyStatus">Exam and Autopsy</mat-panel-title>
       </mat-expansion-panel-header>
-      <app-case-comparison-content-field state={{autopsyPerformed.valueCodeableConcept.style}} title="Autopsy Performed" resource="Observation-autopsy-performed-indicator" fhirPath="{{autopsyPerformed.expected?.resourceType}}.valueCodeableConcept" expected={{autopsyPerformed.valueCodeableConcept.expected}} difference={{autopsyPerformed.valueCodeableConcept.difference}}></app-case-comparison-content-field>
-      <app-case-comparison-content-field state={{autopsyPerformed.componentValueCodeableConcept.style}} title="Results Available" resource="Observation-autopsy-performed-indicator" fhirPath="{{autopsyPerformed.expected?.resourceType}}.component" expected={{autopsyPerformed.componentValueCodeableConcept.expected}} difference={{autopsyPerformed.componentValueCodeableConcept.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{autopsyPerformed.valueCodeableConcept.style}} title="Results Available" resource="Observation-autopsy-performed-indicator" fhirPath="{{autopsyPerformed.expected?.resourceType}}.valueCodeableConcept" expected={{autopsyPerformed.valueCodeableConcept.expected}} difference={{autopsyPerformed.valueCodeableConcept.difference}}></app-case-comparison-content-field>
+      <app-case-comparison-content-field state={{autopsyPerformed.componentValueCodeableConcept.style}} title="Autopsy Performed" resource="Observation-autopsy-performed-indicator" fhirPath="{{autopsyPerformed.expected?.resourceType}}.component" expected={{autopsyPerformed.componentValueCodeableConcept.expected}} difference={{autopsyPerformed.componentValueCodeableConcept.difference}}></app-case-comparison-content-field>
     </mat-expansion-panel>
 
   </mat-accordion>
