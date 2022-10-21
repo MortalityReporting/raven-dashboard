@@ -76,3 +76,9 @@ button {
 .invalid {
   color: red;
 }
+
+mat-card{
+  border-style: solid !important;
+  border-width: 1px !important;
+  background-color: whitesmoke !important;
+}
