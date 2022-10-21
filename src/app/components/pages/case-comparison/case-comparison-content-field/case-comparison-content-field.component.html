@@ -1,6 +1,12 @@
 <mat-expansion-panel class="summary-section" id="name" [expanded]="false">
-  <mat-expansion-panel-header class={{state}}>
-    <mat-panel-title>{{title}}</mat-panel-title>
+  <mat-expansion-panel-header>
+
+    <mat-panel-title>
+      <mat-icon *ngIf="state=='valid'" class="valid-icon">done</mat-icon>
+      <mat-icon *ngIf="state=='invalid'" class="invalid-icon">error</mat-icon>
+      {{title}}
+    </mat-panel-title>
+
   </mat-expansion-panel-header>
   <div class="summary-section-body">
     <div class="summary-section-grid">
@@ -11,16 +17,16 @@
         <div class="grid-col-1">
           <div>FHIR Path: {{fhirPath}}</div>
         </div>
-      </div>  
+      </div>
     </div>
     <br>
     <div class="summary-section-grid">
       <div class="grid-row">
         <div class="grid-col-1">
-          <div class={{state}}><input type="text" value="Actual" readonly></div>
+          <div class={{state}}><input type="text" value="Expected" readonly></div>
         </div>
         <div class="grid-col-1">
-          <div class={{state}}><input type="text" value="Expected" readonly></div>
+          <div class={{state}}><input type="text" value="Actual" readonly></div>
         </div>
       </div>
       <br>

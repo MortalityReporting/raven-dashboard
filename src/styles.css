@@ -103,9 +103,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .diff-added-color{
-  background: green;
+  background: #fff59d;
 }
 
 .diff-removed-color{
-  background: red;
+  background: #ffcdd2;
 }

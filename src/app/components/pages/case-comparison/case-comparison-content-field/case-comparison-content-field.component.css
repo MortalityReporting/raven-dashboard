@@ -73,3 +73,12 @@
 .header {
     background: green;
 }
+
+.invalid-icon {
+  margin-right: 0.2rem; color: #d32f2f; cursor: pointer;
+}
+
+.valid-icon {
+  margin-right: 0.2rem; color: #388e3c; cursor: pointer;
+}
+
