@@ -44,6 +44,7 @@ export class CaseComparisonContentComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
   isLoading = false;
+  isAccordionExpanded = false;
 
   testCases = [
     {"compositionId": "4b81ded1-6dc2-43ab-94b4-35b278c3e75f", "display": "Alice FREEMAN"},
@@ -127,6 +128,9 @@ export class CaseComparisonContentComponent implements OnInit {
         this.expectedDocument = documentBundle;
         this.dodiff();
         this.isLoading = false;
+        this.accordion.closeAll();
+        this.isAccordionExpanded = false;
+        console.log('this.accordion.closeAll()')
       },
       error: err => {
         console.error(err);
@@ -324,5 +328,15 @@ export class CaseComparisonContentComponent implements OnInit {
     } catch(e) {
       console.log(e);
     }
+  }
+
+  onOpenAll() {
+    this.accordion.openAll();
+    this.isAccordionExpanded = true;
+  }
+
+  onCloseAll() {
+    this.accordion.closeAll();
+    this.isAccordionExpanded = false;
   }
 }
