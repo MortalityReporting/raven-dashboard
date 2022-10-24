@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {MatAccordion, MatExpansionPanel} from "@angular/material/expansion";
+import {MatExpansionPanel} from "@angular/material/expansion";
 
 @Component({
   selector: 'app-case-comparison-content-field',
