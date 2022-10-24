@@ -17,7 +17,7 @@ const routes: Routes = [
     component: DecedentRecordsGridComponent
   },
   {
-    path: 'cases/comparison',
+    path: 'comparison',
     component: CaseComparisonComponent
   },
   {
