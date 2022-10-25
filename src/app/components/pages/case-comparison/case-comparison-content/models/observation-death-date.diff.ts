@@ -48,22 +48,22 @@ export class ObservationDeathDateDiff extends ObservationDiff {
 
         try {
             let expectedComponent = this.documentHandler.findObservationComponentByCode(this.expected, "58332-8");
-            this.typeOfDeathLocation.expected = JSON.stringify( {valueCodeableConcept: expectedComponent.valueCodeableConcept}, null, 4 );
+            this.typeOfDeathLocation.expected = JSON.stringify( expectedComponent.valueCodeableConcept, null, 4 );
 
             let actualComponent = this.documentHandler.findObservationComponentByCode(this.actual, "58332-8");
-            this.typeOfDeathLocation.actual = JSON.stringify( {valueCodeableConcept: actualComponent.valueCodeableConcept}, null, 4 );
+            this.typeOfDeathLocation.actual = JSON.stringify( actualComponent.valueCodeableConcept, null, 4 );
 
             [this.typeOfDeathLocation.style,this.typeOfDeathLocation.difference] = DiffType.doDiff( Diff.diffChars( this.typeOfDeathLocation.expected, this.typeOfDeathLocation.actual ));
         } catch(e) {};
 
         try {
-            this.method.expected = JSON.stringify( {method: this.expected.method}, null, 4 );
-            this.method.actual = JSON.stringify( {method: this.actual.method}, null, 4 );
+            this.method.expected = JSON.stringify( this.expected.method, null, 4 );
+            this.method.actual = JSON.stringify( this.actual.method, null, 4 );
             [this.method.style,this.method.difference] = DiffType.doDiff( Diff.diffChars( this.method.expected, this.method.actual ));
         } catch(e) {};
 
         try {
-            this.status.expected = JSON.stringify( {status: this.expected.status}, null, 4 );
+            this.status.expected = JSON.stringify( this.expected.status, null, 4 );
             this.status.actual = JSON.stringify( this.actual.status, null, 4 );
             [this.status.style,this.status.difference] = DiffType.doDiff( Diff.diffChars( this.status.expected, this.status.actual ));
         } catch(e) {};
@@ -75,8 +75,8 @@ export class ObservationDeathDateDiff extends ObservationDiff {
         } catch(e) {};
 
         try {
-            this.valueDateTime.expected = JSON.stringify( {valueDateTime: this.expected.valueDateTime}, null, 4 );
-            this.valueDateTime.actual = JSON.stringify( {valueDateTime: this.actual.valueDateTime}, null, 4 );
+            this.valueDateTime.expected = JSON.stringify( this.expected.valueDateTime, null, 4 );
+            this.valueDateTime.actual = JSON.stringify( this.actual.valueDateTime, null, 4 );
             [this.valueDateTime.style,this.valueDateTime.difference] = DiffType.doDiff( Diff.diffChars( this.valueDateTime.expected, this.valueDateTime.actual ));
         } catch(e) {};
     }

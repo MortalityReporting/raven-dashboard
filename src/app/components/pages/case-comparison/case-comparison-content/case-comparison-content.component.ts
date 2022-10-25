@@ -339,9 +339,4 @@ export class CaseComparisonContentComponent implements OnInit {
     this.accordion.closeAll();
     this.isAccordionExpanded = false;
   }
-
-  getObject(value: string, key: string): any {
-    const object = {[key]: value}
-    return object;
-  }
 }
