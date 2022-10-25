@@ -3,7 +3,7 @@
             (input)="onTextAreaChanged($event)">{{text}}</textarea>
   <div class="mat-error">{{errorMessage}}</div>
   <div mat-dialog-actions class="mat-dialog-actions">
-    <button class="mat-raised-button" (click)="onClearButtonClick();">Clear</button>
+    <button class="mat-raised-button" (click)="onClose();">Close</button>
     <button class="mat-raised-button mat-primary" (click)="onSaveButtonClick();" style="margin-left: 1rem" cdkFocusInitial>
       Save
     </button>

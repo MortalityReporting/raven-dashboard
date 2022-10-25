@@ -16,6 +16,7 @@ export class CaseComparisonDialogComponent {
     @Inject( MAT_DIALOG_DATA) public data: Object,
     private utilsService: UtilsService,
     public dialogRef: MatDialogRef<CaseComparisonDialogComponent>) {
+    dialogRef.disableClose =true;
       if (data) {
         this.text = JSON.stringify(data, null, 2);
         this.originalText = JSON.stringify(data, null, 2);
@@ -24,13 +25,13 @@ export class CaseComparisonDialogComponent {
 
   onTextAreaChanged( event: any ) {
     this.text = (event.target as any).value;
-    console.log( this.text );
     this.errorMessage = '';
   }
 
-  onClearButtonClick() {
+  onClose() {
     this.text = "";
     this.errorMessage = '';
+    this.dialogRef.close(this.originalText);
   }
 
   onCancelButtonClick() {

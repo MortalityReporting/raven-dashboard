@@ -100,12 +100,12 @@ export class CaseComparisonContentComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = true;
 
-    this.decedentService.getMockResponse().subscribe({
-      next: value => {
-        console.log(value);
-        //this.documentBundleList = value.entry.map(element => element.display = element.entry.)
-      }
-    });
+    // this.decedentService.getMockResponse().subscribe({
+    //   next: value => {
+    //     console.log(value);
+    //     //this.documentBundleList = value.entry.map(element => element.display = element.entry.)
+    //   }
+    // });
 
     this.decedentService.getDocumentBundle(this.selectedTestCase.compositionId).subscribe({
       next: (documentBundle: any) => {
@@ -149,12 +149,13 @@ export class CaseComparisonContentComponent implements OnInit {
   }
 
   onInputBundleClick() {
-    const dialogRef = this.dialog.open( CaseComparisonDialogComponent, {data: this.actualDocument}).afterClosed().subscribe( data => {
+    const dialogRef = this.dialog.open( CaseComparisonDialogComponent, {data: null}).afterClosed().subscribe( data => {
       if (data === undefined) {
-        this.clearCase();
+       // this.clearCase();
       } else {
+        console.log("I am closing");
         this.actualDocument = JSON.parse( data );
-          this.dodiff();
+        this.dodiff();
       }
     });
   }
