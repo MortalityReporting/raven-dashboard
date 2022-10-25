@@ -73,3 +73,33 @@
 .header {
     background: green;
 }
+
+.invalid-icon {
+  margin-right: 0.2rem; color: #d32f2f; cursor: pointer;
+}
+
+.valid-icon {
+  margin-right: 0.2rem; color: #388e3c; cursor: pointer;
+}
+
+.results {
+  display: flex;
+  flex-direction: row;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #cdcdcd;
+  transition: 0.2s;
+  width: 50%;
+  overflow-x: auto;
+}
+
+.card .container {
+  display: flex;
+  flex: 1;
+  height: 100%;
+  flex-direction: column;
+}
+

@@ -19,8 +19,9 @@
 </div>
 
 <div *ngIf="!isNarrative()">
-  <span *ngIf="formattedText"><pre> {{ formattedText }} </pre></span>
-  <span *ngIf="!formattedText" style="text-align: center"><pre> No Resource Found </pre></span>
+  <div *ngIf="isLoadingXMLData" class="loading">Converting to XML resource</div>
+  <span *ngIf="formattedText && !isLoadingXMLData"><pre> {{ formattedText }} </pre></span>
+  <span *ngIf="!formattedText && !isLoadingXMLData" style="text-align: center"><pre> No Resource Found </pre></span>
 </div>
 
 <div *ngIf="isNarrative()">

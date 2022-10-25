@@ -15,6 +15,7 @@ export class FhirExplorerComponent implements OnInit {
   formattedText: string;
   fhirResource: any;
   selectedStructure: string = "narrative";
+  isLoadingXMLData = false;
 
   constructor(
     private httpClient: HttpClient,
@@ -36,8 +37,10 @@ export class FhirExplorerComponent implements OnInit {
         this.formattedText = this.fhirResource?.text?.div;
       }
       else if (this.selectedStructure === "xml") {
+        this.isLoadingXMLData = true;
         this.fhirExplorerService.translateToXml( this.fhirResource ).subscribe( response => {
           this.formattedText = response;
+          this.isLoadingXMLData = false;
         })
       }
       else {

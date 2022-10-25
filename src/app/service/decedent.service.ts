@@ -41,4 +41,7 @@ export class DecedentService {
     return ravenFhirServer;
   }
 
+  getMockResponse(): Observable<any> {
+    return this.http.get('../../assets/data/case_comparion_demo_data.json')
+  }
 }
