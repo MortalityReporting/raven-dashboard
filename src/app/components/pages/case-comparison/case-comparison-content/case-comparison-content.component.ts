@@ -130,7 +130,6 @@ export class CaseComparisonContentComponent implements OnInit {
         this.isLoading = false;
         this.accordion.closeAll();
         this.isAccordionExpanded = false;
-        console.log('this.accordion.closeAll()')
       },
       error: err => {
         console.error(err);
