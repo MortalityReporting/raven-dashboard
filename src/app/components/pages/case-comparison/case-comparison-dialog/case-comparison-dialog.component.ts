@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {UtilsService} from "../../../../service/utils.service";
 
 @Component({
   selector: 'case-comparison-dialog',
@@ -8,24 +9,55 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class CaseComparisonDialogComponent {
   text: string = undefined;
-  
+  originalText: string = undefined;
+  errorMessage: string;
+
   constructor(
     @Inject( MAT_DIALOG_DATA) public data: Object,
-      public dialogRef: MatDialogRef<CaseComparisonDialogComponent>) {
-        if (data) {
-          this.text = JSON.stringify(data, null, 2);
-      }
+    private utilsService: UtilsService,
+    public dialogRef: MatDialogRef<CaseComparisonDialogComponent>) {
+    dialogRef.disableClose =true;
+      if (data) {
+        this.text = JSON.stringify(data, null, 2);
+        this.originalText = JSON.stringify(data, null, 2);
+    }
   }
 
-  onTextAreaChanged( event: any ) {    
+  onTextAreaChanged( event: any ) {
     this.text = (event.target as any).value;
+    this.errorMessage = '';
   }
 
-  onClearButtonClick() {
-    this.dialogRef.close(undefined);
-  } 
-  
+  onClose() {
+    this.text = "";
+    this.errorMessage = '';
+    this.dialogRef.close(this.originalText);
+  }
+
+  onCancelButtonClick() {
+    this.dialogRef.close(this.originalText);
+    this.errorMessage = '';
+  }
+
   onSaveButtonClick() {
-    this.dialogRef.close(this.text);
+    if(!this.text){
+      this.errorMessage = "No resource entered.";
+      console.error("No resource entered.");
+      return;
+    }
+    else if(!this.utilsService.isJsonString(this.text)){
+      this.errorMessage = "Invalid JSON.";
+      console.error("Invalid json.");
+      return;
+    }
+    const parsed =  JSON.parse(this.text.trim());
+    if(!parsed.resourceType || parsed.resourceType !== "Bundle"){
+      this.errorMessage = "Resource type must be Bundle.";
+      console.error("Resource type must be Bundle.");
+    }
+    else {
+      this.dialogRef.close(this.text);
+      this.errorMessage = '';
+    }
   }
 }
