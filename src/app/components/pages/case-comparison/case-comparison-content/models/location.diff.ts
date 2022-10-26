@@ -50,7 +50,7 @@ export class LocationDiff {
 
         try {
             this.name.expected = '"name": "' + this.expected.name + '"';
-            this.name.actual = '"name": "' + this.expected.name + '"';
+            this.name.actual = '"name": "' + this.actual.name + '"';
             [this.name.style,this.name.difference] = DiffType.doDiff( Diff.diffChars( this.name.expected, this.name.actual ));
         } catch(e) {};
 
