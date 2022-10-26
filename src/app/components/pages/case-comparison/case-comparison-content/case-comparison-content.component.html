@@ -26,11 +26,11 @@
   </div>
 
   <div class="section-button-wrapper" style="margin-bottom: 0.2rem">
-    <button mat-raised-button *ngIf="!isAccordionExpanded" (click)="onOpenAll()">
+    <button mat-raised-button (click)="onOpenAll()">
       <mat-icon>expand_more</mat-icon>
       Expand All Sections
     </button>
-    <button mat-raised-button *ngIf="isAccordionExpanded" (click)="onCloseAll()">
+    <button mat-raised-button (click)="onCloseAll()">
       <mat-icon>expand_less</mat-icon>
       Collapse All Sections
     </button>
@@ -340,9 +340,9 @@
         [expanded]="isAccordionExpanded">
       </app-case-comparison-content-field>
 
-      <mat-card>How Injury Occurred - Not Yet Implemented</mat-card>
-      <mat-card>Injury Date/Time - Not Yet Implemented</mat-card>
-      <mat-card>Transportation Role - Not Yet Implemented</mat-card>
+      <mat-card style="margin-top: 0.3em; border-color: #cdcdcd">How Injury Occurred - Not Yet Implemented</mat-card>
+      <mat-card style="margin-top: 0.3em; border-color: #cdcdcd">Injury Date/Time - Not Yet Implemented</mat-card>
+      <mat-card style="margin-top: 0.3em; border-color: #cdcdcd">Transportation Role - Not Yet Implemented</mat-card>
     </mat-expansion-panel>
 
     <!-- Exam and Autopsy Section -->

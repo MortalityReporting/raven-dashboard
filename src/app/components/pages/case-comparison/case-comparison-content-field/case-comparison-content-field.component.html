@@ -24,15 +24,15 @@
 
     <div class="results">
       <div class="card">
-        <div [ngClass]="state" style="padding: 0.5rem;">Your Data</div>
-        <div class="container">
+        <div [ngClass]="state" class="card-label">Your Data</div>
+        <div class="card-container">
           <div *ngIf="difference"[innerHTML]="difference">{{difference}}</div>
           <div *ngIf="!difference"><pre>No Data Found</pre></div>
         </div>
       </div>
       <div class="card">
-        <div [ngClass]="state" style="padding: 0.5rem;">Reference Data</div>
-        <div class="container">
+        <div [ngClass]="state" class="card-label">Reference Data</div>
+        <div class="card-container">
           <div><pre>{{expected}}</pre></div>
         </div>
       </div>
