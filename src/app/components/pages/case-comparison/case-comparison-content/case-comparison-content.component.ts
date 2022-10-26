@@ -125,15 +125,16 @@ export class CaseComparisonContentComponent implements OnInit {
 
     this.decedentService.getDocumentBundle(event.value).subscribe({
       next: (documentBundle: any) => {
+        this.accordion.closeAll();
+        this.isAccordionExpanded = false;
         this.expectedDocument = documentBundle;
         this.dodiff();
         this.isLoading = false;
-        this.accordion.closeAll();
-        this.isAccordionExpanded = false;
       },
       error: err => {
         console.error(err);
         this.utilsService.showErrorMessage();
+        this.isLoading = false;
       },
     });
   }
@@ -149,12 +150,11 @@ export class CaseComparisonContentComponent implements OnInit {
 
   onInputBundleClick() {
     const dialogRef = this.dialog.open( CaseComparisonDialogComponent, {data: null}).afterClosed().subscribe( data => {
-      if (data === undefined) {
-       // this.clearCase();
-      } else {
-        console.log("I am closing");
+      if (data) {
         this.actualDocument = JSON.parse( data );
         this.dodiff();
+        this.accordion.closeAll();
+        this.isAccordionExpanded = false;
       }
     });
   }
