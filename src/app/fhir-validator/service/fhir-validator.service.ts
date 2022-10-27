@@ -3,14 +3,14 @@ import {BehaviorSubject, Observable, Subject} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {ValidationResults} from "../domain/ValidationResults";
+import {ValidatorConstants} from "../providers/validator-constants";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FhirValidatorService {
 
-  private prodUri = "https://gt-apps.hdap.gatech.edu/HL7ValidatorService/fhir";
-  //private prodUri = "http://127.0.0.1:8080/fhir/$validate";
+  private prodUri = ValidatorConstants.prodUri;
   private hasExecuted = new Subject<boolean>();
   private fhirResource = new Subject<any>();
   private validationResults = new Subject<ValidationResults>();
