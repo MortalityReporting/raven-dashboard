@@ -142,6 +142,10 @@ export class FhirValidatorService {
           {
             "name": "resource",
             "resource": fhirResource,
+          },
+          {
+            "name": "includeFormattedResource",
+            "valueBoolean": true
           }
         ]
       }
