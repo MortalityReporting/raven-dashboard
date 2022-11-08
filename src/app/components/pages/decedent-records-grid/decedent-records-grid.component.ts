@@ -15,7 +15,7 @@ import {mergeMap, forkJoin, map} from "rxjs";
 export class DecedentRecordsGridComponent implements OnInit {
 
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['index', 'firstName', 'lastName', 'gender',  'tod', 'system'];
+  displayedColumns: string[] = ['index', 'name', 'gender',  'tod', 'system'];
   decedentGridDtoList: DecedentGridDTO[];
   isLoading = true;
 
@@ -42,7 +42,7 @@ export class DecedentRecordsGridComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  
+
     this.isLoading = true;
 
     this.decedentService.getDecedentRecords().pipe(

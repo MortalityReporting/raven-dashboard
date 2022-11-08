@@ -19,19 +19,14 @@
         <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.index}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="firstName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
-        <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.firstName}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="lastName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
-        <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.lastName}} </td>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.lastName | titlecase}}{{decedent.firstName ? ', ' + decedent.firstName: ''}}</td>
       </ng-container>
 
       <ng-container matColumnDef="gender">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Gender </th>
-        <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.gender}} </td>
+        <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.gender | titlecase}} </td>
       </ng-container>
 
       <ng-container matColumnDef="age">
