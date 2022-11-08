@@ -1,9 +1,15 @@
 <div class="case-summary-content-wrapper">
   <div class="section-button-wrapper">
+    <button mat-raised-button (click)="onOpenAll()">
+      <mat-icon>expand_more</mat-icon>
+      Expand All Sections
+    </button>
+    <button mat-raised-button (click)="onCloseAll()">
+      <mat-icon>expand_less</mat-icon>
+      Collapse All Sections
+    </button>
     <span class="content-spacer"></span>
-    <button mat-flat-button color="primary" (click)="onOpenAll()">Expand All Sections</button>
-    <button mat-flat-button color="primary" (click)="onCloseAll()">Collapse All Sections</button>
-    <span class="content-spacer"></span>
+    <button mat-raised-button (click)="onOpenInComparisonTool()">Open in Comparison Tool</button>
   </div>
   <mat-accordion multi>
 

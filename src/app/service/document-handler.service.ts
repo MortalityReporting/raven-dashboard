@@ -52,6 +52,39 @@ export class DocumentHandlerService {
   private patientResource = new Subject<any>();
   patientResource$ = this.patientResource.asObservable();
 
+  setDocumentBundle(documentBundle){
+    this.currentDocumentBundle = documentBundle;
+  }
+
+  setCaseSummary(caseSummary){
+    this.caseSummary.next(caseSummary);
+  }
+
+  setPatienceResource(patientResource){
+    this.patientResource.next(patientResource);
+  }
+
+  setCaseHeader(caseHeader){
+    this.caseHeader.next(caseHeader);
+  }
+
+  setCurrentDocumentBundle(documentBundle){
+    this.currentDocumentBundle = documentBundle;
+  }
+
+  setCurrentCompositionResource(compositionResource){
+    this.currentCompositionResource = compositionResource;
+  }
+
+  clearObservablesAndCashedData(){
+    this.setCurrentCompositionResource(null);
+    this.setCurrentDocumentBundle(null);
+    this.setCaseHeader(null);
+    this.setPatienceResource(null);
+    this.setCaseSummary(null);
+    this.setDocumentBundle(null);
+  }
+
   constructor(private http: HttpClient, private fhirResourceProvider: FhirResourceProviderService, private decedentService: DecedentService, private terminologyService: TerminologyHandlerService) {}
 
   getDocumentBundle(compositionId: string) {
@@ -270,6 +303,9 @@ export class DocumentHandlerService {
 
   // This function should be used whenever possible to go off of absolute references to the full URL within the Document Bundle.
   findResourceById(documentBundle: any = this.currentDocumentBundle, resourceId: string): any {
+    if(!documentBundle || !documentBundle.entry){
+      return null;
+    }
     return (documentBundle.entry.find((entry: any) => entry.fullUrl === resourceId))?.resource || undefined;
   }
 
@@ -284,7 +320,7 @@ export class DocumentHandlerService {
   findResourceByProfileName(documentBundle: any = this.currentDocumentBundle, profileName: string): any {
     try {
       const profile = documentBundle.entry.find((entry: any) => entry.resource.meta.profile.includes(profileName))?.resource;
-      return documentBundle.entry.find((entry: any) => entry.resource.meta.profile.includes(profileName))?.resource || undefined;  
+      return documentBundle.entry.find((entry: any) => entry.resource.meta.profile.includes(profileName))?.resource || undefined;
     } catch(e) {
       return undefined;
     }
@@ -298,7 +334,7 @@ export class DocumentHandlerService {
           items.push( entry.resource );
         }
       })
-      return items;  
+      return items;
     } catch(e) {
       return undefined;
     }
