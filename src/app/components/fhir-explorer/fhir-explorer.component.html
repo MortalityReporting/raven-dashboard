@@ -1,12 +1,34 @@
-<section>
-  <mat-button-toggle-group [(ngModel)]="selectedStructure" (click)="onToggleClick();" style="width: 100%">
-    <mat-button-toggle value="narrative" style="width: 33%">Narrative</mat-button-toggle>
-    <mat-button-toggle value="json" style="width: 33%">JSON</mat-button-toggle>
-    <mat-button-toggle value="xml" style="width: 34%">XML</mat-button-toggle>
-  </mat-button-toggle-group>
-</section>
-<pre *ngIf="!isNarrative()"> {{ formattedText }} </pre>
+<div class="row">
+  <div class="col-left">
+    <section>
+      <mat-button-toggle-group [(ngModel)]="selectedStructure" (click)="onToggleClick();" style="width: 100%">
+        <mat-button-toggle value="narrative" style="width: 33%">Narrative</mat-button-toggle>
+        <mat-button-toggle value="json" style="width: 33%">JSON</mat-button-toggle>
+        <mat-button-toggle value="xml" style="width: 34%">XML</mat-button-toggle>
+      </mat-button-toggle-group>
+    </section>
+  </div>
+  <div class="col-right" style="margin-top: 0.5rem" align="center">
+    <button mat-button color="primary" matTooltip="Copy content to clipboard"
+            [disabled]="selectedStructure==='narrative' || !this.formattedText"
+            [cdkCopyToClipboard]="formattedText"
+            (click)="onCopyToClipboard(formattedText)">
+      <mat-icon>content_copy</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div *ngIf="!isNarrative()">
+  <div *ngIf="isLoadingXMLData" class="loading">Converting to XML resource</div>
+  <span *ngIf="formattedText && !isLoadingXMLData"><pre> {{ formattedText }} </pre></span>
+  <span *ngIf="!formattedText && !isLoadingXMLData" style="text-align: center"><pre> No Resource Found </pre></span>
+</div>
+
 <div *ngIf="isNarrative()">
   <br>
-  <div [innerHTML]="formattedText"></div>
+  <div *ngIf="formattedText" [innerHTML]="formattedText"></div>
+  <div *ngIf="!formattedText" style="text-align: center">
+    <span *ngIf="!fhirResource"><pre>Resource Not Found</pre></span>
+    <span *ngIf="fhirResource"><pre>No Narrative Found</pre></span>
+  </div>
 </div>

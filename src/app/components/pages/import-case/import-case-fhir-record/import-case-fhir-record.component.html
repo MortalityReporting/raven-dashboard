@@ -1,11 +1,11 @@
 <div>
-  1. Select a FHIR JSON or XML file to upload and preview or paste your FHIR Bundle directly in the provided area.
+  1. Select a FHIR JSON file to upload and preview or paste your FHIR Bundle directly in the provided area.
   <div class="content-offset">
     Contents must be a complete MDI Document Bundle or Toxicology Bundle.
 
     <div class="top-spacer">
       <input type="file" class="file-input" (click)="fileUpload.value=null"
-             accept="text/*,.json"
+             accept=".json"
              (change)="onFileSelected($event)" #fileUpload>
       <button mat-raised-button color="success" class="upload-btn"
               (click)="clearUI(); fileUpload.click();" [disabled]=isLoading>
@@ -26,9 +26,15 @@
 <div class="top-spacer">
   2. Submit your Bundle to the Raven FHIR Sever.
   <div class="content-offset top-spacer">
-    <button mat-raised-button color="primary"  (click)="onSubmit()">
+    <button mat-raised-button color="primary" (click)="onSubmit()" *ngIf="!invalidResourceFound || preconditionError">
       <mat-icon>send</mat-icon>
       Submit
     </button>
+    <button mat-raised-button color="warn" (click)="onSubmitInvalidRecord()"
+            *ngIf="invalidResourceFound && !preconditionError && !isLoading">
+      <mat-icon>send</mat-icon>
+      Submit Invalid Record
+    </button>
+
   </div>
 </div>

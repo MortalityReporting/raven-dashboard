@@ -1,0 +1,48 @@
+<mat-expansion-panel class="summary-section" id="name" #matExpansionPanel="matExpansionPanel">
+  <mat-expansion-panel-header>
+
+    <mat-panel-title>
+      <mat-icon *ngIf="state=='valid'" class="valid-icon">done</mat-icon>
+      <mat-icon *ngIf="state=='invalid'" class="invalid-icon">error</mat-icon>
+      {{title}}
+    </mat-panel-title>
+
+  </mat-expansion-panel-header>
+  <div class="summary-section-body">
+
+    <div class="summary-section-grid">
+      <div class="grid-row">
+        <div class="grid-col-1">
+          <div>Resource/Profile: {{resource}}</div>
+        </div>
+        <div class="grid-col-1">
+          <div>FHIR Path: {{fhirPath}}</div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+    <div class="results">
+      <div class="card">
+        <div [ngClass]="state" class="card-label">Your Data</div>
+        <div class="card-container">
+          <div *ngIf="difference"[innerHTML]="difference">{{difference}}</div>
+          <div *ngIf="!difference"><pre>No Data Found</pre></div>
+        </div>
+      </div>
+      <div class="card">
+        <div [ngClass]="state" class="card-label">Reference Data</div>
+        <div class="card-container">
+          <div><pre>{{expected}}</pre></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-row" style="margin: 0.5rem" *ngIf="state=='invalid'">
+      <span>Legend:</span>
+      <span class="diff-removed-color" style="margin-left: 1rem">Data missing in your data</span>
+      <span class="diff-added-color" style="margin-left: 1rem">Additional data in your data</span>
+    </div>
+  </div>
+
+</mat-expansion-panel>

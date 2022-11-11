@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {DecedentRecordsGridComponent} from "./components/pages/decedent-records-grid/decedent-records-grid.component";
 import {LandingComponent} from "./components/landing/landing.component";
 import {CaseContainerComponent} from "./components/pages/case-container/case-container.component";
+import {CaseComparisonComponent} from "./components/pages/case-comparison/case-comparison.component";
 import {ImportCaseComponent} from "./components/pages/import-case/import-case.component";
 import {FhirValidatorComponent} from "./fhir-validator/components/fhir-validator/fhir-validator.component";
 
@@ -14,6 +15,10 @@ const routes: Routes = [
   {
     path: 'cases',
     component: DecedentRecordsGridComponent
+  },
+  {
+    path: 'comparison',
+    component: CaseComparisonComponent
   },
   {
     path: 'fhir-validator',

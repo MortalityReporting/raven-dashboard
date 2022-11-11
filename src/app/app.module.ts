@@ -8,6 +8,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule} from '@angular/material/dialog'
 import {MatIconModule} from "@angular/material/icon";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatToolbarModule} from "@angular/material/toolbar";
@@ -24,6 +25,9 @@ import {FhirValidatorModule} from "./fhir-validator/fhir-validator.module";
 import {FhirAuthInterceptor} from "./interceptors/fhir-auth.interceptor";
 import {MatGridListModule} from '@angular/material/grid-list';
 import {CaseSummaryComponent} from './components/pages/case-summary/case-summary.component';
+import {CaseComparisonComponent} from './components/pages/case-comparison/case-comparison.component';
+import {CaseComparisonContentComponent} from './components/pages/case-comparison/case-comparison-content/case-comparison-content.component';
+import {CaseComparisonContentFieldComponent} from './components/pages/case-comparison/case-comparison-content-field/case-comparison-content-field.component';
 import {LandingComponent} from './components/landing/landing.component';
 import {CaseContainerComponent} from './components/pages/case-container/case-container.component';
 import {FhirExplorerDrawerService} from "./service/fhir-explorer-drawer.service";
@@ -50,6 +54,11 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {MatSelectModule} from '@angular/material/select';
 import {MatMenuModule} from '@angular/material/menu';
 import {ConformationDialogComponent} from "./components/widgets/conformation-dialog/conformation-dialog.component";
+import {ClipboardModule} from "@angular/cdk/clipboard";
+import { MappingsComponent } from './components/pages/import-case/mappings/mappings.component';
+import { ModalComponent } from './components/widgets/modal/modal.component';
+
+import { CaseComparisonDialogComponent } from './components/pages/case-comparison/case-comparison-dialog/case-comparison-dialog.component';
 
 @NgModule({
   declarations: [
@@ -57,16 +66,21 @@ import {ConformationDialogComponent} from "./components/widgets/conformation-dia
     HeaderComponent,
     DecedentRecordsGridComponent,
     CaseSummaryComponent,
+    CaseComparisonComponent,
     LandingComponent,
     CaseContainerComponent,
     FhirExplorerComponent,
     CaseSummaryContentComponent,
+    CaseComparisonContentComponent,
+    CaseComparisonContentFieldComponent,
     SetFhirExplorerDirective,
     CaseSummaryContentFieldComponent,
     ImportCaseComponent,
     ImportCaseFhirRecordComponent,
     ImportCaseConnectathonTemplateComponent,
-    ConformationDialogComponent
+    ConformationDialogComponent,
+    MappingsComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
@@ -75,6 +89,7 @@ import {ConformationDialogComponent} from "./components/widgets/conformation-dia
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatDialogModule,
     ReactiveFormsModule,
     MatIconModule,
     MatSidenavModule,
@@ -96,13 +111,16 @@ import {ConformationDialogComponent} from "./components/widgets/conformation-dia
     MatListModule,
     MatTabsModule,
     MatSelectModule,
-    MatMenuModule
+    MatMenuModule,
+    ClipboardModule,
+    MatDialogModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: FhirAuthInterceptor, multi: true},
     FhirExplorerDrawerService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [CaseComparisonDialogComponent],
 })
 export class AppModule {
 }

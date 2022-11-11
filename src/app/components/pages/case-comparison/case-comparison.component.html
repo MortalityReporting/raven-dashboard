@@ -1,0 +1,66 @@
+<mat-sidenav-container [autosize]="autosize">
+  <mat-sidenav mode="side" opened>
+    <mat-nav-list>
+
+      <mat-list-item (click)="onItemClick('caseAdminInfo');">
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Case Admininstration Information' : ''" matTooltipPosition="right">
+          info
+        </mat-icon>
+        <span *ngIf="sidenavExpanded">&nbsp;Case Administration Info</span>
+      </mat-list-item>
+
+      <mat-list-item (click)="onItemClick('demographics');">
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Demographics' : ''" matTooltipPosition="right">
+          person
+        </mat-icon>
+        <span *ngIf="sidenavExpanded">&nbsp;Demographics</span>
+      </mat-list-item>
+
+      <mat-list-item (click)="onItemClick('circumstances');">
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Circumstances' : ''" matTooltipPosition="right">
+          travel_explore
+        </mat-icon>
+        <span *ngIf="sidenavExpanded">&nbsp;Circumstances</span>
+      </mat-list-item>
+
+      <mat-list-item (click)="onItemClick('jurisdiction');">
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Jurisdiction' : ''" matTooltipPosition="right">
+          gavel
+        </mat-icon>
+        <span *ngIf="sidenavExpanded">&nbsp;Jurisdiction</span>
+      </mat-list-item>
+
+      <mat-list-item (click)="onItemClick('causeAndManner');">
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Cause and Manner of Death' : ''" matTooltipPosition="right">
+          question_mark
+        </mat-icon>
+        <span *ngIf="sidenavExpanded">&nbsp;Cause and Manner of Death</span>
+      </mat-list-item>
+
+      <mat-list-item (click)="onItemClick('examNotes');">
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Exam and Autopsy Notes' : ''" matTooltipPosition="right">
+          description
+        </mat-icon>
+        <span *ngIf="sidenavExpanded">&nbsp;Exam and Autopsy Notes</span>
+      </mat-list-item>
+
+      <mat-list-item *ngIf="sidenavExpanded" (click)="onSidenavResize(false);" >
+        <mat-icon aria-label="Collapse Side Menu">
+          chevron_left
+        </mat-icon>&nbsp;
+        Collapse Menu
+      </mat-list-item>
+
+      <mat-list-item *ngIf="!sidenavExpanded" (click)="onSidenavResize(true);">
+        <mat-icon aria-label="Expand Side Menu" matTooltip="Expand Side Menu" matTooltipPosition="right">
+          chevron_right
+        </mat-icon>
+      </mat-list-item>
+
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-case-comparison-content 
+    ></app-case-comparison-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

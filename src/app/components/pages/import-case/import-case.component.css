@@ -1,12 +1,18 @@
 .radio-group {
   display: flex;
   flex-direction: row;
-  margin: 15px 0;
   align-items: flex-start;
+  margin: 2em 0 2em;
 }
 
 .radio-button {
   margin: 5px;
+}
+
+.import-case.mat-card{
+  padding-top: 2em;
+  padding-left: 2em;
+  padding-bottom: 2em;
 }
 
 #radio-button-label {
@@ -14,4 +20,8 @@
   margin-bottom: 5px;
   margin-right: 10px;
   font-weight: bold;
+}
+
+#card {
+  padding-right: 2em;
 }

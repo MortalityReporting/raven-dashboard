@@ -42,7 +42,7 @@ export class DecedentRecordsGridComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+  
     this.isLoading = true;
 
     this.decedentService.getDecedentRecords().pipe(

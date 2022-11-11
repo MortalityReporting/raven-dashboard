@@ -1,0 +1,119 @@
+.summary-section {
+  border: #cdcdcd 1px solid;
+  box-shadow: 1px 1px 2px black;
+  margin-top: 0.3rem;
+}
+
+.summary-section-body {
+  padding: 5px;
+}
+
+.summary-section-grid .grid-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.summary-section-grid .grid-col-1 {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.content-field {
+  display: flex;
+  flex-direction: row;
+  border: 1px #cdcdcd dashed;
+}
+
+.content-field-label {
+  padding: 5px;
+  display: flex;
+  flex: 1;
+}
+
+.content-field-value {
+  padding: 5px;
+  display: flex;
+  flex: 1;
+}
+
+.content-field-value input {
+  width: 100%;
+}
+
+.valid {
+  width: 100%;
+  background: #a5d6a7;
+}
+
+.invalid {
+  width: 100%;
+  background: #ef9a9a;
+}
+
+.valid input {
+  width: 100%;
+  background: #a5d6a7;
+}
+
+.invalid input {
+  width: 100%;
+  background: #ef9a9a;
+}
+
+.text-area {
+  width: 100%;
+}
+
+.border {
+  border: 1px solid #cdcdcd;
+}
+
+.header {
+  background: green;
+}
+
+.invalid-icon {
+  margin-right: 0.2rem;
+  color: #d32f2f;
+  cursor: pointer;
+}
+
+.valid-icon {
+  margin-right: 0.2rem;
+  color: #388e3c;
+  cursor: pointer;
+}
+
+.results {
+  display: flex;
+  flex-direction: row;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #cdcdcd;
+  transition: 0.2s;
+  width: 50%;
+  border-radius: 5px;
+  margin-right: 3px;
+}
+
+.card .card-container {
+  display: flex;
+  flex: 1;
+  height: 100%;
+  flex-direction: column;
+  overflow-x: auto;
+  padding-left: 1rem;
+}
+
+.card .card-label {
+  text-align: center;
+  padding: 0.5rem 0;
+  overflow: hidden;
+}
+
