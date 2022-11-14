@@ -2,8 +2,8 @@ import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {PageEvent} from '@angular/material/paginator';
 import {MatSort} from "@angular/material/sort";
-import {DecedentGridDTO} from "../../../model/decedent.grid.dto";
-import {DecedentService} from "../../../service/decedent.service";
+import {DecedentGridDTO} from "../../../../model/decedent.grid.dto";
+import {DecedentService} from "../../../../service/decedent.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {mergeMap, forkJoin, map} from "rxjs";
 
