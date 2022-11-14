@@ -3,15 +3,11 @@ import {ImportCaseService} from "../../../../service/import-case.service";
 import {UtilsService} from "../../../../service/utils.service";
 import {FhirValidatorComponent} from "../../../../fhir-validator/components/fhir-validator/fhir-validator.component";
 import {FhirValidatorService} from "../../../../fhir-validator/service/fhir-validator.service";
-<<<<<<< HEAD
-import {combineLatestWith, Observable} from "rxjs";
-import {ValidationResults} from "../../../../fhir-validator/domain/ValidationResults";
-=======
+import {FhirValidatorStateService} from "../../../../fhir-validator/service/fhir-validator-state.service";
 import {Observable} from "rxjs";
-import {ValidationResults} from "../../../../fhir-validator/domain/ValidationResoults";
+import {ValidationResults} from "../../../../fhir-validator/domain/ValidationResults";
 import {MatDialog} from "@angular/material/dialog";
 import {openConformationDialog} from "../../../widgets/conformation-dialog/conformation-dialog.component";
->>>>>>> 3294ddb8882d21f33eeed781f26db7c21087347c
 
 @Component({
   selector: 'app-import-case-fhir-record',
@@ -37,6 +33,7 @@ export class ImportCaseFhirRecordComponent implements OnInit{
   constructor(private importCaseService: ImportCaseService,
               private utilsService: UtilsService,
               private fhirValidatorService: FhirValidatorService,
+              private fhirValidatorStateService: FhirValidatorStateService,
               private dialog: MatDialog) { }
 
   onFileSelected(event: any) {
@@ -58,7 +55,7 @@ export class ImportCaseFhirRecordComponent implements OnInit{
       reader.readAsText(this.file, "UTF-8");
       reader.onload = () => {
         this.fileContent = reader.result as string;
-        this.fhirValidatorService.setFhirResource(this.fileContent);
+        this.fhirValidatorStateService.setFhirResource(this.fileContent);
       }
       reader.onerror = () => {
         this.utilsService.showErrorMessage("Unable to open the file.");
@@ -119,8 +116,8 @@ export class ImportCaseFhirRecordComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.validationResult$ = this.fhirValidatorService.getValidationResults();
-    this.fhirValidatorService.getFhirResource().subscribe({
+    this.validationResult$ = this.fhirValidatorStateService.getValidationResults();
+    this.fhirValidatorStateService.getFhirResource().subscribe({
       next: value => {
         this.preconditionError = '';
         this.fhirResource = value;
@@ -128,7 +125,7 @@ export class ImportCaseFhirRecordComponent implements OnInit{
       }
     })
 
-    this.fhirValidatorService.isResourcePasted().subscribe({
+    this.fhirValidatorStateService.isResourcePasted().subscribe({
       next: value => {
         if(value){
           this.file = null;
