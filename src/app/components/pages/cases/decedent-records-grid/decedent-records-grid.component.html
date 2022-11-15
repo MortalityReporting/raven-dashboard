@@ -35,6 +35,11 @@
     <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.tod | date: 'MM/yyyy'}} </td>
   </ng-container>
 
+  <ng-container matColumnDef="mannerOfDeath">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Manner of Death</th>
+    <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.mannerOfDeath | titlecase}} </td>
+  </ng-container>
+
   <ng-container matColumnDef="system">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> System</th>
     <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.system }} </td>
