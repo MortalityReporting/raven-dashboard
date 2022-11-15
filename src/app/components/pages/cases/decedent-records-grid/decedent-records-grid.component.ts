@@ -54,7 +54,6 @@ export class DecedentRecordsGridComponent implements OnInit {
 
             this.decedentService.getDecedentObservationsByCode(decedentRecord, codes).pipe(
               map((observation: any) => {
-                console.log(observation);
                 decedentRecord = this.mapToDto(decedentRecord);
                 const tod = observation?.entry.find(entry => entry.resource?.code?.coding[0]?.code == loincTimeOfDeath)?.resource?.effectiveDateTime;
                 decedentRecord.tod = tod;
