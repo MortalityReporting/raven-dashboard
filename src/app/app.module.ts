@@ -61,6 +61,9 @@ import { ModalComponent } from './components/widgets/modal/modal.component';
 import { CaseComparisonDialogComponent } from './components/pages/case-comparison/case-comparison-dialog/case-comparison-dialog.component';
 import {CasesComponent} from "./components/pages/cases/cases.component";
 import { ToxicologyGridComponent } from './components/pages/cases/toxicology-grid/toxicology-grid.component';
+import { ToxicologyContainerComponent } from './components/pages/toxicology-container/toxicology-container.component';
+import { ToxicologyReportComponent } from './components/pages/toxicology-report/toxicology-report.component';
+import { ToxicologyReportContentComponent } from './components/pages/toxicology-report/toxicology-report-content/toxicology-report-content.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +87,10 @@ import { ToxicologyGridComponent } from './components/pages/cases/toxicology-gri
     MappingsComponent,
     ModalComponent,
     CasesComponent,
-    ToxicologyGridComponent
+    ToxicologyGridComponent,
+    ToxicologyContainerComponent,
+    ToxicologyReportComponent,
+    ToxicologyReportContentComponent
   ],
   imports: [
     BrowserModule,
