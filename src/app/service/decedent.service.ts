@@ -19,7 +19,7 @@ export class DecedentService {
 
   getDecedentRecords():  Observable<any> {
     // Headers are added in the FHIR Auth Interceptor
-    return this.http.get(this.getFhirServerBaseURL() + "Patient")
+    return this.http.get(this.getFhirServerBaseURL() + "Patient?_count=100")
       .pipe( map((result: any) => (
         result.entry as Object[]
     )));
