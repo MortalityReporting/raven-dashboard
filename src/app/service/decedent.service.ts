@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {map} from  "rxjs/operators";
 import {environment} from "../../environments/environment";
@@ -11,15 +11,20 @@ export class DecedentService {
 
   constructor(private http: HttpClient) { }
 
-  getDecedentConditionRecords(decedent: any):  Observable<any> {
+  getDecedentObservationsByCode(decedent: any, codeList: string[]):  Observable<any> {
     // Headers are added in the FHIR Auth Interceptor
-    return this.http.get(this.getFhirServerBaseURL() + "Observation?patient=" + decedent.resource.id + "&code=81956-5")
+    let params = new HttpParams()
+      .set('patient', decedent.resource.id)
+      .set('code', codeList.toString())
+
+    // return this.http.get(this.getFhirServerBaseURL() + "Observation?patient=" + decedent.resource.id + "&code=81956-5")
+    return this.http.get(this.getFhirServerBaseURL() + "Observation" , {params: params})
       .pipe( map((result: any) => result));
   }
 
   getDecedentRecords():  Observable<any> {
     // Headers are added in the FHIR Auth Interceptor
-    return this.http.get(this.getFhirServerBaseURL() + "Patient")
+    return this.http.get(this.getFhirServerBaseURL() + "Patient?_count=100")
       .pipe( map((result: any) => (
         result.entry as Object[]
     )));

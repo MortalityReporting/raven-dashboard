@@ -12,7 +12,7 @@ import {MatDialogModule} from '@angular/material/dialog'
 import {MatIconModule} from "@angular/material/icon";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatToolbarModule} from "@angular/material/toolbar";
-import {DecedentRecordsGridComponent} from './components/pages/decedent-records-grid/decedent-records-grid.component';
+import {DecedentRecordsGridComponent} from './components/pages/cases/decedent-records-grid/decedent-records-grid.component';
 import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
@@ -59,6 +59,11 @@ import { MappingsComponent } from './components/pages/import-case/mappings/mappi
 import { ModalComponent } from './components/widgets/modal/modal.component';
 
 import { CaseComparisonDialogComponent } from './components/pages/case-comparison/case-comparison-dialog/case-comparison-dialog.component';
+import {CasesComponent} from "./components/pages/cases/cases.component";
+import { ToxicologyGridComponent } from './components/pages/cases/toxicology-grid/toxicology-grid.component';
+import { ToxicologyContainerComponent } from './components/pages/toxicology-container/toxicology-container.component';
+import { ToxicologyReportComponent } from './components/pages/toxicology-report/toxicology-report.component';
+import { ToxicologyReportContentComponent } from './components/pages/toxicology-report/toxicology-report-content/toxicology-report-content.component';
 
 @NgModule({
   declarations: [
@@ -80,7 +85,12 @@ import { CaseComparisonDialogComponent } from './components/pages/case-compariso
     ImportCaseConnectathonTemplateComponent,
     ConformationDialogComponent,
     MappingsComponent,
-    ModalComponent
+    ModalComponent,
+    CasesComponent,
+    ToxicologyGridComponent,
+    ToxicologyContainerComponent,
+    ToxicologyReportComponent,
+    ToxicologyReportContentComponent
   ],
   imports: [
     BrowserModule,
