@@ -40,10 +40,10 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
   validationErrorStr: string; // We use this value to store preliminary error messages or a generic error message.
   hasResponseData = false;  // Indicates if the response generated any messages. If true, we render the report
   parsedFhirResource: any; // We store value of the validator result in order to present it to the user.
-  displayedColumns: string[] = ValidatorConstants.displayedColumns;
+  displayedColumns: string[] = ValidatorConstants.DISPLAYED_COLUMNS;
   isLoading = false;
   allExpanded = true; // Used to render collapsed/expanded all icon as well as calculate if all results are expanded/collapsed
-  severityLevels: string[] = ValidatorConstants.severityLevels;
+  severityLevels: string[] = ValidatorConstants.SEVERITY_LEVELS;
   severityLevelsFormControl = new FormControl(this.severityLevels); // A simple form control used for filtering the results.
   dataSource = new MatTableDataSource([]); // Data source for the report table.
   validatorSubscription$: Subscription;

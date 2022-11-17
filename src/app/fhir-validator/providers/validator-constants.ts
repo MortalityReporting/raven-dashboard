@@ -28,9 +28,9 @@ export class ValidatorConstants {
   ]
 
   // Validator API link
-  static prodUri = "https://gt-apps.hdap.gatech.edu/HL7ValidatorService/fhir";
+  static PROD_URI = "https://gt-apps.hdap.gatech.edu/HL7ValidatorService/fhir";
 
-  static displayedColumns = ['toggle', 'icon', 'severity', 'fhirPath', 'location'];
-  static severityLevels = ['error', 'warning', 'information', 'note'];
+  static DISPLAYED_COLUMNS = ['toggle', 'icon', 'severity', 'fhirPath', 'location'];
+  static SEVERITY_LEVELS = ['error', 'warning', 'information', 'note'];
 
 }
