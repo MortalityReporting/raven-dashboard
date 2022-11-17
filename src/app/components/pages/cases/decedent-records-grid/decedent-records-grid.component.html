@@ -45,6 +45,11 @@
     <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.system }} </td>
   </ng-container>
 
+  <ng-container matColumnDef="caseNumber">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> MDI Case Number</th>
+    <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.caseNumber }} </td>
+  </ng-container>
+
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onCaseSelected(row)"></tr>

@@ -1,11 +1,11 @@
 import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {PageEvent} from '@angular/material/paginator';
 import {MatSort} from "@angular/material/sort";
 import {DecedentGridDTO} from "../../../../model/decedent.grid.dto";
 import {DecedentService} from "../../../../service/decedent.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {mergeMap, forkJoin, map} from "rxjs";
+import {mergeMap, forkJoin, map, Observable} from "rxjs";
+import {UtilsService} from "../../../../service/utils.service";
 
 @Component({
   selector: 'app-decedent-records-grid',
@@ -15,18 +15,18 @@ import {mergeMap, forkJoin, map} from "rxjs";
 export class DecedentRecordsGridComponent implements OnInit {
 
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['index', 'name', 'gender', 'tod', 'mannerOfDeath', 'system'];
+  displayedColumns: string[] = ['index', 'name', 'gender', 'tod', 'mannerOfDeath', 'system', 'caseNumber'];
   decedentGridDtoList: DecedentGridDTO[];
   isLoading = true;
 
   @ViewChild(MatSort) sort: MatSort;
-
   @ViewChild('input') input: ElementRef;
 
   constructor(
     private route: ActivatedRoute,
     private decedentService: DecedentService,
     private router: Router,
+    private utilsService: UtilsService
   ) {
   }
 
@@ -51,13 +51,12 @@ export class DecedentRecordsGridComponent implements OnInit {
       mergeMap((decedentRecordsList: any[]) =>
         forkJoin(
           decedentRecordsList.map((decedentRecord: any, i) =>
-
             this.decedentService.getDecedentObservationsByCode(decedentRecord, codes).pipe(
               map((observation: any) => {
                 decedentRecord = this.mapToDto(decedentRecord);
                 const tod = observation?.entry.find(entry => entry.resource?.code?.coding[0]?.code == loincTimeOfDeath)?.resource?.effectiveDateTime;
                 decedentRecord.tod = tod;
-                const mannerOfDeath =  observation?.entry.find(entry => entry.resource.code.coding[0].code == loincCauseOfDeath)?.resource?.valueCodeableConcept?.coding[0]?.display;
+                const mannerOfDeath =  observation?.entry.find(entry => entry.resource?.code?.coding[0]?.code == loincCauseOfDeath)?.resource?.valueCodeableConcept?.coding[0]?.display;
                 decedentRecord.mannerOfDeath = mannerOfDeath;
                 decedentRecord.index = i + 1;
                 return decedentRecord;
@@ -65,7 +64,21 @@ export class DecedentRecordsGridComponent implements OnInit {
             )
           ))
       )
-    ).subscribe({
+    ).pipe(
+      mergeMap((decedentRecordsList: any[]) =>
+        forkJoin(
+          decedentRecordsList.map((decedentRecord: any, i) =>
+            this.decedentService.getComposition(decedentRecord.decedentId).pipe(
+              map((composition: any) => {
+                const caseNumber = composition?.entry[0]?.resource?.extension[0]?.valueIdentifier?.value;
+                decedentRecord.caseNumber = caseNumber;
+                return decedentRecord
+              })
+            )
+          ))
+      )
+    )
+    .subscribe({
         next: (data) => {
           this.decedentGridDtoList = data;
           this.dataSource = new MatTableDataSource(data);
@@ -73,19 +86,16 @@ export class DecedentRecordsGridComponent implements OnInit {
           },
         error: (e) => {
           console.error(e);
-          //TODO render error message to the user
+          this.utilsService.showErrorMessage();
         },
         complete:  () => {
-          this.isLoading = false
+          this.isLoading = false;
           }
     });
   }
 
   onCaseSelected(row: any) {
     this.router.navigate(['cases/summary/', row.decedentId]);
-  }
-
-  pageChanged(event: PageEvent) {
   }
 
   applyFilter(event: Event) {
