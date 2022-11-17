@@ -13,7 +13,6 @@ export class FhirValidatorComponent implements OnInit {
 
   @ViewChild(ValidatorCoreComponent) validatorCore: FhirValidatorComponent;
 
-
   constructor() { }
 
   validateFhirResource(resource?: any, recourseFormat?: string){

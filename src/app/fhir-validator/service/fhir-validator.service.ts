@@ -10,7 +10,7 @@ import {ValidatorConstants} from "../providers/validator-constants";
 })
 export class FhirValidatorService {
 
-  private prodUri = ValidatorConstants.prodUri;
+  private prodUri = ValidatorConstants.PROD_URI;
 
   constructor( private http: HttpClient) { }
 
