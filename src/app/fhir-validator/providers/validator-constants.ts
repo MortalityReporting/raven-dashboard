@@ -27,4 +27,6 @@ export class ValidatorConstants {
     { name : "Resource Profile: US Core Patient Profile",          url: "https://hl7.org/fhir/us/core/STU4/StructureDefinition-us-core-patient.html#root"},
   ];
 
+  static prodUri = "https://gt-apps.hdap.gatech.edu/HL7ValidatorService/fhir";
+
 }

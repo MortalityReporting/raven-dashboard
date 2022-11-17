@@ -1,13 +1,13 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {DomSanitizer} from "@angular/platform-browser";
 import {FhirValidatorService} from "../../service/fhir-validator.service";
-import {ValidatorConstants} from "../../providers/validator-constants";
+import {FhirValidatorStateService} from "../../service/fhir-validator-state.service";
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatTableDataSource} from "@angular/material/table";
 import {FormControl} from "@angular/forms";
 import {Subscription} from "rxjs";
 import {UtilsService} from "../../../service/utils.service";
-import {ValidationResults} from "../../domain/ValidationResoults";
+import {ValidationResults} from "../../domain/ValidationResults";
 
 export interface ResponseItem {
   severity: string;
@@ -53,7 +53,6 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
   serverErrorDetected = false; // Tracks if the server has responded with an error (404, 500). Used to render the error in UI.
   serverErrorList: any []; // Store the data from the OperationOutcome resource
   serverErrorStatus: string; // We store the error response status here (i.e. 404, 500)
-  validationResults: ValidationResults = {};
 
   //TODO remove this code when the API returns a timeout error
   serverTimoutDetected = false;
@@ -61,8 +60,8 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
 
   constructor(
     private fhirValidatorService: FhirValidatorService,
+    private fhirValidatorStateService: FhirValidatorStateService,
     private sanitized: DomSanitizer,
-    public constants: ValidatorConstants,
     private utilsService: UtilsService,
   ) {
   }
@@ -75,22 +74,22 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
       //Track the fhir resource injected from parent other components.
-      this.fhirValidatorService.getFhirResource().subscribe({
+      this.fhirValidatorStateService.getFhirResource().subscribe({
         next: value => this.fhirResource = value
       });
 
-      this.fhirValidatorService.setValidationResults({});
+      this.fhirValidatorStateService.setValidationResults({});
   }
 
   formatFhirResource(){
     if(this.fhirResource){
       if(this.resourceFormat === 'json' && this.fhirValidatorService.isJson(this.fhirResource)){
         this.fhirResource = this.fhirValidatorService.beautifyJSON(this.fhirResource);
-        this.fhirValidatorService.setFhirResource(this.fhirResource);
+        this.fhirValidatorStateService.setFhirResource(this.fhirResource);
       }
       else if(this.resourceFormat === 'xml' && this.fhirValidatorService.isXmlString(this.fhirResource)){
         this.fhirResource = this.fhirValidatorService.beautifyXML(this.fhirResource);
-        this.fhirValidatorService.setFhirResource(this.fhirResource);
+        this.fhirValidatorStateService.setFhirResource(this.fhirResource);
       }
     }
   }
@@ -136,7 +135,7 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
         reader.readAsText(file, "UTF-8");
         reader.onload = () => {
           this.fhirResource = reader.result as string;
-          this.fhirValidatorService.setFhirResource(this.fhirResource);
+          this.fhirValidatorStateService.setFhirResource(this.fhirResource);
           this.formatFhirResource();
         }
         reader.onerror = () => {
@@ -175,7 +174,7 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
       //see if we can find any obvious issues with the resource here
       this.isValidResource = false;
       this.validationFinished = true;
-      this.fhirValidatorService.setValidationResults({hasBasicErrors: true, isValid: false})
+      this.fhirValidatorStateService.setValidationResults({hasBasicErrors: true, isValid: false})
     }
     else {
       // The UI validation passed successfully, and we execute the backend validation.
@@ -185,7 +184,7 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
 
   onPasteFhirResource(event: ClipboardEvent) {
     this.fileName = '';
-    this.fhirValidatorService.setResourcePasted(true);
+    this.fhirValidatorStateService.setResourcePasted(true);
     if(!this.fhirResource) {
       this.clearUI();
     }
@@ -288,6 +287,7 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
     this.scrollToElement(locationId);
   }
 
+  // Sends fhir resource to be validated, renders response
   private executeAPIValidation(fhirResource: any, resourceFormat: string) {
 
     // Reset values to default state prior to validation.
@@ -310,7 +310,7 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
         let issues = response.issues;
         if(issues.length === 1 && issues[0].severity === "Information" && issues[0]?.message.toLowerCase() === "ALL OK".toLowerCase()){
           this.isValidResource = true;
-          this.fhirValidatorService.setValidationResults({isValid: true})
+          this.fhirValidatorStateService.setValidationResults({isValid: true})
         }
         else {
           this.isValidResource = false;
@@ -427,10 +427,10 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
 
   onFhirRecordChanged(fhirResource: any) {
     if(this.fhirValidatorService.isJson(fhirResource)){
-      this.fhirValidatorService.setFhirResource(JSON.parse(fhirResource));
+      this.fhirValidatorStateService.setFhirResource(JSON.parse(fhirResource));
     }
     else {
-      this.fhirValidatorService.setFhirResource(fhirResource);
+      this.fhirValidatorStateService.setFhirResource(fhirResource);
     }
 
   }
@@ -447,13 +447,8 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
     validationResult.notesCount = notesCount;
     validationResult.infoCount = infoCount;
 
-    if(errorsCount > 0){
-      validationResult.isValid = false;
-    }
-    else {
-      validationResult.isValid = true;
-    }
-    this.fhirValidatorService.setValidationResults(validationResult);
+    validationResult.isValid = errorsCount <= 0;
+    this.fhirValidatorStateService.setValidationResults(validationResult);
   }
 
   clearValidationErrors(){
@@ -467,6 +462,6 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
     this.serverErrorList = [];
     this.serverErrorStatus = '';
     this.serverTimoutDetected = false;
-    this.fhirValidatorService.setValidationResults({});
+    this.fhirValidatorStateService.setValidationResults({});
   }
 }

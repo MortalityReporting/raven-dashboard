@@ -2,42 +2,15 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable, Subject} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {map} from "rxjs/operators";
-import {ValidationResults} from "../domain/ValidationResoults";
+import {ValidationResults} from "../domain/ValidationResults";
+import {ValidatorConstants} from "../providers/validator-constants";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FhirValidatorService {
 
-  private prodUri = "https://gt-apps.hdap.gatech.edu/HL7ValidatorService/fhir";
-  //private prodUri = "http://127.0.0.1:8080/fhir/$validate";
-  private fhirResource = new Subject<any>();
-  private validationResults = new Subject<ValidationResults>();
-  private resourcePasted = new Subject<boolean>();
-
-  setValidationResults(value: ValidationResults){
-    this.validationResults.next(value);
-  }
-
-  setFhirResource(value: any){
-    this.fhirResource.next(value);
-  }
-
-  getFhirResource(): Observable<any>{
-    return this.fhirResource.asObservable();
-  }
-
-  getValidationResults() : Observable<ValidationResults>{
-    return this.validationResults.asObservable();
-  }
-
-  isResourcePasted(): Observable<boolean>{
-    return this.resourcePasted.asObservable();
-  }
-
-  setResourcePasted(value: boolean){
-    return this.resourcePasted.next(value);
-  }
+  private prodUri = ValidatorConstants.prodUri;
 
   constructor( private http: HttpClient) { }
 
@@ -116,12 +89,6 @@ export class FhirValidatorService {
       }
     });
     return formatted.substring(1, formatted.length-3);
-  }
-
-  validateFhirResourceTemp(fhirResource: any, resourceFormat: string, resourceType: string):  Observable<any> {
-    return this.http.get('./assets/data/formatted_response.json').pipe( map((result: any) => (
-      result as Object
-    )));
   }
 
   validateFhirResource(fhirResource: any, resourceFormat: string):  Observable<any> {
