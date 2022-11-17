@@ -40,14 +40,9 @@
     <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.mannerOfDeath | titlecase}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="system">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> System</th>
-    <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.system }} </td>
-  </ng-container>
-
   <ng-container matColumnDef="caseNumber">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> MDI Case Number</th>
-    <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.caseNumber }} </td>
+    <td mat-cell class="pointer" *matCellDef="let decedent" [matTooltip]="'System: ' + decedent.system"> {{decedent.caseNumber }} </td>
   </ng-container>
 
 

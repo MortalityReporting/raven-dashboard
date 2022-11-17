@@ -15,7 +15,7 @@ import {UtilsService} from "../../../../service/utils.service";
 export class DecedentRecordsGridComponent implements OnInit {
 
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['index', 'name', 'gender', 'tod', 'mannerOfDeath', 'system', 'caseNumber'];
+  displayedColumns: string[] = ['index', 'name', 'gender', 'tod', 'mannerOfDeath', 'caseNumber'];
   decedentGridDtoList: DecedentGridDTO[];
   isLoading = true;
 
