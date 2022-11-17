@@ -32,7 +32,7 @@
 
   <ng-container matColumnDef="tod">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of Death</th>
-    <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.tod | date: 'MM/yyyy'}} </td>
+    <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.tod | date }} </td>
   </ng-container>
 
   <ng-container matColumnDef="mannerOfDeath">
