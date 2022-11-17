@@ -3,15 +3,10 @@ import {ImportCaseService} from "../../../../service/import-case.service";
 import {UtilsService} from "../../../../service/utils.service";
 import {FhirValidatorComponent} from "../../../../fhir-validator/components/fhir-validator/fhir-validator.component";
 import {FhirValidatorService} from "../../../../fhir-validator/service/fhir-validator.service";
-<<<<<<< HEAD
-import {combineLatestWith, Observable} from "rxjs";
-import {ValidationResults} from "../../../../fhir-validator/domain/ValidationResults";
-=======
 import {Observable} from "rxjs";
-import {ValidationResults} from "../../../../fhir-validator/domain/ValidationResoults";
+import {ValidationResults} from "../../../../fhir-validator/domain/ValidationResults";
 import {MatDialog} from "@angular/material/dialog";
 import {openConformationDialog} from "../../../widgets/conformation-dialog/conformation-dialog.component";
->>>>>>> 3294ddb8882d21f33eeed781f26db7c21087347c
 
 @Component({
   selector: 'app-import-case-fhir-record',
