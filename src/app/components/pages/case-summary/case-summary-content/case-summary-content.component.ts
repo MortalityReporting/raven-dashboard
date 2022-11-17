@@ -6,6 +6,7 @@ import {MatAccordion} from "@angular/material/expansion";
 import {Profiles} from "../../../../model/mdi/profile.list";
 import {FhirResourceProviderService} from "../../../../service/fhir-resource-provider.service";
 import {DocumentHandlerService} from "../../../../service/document-handler.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-case-summary-content',
@@ -39,15 +40,16 @@ export class CaseSummaryContentComponent implements OnInit {
 
   constructor(
     private fhirResourceProviderService: FhirResourceProviderService,
-    private documentHandlerService: DocumentHandlerService
+    private documentHandlerService: DocumentHandlerService,
+    private route: ActivatedRoute,
+    private router: Router,
   ) {
   }
 
   ngOnInit(): void {
 
     this.caseHeader$.subscribe( caseHeader => {
-      console.log(caseHeader);
-      if (caseHeader.authors != null)
+      if (caseHeader?.authors != null)
       {
         let author = caseHeader.authors[0];
         this.author = caseHeader.authors[0];
@@ -114,5 +116,9 @@ export class CaseSummaryContentComponent implements OnInit {
     if(this.author){
       this.fhirResourceProviderService.setSelectedFhirResource(this.author);
     }
+  }
+
+  onOpenInComparisonTool() {
+    this.router.navigate(['comparison/', this.route.snapshot.params['id']]);
   }
 }

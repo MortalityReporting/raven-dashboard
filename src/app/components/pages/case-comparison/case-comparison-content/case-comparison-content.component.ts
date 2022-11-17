@@ -34,6 +34,7 @@ import {
 } from "../../../../model/mdi/profile.list"
 import { ObservationAutopsyPerformedDiff } from './models/observation_autopsy_performed.diff';
 import {UtilsService} from "../../../../service/utils.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-case-comparison-content',
@@ -94,20 +95,34 @@ export class CaseComparisonContentComponent implements OnInit {
     private dialog: MatDialog,
     private decedentService: DecedentService,
     private documentHandler: DocumentHandlerService,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    let subjectId = this.route.snapshot.params['id'];
+
+    if(subjectId){ //We need to wait for the case summary for the selected case to be loaded BEFORE we do any comparisons
+      this.isLoading = true;
+      this.documentHandler.caseSummary$.subscribe({
+        next: (value) => {
+          this.getDocumentBundle(this.selectedTestCase.compositionId);
+        },
+        error: err => {
+          console.error(err);
+          this.utilsService.showErrorMessage();
+          this.isLoading = false;
+        }
+      });
+    }
+    else { // We do comparisons with an empty record.
+      this.getDocumentBundle(this.selectedTestCase.compositionId)
+    }
+  }
+
+  getDocumentBundle(compositionId){
     this.isLoading = true;
-
-    // this.decedentService.getMockResponse().subscribe({
-    //   next: value => {
-    //     console.log(value);
-    //     //this.documentBundleList = value.entry.map(element => element.display = element.entry.)
-    //   }
-    // });
-
-    this.decedentService.getDocumentBundle(this.selectedTestCase.compositionId).subscribe({
+    this.decedentService.getDocumentBundle(compositionId).subscribe({
       next: (documentBundle: any) => {
         this.expectedDocument = documentBundle;
         this.dodiff();
@@ -116,6 +131,7 @@ export class CaseComparisonContentComponent implements OnInit {
       error: err => {
         console.error(err);
         this.utilsService.showErrorMessage();
+        this.isLoading = false;
       }
     });
   }

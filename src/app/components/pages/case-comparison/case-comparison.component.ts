@@ -1,12 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import {DecedentService} from "../../../service/decedent.service";
 import {DocumentHandlerService} from "../../../service/document-handler.service";
-import {BehaviorSubject, Observable, Subject} from "rxjs";
-import {map} from "rxjs-compat/operator/map";
+import { Observable } from "rxjs";
 import {CaseHeader} from "../../../model/case-summary-models/case.header";
 import {CaseSummary} from "../../../model/case-summary-models/case.summary";
-import {MatAccordion} from "@angular/material/expansion";
 import {CaseComparisonContentComponent} from "./case-comparison-content/case-comparison-content.component";
 
 @Component({
@@ -14,7 +12,7 @@ import {CaseComparisonContentComponent} from "./case-comparison-content/case-com
   templateUrl: './case-comparison.component.html',
   styleUrls: ['./case-comparison.component.css']
 })
-export class CaseComparisonComponent implements OnInit {
+export class CaseComparisonComponent implements OnInit, OnDestroy {
   @ViewChild(CaseComparisonContentComponent) caseComparisonContentComponent: CaseComparisonContentComponent;
   caseHeader$: Observable<CaseHeader>;
   caseSummary$: Observable<CaseSummary>;
@@ -31,15 +29,24 @@ export class CaseComparisonComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.caseHeader$ = this.documentHandler.caseHeader$;
-    this.caseSummary$ = this.documentHandler.caseSummary$;
-    this.patientResource$ = this.documentHandler.patientResource$;
-    
-    this.caseSummary$.subscribe( caseSummary => {
-      caseSummary.narratives = this.documentHandler.getCurrentSubjectResource().text.div;
-    })
+
+    let subjectId = this.route.snapshot.params['id'];
+    if (subjectId) {
+      this.decedentService.getComposition(subjectId).subscribe(
+        {next: (composition: any) => {
+            this.documentBundle$ = this.documentHandler.getDocumentBundle(composition.entry[0].resource.id);
+            this.documentBundle$.subscribe();
+          }}
+      );
+      this.caseHeader$ = this.documentHandler.caseHeader$;
+      this.caseSummary$ = this.documentHandler.caseSummary$;
+      this.patientResource$ = this.documentHandler.patientResource$;
+      this.caseSummary$.subscribe(caseSummary => {
+        caseSummary.narratives = this.documentHandler.getCurrentSubjectResource()?.text?.div;
+      })
+    }
   }
-  
+
   onSidenavResize(expanded: boolean) {
     this.sidenavExpanded = expanded;
     this.autosize = true;
@@ -65,9 +72,13 @@ export class CaseComparisonComponent implements OnInit {
     this.caseComparisonContentComponent.jurisdictionExpanded = false;
     this.caseComparisonContentComponent.causeAndMannerExpanded = false;
     this.caseComparisonContentComponent.examNotesExpanded = false;
-    
+
     if (shouldOpen) {
       this.caseComparisonContentComponent.onItemClick(id);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.documentHandler.clearObservablesAndCashedData();
   }
 }
