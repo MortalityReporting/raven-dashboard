@@ -11,7 +11,6 @@ import {ValidatorConstants} from "../providers/validator-constants";
 export class FhirValidatorService {
 
   private prodUri = ValidatorConstants.prodUri;
-  private hasExecuted = new Subject<boolean>();
   private fhirResource = new Subject<any>();
   private validationResults = new Subject<ValidationResults>();
   private resourcePasted = new Subject<boolean>();
