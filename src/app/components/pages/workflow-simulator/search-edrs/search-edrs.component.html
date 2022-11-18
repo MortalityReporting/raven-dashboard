@@ -1,0 +1,54 @@
+<div class="container">
+  <mat-stepper #stepper>
+    <mat-step label="Select MDI to EDRS document">
+      Step 1 - Select or Import an MDI to EDRS Document (Optional)
+      If provided, the Document Bundle is used to populate the Search Parameters. Otherwise, the Search Parameters may be manually specified.
+
+      <mat-tab-group>
+
+        <mat-tab label="Select MDI to EDRS Document">
+          Add a table and filter here, may have to do this with a child component(s)
+          <div>
+            <button mat-raised-button color="primary">  </button>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Import MDI to EDRS Document ">
+          <div>
+            The data provided should be a valid FHIR MDI to EDRS Document Bundle. Please validate your resource prior to
+            using it in the workflow simulator or unexpected behavior may occur.
+          </div>
+
+          <div>
+            Click the "Input MDI to EDRS Document Bundle" button below to paste in your complete Document Bundle
+            resource or click "Select File" to select a plain text (JSON) file from your local drive.
+          </div>
+          <div>
+            <button mat-raised-button color="primary">
+              Input MDI to EDRS Document Bundle
+            </button>
+            <button mat-raised-button>Select File</button>
+          </div>
+          <div>
+            <div>
+              Decedent Name:
+            </div>
+            <div>
+              Date/Time of Death:
+            </div>
+            <div>
+              MDI Tracking Number:
+            </div>
+          </div>
+        </mat-tab>
+
+      </mat-tab-group>
+
+    </mat-step>
+    <mat-step label="Configure Endpoint">
+    </mat-step>
+    <mat-step label="Search EDRS">
+    </mat-step>
+  </mat-stepper>
+</div>
+

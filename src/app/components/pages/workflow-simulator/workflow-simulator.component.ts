@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-workflow-simulator',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WorkflowSimulatorComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(
+    private router: Router) {
   }
 
+  ngOnInit(): void {
+    console.log(this.router)
+  }
+
+  onStartWorkflow() {
+    this.router.navigate(['/workflow-simulator/search-edrs']);
+  }
 }

@@ -7,6 +7,7 @@ import {ImportCaseComponent} from "./components/pages/import-case/import-case.co
 import {FhirValidatorComponent} from "./fhir-validator/components/fhir-validator/fhir-validator.component";
 import {CasesComponent} from "./components/pages/cases/cases.component";
 import {WorkflowSimulatorComponent} from "./components/pages/workflow-simulator/workflow-simulator.component";
+import {SearchEdrsComponent} from "./components/pages/workflow-simulator/search-edrs/search-edrs.component";
 
 const routes: Routes = [
   {
@@ -39,7 +40,16 @@ const routes: Routes = [
   },
   {
     path: 'workflow-simulator',
-    component: WorkflowSimulatorComponent
+    children:[
+      {
+        path : '',
+        component: WorkflowSimulatorComponent,
+      },
+      {
+        path : 'search-edrs',
+        component: SearchEdrsComponent,
+      }
+    ]
   },
   { // Do not add any paths below this point, this path MUST ALWAYS be the last path!
     path: '**', redirectTo: ''

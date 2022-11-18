@@ -65,6 +65,8 @@ import { ToxicologyContainerComponent } from './components/pages/toxicology-cont
 import { ToxicologyReportComponent } from './components/pages/toxicology-report/toxicology-report.component';
 import { ToxicologyReportContentComponent } from './components/pages/toxicology-report/toxicology-report-content/toxicology-report-content.component';
 import { WorkflowSimulatorComponent } from './components/pages/workflow-simulator/workflow-simulator.component';
+import { SearchEdrsComponent } from './components/pages/workflow-simulator/search-edrs/search-edrs.component';
+import {MatStepperModule} from "@angular/material/stepper";
 
 @NgModule({
   declarations: [
@@ -92,7 +94,8 @@ import { WorkflowSimulatorComponent } from './components/pages/workflow-simulato
     ToxicologyContainerComponent,
     ToxicologyReportComponent,
     ToxicologyReportContentComponent,
-    WorkflowSimulatorComponent
+    WorkflowSimulatorComponent,
+    SearchEdrsComponent
   ],
   imports: [
     BrowserModule,
@@ -126,6 +129,7 @@ import { WorkflowSimulatorComponent } from './components/pages/workflow-simulato
     MatMenuModule,
     ClipboardModule,
     MatDialogModule,
+    MatStepperModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: FhirAuthInterceptor, multi: true},
