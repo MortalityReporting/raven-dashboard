@@ -45,7 +45,6 @@
     <td mat-cell class="pointer" *matCellDef="let decedent" [matTooltip]="'System: ' + decedent.system"> {{decedent.caseNumber }} </td>
   </ng-container>
 
-
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onCaseSelected(row)"></tr>
 
