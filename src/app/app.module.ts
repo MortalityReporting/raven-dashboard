@@ -64,6 +64,7 @@ import { ToxicologyGridComponent } from './components/pages/cases/toxicology-gri
 import { ToxicologyContainerComponent } from './components/pages/toxicology-container/toxicology-container.component';
 import { ToxicologyReportComponent } from './components/pages/toxicology-report/toxicology-report.component';
 import { ToxicologyReportContentComponent } from './components/pages/toxicology-report/toxicology-report-content/toxicology-report-content.component';
+import { WorkflowSimulatorComponent } from './components/pages/workflow-simulator/workflow-simulator.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import { ToxicologyReportContentComponent } from './components/pages/toxicology-
     ToxicologyGridComponent,
     ToxicologyContainerComponent,
     ToxicologyReportComponent,
-    ToxicologyReportContentComponent
+    ToxicologyReportContentComponent,
+    WorkflowSimulatorComponent
   ],
   imports: [
     BrowserModule,

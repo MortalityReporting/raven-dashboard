@@ -6,6 +6,7 @@ import {CaseComparisonComponent} from "./components/pages/case-comparison/case-c
 import {ImportCaseComponent} from "./components/pages/import-case/import-case.component";
 import {FhirValidatorComponent} from "./fhir-validator/components/fhir-validator/fhir-validator.component";
 import {CasesComponent} from "./components/pages/cases/cases.component";
+import {WorkflowSimulatorComponent} from "./components/pages/workflow-simulator/workflow-simulator.component";
 
 const routes: Routes = [
   {
@@ -35,6 +36,10 @@ const routes: Routes = [
   {
     path: 'import-case',
     component: ImportCaseComponent
+  },
+  {
+    path: 'workflow-simulator',
+    component: WorkflowSimulatorComponent
   },
   { // Do not add any paths below this point, this path MUST ALWAYS be the last path!
     path: '**', redirectTo: ''
