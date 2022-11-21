@@ -208,11 +208,8 @@ export class DocumentHandlerService {
     let observation = this.findJurisdictionObservation(documentBundle, compositionResource, jurisdictionSection);
 
     let typeOfDeathLocationComponent = this.findObservationComponentByCode(observation, "58332-8");
-    console.log(typeOfDeathLocationComponent);
     let pronouncedDateTimeComponent = this.findObservationComponentByCode(observation, "80616-6");
-    console.log(pronouncedDateTimeComponent);
-    // 58332-8
-
+    
     jurisdiction.typeOfDeathLocation = typeOfDeathLocationComponent?.valueCodeableConcept?.text ||
       typeOfDeathLocationComponent?.valueCodeableConcept?.coding?.[0].display || typeOfDeathLocationComponent?.valueCodeableConcept?.coding?.[0].code || this.defaultString;
     jurisdiction.establishmentApproach = observation?.method?.text || observation?.method?.coding?.[0]?.display || observation?.method?.coding?.[0]?.code || this.defaultString;
@@ -277,7 +274,47 @@ export class DocumentHandlerService {
           }
           else if (profile === Obs_HowDeathInjuryOccurred)
           {
-            causeAndManner.howDeathInjuryOccurred =observation.valueString || this.defaultString;
+            causeAndManner.howDeathInjuryOccurred = observation.valueCodeableConcept?.text || this.defaultString;
+
+            let placeOfInjuryComponent = this.findObservationComponentByCode(observation, "69450-5");
+            causeAndManner.placeOfInjury = placeOfInjuryComponent?.valueCodeableConcept?.text || this.defaultString;
+
+            let workInjuryIndicatorComponent = this.findObservationComponentByCode(observation, "69444-8");
+            let workInjuryIndicatorValue = workInjuryIndicatorComponent?.valueCodeableConcept;
+            causeAndManner.workInjuryIndicator = workInjuryIndicatorValue?.text || workInjuryIndicatorValue?.coding?.[0]?.display || workInjuryIndicatorValue?.coding?.[0]?.code || this.defaultString;
+                
+            let transportationRoleComponent = this.findObservationComponentByCode(observation, "69451-3");
+            let transportationRoleValue = transportationRoleComponent?.valueCodeableConcept;
+            causeAndManner.transportationRole = transportationRoleValue?.text || transportationRoleValue?.coding?.[0]?.display || transportationRoleValue?.coding?.[0]?.code || this.defaultString;
+            
+            if (observation._effectiveDateTime != null) 
+            {
+              let year = 0;
+              let month = 0;
+              let day = 0;
+              let time = "";
+
+              observation._effectiveDateTime.extension[0].extension.map((item: any) => {
+                if (item.url.includes("Extension-date-year"))
+                {
+                  year = item.valueUnsignedInt;
+                }
+                else if (item.url.includes("Extension-date-month"))
+                {
+                  month = item.valueUnsignedInt;
+                }
+                else if (item.url.includes("Extension-date-day"))
+                {
+                  day = item.valueUnsignedInt;
+                }
+                else if (item.url.includes("Extension-date-time"))
+                {
+                  time = item.valueTime;
+                }
+              })
+
+              causeAndManner.injuryDateTime = year + "-" + month.toString().padStart( 2, "0" ) + "-" + day.toString().padStart( 2, "0" ) + " " + time;
+            }
           }
         }
       }
@@ -291,8 +328,10 @@ export class DocumentHandlerService {
     // let autopsySection = this.getSection(compositionResource, "exam-autopsy");
     let observation = this.findResourcesByProfileName(documentBundle, "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-autopsy-performed-indicator")[0];
     let performedValue = observation?.valueCodeableConcept;
-    let availableValue = observation?.component?.[0]?.valueCodeableConcept; // TODO: Switch to search by code. http://loinc.org|69436-4
     autopsy.performed = performedValue?.text || performedValue?.coding?.[0]?.display || performedValue?.coding?.[0]?.code || this.defaultString;
+
+    let availableComponent = this.findObservationComponentByCode(observation, "69436-4");
+    let availableValue = availableComponent?.valueCodeableConcept;
     autopsy.resultsAvailable = availableValue?.text || availableValue?.coding?.[0]?.display || availableValue?.coding?.[0]?.code || this.defaultString;
 
     return autopsy;
