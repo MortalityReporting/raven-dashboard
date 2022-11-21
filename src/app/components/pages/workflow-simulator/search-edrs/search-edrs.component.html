@@ -46,6 +46,54 @@
 
     </mat-step>
     <mat-step label="Configure Endpoint">
+      <div>
+        <div>
+          Decedent Name:
+        </div>
+        <div>
+          Date/Time of Death:
+        </div>
+        <div>
+          MDI Tracking Number:
+        </div>
+      </div>
+      <div>
+        Disclaimer about user data storage being client side and not visible to Raven/GTRI/etc
+      </div>
+
+      <form [formGroup]="endpointConfigurationFormGroup" (ngSubmit)="onSubmitEndpointConfiguration()">
+
+        <div>
+          <mat-radio-group formControlName="inputType">
+            <mat-radio-button class="radio-button" *ngFor="let inputOption of inputTypeOptions" [value]="inputOption">
+              {{ inputOption }}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>Select Endpoint</mat-label>
+            <mat-select formControlName="serverEndpoint">
+              <mat-option *ngFor="let serverEndpoint of serverEndpointList" [value]="serverEndpoint.uri">
+                {{ serverEndpoint.displayName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <button type="button" mat-raised-button>View Server Capability Statement</button>
+          <button type="button"  mat-raised-button>View Server $mdi-documents Operation Definition</button>
+        </div>
+
+        <div>
+          <button type="submit" mat mat-raised-button color="primary">
+            Proceed to Search
+          </button>
+        </div>
+      </form>
+
     </mat-step>
     <mat-step label="Search EDRS">
     </mat-step>

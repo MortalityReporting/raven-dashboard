@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {FormBuilder, FormGroupDirective, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-search-edrs',
@@ -7,9 +8,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchEdrsComponent implements OnInit {
 
-  constructor() { }
+  inputTypeOptions: string[] = ['Registered Endpoint', 'Custom Endpoint'];
+
+  serverEndpointList: any[] = [
+    {uri: 'www.bluejay.edu', displayName: 'BlueJay'},
+    {uri: 'www.gavers.edu', displayName: 'Gavers'},
+  ];
+
+  endpointConfigurationFormGroup = this.formBuilder.group({
+    inputType: [this.inputTypeOptions[0]],
+    serverEndpoint: [this.serverEndpointList[0].uri]
+  });
+
+  constructor(
+    private formBuilder: FormBuilder
+  ) { }
 
   ngOnInit(): void {
   }
 
+  onSubmitEndpointConfiguration() {
+    console.log(this.endpointConfigurationFormGroup);
+  }
 }
