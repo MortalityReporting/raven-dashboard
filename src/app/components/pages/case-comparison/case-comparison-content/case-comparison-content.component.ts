@@ -4,18 +4,22 @@ import { DocumentHandlerService } from "../../../../service/document-handler.ser
 import { USCorePatientDiff } from './models/us-core-patient.diff';
 import { CompositionMdiToEdrsDiff } from './models/composition-mdi-to-edrs.diff';
 import { USCoreLocationDiff } from './models/us-core-location.diff';
+import { USCorePractitionerDiff } from './models/us-core-practitioner.diff';
 import { ObservationTobaccoUseDiff } from './models/observation-tobacco-use.diff';
-import { ObservationDecedentPregnancyDiff } from './models/observation_decedent-pregnancy.diff';
+import { ObservationDecedentPregnancyDiff } from './models/observation-decedent-pregnancy.diff';
 import { ObservationDeathDateDiff } from './models/observation-death-date.diff';
 import { ObservationMannerOfDeathDiff } from './models/observation-manner-of-death.diff';
-import { USCorePractitionerDiff } from './models/us-core-practitioner.diff';
 import { ObservationCauseOfDeathPart1Diff } from './models/observation-cause-of-death-part-1.diff';
 import { ObservationCauseOfDeathPart2Diff } from './models/observation-cause-of-death-part-2.diff';
+import { ObservationAutopsyPerformedDiff } from './models/observation-autopsy-performed.diff';
+import { ObservationHowDeathInjuryOccurredDiff } from './models/observation-how-death-injury-occurred.diff';
 import { LocationDeathDiff } from './models/location-death.diff';
 import { LocationInjuryDiff } from './models/location-injury.diff';
 import { DecedentService } from "../../../../service/decedent.service";
 import { CaseComparisonDialogComponent } from '../case-comparison-dialog/case-comparison-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { UtilsService } from "../../../../service/utils.service";
+import { ActivatedRoute } from "@angular/router";
 
 import {
   Comp_MDItoEDRS,
@@ -26,15 +30,13 @@ import {
   Obs_CauseOfDeathPart2,
   Obs_DeathDate,
   Obs_DecedentPregnancy,
+  Obs_HowDeathInjuryOccurred,
   Obs_MannerOfDeath,
   Obs_TobaccoUseContributedToDeath,
   USCoreLocation,
   USCorePatient,
   USCorePractitioner
 } from "../../../../model/mdi/profile.list"
-import { ObservationAutopsyPerformedDiff } from './models/observation_autopsy_performed.diff';
-import {UtilsService} from "../../../../service/utils.service";
-import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-case-comparison-content',
@@ -48,8 +50,8 @@ export class CaseComparisonContentComponent implements OnInit {
   isAccordionExpanded = false;
 
   testCases = [
-    {"compositionId": "4b81ded1-6dc2-43ab-94b4-35b278c3e75f", "display": "Alice FREEMAN"},
-    {"compositionId": "ff3563ad-0d8b-4bc3-8e69-5ae900222534", "display": "Whago C Brox"},
+    {"compositionId": "73237426-9fbf-4ee0-bca4-42f6c3296cf0", "display": "Alice Freeman"},
+    {"compositionId": "d5711ee4-a58c-4c20-b236-5f281c568e6e", "display": "Patch Adams"},
   ]
 
   patientResource: any;
@@ -79,6 +81,7 @@ export class CaseComparisonContentComponent implements OnInit {
   locationDeath: LocationDeathDiff = new LocationDeathDiff( undefined, undefined );
   locationInjury: LocationInjuryDiff = new LocationInjuryDiff( undefined, undefined );
   autopsyPerformed: ObservationAutopsyPerformedDiff = new ObservationAutopsyPerformedDiff( undefined, undefined );
+  howDeathOccurred: ObservationHowDeathInjuryOccurredDiff = new ObservationHowDeathInjuryOccurredDiff( undefined, undefined );
 
   demographicsStatus = 'invalid';
   circumstancesStatus = 'invalid';
@@ -280,6 +283,12 @@ export class CaseComparisonContentComponent implements OnInit {
         this.documentHandler.findResourceByProfileName( this.actualDocument, Obs_AutopsyPerformed ),
         this.documentHandler.findResourceByProfileName( this.expectedDocument, Obs_AutopsyPerformed ));
 
+      // console.log( this.documentHandler.findResourceByProfileName( this.expectedDocument, Obs_HowDeathInjuryOccurred ));
+
+      // this.howDeathOccurred = new ObservationHowDeathInjuryOccurredDiff(
+      //   this.documentHandler.findResourceByProfileName( this.actualDocument, Obs_HowDeathInjuryOccurred ),
+      //   this.documentHandler.findResourceByProfileName( this.expectedDocument, Obs_HowDeathInjuryOccurred ));
+  
       this.caseAdminInfoStatus = (
         this.mdiToEdrs.extension.style === 'valid' &&
         this.practitioner.name.style === 'valid' &&
