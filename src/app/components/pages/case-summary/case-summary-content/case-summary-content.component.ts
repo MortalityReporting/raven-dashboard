@@ -23,14 +23,16 @@ export class CaseSummaryContentComponent implements OnInit {
   phone:string;
   addressLine: string;
 
-  caseAdminInfoExpanded: boolean = true;
-  demographicsExpanded: boolean = false;
-  circumstancesExpanded: boolean = false;
-  jurisdictionExpanded: boolean = false;
-  causeAndMannerExpanded: boolean = false;
-  medicalHistoryExpanded: boolean = false;
-  examNotesExpanded: boolean = false;
-  narrativesExpanded: boolean = false;
+  idStateList = [
+    { expanded: true,     id: 'caseAdminInfo' },
+    { expanded: false,    id: 'demographics' },
+    { expanded: false,    id: 'jurisdiction' },
+    { expanded: false,    id: 'causeAndManner' },
+    { expanded: false,    id: 'medicalHistory' },
+    { expanded: false,    id: 'narratives' },
+    { expanded: false,    id: 'circumstances' },
+    { expanded: false,    id: 'examAndAutopsy' },
+  ]
 
   profiles: any = Profiles;
   ids = ["ID-1", "ID-2", "ID-3"];
@@ -67,44 +69,21 @@ export class CaseSummaryContentComponent implements OnInit {
     });
   }
 
-  onItemClick( id: any )
-  {
-    switch  (id)
-    {
-      case 'caseAdminInfo': this.caseAdminInfoExpanded = !this.caseAdminInfoExpanded; break;
-      case 'demographics': this.demographicsExpanded = !this.demographicsExpanded; break;
-      case 'circumstances':  this.circumstancesExpanded = !this.circumstancesExpanded; break;
-      case 'jurisdiction': this.jurisdictionExpanded = !this.jurisdictionExpanded; break;
-      case 'causeAndManner': this.causeAndMannerExpanded = !this.causeAndMannerExpanded; break;
-      case 'medicalHistory': this.medicalHistoryExpanded = !this.medicalHistoryExpanded; break;
-      case 'examNotes': this.examNotesExpanded = !this.examNotesExpanded; break;
-      case 'narratives': this.narrativesExpanded = !this.narrativesExpanded; break;
-    }
+  onToggleState(id: any ) {
+    this.idStateList = this.idStateList.map(element => element.id == id ? {id: element.id, expanded: !element.expanded}: element);
+  }
+
+  onSetState(resourceId, state){
+      this.idStateList = this.idStateList.map(element => element.id == resourceId ? {id: element.id, expanded: state} : element);
   }
 
   onOpenAll() {
-    this.caseAdminInfoExpanded = true;
-    this.demographicsExpanded = true;
-    this.circumstancesExpanded = true;
-    this.jurisdictionExpanded = true;
-    this.causeAndMannerExpanded = true;
-    this.medicalHistoryExpanded = true;
-    this.examNotesExpanded = true;
-    this.narrativesExpanded = true;
-
+    this.idStateList.forEach(element => element.expanded = true);
     this.accordion.openAll()
   }
 
   onCloseAll() {
-    this.caseAdminInfoExpanded = false;
-    this.demographicsExpanded= false;
-    this.circumstancesExpanded = false;
-    this.jurisdictionExpanded = true;
-    this.causeAndMannerExpanded = false;
-    this.medicalHistoryExpanded = false;
-    this.examNotesExpanded = false;
-    this.narrativesExpanded = false;
-
+    this.idStateList.forEach(element => element.expanded = false);
     this.accordion.closeAll()
   }
 
@@ -120,5 +99,9 @@ export class CaseSummaryContentComponent implements OnInit {
 
   onOpenInComparisonTool() {
     this.router.navigate(['comparison/', this.route.snapshot.params['id']]);
+  }
+
+  isExpanded(elementId: string) {
+    return this.idStateList.find(element => element.id == elementId)?.expanded;
   }
 }
