@@ -22,6 +22,7 @@ export class CaseSummaryContentComponent implements OnInit {
   license: string;
   phone:string;
   addressLine: string;
+
   idStateList = [
     { expanded: true,     id: 'caseAdminInfo' },
     { expanded: false,    id: 'demographics' },
@@ -32,7 +33,6 @@ export class CaseSummaryContentComponent implements OnInit {
     { expanded: false,    id: 'circumstances' },
     { expanded: false,    id: 'examAndAutopsy' },
   ]
-
 
   profiles: any = Profiles;
   ids = ["ID-1", "ID-2", "ID-3"];
@@ -70,7 +70,7 @@ export class CaseSummaryContentComponent implements OnInit {
   }
 
   onToggleState(id: any ) {
-    this.idStateList = this.idStateList.map(element => element.id == id ? {id: element.id, expanded: !element.expanded}: element)
+    this.idStateList = this.idStateList.map(element => element.id == id ? {id: element.id, expanded: !element.expanded}: element);
   }
 
   onSetState(resourceId, state){
@@ -78,14 +78,12 @@ export class CaseSummaryContentComponent implements OnInit {
   }
 
   onOpenAll() {
-    this.idStateList.forEach(element => element.expanded = true)
-
+    this.idStateList.forEach(element => element.expanded = true);
     this.accordion.openAll()
   }
 
   onCloseAll() {
-    this.idStateList.forEach(element => element.expanded = false)
-
+    this.idStateList.forEach(element => element.expanded = false);
     this.accordion.closeAll()
   }
 
@@ -104,9 +102,6 @@ export class CaseSummaryContentComponent implements OnInit {
   }
 
   isExpanded(elementId: string) {
-    console.log(elementId);
-    const result = this.idStateList.find(element => element.id == elementId)?.expanded;
-    console.log(result);
-    return result;
+    return this.idStateList.find(element => element.id == elementId)?.expanded;
   }
 }
