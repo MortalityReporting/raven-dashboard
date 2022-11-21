@@ -33,7 +33,8 @@
       <div class="card">
         <div [ngClass]="state" class="card-label">Reference Data</div>
         <div class="card-container">
-          <div><pre>{{expected}}</pre></div>
+          <div *ngIf="expected"><pre>{{expected}}</pre></div>
+          <div *ngIf="!expected"><pre>No Data Found</pre></div>
         </div>
       </div>
     </div>

@@ -25,6 +25,12 @@ export class ValidatorConstants {
     { name : "Observation - Toxicology Lab Result",                url: "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-toxicology-lab-result"},
     { name : "Resource Profile: US Core Practitioner Profile",     url: "http://hl7.org/fhir/us/core/STU4/StructureDefinition-us-core-practitioner.html#root"},
     { name : "Resource Profile: US Core Patient Profile",          url: "https://hl7.org/fhir/us/core/STU4/StructureDefinition-us-core-patient.html#root"},
-  ];
+  ]
+
+  // Validator API link
+  static PROD_URI = "https://gt-apps.hdap.gatech.edu/HL7ValidatorService/fhir";
+
+  static DISPLAYED_COLUMNS = ['toggle', 'icon', 'severity', 'fhirPath', 'location'];
+  static SEVERITY_LEVELS = ['error', 'warning', 'information', 'note'];
 
 }

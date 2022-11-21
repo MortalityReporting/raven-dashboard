@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {DecedentService} from "../../../service/decedent.service";
 import {DocumentHandlerService} from "../../../service/document-handler.service";
@@ -12,7 +12,7 @@ import {CaseSummaryContentComponent} from "./case-summary-content/case-summary-c
   templateUrl: './case-summary.component.html',
   styleUrls: ['./case-summary.component.css']
 })
-export class CaseSummaryComponent implements OnInit {
+export class CaseSummaryComponent implements OnInit, OnDestroy {
   @ViewChild(CaseSummaryContentComponent) caseSummaryContentComponent: CaseSummaryContentComponent;
   caseHeader$: Observable<CaseHeader>;
   caseSummary$: Observable<CaseSummary>;
@@ -76,5 +76,9 @@ export class CaseSummaryComponent implements OnInit {
     {
       this.caseSummaryContentComponent.onItemClick(id);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.documentHandler.clearObservablesAndCashedData();
   }
 }
