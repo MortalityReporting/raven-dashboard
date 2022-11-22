@@ -93,6 +93,7 @@ export class CaseComparisonContentComponent implements OnInit {
   narrativesStatus = 'invalid';
   deathDateStatus = 'invalid';
   examAndAutopsyStatus = 'invalid';
+  howDeathOccurredStatus = 'invalid';
 
   constructor(
     private dialog: MatDialog,
@@ -205,6 +206,7 @@ export class CaseComparisonContentComponent implements OnInit {
     this.locationDeath = new LocationDeathDiff( undefined, undefined );
     this.locationInjury = new LocationInjuryDiff( undefined, undefined );
     this.autopsyPerformed = new ObservationAutopsyPerformedDiff( undefined, undefined );
+    this.howDeathOccurred = new ObservationHowDeathInjuryOccurredDiff( undefined, undefined );
 
     this.demographicsStatus = 'invalid';
     this.circumstancesStatus = 'invalid';
@@ -217,6 +219,7 @@ export class CaseComparisonContentComponent implements OnInit {
     this.deathDateStatus = 'invalid';
     this.deathDateStatus = 'invalid';
     this.examAndAutopsyStatus = 'invalid';
+    this.howDeathOccurredStatus = 'invalid';
 
     this.dodiff();
   }
@@ -248,13 +251,28 @@ export class CaseComparisonContentComponent implements OnInit {
       let actualCauseOfDeath1List = this.documentHandler.findResourcesByProfileName( this.actualDocument, Obs_CauseOfDeathPart1 );
       let expectedCauseOfDeath1List = this.documentHandler.findResourcesByProfileName( this.expectedDocument, Obs_CauseOfDeathPart1 );
 
-      if (actualCauseOfDeath1List != undefined) {
-        for (let i = 0; i < actualCauseOfDeath1List.length; i++) {
-          let causeOfDeath1 = new ObservationCauseOfDeathPart1Diff( actualCauseOfDeath1List[i], expectedCauseOfDeath1List[i] );
-          this.causeOfDeath1List.push( causeOfDeath1 );
-        }
-      }
+      this.causeAndMannerStatus = 'valid';
 
+      if (expectedCauseOfDeath1List != undefined) { 
+        expectedCauseOfDeath1List.map((item: any, i) => {
+          let causeOfDeath1 = undefined;
+          if (actualCauseOfDeath1List != undefined && actualCauseOfDeath1List.length > i) {
+            causeOfDeath1 = new ObservationCauseOfDeathPart1Diff( actualCauseOfDeath1List[i], expectedCauseOfDeath1List[i] );
+          } else {
+            causeOfDeath1 = new ObservationCauseOfDeathPart1Diff( null, expectedCauseOfDeath1List[i] );
+          }
+          this.causeOfDeath1List.push( causeOfDeath1 );    
+          if (causeOfDeath1.valueCodeableConcept.style === 'invalid')
+          {
+            this.causeAndMannerStatus = 'invalid';
+          }
+          if (causeOfDeath1.component.style === 'invalid')
+          {
+            this.causeAndMannerStatus = 'invalid';
+          }
+        })
+      }
+      
       this.causeOfDeath2 = new ObservationCauseOfDeathPart2Diff(
         this.documentHandler.findResourceByProfileName( this.actualDocument, Obs_CauseOfDeathPart2 ),
         this.documentHandler.findResourceByProfileName( this.expectedDocument, Obs_CauseOfDeathPart2 ));
@@ -283,11 +301,9 @@ export class CaseComparisonContentComponent implements OnInit {
         this.documentHandler.findResourceByProfileName( this.actualDocument, Obs_AutopsyPerformed ),
         this.documentHandler.findResourceByProfileName( this.expectedDocument, Obs_AutopsyPerformed ));
 
-      // console.log( this.documentHandler.findResourceByProfileName( this.expectedDocument, Obs_HowDeathInjuryOccurred ));
-
-      // this.howDeathOccurred = new ObservationHowDeathInjuryOccurredDiff(
-      //   this.documentHandler.findResourceByProfileName( this.actualDocument, Obs_HowDeathInjuryOccurred ),
-      //   this.documentHandler.findResourceByProfileName( this.expectedDocument, Obs_HowDeathInjuryOccurred ));
+      this.howDeathOccurred = new ObservationHowDeathInjuryOccurredDiff(
+        this.documentHandler.findResourceByProfileName( this.actualDocument, Obs_HowDeathInjuryOccurred ),
+        this.documentHandler.findResourceByProfileName( this.expectedDocument, Obs_HowDeathInjuryOccurred ));
   
       this.caseAdminInfoStatus = (
         this.mdiToEdrs.extension.style === 'valid' &&
@@ -324,21 +340,14 @@ export class CaseComparisonContentComponent implements OnInit {
         this.autopsyPerformed.componentValueCodeableConcept.style === 'valid'
       ) ? 'valid' : 'invalid';
 
-      this.causeAndMannerStatus = 'valid';
-
-      if (actualCauseOfDeath1List != undefined) {
-        for (let i = 0; i < actualCauseOfDeath1List.length; i++) {
-          let causeOfDeath1 = new ObservationCauseOfDeathPart1Diff( actualCauseOfDeath1List[i], expectedCauseOfDeath1List[i] );
-          if (causeOfDeath1.valueCodeableConcept.style === 'invalid')
-          {
-            this.causeAndMannerStatus = 'invalid';
-          }
-          if (causeOfDeath1.component.style === 'invalid')
-          {
-            this.causeAndMannerStatus = 'invalid';
-          }
-        }
-      }
+      this.causeAndMannerStatus = (
+        this.causeAndMannerStatus === 'valid' &&
+        this.howDeathOccurred.placeOfInjury.style === 'valid' &&
+        this.howDeathOccurred.howDeathInjuryOccurred.style === 'valid' &&
+        this.howDeathOccurred.effectiveDateTime.style === 'valid' &&
+        this.howDeathOccurred.injuryOccurredAtWork.style === 'valid' &&
+        this.howDeathOccurred.transportationRole.style === 'valid' 
+      ) ? 'valid' : 'invalid';
 
       if (this.causeOfDeath2.valueCodeableConcept.style === 'invalid' )
       {

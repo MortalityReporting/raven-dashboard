@@ -21,7 +21,7 @@ export class ObservationCauseOfDeathPart1Diff extends ObservationDiff {
     override doDiff()
     {
         super.doDiff();
-
+        
         try {
             this.component.expected = JSON.stringify( this.expected.component, null, 4 );
             this.component.actual = JSON.stringify( this.actual.component, null, 4 );

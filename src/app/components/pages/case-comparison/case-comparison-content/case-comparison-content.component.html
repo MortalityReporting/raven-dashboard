@@ -331,18 +331,54 @@
       </app-case-comparison-content-field>
 
       <app-case-comparison-content-field
-        [state]="locationInjury.name.style"
+        [state]="howDeathOccurred.placeOfInjury.style"
         [title]="'Place of Injury'"
-        [resource]="'Location-injury'"
-        [fhirPath]="locationInjury.expected?.resourceType + '.valueCodeableConcept'"
-        [expected]="locationInjury.name.expected"
-        [difference]="locationInjury.name.difference"
+        [resource]="'Observation-how-death-injury-occurred'"
+        [fhirPath]="howDeathOccurred.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="howDeathOccurred.placeOfInjury.expected"
+        [difference]="howDeathOccurred.placeOfInjury.difference"
         [expanded]="isAccordionExpanded">
       </app-case-comparison-content-field>
 
-      <mat-card style="margin-top: 0.3em; border-color: #cdcdcd">How Injury Occurred - Not Yet Implemented</mat-card>
-      <mat-card style="margin-top: 0.3em; border-color: #cdcdcd">Injury Date/Time - Not Yet Implemented</mat-card>
-      <mat-card style="margin-top: 0.3em; border-color: #cdcdcd">Transportation Role - Not Yet Implemented</mat-card>
+      <app-case-comparison-content-field
+        [state]="howDeathOccurred.howDeathInjuryOccurred.style"
+        [title]="'How Injury Occurred'"
+        [resource]="'Observation-how-death-injury-occurred'"
+        [fhirPath]="howDeathOccurred.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="howDeathOccurred.howDeathInjuryOccurred.expected"
+        [difference]="howDeathOccurred.howDeathInjuryOccurred.difference"
+        [expanded]="isAccordionExpanded">
+      </app-case-comparison-content-field>
+
+      <app-case-comparison-content-field
+        [state]="howDeathOccurred.effectiveDateTime.style"
+        [title]="'Injury Date/Time'"
+        [resource]="'Observation-how-death-injury-occurred'"
+        [fhirPath]="howDeathOccurred.expected?.resourceType + '.effectiveDateTime'"
+        [expected]="howDeathOccurred.effectiveDateTime.expected"
+        [difference]="howDeathOccurred.effectiveDateTime.difference"
+        [expanded]="isAccordionExpanded">
+      </app-case-comparison-content-field>
+
+      <app-case-comparison-content-field
+        [state]="howDeathOccurred.injuryOccurredAtWork.style"
+        [title]="'Injury/Event Occurred at Work'"
+        [resource]="'Observation-how-death-injury-occurred'"
+        [fhirPath]="howDeathOccurred.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="howDeathOccurred.injuryOccurredAtWork.expected"
+        [difference]="howDeathOccurred.injuryOccurredAtWork.difference"
+        [expanded]="isAccordionExpanded">
+      </app-case-comparison-content-field>
+
+      <app-case-comparison-content-field
+        [state]="howDeathOccurred.transportationRole.style"
+        [title]="'Transportation Role'"
+        [resource]="'Observation-how-death-injury-occurred'"
+        [fhirPath]="howDeathOccurred.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="howDeathOccurred.transportationRole.expected"
+        [difference]="howDeathOccurred.transportationRole.difference"
+        [expanded]="isAccordionExpanded">
+      </app-case-comparison-content-field>
     </mat-expansion-panel>
 
     <!-- Exam and Autopsy Section -->

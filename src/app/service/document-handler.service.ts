@@ -157,7 +157,6 @@ export class DocumentHandlerService {
 
   generateDemographics(documentBundle: any, compositionResource: any, patientResource: any): Demographics {
     let demographics: Demographics = new Demographics();
-    console.log(demographics)
 
     // Setup Basic Demographics from Patient Resource Directly
     demographics.aliases = patientResource.name || this.defaultString;
@@ -187,7 +186,6 @@ export class DocumentHandlerService {
 
   generateCircumstances(documentBundle: any, compositionResource: any): Circumstances {
     let circumstances: Circumstances = new Circumstances();
-    let circumstancesSection = this.getSection(compositionResource, "circumstances");
 
     let deathLocationResource = this.findResourceByProfileName(documentBundle, Loc_death);
     let injuryLocationResource = this.findResourceByProfileName(documentBundle, Loc_injury);
