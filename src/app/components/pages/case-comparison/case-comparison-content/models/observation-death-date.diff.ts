@@ -38,10 +38,10 @@ export class ObservationDeathDateDiff extends ObservationDiff {
 
         try {
             let expectedComponent = this.documentHandler.findObservationComponentByCode(this.expected, "80616-6");
-            this.pronouncedDateTime.expected = '"valueDateTime": "' + expectedComponent.valueDateTime + '"';
+            this.pronouncedDateTime.expected = expectedComponent.valueDateTime;
 
             let actualComponent = this.documentHandler.findObservationComponentByCode(this.actual, "80616-6");
-            this.pronouncedDateTime.actual = '"valueDateTime": "' + actualComponent.valueDateTime + '"';
+            this.pronouncedDateTime.actual = actualComponent.valueDateTime;
 
             [this.pronouncedDateTime.style,this.pronouncedDateTime.difference] = DiffType.doDiff( Diff.diffChars( this.pronouncedDateTime.expected, this.pronouncedDateTime.actual ));
         } catch(e) {};
@@ -69,8 +69,8 @@ export class ObservationDeathDateDiff extends ObservationDiff {
         } catch(e) {};
 
         try {
-            this.effectiveDateTime.expected = '"effectiveDateTime": "' + this.expected.effectiveDateTime + '"';
-            this.effectiveDateTime.actual = '"effectiveDateTime": "' + this.actual.effectiveDateTime + '"';
+            this.effectiveDateTime.expected = this.expected.effectiveDateTime ;
+            this.effectiveDateTime.actual = this.actual.effectiveDateTime;
             [this.effectiveDateTime.style,this.effectiveDateTime.difference] = DiffType.doDiff( Diff.diffChars( this.effectiveDateTime.expected, this.effectiveDateTime.actual ));
         } catch(e) {};
 

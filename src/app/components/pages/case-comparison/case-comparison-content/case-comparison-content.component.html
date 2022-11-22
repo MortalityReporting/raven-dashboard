@@ -155,7 +155,7 @@
         [state]="patient.race.style"
         [title]="'Race'"
         [resource]="'US Core Patien\'t'"
-        [fhirPath]="patient.expected?.resourceType + '.extension'"
+        [fhirPath]="patient.expected?.resourceType + '.valueString'"
         [expected]="patient.race.expected"
         [difference]="patient.race.difference"
         [expanded]="isAccordionExpanded">
@@ -165,7 +165,7 @@
         [state]="patient.ethnicity.style"
         [title]="'Ethnicity'"
         [resource]="'US Core Patient'"
-        [fhirPath]="patient.expected?.resourceType + '.extension'"
+        [fhirPath]="patient.expected?.resourceType + '.valueString'"
         [expected]="patient.ethnicity.expected"
         [difference]="patient.ethnicity.difference"
         [expanded]="isAccordionExpanded">
@@ -197,7 +197,7 @@
         [state]="locationDeath.name.style"
         [title]="'Death Location'"
         [resource]="'Location-death'"
-        [fhirPath]="locationDeath.expected?.resourceType + '.valueCodeableConcept'"
+        [fhirPath]="locationDeath.expected?.resourceType + '.name'"
         [expected]="locationDeath.name.expected"
         [difference]="locationDeath.name.difference"
         [expanded]="isAccordionExpanded">
@@ -207,7 +207,7 @@
         [state]="locationInjury.name.style"
         [title]="'Injury Location'"
         [resource]="'Location-injury'"
-        [fhirPath]="locationInjury.expected?.resourceType + '.valueCodeableConcept'"
+        [fhirPath]="locationInjury.expected?.resourceType + '.name'"
         [expected]="locationInjury.name.expected"
         [difference]="locationInjury.name.difference"
         [expanded]="isAccordionExpanded">
@@ -249,7 +249,7 @@
         [state]="deathDate.effectiveDateTime.style"
         [title]="'Death Date/Time'"
         [resource]="'Observation-death-date'"
-        [fhirPath]="deathDate.expected?.resourceType + '.effectiveDateTime'"
+        [fhirPath]="deathDate.expected?.resourceType + '.valueDateTime'"
         [expected]="deathDate.effectiveDateTime.expected"
         [difference]="deathDate.effectiveDateTime.difference"
         [expanded]="isAccordionExpanded">
@@ -259,7 +259,7 @@
         [state]="deathDate.pronouncedDateTime.style"
         [title]="'Pronounced Date/Time'"
         [resource]="'Observation-death-date'"
-        [fhirPath]="deathDate.expected?.resourceType + '.component'"
+        [fhirPath]="deathDate.expected?.resourceType + '.valueDateTime'"
         [expected]="deathDate.pronouncedDateTime.expected"
         [difference]="deathDate.pronouncedDateTime.difference"
         [expanded]="isAccordionExpanded">
