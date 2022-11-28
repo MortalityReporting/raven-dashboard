@@ -1,5 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroupDirective, Validators} from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder} from "@angular/forms";
+import {MatDialog} from "@angular/material/dialog";
+import {openInputTextDialog} from "../../../widgets/input-text-dialog/input-text-dialog.component";
 
 @Component({
   selector: 'app-search-edrs',
@@ -21,13 +23,31 @@ export class SearchEdrsComponent implements OnInit {
   });
 
   constructor(
-    private formBuilder: FormBuilder
-  ) { }
+    private formBuilder: FormBuilder,
+    private dialog: MatDialog
+  ) {
+  }
 
   ngOnInit(): void {
   }
 
   onSubmitEndpointConfiguration() {
     console.log(this.endpointConfigurationFormGroup);
+  }
+
+  onInputMdiToEdrsBundle() {
+    openInputTextDialog(
+      this.dialog,
+      {
+        title: "Input MDI to EDRS Document Bundle ",
+        primaryActionBtnTitle: "Save",
+        secondaryActionBtnTitle: "Cancel",
+        isPrimaryButtonLeft: false
+      })
+      .subscribe(
+        data => {
+          console.log(data);
+        }
+      );
   }
 }

@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>{{title}}</h1>
+<form [formGroup]="dialogForm" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content style="margin-top: 1em; margin-bottom: 1em">
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>Paste or edit data here</mat-label>
+      <textarea type="text" class="text-area" matInput formControlName="content"></textarea>
+      <mat-error>
+        Please enter data.
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button type="button" mat-stroked-button (click)="onCancel()">{{secondaryActionBtnTitle}}</button>
+    <button mat-stroked-button type="submit" color="primary"
+            cdkFocusInitial>{{primaryActionBtnTitle}}</button>
+  </div>
+</form>

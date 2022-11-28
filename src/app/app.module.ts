@@ -67,6 +67,8 @@ import { ToxicologyReportContentComponent } from './components/pages/toxicology-
 import { WorkflowSimulatorComponent } from './components/pages/workflow-simulator/workflow-simulator.component';
 import { SearchEdrsComponent } from './components/pages/workflow-simulator/search-edrs/search-edrs.component';
 import {MatStepperModule} from "@angular/material/stepper";
+import { MdiToEdrsGridComponent } from './components/pages/workflow-simulator/mdi-to-edrs-grid/mdi-to-edrs-grid.component';
+import { InputTextDialogComponent } from './components/widgets/input-text-dialog/input-text-dialog.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +97,9 @@ import {MatStepperModule} from "@angular/material/stepper";
     ToxicologyReportComponent,
     ToxicologyReportContentComponent,
     WorkflowSimulatorComponent,
-    SearchEdrsComponent
+    SearchEdrsComponent,
+    MdiToEdrsGridComponent,
+    InputTextDialogComponent
   ],
   imports: [
     BrowserModule,

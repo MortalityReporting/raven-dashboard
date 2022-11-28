@@ -7,7 +7,7 @@
       <mat-tab-group>
 
         <mat-tab label="Select MDI to EDRS Document">
-          Add a table and filter here, may have to do this with a child component(s)
+          <app-mdi-to-edrs-grid></app-mdi-to-edrs-grid>
           <div>
             <button mat-raised-button color="primary">Proceed to Configure Endpoint</button>
           </div>
@@ -24,7 +24,7 @@
             resource or click "Select File" to select a plain text (JSON) file from your local drive.
           </div>
           <div>
-            <button mat-raised-button color="primary">
+            <button mat-raised-button color="primary" (click)="onInputMdiToEdrsBundle()">
               Input MDI to EDRS Document Bundle
             </button>
             <button mat-raised-button>Select File</button>
