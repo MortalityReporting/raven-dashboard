@@ -13,8 +13,8 @@
   </div>
   <mat-accordion multi>
 
-    <mat-expansion-panel class="summary-section" id="caseAdminInfo" [expanded]="caseAdminInfoExpanded" >
-      <mat-expansion-panel-header (click)="onItemClick( 'caseAdminInfo' )">
+    <mat-expansion-panel class="summary-section" id="caseAdminInfo" [expanded]="isExpanded('caseAdminInfo')" >
+      <mat-expansion-panel-header (click)="onToggleState( 'caseAdminInfo' )">
         <mat-panel-title>Case Administration Information</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="summary-section-body">
@@ -56,8 +56,8 @@
       </div>
     </mat-expansion-panel>
 
-    <mat-expansion-panel class="summary-section" id="demographics" [expanded]="demographicsExpanded">
-      <mat-expansion-panel-header (click)="onItemClick( 'demographics' )">
+    <mat-expansion-panel class="summary-section" id="demographics" [expanded]="isExpanded('demographics')">
+      <mat-expansion-panel-header (click)="onToggleState( 'demographics' )">
         <mat-panel-title>Demographics</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="summary-section-body">
@@ -118,8 +118,8 @@
       </div>
     </mat-expansion-panel>
 
-    <mat-expansion-panel class="summary-section" id="circumstances" [expanded]="circumstancesExpanded">
-      <mat-expansion-panel-header (click)="onItemClick( 'circumstances' )">
+    <mat-expansion-panel class="summary-section" id="circumstances" [expanded]="isExpanded('circumstances')">
+      <mat-expansion-panel-header (click)="onToggleState( 'circumstances' )">
         <mat-panel-title>Circumstances</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="summary-section-body">
@@ -144,8 +144,8 @@
       </div>
     </mat-expansion-panel>
 
-    <mat-expansion-panel class="summary-section" id="jurisdiction" [expanded]="jurisdictionExpanded">
-      <mat-expansion-panel-header (click)="onItemClick( 'jurisdiction' )">
+    <mat-expansion-panel class="summary-section" id="jurisdiction" [expanded]="isExpanded('jurisdiction')">
+      <mat-expansion-panel-header (click)="onToggleState( 'jurisdiction' )">
         <mat-panel-title>Jurisdiction</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="summary-section-body">
@@ -170,8 +170,8 @@
       </div>
     </mat-expansion-panel>
 
-    <mat-expansion-panel class="summary-section" id="causeAndManner" [expanded]="causeAndMannerExpanded">
-      <mat-expansion-panel-header (click)="onItemClick( 'causeAndManner' )">
+    <mat-expansion-panel class="summary-section" id="causeAndManner" [expanded]="isExpanded('causeAndManner')">
+      <mat-expansion-panel-header (click)="onToggleState( 'causeAndManner' )">
         <mat-panel-title>Cause and Manner of Death</mat-panel-title>
       </mat-expansion-panel-header>
 
@@ -258,15 +258,15 @@
 
     </mat-expansion-panel>
 
-    <mat-expansion-panel class="summary-section" id="medicalHistory" [expanded]="medicalHistoryExpanded">
-      <mat-expansion-panel-header (click)="onItemClick( 'medicalHistory' )">
+    <mat-expansion-panel class="summary-section" id="medicalHistory" [expanded]="isExpanded('medicalHistory')">
+      <mat-expansion-panel-header (click)="onToggleState( 'medicalHistory' )">
         <mat-panel-title>Relevant Medical History</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="summary-section-body" (click)="onNotImplementedItemSelected()">Not Yet Implemented in MDI Implementation Guide</div>
     </mat-expansion-panel>
 
-    <mat-expansion-panel class="summary-section" id="examAndAutopsy" [expanded]="examNotesExpanded">
-      <mat-expansion-panel-header (click)="onItemClick( 'examNotes' )">
+    <mat-expansion-panel class="summary-section" id="examAndAutopsy" [expanded]="isExpanded('examAndAutopsy')">
+      <mat-expansion-panel-header (click)="onToggleState( 'examAndAutopsy' )">
         <mat-panel-title>Exam and Autopsy Notes</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="summary-section-body">
@@ -282,8 +282,8 @@
         </div>
       </div>    </mat-expansion-panel>
 
-    <mat-expansion-panel class="summary-section" id="narratives" [expanded]="narrativesExpanded">
-      <mat-expansion-panel-header (click)="onItemClick( 'narratives' )">
+    <mat-expansion-panel class="summary-section" id="narratives" [expanded]="isExpanded('narratives')">
+      <mat-expansion-panel-header (click)="onToggleState( 'narratives' )">
         <mat-panel-title>Narratives</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="summary-section-body" (click)="onNotImplementedItemSelected()">Not Yet Implemented in MDI Implementation Guide</div>
