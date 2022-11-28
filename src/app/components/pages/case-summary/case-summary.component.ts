@@ -49,33 +49,7 @@ export class CaseSummaryComponent implements OnInit, OnDestroy {
   }
 
   onItemClick(id: string) {
-
-    let shouldOpen = false;
-
-    switch (id) {
-      case "caseAdminInfo": shouldOpen = !this.caseSummaryContentComponent.caseAdminInfoExpanded; break;
-      case "demographics": shouldOpen = !this.caseSummaryContentComponent.demographicsExpanded; break;
-      case "circumstances": shouldOpen = !this.caseSummaryContentComponent.circumstancesExpanded; break;
-      case "jurisdiction": shouldOpen = !this.caseSummaryContentComponent.jurisdictionExpanded; break;
-      case "causeAndManner": shouldOpen = !this.caseSummaryContentComponent.causeAndMannerExpanded; break;
-      case "medicalHistory": shouldOpen = !this.caseSummaryContentComponent.medicalHistoryExpanded; break;
-      case "examNotes": shouldOpen = !this.caseSummaryContentComponent.examNotesExpanded; break;
-      case "narratives": shouldOpen = !this.caseSummaryContentComponent.narrativesExpanded; break;
-    }
-
-    this.caseSummaryContentComponent.caseAdminInfoExpanded = false;
-    this.caseSummaryContentComponent.demographicsExpanded = false;
-    this.caseSummaryContentComponent.circumstancesExpanded = false;
-    this.caseSummaryContentComponent.jurisdictionExpanded = false;
-    this.caseSummaryContentComponent.causeAndMannerExpanded = false;
-    this.caseSummaryContentComponent.medicalHistoryExpanded = false;
-    this.caseSummaryContentComponent.examNotesExpanded = false;
-    this.caseSummaryContentComponent.narrativesExpanded = false;
-
-    if (shouldOpen)
-    {
-      this.caseSummaryContentComponent.onItemClick(id);
-    }
+    this.caseSummaryContentComponent.onSetState(id, true);
   }
 
   ngOnDestroy(): void {
