@@ -69,6 +69,7 @@ import { SearchEdrsComponent } from './components/pages/workflow-simulator/searc
 import {MatStepperModule} from "@angular/material/stepper";
 import { MdiToEdrsGridComponent } from './components/pages/workflow-simulator/mdi-to-edrs-grid/mdi-to-edrs-grid.component';
 import { InputTextDialogComponent } from './components/widgets/input-text-dialog/input-text-dialog.component';
+import { ImportMdiToEdrsDocumentComponent } from './components/pages/workflow-simulator/import-mdi-to-edrs-document/import-mdi-to-edrs-document.component';
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import { InputTextDialogComponent } from './components/widgets/input-text-dialog
     WorkflowSimulatorComponent,
     SearchEdrsComponent,
     MdiToEdrsGridComponent,
-    InputTextDialogComponent
+    InputTextDialogComponent,
+    ImportMdiToEdrsDocumentComponent
   ],
   imports: [
     BrowserModule,

@@ -8,51 +8,17 @@
 
         <mat-tab label="Select MDI to EDRS Document">
           <app-mdi-to-edrs-grid></app-mdi-to-edrs-grid>
-          <div>
-            <button mat-raised-button color="primary">Proceed to Configure Endpoint</button>
-          </div>
         </mat-tab>
 
         <mat-tab label="Import MDI to EDRS Document ">
-          <div>
-            The data provided should be a valid FHIR MDI to EDRS Document Bundle. Please validate your resource prior to
-            using it in the workflow simulator or unexpected behavior may occur.
-          </div>
-
-          <div>
-            Click the "Input MDI to EDRS Document Bundle" button below to paste in your complete Document Bundle
-            resource or click "Select File" to select a plain text (JSON) file from your local drive.
-          </div>
-          <div>
-
-            <button mat-raised-button color="primary" (click)="onInputMdiToEdrsBundle()">
-              Input MDI to EDRS Document Bundle
-            </button>
-
-            <input type="file" class="file-input" (click)="fileUpload.value=null"
-                   accept=".json"
-                   (change)="onFileSelected($event)" #fileUpload>
-            <button mat-raised-button color="success" class="upload-btn" (click)="fileUpload.click();">
-              <mat-icon>post_add</mat-icon>
-              Select File
-            </button>
-
-            <span id="filename">{{file?.name}}</span>
-          </div>
-          <div>
-            <div>
-              Decedent Name:
-            </div>
-            <div>
-              Date/Time of Death:
-            </div>
-            <div>
-              MDI Tracking Number:
-            </div>
-          </div>
+          <app-import-mdi-to-edrs-document></app-import-mdi-to-edrs-document>
         </mat-tab>
 
       </mat-tab-group>
+
+      <div>
+        <button mat-raised-button color="primary">Proceed to Configure Endpoint</button>
+      </div>
 
     </mat-step>
     <mat-step label="Configure Endpoint">
