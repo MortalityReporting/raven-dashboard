@@ -37,10 +37,10 @@
   </div>
 
   <mat-accordion multi>
-    <mat-expansion-panel class="summary-section" id="caseAdminInfo" [expanded]="caseAdminInfoExpanded">
+    <mat-expansion-panel class="summary-section" id="caseAdminInfo" [expanded]="isExpanded('caseAdminInfo')">
 
       <!-- Case Administration Information Section -->
-      <mat-expansion-panel-header (click)="onItemClick( 'caseAdminInfo' )">
+      <mat-expansion-panel-header (click)="onToggleState( 'caseAdminInfo' )">
         <mat-panel-title>
           <mat-icon *ngIf="caseAdminInfoStatus=='valid'" class="valid-icon">done</mat-icon>
           <mat-icon *ngIf="caseAdminInfoStatus=='invalid'" class="invalid-icon">error</mat-icon>
@@ -102,8 +102,8 @@
     </mat-expansion-panel>
 
     <!-- Demographics Section -->
-    <mat-expansion-panel class="summary-section" id="demographics" [expanded]="demographicsExpanded">
-      <mat-expansion-panel-header (click)="onItemClick( 'demographics' )">
+    <mat-expansion-panel class="summary-section" id="demographics" [expanded]="isExpanded('demographics')">
+      <mat-expansion-panel-header (click)="onToggleState( 'demographics' )">
         <mat-panel-title>
           <mat-icon *ngIf="demographicsStatus=='valid'" class="valid-icon">done</mat-icon>
           <mat-icon *ngIf="demographicsStatus=='invalid'" class="invalid-icon">error</mat-icon>
@@ -184,8 +184,8 @@
     </mat-expansion-panel>
 
     <!-- Circumstances Section -->
-    <mat-expansion-panel class="summary-section" id="circumstances" [expanded]="circumstancesExpanded">
-      <mat-expansion-panel-header (click)="onItemClick( 'circumstances' )">
+    <mat-expansion-panel class="summary-section" id="circumstances" [expanded]="isExpanded('circumstances')">
+      <mat-expansion-panel-header (click)="onToggleState( 'circumstances' )">
         <mat-panel-title>
           <mat-icon *ngIf="circumstancesStatus=='valid'" class="valid-icon">done</mat-icon>
           <mat-icon *ngIf="circumstancesStatus=='invalid'" class="invalid-icon">error</mat-icon>
@@ -236,8 +236,8 @@
     </mat-expansion-panel>
 
     <!-- Jurisdiction Section -->
-    <mat-expansion-panel class="summary-section" id="jurisdiction" [expanded]="jurisdictionExpanded">
-      <mat-expansion-panel-header (click)="onItemClick( 'jurisdiction' )">
+    <mat-expansion-panel class="summary-section" id="jurisdiction" [expanded]="isExpanded('jurisdiction')">
+      <mat-expansion-panel-header (click)="onToggleState( 'jurisdiction' )">
         <mat-panel-title>
           <mat-icon *ngIf="jurisdictionStatus=='valid'" class="valid-icon">done</mat-icon>
           <mat-icon *ngIf="jurisdictionStatus=='invalid'" class="invalid-icon">error</mat-icon>
@@ -278,9 +278,9 @@
     </mat-expansion-panel>
 
     <!-- Cause and Manner of Death Section -->
-    <mat-expansion-panel class="summary-section" id="causeAndManner" [expanded]="causeAndMannerExpanded">
+    <mat-expansion-panel class="summary-section" id="causeAndManner" [expanded]="isExpanded('causeAndManner')">
 
-      <mat-expansion-panel-header (click)="onItemClick( 'causeAndManner' )">
+      <mat-expansion-panel-header (click)="onToggleState( 'causeAndManner' )">
         <mat-panel-title>
           <mat-icon *ngIf="causeAndMannerStatus=='valid'" class="valid-icon">done</mat-icon>
           <mat-icon *ngIf="causeAndMannerStatus=='invalid'" class="invalid-icon">error</mat-icon>
@@ -300,12 +300,12 @@
         </app-case-comparison-content-field>
 
         <app-case-comparison-content-field
-          [state]="causeOfDeath1.component.style"
+          [state]="causeOfDeath1.valueString.style"
           [title]="'Part 1 Immediate Cause Interval ' + (i+1)"
           [resource]="'Observation-cause-of-death-part1'"
-          [fhirPath]="causeOfDeath1.expected?.resourceType + '.component'"
-          [expected]="causeOfDeath1.component.expected"
-          [difference]="causeOfDeath1.component.difference"
+          [fhirPath]="causeOfDeath1.expected?.resourceType + '.valueString'"
+          [expected]="causeOfDeath1.valueString.expected"
+          [difference]="causeOfDeath1.valueString.difference"
           [expanded]="isAccordionExpanded">
         </app-case-comparison-content-field>
       </div>
@@ -314,9 +314,9 @@
         [state]="causeOfDeath2.valueCodeableConcept.style"
         [title]="'Part 2 Contributing Cause'"
         [resource]="'Observation-cause-of-death-part2'"
-        [fhirPath]="mannerOfDeath.expected?.resourceType + '.valueCodeableConcept'"
-        [expected]="mannerOfDeath.valueCodeableConcept.expected"
-        [difference]="mannerOfDeath.valueCodeableConcept.difference"
+        [fhirPath]="causeOfDeath2.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="causeOfDeath2.valueCodeableConcept.expected"
+        [difference]="causeOfDeath2.valueCodeableConcept.difference"
         [expanded]="isAccordionExpanded">
       </app-case-comparison-content-field>
 
@@ -381,9 +381,12 @@
       </app-case-comparison-content-field>
     </mat-expansion-panel>
 
+    <!-- Medical History Section -->
+    <!-- TODO -->
+
     <!-- Exam and Autopsy Section -->
-    <mat-expansion-panel class="summary-section" id="examAndAutopsy" [expanded]="examNotesExpanded">
-      <mat-expansion-panel-header (click)="onItemClick( 'examAndAutopsy' )">
+    <mat-expansion-panel class="summary-section" id="examAndAutopsy" [expanded]="isExpanded('examAndAutopsy')">
+      <mat-expansion-panel-header (click)="onToggleState( 'examAndAutopsy' )">
         <mat-panel-title>
           <mat-icon *ngIf="examAndAutopsyStatus=='valid'" class="valid-icon">done</mat-icon>
           <mat-icon *ngIf="examAndAutopsyStatus=='invalid'" class="invalid-icon">error</mat-icon>
@@ -411,9 +414,10 @@
         [difference]="autopsyPerformed.componentValueCodeableConcept.difference"
         [expanded]="isAccordionExpanded">
       </app-case-comparison-content-field>
-
     </mat-expansion-panel>
 
+    <!-- Narratives Section -->
+    <!-- TODO -->
   </mat-accordion>
 </div>
 <div class="spinner-container" *ngIf="isLoading">

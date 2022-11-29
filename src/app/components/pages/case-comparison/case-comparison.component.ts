@@ -54,28 +54,7 @@ export class CaseComparisonComponent implements OnInit, OnDestroy {
   }
 
   onItemClick(id: string) {
-
-    let shouldOpen = false;
-
-    switch (id) {
-      case "caseAdminInfo": shouldOpen = !this.caseComparisonContentComponent.caseAdminInfoExpanded; break;
-      case "demographics": shouldOpen = !this.caseComparisonContentComponent.demographicsExpanded; break;
-      case "circumstances": shouldOpen = !this.caseComparisonContentComponent.circumstancesExpanded; break;
-      case "jurisdiction": shouldOpen = !this.caseComparisonContentComponent.jurisdictionExpanded; break;
-      case "causeAndManner": shouldOpen = !this.caseComparisonContentComponent.causeAndMannerExpanded; break;
-      case "examNotes": shouldOpen = !this.caseComparisonContentComponent.examNotesExpanded; break;
-    }
-
-    this.caseComparisonContentComponent.caseAdminInfoExpanded = false;
-    this.caseComparisonContentComponent.demographicsExpanded = false;
-    this.caseComparisonContentComponent.circumstancesExpanded = false;
-    this.caseComparisonContentComponent.jurisdictionExpanded = false;
-    this.caseComparisonContentComponent.causeAndMannerExpanded = false;
-    this.caseComparisonContentComponent.examNotesExpanded = false;
-
-    if (shouldOpen) {
-      this.caseComparisonContentComponent.onItemClick(id);
-    }
+    this.caseComparisonContentComponent.onSetState(id, true)
   }
 
   ngOnDestroy(): void {
