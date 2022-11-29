@@ -1,27 +1,28 @@
 <div class="container">
+  state {{!!documentBundle}}
   <mat-stepper #stepper>
     <mat-step label="Select MDI to EDRS document">
       Step 1 - Select or Import an MDI to EDRS Document (Optional)
       If provided, the Document Bundle is used to populate the Search Parameters. Otherwise, the Search Parameters may be manually specified.
 
-      <mat-tab-group>
+      <mat-tab-group (selectedIndexChange)="tabSelectionChange()">
 
         <mat-tab label="Select MDI to EDRS Document">
           <app-mdi-to-edrs-grid></app-mdi-to-edrs-grid>
         </mat-tab>
 
-        <mat-tab label="Import MDI to EDRS Document ">
+        <mat-tab label="Import MDI to EDRS Document">
           <app-import-mdi-to-edrs-document></app-import-mdi-to-edrs-document>
         </mat-tab>
 
       </mat-tab-group>
 
       <div>
-        <button mat-raised-button color="primary">Proceed to Configure Endpoint</button>
+        <button mat-raised-button color="primary" [disabled]="!documentBundle" (click)="stepper.next()">Proceed to Configure Endpoint</button>
       </div>
 
     </mat-step>
-    <mat-step label="Configure Endpoint">
+    <mat-step label="Configure Endpoint"  [editable]="!!documentBundle">
       <div>
         <div>
           Decedent Name:
@@ -64,14 +65,14 @@
         </div>
 
         <div>
-          <button type="submit" mat mat-raised-button color="primary">
+          <button type="submit" mat mat-raised-button color="primary" (click)="stepper.next()">
             Proceed to Search
           </button>
         </div>
       </form>
 
     </mat-step>
-    <mat-step label="Search EDRS">
+    <mat-step label="Search EDRS" [editable]="!!documentBundle">
     </mat-step>
   </mat-stepper>
 </div>

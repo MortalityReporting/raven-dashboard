@@ -5,8 +5,8 @@ import {MatSort} from "@angular/material/sort";
 import {ActivatedRoute, Router} from "@angular/router";
 import {DecedentService} from "../../../../service/decedent.service";
 import {UtilsService} from "../../../../service/utils.service";
-import {forkJoin, map, mergeMap} from "rxjs";
-import {WorkflowSimulatorService} from "../../../../service/workflow-simulator.service";
+import {forkJoin, map, mergeMap, switchMap} from "rxjs";
+import {SearchEdrsService} from "../../../../service/search-edrs.service";
 
 @Component({
   selector: 'app-mdi-to-edrs-grid',
@@ -14,8 +14,8 @@ import {WorkflowSimulatorService} from "../../../../service/workflow-simulator.s
   styleUrls: ['./mdi-to-edrs-grid.component.css']
 })
 // For now this class component is almost exactly the same as the one we use for the decedent-records-grid.
-// However, the functionality will be different the we are going to change the code at some point in the near future.
-export class MdiToEdrsGridComponent implements OnInit , OnDestroy{
+// However, the functionality will be different and we are going to change the code at some point in the near future.
+export class MdiToEdrsGridComponent implements OnInit {
 
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['index', 'name', 'gender', 'tod', 'mannerOfDeath', 'caseNumber'];
@@ -31,12 +31,8 @@ export class MdiToEdrsGridComponent implements OnInit , OnDestroy{
     private decedentService: DecedentService,
     private router: Router,
     private utilsService: UtilsService,
-    private workflowSimulatorService: WorkflowSimulatorService
+    private searchEdrsService: SearchEdrsService
   ) {
-  }
-
-  ngOnDestroy(): void {
-    this.workflowSimulatorService.setSelectedCase(null);
   }
 
   mapToDto(entry: any): DecedentGridDTO {
@@ -103,9 +99,17 @@ export class MdiToEdrsGridComponent implements OnInit , OnDestroy{
       });
   }
 
-  onCaseSelected(row: any) {
-    this.selectedCase = row;
-    this.workflowSimulatorService.setSelectedCase(row);
+  onCaseSelected(decedent: any) {
+    this.selectedCase = decedent;
+    this.decedentService.getComposition(decedent.decedentId).pipe(
+      switchMap(composition => this.decedentService.getDocumentBundle(composition?.entry[0]?.resource?.id))
+    ).subscribe({
+      next: result => this.searchEdrsService.setDocumentBundle(result),
+      error: err => {
+        console.error(err);
+        this.utilsService.showErrorMessage("Error retrieving document bundle.")
+      }
+    });
   }
 
   applyFilter(event: Event) {
