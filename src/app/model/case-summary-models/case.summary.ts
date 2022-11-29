@@ -69,6 +69,10 @@ export class CauseAndManner {
   contributingConditions: string[]; // TODO: Does this need a model?
   mannerOfDeath: string;
   howDeathInjuryOccurred: string;
+  injuryDateTime: string;
+  placeOfInjury: string;
+  workInjuryIndicator: string;
+  transportationRole: string;
 
   constructor() {
     this.causeOfDeathPart1 = [];
