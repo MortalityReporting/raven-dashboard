@@ -2,7 +2,7 @@
 <form [formGroup]="dialogForm" (ngSubmit)="onSubmit()">
   <div mat-dialog-content style="margin-top: 1em; margin-bottom: 1em">
     <mat-form-field appearance="outline" style="width: 100%">
-      <mat-label>Paste or edit data here</mat-label>
+      <mat-label>{{inputLabelText}}</mat-label>
       <textarea type="text" class="text-area" matInput formControlName="content"></textarea>
       <mat-error>
         Please enter data.

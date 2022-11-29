@@ -24,10 +24,20 @@
             resource or click "Select File" to select a plain text (JSON) file from your local drive.
           </div>
           <div>
+
             <button mat-raised-button color="primary" (click)="onInputMdiToEdrsBundle()">
               Input MDI to EDRS Document Bundle
             </button>
-            <button mat-raised-button>Select File</button>
+
+            <input type="file" class="file-input" (click)="fileUpload.value=null"
+                   accept=".json"
+                   (change)="onFileSelected($event)" #fileUpload>
+            <button mat-raised-button color="success" class="upload-btn" (click)="fileUpload.click();">
+              <mat-icon>post_add</mat-icon>
+              Select File
+            </button>
+
+            <span id="filename">{{file?.name}}</span>
           </div>
           <div>
             <div>

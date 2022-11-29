@@ -10,12 +10,13 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 export class InputTextDialogComponent implements OnInit {
 
   title: string = null;
-  primaryActionBtnTitle: string = "Save"; // Is the action we want to take. For example Save, Delete
-  secondaryActionBtnTitle: string = "Cancel"; // Permits the user to exist without executing the primary action. For example Cancel
+  primaryActionBtnTitle: string; // Is the action we want to take. For example Save, Delete
+  secondaryActionBtnTitle: string; // Permits the user to exist without executing the primary action. For example Cancel
   isPrimaryButtonLeft: boolean = false; // Indicates the position of the primary action. If the primary action is on the left, the default button is the secondary action.
   dialogForm = new FormGroup({
     content: new FormControl(null, [Validators.required])
   });
+  inputLabelText: string = 'Paste or enter content here';
 
   constructor(
     private dialogRef: MatDialogRef<any>,
@@ -28,7 +29,7 @@ export class InputTextDialogComponent implements OnInit {
   }
 
   onSave() {
-    this.dialogRef.close(this.dialogForm.value);
+    this.dialogRef.close(this.dialogForm.controls['content'].value);
     this.dialogForm.reset();
   }
 
@@ -39,9 +40,10 @@ export class InputTextDialogComponent implements OnInit {
     };
 
     this.title = this.dialogData.title;
-    this.primaryActionBtnTitle = this.dialogData.primaryActionBtnTitle;
-    this.secondaryActionBtnTitle = this.dialogData.secondaryActionBtnTitle;
+    this.primaryActionBtnTitle = this.dialogData.primaryActionBtnTitle ?? 'Save';
+    this.secondaryActionBtnTitle = this.dialogData.secondaryActionBtnTitl ?? 'Cancel';
     this.isPrimaryButtonLeft = this.dialogData.isPrimaryButtonLeft;
+    this.inputLabelText = this.dialogData.inputLabelText ?? 'Paste or enter content here';
   }
 
   onSubmit() {
