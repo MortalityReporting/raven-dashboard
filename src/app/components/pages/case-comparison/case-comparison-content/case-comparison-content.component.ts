@@ -49,6 +49,17 @@ export class CaseComparisonContentComponent implements OnInit {
   isLoading = false;
   isAccordionExpanded = false;
 
+  idStateList = [
+    { expanded: true,     id: 'caseAdminInfo' },
+    { expanded: false,    id: 'demographics' },
+    { expanded: false,    id: 'jurisdiction' },
+    { expanded: false,    id: 'causeAndManner' },
+    { expanded: false,    id: 'medicalHistory' },
+    { expanded: false,    id: 'narratives' },
+    { expanded: false,    id: 'circumstances' },
+    { expanded: false,    id: 'examAndAutopsy' },
+  ]
+
   testCases = [
     {"compositionId": "73237426-9fbf-4ee0-bca4-42f6c3296cf0", "display": "Alice Freeman"},
     {"compositionId": "d5711ee4-a58c-4c20-b236-5f281c568e6e", "display": "Patch Adams"},
@@ -59,14 +70,6 @@ export class CaseComparisonContentComponent implements OnInit {
   expectedDocument: any;
   selectedTestCase = this.testCases[0];
   documentBundleList: any[];
-
-
-  caseAdminInfoExpanded: boolean = false;
-  demographicsExpanded: boolean = false;
-  circumstancesExpanded: boolean = false;
-  jurisdictionExpanded: boolean = false;
-  causeAndMannerExpanded: boolean = false;
-  examNotesExpanded: boolean = false;
 
   patient: USCorePatientDiff = new USCorePatientDiff( undefined, undefined );
   mdiToEdrs: CompositionMdiToEdrsDiff = new CompositionMdiToEdrsDiff( undefined, undefined );
@@ -93,6 +96,7 @@ export class CaseComparisonContentComponent implements OnInit {
   narrativesStatus = 'invalid';
   deathDateStatus = 'invalid';
   examAndAutopsyStatus = 'invalid';
+  howDeathOccurredStatus = 'invalid';
 
   constructor(
     private dialog: MatDialog,
@@ -178,17 +182,6 @@ export class CaseComparisonContentComponent implements OnInit {
     });
   }
 
-  onItemClick( id: any ) {
-    switch (id) {
-      case 'caseAdminInfo': this.caseAdminInfoExpanded = !this.caseAdminInfoExpanded; break;
-      case 'demographics': this.demographicsExpanded = !this.demographicsExpanded; break;
-      case 'circumstances':  this.circumstancesExpanded = !this.circumstancesExpanded; break;
-      case 'jurisdiction': this.jurisdictionExpanded = !this.jurisdictionExpanded; break;
-      case 'causeAndManner': this.causeAndMannerExpanded = !this.causeAndMannerExpanded; break;
-      case 'examNotes': this.examNotesExpanded = !this.examNotesExpanded; break;
-    }
-  }
-
   clearCase() {
     this.actualDocument = undefined;
 
@@ -205,6 +198,7 @@ export class CaseComparisonContentComponent implements OnInit {
     this.locationDeath = new LocationDeathDiff( undefined, undefined );
     this.locationInjury = new LocationInjuryDiff( undefined, undefined );
     this.autopsyPerformed = new ObservationAutopsyPerformedDiff( undefined, undefined );
+    this.howDeathOccurred = new ObservationHowDeathInjuryOccurredDiff( undefined, undefined );
 
     this.demographicsStatus = 'invalid';
     this.circumstancesStatus = 'invalid';
@@ -217,6 +211,7 @@ export class CaseComparisonContentComponent implements OnInit {
     this.deathDateStatus = 'invalid';
     this.deathDateStatus = 'invalid';
     this.examAndAutopsyStatus = 'invalid';
+    this.howDeathOccurredStatus = 'invalid';
 
     this.dodiff();
   }
@@ -248,13 +243,28 @@ export class CaseComparisonContentComponent implements OnInit {
       let actualCauseOfDeath1List = this.documentHandler.findResourcesByProfileName( this.actualDocument, Obs_CauseOfDeathPart1 );
       let expectedCauseOfDeath1List = this.documentHandler.findResourcesByProfileName( this.expectedDocument, Obs_CauseOfDeathPart1 );
 
-      if (actualCauseOfDeath1List != undefined) {
-        for (let i = 0; i < actualCauseOfDeath1List.length; i++) {
-          let causeOfDeath1 = new ObservationCauseOfDeathPart1Diff( actualCauseOfDeath1List[i], expectedCauseOfDeath1List[i] );
-          this.causeOfDeath1List.push( causeOfDeath1 );
-        }
-      }
+      this.causeAndMannerStatus = 'valid';
 
+      if (expectedCauseOfDeath1List != undefined) { 
+        expectedCauseOfDeath1List.map((item: any, i) => {
+          let causeOfDeath1 = undefined;
+          if (actualCauseOfDeath1List != undefined && actualCauseOfDeath1List.length > i) {
+            causeOfDeath1 = new ObservationCauseOfDeathPart1Diff( actualCauseOfDeath1List[i], expectedCauseOfDeath1List[i], this.documentHandler );
+          } else {
+            causeOfDeath1 = new ObservationCauseOfDeathPart1Diff( null, expectedCauseOfDeath1List[i], this.documentHandler );
+          }
+          this.causeOfDeath1List.push( causeOfDeath1 );    
+          if (causeOfDeath1.valueCodeableConcept.style === 'invalid')
+          {
+            this.causeAndMannerStatus = 'invalid';
+          }
+          if (causeOfDeath1.valueString.style === 'invalid')
+          {
+            this.causeAndMannerStatus = 'invalid';
+          }
+        })
+      }
+      
       this.causeOfDeath2 = new ObservationCauseOfDeathPart2Diff(
         this.documentHandler.findResourceByProfileName( this.actualDocument, Obs_CauseOfDeathPart2 ),
         this.documentHandler.findResourceByProfileName( this.expectedDocument, Obs_CauseOfDeathPart2 ));
@@ -283,11 +293,9 @@ export class CaseComparisonContentComponent implements OnInit {
         this.documentHandler.findResourceByProfileName( this.actualDocument, Obs_AutopsyPerformed ),
         this.documentHandler.findResourceByProfileName( this.expectedDocument, Obs_AutopsyPerformed ));
 
-      // console.log( this.documentHandler.findResourceByProfileName( this.expectedDocument, Obs_HowDeathInjuryOccurred ));
-
-      // this.howDeathOccurred = new ObservationHowDeathInjuryOccurredDiff(
-      //   this.documentHandler.findResourceByProfileName( this.actualDocument, Obs_HowDeathInjuryOccurred ),
-      //   this.documentHandler.findResourceByProfileName( this.expectedDocument, Obs_HowDeathInjuryOccurred ));
+      this.howDeathOccurred = new ObservationHowDeathInjuryOccurredDiff(
+        this.documentHandler.findResourceByProfileName( this.actualDocument, Obs_HowDeathInjuryOccurred ),
+        this.documentHandler.findResourceByProfileName( this.expectedDocument, Obs_HowDeathInjuryOccurred ));
   
       this.caseAdminInfoStatus = (
         this.mdiToEdrs.extension.style === 'valid' &&
@@ -300,6 +308,7 @@ export class CaseComparisonContentComponent implements OnInit {
       this.demographicsStatus = (
         this.patient.name.style === 'valid' &&
         this.patient.gender.style === 'valid' &&
+        this.patient.identifier.style === 'valid' &&
         this.patient.birthDate.style === 'valid' &&
         this.patient.ethnicity.style === 'valid' &&
         this.patient.race.style === 'valid' &&
@@ -324,21 +333,14 @@ export class CaseComparisonContentComponent implements OnInit {
         this.autopsyPerformed.componentValueCodeableConcept.style === 'valid'
       ) ? 'valid' : 'invalid';
 
-      this.causeAndMannerStatus = 'valid';
-
-      if (actualCauseOfDeath1List != undefined) {
-        for (let i = 0; i < actualCauseOfDeath1List.length; i++) {
-          let causeOfDeath1 = new ObservationCauseOfDeathPart1Diff( actualCauseOfDeath1List[i], expectedCauseOfDeath1List[i] );
-          if (causeOfDeath1.valueCodeableConcept.style === 'invalid')
-          {
-            this.causeAndMannerStatus = 'invalid';
-          }
-          if (causeOfDeath1.component.style === 'invalid')
-          {
-            this.causeAndMannerStatus = 'invalid';
-          }
-        }
-      }
+      this.causeAndMannerStatus = (
+        this.causeAndMannerStatus === 'valid' &&
+        this.howDeathOccurred.placeOfInjury.style === 'valid' &&
+        this.howDeathOccurred.howDeathInjuryOccurred.style === 'valid' &&
+        this.howDeathOccurred.effectiveDateTime.style === 'valid' &&
+        this.howDeathOccurred.injuryOccurredAtWork.style === 'valid' &&
+        this.howDeathOccurred.transportationRole.style === 'valid' 
+      ) ? 'valid' : 'invalid';
 
       if (this.causeOfDeath2.valueCodeableConcept.style === 'invalid' )
       {
@@ -355,13 +357,25 @@ export class CaseComparisonContentComponent implements OnInit {
     }
   }
 
+  isExpanded(elementId: string) {
+    return this.idStateList.find(element => element.id == elementId)?.expanded;
+  }
+
+  onToggleState(id: any ) {
+    this.idStateList = this.idStateList.map(element => element.id == id ? {id: element.id, expanded: !element.expanded}: element);
+  }
+
+  onSetState(resourceId, state){
+    this.idStateList = this.idStateList.map(element => element.id == resourceId ? {id: element.id, expanded: state} : element);
+  }
+
   onOpenAll() {
-    this.accordion.openAll();
-    this.isAccordionExpanded = true;
+    this.idStateList.forEach(element => element.expanded = true);
+    this.accordion.openAll()
   }
 
   onCloseAll() {
-    this.accordion.closeAll();
-    this.isAccordionExpanded = false;
+    this.idStateList.forEach(element => element.expanded = false);
+    this.accordion.closeAll()
   }
 }

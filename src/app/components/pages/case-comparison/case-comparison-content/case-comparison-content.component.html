@@ -37,10 +37,10 @@
   </div>
 
   <mat-accordion multi>
-    <mat-expansion-panel class="summary-section" id="caseAdminInfo" [expanded]="caseAdminInfoExpanded">
+    <mat-expansion-panel class="summary-section" id="caseAdminInfo" [expanded]="isExpanded('caseAdminInfo')">
 
       <!-- Case Administration Information Section -->
-      <mat-expansion-panel-header (click)="onItemClick( 'caseAdminInfo' )">
+      <mat-expansion-panel-header (click)="onToggleState( 'caseAdminInfo' )">
         <mat-panel-title>
           <mat-icon *ngIf="caseAdminInfoStatus=='valid'" class="valid-icon">done</mat-icon>
           <mat-icon *ngIf="caseAdminInfoStatus=='invalid'" class="invalid-icon">error</mat-icon>
@@ -102,8 +102,8 @@
     </mat-expansion-panel>
 
     <!-- Demographics Section -->
-    <mat-expansion-panel class="summary-section" id="demographics" [expanded]="demographicsExpanded">
-      <mat-expansion-panel-header (click)="onItemClick( 'demographics' )">
+    <mat-expansion-panel class="summary-section" id="demographics" [expanded]="isExpanded('demographics')">
+      <mat-expansion-panel-header (click)="onToggleState( 'demographics' )">
         <mat-panel-title>
           <mat-icon *ngIf="demographicsStatus=='valid'" class="valid-icon">done</mat-icon>
           <mat-icon *ngIf="demographicsStatus=='invalid'" class="invalid-icon">error</mat-icon>
@@ -155,7 +155,7 @@
         [state]="patient.race.style"
         [title]="'Race'"
         [resource]="'US Core Patien\'t'"
-        [fhirPath]="patient.expected?.resourceType + '.extension'"
+        [fhirPath]="patient.expected?.resourceType + '.valueString'"
         [expected]="patient.race.expected"
         [difference]="patient.race.difference"
         [expanded]="isAccordionExpanded">
@@ -165,7 +165,7 @@
         [state]="patient.ethnicity.style"
         [title]="'Ethnicity'"
         [resource]="'US Core Patient'"
-        [fhirPath]="patient.expected?.resourceType + '.extension'"
+        [fhirPath]="patient.expected?.resourceType + '.valueString'"
         [expected]="patient.ethnicity.expected"
         [difference]="patient.ethnicity.difference"
         [expanded]="isAccordionExpanded">
@@ -184,8 +184,8 @@
     </mat-expansion-panel>
 
     <!-- Circumstances Section -->
-    <mat-expansion-panel class="summary-section" id="circumstances" [expanded]="circumstancesExpanded">
-      <mat-expansion-panel-header (click)="onItemClick( 'circumstances' )">
+    <mat-expansion-panel class="summary-section" id="circumstances" [expanded]="isExpanded('circumstances')">
+      <mat-expansion-panel-header (click)="onToggleState( 'circumstances' )">
         <mat-panel-title>
           <mat-icon *ngIf="circumstancesStatus=='valid'" class="valid-icon">done</mat-icon>
           <mat-icon *ngIf="circumstancesStatus=='invalid'" class="invalid-icon">error</mat-icon>
@@ -197,7 +197,7 @@
         [state]="locationDeath.name.style"
         [title]="'Death Location'"
         [resource]="'Location-death'"
-        [fhirPath]="locationDeath.expected?.resourceType + '.valueCodeableConcept'"
+        [fhirPath]="locationDeath.expected?.resourceType + '.name'"
         [expected]="locationDeath.name.expected"
         [difference]="locationDeath.name.difference"
         [expanded]="isAccordionExpanded">
@@ -207,7 +207,7 @@
         [state]="locationInjury.name.style"
         [title]="'Injury Location'"
         [resource]="'Location-injury'"
-        [fhirPath]="locationInjury.expected?.resourceType + '.valueCodeableConcept'"
+        [fhirPath]="locationInjury.expected?.resourceType + '.name'"
         [expected]="locationInjury.name.expected"
         [difference]="locationInjury.name.difference"
         [expanded]="isAccordionExpanded">
@@ -236,8 +236,8 @@
     </mat-expansion-panel>
 
     <!-- Jurisdiction Section -->
-    <mat-expansion-panel class="summary-section" id="jurisdiction" [expanded]="jurisdictionExpanded">
-      <mat-expansion-panel-header (click)="onItemClick( 'jurisdiction' )">
+    <mat-expansion-panel class="summary-section" id="jurisdiction" [expanded]="isExpanded('jurisdiction')">
+      <mat-expansion-panel-header (click)="onToggleState( 'jurisdiction' )">
         <mat-panel-title>
           <mat-icon *ngIf="jurisdictionStatus=='valid'" class="valid-icon">done</mat-icon>
           <mat-icon *ngIf="jurisdictionStatus=='invalid'" class="invalid-icon">error</mat-icon>
@@ -249,7 +249,7 @@
         [state]="deathDate.effectiveDateTime.style"
         [title]="'Death Date/Time'"
         [resource]="'Observation-death-date'"
-        [fhirPath]="deathDate.expected?.resourceType + '.effectiveDateTime'"
+        [fhirPath]="deathDate.expected?.resourceType + '.valueDateTime'"
         [expected]="deathDate.effectiveDateTime.expected"
         [difference]="deathDate.effectiveDateTime.difference"
         [expanded]="isAccordionExpanded">
@@ -259,7 +259,7 @@
         [state]="deathDate.pronouncedDateTime.style"
         [title]="'Pronounced Date/Time'"
         [resource]="'Observation-death-date'"
-        [fhirPath]="deathDate.expected?.resourceType + '.component'"
+        [fhirPath]="deathDate.expected?.resourceType + '.valueDateTime'"
         [expected]="deathDate.pronouncedDateTime.expected"
         [difference]="deathDate.pronouncedDateTime.difference"
         [expanded]="isAccordionExpanded">
@@ -278,9 +278,9 @@
     </mat-expansion-panel>
 
     <!-- Cause and Manner of Death Section -->
-    <mat-expansion-panel class="summary-section" id="causeAndManner" [expanded]="causeAndMannerExpanded">
+    <mat-expansion-panel class="summary-section" id="causeAndManner" [expanded]="isExpanded('causeAndManner')">
 
-      <mat-expansion-panel-header (click)="onItemClick( 'causeAndManner' )">
+      <mat-expansion-panel-header (click)="onToggleState( 'causeAndManner' )">
         <mat-panel-title>
           <mat-icon *ngIf="causeAndMannerStatus=='valid'" class="valid-icon">done</mat-icon>
           <mat-icon *ngIf="causeAndMannerStatus=='invalid'" class="invalid-icon">error</mat-icon>
@@ -300,12 +300,12 @@
         </app-case-comparison-content-field>
 
         <app-case-comparison-content-field
-          [state]="causeOfDeath1.component.style"
+          [state]="causeOfDeath1.valueString.style"
           [title]="'Part 1 Immediate Cause Interval ' + (i+1)"
           [resource]="'Observation-cause-of-death-part1'"
-          [fhirPath]="causeOfDeath1.expected?.resourceType + '.component'"
-          [expected]="causeOfDeath1.component.expected"
-          [difference]="causeOfDeath1.component.difference"
+          [fhirPath]="causeOfDeath1.expected?.resourceType + '.valueString'"
+          [expected]="causeOfDeath1.valueString.expected"
+          [difference]="causeOfDeath1.valueString.difference"
           [expanded]="isAccordionExpanded">
         </app-case-comparison-content-field>
       </div>
@@ -314,9 +314,9 @@
         [state]="causeOfDeath2.valueCodeableConcept.style"
         [title]="'Part 2 Contributing Cause'"
         [resource]="'Observation-cause-of-death-part2'"
-        [fhirPath]="mannerOfDeath.expected?.resourceType + '.valueCodeableConcept'"
-        [expected]="mannerOfDeath.valueCodeableConcept.expected"
-        [difference]="mannerOfDeath.valueCodeableConcept.difference"
+        [fhirPath]="causeOfDeath2.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="causeOfDeath2.valueCodeableConcept.expected"
+        [difference]="causeOfDeath2.valueCodeableConcept.difference"
         [expanded]="isAccordionExpanded">
       </app-case-comparison-content-field>
 
@@ -331,23 +331,62 @@
       </app-case-comparison-content-field>
 
       <app-case-comparison-content-field
-        [state]="locationInjury.name.style"
+        [state]="howDeathOccurred.placeOfInjury.style"
         [title]="'Place of Injury'"
-        [resource]="'Location-injury'"
-        [fhirPath]="locationInjury.expected?.resourceType + '.valueCodeableConcept'"
-        [expected]="locationInjury.name.expected"
-        [difference]="locationInjury.name.difference"
+        [resource]="'Observation-how-death-injury-occurred'"
+        [fhirPath]="howDeathOccurred.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="howDeathOccurred.placeOfInjury.expected"
+        [difference]="howDeathOccurred.placeOfInjury.difference"
         [expanded]="isAccordionExpanded">
       </app-case-comparison-content-field>
 
-      <mat-card style="margin-top: 0.3em; border-color: #cdcdcd">How Injury Occurred - Not Yet Implemented</mat-card>
-      <mat-card style="margin-top: 0.3em; border-color: #cdcdcd">Injury Date/Time - Not Yet Implemented</mat-card>
-      <mat-card style="margin-top: 0.3em; border-color: #cdcdcd">Transportation Role - Not Yet Implemented</mat-card>
+      <app-case-comparison-content-field
+        [state]="howDeathOccurred.howDeathInjuryOccurred.style"
+        [title]="'How Injury Occurred'"
+        [resource]="'Observation-how-death-injury-occurred'"
+        [fhirPath]="howDeathOccurred.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="howDeathOccurred.howDeathInjuryOccurred.expected"
+        [difference]="howDeathOccurred.howDeathInjuryOccurred.difference"
+        [expanded]="isAccordionExpanded">
+      </app-case-comparison-content-field>
+
+      <app-case-comparison-content-field
+        [state]="howDeathOccurred.effectiveDateTime.style"
+        [title]="'Injury Date/Time'"
+        [resource]="'Observation-how-death-injury-occurred'"
+        [fhirPath]="howDeathOccurred.expected?.resourceType + '.effectiveDateTime'"
+        [expected]="howDeathOccurred.effectiveDateTime.expected"
+        [difference]="howDeathOccurred.effectiveDateTime.difference"
+        [expanded]="isAccordionExpanded">
+      </app-case-comparison-content-field>
+
+      <app-case-comparison-content-field
+        [state]="howDeathOccurred.injuryOccurredAtWork.style"
+        [title]="'Injury/Event Occurred at Work'"
+        [resource]="'Observation-how-death-injury-occurred'"
+        [fhirPath]="howDeathOccurred.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="howDeathOccurred.injuryOccurredAtWork.expected"
+        [difference]="howDeathOccurred.injuryOccurredAtWork.difference"
+        [expanded]="isAccordionExpanded">
+      </app-case-comparison-content-field>
+
+      <app-case-comparison-content-field
+        [state]="howDeathOccurred.transportationRole.style"
+        [title]="'Transportation Role'"
+        [resource]="'Observation-how-death-injury-occurred'"
+        [fhirPath]="howDeathOccurred.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="howDeathOccurred.transportationRole.expected"
+        [difference]="howDeathOccurred.transportationRole.difference"
+        [expanded]="isAccordionExpanded">
+      </app-case-comparison-content-field>
     </mat-expansion-panel>
 
+    <!-- Medical History Section -->
+    <!-- TODO -->
+
     <!-- Exam and Autopsy Section -->
-    <mat-expansion-panel class="summary-section" id="examAndAutopsy" [expanded]="examNotesExpanded">
-      <mat-expansion-panel-header (click)="onItemClick( 'examAndAutopsy' )">
+    <mat-expansion-panel class="summary-section" id="examAndAutopsy" [expanded]="isExpanded('examAndAutopsy')">
+      <mat-expansion-panel-header (click)="onToggleState( 'examAndAutopsy' )">
         <mat-panel-title>
           <mat-icon *ngIf="examAndAutopsyStatus=='valid'" class="valid-icon">done</mat-icon>
           <mat-icon *ngIf="examAndAutopsyStatus=='invalid'" class="invalid-icon">error</mat-icon>
@@ -375,9 +414,10 @@
         [difference]="autopsyPerformed.componentValueCodeableConcept.difference"
         [expanded]="isAccordionExpanded">
       </app-case-comparison-content-field>
-
     </mat-expansion-panel>
 
+    <!-- Narratives Section -->
+    <!-- TODO -->
   </mat-accordion>
 </div>
 <div class="spinner-container" *ngIf="isLoading">

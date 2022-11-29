@@ -47,10 +47,10 @@ export class LocationDiff {
             this.meta.actual = JSON.stringify( this.actual.meta, null, 4 );
             [this.meta.style,this.meta.difference] = DiffType.doDiff( Diff.diffChars( this.meta.expected, this.meta.actual ));
         } catch(e) {};
-
+        
         try {
-            this.name.expected = '"name": "' + this.expected.name + '"';
-            this.name.actual = '"name": "' + this.actual.name + '"';
+            this.name.expected = this.expected.name;
+            this.name.actual = this.actual.name;
             [this.name.style,this.name.difference] = DiffType.doDiff( Diff.diffChars( this.name.expected, this.name.actual ));
         } catch(e) {};
 
