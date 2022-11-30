@@ -1,6 +1,5 @@
 <div class="container">
-  state {{!!documentBundle}}
-  <mat-stepper #stepper>
+  <mat-horizontal-stepper #stepper [linear]="true">
     <mat-step label="Select MDI to EDRS document">
       Step 1 - Select or Import an MDI to EDRS Document (Optional)
       If provided, the Document Bundle is used to populate the Search Parameters. Otherwise, the Search Parameters may be manually specified.
@@ -11,18 +10,18 @@
           <app-mdi-to-edrs-grid></app-mdi-to-edrs-grid>
         </mat-tab>
 
-        <mat-tab label="Import MDI to EDRS Document">
+        <mat-tab label="Import MDI to EDRS FHIR Document Bundle">
           <app-import-mdi-to-edrs-document></app-import-mdi-to-edrs-document>
         </mat-tab>
 
       </mat-tab-group>
 
       <div>
-        <button mat-raised-button color="primary" [disabled]="!documentBundle" (click)="stepper.next()">Proceed to Configure Endpoint</button>
+        <button mat-raised-button color="primary" [disabled]="!documentBundle" matStepperNext>Proceed to Configure Endpoint</button>
       </div>
 
     </mat-step>
-    <mat-step label="Configure Endpoint"  [editable]="!!documentBundle">
+    <mat-step label="Configure Endpoint">
       <div>
         <div>
           Decedent Name:
@@ -65,15 +64,18 @@
         </div>
 
         <div>
-          <button type="submit" mat mat-raised-button color="primary" (click)="stepper.next()">
+          <button mat-raised-button matStepperPrevious>Back</button>
+          <button type="submit" mat mat-raised-button color="primary" matStepperNext>
             Proceed to Search
           </button>
         </div>
       </form>
 
     </mat-step>
-    <mat-step label="Search EDRS" [editable]="!!documentBundle">
+
+    <mat-step label="Search EDRS">
+      <button mat-raised-button matStepperPrevious>Back</button>
     </mat-step>
-  </mat-stepper>
+  </mat-horizontal-stepper>
 </div>
 
