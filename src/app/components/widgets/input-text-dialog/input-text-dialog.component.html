@@ -5,13 +5,12 @@
       <mat-label>{{inputLabelText}}</mat-label>
       <textarea type="text" class="text-area" matInput formControlName="content"></textarea>
       <mat-error>
-        Please enter data.
+        {{ validatorErrors }}
       </mat-error>
     </mat-form-field>
   </div>
   <div mat-dialog-actions align="end">
     <button type="button" mat-stroked-button (click)="onCancel()">{{secondaryActionBtnTitle}}</button>
-    <button mat-stroked-button type="submit" color="primary"
-            cdkFocusInitial>{{primaryActionBtnTitle}}</button>
+    <button mat-stroked-button type="submit" color="primary" cdkFocusInitial>{{primaryActionBtnTitle}}</button>
   </div>
 </form>

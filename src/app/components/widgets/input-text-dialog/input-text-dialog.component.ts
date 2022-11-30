@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material/dialog";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
+import {JsonValidator} from "../../../reactive-form-validators/json-validator";
 
 @Component({
   selector: 'app-input-text-dialog',
@@ -14,9 +15,11 @@ export class InputTextDialogComponent implements OnInit {
   secondaryActionBtnTitle: string; // Permits the user to exist without executing the primary action. For example Cancel
   isPrimaryButtonLeft: boolean = false; // Indicates the position of the primary action. If the primary action is on the left, the default button is the secondary action.
   dialogForm = new FormGroup({
-    content: new FormControl(null, [Validators.required])
+    content: new FormControl(null)
   });
   inputLabelText: string = 'Paste or enter content here';
+  validatorErrors: string;
+  validatorErrorTypes: any[]; // We can use this to inject the error types used by the validators
 
   constructor(
     private dialogRef: MatDialogRef<any>,
@@ -37,7 +40,14 @@ export class InputTextDialogComponent implements OnInit {
 
     if(this.dialogData.content){
       this.dialogForm.controls['content'].patchValue(this.dialogData.content);
-    };
+    }
+
+    if(this.dialogData.formValidators){
+      // Inject the validators
+      this.dialogForm.controls['content'].setValidators(this.dialogData.formValidators);
+      this.dialogForm.controls['content'].updateValueAndValidity();
+      this.validatorErrorTypes = this.dialogData.formValidationTypes
+    }
 
     this.title = this.dialogData.title;
     this.primaryActionBtnTitle = this.dialogData.primaryActionBtnTitle ?? 'Save';
@@ -49,6 +59,31 @@ export class InputTextDialogComponent implements OnInit {
   onSubmit() {
     if(this.dialogForm.valid){
       this.onSave();
+      this.validatorErrors = null;
+    }
+    else {
+      this.validatorErrors = this.getValidationErrors(this.dialogForm.controls['content'].errors, this.validatorErrorTypes);
+    }
+
+  }
+
+  getValidationErrors(errors: ValidationErrors, errorTypes: any[]): string {
+    if(!errors || !errorTypes){
+      console.error("No errors or error type parameters present.");
+      return null;
+    }
+    const errorName = Object.keys(errors)[0];
+    const result = errorTypes.find(element => element.name === errorName)?.display;
+    if(result) {
+      return result;
+    }
+    else if(errorName){
+      console.error("Unable to find error with name " + errorName);
+      return "Validation Error Produced";
+    }
+    else {
+      console.log("The validation did not produce any errors")
+      return null;
     }
   }
 }

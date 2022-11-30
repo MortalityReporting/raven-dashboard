@@ -3,6 +3,9 @@ import {openInputTextDialog} from "../../../widgets/input-text-dialog/input-text
 import {MatDialog} from "@angular/material/dialog";
 import {UtilsService} from "../../../../service/utils.service";
 import {SearchEdrsService} from "../../../../service/search-edrs.service";
+import {Validators} from "@angular/forms";
+import {JsonValidator} from "../../../../reactive-form-validators/json-validator";
+import {ResourceTypeValidator} from "../../../../reactive-form-validators/resource-type-validator";
 
 @Component({
   selector: 'app-import-mdi-to-edrs-document',
@@ -33,11 +36,17 @@ export class ImportMdiToEdrsDocumentComponent implements OnInit {
         title: "Input MDI to EDRS Document Bundle ",
         primaryActionBtnTitle: "Save",
         secondaryActionBtnTitle: "Cancel",
-        isPrimaryButtonLeft: false
+        isPrimaryButtonLeft: false,
+        formValidators:[Validators.required, JsonValidator, ResourceTypeValidator],
+        formValidationTypes: [
+          { name: 'required', display:"Enter or paste content." },
+          { name: "jsonValidator", display: "The content should be valid json" },
+          { name: "resourceTypeValidator", display: "Resource Type not found." },
+        ]
       })
       .subscribe(
         data => {
-          console.log(data);
+          this.searchEdrsService.setDocumentBundle(data);
         }
       );
   }
