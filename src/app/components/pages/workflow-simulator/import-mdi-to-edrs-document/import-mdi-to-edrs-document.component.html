@@ -7,6 +7,11 @@
   Click the "Input MDI to EDRS Document Bundle" button below to paste in your complete Document Bundle
   resource or click "Select File" to select a plain text (JSON) file from your local drive.
 </div>
+
+<div>
+  <mat-error>{{errorMessage}}</mat-error>
+</div>
+
 <div>
 
   <button mat-raised-button color="primary" (click)="onInputMdiToEdrsBundle()">

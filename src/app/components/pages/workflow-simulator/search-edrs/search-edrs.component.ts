@@ -1,6 +1,8 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {FormBuilder} from "@angular/forms";
 import {SearchEdrsService} from "../../../../service/search-edrs.service";
+import {MatStepper} from "@angular/material/stepper";
+import {MatTabGroup} from "@angular/material/tabs";
 
 @Component({
   selector: 'app-search-edrs',
@@ -12,6 +14,10 @@ export class SearchEdrsComponent implements OnInit {
 
   inputTypeOptions: string[] = ['Registered Endpoint', 'Custom Endpoint'];
   documentBundle: any;
+  errorMessage: string;
+
+  @ViewChild('stepper') private stepper: MatStepper;
+  @ViewChild('mdiToEdrsTabGroup') private mdiToEdrsTabGroup: MatTabGroup;
 
   serverEndpointList: any[] = [
     {uri: 'www.bluejay.edu', displayName: 'BlueJay'},
@@ -30,7 +36,12 @@ export class SearchEdrsComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchEdrsService.documentBundle$.subscribe({
-      next: value => this.documentBundle = value
+      next: value => {
+        this.documentBundle = value
+        if(this.documentBundle){
+          this.errorMessage = null;
+        }
+      }
     })
   }
 
@@ -40,5 +51,22 @@ export class SearchEdrsComponent implements OnInit {
 
   tabSelectionChange() {
     this.searchEdrsService.setDocumentBundle(null);
+  }
+
+  onAdvanceStepper() {
+    this.errorMessage = null;
+
+    if (this.stepper.selectedIndex === 0) {
+      if(!this.documentBundle && this.mdiToEdrsTabGroup.selectedIndex === 0){
+        this.errorMessage = "Select a bundle from the table above to proceed.";
+      }
+      else if (!this.documentBundle && this.mdiToEdrsTabGroup.selectedIndex === 1){
+        this.errorMessage = "Upload a valid bundle to proceed.";
+      }
+    }
+
+    if(!this.errorMessage){
+      this.stepper.next();
+    }
   }
 }

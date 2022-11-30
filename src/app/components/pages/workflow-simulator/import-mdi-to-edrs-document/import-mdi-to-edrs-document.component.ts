@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {openInputTextDialog} from "../../../widgets/input-text-dialog/input-text-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {UtilsService} from "../../../../service/utils.service";
+import {SearchEdrsService} from "../../../../service/search-edrs.service";
 
 @Component({
   selector: 'app-import-mdi-to-edrs-document',
@@ -12,17 +13,20 @@ export class ImportMdiToEdrsDocumentComponent implements OnInit {
 
   file: File = null;
   MAX_FILE_SIZE = 100000; // Max allowed file size is 100KB
-  fileContent: string;
+  fileContent: any;
+  errorMessage: string;
 
   constructor(
     private dialog: MatDialog,
-    private utilsService: UtilsService) { }
+    private utilsService: UtilsService,
+    private searchEdrsService: SearchEdrsService) { }
 
   ngOnInit(): void {
   }
 
   onInputMdiToEdrsBundle() {
     this.file = null;
+    this.errorMessage = null;
     openInputTextDialog(
       this.dialog,
       {
@@ -39,26 +43,54 @@ export class ImportMdiToEdrsDocumentComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
+    this.errorMessage = '';
 
     this.file = event.target.files[0];
 
     if(!this.file){
-      this.utilsService.showErrorMessage("Unable to open the file.");
+      this.errorMessage = "Unable to open the file.";
+      console.error(this.errorMessage);
     }
     else if (this.file.size > this.MAX_FILE_SIZE){
-      console.error("File too big")
-      this.utilsService.showErrorMessage("This file exceeds " + this.MAX_FILE_SIZE /  1000 + "kb and cannot be processed");
+      this.errorMessage = "This file exceeds " + this.MAX_FILE_SIZE /  1000 + "kb and cannot be processed";
+      console.error(this.errorMessage);
     }
     else {
       const reader = new FileReader();
       reader.readAsText(this.file, "UTF-8");
       reader.onload = () => {
-        this.fileContent = reader.result as string;
+        try {
+          this.fileContent = JSON.parse(reader.result as string);
+          this.errorMessage = this.validateFileContent(this.fileContent);
+          if(!this.errorMessage) {
+            this.searchEdrsService.setDocumentBundle(this.fileContent);
+          }
+        }
+        catch (e) {
+          console.error(e);
+          this.errorMessage = "Parsing Error. Unable to open the file.";
+        }
       }
       reader.onerror = () => {
-        this.utilsService.showErrorMessage("Unable to open the file.");
+        this.errorMessage = "Parsing Error. Unable to open the file.";
+        console.error(this.errorMessage);
       }
     }
+  }
 
+  private validateFileContent(fileContent: any): string {
+    if(!fileContent){
+      return "The file is empty or not parsed correctly";
+    }
+    if(this.utilsService.isJsonString(fileContent)){
+      return "Invalid JSON content detected";
+    }
+    if(!fileContent.resourceType){
+      return 'Invalid resource detected. Missing "Resource Type" property';
+    }
+    if (fileContent.resourceType != "Bundle"){
+      return 'Invalid resource detected. The resource type must be Bundle';
+    }
+    return null;
   }
 }

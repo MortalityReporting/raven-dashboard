@@ -1,10 +1,10 @@
 <div class="container">
-  <mat-horizontal-stepper #stepper [linear]="true">
+  <mat-horizontal-stepper #stepper>
     <mat-step label="Select MDI to EDRS document">
       Step 1 - Select or Import an MDI to EDRS Document (Optional)
       If provided, the Document Bundle is used to populate the Search Parameters. Otherwise, the Search Parameters may be manually specified.
 
-      <mat-tab-group (selectedIndexChange)="tabSelectionChange()">
+      <mat-tab-group (selectedIndexChange)="tabSelectionChange()" #mdiToEdrsTabGroup (selectedTabChange)="errorMessage = null">
 
         <mat-tab label="Select MDI to EDRS Document">
           <app-mdi-to-edrs-grid></app-mdi-to-edrs-grid>
@@ -17,10 +17,12 @@
       </mat-tab-group>
 
       <div>
-        <button mat-raised-button color="primary" [disabled]="!documentBundle" matStepperNext>Proceed to Configure Endpoint</button>
+        <mat-error>{{errorMessage}}</mat-error>
+        <button mat-raised-button color="primary" (click)="onAdvanceStepper()">Proceed to Configure Endpoint</button>
       </div>
 
     </mat-step>
+
     <mat-step label="Configure Endpoint">
       <div>
         <div>
