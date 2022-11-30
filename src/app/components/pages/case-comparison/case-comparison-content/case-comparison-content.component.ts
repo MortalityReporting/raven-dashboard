@@ -146,7 +146,7 @@ export class CaseComparisonContentComponent implements OnInit {
   onExpectedCompositionChanged( event: any ) {
     this.isLoading = true;
 
-    this.decedentService.getDocumentBundle(event.value).subscribe({
+    this.decedentService.getDocumentBundle(event.value.compositionId).subscribe({
       next: (documentBundle: any) => {
         this.accordion.closeAll();
         this.isAccordionExpanded = false;

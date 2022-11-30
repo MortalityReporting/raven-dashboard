@@ -30,12 +30,9 @@ export class ObservationCauseOfDeathPart1Diff extends ObservationDiff {
     {
         super.doDiff();
         
-        console.log( this.expected );
-
         try {
             let expectedComponent = this.documentHandler.findObservationComponentByCode(this.expected, "69440-6");
             this.valueString.expected = JSON.stringify( expectedComponent.valueString, null, 4 );
-            console.log( expectedComponent );
             let actualComponent = this.documentHandler.findObservationComponentByCode(this.actual, "69440-6");
             this.valueString.actual = JSON.stringify( actualComponent.valueString, null, 4 );
             [this.valueString.style,this.valueString.difference] = DiffType.doDiff( Diff.diffChars( this.valueString.expected, this.valueString.actual ));
