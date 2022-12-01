@@ -10,6 +10,7 @@ import {FormBuilder} from "@angular/forms";
 })
 export class EndpointConfigurationComponent implements OnInit {
   inputTypeOptions: string[] = ['Registered Endpoint', 'Custom Endpoint'];
+  authenticationOptions: string [] = ['None', 'Basic', 'Bearer Token'];
 
   //TODO extract those as constants
   serverEndpointList: any[] = [
@@ -19,7 +20,25 @@ export class EndpointConfigurationComponent implements OnInit {
 
   endpointConfigurationFormGroup = this.formBuilder.group({
     inputType: [this.inputTypeOptions[0]],
-    serverEndpoint: [this.serverEndpointList[0].uri]
+
+    registeredEndpoint: this.formBuilder.group({
+      serverEndpoint: [this.serverEndpointList[0].uri],
+    }),
+
+    customEndpoint: this.formBuilder.group({
+      customEndpointUrl: [''],
+      authenticationType: [this.authenticationOptions[0]],
+
+      userNamePassword: this.formBuilder.group({
+        username: [''],
+        password: ['']
+      }),
+
+      bearerToken: this.formBuilder.group({
+        token: ['']
+      }),
+    })
+
   });
 
   decedentInfo: DecedentSimpleInfo;

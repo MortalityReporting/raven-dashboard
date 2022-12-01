@@ -23,7 +23,9 @@
     </mat-radio-group>
   </div>
 
-  <div>
+  <!-- Registered Endpoint -->
+  <div formGroupName="registeredEndpoint"  *ngIf="endpointConfigurationFormGroup.controls['inputType'].value == 'Registered Endpoint'">
+
     <mat-form-field appearance="outline">
       <mat-label>Select Endpoint</mat-label>
       <mat-select formControlName="serverEndpoint">
@@ -32,11 +34,58 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+
+    <div>
+      <button type="button" mat-raised-button>View Server Capability Statement</button>
+      <button type="button" mat-raised-button>View Server $mdi-documents Operation Definition</button>
+    </div>
+
   </div>
 
-  <div>
-    <button type="button" mat-raised-button>View Server Capability Statement</button>
-    <button type="button"  mat-raised-button>View Server $mdi-documents Operation Definition</button>
+  <!-- Custom Endpoint -->
+  <div formGroupName="customEndpoint" *ngIf="endpointConfigurationFormGroup.controls['inputType'].value == 'Custom Endpoint'">
+
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Endpoint URL</mat-label>
+        <input matInput formControlName="customEndpointUrl">
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-radio-group formControlName="authenticationType">
+        <mat-radio-button class="radio-button" *ngFor="let authenticationType of authenticationOptions"
+                          [value]="authenticationType">
+          {{ authenticationType }}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <!-- Basic Authentication -->
+    <div formGroupName="userNamePassword" *ngIf="endpointConfigurationFormGroup.value.customEndpoint.authenticationType == 'Basic'">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input type="text" matInput formControlName="username">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password">
+        </mat-form-field>
+
+    </div>
+
+    <!-- Bearer Token Authentication -->
+    <div formGroupName="bearerToken" *ngIf="endpointConfigurationFormGroup.value.customEndpoint.authenticationType == 'Bearer Token'">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Bearer Token</mat-label>
+        <textarea type="text" matInput formControlName="token"></textarea>
+      </mat-form-field>
+
+    </div>
+
   </div>
 
   <div>
