@@ -1,0 +1,48 @@
+<div>
+  <div>
+    Decedent Name: {{decedentInfo?.name}}
+  </div>
+  <div>
+    Date/Time of Death: {{decedentInfo?.dateTimeOfDeath | date}}
+  </div>
+  <div>
+    MDI Tracking Number: {{decedentInfo?.mdiTrackingNumber}}
+  </div>
+</div>
+<div>
+  Disclaimer about user data storage being client side and not visible to Raven/GTRI/etc
+</div>
+
+<form [formGroup]="endpointConfigurationFormGroup" (ngSubmit)="onSubmitEndpointConfiguration()">
+
+  <div>
+    <mat-radio-group formControlName="inputType">
+      <mat-radio-button class="radio-button" *ngFor="let inputOption of inputTypeOptions" [value]="inputOption">
+        {{ inputOption }}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label>Select Endpoint</mat-label>
+      <mat-select formControlName="serverEndpoint">
+        <mat-option *ngFor="let serverEndpoint of serverEndpointList" [value]="serverEndpoint.uri">
+          {{ serverEndpoint.displayName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <button type="button" mat-raised-button>View Server Capability Statement</button>
+    <button type="button"  mat-raised-button>View Server $mdi-documents Operation Definition</button>
+  </div>
+
+  <div>
+    <button mat-raised-button matStepperPrevious>Back</button>
+    <button type="submit" mat mat-raised-button color="primary" matStepperNext>
+      Proceed to Search
+    </button>
+  </div>
+</form>

@@ -3,7 +3,6 @@ import {FormBuilder} from "@angular/forms";
 import {SearchEdrsService} from "../../../../service/search-edrs.service";
 import {MatStepper} from "@angular/material/stepper";
 import {MatTabGroup} from "@angular/material/tabs";
-import {DecedentSimpleInfo} from "../../../../model/decedent-simple-info";
 
 @Component({
   selector: 'app-search-edrs',
@@ -13,24 +12,11 @@ import {DecedentSimpleInfo} from "../../../../model/decedent-simple-info";
 })
 export class SearchEdrsComponent implements OnInit {
 
-  inputTypeOptions: string[] = ['Registered Endpoint', 'Custom Endpoint'];
   documentBundle: any;
   errorMessage: string;
-  decedentInfo: DecedentSimpleInfo;
 
   @ViewChild('stepper') private stepper: MatStepper;
   @ViewChild('mdiToEdrsTabGroup') private mdiToEdrsTabGroup: MatTabGroup;
-
-  //TODO extract those as constants
-  serverEndpointList: any[] = [
-    {uri: 'www.bluejay.edu', displayName: 'BlueJay'},
-    {uri: 'www.gavers.edu', displayName: 'Gavers'},
-  ];
-
-  endpointConfigurationFormGroup = this.formBuilder.group({
-    inputType: [this.inputTypeOptions[0]],
-    serverEndpoint: [this.serverEndpointList[0].uri]
-  });
 
   constructor(
     private formBuilder: FormBuilder,
@@ -46,16 +32,6 @@ export class SearchEdrsComponent implements OnInit {
         }
       }
     });
-
-    this.searchEdrsService.decedentData$.subscribe({
-     next: value => {
-       this.decedentInfo = value;
-     }
-    })
-  }
-
-  onSubmitEndpointConfiguration() {
-    console.log(this.endpointConfigurationFormGroup);
   }
 
   tabSelectionChange() {
