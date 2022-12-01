@@ -18,6 +18,7 @@ export class ImportMdiToEdrsDocumentComponent implements OnInit {
   MAX_FILE_SIZE = 100000; // Max allowed file size is 100KB
   fileContent: any;
   errorMessage: string;
+  decedentData: any;
 
   constructor(
     private dialog: MatDialog,
@@ -25,6 +26,16 @@ export class ImportMdiToEdrsDocumentComponent implements OnInit {
     private searchEdrsService: SearchEdrsService) { }
 
   ngOnInit(): void {
+    this.searchEdrsService.documentBundle$.subscribe({
+      next: documentBundleValue => {
+        if(documentBundleValue && documentBundleValue?.resourceType === "Bundle"){
+          this.decedentData = this.getPatientData(documentBundleValue);
+        }
+        else {
+          this.decedentData = null;
+        }
+      }
+    })
   }
 
   onInputMdiToEdrsBundle() {
@@ -101,5 +112,49 @@ export class ImportMdiToEdrsDocumentComponent implements OnInit {
       return 'Invalid resource detected. The resource type must be Bundle';
     }
     return null;
+  }
+
+  private getPatientData(documentBundle: any) {
+    let patientData = {name: '', dateTimeOfDeath: '', mdiTrackingNumber: ''};
+    const patient = documentBundle.entry.find(entry => entry.resource?.resourceType === "Patient");
+    if(patient){
+      const name = this.getPatientName(patient?.resource);
+      patientData.name = name;
+    }
+    const composition = documentBundle.entry.find(entry => entry.resource?.resourceType === "Composition");
+    if(composition){
+      const caseNumber = composition?.resource?.extension[0]?.valueIdentifier?.value;
+      patientData.mdiTrackingNumber = caseNumber;
+    }
+    const dateTimeOfDeathObservation = this.getObservationByCode(documentBundle, "81956-5");
+    if(dateTimeOfDeathObservation){
+      const dateTimeOfDeath = dateTimeOfDeathObservation?.effectiveDateTime;
+      patientData.dateTimeOfDeath = dateTimeOfDeath;
+    }
+
+    return patientData;
+  }
+
+  getObservationByCode(documentBundle, code){
+    if(!documentBundle || !code){
+      console.warn("Invalid parameters passed");
+      return null;
+    }
+    const observation = documentBundle.entry
+      .find(entry => entry.resource?.resourceType === "Observation" && entry.resource?.code?.coding[0]?.code === code)?.resource;
+    return observation;
+  }
+
+  private getPatientName(patientResource: any): string {
+    if(!patientResource || !(patientResource?.resourceType === "Patient")){
+      console.warn("Invalid resource passed");
+      return null;
+    }
+    //This title case may not be appropriate conversion
+    const family = patientResource.name[0]?.family[0].toUpperCase() + patientResource.name[0]?.family.substring(1).toLowerCase();
+    const given = patientResource.name[0]?.given?.join(' ');
+    const name = given ? (family + ', '+  given) : family;
+
+    return name;
   }
 }

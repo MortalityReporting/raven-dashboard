@@ -19,6 +19,7 @@ export class SearchEdrsComponent implements OnInit {
   @ViewChild('stepper') private stepper: MatStepper;
   @ViewChild('mdiToEdrsTabGroup') private mdiToEdrsTabGroup: MatTabGroup;
 
+  //TODO extract those as constants
   serverEndpointList: any[] = [
     {uri: 'www.bluejay.edu', displayName: 'BlueJay'},
     {uri: 'www.gavers.edu', displayName: 'Gavers'},

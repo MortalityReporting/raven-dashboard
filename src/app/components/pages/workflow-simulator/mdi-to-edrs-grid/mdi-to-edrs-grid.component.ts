@@ -52,6 +52,14 @@ export class MdiToEdrsGridComponent implements OnInit {
     const codes = [loincCauseOfDeath, loincTimeOfDeath];
     this.isLoading = true;
 
+    this.searchEdrsService.documentBundle$.subscribe({
+      next: value => {
+        if(!value){
+          this.selectedCase = null;
+        }
+      }
+    });
+
     this.decedentService.getDecedentRecords().pipe(
       mergeMap((decedentRecordsList: any[]) =>
         forkJoin(
