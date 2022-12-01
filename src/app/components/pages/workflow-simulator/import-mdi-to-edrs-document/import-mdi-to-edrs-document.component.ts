@@ -6,6 +6,7 @@ import {SearchEdrsService} from "../../../../service/search-edrs.service";
 import {Validators} from "@angular/forms";
 import {JsonValidator} from "../../../../reactive-form-validators/json-validator";
 import {ResourceTypeValidator} from "../../../../reactive-form-validators/resource-type-validator";
+import {DecedentSimpleInfo} from "../../../../model/decedent-simple-info";
 
 @Component({
   selector: 'app-import-mdi-to-edrs-document',
@@ -18,7 +19,7 @@ export class ImportMdiToEdrsDocumentComponent implements OnInit {
   MAX_FILE_SIZE = 100000; // Max allowed file size is 100KB
   fileContent: any;
   errorMessage: string;
-  decedentData: any;
+  decedentData: DecedentSimpleInfo;
 
   constructor(
     private dialog: MatDialog,
@@ -34,6 +35,7 @@ export class ImportMdiToEdrsDocumentComponent implements OnInit {
         else {
           this.decedentData = null;
         }
+        this.searchEdrsService.setDecedentData(this.decedentData);
       }
     })
   }
@@ -114,25 +116,25 @@ export class ImportMdiToEdrsDocumentComponent implements OnInit {
     return null;
   }
 
-  private getPatientData(documentBundle: any) {
-    let patientData = {name: '', dateTimeOfDeath: '', mdiTrackingNumber: ''};
+  private getPatientData(documentBundle: any): DecedentSimpleInfo {
+    let decedentSimpleInfo: DecedentSimpleInfo = {name: '', dateTimeOfDeath: '', mdiTrackingNumber: ''};
     const patient = documentBundle.entry.find(entry => entry.resource?.resourceType === "Patient");
     if(patient){
       const name = this.getPatientName(patient?.resource);
-      patientData.name = name;
+      decedentSimpleInfo.name = name;
     }
     const composition = documentBundle.entry.find(entry => entry.resource?.resourceType === "Composition");
     if(composition){
       const caseNumber = composition?.resource?.extension[0]?.valueIdentifier?.value;
-      patientData.mdiTrackingNumber = caseNumber;
+      decedentSimpleInfo.mdiTrackingNumber = caseNumber;
     }
     const dateTimeOfDeathObservation = this.getObservationByCode(documentBundle, "81956-5");
     if(dateTimeOfDeathObservation){
       const dateTimeOfDeath = dateTimeOfDeathObservation?.effectiveDateTime;
-      patientData.dateTimeOfDeath = dateTimeOfDeath;
+      decedentSimpleInfo.dateTimeOfDeath = dateTimeOfDeath;
     }
 
-    return patientData;
+    return decedentSimpleInfo;
   }
 
   getObservationByCode(documentBundle, code){
@@ -152,7 +154,7 @@ export class ImportMdiToEdrsDocumentComponent implements OnInit {
     }
     //This title case may not be appropriate conversion
     const family = patientResource.name[0]?.family[0].toUpperCase() + patientResource.name[0]?.family.substring(1).toLowerCase();
-    const given = patientResource.name[0]?.given?.join(' ');
+    const given = patientResource.name[0]?.given[0];
     const name = given ? (family + ', '+  given) : family;
 
     return name;

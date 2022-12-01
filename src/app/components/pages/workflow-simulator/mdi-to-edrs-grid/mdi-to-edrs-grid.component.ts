@@ -7,6 +7,7 @@ import {DecedentService} from "../../../../service/decedent.service";
 import {UtilsService} from "../../../../service/utils.service";
 import {forkJoin, map, mergeMap, switchMap} from "rxjs";
 import {SearchEdrsService} from "../../../../service/search-edrs.service";
+import {DecedentSimpleInfo} from "../../../../model/decedent-simple-info";
 
 @Component({
   selector: 'app-mdi-to-edrs-grid',
@@ -22,6 +23,7 @@ export class MdiToEdrsGridComponent implements OnInit {
   decedentGridDtoList: any[];
   isLoading = true;
   selectedCase: any;
+  decedentInfo: DecedentSimpleInfo;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('input') input: ElementRef;
@@ -56,6 +58,7 @@ export class MdiToEdrsGridComponent implements OnInit {
       next: value => {
         if(!value){
           this.selectedCase = null;
+          this.searchEdrsService.setDecedentData(null);
         }
       }
     });
@@ -109,6 +112,13 @@ export class MdiToEdrsGridComponent implements OnInit {
 
   onCaseSelected(decedent: any) {
     this.selectedCase = decedent;
+
+    this.decedentInfo = new DecedentSimpleInfo();
+    this.decedentInfo.mdiTrackingNumber = decedent.caseNumber;
+    this.decedentInfo.dateTimeOfDeath = decedent.tod;
+    this.decedentInfo.name = decedent.lastName + ', ' + decedent.firstName ? ', ' + decedent.firstName : '';
+    this.searchEdrsService.setDecedentData(this.decedentInfo);
+
     this.decedentService.getComposition(decedent.decedentId).pipe(
       switchMap(composition => this.decedentService.getDocumentBundle(composition?.entry[0]?.resource?.id))
     ).subscribe({

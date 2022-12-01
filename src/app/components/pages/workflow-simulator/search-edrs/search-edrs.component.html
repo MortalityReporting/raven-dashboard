@@ -26,13 +26,13 @@
     <mat-step label="Configure Endpoint">
       <div>
         <div>
-          Decedent Name:
+          Decedent Name: {{decedentInfo?.name}}
         </div>
         <div>
-          Date/Time of Death:
+          Date/Time of Death: {{decedentInfo?.dateTimeOfDeath | date}}
         </div>
         <div>
-          MDI Tracking Number:
+          MDI Tracking Number: {{decedentInfo?.mdiTrackingNumber}}
         </div>
       </div>
       <div>

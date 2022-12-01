@@ -3,6 +3,7 @@ import {FormBuilder} from "@angular/forms";
 import {SearchEdrsService} from "../../../../service/search-edrs.service";
 import {MatStepper} from "@angular/material/stepper";
 import {MatTabGroup} from "@angular/material/tabs";
+import {DecedentSimpleInfo} from "../../../../model/decedent-simple-info";
 
 @Component({
   selector: 'app-search-edrs',
@@ -15,6 +16,7 @@ export class SearchEdrsComponent implements OnInit {
   inputTypeOptions: string[] = ['Registered Endpoint', 'Custom Endpoint'];
   documentBundle: any;
   errorMessage: string;
+  decedentInfo: DecedentSimpleInfo;
 
   @ViewChild('stepper') private stepper: MatStepper;
   @ViewChild('mdiToEdrsTabGroup') private mdiToEdrsTabGroup: MatTabGroup;
@@ -43,6 +45,12 @@ export class SearchEdrsComponent implements OnInit {
           this.errorMessage = null;
         }
       }
+    });
+
+    this.searchEdrsService.decedentData$.subscribe({
+     next: value => {
+       this.decedentInfo = value;
+     }
     })
   }
 
@@ -52,6 +60,7 @@ export class SearchEdrsComponent implements OnInit {
 
   tabSelectionChange() {
     this.searchEdrsService.setDocumentBundle(null);
+    this.searchEdrsService.setDecedentData(null);
   }
 
   onAdvanceStepper() {
