@@ -4,7 +4,7 @@
       Step 1 - Select or Import an MDI to EDRS Document (Optional)
       If provided, the Document Bundle is used to populate the Search Parameters. Otherwise, the Search Parameters may be manually specified.
 
-      <mat-tab-group (selectedIndexChange)="tabSelectionChange()" #mdiToEdrsTabGroup (selectedTabChange)="errorMessage = null">
+      <mat-tab-group #mdiToEdrsTabGroup (selectedTabChange)="errorMessage = null; tabSelectionChange()">
 
         <mat-tab label="Select MDI to EDRS Document">
           <app-mdi-to-edrs-grid></app-mdi-to-edrs-grid>
@@ -28,6 +28,7 @@
     </mat-step>
 
     <mat-step label="Search EDRS">
+      <app-edrs-results [parentStepper]="stepper" ></app-edrs-results>
       <button mat-raised-button matStepperPrevious>Back</button>
     </mat-step>
   </mat-horizontal-stepper>

@@ -15,7 +15,7 @@ export class SearchEdrsComponent implements OnInit {
   documentBundle: any;
   errorMessage: string;
 
-  @ViewChild('stepper') private stepper: MatStepper;
+  @ViewChild('stepper') stepper: MatStepper;
   @ViewChild('mdiToEdrsTabGroup') private mdiToEdrsTabGroup: MatTabGroup;
 
   constructor(

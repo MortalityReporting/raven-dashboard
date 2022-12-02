@@ -71,6 +71,9 @@ import { MdiToEdrsGridComponent } from './components/pages/workflow-simulator/md
 import { InputTextDialogComponent } from './components/widgets/input-text-dialog/input-text-dialog.component';
 import { ImportMdiToEdrsDocumentComponent } from './components/pages/workflow-simulator/import-mdi-to-edrs-document/import-mdi-to-edrs-document.component';
 import { EndpointConfigurationComponent } from './components/pages/workflow-simulator/endpoint-configuration/endpoint-configuration.component';
+import { EdrsResultsComponent } from './components/pages/workflow-simulator/edrs-results/edrs-results.component';
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -103,42 +106,45 @@ import { EndpointConfigurationComponent } from './components/pages/workflow-simu
     MdiToEdrsGridComponent,
     InputTextDialogComponent,
     ImportMdiToEdrsDocumentComponent,
-    EndpointConfigurationComponent
+    EndpointConfigurationComponent,
+    EdrsResultsComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatDialogModule,
-    ReactiveFormsModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatProgressSpinnerModule,
-    MatSortModule,
-    HttpClientModule,
-    MatRadioModule,
-    FormsModule,
-    MatCardModule,
-    MatSnackBarModule,
-    FhirValidatorModule,
-    MatGridListModule,
-    MatExpansionModule,
-    MatButtonToggleModule,
-    MatTooltipModule,
-    MatListModule,
-    MatTabsModule,
-    MatSelectModule,
-    MatMenuModule,
-    ClipboardModule,
-    MatDialogModule,
-    MatStepperModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatDialogModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatProgressSpinnerModule,
+        MatSortModule,
+        HttpClientModule,
+        MatRadioModule,
+        FormsModule,
+        MatCardModule,
+        MatSnackBarModule,
+        FhirValidatorModule,
+        MatGridListModule,
+        MatExpansionModule,
+        MatButtonToggleModule,
+        MatTooltipModule,
+        MatListModule,
+        MatTabsModule,
+        MatSelectModule,
+        MatMenuModule,
+        ClipboardModule,
+        MatDialogModule,
+        MatStepperModule,
+        MatDatepickerModule,
+        MatNativeDateModule
+    ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: FhirAuthInterceptor, multi: true},
     FhirExplorerDrawerService

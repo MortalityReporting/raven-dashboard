@@ -1,0 +1,95 @@
+<div>
+  <div>
+    Decedent Name: {{decedentInfo?.name}}
+  </div>
+  <div>
+    Date/Time of Death: {{decedentInfo?.dateTimeOfDeath | date}}
+  </div>
+  <div>
+    MDI Tracking Number: {{decedentInfo?.mdiTrackingNumber}}
+  </div>
+  <div>
+    <button mat-raised-button (click)="onSelectDifferentDocument()">Select Different Document</button>
+  </div>
+  <div>
+    <div>EDRS Sever: TODO insert EDRS server link here</div>
+    <button mat-raised-button (click)="onChangeEndpointConfiguration()">Change Endpoint Configuration</button>
+  </div>
+
+  <form [formGroup]="edrsSearchParametersForm" (ngSubmit)="onSubmitSearchParams()">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Decedent First Name</mat-label>
+      <input type="text" matInput formControlName="decedentFirstName">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Decedent Last Name</mat-label>
+      <input type="text" matInput formControlName="decedentLastName">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Legal Sex at Death</mat-label>
+      <input type="text" matInput formControlName="legalSexAtDeath">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>District of Death</mat-label>
+      <input type="text" matInput formControlName="districtOfDeath">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Date of Death</mat-label>
+      <mat-date-range-input formGroupName="range" [rangePicker]="picker">
+        <input matStartDate formControlName="start" placeholder="Start date">
+        <input matEndDate formControlName="end" placeholder="End date">
+      </mat-date-range-input>
+      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+
+    <div>
+      <div>Search Parameters Resource Preview</div>
+      <div><pre>{{getSearchParametersResourcePreview() | json}}</pre></div>
+    </div>
+    <button mat-raised-button type="submit">Search EDRS</button>
+  </form>
+
+  <mat-tab-group (selectedTabChange)="onResultsTabChange()" #resultsTabGroup>
+
+    <mat-tab label="Result">
+      Status Code: 400 Bad Request
+    </mat-tab>
+
+    <mat-tab label="FHIR Result">
+      Table containing the fhir resource.
+    </mat-tab>
+
+    <mat-tab label="HTTP Request">
+      HTTP Request
+    </mat-tab>
+
+    <mat-tab label="HTTP Response">
+      HTTP Response
+    </mat-tab>
+
+  </mat-tab-group>
+
+  <div>
+    Select a case in the result table to view a summary below.
+
+    <mat-tab-group #caseSummaryTabGroup>
+
+      <mat-tab label="Record Summary">
+        Record Summary
+      </mat-tab>
+
+      <mat-tab label="View as FHIR MDI Document Bundle">
+        View as FHIR MDI Document Bundle
+      </mat-tab>
+
+    </mat-tab-group>
+
+  </div>
+</div>
