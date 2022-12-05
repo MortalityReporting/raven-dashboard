@@ -7,6 +7,7 @@ import {Validators} from "@angular/forms";
 import {JsonValidator} from "../../../../reactive-form-validators/json-validator";
 import {ResourceTypeValidator} from "../../../../reactive-form-validators/resource-type-validator";
 import {DecedentSimpleInfo} from "../../../../model/decedent-simple-info";
+import {UiStringConstants} from "../../../../providers/ui-string-constants";
 
 @Component({
   selector: 'app-import-mdi-to-edrs-document',
@@ -20,11 +21,18 @@ export class ImportMdiToEdrsDocumentComponent implements OnInit {
   fileContent: any;
   errorMessage: string;
   decedentData: DecedentSimpleInfo;
+  uiConstants: any;
+  commonUIConstants: any
 
   constructor(
     private dialog: MatDialog,
     private utilsService: UtilsService,
-    private searchEdrsService: SearchEdrsService) { }
+    private searchEdrsService: SearchEdrsService,
+    private uiStringConstants: UiStringConstants
+  ) {
+    this.uiConstants = uiStringConstants.WorkflowSimulator.searchEdrs.step1;
+    this.commonUIConstants = uiStringConstants.Common;
+  }
 
   ngOnInit(): void {
     this.searchEdrsService.documentBundle$.subscribe({

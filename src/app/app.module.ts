@@ -74,6 +74,7 @@ import { EndpointConfigurationComponent } from './components/pages/workflow-simu
 import { EdrsResultsComponent } from './components/pages/workflow-simulator/edrs-results/edrs-results.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import {UiStringConstants} from "./providers/ui-string-constants";
 
 @NgModule({
   declarations: [
@@ -146,8 +147,9 @@ import {MatNativeDateModule} from "@angular/material/core";
         MatNativeDateModule
     ],
   providers: [
+    UiStringConstants,
     {provide: HTTP_INTERCEPTORS, useClass: FhirAuthInterceptor, multi: true},
-    FhirExplorerDrawerService
+    FhirExplorerDrawerService,
   ],
   bootstrap: [AppComponent],
   entryComponents: [CaseComparisonDialogComponent],

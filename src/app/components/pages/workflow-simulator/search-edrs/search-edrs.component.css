@@ -1,3 +1,10 @@
 .mat-step-header {
   pointer-events: none !important;
 }
+.action-buttons {
+  margin-top: 1em;
+  display: flex;
+}
+.action-buttons .error-message{
+  align-self: flex-start;
+}

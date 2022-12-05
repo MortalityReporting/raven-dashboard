@@ -3,6 +3,7 @@ import {FormBuilder} from "@angular/forms";
 import {SearchEdrsService} from "../../../../service/search-edrs.service";
 import {MatStepper} from "@angular/material/stepper";
 import {MatTabGroup} from "@angular/material/tabs";
+import {UiStringConstants} from "../../../../providers/ui-string-constants";
 
 @Component({
   selector: 'app-search-edrs',
@@ -18,10 +19,15 @@ export class SearchEdrsComponent implements OnInit {
   @ViewChild('stepper') stepper: MatStepper;
   @ViewChild('mdiToEdrsTabGroup') private mdiToEdrsTabGroup: MatTabGroup;
 
+  uiConstants: any;
+
   constructor(
     private formBuilder: FormBuilder,
-    private searchEdrsService: SearchEdrsService
-  ) {}
+    private searchEdrsService: SearchEdrsService,
+    private uiStringConstants: UiStringConstants,
+  ) {
+    this.uiConstants = uiStringConstants.WorkflowSimulator.searchEdrs;
+  }
 
   ngOnInit(): void {
     this.searchEdrsService.documentBundle$.subscribe({

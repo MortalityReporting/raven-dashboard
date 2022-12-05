@@ -1,14 +1,18 @@
 <div>
-  <div>
-    Decedent Name: {{decedentInfo?.name}}
+  <div class="row content-field">
+    <div class="col-right content-field-label">Decedent Name:</div>
+    <div class="col-left content-field-value">{{decedentInfo?.name}}</div>
   </div>
-  <div>
-    Date/Time of Death: {{decedentInfo?.dateTimeOfDeath | date}}
+  <div class="row content-field">
+    <div class="col-right content-field-label">Date/Time of Death:</div>
+    <div class="col-left content-field-value">{{decedentInfo?.dateTimeOfDeath | date}}</div>
   </div>
-  <div>
-    MDI Tracking Number: {{decedentInfo?.mdiTrackingNumber}}
+  <div class="row content-field">
+    <div class="col-right content-field-label">MDI Tracking Number:</div>
+    <div class="col-left content-field-value">{{decedentInfo?.mdiTrackingNumber}}</div>
   </div>
 </div>
+
 <div>
   Disclaimer about user data storage being client side and not visible to Raven/GTRI/etc
 </div>

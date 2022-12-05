@@ -1,33 +1,38 @@
 <div class="container">
   <mat-horizontal-stepper #stepper>
     <mat-step label="Select MDI to EDRS document">
-      Step 1 - Select or Import an MDI to EDRS Document (Optional)
-      If provided, the Document Bundle is used to populate the Search Parameters. Otherwise, the Search Parameters may be manually specified.
-
+      {{ uiConstants.step1.DESCRIPTION }}
+      <mat-card>
       <mat-tab-group #mdiToEdrsTabGroup (selectedTabChange)="errorMessage = null; tabSelectionChange()">
 
-        <mat-tab label="Select MDI to EDRS Document">
+        <mat-tab label="{{ uiConstants.step1.TAB_LABEL_1 }}">
           <app-mdi-to-edrs-grid></app-mdi-to-edrs-grid>
         </mat-tab>
 
-        <mat-tab label="Import MDI to EDRS FHIR Document Bundle">
+        <mat-tab label="{{ uiConstants.step1.TAB_LABEL_2 }}">
           <app-import-mdi-to-edrs-document></app-import-mdi-to-edrs-document>
         </mat-tab>
 
       </mat-tab-group>
+      </mat-card>
 
       <div>
-        <mat-error>{{errorMessage}}</mat-error>
-        <button mat-raised-button color="primary" (click)="onAdvanceStepper()">Proceed to Configure Endpoint</button>
+        <div class="action-buttons">
+          <mat-error>{{errorMessage}}</mat-error>
+          <div class="push-right">
+            <button mat-raised-button color="primary" (click)="onAdvanceStepper()" class="action-button">
+              {{ uiConstants.step1.PROCEED_TO_NEXT_STEP_BTN }}
+            </button>
+          </div>
+        </div>
       </div>
-
     </mat-step>
 
-    <mat-step label="Configure Endpoint">
+    <mat-step label="{{ uiConstants.step2.STEP_LABEL }}">
       <app-endpoint-configuration></app-endpoint-configuration>
     </mat-step>
 
-    <mat-step label="Search EDRS">
+    <mat-step label="{{ uiConstants.step3.STEP_LABEL }}">
       <app-edrs-results [parentStepper]="stepper" ></app-edrs-results>
       <button mat-raised-button matStepperPrevious>Back</button>
     </mat-step>

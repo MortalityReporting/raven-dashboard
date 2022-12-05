@@ -1,11 +1,11 @@
 <div>
-  The data provided should be a valid FHIR MDI to EDRS Document Bundle. Please validate your resource prior to
-  using it in the workflow simulator or unexpected behavior may occur.
+<!--  The data provided should be a valid FHIR MDI to EDRS Document Bundle. Please validate your resource prior to-->
+<!--  using it in the workflow simulator or unexpected behavior may occur.-->
+  {{ uiConstants.UPLOAD_FILE_CONTENT_MSG}}
 </div>
 
 <div>
-  Click the "Input MDI to EDRS Document Bundle" button below to paste in your complete Document Bundle
-  resource or click "Select File" to select a plain text (JSON) file from your local drive.
+  {{ uiConstants.UPLOAD_FILE_CONTENT_MSG }}
 </div>
 
 <div>
@@ -28,14 +28,14 @@
 
   <span id="filename">{{file?.name}}</span>
 </div>
-<div>
+<div class="decedent-info">
   <div>
-    Decedent Name: {{decedentData?.name}}
+    {{ commonUIConstants.DECEDENT_NAME }}: {{decedentData?.name}}
   </div>
   <div>
-    Date/Time of Death: {{decedentData?.dateTimeOfDeath | date}}
+    {{ commonUIConstants.DATE_TIME_OF_DEATH }}: {{decedentData?.dateTimeOfDeath | date}}
   </div>
   <div>
-    MDI Tracking Number: {{decedentData?.mdiTrackingNumber}}
+    {{ commonUIConstants.MDI_TRACKING_NUMBER }}: {{decedentData?.mdiTrackingNumber}}
   </div>
 </div>
