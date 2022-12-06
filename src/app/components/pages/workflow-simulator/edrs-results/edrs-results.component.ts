@@ -3,6 +3,7 @@ import {DecedentSimpleInfo} from "../../../../model/decedent-simple-info";
 import {SearchEdrsService} from "../../../../service/search-edrs.service";
 import {MatStepper} from "@angular/material/stepper";
 import {FormBuilder} from "@angular/forms";
+import {UiStringConstants} from "../../../../providers/ui-string-constants";
 
 @Component({
   selector: 'app-edrs-results',
@@ -12,6 +13,9 @@ import {FormBuilder} from "@angular/forms";
 export class EdrsResultsComponent implements OnInit {
   @Input('parentStepper') parentStepper: MatStepper;
   decedentInfo: DecedentSimpleInfo;
+
+  uiConstantsStep3: any;
+  commonUIConstants: any;
 
   edrsSearchParametersForm = this.formBuilder.group({
     decedentFirstName: [],
@@ -27,8 +31,11 @@ export class EdrsResultsComponent implements OnInit {
   constructor(
     private searchEdrsService: SearchEdrsService,
     private formBuilder: FormBuilder,
-  ) { }
-
+    uiStringConstants: UiStringConstants
+  ) {
+    this.uiConstantsStep3 = uiStringConstants.WorkflowSimulator.searchEdrs.step2;
+    this.commonUIConstants = uiStringConstants.Common;
+  }
   ngOnInit(): void {
     this.searchEdrsService.decedentData$.subscribe({
       next: value => {
@@ -54,6 +61,6 @@ export class EdrsResultsComponent implements OnInit {
   }
 
   onResultsTabChange() {
-
+    console.log("onResultsTabChange");
   }
 }

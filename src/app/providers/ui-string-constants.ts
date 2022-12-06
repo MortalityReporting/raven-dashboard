@@ -7,6 +7,10 @@ export class UiStringConstants {
     DECEDENT_NAME: `Decedent Name`,
     DATE_TIME_OF_DEATH: `Date/Time of death`,
     MDI_TRACKING_NUMBER: `MDI Tracking Number`,
+    DECEDENT_FIRST_NAME: `Decedent First Name`,
+    DECEDENT_LAST_NAME: `Decedent Last Name`,
+    LEGAL_SEX_AT_DEATH: `Legal Sex at Death`,
+    DISTRICT_OF_DEATH: `District of Death`,
   }
 
   WorkflowSimulator = {
@@ -35,15 +39,14 @@ export class UiStringConstants {
         VIEW_CAPABILITY_STMT_BTN: `View Server Capability Statement`,
         VIEW_SERVER_$MDI_DOCS_OP_DEFINITION_BTN: `View Server $mdi-documents Operation Definition`,
         PROCEED_TO_NEXT_STEP_BTN: `Proceed to search`,
+        authenticationOptions: ['None', 'Basic', 'Bearer Token'],
+        endpointTypeOptions: ['Registered Endpoint', 'Custom Endpoint']
       },
       // Step 3
       step3: {
         STEP_LABEL: `Search EDRS`,
+        SEARCH_PARAMS_RESOURCE_PREVIEW: `Search Parameters Resource Preview`,
       },
-
-
-
-
     }
   }
 }

@@ -1,0 +1,34 @@
+.decedent-info {
+  margin: 1em 0;
+  padding: 1em 0.5em;
+  border: 1px #cdcdcd solid;
+  border-radius: 5px;
+}
+
+.content-field {
+  margin: 0.5em 0;
+  width: 50%;
+}
+
+.content-field-label {
+  font-weight: bold;
+  padding: 5px;
+}
+
+.content-field-value {
+  padding: 5px;
+  border: 1px #cdcdcd solid;
+  border-radius: 5px;
+}
+
+.row {
+  display: flex;  /* aligns all child elements (flex items) in a row */
+}
+
+.col-left {
+  flex: 60;        /* distributes space on the line equally among items */
+}
+
+.col-right {
+  flex: 40;        /* distributes space on the line equally among items */
+}

@@ -21,7 +21,7 @@ export class ImportMdiToEdrsDocumentComponent implements OnInit {
   fileContent: any;
   errorMessage: string;
   decedentData: DecedentSimpleInfo;
-  uiConstants: any;
+  uiConstantsStep1: any;
   commonUIConstants: any
 
   constructor(
@@ -30,7 +30,7 @@ export class ImportMdiToEdrsDocumentComponent implements OnInit {
     private searchEdrsService: SearchEdrsService,
     private uiStringConstants: UiStringConstants
   ) {
-    this.uiConstants = uiStringConstants.WorkflowSimulator.searchEdrs.step1;
+    this.uiConstantsStep1 = uiStringConstants.WorkflowSimulator.searchEdrs.step1;
     this.commonUIConstants = uiStringConstants.Common;
   }
 

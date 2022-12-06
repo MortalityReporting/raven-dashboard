@@ -1,6 +1,7 @@
 <div class="container">
   <mat-horizontal-stepper #stepper>
-    <mat-step label="Select MDI to EDRS document">
+
+    <mat-step label="{{ uiConstants.step1.STEP_LABEL }}">
       {{ uiConstants.step1.DESCRIPTION }}
       <mat-card>
       <mat-tab-group #mdiToEdrsTabGroup (selectedTabChange)="errorMessage = null; tabSelectionChange()">

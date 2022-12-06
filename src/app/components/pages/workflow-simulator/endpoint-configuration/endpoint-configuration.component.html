@@ -1,27 +1,16 @@
 <div>
-  <div class="row content-field">
-    <div class="col-right content-field-label">Decedent Name:</div>
-    <div class="col-left content-field-value">{{decedentInfo?.name}}</div>
-  </div>
-  <div class="row content-field">
-    <div class="col-right content-field-label">Date/Time of Death:</div>
-    <div class="col-left content-field-value">{{decedentInfo?.dateTimeOfDeath | date}}</div>
-  </div>
-  <div class="row content-field">
-    <div class="col-right content-field-label">MDI Tracking Number:</div>
-    <div class="col-left content-field-value">{{decedentInfo?.mdiTrackingNumber}}</div>
-  </div>
+  <app-decedent-basic-info [decedentInfo]="decedentInfo"></app-decedent-basic-info>
 </div>
 
 <div>
-  Disclaimer about user data storage being client side and not visible to Raven/GTRI/etc
+  {{uiConstantsStep2.DISCLAIMER}}
 </div>
 
 <form [formGroup]="endpointConfigurationFormGroup" (ngSubmit)="onSubmitEndpointConfiguration()">
 
   <div>
     <mat-radio-group formControlName="inputType">
-      <mat-radio-button class="radio-button" *ngFor="let inputOption of inputTypeOptions" [value]="inputOption">
+      <mat-radio-button class="radio-button" *ngFor="let inputOption of endpointTypeOptions" [value]="inputOption">
         {{ inputOption }}
       </mat-radio-button>
     </mat-radio-group>
@@ -40,8 +29,8 @@
     </mat-form-field>
 
     <div>
-      <button type="button" mat-raised-button>View Server Capability Statement</button>
-      <button type="button" mat-raised-button>View Server $mdi-documents Operation Definition</button>
+      <button type="button" mat-raised-button>{{ uiConstantsStep2.VIEW_CAPABILITY_STMT_BTN }}</button>
+      <button type="button" mat-raised-button>{{ uiConstantsStep2.VIEW_SERVER_$MDI_DOCS_OP_DEFINITION_BTN }}</button>
     </div>
 
   </div>
@@ -95,7 +84,8 @@
   <div>
     <button mat-raised-button matStepperPrevious>Back</button>
     <button type="submit" mat mat-raised-button color="primary" matStepperNext>
-      Proceed to Search
+      {{ uiConstantsStep2.PROCEED_TO_NEXT_STEP_BTN }}
     </button>
   </div>
+
 </form>

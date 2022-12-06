@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {DecedentSimpleInfo} from "../../../../model/decedent-simple-info";
 import {SearchEdrsService} from "../../../../service/search-edrs.service";
-import {FormBuilder} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {UiStringConstants} from "../../../../providers/ui-string-constants";
 
 @Component({
   selector: 'app-endpoint-configuration',
@@ -9,8 +10,11 @@ import {FormBuilder} from "@angular/forms";
   styleUrls: ['./endpoint-configuration.component.css']
 })
 export class EndpointConfigurationComponent implements OnInit {
-  inputTypeOptions: string[] = ['Registered Endpoint', 'Custom Endpoint'];
-  authenticationOptions: string [] = ['None', 'Basic', 'Bearer Token'];
+  endpointTypeOptions: string[];
+  authenticationOptions: string [];
+
+  uiConstantsStep2: any;
+  commonUIConstants: any
 
   //TODO extract those as constants
   serverEndpointList: any[] = [
@@ -18,35 +22,43 @@ export class EndpointConfigurationComponent implements OnInit {
     {uri: 'www.gavers.edu', displayName: 'Gavers'},
   ];
 
-  endpointConfigurationFormGroup = this.formBuilder.group({
-    inputType: [this.inputTypeOptions[0]],
-
-    registeredEndpoint: this.formBuilder.group({
-      serverEndpoint: [this.serverEndpointList[0].uri],
-    }),
-
-    customEndpoint: this.formBuilder.group({
-      customEndpointUrl: [''],
-      authenticationType: [this.authenticationOptions[0]],
-
-      userNamePassword: this.formBuilder.group({
-        username: [''],
-        password: ['']
-      }),
-
-      bearerToken: this.formBuilder.group({
-        token: ['']
-      }),
-    })
-
-  });
-
+  endpointConfigurationFormGroup: FormGroup
   decedentInfo: DecedentSimpleInfo;
 
   constructor(
     private searchEdrsService: SearchEdrsService,
     private formBuilder: FormBuilder,
-  ) { }
+    uiStringConstants: UiStringConstants
+  ) {
+    this.uiConstantsStep2 = uiStringConstants.WorkflowSimulator.searchEdrs.step2;
+    this.commonUIConstants = uiStringConstants.Common;
+
+    this.endpointTypeOptions = this.uiConstantsStep2.endpointTypeOptions;
+    this.authenticationOptions = this.uiConstantsStep2.authenticationOptions;
+
+    this.endpointConfigurationFormGroup = this.formBuilder.group({
+      inputType: [this.endpointTypeOptions[0]],
+
+      registeredEndpoint: this.formBuilder.group({
+        serverEndpoint: [this.serverEndpointList[0].uri],
+      }),
+
+      customEndpoint: this.formBuilder.group({
+        customEndpointUrl: [''],
+        authenticationType: [this.authenticationOptions[0]],
+
+        userNamePassword: this.formBuilder.group({
+          username: [''],
+          password: ['']
+        }),
+
+        bearerToken: this.formBuilder.group({
+          token: ['']
+        }),
+      })
+
+    });
+  }
 
   onSubmitEndpointConfiguration() {
     console.log(this.endpointConfigurationFormGroup);

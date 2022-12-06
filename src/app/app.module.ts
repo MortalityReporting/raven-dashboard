@@ -75,6 +75,7 @@ import { EdrsResultsComponent } from './components/pages/workflow-simulator/edrs
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {UiStringConstants} from "./providers/ui-string-constants";
+import { DecedentBasicInfoComponent } from './components/pages/workflow-simulator/decedent-basic-info/decedent-basic-info.component';
 
 @NgModule({
   declarations: [
@@ -108,7 +109,8 @@ import {UiStringConstants} from "./providers/ui-string-constants";
     InputTextDialogComponent,
     ImportMdiToEdrsDocumentComponent,
     EndpointConfigurationComponent,
-    EdrsResultsComponent
+    EdrsResultsComponent,
+    DecedentBasicInfoComponent
   ],
     imports: [
         BrowserModule,

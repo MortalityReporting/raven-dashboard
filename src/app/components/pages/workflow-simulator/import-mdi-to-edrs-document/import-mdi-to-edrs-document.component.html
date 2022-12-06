@@ -1,11 +1,9 @@
 <div>
-<!--  The data provided should be a valid FHIR MDI to EDRS Document Bundle. Please validate your resource prior to-->
-<!--  using it in the workflow simulator or unexpected behavior may occur.-->
-  {{ uiConstants.UPLOAD_FILE_CONTENT_MSG}}
+  {{ uiConstantsStep1.UPLOAD_JSON_CONTENT_MSG}}
 </div>
 
 <div>
-  {{ uiConstants.UPLOAD_FILE_CONTENT_MSG }}
+  {{ uiConstantsStep1.UPLOAD_FILE_CONTENT_MSG }}
 </div>
 
 <div>
@@ -27,7 +25,9 @@
   </button>
 
   <span id="filename">{{file?.name}}</span>
+
 </div>
+
 <div class="decedent-info">
   <div>
     {{ commonUIConstants.DECEDENT_NAME }}: {{decedentData?.name}}

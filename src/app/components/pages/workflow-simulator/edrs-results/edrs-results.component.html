@@ -1,19 +1,6 @@
 <div>
   <div>
-    Decedent Name: {{decedentInfo?.name}}
-  </div>
-  <div>
-    Date/Time of Death: {{decedentInfo?.dateTimeOfDeath | date}}
-  </div>
-  <div>
-    MDI Tracking Number: {{decedentInfo?.mdiTrackingNumber}}
-  </div>
-  <div>
-    <button mat-raised-button (click)="onSelectDifferentDocument()">Select Different Document</button>
-  </div>
-  <div>
-    <div>EDRS Sever: TODO insert EDRS server link here</div>
-    <button mat-raised-button (click)="onChangeEndpointConfiguration()">Change Endpoint Configuration</button>
+    <app-decedent-basic-info [decedentInfo]="decedentInfo"></app-decedent-basic-info>
   </div>
 
   <form [formGroup]="edrsSearchParametersForm" (ngSubmit)="onSubmitSearchParams()">
