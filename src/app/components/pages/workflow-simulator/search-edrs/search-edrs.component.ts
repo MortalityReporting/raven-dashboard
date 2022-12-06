@@ -14,7 +14,6 @@ import {UiStringConstants} from "../../../../providers/ui-string-constants";
 export class SearchEdrsComponent implements OnInit {
 
   documentBundle: any;
-  errorMessage: string;
 
   @ViewChild('stepper') stepper: MatStepper;
   @ViewChild('mdiToEdrsTabGroup') private mdiToEdrsTabGroup: MatTabGroup;
@@ -33,9 +32,6 @@ export class SearchEdrsComponent implements OnInit {
     this.searchEdrsService.documentBundle$.subscribe({
       next: value => {
         this.documentBundle = value
-        if(this.documentBundle){
-          this.errorMessage = null;
-        }
       }
     });
   }
@@ -46,19 +42,6 @@ export class SearchEdrsComponent implements OnInit {
   }
 
   onAdvanceStepper() {
-    this.errorMessage = null;
-
-    if (this.stepper.selectedIndex === 0) {
-      if(!this.documentBundle && this.mdiToEdrsTabGroup.selectedIndex === 0){
-        this.errorMessage = "Select a bundle from the table above to proceed.";
-      }
-      else if (!this.documentBundle && this.mdiToEdrsTabGroup.selectedIndex === 1){
-        this.errorMessage = "Upload a valid bundle to proceed.";
-      }
-    }
-
-    if(!this.errorMessage){
-      this.stepper.next();
-    }
+    this.stepper.next();
   }
 }
