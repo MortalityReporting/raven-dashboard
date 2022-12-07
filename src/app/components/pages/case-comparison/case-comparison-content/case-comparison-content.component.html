@@ -15,8 +15,8 @@
       </div>
       <div class="grid-col-1">
         <mat-form-field>
-          <mat-select (selectionChange)="onExpectedCompositionChanged($event)" [(value)]=selectedTestCase.compositionId>
-            <mat-option class="mat-option" *ngFor="let testCase of testCases" [value]="testCase.compositionId">
+          <mat-select (selectionChange)="onExpectedCompositionChanged($event)" [(value)]="selectedTestCase">
+            <mat-option class="mat-option" *ngFor="let testCase of testCases" [value]="testCase">
               {{ testCase.display }}
             </mat-option>
           </mat-select>
