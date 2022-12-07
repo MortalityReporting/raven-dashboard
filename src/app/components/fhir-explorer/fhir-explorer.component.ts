@@ -1,4 +1,4 @@
-import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
+import {Component, OnInit, ElementRef} from '@angular/core';
 import {FhirResourceProviderService} from "../../service/fhir-resource-provider.service";
 import {HttpClient} from "@angular/common/http";
 import {DocumentHandlerService} from "../../service/document-handler.service";
