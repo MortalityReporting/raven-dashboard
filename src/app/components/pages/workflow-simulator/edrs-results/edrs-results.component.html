@@ -5,25 +5,33 @@
 
   <form [formGroup]="edrsSearchParametersForm" (ngSubmit)="onSubmitSearchParams()">
 
-    <mat-form-field appearance="outline">
-      <mat-label>Decedent First Name</mat-label>
-      <input type="text" matInput formControlName="decedentFirstName">
-    </mat-form-field>
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Decedent First Name</mat-label>
+        <input type="text" matInput formControlName="decedentFirstName">
+      </mat-form-field>
+    </div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Decedent Last Name</mat-label>
-      <input type="text" matInput formControlName="decedentLastName">
-    </mat-form-field>
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Decedent Last Name</mat-label>
+        <input type="text" matInput formControlName="decedentLastName">
+      </mat-form-field>
+    </div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Legal Sex at Death</mat-label>
-      <input type="text" matInput formControlName="legalSexAtDeath">
-    </mat-form-field>
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Legal Sex at Death</mat-label>
+        <input type="text" matInput formControlName="legalSexAtDeath">
+      </mat-form-field>
+    </div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>District of Death</mat-label>
-      <input type="text" matInput formControlName="districtOfDeath">
-    </mat-form-field>
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>District of Death</mat-label>
+        <input type="text" matInput formControlName="districtOfDeath">
+      </mat-form-field>
+    </div>
 
     <mat-form-field appearance="outline">
       <mat-label>Date of Death</mat-label>
@@ -38,7 +46,9 @@
 
     <div>
       <div>Search Parameters Resource Preview</div>
-      <div><pre>{{getSearchParametersResourcePreview() | json}}</pre></div>
+      <div>
+        <pre>{{getSearchParametersResourcePreview() | json}}</pre>
+      </div>
     </div>
     <button mat-raised-button type="submit">Search EDRS</button>
   </form>

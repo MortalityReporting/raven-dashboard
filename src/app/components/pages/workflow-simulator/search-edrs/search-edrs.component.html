@@ -1,41 +1,43 @@
 <div class="container">
-  <mat-horizontal-stepper #stepper>
+  <mat-card class="mat-elevation-z8" style="margin-top: 1em">
+    <mat-horizontal-stepper #stepper>
 
-    <mat-step label="{{ uiConstants.step1.STEP_LABEL }}">
-      {{ uiConstants.step1.DESCRIPTION }}
-      <mat-card>
-      <mat-tab-group #mdiToEdrsTabGroup (selectedTabChange)="tabSelectionChange()">
+      <mat-step label="{{ uiConstants.step1.STEP_LABEL }}">
+        {{ uiConstants.step1.DESCRIPTION }}
+        <mat-card>
+          <mat-tab-group #mdiToEdrsTabGroup (selectedTabChange)="tabSelectionChange()">
 
-        <mat-tab label="{{ uiConstants.step1.TAB_LABEL_1 }}">
-          <app-mdi-to-edrs-grid></app-mdi-to-edrs-grid>
-        </mat-tab>
+            <mat-tab label="{{ uiConstants.step1.TAB_LABEL_1 }}">
+              <app-mdi-to-edrs-grid></app-mdi-to-edrs-grid>
+            </mat-tab>
 
-        <mat-tab label="{{ uiConstants.step1.TAB_LABEL_2 }}">
-          <app-import-mdi-to-edrs-document></app-import-mdi-to-edrs-document>
-        </mat-tab>
+            <mat-tab label="{{ uiConstants.step1.TAB_LABEL_2 }}">
+              <app-import-mdi-to-edrs-document></app-import-mdi-to-edrs-document>
+            </mat-tab>
 
-      </mat-tab-group>
-      </mat-card>
+          </mat-tab-group>
+        </mat-card>
 
-      <div>
-        <div class="action-buttons">
-          <div class="push-right">
-            <button mat-raised-button color="primary" (click)="onAdvanceStepper()" class="action-button">
-              {{ uiConstants.step1.PROCEED_TO_NEXT_STEP_BTN }}
-            </button>
+        <div>
+          <div class="action-buttons">
+            <div class="push-right">
+              <button mat-raised-button color="primary" (click)="onAdvanceStepper()" class="action-button">
+                {{ uiConstants.step1.PROCEED_TO_NEXT_STEP_BTN }}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </mat-step>
+      </mat-step>
 
-    <mat-step label="{{ uiConstants.step2.STEP_LABEL }}">
-      <app-endpoint-configuration></app-endpoint-configuration>
-    </mat-step>
+      <mat-step label="{{ uiConstants.step2.STEP_LABEL }}">
+        <app-endpoint-configuration></app-endpoint-configuration>
+      </mat-step>
 
-    <mat-step label="{{ uiConstants.step3.STEP_LABEL }}">
-      <app-edrs-results [parentStepper]="stepper" ></app-edrs-results>
-      <button mat-raised-button matStepperPrevious>Back</button>
-    </mat-step>
-  </mat-horizontal-stepper>
+      <mat-step label="{{ uiConstants.step3.STEP_LABEL }}">
+        <app-edrs-results [parentStepper]="stepper"></app-edrs-results>
+        <button mat-raised-button matStepperPrevious>Back</button>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </mat-card>
 </div>
 
