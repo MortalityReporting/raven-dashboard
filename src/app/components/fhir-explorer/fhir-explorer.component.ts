@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ElementRef} from '@angular/core';
 import {FhirResourceProviderService} from "../../service/fhir-resource-provider.service";
 import {HttpClient} from "@angular/common/http";
 import {DocumentHandlerService} from "../../service/document-handler.service";
@@ -22,7 +22,8 @@ export class FhirExplorerComponent implements OnInit {
     private documentHandler: DocumentHandlerService,
     private fhirExplorerService: FhirExplorerService,
     private fhirResourceProvider: FhirResourceProviderService,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private elRef: ElementRef
   ) {
       this.fhirResourceProvider.fhirResource$.subscribe( resource => {
 
@@ -46,11 +47,16 @@ export class FhirExplorerComponent implements OnInit {
       else {
         this.formattedText = JSON.stringify( resource, null, 2 );
       }
+
+      this.elRef.nativeElement.parentElement.parentElement.scrollTo(0, 0);
+
     })
   };
 
   ngOnInit(): void {
+
   }
+
 
   isNarrative() : boolean {
     return this.selectedStructure === 'narrative';
