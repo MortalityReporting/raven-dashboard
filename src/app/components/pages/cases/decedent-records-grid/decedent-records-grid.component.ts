@@ -70,9 +70,9 @@ export class DecedentRecordsGridComponent implements OnInit {
       mergeMap((decedentRecordsList: any[]) =>
         forkJoin(
           decedentRecordsList.map((decedentRecord: any, i) =>
-            this.decedentService.getComposition(decedentRecord.decedentId).pipe(
-              map((composition: any) => {
-                const caseNumber = composition?.entry?.[0]?.resource?.extension?.[0]?.valueIdentifier?.value;
+              this.decedentService.getComposition(decedentRecord.decedentId).pipe(
+              map((searchset: any) => {
+                const caseNumber = searchset?.entry?.[0]?.resource?.extension?.[0]?.valueIdentifier?.value;
                 decedentRecord.caseNumber = caseNumber;
                 return decedentRecord
               })
@@ -82,8 +82,8 @@ export class DecedentRecordsGridComponent implements OnInit {
     )
     .subscribe({
         next: (data) => {
-          this.decedentGridDtoList = data;
-          this.dataSource = new MatTableDataSource(data);
+          this.decedentGridDtoList = data.filter(record => !!record.caseNumber);
+          this.dataSource = new MatTableDataSource(this.decedentGridDtoList);
           this.dataSource.sort = this.sort;
           },
         error: (e) => {
