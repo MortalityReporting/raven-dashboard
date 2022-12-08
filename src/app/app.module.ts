@@ -67,15 +67,15 @@ import { ToxicologyReportContentComponent } from './components/pages/toxicology-
 import { WorkflowSimulatorComponent } from './components/pages/workflow-simulator/workflow-simulator.component';
 import { SearchEdrsComponent } from './components/pages/workflow-simulator/search-edrs/search-edrs.component';
 import {MatStepperModule} from "@angular/material/stepper";
-import { MdiToEdrsGridComponent } from './components/pages/workflow-simulator/mdi-to-edrs-grid/mdi-to-edrs-grid.component';
+import { MdiToEdrsGridComponent } from './components/pages/workflow-simulator/search-edrs/mdi-to-edrs-grid/mdi-to-edrs-grid.component';
 import { InputTextDialogComponent } from './components/widgets/input-text-dialog/input-text-dialog.component';
-import { ImportMdiToEdrsDocumentComponent } from './components/pages/workflow-simulator/import-mdi-to-edrs-document/import-mdi-to-edrs-document.component';
-import { EndpointConfigurationComponent } from './components/pages/workflow-simulator/endpoint-configuration/endpoint-configuration.component';
-import { EdrsResultsComponent } from './components/pages/workflow-simulator/edrs-results/edrs-results.component';
+import { ImportMdiToEdrsDocumentComponent } from './components/pages/workflow-simulator/search-edrs/import-mdi-to-edrs-document/import-mdi-to-edrs-document.component';
+import { EndpointConfigurationComponent } from './components/pages/workflow-simulator/search-edrs/endpoint-configuration/endpoint-configuration.component';
+import { EdrsResultsComponent } from './components/pages/workflow-simulator/search-edrs/edrs-results/edrs-results.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {UiStringConstants} from "./providers/ui-string-constants";
-import { DecedentBasicInfoComponent } from './components/pages/workflow-simulator/decedent-basic-info/decedent-basic-info.component';
+import { DecedentBasicInfoComponent } from './components/pages/workflow-simulator/search-edrs/decedent-basic-info/decedent-basic-info.component';
 
 @NgModule({
   declarations: [

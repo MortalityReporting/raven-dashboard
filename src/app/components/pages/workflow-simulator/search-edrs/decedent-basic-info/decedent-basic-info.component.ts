@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {UiStringConstants} from "../../../../providers/ui-string-constants";
+import {UiStringConstants} from "../../../../../providers/ui-string-constants";
 
 @Component({
   selector: 'app-decedent-basic-info',

@@ -1,13 +1,13 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {DecedentGridDTO} from "../../../../model/decedent.grid.dto";
+import {DecedentGridDTO} from "../../../../../model/decedent.grid.dto";
 import {MatSort} from "@angular/material/sort";
 import {ActivatedRoute, Router} from "@angular/router";
-import {DecedentService} from "../../../../service/decedent.service";
-import {UtilsService} from "../../../../service/utils.service";
+import {DecedentService} from "../../../../../service/decedent.service";
+import {UtilsService} from "../../../../../service/utils.service";
 import {forkJoin, map, mergeMap, switchMap} from "rxjs";
-import {SearchEdrsService} from "../../../../service/search-edrs.service";
-import {DecedentSimpleInfo} from "../../../../model/decedent-simple-info";
+import {SearchEdrsService} from "../../../../../service/search-edrs.service";
+import {DecedentSimpleInfo} from "../../../../../model/decedent-simple-info";
 
 @Component({
   selector: 'app-mdi-to-edrs-grid',

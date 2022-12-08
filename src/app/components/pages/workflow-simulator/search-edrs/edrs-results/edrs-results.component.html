@@ -3,6 +3,16 @@
     <app-decedent-basic-info [decedentInfo]="decedentInfo"></app-decedent-basic-info>
   </div>
 
+  <form [formGroup]="testForm" (ngSubmit)="onSubmitSearchParams()">
+    <mat-form-field appearance="outline">
+      <mat-label>Search Filters</mat-label>
+      <mat-select formControlName="decedentLastName">
+        <mat-option *ngFor="let filter of initialFilters" [value]="filter">{{filter.display}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+
+
   <form [formGroup]="edrsSearchParametersForm" (ngSubmit)="onSubmitSearchParams()">
 
     <div>
@@ -28,21 +38,10 @@
 
     <div>
       <mat-form-field appearance="outline">
-        <mat-label>District of Death</mat-label>
-        <input type="text" matInput formControlName="districtOfDeath">
+        <mat-label>Date of Birth</mat-label>
+        <input type="text" matInput formControlName="dob">
       </mat-form-field>
     </div>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Date of Death</mat-label>
-      <mat-date-range-input formGroupName="range" [rangePicker]="picker">
-        <input matStartDate formControlName="start" placeholder="Start date">
-        <input matEndDate formControlName="end" placeholder="End date">
-      </mat-date-range-input>
-      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-date-range-picker #picker></mat-date-range-picker>
-    </mat-form-field>
 
     <div>
       <div>Search Parameters Resource Preview</div>
