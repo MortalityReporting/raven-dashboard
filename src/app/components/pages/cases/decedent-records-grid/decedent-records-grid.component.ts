@@ -87,6 +87,7 @@ export class DecedentRecordsGridComponent implements OnInit {
           this.dataSource.sort = this.sort;
           },
         error: (e) => {
+          this.isLoading = false;
           console.error(e);
           this.utilsService.showErrorMessage();
         },
