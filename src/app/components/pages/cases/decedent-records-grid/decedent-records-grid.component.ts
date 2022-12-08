@@ -16,7 +16,7 @@ import {UtilsService} from "../../../../service/utils.service";
 export class DecedentRecordsGridComponent implements OnInit {
 
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['index', 'name', 'gender', 'tod', 'mannerOfDeath', 'system'];
+  displayedColumns: string[] = ['index', 'name', 'gender', 'tod', 'mannerOfDeath', 'caseNumber'];
   decedentGridDtoList: DecedentGridDTO[];
   isLoading = true;
 
@@ -34,10 +34,10 @@ export class DecedentRecordsGridComponent implements OnInit {
   mapToDto(entry: any): DecedentGridDTO {
     let decedentDTO = new DecedentGridDTO();
     decedentDTO.decedentId = entry.resource?.id;
-    decedentDTO.firstName = entry.resource?.name[0]?.given[0];
-    decedentDTO.lastName = entry.resource?.name[0]?.family;
+    decedentDTO.firstName = entry.resource?.name?.[0]?.given[0];
+    decedentDTO.lastName = entry.resource?.name?.[0]?.family;
     decedentDTO.gender = entry.resource?.gender;
-    decedentDTO.system = entry.resource?.identifier[0]?.system || null;
+    decedentDTO.system = entry.resource?.identifier?.[0]?.system || null;
     decedentDTO.age = this.getAgeFromDob(new Date(entry.resource?.birthDate));
     return decedentDTO;
   }
@@ -56,9 +56,9 @@ export class DecedentRecordsGridComponent implements OnInit {
             this.decedentService.getDecedentObservationsByCode(decedentRecord, codes).pipe(
               map((observation: any) => {
                 decedentRecord = this.mapToDto(decedentRecord);
-                const tod = observation?.entry?.find(entry => entry.resource?.code?.coding[0]?.code == loincTimeOfDeath)?.resource?.effectiveDateTime;
+                const tod = observation?.entry?.find(entry => entry.resource?.code?.coding?.[0]?.code == loincTimeOfDeath)?.resource?.effectiveDateTime;
                 decedentRecord.tod = tod;
-                const mannerOfDeath =  observation?.entry.find(entry => entry.resource?.code?.coding[0]?.code == loincCauseOfDeath)?.resource?.valueCodeableConcept?.coding[0]?.display;
+                const mannerOfDeath =  observation?.entry?.find(entry => entry.resource?.code?.coding?.[0]?.code == loincCauseOfDeath)?.resource?.valueCodeableConcept?.coding?.[0]?.display;
                 decedentRecord.mannerOfDeath = mannerOfDeath;
                 decedentRecord.index = i + 1;
                 return decedentRecord;
@@ -72,7 +72,7 @@ export class DecedentRecordsGridComponent implements OnInit {
           decedentRecordsList.map((decedentRecord: any, i) =>
             this.decedentService.getComposition(decedentRecord.decedentId).pipe(
               map((composition: any) => {
-                const caseNumber = composition?.entry[0]?.resource?.extension[0]?.valueIdentifier?.value;
+                const caseNumber = composition?.entry?.[0]?.resource?.extension?.[0]?.valueIdentifier?.value;
                 decedentRecord.caseNumber = caseNumber;
                 return decedentRecord
               })
