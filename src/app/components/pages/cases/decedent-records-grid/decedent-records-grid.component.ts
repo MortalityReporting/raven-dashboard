@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
+import {PageEvent} from '@angular/material/paginator';
 import {MatSort} from "@angular/material/sort";
 import {DecedentGridDTO} from "../../../../model/decedent.grid.dto";
 import {DecedentService} from "../../../../service/decedent.service";
@@ -15,7 +16,7 @@ import {UtilsService} from "../../../../service/utils.service";
 export class DecedentRecordsGridComponent implements OnInit {
 
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['index', 'name', 'gender', 'tod', 'mannerOfDeath', 'caseNumber'];
+  displayedColumns: string[] = ['index', 'name', 'gender', 'tod', 'mannerOfDeath', 'system'];
   decedentGridDtoList: DecedentGridDTO[];
   isLoading = true;
 
@@ -51,10 +52,11 @@ export class DecedentRecordsGridComponent implements OnInit {
       mergeMap((decedentRecordsList: any[]) =>
         forkJoin(
           decedentRecordsList.map((decedentRecord: any, i) =>
+
             this.decedentService.getDecedentObservationsByCode(decedentRecord, codes).pipe(
               map((observation: any) => {
                 decedentRecord = this.mapToDto(decedentRecord);
-                const tod = observation?.entry.find(entry => entry.resource?.code?.coding[0]?.code == loincTimeOfDeath)?.resource?.effectiveDateTime;
+                const tod = observation?.entry?.find(entry => entry.resource?.code?.coding[0]?.code == loincTimeOfDeath)?.resource?.effectiveDateTime;
                 decedentRecord.tod = tod;
                 const mannerOfDeath =  observation?.entry.find(entry => entry.resource?.code?.coding[0]?.code == loincCauseOfDeath)?.resource?.valueCodeableConcept?.coding[0]?.display;
                 decedentRecord.mannerOfDeath = mannerOfDeath;
@@ -96,6 +98,9 @@ export class DecedentRecordsGridComponent implements OnInit {
 
   onCaseSelected(row: any) {
     this.router.navigate(['cases/summary/', row.decedentId]);
+  }
+
+  pageChanged(event: PageEvent) {
   }
 
   applyFilter(event: Event) {

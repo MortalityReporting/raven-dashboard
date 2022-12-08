@@ -11,7 +11,7 @@ import {environment} from "../../environments/environment";
 export class ImportCaseService {
 
   // API url
-  importFileUrl = "https://apps.hdap.gatech.edu/raven-import-and-submit-api/upload-xlsx-file"
+  importFileUrl = environment.ravenImportApi;
 
   constructor(private http:HttpClient) { }
 
