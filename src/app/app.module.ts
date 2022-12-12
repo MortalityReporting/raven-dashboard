@@ -110,7 +110,7 @@ import { DecedentBasicInfoComponent } from './components/pages/workflow-simulato
     ImportMdiToEdrsDocumentComponent,
     EndpointConfigurationComponent,
     EdrsResultsComponent,
-    DecedentBasicInfoComponent
+    DecedentBasicInfoComponent,
   ],
     imports: [
         BrowserModule,

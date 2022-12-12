@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {DecedentSimpleInfo} from "../../../../../model/decedent-simple-info";
 import {SearchEdrsService} from "../../../../../service/search-edrs.service";
 import {MatStepper} from "@angular/material/stepper";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {UiStringConstants} from "../../../../../providers/ui-string-constants";
 import {UtilsService} from "../../../../../service/utils.service";
 
@@ -25,20 +25,38 @@ export class EdrsResultsComponent implements OnInit {
     { display: 'Date of Birth', value: 'patient.birthday'},
   ];
 
-  edrsSearchParametersForm = this.formBuilder.group({
+  filtersForm = this.fb.group({
+    name: new FormControl('', [Validators.required]),
+    value: new FormControl('', [Validators.required]),
+  });
+
+  get filters() {
+    return this.companyForm.controls["filters"] as FormArray;
+  }
+
+  addNewFilter(){
+    this.filters.push(this.filtersForm);
+  }
+
+  companyForm = this.fb.group({
+    companyName: new FormControl('', [Validators.required]),
+    filters: this.fb.array([])
+  })
+
+  edrsSearchParametersForm = this.fb.group({
     decedentFirstName: [],
     decedentLastName: [],
     legalSexAtDeath: [],
     dob: []
   });
 
-  testForm = this.formBuilder.group({
+  testForm = this.fb.group({
     filter: [],
   });
 
   constructor(
     private searchEdrsService: SearchEdrsService,
-    private formBuilder: FormBuilder,
+    private fb: FormBuilder,
     private utilsService: UtilsService,
     uiStringConstants: UiStringConstants
   ) {
@@ -105,4 +123,5 @@ export class EdrsResultsComponent implements OnInit {
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
   }
+
 }
