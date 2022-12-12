@@ -6,6 +6,7 @@ import {CaseComparisonComponent} from "./components/pages/case-comparison/case-c
 import {ImportCaseComponent} from "./components/pages/import-case/import-case.component";
 import {FhirValidatorComponent} from "./fhir-validator/components/fhir-validator/fhir-validator.component";
 import {CasesComponent} from "./components/pages/cases/cases.component";
+import {ToxicologyContainerComponent} from "./components/pages/toxicology-container/toxicology-container.component";
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
   {
     path: 'cases/summary/:id',
     component: CaseContainerComponent
+  },
+  {
+    path: 'records/toxicology/:id',
+    component: ToxicologyContainerComponent
   },
   {
     path: 'import-case',
