@@ -18,41 +18,28 @@ export class EdrsResultsComponent implements OnInit {
   uiConstantsStep3: any;
   commonUIConstants: any;
 
-  initialFilters = [
+  searchParams = [
     { display: 'Decedent Last Name', value:  'patient.family' },
     { display: 'Decedent First Name', value: 'patient.given'},
     { display: 'Legal Sex at Death', value: 'patient.gender'},
     { display: 'Date of Birth', value: 'patient.birthday'},
   ];
 
-  filtersForm = this.fb.group({
-    name: new FormControl('', [Validators.required]),
-    value: new FormControl('', [Validators.required]),
-  });
-
-  get filters() {
-    return this.companyForm.controls["filters"] as FormArray;
+  get parameters() {
+    return this.searchEdrsForm.controls["parameters"] as FormArray;
   }
 
   addNewFilter(){
-    this.filters.push(this.filtersForm);
+    const paramsFormGroup = this.fb.group({
+      name: new FormControl(''),
+      valueString: new FormControl(''),
+    });
+    this.parameters.push(paramsFormGroup);
   }
 
-  companyForm = this.fb.group({
-    companyName: new FormControl('', [Validators.required]),
-    filters: this.fb.array([])
+  searchEdrsForm = this.fb.group({
+    parameters: this.fb.array([])
   })
-
-  edrsSearchParametersForm = this.fb.group({
-    decedentFirstName: [],
-    decedentLastName: [],
-    legalSexAtDeath: [],
-    dob: []
-  });
-
-  testForm = this.fb.group({
-    filter: [],
-  });
 
   constructor(
     private searchEdrsService: SearchEdrsService,
@@ -64,6 +51,9 @@ export class EdrsResultsComponent implements OnInit {
     this.commonUIConstants = uiStringConstants.Common;
   }
   ngOnInit(): void {
+
+    this.setInitialFilterControls();
+
     this.searchEdrsService.decedentData$.subscribe({
       next: value => {
         this.decedentInfo = value;
@@ -76,20 +66,19 @@ export class EdrsResultsComponent implements OnInit {
         const dataDrivenParams = value.parameter
           .filter(param => param.type === 'string')
           .map(param => param.name)
-          .map(param => { return { display: this.toTitleCase(this.removePeriods(param)), value: param } })
-        // this.operationDefinitionParameters.push(...dataDrivenParams);
-        // console.log(this.operationDefinitionParameters);
-        console.log(dataDrivenParams);
+          .map(param => { return { display: this.toTitleCase(this.removePeriods(param)), value: param } });
+
+        this.searchParams = this.searchParams.concat(dataDrivenParams);
+        this.searchParams = this.searchParams.filter((item,index)=>{
+          return (this.searchParams.indexOf(item) == index)
+        })
+        console.log(this.searchParams);
       },
       error: err => {
         console.error(err);
         this.utilsService.showErrorMessage()
       }
     });
-  }
-
-  onAddControl(name){
-    this.testForm.addControl('new', new FormControl('', Validators.required));
   }
 
   onSelectDifferentDocument() {
@@ -101,19 +90,43 @@ export class EdrsResultsComponent implements OnInit {
   }
 
   onSubmitSearchParams() {
-    console.log(this.edrsSearchParametersForm.value);
+
   }
 
   getSearchParametersResourcePreview() {
-    return this.edrsSearchParametersForm.value;
+    return this.searchEdrsForm.value.parameters.filter(param => !!param.valueString);
   }
 
   onResultsTabChange() {
     console.log("onResultsTabChange");
   }
 
-  // Helper Functions
+  getFilterTypes(index, paramsFormControl) {
+    const currentParams = this.parameters.value.map(value => value.name);
+    const result = this.searchParams
+      .filter(param => (currentParams.indexOf(param.value) == -1) || param.value == paramsFormControl.value.name)
+    // TODO do we need those params to be sorted in any way?
+    // Below is a simple alphabetical sort
+    //   .sort(function(a,b) {
+    //     let c = a.display.toLowerCase();
+    //     let d = b.display.toLowerCase();
+    //     if (c == d) return 0;
+    //     if (c > d) return 1;
+    //     return -1;
+    //   });
+    return result;
+  }
 
+  onDeleteFilter(filterIndex){
+    this.parameters.removeAt(filterIndex);
+  }
+
+
+  onSubmit() {
+    //console.log(this.filtersFormGroup)
+  }
+
+  // Helper Functions
   removePeriods(str: string): string{
     return str.replace(/-/g, ' ').replace(/_/g, ' ')+'';
   }
@@ -124,4 +137,28 @@ export class EdrsResultsComponent implements OnInit {
     });
   }
 
+  setInitialFilterControls(){
+    // TODO: We should refactor this and use a loop. The code is too repetitive.
+    const  givenNameFg = this.fb.group({
+      name : new FormControl('patient.given'),
+      valueString: new FormControl(''),
+    });
+    this.parameters.push(givenNameFg);
+
+    const lastNameFg = this.fb.group({
+      name : new FormControl('patient.family'),
+      valueString: new FormControl(''),
+    });
+    this.parameters.push(lastNameFg);
+
+    const dobFg = this.fb.group({
+      name : new FormControl('mdi-case-number'),
+      valueString: new FormControl(''),
+    });
+    this.parameters.push(dobFg);
+
+  }
+
 }
+
+
