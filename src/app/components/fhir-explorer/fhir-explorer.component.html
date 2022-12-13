@@ -1,8 +1,8 @@
 <div class="explorer-header-text">
-  Resource Type: {{fhirResource.resourceType}}
+  Resource Type: {{fhirResource?.resourceType}}
 </div>
-<div class="explorer-header-text" *ngIf="fhirResource.meta?.profile?.[0]">
-  Profile: {{fhirResource.meta.profile[0]}}
+<div class="explorer-header-text" *ngIf="fhirResource?.meta?.profile?.[0]">
+  Profile: {{fhirResource?.meta?.profile?.[0]}}
 </div>
 <div class="row">
   <div class="col-left">
