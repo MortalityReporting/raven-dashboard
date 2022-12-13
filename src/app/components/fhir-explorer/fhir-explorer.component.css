@@ -39,3 +39,8 @@
     content: "...";
   }
 }
+
+.explorer-header-text {
+  font-weight: bold;
+  padding: 5px;
+}

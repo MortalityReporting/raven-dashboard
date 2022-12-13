@@ -1,5 +1,6 @@
 <mat-toolbar class="tool-bars">
-  <mat-toolbar-row class="primary-light" appSetFhirExplorer [title]="'toxmessage'">
+  <mat-toolbar-row class="primary-light" appSetFhirExplorer [title]="'document'">
+    <span class="viewer-header-title">MDI Viewer</span>
     <span class="viewer-header-label">Subject Name:</span>
     <input type="text" value="{{ (caseHeader$ | async)?.fullName}}" readonly>
     <span class="content-spacer"> </span>
