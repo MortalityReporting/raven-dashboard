@@ -12,7 +12,9 @@ import {MatDialogModule} from '@angular/material/dialog'
 import {MatIconModule} from "@angular/material/icon";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatToolbarModule} from "@angular/material/toolbar";
-import {DecedentRecordsGridComponent} from './components/pages/cases/decedent-records-grid/decedent-records-grid.component';
+import {
+  DecedentRecordsGridComponent
+} from './components/pages/cases/decedent-records-grid/decedent-records-grid.component';
 import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
@@ -26,8 +28,12 @@ import {FhirAuthInterceptor} from "./interceptors/fhir-auth.interceptor";
 import {MatGridListModule} from '@angular/material/grid-list';
 import {CaseSummaryComponent} from './components/pages/case-summary/case-summary.component';
 import {CaseComparisonComponent} from './components/pages/case-comparison/case-comparison.component';
-import {CaseComparisonContentComponent} from './components/pages/case-comparison/case-comparison-content/case-comparison-content.component';
-import {CaseComparisonContentFieldComponent} from './components/pages/case-comparison/case-comparison-content-field/case-comparison-content-field.component';
+import {
+  CaseComparisonContentComponent
+} from './components/pages/case-comparison/case-comparison-content/case-comparison-content.component';
+import {
+  CaseComparisonContentFieldComponent
+} from './components/pages/case-comparison/case-comparison-content-field/case-comparison-content-field.component';
 import {LandingComponent} from './components/landing/landing.component';
 import {CaseContainerComponent} from './components/pages/case-container/case-container.component';
 import {FhirExplorerDrawerService} from "./service/fhir-explorer-drawer.service";
@@ -55,27 +61,38 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatMenuModule} from '@angular/material/menu';
 import {ConformationDialogComponent} from "./components/widgets/conformation-dialog/conformation-dialog.component";
 import {ClipboardModule} from "@angular/cdk/clipboard";
-import { MappingsComponent } from './components/pages/import-case/mappings/mappings.component';
-import { ModalComponent } from './components/widgets/modal/modal.component';
-
-import { CaseComparisonDialogComponent } from './components/pages/case-comparison/case-comparison-dialog/case-comparison-dialog.component';
+import {MappingsComponent} from './components/pages/import-case/mappings/mappings.component';
+import {ModalComponent} from './components/widgets/modal/modal.component';
+import {
+  CaseComparisonDialogComponent
+} from './components/pages/case-comparison/case-comparison-dialog/case-comparison-dialog.component';
 import {CasesComponent} from "./components/pages/cases/cases.component";
-import { ToxicologyGridComponent } from './components/pages/cases/toxicology-grid/toxicology-grid.component';
-import { ToxicologyContainerComponent } from './components/pages/toxicology-container/toxicology-container.component';
-import { ToxicologyReportComponent } from './components/pages/toxicology-report/toxicology-report.component';
-import { ToxicologyReportContentComponent } from './components/pages/toxicology-report/toxicology-report-content/toxicology-report-content.component';
-import { WorkflowSimulatorComponent } from './components/pages/workflow-simulator/workflow-simulator.component';
-import { SearchEdrsComponent } from './components/pages/workflow-simulator/search-edrs/search-edrs.component';
+import {ToxicologyGridComponent} from './components/pages/cases/toxicology-grid/toxicology-grid.component';
+import {ToxicologyContainerComponent} from './components/pages/toxicology-container/toxicology-container.component';
+import {ToxicologyReportComponent} from './components/pages/toxicology-report/toxicology-report.component';
+import {
+  ToxicologyReportContentComponent
+} from './components/pages/toxicology-report/toxicology-report-content/toxicology-report-content.component';
+import {WorkflowSimulatorComponent} from './components/pages/workflow-simulator/workflow-simulator.component';
+import {SearchEdrsComponent} from './components/pages/workflow-simulator/search-edrs/search-edrs.component';
 import {MatStepperModule} from "@angular/material/stepper";
-import { MdiToEdrsGridComponent } from './components/pages/workflow-simulator/search-edrs/mdi-to-edrs-grid/mdi-to-edrs-grid.component';
-import { InputTextDialogComponent } from './components/widgets/input-text-dialog/input-text-dialog.component';
-import { ImportMdiToEdrsDocumentComponent } from './components/pages/workflow-simulator/search-edrs/import-mdi-to-edrs-document/import-mdi-to-edrs-document.component';
-import { EndpointConfigurationComponent } from './components/pages/workflow-simulator/search-edrs/endpoint-configuration/endpoint-configuration.component';
-import { EdrsResultsComponent } from './components/pages/workflow-simulator/search-edrs/edrs-results/edrs-results.component';
-import {MatDatepickerModule} from "@angular/material/datepicker";
-import {MatNativeDateModule} from "@angular/material/core";
+import {
+  MdiToEdrsGridComponent
+} from './components/pages/workflow-simulator/search-edrs/mdi-to-edrs-grid/mdi-to-edrs-grid.component';
+import {InputTextDialogComponent} from './components/widgets/input-text-dialog/input-text-dialog.component';
+import {
+  ImportMdiToEdrsDocumentComponent
+} from './components/pages/workflow-simulator/search-edrs/import-mdi-to-edrs-document/import-mdi-to-edrs-document.component';
+import {
+  EndpointConfigurationComponent
+} from './components/pages/workflow-simulator/search-edrs/endpoint-configuration/endpoint-configuration.component';
+import {
+  EdrsResultsComponent
+} from './components/pages/workflow-simulator/search-edrs/edrs-results/edrs-results.component';
 import {UiStringConstants} from "./providers/ui-string-constants";
-import { DecedentBasicInfoComponent } from './components/pages/workflow-simulator/search-edrs/decedent-basic-info/decedent-basic-info.component';
+import {
+  DecedentBasicInfoComponent
+} from './components/pages/workflow-simulator/search-edrs/decedent-basic-info/decedent-basic-info.component';
 
 @NgModule({
   declarations: [
@@ -144,6 +161,7 @@ import { DecedentBasicInfoComponent } from './components/pages/workflow-simulato
     MatMenuModule,
     ClipboardModule,
     MatDialogModule,
+    MatStepperModule
   ],
   providers: [
     UiStringConstants,

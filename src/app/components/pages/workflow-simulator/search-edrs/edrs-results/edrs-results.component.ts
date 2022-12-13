@@ -109,9 +109,6 @@ export class EdrsResultsComponent implements OnInit {
           const value = periodSeparated[1];
           result.parameter.push({name: name, part: []});
           this.getParts(name, formParams);
-          //
-          // console.log(result);
-          // console.log(periodSeparated);
         }
       })
     }
