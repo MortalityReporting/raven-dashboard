@@ -14,7 +14,7 @@ const routes: Routes = [
     component: LandingComponent
   },
   {
-    path: 'cases',
+    path: 'records',
     component: CasesComponent
   },
   {
@@ -30,12 +30,12 @@ const routes: Routes = [
     component: FhirValidatorComponent
   },
   {
-    path: 'cases/summary/:id',
+    path: 'records/mdi/:id',
     component: CaseContainerComponent
   },
   {
-    path: 'records/toxicology/:id',
-    component: ToxicologyContainerComponent
+    path: 'records/tox/:id',
+    component: CaseContainerComponent
   },
   {
     path: 'import-case',

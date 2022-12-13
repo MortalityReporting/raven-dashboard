@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {MatDrawer} from "@angular/material/sidenav";
 import {FhirExplorerDrawerService} from "../../../service/fhir-explorer-drawer.service";
 import {Subscription} from "rxjs";
@@ -19,10 +19,16 @@ export class CaseContainerComponent implements OnInit, AfterViewInit, OnDestroy 
   drawerWidth = "30%"
   drawerCollapsed = true;
   drawerStatus$: Subscription;
+  currentRoute: string;
 
   constructor(private route: ActivatedRoute,
               private fhirExplorerDrawerService: FhirExplorerDrawerService
-  ) { }
+  ) {
+    route.url.subscribe(url => {
+      this.currentRoute = url[1].path;
+      console.log(this.currentRoute);
+    });
+  }
 
   ngOnInit(): void {
     this.drawerStatus$ = this.fhirExplorerDrawerService.currentDrawerStatus.subscribe(

@@ -16,11 +16,6 @@
 
 <table mat-table [dataSource]="dataSource" matSort matSortDisableClear matSortActive="personId">
 
-  <ng-container matColumnDef="index">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> #</th>
-    <td mat-cell class="pointer" *matCellDef="let report"> {{report.index}} </td>
-  </ng-container>
-
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Subject Name</th>
     <td mat-cell class="pointer"
@@ -29,7 +24,7 @@
 
   <ng-container matColumnDef="reportdate">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Report Date</th>
-    <td mat-cell class="pointer" *matCellDef="let report"> {{report.reportdate | date: 'MM/yyyy'}} </td>
+    <td mat-cell class="pointer" *matCellDef="let report"> {{report.reportdate | date: 'MM/dd/yyyy'}} </td>
   </ng-container>
 
   <ng-container matColumnDef="toxcasenumber">

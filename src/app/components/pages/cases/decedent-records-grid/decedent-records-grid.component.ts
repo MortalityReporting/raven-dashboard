@@ -83,7 +83,7 @@ export class DecedentRecordsGridComponent implements OnInit {
   }
 
   onCaseSelected(row: any) {
-    this.router.navigate(['cases/summary/', row.decedentId]);
+    this.router.navigate(['records/mdi/', row.decedentId]);
   }
 
   pageChanged(event: PageEvent) {

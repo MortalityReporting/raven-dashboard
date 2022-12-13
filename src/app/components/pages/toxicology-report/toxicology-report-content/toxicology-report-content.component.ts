@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ToxicologyHandlerService} from "../../../../service/toxicology-handler.service";
 
 @Component({
   selector: 'app-toxicology-report-content',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ToxicologyReportContentComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private toxicologyHandler: ToxicologyHandlerService,
+  ) { }
 
   ngOnInit(): void {
   }

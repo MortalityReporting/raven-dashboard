@@ -28,7 +28,11 @@
   </mat-drawer>
 
   <mat-drawer-content>
-    <app-case-summary></app-case-summary>
+    <ng-container [ngSwitch]="currentRoute">
+      <app-case-summary *ngSwitchCase="'mdi'"></app-case-summary>
+      <app-toxicology-report *ngSwitchCase="'tox'"></app-toxicology-report>
+
+    </ng-container>
   </mat-drawer-content>
 
 </mat-drawer-container>

@@ -31,6 +31,7 @@ import {
 import {FhirResourceProviderService} from "./fhir-resource-provider.service";
 import {Address} from "../model/fhir/types/address";
 import {EnvironmentHandlerService} from "./environment-handler.service";
+import {FhirHelperService} from "./fhir-helper.service";
 
 @Injectable({
   providedIn: 'root'
@@ -91,7 +92,8 @@ export class DocumentHandlerService {
     private fhirResourceProvider: FhirResourceProviderService,
     private decedentService: DecedentService,
     private terminologyService: TerminologyHandlerService,
-    private environmentHandler: EnvironmentHandlerService
+    private environmentHandler: EnvironmentHandlerService,
+    private fhirHelper: FhirHelperService
   ) {}
 
   getDocumentBundle(compositionId: string) {
@@ -118,7 +120,7 @@ export class DocumentHandlerService {
   createCaseHeader(documentBundle: any, patientResource: any, compositionResource: any): CaseHeader {
 
     let caseHeader = new CaseHeader();
-    caseHeader.fullName = this.getPatientOfficialName(patientResource);
+    caseHeader.fullName = this.fhirHelper.getPatientOfficialName(patientResource);
     let genderString = patientResource.gender || this.defaultString;
     caseHeader.gender = genderString.substring(0,1).toUpperCase() + genderString.substring(1);
     let deathDateResource = this.findResourceByProfileName(documentBundle, Obs_DeathDate);
@@ -476,23 +478,6 @@ export class DocumentHandlerService {
       }
       return trackingNumber;
     }
-
-  // Build a full name from Patient official use name
-  getPatientOfficialName(patientResource: any): string {
-    let nameList = patientResource.name;
-    let firstOrOfficialName = (nameList.filter((humanName: any) => humanName.use === "official"))[0];
-
-    // If No Official Name is Found, use First HumanName in List
-    if (firstOrOfficialName === undefined) {
-      firstOrOfficialName = nameList[0]
-    }
-    let fullName = "";
-    firstOrOfficialName.given.forEach((name: any) => {
-      fullName = fullName + name + " "
-    });
-    fullName = fullName + firstOrOfficialName.family;
-    return fullName;
-  }
 
   // Get SSN from Patient Identifier
   getSocialSecurityNumber(patientResource: any): string {

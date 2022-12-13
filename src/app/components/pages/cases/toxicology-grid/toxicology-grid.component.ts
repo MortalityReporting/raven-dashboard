@@ -17,7 +17,7 @@ export class ToxicologyGridComponent implements OnInit {
 
 
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['index', 'name', 'reportdate', 'toxcasenumber', 'toxcasesystem', 'mdicasenumber', 'mdicasesystem'];
+  displayedColumns: string[] = ['name', 'reportdate', 'toxcasenumber', 'toxcasesystem', 'mdicasenumber', 'mdicasesystem'];
   toxGridDtoList: ToxicologyGridDto[];
   isLoading = true;
   showSystems = false;
@@ -45,7 +45,6 @@ export class ToxicologyGridComponent implements OnInit {
             this.toxicologyHandler.getSubject(diagnosticReportBec.resource).pipe(
               map((subject: any) => {
                 let diagnosticReportDto = this.mapToDto(diagnosticReportBec.resource, subject);
-                diagnosticReportDto.index = i + 1;
                 return diagnosticReportDto;
               })
             )
@@ -73,7 +72,7 @@ export class ToxicologyGridComponent implements OnInit {
     let toxDto = new ToxicologyGridDto();
     toxDto.firstName = subject?.name[0]?.given[0];
     toxDto.lastName = subject?.name[0]?.family;
-    toxDto.reportdate = diagnosticReport?.effectiveDateTime
+    toxDto.reportdate = diagnosticReport?.issued
     const toxTrackingNumber = this.toxicologyHandler.getTrackingNumber(diagnosticReport, TrackingNumberType.Tox);
     const mdiTrackingNumber = this.toxicologyHandler.getTrackingNumber(diagnosticReport, TrackingNumberType.Mdi);
     toxDto.toxcasenumber = toxTrackingNumber?.value || undefined;
@@ -84,7 +83,7 @@ export class ToxicologyGridComponent implements OnInit {
   }
 
   onCaseSelected(row: any) {
-    this.router.navigate(['records/toxicology/', row.toxcasenumber]);
+    this.router.navigate(['records/tox/', row.toxcasesystem + "|" + row.toxcasenumber]);
   }
 
   pageChanged(event: PageEvent) {
