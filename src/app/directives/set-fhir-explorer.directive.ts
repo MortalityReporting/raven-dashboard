@@ -9,12 +9,16 @@ export class SetFhirExplorerDirective {
   @Input() profile: string;
   @Input() title: string;
   @Input() observation: string;
+  @Input() resource: any;
 
   @HostListener('click', ['$event']) onClick(event: any) {
     console.log(event);
     console.log(this.title);
     console.log(this.profile);
-    if (this.profile) {
+    if (this.resource) {
+      this.fhirResourceProvider.setSelectedFhirResource(this.resource);
+    }
+    else if (this.profile) {
       this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.findResourceByProfileName(undefined, this.profile));
     }
     else if (this.observation)

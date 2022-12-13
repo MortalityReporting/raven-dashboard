@@ -30,6 +30,8 @@ import {
 } from "../model/mdi/profile.list"
 import {FhirResourceProviderService} from "./fhir-resource-provider.service";
 import {Address} from "../model/fhir/types/address";
+import {EnvironmentHandlerService} from "./environment-handler.service";
+import {FhirHelperService} from "./fhir-helper.service";
 
 @Injectable({
   providedIn: 'root'
@@ -85,10 +87,17 @@ export class DocumentHandlerService {
     this.setDocumentBundle(null);
   }
 
-  constructor(private http: HttpClient, private fhirResourceProvider: FhirResourceProviderService, private decedentService: DecedentService, private terminologyService: TerminologyHandlerService) {}
+  constructor(
+    private http: HttpClient,
+    private fhirResourceProvider: FhirResourceProviderService,
+    private decedentService: DecedentService,
+    private terminologyService: TerminologyHandlerService,
+    private environmentHandler: EnvironmentHandlerService,
+    private fhirHelper: FhirHelperService
+  ) {}
 
   getDocumentBundle(compositionId: string) {
-    return this.http.get(this.decedentService.getFhirServerBaseURL() + "Composition/" + compositionId + "/$document").pipe(
+    return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "Composition/" + compositionId + "/$document").pipe(
       map((documentBundle: any) => {
         this.currentDocumentBundle = documentBundle;
         let compositionResource = this.findResourceById(documentBundle, "Composition/" + compositionId);
@@ -111,7 +120,7 @@ export class DocumentHandlerService {
   createCaseHeader(documentBundle: any, patientResource: any, compositionResource: any): CaseHeader {
 
     let caseHeader = new CaseHeader();
-    caseHeader.fullName = this.getPatientOfficialName(patientResource);
+    caseHeader.fullName = this.fhirHelper.getPatientOfficialName(patientResource);
     let genderString = patientResource.gender || this.defaultString;
     caseHeader.gender = genderString.substring(0,1).toUpperCase() + genderString.substring(1);
     let deathDateResource = this.findResourceByProfileName(documentBundle, Obs_DeathDate);
@@ -207,7 +216,7 @@ export class DocumentHandlerService {
 
     let typeOfDeathLocationComponent = this.findObservationComponentByCode(observation, "58332-8");
     let pronouncedDateTimeComponent = this.findObservationComponentByCode(observation, "80616-6");
-    
+
     jurisdiction.typeOfDeathLocation = typeOfDeathLocationComponent?.valueCodeableConcept?.text ||
       typeOfDeathLocationComponent?.valueCodeableConcept?.coding?.[0].display || typeOfDeathLocationComponent?.valueCodeableConcept?.coding?.[0].code || this.defaultString;
     jurisdiction.establishmentApproach = observation?.method?.text || observation?.method?.coding?.[0]?.display || observation?.method?.coding?.[0]?.code || this.defaultString;
@@ -280,12 +289,12 @@ export class DocumentHandlerService {
             let workInjuryIndicatorComponent = this.findObservationComponentByCode(observation, "69444-8");
             let workInjuryIndicatorValue = workInjuryIndicatorComponent?.valueCodeableConcept;
             causeAndManner.workInjuryIndicator = workInjuryIndicatorValue?.text || workInjuryIndicatorValue?.coding?.[0]?.display || workInjuryIndicatorValue?.coding?.[0]?.code || this.defaultString;
-                
+
             let transportationRoleComponent = this.findObservationComponentByCode(observation, "69451-3");
             let transportationRoleValue = transportationRoleComponent?.valueCodeableConcept;
             causeAndManner.transportationRole = transportationRoleValue?.text || transportationRoleValue?.coding?.[0]?.display || transportationRoleValue?.coding?.[0]?.code || this.defaultString;
-            
-            if (observation._effectiveDateTime != null) 
+
+            if (observation._effectiveDateTime != null)
             {
               let year = 0;
               let month = 0;
@@ -469,23 +478,6 @@ export class DocumentHandlerService {
       }
       return trackingNumber;
     }
-
-  // Build a full name from Patient official use name
-  getPatientOfficialName(patientResource: any): string {
-    let nameList = patientResource.name;
-    let firstOrOfficialName = (nameList.filter((humanName: any) => humanName.use === "official"))[0];
-
-    // If No Official Name is Found, use First HumanName in List
-    if (firstOrOfficialName === undefined) {
-      firstOrOfficialName = nameList[0]
-    }
-    let fullName = "";
-    firstOrOfficialName.given.forEach((name: any) => {
-      fullName = fullName + name + " "
-    });
-    fullName = fullName + firstOrOfficialName.family;
-    return fullName;
-  }
 
   // Get SSN from Patient Identifier
   getSocialSecurityNumber(patientResource: any): string {

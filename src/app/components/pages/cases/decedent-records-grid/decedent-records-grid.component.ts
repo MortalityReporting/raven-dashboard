@@ -10,7 +10,7 @@ import {mergeMap, forkJoin, map} from "rxjs";
 @Component({
   selector: 'app-decedent-records-grid',
   templateUrl: './decedent-records-grid.component.html',
-  styleUrls: ['./decedent-records-grid.component.css']
+  styleUrls: ['../cases.component.css']
 })
 export class DecedentRecordsGridComponent implements OnInit {
 
@@ -83,7 +83,7 @@ export class DecedentRecordsGridComponent implements OnInit {
   }
 
   onCaseSelected(row: any) {
-    this.router.navigate(['cases/summary/', row.decedentId]);
+    this.router.navigate(['records/mdi/', row.decedentId]);
   }
 
   pageChanged(event: PageEvent) {
