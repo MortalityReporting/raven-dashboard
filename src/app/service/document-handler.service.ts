@@ -481,7 +481,7 @@ export class DocumentHandlerService {
 
   // Get SSN from Patient Identifier
   getSocialSecurityNumber(patientResource: any): string {
-    let identifierList = patientResource.identifier;
+    let identifierList = patientResource.identifier || [];
     let ssnIdentifier = (identifierList.find((identifier: any) => identifier.system === "http://hl7.org/fhir/sid/us-ssn"));
     return ssnIdentifier?.value || this.defaultString;
   }
