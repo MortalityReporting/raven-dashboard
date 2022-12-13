@@ -1,12 +1,14 @@
 <mat-toolbar class="tool-bars">
   <mat-toolbar-row class="primary-light" appSetFhirExplorer [title]="'document'">
-    Subject Name: <input type="text" value="{{ (caseHeader$ | async)?.fullName}}" readonly>
+    <span class="viewer-header-title">MDI Viewer</span>
+    <span class="viewer-header-label">Subject Name:</span>
+    <input type="text" value="{{ (caseHeader$ | async)?.fullName}}" readonly>
     <span class="content-spacer"> </span>
-    Date/Time of Death:
+    <span class="viewer-header-label">Date/Time of Death:</span>
     <input type="text" value="{{ (caseHeader$ | async)?.deathDate}}" readonly>
     <input type="text" value="{{ (caseHeader$ | async)?.deathTime}}" readonly>
     <span class="content-spacer"> </span>
-    Tracking Number/Type:
+    <span class="viewer-header-label">Tracking Number/Type:</span>
     <input type="text" value="{{ (caseHeader$ | async)?.trackingNumbers[0]?.value}}" readonly>
     <input type="text" value="{{ (caseHeader$ | async)?.trackingNumbers[0]?.type}}" readonly>
   </mat-toolbar-row>

@@ -8,6 +8,7 @@ import {FhirValidatorComponent} from "./fhir-validator/components/fhir-validator
 import {CasesComponent} from "./components/pages/cases/cases.component";
 import {WorkflowSimulatorComponent} from "./components/pages/workflow-simulator/workflow-simulator.component";
 import {SearchEdrsComponent} from "./components/pages/workflow-simulator/search-edrs/search-edrs.component";
+import {ToxicologyContainerComponent} from "./components/pages/toxicology-container/toxicology-container.component";
 
 const routes: Routes = [
   {
@@ -15,7 +16,7 @@ const routes: Routes = [
     component: LandingComponent
   },
   {
-    path: 'cases',
+    path: 'records',
     component: CasesComponent
   },
   {
@@ -31,7 +32,11 @@ const routes: Routes = [
     component: FhirValidatorComponent
   },
   {
-    path: 'cases/summary/:id',
+    path: 'records/mdi/:id',
+    component: CaseContainerComponent
+  },
+  {
+    path: 'records/tox/:id',
     component: CaseContainerComponent
   },
   {

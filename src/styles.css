@@ -90,6 +90,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background-color: #9fa8da;
 }
 
+.primary-lighter {
+  background-color: #bfc8fa;
+}
+
 .mat-snack-bar-container {
   margin-top: 10em !important;
 }
@@ -114,3 +118,89 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   margin-left: auto;
 }
 
+
+
+/**
+MOVED FROM CASE SUMMARY TO USE WITH TOX AS WELL
+TODO: Refactor to generalize class names and move to a common shared .css file.
+**/
+
+/** Collapse/Expand Button Styling **/
+.section-button-wrapper {
+  display: flex;
+}
+
+button {
+  margin: 5px;
+}
+
+/** Summary Section Styling **/
+
+.summary-section {
+  border: black 1px solid;
+  box-shadow: 1px 1px 2px black;
+}
+
+.summary-section-body {
+  padding: 5px;
+}
+
+.case-summary-content-wrapper {
+  padding: 20px;
+}
+
+.summary-section-grid .grid-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.summary-section-grid .grid-col-1 {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding-left: 10px;
+}
+
+.summary-section-grid .grid-col-2 {
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+}
+
+.summary-section-grid .grid-col-6 {
+  display: flex;
+  flex-direction: column;
+  flex: 6;
+}
+
+.mat-form-field {
+  margin-left: 10px;
+}
+
+/** Alias Table Styling **/
+.alias-table {
+  width: 100%;
+  border: 1px black solid;
+}
+.alias-table th {
+  text-decoration: underline;
+}
+.alias-table td {
+  border: 1px black solid;
+  padding: 5px;
+}
+
+.viewer-header-label {
+  margin: 5px;
+  font-size: medium;
+}
+.viewer-header-title {
+  text-decoration: underline;
+  padding: 10px;
+}
+
+.explorer-header-instructions {
+  font-size: small;
+}

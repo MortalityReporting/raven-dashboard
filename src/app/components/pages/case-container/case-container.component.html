@@ -15,6 +15,8 @@
         chevron_right
       </mat-icon>
       <span class="content-spacer"></span>
+      <span class="explorer-header-instructions">(Note: Click the Viewer Header to return to the Bundle Resource)</span>
+      <span class="content-spacer"></span>
       <mat-icon (click)="setDrawerWidth('30%'); drawer.close(); drawerCollapsed=true;"
                 aria-label="Close FHIR explorer"
                 style="cursor: pointer" matTooltip="Close FHIR Explorer">
@@ -28,7 +30,11 @@
   </mat-drawer>
 
   <mat-drawer-content>
-    <app-case-summary></app-case-summary>
+    <ng-container [ngSwitch]="currentRoute">
+      <app-case-summary *ngSwitchCase="'mdi'"></app-case-summary>
+      <app-toxicology-report *ngSwitchCase="'tox'"></app-toxicology-report>
+
+    </ng-container>
   </mat-drawer-content>
 
 </mat-drawer-container>
