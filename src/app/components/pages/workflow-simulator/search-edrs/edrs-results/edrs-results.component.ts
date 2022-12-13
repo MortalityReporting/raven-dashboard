@@ -94,6 +94,28 @@ export class EdrsResultsComponent implements OnInit {
   }
 
   getSearchParametersResourcePreview() {
+    const formParams = this.searchEdrsForm.value.parameters.filter(param => !!param.valueString);
+    let result: any = null;
+    if(formParams){
+      result = {
+        resourceType: "Parameters",
+        parameter: []
+      }
+      formParams.forEach(param => {
+        if(param.name.indexOf('.') !=-1){
+          let periodSeparated = param.name.split('.');
+          let part = [];
+          const name = periodSeparated[0];
+          const value = periodSeparated[1];
+          result.parameter.push({name: name, part: []});
+          this.getParts(name, formParams);
+          //
+          // console.log(result);
+          // console.log(periodSeparated);
+        }
+      })
+    }
+
     return this.searchEdrsForm.value.parameters.filter(param => !!param.valueString);
   }
 
@@ -159,6 +181,18 @@ export class EdrsResultsComponent implements OnInit {
 
   }
 
+  getQueryParams() {
+    // const params = this.getSearchParametersResourcePreview();
+    // console.log(params);
+  }
+
+  private getParts(name: any, formParams: any) {
+    let result = null;
+    console.log(name);
+    console.log(formParams);
+    //name =
+    return null;
+  }
 }
 
 
