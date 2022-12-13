@@ -195,3 +195,7 @@ button {
   text-decoration: underline;
   padding: 10px;
 }
+
+.explorer-header-instructions {
+  font-size: small;
+}
