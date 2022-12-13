@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {DecedentSimpleInfo} from "../../../../../model/decedent-simple-info";
 import {SearchEdrsService} from "../../../../../service/search-edrs.service";
 import {MatStepper} from "@angular/material/stepper";
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormControl} from "@angular/forms";
 import {UiStringConstants} from "../../../../../providers/ui-string-constants";
 import {UtilsService} from "../../../../../service/utils.service";
 
@@ -17,6 +17,8 @@ export class EdrsResultsComponent implements OnInit {
 
   uiConstantsStep3: any;
   commonUIConstants: any;
+
+  operationsDatsStructure: any;
 
   searchParams = [
     { display: 'Decedent Last Name', value:  'patient.family' },
@@ -50,6 +52,7 @@ export class EdrsResultsComponent implements OnInit {
     this.uiConstantsStep3 = uiStringConstants.WorkflowSimulator.searchEdrs.step2;
     this.commonUIConstants = uiStringConstants.Common;
   }
+
   ngOnInit(): void {
 
     this.setInitialFilterControls();
@@ -62,7 +65,7 @@ export class EdrsResultsComponent implements OnInit {
 
     this.searchEdrsService.getOperationDefinitionList().subscribe({
       next: value => {
-        console.log(value);
+        this.operationsDatsStructure = value;
         const dataDrivenParams = value.parameter
           .filter(param => param.type === 'string')
           .map(param => param.name)
@@ -81,36 +84,25 @@ export class EdrsResultsComponent implements OnInit {
     });
   }
 
-  onSelectDifferentDocument() {
-    this.parentStepper.reset();
-  }
-
-  onChangeEndpointConfiguration() {
-    this.parentStepper.previous();
-  }
-
-  onSubmitSearchParams() {
-
-  }
-
   getSearchParametersResourcePreview() {
     const formParams = this.searchEdrsForm.value.parameters.filter(param => !!param.valueString);
     let result: any = null;
     if(formParams){
       result = {
         resourceType: "Parameters",
-        parameter: []
+        parameter: this.getParameters(formParams)
       }
-      formParams.forEach(param => {
-        if(param.name.indexOf('.') !=-1){
-          let periodSeparated = param.name.split('.');
-          let part = [];
-          const name = periodSeparated[0];
-          const value = periodSeparated[1];
-          result.parameter.push({name: name, part: []});
-          this.getParts(name, formParams);
-        }
-      })
+      return result;
+      // formParams.forEach(param => {
+      //   if(param.name.indexOf('.') !=-1){
+      //     let periodSeparated = param.name.split('.');
+      //     let part = [];
+      //     const name = periodSeparated[0];
+      //     const value = periodSeparated[1];
+      //     result.parameter.push({name: name, part: []});
+      //     this.getParts(name, formParams);
+      //   }
+      // })
     }
 
     return this.searchEdrsForm.value.parameters.filter(param => !!param.valueString);
@@ -190,6 +182,33 @@ export class EdrsResultsComponent implements OnInit {
     //name =
     return null;
   }
+
+  private getParameters(formParams: any) {
+    let resultList = [];
+    formParams.forEach(formParam => {
+      if (formParam.name.indexOf('.') == -1) {
+        console.log(formParam);
+        const result = {name : formParam.name, valueString: formParam.valueString};
+        if(resultList.indexOf(result) == -1){
+          resultList.push(result);
+        }
+      }
+      else {
+        if(resultList.length == 0){
+          //console.log(formParam.name.split('.')[0]);
+          const name = formParam.name.split('.')[0];
+          // const value = formParam.name.split('.')[1];
+          // console.log(value);
+          const part = [{name: formParam.name.split('.')[1], valueString:  formParam.valueString}];
+          const result = {name: name, part: part};
+          resultList.push(result);
+        }
+      }
+    })
+    console.log(resultList);
+    return resultList;
+  }
+
 }
 
 
