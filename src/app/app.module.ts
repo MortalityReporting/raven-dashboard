@@ -93,6 +93,7 @@ import {UiStringConstants} from "./providers/ui-string-constants";
 import {
   DecedentBasicInfoComponent
 } from './components/pages/workflow-simulator/search-edrs/decedent-basic-info/decedent-basic-info.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -161,7 +162,8 @@ import {
     MatMenuModule,
     ClipboardModule,
     MatDialogModule,
-    MatStepperModule
+    MatStepperModule,
+    MatCheckboxModule
   ],
   providers: [
     UiStringConstants,
