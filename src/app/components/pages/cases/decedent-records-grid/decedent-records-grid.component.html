@@ -32,7 +32,7 @@
 
   <ng-container matColumnDef="tod">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of Death</th>
-    <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.tod | date }} </td>
+    <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.tod | date: 'MM/yyyy'}} </td>
   </ng-container>
 
   <ng-container matColumnDef="mannerOfDeath">
@@ -44,6 +44,7 @@
     <th mat-header-cell *matHeaderCellDef mat-sort-header> MDI Case Number</th>
     <td mat-cell class="pointer" *matCellDef="let decedent" [matTooltip]="'System: ' + decedent.system"> {{decedent.caseNumber }} </td>
   </ng-container>
+
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onCaseSelected(row)"></tr>
