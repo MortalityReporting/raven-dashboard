@@ -33,4 +33,12 @@ export class SearchEdrsService {
     )));
   }
 
+
+  searchEdrs(params): Observable<any> {
+    const operationDefinitionLocation = "Composition/$mdi-documents";
+    return this.http.post(environment.ravenFhirServer  + operationDefinitionLocation, params).pipe(map((result: any) => (
+      result as Object
+    )));
+  }
+
 }
