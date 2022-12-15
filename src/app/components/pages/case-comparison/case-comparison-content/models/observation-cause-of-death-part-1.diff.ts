@@ -2,23 +2,24 @@ import * as Diff from 'diff';
 import {DiffType} from '../diff-type';
 import {ObservationDiff} from './observation.diff';
 import { DocumentHandlerService } from "../../../../../service/document-handler.service";
+import {FhirHelperService} from "../../../../../service/fhir/fhir-helper.service";
 
 export class ObservationCauseOfDeathPart1Diff extends ObservationDiff {
     performer: DiffType;
     valueString: DiffType;
     valueCodeableConcept: DiffType;
 
-    documentHandler: DocumentHandlerService
+  fhirHelper: FhirHelperService
 
-    constructor( 
-        actual: any, 
+    constructor(
+        actual: any,
         expected: any,
-        documentHandler: DocumentHandlerService
-        )
+        fhirHelper: FhirHelperService
+      )
     {
         super( actual, expected );
 
-        this.documentHandler = documentHandler;
+        this.fhirHelper = fhirHelper;
         this.performer = new DiffType();
         this.valueString = new DiffType();
         this.valueCodeableConcept = new DiffType();
@@ -29,11 +30,11 @@ export class ObservationCauseOfDeathPart1Diff extends ObservationDiff {
     override doDiff()
     {
         super.doDiff();
-        
+
         try {
-            let expectedComponent = this.documentHandler.findObservationComponentByCode(this.expected, "69440-6");
+            let expectedComponent = this.fhirHelper.findObservationComponentByCode(this.expected, "69440-6");
             this.valueString.expected = JSON.stringify( expectedComponent.valueString, null, 4 );
-            let actualComponent = this.documentHandler.findObservationComponentByCode(this.actual, "69440-6");
+            let actualComponent = this.fhirHelper.findObservationComponentByCode(this.actual, "69440-6");
             this.valueString.actual = JSON.stringify( actualComponent.valueString, null, 4 );
             [this.valueString.style,this.valueString.difference] = DiffType.doDiff( Diff.diffChars( this.valueString.expected, this.valueString.actual ));
         } catch(e) {};

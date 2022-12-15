@@ -2,6 +2,8 @@ import * as Diff from 'diff';
 import {DiffType} from '../diff-type';
 import {ObservationDiff} from './observation.diff';
 import { DocumentHandlerService } from "../../../../../service/document-handler.service";
+import {BundleHelperService} from "../../../../../service/fhir/bundle-helper.service";
+import {FhirHelperService} from "../../../../../service/fhir/fhir-helper.service";
 
 export class ObservationDeathDateDiff extends ObservationDiff {
     effectiveDateTime: DiffType;
@@ -11,17 +13,17 @@ export class ObservationDeathDateDiff extends ObservationDiff {
     typeOfDeathLocation: DiffType;
     valueDateTime: DiffType;
 
-    documentHandler: DocumentHandlerService
+    fhirHelper: FhirHelperService
 
     constructor(
         actual: any,
         expected: any,
-        documentHandler: DocumentHandlerService
+        fhirHelper: FhirHelperService
         )
     {
         super( actual, expected );
 
-        this.documentHandler = documentHandler;
+        this.fhirHelper = fhirHelper;
         this.effectiveDateTime = new DiffType();
         this.method = new DiffType();
         this.pronouncedDateTime = new DiffType();
@@ -37,20 +39,20 @@ export class ObservationDeathDateDiff extends ObservationDiff {
         super.doDiff();
 
         try {
-            let expectedComponent = this.documentHandler.findObservationComponentByCode(this.expected, "80616-6");
+            let expectedComponent = this.fhirHelper.findObservationComponentByCode(this.expected, "80616-6");
             this.pronouncedDateTime.expected = expectedComponent.valueDateTime;
 
-            let actualComponent = this.documentHandler.findObservationComponentByCode(this.actual, "80616-6");
+            let actualComponent = this.fhirHelper.findObservationComponentByCode(this.actual, "80616-6");
             this.pronouncedDateTime.actual = actualComponent.valueDateTime;
 
             [this.pronouncedDateTime.style,this.pronouncedDateTime.difference] = DiffType.doDiff( Diff.diffChars( this.pronouncedDateTime.expected, this.pronouncedDateTime.actual ));
         } catch(e) {};
 
         try {
-            let expectedComponent = this.documentHandler.findObservationComponentByCode(this.expected, "58332-8");
+            let expectedComponent = this.fhirHelper.findObservationComponentByCode(this.expected, "58332-8");
             this.typeOfDeathLocation.expected = JSON.stringify( expectedComponent.valueCodeableConcept, null, 4 );
 
-            let actualComponent = this.documentHandler.findObservationComponentByCode(this.actual, "58332-8");
+            let actualComponent = this.fhirHelper.findObservationComponentByCode(this.actual, "58332-8");
             this.typeOfDeathLocation.actual = JSON.stringify( actualComponent.valueCodeableConcept, null, 4 );
 
             [this.typeOfDeathLocation.style,this.typeOfDeathLocation.difference] = DiffType.doDiff( Diff.diffChars( this.typeOfDeathLocation.expected, this.typeOfDeathLocation.actual ));

@@ -31,7 +31,8 @@ import {
 import {FhirResourceProviderService} from "./fhir-resource-provider.service";
 import {Address} from "../model/fhir/types/address";
 import {EnvironmentHandlerService} from "./environment-handler.service";
-import {FhirHelperService} from "./fhir-helper.service";
+import {FhirHelperService} from "./fhir/fhir-helper.service";
+import {BundleHelperService} from "./fhir/bundle-helper.service";
 
 @Injectable({
   providedIn: 'root'
@@ -93,17 +94,18 @@ export class DocumentHandlerService {
     private decedentService: DecedentService,
     private terminologyService: TerminologyHandlerService,
     private environmentHandler: EnvironmentHandlerService,
-    private fhirHelper: FhirHelperService
+    private fhirHelper: FhirHelperService,
+    private bundleHelper: BundleHelperService
   ) {}
 
   getDocumentBundle(compositionId: string) {
     return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "Composition/" + compositionId + "/$document").pipe(
       map((documentBundle: any) => {
         this.currentDocumentBundle = documentBundle;
-        let compositionResource = this.findResourceById(documentBundle, "Composition/" + compositionId);
+        let compositionResource = this.bundleHelper.findResourceById(documentBundle, "Composition/" + compositionId);
         this.currentCompositionResource = compositionResource;
         this.subjectId = compositionResource.subject.reference
-        let patientResource = this.findResourceById(documentBundle, this.subjectId);
+        let patientResource = this.bundleHelper.findResourceById(documentBundle, this.subjectId);
         this.patientResource.next(patientResource);
         this.caseHeader.next(this.createCaseHeader(documentBundle, patientResource, compositionResource));
         this.caseSummary.next(this.createCaseSummary(documentBundle, patientResource, compositionResource));
@@ -123,7 +125,7 @@ export class DocumentHandlerService {
     caseHeader.fullName = this.fhirHelper.getPatientOfficialName(patientResource);
     let genderString = patientResource.gender || this.defaultString;
     caseHeader.gender = genderString.substring(0,1).toUpperCase() + genderString.substring(1);
-    let deathDateResource = this.findResourceByProfileName(documentBundle, Obs_DeathDate);
+    let deathDateResource = this.bundleHelper.findResourceByProfileName(documentBundle, Obs_DeathDate);
     let splitDateTime = deathDateResource?.valueDateTime?.split("T") || []; //TODO: Add more handling to this for other forms of dateTime?
     caseHeader.deathDate = splitDateTime[0] || this.defaultString;
     caseHeader.deathTime = splitDateTime[1] || this.defaultString;
@@ -131,7 +133,7 @@ export class DocumentHandlerService {
 
     compositionResource.author?.map(( ref: any ) => {
 
-      let practitioner = this.findResourceById(documentBundle, ref.reference );
+      let practitioner = this.bundleHelper.findResourceById(documentBundle, ref.reference );
 
       let author = new Author();
 
@@ -196,14 +198,14 @@ export class DocumentHandlerService {
   generateCircumstances(documentBundle: any, compositionResource: any): Circumstances {
     let circumstances: Circumstances = new Circumstances();
 
-    let deathLocationResource = this.findResourceByProfileName(documentBundle, Loc_death);
-    let injuryLocationResource = this.findResourceByProfileName(documentBundle, Loc_injury);
+    let deathLocationResource = this.bundleHelper.findResourceByProfileName(documentBundle, Loc_death);
+    let injuryLocationResource = this.bundleHelper.findResourceByProfileName(documentBundle, Loc_injury);
 
     circumstances.deathLocation = deathLocationResource?.name || this.defaultString;
     circumstances.injuryLocation = injuryLocationResource?.name || this.defaultString;
 
-    circumstances.pregnancy = this.findResourceByProfileName(documentBundle, Obs_DecedentPregnancy)?.valueCodeableConcept?.coding[0]?.display || this.defaultString; // TODO: Missing data, once available fix.
-    circumstances.tobaccoUseContributed = this.findResourceByProfileName(documentBundle, Obs_TobaccoUseContributedToDeath)?.valueCodeableConcept?.coding[0]?.display || this.defaultString;; // TODO: Missing data, once available fix.
+    circumstances.pregnancy = this.bundleHelper.findResourceByProfileName(documentBundle, Obs_DecedentPregnancy)?.valueCodeableConcept?.coding[0]?.display || this.defaultString; // TODO: Missing data, once available fix.
+    circumstances.tobaccoUseContributed = this.bundleHelper.findResourceByProfileName(documentBundle, Obs_TobaccoUseContributedToDeath)?.valueCodeableConcept?.coding[0]?.display || this.defaultString;; // TODO: Missing data, once available fix.
 
     return circumstances;
   }
@@ -214,8 +216,8 @@ export class DocumentHandlerService {
     let jurisdictionSection = this.getSection(compositionResource, "jurisdiction");
     let observation = this.findJurisdictionObservation(documentBundle, compositionResource, jurisdictionSection);
 
-    let typeOfDeathLocationComponent = this.findObservationComponentByCode(observation, "58332-8");
-    let pronouncedDateTimeComponent = this.findObservationComponentByCode(observation, "80616-6");
+    let typeOfDeathLocationComponent = this.fhirHelper.findObservationComponentByCode(observation, "58332-8");
+    let pronouncedDateTimeComponent = this.fhirHelper.findObservationComponentByCode(observation, "80616-6");
 
     jurisdiction.typeOfDeathLocation = typeOfDeathLocationComponent?.valueCodeableConcept?.text ||
       typeOfDeathLocationComponent?.valueCodeableConcept?.coding?.[0].display || typeOfDeathLocationComponent?.valueCodeableConcept?.coding?.[0].code || this.defaultString;
@@ -236,7 +238,7 @@ export class DocumentHandlerService {
 
     causeAndMannerSection?.entry.map(( entry: any) =>
     {
-      let observation = this.findResourceById(documentBundle, entry.reference );
+      let observation = this.bundleHelper.findResourceById(documentBundle, entry.reference );
 
       if (observation != null)
       {
@@ -283,14 +285,14 @@ export class DocumentHandlerService {
           {
             causeAndManner.howDeathInjuryOccurred = observation.valueCodeableConcept?.text || this.defaultString;
 
-            let placeOfInjuryComponent = this.findObservationComponentByCode(observation, "69450-5");
+            let placeOfInjuryComponent = this.fhirHelper.findObservationComponentByCode(observation, "69450-5");
             causeAndManner.placeOfInjury = placeOfInjuryComponent?.valueCodeableConcept?.text || this.defaultString;
 
-            let workInjuryIndicatorComponent = this.findObservationComponentByCode(observation, "69444-8");
+            let workInjuryIndicatorComponent = this.fhirHelper.findObservationComponentByCode(observation, "69444-8");
             let workInjuryIndicatorValue = workInjuryIndicatorComponent?.valueCodeableConcept;
             causeAndManner.workInjuryIndicator = workInjuryIndicatorValue?.text || workInjuryIndicatorValue?.coding?.[0]?.display || workInjuryIndicatorValue?.coding?.[0]?.code || this.defaultString;
 
-            let transportationRoleComponent = this.findObservationComponentByCode(observation, "69451-3");
+            let transportationRoleComponent = this.fhirHelper.findObservationComponentByCode(observation, "69451-3");
             let transportationRoleValue = transportationRoleComponent?.valueCodeableConcept;
             causeAndManner.transportationRole = transportationRoleValue?.text || transportationRoleValue?.coding?.[0]?.display || transportationRoleValue?.coding?.[0]?.code || this.defaultString;
 
@@ -333,11 +335,11 @@ export class DocumentHandlerService {
   generateExamAndAutopsy(documentBundle: any, compositionResource: any): Autopsy {
     let autopsy: Autopsy = new Autopsy();
     // let autopsySection = this.getSection(compositionResource, "exam-autopsy");
-    let observation = this.findResourcesByProfileName(documentBundle, "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-autopsy-performed-indicator")[0];
+    let observation = this.bundleHelper.findResourcesByProfileName(documentBundle, "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-autopsy-performed-indicator")[0];
     let performedValue = observation?.valueCodeableConcept;
     autopsy.performed = performedValue?.text || performedValue?.coding?.[0]?.display || performedValue?.coding?.[0]?.code || this.defaultString;
 
-    let availableComponent = this.findObservationComponentByCode(observation, "69436-4");
+    let availableComponent = this.fhirHelper.findObservationComponentByCode(observation, "69436-4");
     let availableValue = availableComponent?.valueCodeableConcept;
     autopsy.resultsAvailable = availableValue?.text || availableValue?.coding?.[0]?.display || availableValue?.coding?.[0]?.code || this.defaultString;
 
@@ -346,46 +348,6 @@ export class DocumentHandlerService {
   // -------------------------
   // Find and Filter Functions
   // -------------------------
-
-  // This function should be used whenever possible to go off of absolute references to the full URL within the Document Bundle.
-  findResourceById(documentBundle: any = this.currentDocumentBundle, resourceId: string): any {
-    if(!documentBundle || !documentBundle.entry){
-      return null;
-    }
-    return (documentBundle.entry.find((entry: any) => entry.fullUrl === resourceId))?.resource || undefined;
-  }
-
-  findObservationComponentByCode(observation: any, componentCode: string): any {
-    if(!observation.component || !componentCode){
-      return null;
-    }
-    return (observation.component.find((component: any) => component.code.coding[0].code === componentCode)) || undefined;
-  }
-
-  // For singleton profiles, this function can be used to find the resource by the profile name. ID should be preferred whenever available.
-  findResourceByProfileName(documentBundle: any = this.currentDocumentBundle, profileName: string): any {
-    try {
-      const profile = documentBundle.entry.find((entry: any) => entry.resource.meta.profile.includes(profileName))?.resource;
-      return documentBundle.entry.find((entry: any) => entry.resource.meta.profile.includes(profileName))?.resource || undefined;
-    } catch(e) {
-      return undefined;
-    }
-  }
-
-  findResourcesByProfileName(documentBundle: any = this.currentDocumentBundle, profileName: string): any[] {
-    try {
-      let items = [];
-      documentBundle.entry.map( (entry: any) => {
-        if (entry.resource.meta.profile.includes(profileName)) {
-          items.push( entry.resource );
-        }
-      })
-      return items;
-    } catch(e) {
-      return undefined;
-    }
-  }
-
   // // Find Death Location Resource (US Core Location Profile) through the Composition.section reference.
   // findDeathLocation(documentBundle: any = this.currentDocumentBundle, compositionResource: any, circumstancesSection: any): any {
   //   let deathLocationResourceId = (circumstancesSection?.entry?.find((entry: any) => entry.reference.startsWith("Location")))?.reference || undefined;
@@ -401,7 +363,7 @@ export class DocumentHandlerService {
 
   findJurisdictionObservation(documentBundle: any = this.currentDocumentBundle, compositionResource: any, jurisdictionSection: any): any {
     let id = (jurisdictionSection?.entry?.find((entry: any) => entry.reference.startsWith("Observation")))?.reference || undefined;
-    return this.findResourceById(documentBundle, id);
+    return this.bundleHelper.findResourceById(documentBundle, id);
   }
 
   // Filter Bundle Entries by Patient Resource.
@@ -505,19 +467,20 @@ export class DocumentHandlerService {
   }
 
   getCurrentSubjectResource(): any {
-    return this.findResourceById(undefined, this.subjectId);
+    return this.bundleHelper.findResourceById(undefined, this.subjectId);
   }
 
   getCertifier(): any {
     let certifierId = this.currentCompositionResource?.author?.[0]?.reference;
     console.log(certifierId);
-    let test = this.findResourceById(this.currentDocumentBundle, certifierId);
+    let test = this.bundleHelper.findResourceById(this.currentDocumentBundle, certifierId);
     console.log(test)
     return test;
   }
 
-  getObservationResource(id: any): any {
-    return this.findResourceById(undefined, id);
+  // TODO: REFACTOR DIRECTIVE AND REMOVE THIS FUNCTION
+  findResourceByProfileNamePassThrough(profile) {
+    return this.bundleHelper.findResourceByProfileName(this.currentDocumentBundle, profile);
   }
 
 }

@@ -6,7 +6,8 @@ import {EnvironmentHandlerService} from "./environment-handler.service";
 import {TrackingNumberType} from "../model/tracking.number.type";
 import {trackingNumberUrl} from "../model/fhir.constants";
 import {ToxHeader} from "../model/tox-report-models/tox.header";
-import {FhirHelperService} from "./fhir-helper.service";
+import {FhirHelperService} from "./fhir/fhir-helper.service";
+import {BundleHelperService} from "./fhir/bundle-helper.service";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,8 @@ export class ToxicologyHandlerService {
   constructor(
     private http: HttpClient,
     private environmentHandler: EnvironmentHandlerService,
-    private fhirHelper: FhirHelperService
+    private fhirHelper: FhirHelperService,
+    private bundleHelper: BundleHelperService
   ) { }
 
   getToxicologyRecords(): Observable<any>{
@@ -82,7 +84,7 @@ export class ToxicologyHandlerService {
 
   setToxHeaderHeader(messageBundle: any) {
     const diagnosticReport = this.getDiagnosticReportFromMessageBundle(messageBundle);
-    const subject = this.fhirHelper.findSubjectInBundle(diagnosticReport, messageBundle);
+    const subject = this.bundleHelper.findSubjectInBundle(diagnosticReport, messageBundle);
     const toxLabNumber = this.getTrackingNumber(diagnosticReport, TrackingNumberType.Tox);
     console.log(diagnosticReport.issued);
     let toxHeader = new ToxHeader();
