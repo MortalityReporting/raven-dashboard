@@ -19,11 +19,13 @@ export class SetFhirExplorerDirective {
       this.fhirResourceProvider.setSelectedFhirResource(this.resource);
     }
     else if (this.profile) {
-      this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.findResourceByProfileName(undefined, this.profile));
+      // TODO: Refactor to provide the bundle to the directive so this is not needed...
+      this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.findResourceByProfileNamePassThrough(this.profile));
     }
     else if (this.observation)
     {
-      this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.findResourceById(undefined, this.observation));
+      // TODO: Refactor to provide the bundle to the directive so this is not needed...
+      this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.findResourceByProfileNamePassThrough(this.observation));
     }
     else if (this.title) {
       switch (this.title) {
@@ -40,6 +42,8 @@ export class SetFhirExplorerDirective {
     }
   }
 
-  constructor(private fhirResourceProvider: FhirResourceProviderService, private documentHandler: DocumentHandlerService) { }
+  constructor(private fhirResourceProvider: FhirResourceProviderService,
+              private documentHandler: DocumentHandlerService
+              ) { }
 
 }
