@@ -12,22 +12,61 @@
     <input type="text" value="{{ (toxHeader$ | async)?.toxCaseNumber}}" readonly>
     <input type="text" value="{{ (toxHeader$ | async)?.toxCaseSystem}}" readonly>
   </mat-toolbar-row>
-  <!--  <mat-toolbar-row>-->
 
-  <!--    <span class="content-spacer"> </span>-->
-  <!--&lt;!&ndash;    Authors:&ndash;&gt;-->
-  <!--&lt;!&ndash;    <mat-form-field>&ndash;&gt;-->
-  <!--&lt;!&ndash;      <mat-select value={{selectedAuthor}}>&ndash;&gt;-->
-  <!--&lt;!&ndash;        <mat-option class="mat-option" *ngFor="let author of (caseHeader$ | async)?.authors;" value="{{selectedAuthor}}">&ndash;&gt;-->
-  <!--&lt;!&ndash;          {{ author.givenName + " " + author.familyName }}&ndash;&gt;-->
-  <!--&lt;!&ndash;        </mat-option>&ndash;&gt;-->
-  <!--&lt;!&ndash;      </mat-select>&ndash;&gt;-->
-  <!--&lt;!&ndash;    </mat-form-field>&ndash;&gt;-->
-  <!--</mat-toolbar-row>-->
 </mat-toolbar>
 <mat-sidenav-container>
   <mat-sidenav mode="side" opened>
-    <mat-nav-list>
+    <mat-nav-list aria-label="Toxicology Record Navigation">
+
+      <mat-list-item (click)="onItemClick('mdiCaseNumber');">
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'MDI Case Number' : ''" matTooltipPosition="right" aria-hidden="true">
+          info
+        </mat-icon>
+        <span *ngIf="sidenavExpanded">&nbsp;MDI Case Number </span>
+      </mat-list-item>
+
+      <mat-list-item (click)="onItemClick('performers');">
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Performers' : ''" matTooltipPosition="right" aria-hidden="true">
+          person
+        </mat-icon>
+        <span *ngIf="sidenavExpanded">&nbsp;Performers</span>
+      </mat-list-item>
+
+      <mat-list-item (click)="onItemClick('specimens');">
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Specimens Received' : ''" matTooltipPosition="right" aria-hidden="true"
+                  svgIcon="labs">
+        </mat-icon>
+        <span *ngIf="sidenavExpanded">&nbsp;Specimens</span>
+      </mat-list-item>
+
+      <mat-list-item (click)="onItemClick('results');">
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Test Results' : ''" matTooltipPosition="right" aria-hidden="true">
+          lab_panel
+        </mat-icon>
+        <span *ngIf="sidenavExpanded">&nbsp;Test Results</span>
+      </mat-list-item>
+
+      <mat-list-item (click)="onItemClick('conclusion');">
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Conclusion' : ''" matTooltipPosition="right" aria-hidden="true">
+          question_mark
+        </mat-icon>
+        <span *ngIf="sidenavExpanded">&nbsp;Conclusion</span>
+      </mat-list-item>
+
+      <hr/>
+
+      <mat-list-item *ngIf="sidenavExpanded" (click)="onSidenavResize(false);" >
+        <mat-icon aria-label="Collapse Side Menu">
+          chevron_left
+        </mat-icon>&nbsp;
+        Collapse Menu
+      </mat-list-item>
+
+      <mat-list-item *ngIf="!sidenavExpanded" (click)="onSidenavResize(true);">
+        <mat-icon aria-label="Expand Side Menu" matTooltip="Expand Side Menu" matTooltipPosition="right">
+          chevron_right
+        </mat-icon>
+      </mat-list-item>
 
     </mat-nav-list>
   </mat-sidenav>
