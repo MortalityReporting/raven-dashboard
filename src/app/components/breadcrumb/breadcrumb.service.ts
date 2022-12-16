@@ -47,8 +47,7 @@ export class BreadcrumbService {
     if (route) {
       const routeUrl = parentUrl.concat(route.url.map((url) => url.path));
 
-      let components: string[] = new Array();
-      components = routeUrl.toString().split(',');
+      let components = routeUrl.toString().split(',');
 
       // only show 'home' when we're not home      
       if (routeUrl.length > 0) {
