@@ -18,10 +18,8 @@ export class BreadcrumbService {
         filter((event) => event instanceof NavigationEnd)
       )
       .subscribe((event) => {
-        // Get the url
-        const root = this.router.routerState.snapshot.root;
-
         const breadcrumbs: Breadcrumb[] = [];
+        const root = this.router.routerState.snapshot.root;
 
         // Make first call to addBreadcrumb function
         this.addBreadcrumb(root.firstChild!, [], breadcrumbs);
@@ -31,7 +29,7 @@ export class BreadcrumbService {
       });
   }
 
-  buildPath(iterations: number, components: string[]) {
+  private buildPath(iterations: number, components: string[]) {
     var path = '';
 
     for (let i = 1; i <= iterations; i++) {
@@ -62,15 +60,9 @@ export class BreadcrumbService {
 
         let label = item;
 
-        if (item === "records") {
-          label = "record viewer";
-        }
-        else if (item === "mdi") {
-          label = "mdi viewer";
-        }
-        else if (item === "tox") {
-          label = "toxicology viewer";
-        }
+        label = label.replace( "records", "record viewer" );
+        label = label.replace( "mdi", "mdi viewer" );
+        label = label.replace( "tox", "toxicology viewer" );
 
         const breadcrumb = {
             label: label,
