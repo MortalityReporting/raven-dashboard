@@ -1,24 +1,43 @@
-<p>toxicology-report-content works!</p>
-<p>toxicology-report-content works!</p>
-<p>toxicology-report-content works!</p>
-<p>toxicology-report-content works!</p>
-<p>toxicology-report-content works!</p>
-<p>toxicology-report-content works!</p>
-<p>toxicology-report-content works!</p>
-<p>toxicology-report-content works!</p>
-<p>toxicology-report-content works!</p>
-<p>toxicology-report-content works!</p>
-<p>toxicology-report-content works!</p>
-<p>toxicology-report-content works!</p>
-<p>toxicology-report-content works!</p>
-<p>toxicology-report-content works!</p>
-<p>toxicology-report-content works!</p>
-<p>toxicology-report-content works!</p>
-<p>toxicology-report-content works!</p>
-<p>toxicology-report-content works!</p>
-<p>toxicology-report-content works!</p>
-<p>toxicology-report-content works!</p>
-<p>toxicology-report-content works!</p>
-<p>toxicology-report-content works!</p>
-<p>toxicology-report-content works!</p>
-<p>toxicology-report-content works!</p>
+<div class="case-summary-content-wrapper">
+  <div class="section-button-wrapper">
+    <button mat-raised-button (click)="onOpenAll()">
+      <mat-icon>expand_more</mat-icon>
+      Expand All Sections
+    </button>
+    <button mat-raised-button (click)="onCloseAll()">
+      <mat-icon>expand_less</mat-icon>
+      Collapse All Sections
+    </button>
+    <span class="content-spacer"></span>
+
+  </div>
+  <!-- mat-expansion-panel used outside of accordion to maintain consistent styling for non collapsible div -->
+  <div class="summary-section mdi-case-number-body-padding" >
+    <div class="summary-section-body">
+      <div class="summary-section-grid">
+        <div class="grid-row">
+          <div class="grid-col-1">
+            <app-toxicology-report-mdi-case [toxSummary]="toxSummary" *ngIf="toxSummary"></app-toxicology-report-mdi-case>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <mat-accordion multi>
+
+
+
+  </mat-accordion>
+</div>
+
+
+MDI Case Number
+
+Performers
+
+Specimens
+
+Test Results
+
+Conclusion

@@ -3,14 +3,14 @@
   <mat-toolbar-row class="header-mint" appSetFhirExplorer [resource]="messageBundle$ | async">
     <span class="viewer-header-title">Toxicology Viewer</span>
     <span class="viewer-header-label">Subject Name:</span>
-    <input type="text" value="{{ (toxHeader$ | async)?.fullName}}" readonly>
+    <input type="text" value="{{ toxHeader?.fullName || ''}}" readonly>
     <span class="content-spacer"> </span>
     <span class="viewer-header-label">Date Report Issued:</span>
-    <input type="text" value="{{ (toxHeader$ | async)?.reportDate}}" readonly>
+    <input type="text" value="{{ toxHeader?.reportDate || ''}}" readonly>
     <span class="content-spacer"> </span>
     <span class="viewer-header-label">Tox Lab Case Number/System:</span>
-    <input type="text" value="{{ (toxHeader$ | async)?.toxCaseNumber}}" readonly>
-    <input type="text" value="{{ (toxHeader$ | async)?.toxCaseSystem}}" readonly>
+    <input type="text" value="{{ toxHeader?.toxCaseNumber || ''}}" readonly>
+    <input type="text" value="{{ toxHeader?.toxCaseSystem || ''}}" readonly>
   </mat-toolbar-row>
 
 </mat-toolbar>
@@ -71,6 +71,6 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <app-toxicology-report-content></app-toxicology-report-content>
+    <app-toxicology-report-content [toxHeader]="toxHeader" [toxSummary]="toxSummary"></app-toxicology-report-content>
   </mat-sidenav-content>
 </mat-sidenav-container>

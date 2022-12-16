@@ -12,8 +12,8 @@ import {
   Demographics,
   UsualWork,
   Autopsy
-} from "../model/case-summary-models/case.summary";
-import {Author, CaseHeader} from "../model/case-summary-models/case.header";
+} from "../model/record-models/case.summary";
+import {Author, CaseHeader} from "../model/record-models/case.header";
 import {TrackingNumber} from "../model/mdi/tracking.number";
 import {TerminologyHandlerService} from "./terminology-handler.service";
 import {
@@ -419,27 +419,6 @@ export class DocumentHandlerService {
 
     return trackingNumbers;
   }
-
-    // Get Tracking Number from Composition Extension
-    getTrackingNumber(compositionResource: any): TrackingNumber {
-      let trackingNumber = new TrackingNumber();
-      let extensions = compositionResource.extension;
-      let trackingNumberExtension = extensions?.find((extension: any) => extension.url === "http://hl7.org/fhir/us/mdi/StructureDefinition/Extension-tracking-number");
-      let valueIdentifier = trackingNumberExtension?.valueIdentifier;
-      trackingNumber.value = valueIdentifier?.value || "Tracking Number Not Specified";
-
-      if (valueIdentifier?.type?.text) {
-        trackingNumber.type = valueIdentifier.type.text;
-      }
-      else if (valueIdentifier?.type?.coding[0].code) {
-        let code = valueIdentifier.type?.coding[0].code;
-        trackingNumber.type = this.terminologyService.mapMdiCodeToDisplay(code);
-      }
-      else {
-        trackingNumber.type = "Unknown Type"
-      }
-      return trackingNumber;
-    }
 
   // Get SSN from Patient Identifier
   getSocialSecurityNumber(patientResource: any): string {

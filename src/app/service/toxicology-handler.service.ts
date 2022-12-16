@@ -1,21 +1,19 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable, Subject, tap} from "rxjs";
+import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
 import {EnvironmentHandlerService} from "./environment-handler.service";
 import {TrackingNumberType} from "../model/tracking.number.type";
 import {trackingNumberUrl} from "../model/fhir.constants";
-import {ToxHeader} from "../model/tox-report-models/tox.header";
+import {ToxHeader} from "../model/record-models/tox.header";
 import {FhirHelperService} from "./fhir/fhir-helper.service";
 import {BundleHelperService} from "./fhir/bundle-helper.service";
+import {ToxSummary} from "../model/record-models/tox.summary";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ToxicologyHandlerService {
-
-  private toxHeader: BehaviorSubject<ToxHeader> = new BehaviorSubject<ToxHeader>(undefined);
-  toxHeader$ = this.toxHeader.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -60,8 +58,7 @@ export class ToxicologyHandlerService {
       this.environmentHandler.getFhirServerBaseURL() + "DiagnosticReport/$toxicology-message",
       parametersResource
     ).pipe(
-      map((searchBundle: any) => searchBundle.entry[0].resource),
-      tap(messageBundle => this.setToxHeaderHeader(messageBundle))
+      map((searchBundle: any) => searchBundle.entry[0].resource)
     );
   }
 
@@ -82,7 +79,7 @@ export class ToxicologyHandlerService {
     return diagnosticReport;
   }
 
-  setToxHeaderHeader(messageBundle: any) {
+  constructToxHeaderHeader(messageBundle: any): ToxHeader {
     const diagnosticReport = this.getDiagnosticReportFromMessageBundle(messageBundle);
     const subject = this.bundleHelper.findSubjectInBundle(diagnosticReport, messageBundle);
     const toxLabNumber = this.getTrackingNumber(diagnosticReport, TrackingNumberType.Tox);
@@ -92,7 +89,25 @@ export class ToxicologyHandlerService {
     toxHeader.reportDate = diagnosticReport.issued.split("T")[0] || undefined;
     toxHeader.toxCaseNumber = toxLabNumber.value;
     toxHeader.toxCaseSystem = toxLabNumber.system;
-    this.toxHeader.next(toxHeader)
+    return toxHeader
+  }
+
+  constructToxSummary(messageBundle: any): ToxSummary {
+    let toxSummary = new ToxSummary()
+    const diagnosticReport = this.getDiagnosticReportFromMessageBundle(messageBundle);
+    const subject = this.bundleHelper.findSubjectInBundle(diagnosticReport, messageBundle);
+    toxSummary.patientId = subject.id //"6951b919-1872-448c-8893-555febe22bc1";
+    toxSummary.mdiCaseNumber = this.fhirHelper.getTrackingNumber(diagnosticReport, TrackingNumberType.Mdi);
+
+    console.log(toxSummary)
+    return toxSummary
+  }
+
+  // TODO: Refactor to map to boolean
+  isRelatedMdiDocumentAvailable(subjectId: any) {
+    return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "Composition?subject=" + subjectId).pipe(
+      map((searchBundle:any) => {return !!searchBundle.entry})
+    );
   }
 
 }

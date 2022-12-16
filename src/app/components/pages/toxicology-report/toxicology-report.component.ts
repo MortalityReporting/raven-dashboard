@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {ToxicologyHandlerService} from "../../../service/toxicology-handler.service";
 import {ActivatedRoute} from "@angular/router";
-import {Observable} from "rxjs";
+import {Observable, tap} from "rxjs";
 import {FhirResourceProviderService} from "../../../service/fhir-resource-provider.service";
 import {MatIconRegistry} from "@angular/material/icon";
 import {DomSanitizer} from "@angular/platform-browser";
+import {ToxHeader} from "../../../model/record-models/tox.header";
+import {ToxSummary} from "../../../model/record-models/tox.summary";
 
 @Component({
   selector: 'app-toxicology-report',
@@ -14,7 +16,9 @@ import {DomSanitizer} from "@angular/platform-browser";
 export class ToxicologyReportComponent implements OnInit {
 
   messageBundle$: Observable<any>;
-  toxHeader$: Observable<any>;
+  toxHeader: ToxHeader;
+  toxSummary: ToxSummary;
+
   sidenavExpanded = false;
   autosize: boolean = false;
 
@@ -35,10 +39,10 @@ export class ToxicologyReportComponent implements OnInit {
     this.messageBundle$ = this.toxicologyHandler.getMessageBundle(toxLabId);
     this.messageBundle$.subscribe(bundle => {
       this.fhirResourceProvider.setSelectedFhirResource(bundle);
+      this.toxHeader = this.toxicologyHandler.constructToxHeaderHeader(bundle);
+      this.toxSummary = this.toxicologyHandler.constructToxSummary(bundle);
       }
     );
-    this.toxHeader$ = this.toxicologyHandler.toxHeader$;
-
   }
 
   onSidenavResize(expanded: boolean) {
