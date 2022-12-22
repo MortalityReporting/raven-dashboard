@@ -1,12 +1,13 @@
 import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {PageEvent} from '@angular/material/paginator';
 import {MatSort} from "@angular/material/sort";
 import {DecedentGridDTO} from "../../../../model/decedent.grid.dto";
 import {DecedentService} from "../../../../service/decedent.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {mergeMap, forkJoin, map, Observable} from "rxjs";
+import {mergeMap, forkJoin, map} from "rxjs";
 import {UtilsService} from "../../../../service/utils.service";
+import {MatSelect} from "@angular/material/select";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-decedent-records-grid',
@@ -15,10 +16,14 @@ import {UtilsService} from "../../../../service/utils.service";
 })
 export class DecedentRecordsGridComponent implements OnInit {
 
+  @ViewChild('mannerOfDeathSelect') mannerOfDeathSelect: MatSelect;
+
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['index', 'name', 'gender', 'tod', 'mannerOfDeath', 'caseNumber'];
+  displayedColumns: string[] = ['index', 'officialName', 'gender', 'tod', 'mannerOfDeath', 'caseNumber'];
   decedentGridDtoList: DecedentGridDTO[];
   isLoading = true;
+  mannerOfDeathList: string [] = [];
+  pipe: DatePipe;
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -28,7 +33,7 @@ export class DecedentRecordsGridComponent implements OnInit {
     private route: ActivatedRoute,
     private decedentService: DecedentService,
     private router: Router,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
   ) {
   }
 
@@ -86,7 +91,9 @@ export class DecedentRecordsGridComponent implements OnInit {
           this.decedentGridDtoList = data.filter(record => !!record.caseNumber);
           this.dataSource = new MatTableDataSource(this.decedentGridDtoList);
           this.dataSource.sort = this.sort;
-          },
+          this.mannerOfDeathList = this.getMannerOfDeathList(this.decedentGridDtoList);
+          this.setDataSourceFilters();
+        },
         error: (e) => {
           this.isLoading = false;
           console.error(e);
@@ -103,12 +110,12 @@ export class DecedentRecordsGridComponent implements OnInit {
     this.router.navigate(['records/mdi/', row.decedentId]);
   }
 
-  pageChanged(event: PageEvent) {
-  }
-
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   getAgeFromDob(birthday: any) {
@@ -117,4 +124,34 @@ export class DecedentRecordsGridComponent implements OnInit {
     return Math.abs(ageDate.getUTCFullYear() - 1970);
   }
 
+  private getMannerOfDeathList(decedentGridDtoList: DecedentGridDTO[]) {
+    const result = [...new Set (decedentGridDtoList.map(decedent => decedent.mannerOfDeath))];
+    return result;
+  }
+
+  applyMannerOfDeathFilter() {
+    const mannerOfDeath = this.mannerOfDeathSelect.value;
+    this.dataSource.filter = mannerOfDeath;
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  private setDataSourceFilters() {
+    this.pipe = new DatePipe('en');
+    const defaultPredicate = this.dataSource.filterPredicate;
+    this.dataSource.filterPredicate = (data, filter) => {
+      const formatted = this.pipe.transform(data.tod,'MM/dd/yyyy');
+      return formatted.indexOf(filter) >= 0 || defaultPredicate(data,filter) ;
+    }
+  }
+
+  onClearFilters() {
+    this.mannerOfDeathSelect.value = null;
+    this.input.nativeElement.value = '';
+    this.dataSource.filter = '';
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
 }
