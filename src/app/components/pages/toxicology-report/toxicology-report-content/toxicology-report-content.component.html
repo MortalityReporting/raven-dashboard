@@ -25,19 +25,45 @@
   </div>
 
   <mat-accordion multi>
+    <!-- Performer(s) -->
+    <mat-expansion-panel class="summary-section" id="performers" [expanded]="isExpanded('performers')">
+      <mat-expansion-panel-header (click)="onToggleState( 'performers' )">
+        <mat-panel-title>Performer(s)</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="summary-section-body">
+        SPACER SPACER SPACER
+      </div>
+    </mat-expansion-panel>
 
+    <!-- Specimens -->
+    <mat-expansion-panel class="summary-section" id="specimens" [expanded]="isExpanded('specimens')">
+      <mat-expansion-panel-header (click)="onToggleState( 'specimens' )">
+        <mat-panel-title>Specimens</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="summary-section-body">
+        SPACER SPACER SPACER
+      </div>
+    </mat-expansion-panel>
 
+    <!-- Test Results -->
+    <mat-expansion-panel class="summary-section" id="testresults" [expanded]="isExpanded('testresults')">
+      <mat-expansion-panel-header (click)="onToggleState( 'testresults' )">
+        <mat-panel-title>Test Results</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="summary-section-body">
+        SPACER SPACER SPACER
+      </div>
+    </mat-expansion-panel>
+
+    <!-- Conclusion -->
+    <mat-expansion-panel class="summary-section" id="conclusion" [expanded]="isExpanded('conclusion')">
+      <mat-expansion-panel-header (click)="onToggleState( 'conclusion' )">
+        <mat-panel-title>Conclusion</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="summary-section-body">
+        SPACER SPACER SPACER
+      </div>
+    </mat-expansion-panel>
 
   </mat-accordion>
 </div>
-
-
-MDI Case Number
-
-Performers
-
-Specimens
-
-Test Results
-
-Conclusion

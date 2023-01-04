@@ -32,3 +32,36 @@ li mat-icon {
 mat-sidenav-container {
   height: 100%;
 }
+
+.mdi-case-number-label {
+  margin: auto;
+  font-weight: bold;
+  flex: 1;
+}
+
+.mdi-case-number-flex-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.mdi-case-number-value {
+  flex: 1;
+  margin: auto;
+}
+
+.mdi-case-number-open-related {
+  flex: 2;
+  margin-right: 10px;
+  justify-content: flex-end;
+  align-items: flex-end;
+  align-content: flex-end;
+  display: flex;
+}
+
+
+
+.mdi-case-number-body-padding {
+  padding: 8px 24px 8px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}

@@ -8,7 +8,7 @@ import {trackingNumberUrl} from "../model/fhir.constants";
 import {ToxHeader} from "../model/record-models/tox.header";
 import {FhirHelperService} from "./fhir/fhir-helper.service";
 import {BundleHelperService} from "./fhir/bundle-helper.service";
-import {ToxSummary} from "../model/record-models/tox.summary";
+import {Performer, ToxSummary} from "../model/record-models/tox.summary";
 
 @Injectable({
   providedIn: 'root'
@@ -99,9 +99,22 @@ export class ToxicologyHandlerService {
     toxSummary.patientId = subject.id //"6951b919-1872-448c-8893-555febe22bc1";
     toxSummary.mdiCaseNumber = this.fhirHelper.getTrackingNumber(diagnosticReport, TrackingNumberType.Mdi);
 
+
+    toxSummary.performers = this.createPerformersList(diagnosticReport, messageBundle);
+
     console.log(toxSummary)
     return toxSummary
   }
+
+  // TODO: Add support for non references.
+  createPerformersList(diagnosticReport: any, messageBundle: any): Performer[] {
+    let performers = [];
+    if (diagnosticReport.performer) {
+      diagnosticReport.performer.forEach(performer => console.log(performer));
+    }
+    return performers;
+  }
+
 
   // TODO: Refactor to map to boolean
   isRelatedMdiDocumentAvailable(subjectId: any) {

@@ -6,7 +6,7 @@ import {ToxSummary} from "../../../../model/record-models/tox.summary";
 @Component({
   selector: 'app-toxicology-report-content',
   templateUrl: './toxicology-report-content.component.html',
-  styleUrls: ['./toxicology-report-content.component.css']
+  styleUrls: ['../toxicology-report.component.css']
 })
 export class ToxicologyReportContentComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
@@ -14,14 +14,10 @@ export class ToxicologyReportContentComponent implements OnInit {
   @Input() toxSummary: ToxSummary;
 
   idStateList = [
-    { expanded: true,     id: 'caseAdminInfo' },
-    { expanded: false,    id: 'demographics' },
-    { expanded: false,    id: 'jurisdiction' },
-    { expanded: false,    id: 'causeAndManner' },
-    { expanded: false,    id: 'medicalHistory' },
-    { expanded: false,    id: 'narratives' },
-    { expanded: false,    id: 'circumstances' },
-    { expanded: false,    id: 'examAndAutopsy' },
+    { expanded: true,    id: 'performers' },
+    { expanded: true,    id: 'specimens' },
+    { expanded: true,    id: 'testresults' },
+    { expanded: true,    id: 'conclusion' }
   ]
 
   constructor(

@@ -7,14 +7,14 @@ export class ToxSummary {
   conclusion: string;
 }
 
-class Performer {
+export class Performer {
+  name: string;
+}
+
+export class Specimen {
 
 }
 
-class Specimen {
-
-}
-
-class Lab {
+export class Lab {
 
 }

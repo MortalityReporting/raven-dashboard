@@ -6,7 +6,7 @@ import {Observable} from "rxjs";
 @Component({
   selector: 'app-toxicology-report-mdi-case',
   templateUrl: './toxicology-report-mdi-case.component.html',
-  styleUrls: ['./toxicology-report-mdi-case.component.css']
+  styleUrls: ['../toxicology-report.component.css']
 })
 export class ToxicologyReportMdiCaseComponent implements OnInit {
   @Input() toxSummary: ToxSummary;
