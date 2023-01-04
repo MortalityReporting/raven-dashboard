@@ -1,52 +1,68 @@
 <div>
 
-  <div>
+  <mat-card>
     <app-decedent-basic-info [decedentInfo]="decedentInfo"></app-decedent-basic-info>
-  </div>
+  </mat-card>
 
-  <form [formGroup]="searchEdrsForm" (ngSubmit)="onSubmit()">
-
-    <ng-container formArrayName="parameters">
-
-      <ng-container *ngFor="let parametersFormControl of parameters.controls; let index = index">
-
-        <div [formGroupName]="index">
-
-          <mat-form-field appearance="outline">
-            <mat-label>Parameter</mat-label>
-            <mat-select formControlName="name">
-              <mat-option *ngFor="let param of getFormControlParamTypes(index, parametersFormControl)" [value]="param.value">
-                {{ param.display }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" style="margin-left: 1em">
-            <input matInput id="valueString" type="text" formControlName="valueString"/>
-          </mat-form-field>
-
-          <button style="margin-left: 1em" mat-mini-fab aria-label="Delete Filter" color="warn" matTooltip="Remove Parameter"
-                  (click)="onDeleteFormParam(index)">
-            <mat-icon>delete</mat-icon>
-          </button>
-
-        </div>
-      </ng-container>
-
-    </ng-container>
-
-    <button mat-raised-button type="button" (click)="addNewFilter()"><mat-icon>add</mat-icon> Add Parameter</button>
-    <span style="margin-left: 3em"><button type="submit" mat-raised-button color="primary">Search</button></span>
-
-    <div style="margin-top: 2em">
-      <div>Search Parameters Resource Preview</div>
-      <div>
-        <pre>{{getSearchParametersResourcePreview() | json}}</pre>
-      </div>
+  <mat-card style="margin-top: 1em">
+    <div class="row">
+      <div class="col"> Enter Search Parameters</div>
+      <div class="col"> Search Parameters Preview</div>
     </div>
 
-  </form>
+    <form [formGroup]="searchEdrsForm" (ngSubmit)="onSubmit()">
+      <div class="row" style="margin-top: 1em">
+        <div class="col">
+          <ng-container formArrayName="parameters">
 
+            <ng-container *ngFor="let parametersFormControl of parameters.controls; let index = index">
+
+              <div [formGroupName]="index">
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Parameter</mat-label>
+                  <mat-select formControlName="name">
+                    <mat-option *ngFor="let param of getFormControlParamTypes(index, parametersFormControl)"
+                                [value]="param.value">
+                      {{ param.display }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" style="margin-left: 1em">
+                  <input matInput id="valueString" type="text" formControlName="valueString"/>
+                </mat-form-field>
+
+                <button style="margin-left: 1em" mat-mini-fab aria-label="Delete Filter" color="warn"
+                        matTooltip="Remove Parameter"
+                        (click)="onDeleteFormParam(index)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+
+              </div>
+            </ng-container>
+
+          </ng-container>
+          <button mat-raised-button type="button" (click)="addNewFilter()">
+            <mat-icon>add</mat-icon>
+            Add Parameter
+          </button>
+        </div>
+
+        <div class="col">
+          <div class="search-params-preview">
+            <pre>{{getSearchParametersResourcePreview() | json}}</pre>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 1em; flex-direction: row-reverse">
+
+        <span style="margin-left: 3em"><button type="submit" mat-raised-button color="primary">Search</button></span>
+      </div>
+    </form>
+  </mat-card>
+
+  <mat-card style="margin-top: 1em">
   <mat-tab-group (selectedTabChange)="onResultsTabChange()" #resultsTabGroup>
 
     <mat-tab label="Result">
@@ -57,7 +73,7 @@
             <span class="result-label">Status:</span>
             {{ errorResponse.status }} {{ errorResponse.statusText }}
           </div>
-          <div  *ngFor="let issue of errorResponse?.error?.issue; let index = index">
+          <div *ngFor="let issue of errorResponse?.error?.issue; let index = index">
             <div class="result-line-item"><span class="result-label">Severity:</span> {{ issue?.severity }}</div>
             <div class="result-line-item"><span class="result-label">Text:</span> {{ issue?.details?.text }}</div>
           </div>
@@ -72,27 +88,27 @@
           <table mat-table [dataSource]="resultTableDataSource" style="width: 100%">
 
             <ng-container matColumnDef="officialName">
-              <th mat-header-cell *matHeaderCellDef> Name </th>
+              <th mat-header-cell *matHeaderCellDef> Name</th>
               <td mat-cell *matCellDef="let decedent"> {{decedent.officialName}} </td>
             </ng-container>
 
             <ng-container matColumnDef="dateOfDeath">
-              <th mat-header-cell *matHeaderCellDef> Date of Death </th>
+              <th mat-header-cell *matHeaderCellDef> Date of Death</th>
               <td mat-cell *matCellDef="let decedent"> {{decedent.deathDate | date:'MM/dd/yyyy' }} </td>
             </ng-container>
 
             <ng-container matColumnDef="mannerOfDeath">
-              <th mat-header-cell *matHeaderCellDef> Manner of Death </th>
+              <th mat-header-cell *matHeaderCellDef> Manner of Death</th>
               <td mat-cell *matCellDef="let decedent"> {{decedent.mannerOfDeath}} </td>
             </ng-container>
 
             <ng-container matColumnDef="mdiCaseNumber">
-              <th mat-header-cell *matHeaderCellDef> MDI Case Number </th>
+              <th mat-header-cell *matHeaderCellDef> MDI Case Number</th>
               <td mat-cell *matCellDef="let decedent"> {{decedent.mdiCaseNumber}} </td>
             </ng-container>
 
             <ng-container matColumnDef="edrsFileNumber">
-              <th mat-header-cell *matHeaderCellDef> EDRS File Number </th>
+              <th mat-header-cell *matHeaderCellDef> EDRS File Number</th>
               <td mat-cell *matCellDef="let decedent"> {{decedent.edrsFileNumber}} </td>
             </ng-container>
 
@@ -133,9 +149,12 @@
     </mat-tab>
 
   </mat-tab-group>
-
-  <div style="margin-top: 2em">
+    <div class="top-spacer">
     Select a case in the result table to view a summary below.
+    </div>
+  </mat-card>
+
+  <mat-card style="margin-top: 1em">
 
     <mat-tab-group #caseSummaryTabGroup>
 
@@ -149,6 +168,6 @@
 
     </mat-tab-group>
 
-  </div>
+  </mat-card>
 
 </div>

@@ -213,3 +213,13 @@ button {
 .explorer-header-instructions {
   font-size: small;
 }
+
+/* Basic row and col classes*/
+.row {
+  display: flex;  /* aligns all child elements (flex items) in a row */
+}
+
+.col {
+  flex: 1;        /* distributes space on the line equally among items */
+}
+
