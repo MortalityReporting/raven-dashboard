@@ -2,6 +2,7 @@
   margin-top: 1em;
   padding: 1em;
   min-height: 300px;
+  max-height: 300px;
   border: #cdcdcd 1px solid;
   border-radius: 4px;
   overflow: auto;

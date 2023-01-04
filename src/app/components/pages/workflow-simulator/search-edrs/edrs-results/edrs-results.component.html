@@ -69,7 +69,7 @@
 
         <!-- Render success results here -->
         <div *ngIf="successResponse">
-          <table mat-table [dataSource]="resultTableDataSource">
+          <table mat-table [dataSource]="resultTableDataSource" style="width: 100%">
 
             <ng-container matColumnDef="officialName">
               <th mat-header-cell *matHeaderCellDef> Name </th>
@@ -78,7 +78,7 @@
 
             <ng-container matColumnDef="dateOfDeath">
               <th mat-header-cell *matHeaderCellDef> Date of Death </th>
-              <td mat-cell *matCellDef="let decedent"> {{decedent.dateOfDeath | date}} </td>
+              <td mat-cell *matCellDef="let decedent"> {{decedent.deathDate | date:'MM/dd/yyyy' }} </td>
             </ng-container>
 
             <ng-container matColumnDef="mannerOfDeath">

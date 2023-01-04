@@ -8,6 +8,12 @@ import {UtilsService} from "../../../../../service/utils.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {FhirHelperService} from "../../../../../service/fhir/fhir-helper.service";
 
+import {
+  Obs_DeathDate,
+  Obs_MannerOfDeath, Profiles,
+} from "../../../../../model/mdi/profile.list"
+import {TrackingNumberType} from "../../../../../model/tracking.number.type";
+
 @Component({
   selector: 'app-edrs-results',
   templateUrl: './edrs-results.component.html',
@@ -25,6 +31,7 @@ export class EdrsResultsComponent implements OnInit {
   successResponse: any;
   resultTableColumns = ['officialName', 'dateOfDeath', 'mannerOfDeath', 'mdiCaseNumber', 'edrsFileNumber'];
   resultTableDataSource = new MatTableDataSource<any>();
+  selectedDecedent: any;
 
   //TODO change this to a data driven solution when we have an API that can support it
   edrsSearchFormParams = [
@@ -55,7 +62,7 @@ export class EdrsResultsComponent implements OnInit {
     private fb: FormBuilder,
     private utilsService: UtilsService,
     uiStringConstants: UiStringConstants,
-    private fhirHelperService: FhirHelperService
+    private fhirHelperService: FhirHelperService,
   ) {
     this.uiConstantsStep3 = uiStringConstants.WorkflowSimulator.searchEdrs.step2;
     this.commonUIConstants = uiStringConstants.Common;
@@ -108,19 +115,24 @@ export class EdrsResultsComponent implements OnInit {
     outerEntryList.forEach((bundle, i) => {
       let decedent: any = {};
       decedent.bundleResource = bundle;
-      bundle.resource.entry.forEach(entry => {
-        // console.log(entry);
-        // console.log(i);
-        if(entry.resource.resourceType === 'Patient'){
-          decedent.patientResource = entry.resource;
-          const officialName = this.fhirHelperService.getPatientOfficialName(entry.resource);
-          decedent.officialName = officialName;
-          decedent.mannerOfDeath = 'Accidental';
-          decedent.edrsFileNumber = '1234-56-789';
-          decedent.mdiCaseNumber = '789';
-          decedent.dateOfDeath = new Date();
-        }
-      });
+
+      const patientResource = this.getPatientResource(bundle.resource);
+      const officialName = this.fhirHelperService.getPatientOfficialName(patientResource);
+      decedent.officialName = officialName;
+
+      const mannerOfDeathObservation = this.getObservationByProfile(bundle.resource, Obs_MannerOfDeath);
+      const mannerOfDeathStr = this.getMannerOfDeathObservationStr(mannerOfDeathObservation);
+      decedent.mannerOfDeath = mannerOfDeathStr;
+
+      const deathDateObservation = this.getObservationByProfile(bundle.resource, Obs_DeathDate);
+      decedent.deathDate= deathDateObservation.effectiveDateTime;
+
+      const mdiCaseNumber = this.getTrackingNumber(bundle.resource, TrackingNumberType.Mdi);
+      decedent.mdiCaseNumber = mdiCaseNumber;
+
+      const edrsFileNumber = this.getTrackingNumber(bundle.resource, TrackingNumberType.Edrs);
+      decedent.edrsFileNumber = edrsFileNumber;
+
       formattedData.push(decedent);
     })
     console.log(formattedData);
@@ -132,7 +144,6 @@ export class EdrsResultsComponent implements OnInit {
     this.successResponse = null;
     this.searchEdrsService.searchEdrs(this.getSearchParametersResourcePreview()).subscribe({
       next: value => {
-        console.log(value);
         this.parseResponseToTable(value);
         this.successResponse = value;
         },
@@ -167,7 +178,6 @@ export class EdrsResultsComponent implements OnInit {
   onDeleteFormParam(filterIndex){
     this.parameters.removeAt(filterIndex);
   }
-
 
   onSubmit() {
     this.executeEdrsSearch();
@@ -247,7 +257,54 @@ export class EdrsResultsComponent implements OnInit {
     return resultList;
   }
 
+  // TODO extract this to mdi service
+  private getMannerOfDeathObservationStr(observationResource){
+    if(!observationResource.resourceType
+      || observationResource.resourceType != 'Observation'){
+      console.error("Empty or incorrect function parameter.");
+      return null;
+    }
+    const result = observationResource.valueCodeableConcept?.coding?.[0]?.display;
+    return result;
+  };
 
+  private getPatientResource(documentBundle) {
+    if(!documentBundle
+      || !documentBundle.resourceType || documentBundle.resourceType != "Bundle"
+      || !documentBundle.type || documentBundle.type != "document"
+      || !documentBundle.entry?.length){
+      console.error("Empty or incorrect function parameter.");
+      return null;
+    }
+    const result = documentBundle.entry
+      .find(entry => entry?.resource?.resourceType === "Patient")
+      .resource;
+    return result;
+  }
+
+  private getObservationByProfile(documentBundle, profileStr) {
+    if(!documentBundle
+      || !documentBundle.resourceType || documentBundle.resourceType != "Bundle"
+      || !documentBundle.type || documentBundle.type != "document"
+      || !documentBundle.entry?.length){
+      console.error("Empty or incorrect function parameter.");
+      return null;
+    }
+    const result = documentBundle.entry
+      .filter(entry => entry?.resource?.resourceType === "Observation")
+      .find(entry => entry?.resource?.meta?.profile?.[0] === profileStr)
+      .resource;
+
+    return result;
+  }
+
+  //TODO this code simply does not work and needs to be refactored or extended properly
+  getTrackingNumber(resource: any, type: TrackingNumberType = TrackingNumberType.Mdi): string {
+    const extensions = resource.extension;
+    const trackingNumberExtensions = extensions?.filter((extension: any) => extension.url === "http://hl7.org/fhir/us/mdi/StructureDefinition/Extension-tracking-number");
+    const matchedExtension = trackingNumberExtensions?.find((extension: any) => extension?.valueIdentifier?.type?.coding?.[0].code === type);
+    return matchedExtension?.valueIdentifier?.value || undefined;
+  }
 }
 
 
