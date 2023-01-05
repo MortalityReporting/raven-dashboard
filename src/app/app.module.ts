@@ -94,6 +94,9 @@ import {
   DecedentBasicInfoComponent
 } from './components/pages/workflow-simulator/search-edrs/decedent-basic-info/decedent-basic-info.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { SearchParametersComponent } from './components/pages/workflow-simulator/search-edrs/search-parameters/search-parameters.component';
+import { EdrsSearchResultsComponent } from './components/pages/workflow-simulator/search-edrs/edrs-search-results/edrs-search-results.component';
+import { EdrsRecordSummaryComponent } from './components/pages/workflow-simulator/search-edrs/edrs-record-summary/edrs-record-summary.component';
 
 @NgModule({
   declarations: [
@@ -129,6 +132,9 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     EndpointConfigurationComponent,
     EdrsResultsComponent,
     DecedentBasicInfoComponent,
+    SearchParametersComponent,
+    EdrsSearchResultsComponent,
+    EdrsRecordSummaryComponent,
   ],
   imports: [
     BrowserModule,
