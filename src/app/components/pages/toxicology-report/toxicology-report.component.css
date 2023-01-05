@@ -65,3 +65,18 @@ mat-sidenav-container {
   margin-top: 16px;
   margin-bottom: 16px;
 }
+
+table {
+  width: 100%;
+}
+
+.mat-row:nth-child(2n+1){
+  background-color: #eeeeee;
+}
+.mat-header-row th {
+  color: black;
+}
+
+.conclusion-text-area {
+  width: 100%;
+}

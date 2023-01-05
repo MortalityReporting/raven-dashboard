@@ -102,10 +102,10 @@ export class DocumentHandlerService {
     return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "Composition/" + compositionId + "/$document").pipe(
       map((documentBundle: any) => {
         this.currentDocumentBundle = documentBundle;
-        let compositionResource = this.bundleHelper.findResourceById(documentBundle, "Composition/" + compositionId);
+        let compositionResource = this.bundleHelper.findResourceByFullUrl(documentBundle, "Composition/" + compositionId);
         this.currentCompositionResource = compositionResource;
         this.subjectId = compositionResource.subject.reference
-        let patientResource = this.bundleHelper.findResourceById(documentBundle, this.subjectId);
+        let patientResource = this.bundleHelper.findResourceByFullUrl(documentBundle, this.subjectId);
         this.patientResource.next(patientResource);
         this.caseHeader.next(this.createCaseHeader(documentBundle, patientResource, compositionResource));
         this.caseSummary.next(this.createCaseSummary(documentBundle, patientResource, compositionResource));
@@ -133,7 +133,7 @@ export class DocumentHandlerService {
 
     compositionResource.author?.map(( ref: any ) => {
 
-      let practitioner = this.bundleHelper.findResourceById(documentBundle, ref.reference );
+      let practitioner = this.bundleHelper.findResourceByFullUrl(documentBundle, ref.reference );
 
       let author = new Author();
 
@@ -238,7 +238,7 @@ export class DocumentHandlerService {
 
     causeAndMannerSection?.entry.map(( entry: any) =>
     {
-      let observation = this.bundleHelper.findResourceById(documentBundle, entry.reference );
+      let observation = this.bundleHelper.findResourceByFullUrl(documentBundle, entry.reference );
 
       if (observation != null)
       {
@@ -363,7 +363,7 @@ export class DocumentHandlerService {
 
   findJurisdictionObservation(documentBundle: any = this.currentDocumentBundle, compositionResource: any, jurisdictionSection: any): any {
     let id = (jurisdictionSection?.entry?.find((entry: any) => entry.reference.startsWith("Observation")))?.reference || undefined;
-    return this.bundleHelper.findResourceById(documentBundle, id);
+    return this.bundleHelper.findResourceByFullUrl(documentBundle, id);
   }
 
   // Filter Bundle Entries by Patient Resource.
@@ -446,13 +446,13 @@ export class DocumentHandlerService {
   }
 
   getCurrentSubjectResource(): any {
-    return this.bundleHelper.findResourceById(undefined, this.subjectId);
+    return this.bundleHelper.findResourceByFullUrl(undefined, this.subjectId);
   }
 
   getCertifier(): any {
     let certifierId = this.currentCompositionResource?.author?.[0]?.reference;
     console.log(certifierId);
-    let test = this.bundleHelper.findResourceById(this.currentDocumentBundle, certifierId);
+    let test = this.bundleHelper.findResourceByFullUrl(this.currentDocumentBundle, certifierId);
     console.log(test)
     return test;
   }

@@ -66,35 +66,39 @@ import { ToxicologyReportComponent } from './components/pages/toxicology-report/
 import { ToxicologyReportContentComponent } from './components/pages/toxicology-report/toxicology-report-content/toxicology-report-content.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { ToxicologyReportMdiCaseComponent } from './components/pages/toxicology-report/toxicology-report-mdi-case/toxicology-report-mdi-case.component';
+import {
+    ToxicologyReportGridSectionComponent
+} from "./components/pages/toxicology-report/toxicology-report-grid-section/toxicology-report-grid-section.component";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    DecedentRecordsGridComponent,
-    CaseSummaryComponent,
-    CaseComparisonComponent,
-    LandingComponent,
-    CaseContainerComponent,
-    FhirExplorerComponent,
-    CaseSummaryContentComponent,
-    CaseComparisonContentComponent,
-    CaseComparisonContentFieldComponent,
-    SetFhirExplorerDirective,
-    CaseSummaryContentFieldComponent,
-    ImportCaseComponent,
-    ImportCaseFhirRecordComponent,
-    ImportCaseConnectathonTemplateComponent,
-    ConformationDialogComponent,
-    MappingsComponent,
-    ModalComponent,
-    CasesComponent,
-    ToxicologyGridComponent,
-    ToxicologyContainerComponent,
-    ToxicologyReportComponent,
-    ToxicologyReportContentComponent,
-    ToxicologyReportMdiCaseComponent
-  ],
+    declarations: [
+        AppComponent,
+        HeaderComponent,
+        DecedentRecordsGridComponent,
+        CaseSummaryComponent,
+        CaseComparisonComponent,
+        LandingComponent,
+        CaseContainerComponent,
+        FhirExplorerComponent,
+        CaseSummaryContentComponent,
+        CaseComparisonContentComponent,
+        CaseComparisonContentFieldComponent,
+        SetFhirExplorerDirective,
+        CaseSummaryContentFieldComponent,
+        ImportCaseComponent,
+        ImportCaseFhirRecordComponent,
+        ImportCaseConnectathonTemplateComponent,
+        ConformationDialogComponent,
+        MappingsComponent,
+        ModalComponent,
+        CasesComponent,
+        ToxicologyGridComponent,
+        ToxicologyContainerComponent,
+        ToxicologyReportComponent,
+        ToxicologyReportContentComponent,
+        ToxicologyReportMdiCaseComponent,
+        ToxicologyReportGridSectionComponent
+    ],
     imports: [
         BrowserModule,
         AppRoutingModule,

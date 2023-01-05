@@ -17,7 +17,6 @@ export class BundleHelperService {
   // For singleton profiles, this function can be used to find the resource by the profile name. ID should be preferred whenever available.
   findResourceByProfileName(bundle: any, profileName: string): any {
     try {
-      const profile = bundle.entry.find((entry: any) => entry.resource.meta.profile.includes(profileName))?.resource;
       return bundle.entry.find((entry: any) => entry.resource.meta.profile.includes(profileName))?.resource || undefined;
     } catch(e) {
       return undefined;
@@ -38,15 +37,15 @@ export class BundleHelperService {
       return undefined;
     }
   }
+
   // This function should be used whenever possible to go off of absolute references to the full URL within the Document Bundle.
-  findResourceById(bundle: any, resourceId: string): any {
+  // The input is the bundle to search and the expected form of the fullUrl, often "resource/id". E.g., "Patient/134-412-21".
+  // TODO: Handle Reference objects in addition to the fullUrlReference string.
+  findResourceByFullUrl(bundle: any, fullUrlReference: string): any {
     if(!bundle || !bundle.entry){
       return null;
     }
-    return (bundle.entry.find((entry: any) => entry.fullUrl === resourceId))?.resource || undefined;
+    return (bundle.entry.find((entry: any) => entry.fullUrl === fullUrlReference))?.resource || undefined;
   }
-
-
-
 
 }

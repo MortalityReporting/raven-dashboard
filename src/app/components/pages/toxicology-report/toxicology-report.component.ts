@@ -41,7 +41,6 @@ export class ToxicologyReportComponent implements OnInit {
       this.fhirResourceProvider.setSelectedFhirResource(bundle);
       this.toxHeader = this.toxicologyHandler.constructToxHeaderHeader(bundle);
       this.toxSummary = this.toxicologyHandler.constructToxSummary(bundle);
-      console.log(bundle);
       }
     );
   }

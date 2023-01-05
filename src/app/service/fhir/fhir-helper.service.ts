@@ -22,11 +22,8 @@ export class FhirHelperService {
   // This function should only apply to Composition or DiagnosticReport. Matches by tracking number type constant.
   getTrackingNumber(resource: any, type: TrackingNumberType = TrackingNumberType.Mdi): string {
     const extensions = resource.extension;
-    console.log(extensions)
     const trackingNumberExtensions = extensions?.filter((extension: any) => extension.url === "http://hl7.org/fhir/us/mdi/StructureDefinition/Extension-tracking-number");
-    console.log(trackingNumberExtensions)
     const matchedExtension = trackingNumberExtensions.find((extension: any) => extension?.valueIdentifier?.type?.coding?.[0].code === type);
-    console.log(matchedExtension)
     return matchedExtension?.valueIdentifier?.value || undefined;
   }
 
@@ -50,7 +47,7 @@ export class FhirHelperService {
 
 
 
-  getPatientOfficialName(patientResource: any, returnStyle: PatientNameReturn = 0): string {
+  getPatientOfficialName(patientResource: any, returnStyle: PatientNameReturn = 0, includePrefix: boolean = false): string {
     let nameList = patientResource.name;
     let firstOrOfficialName = (nameList.filter((humanName: any) => humanName.use === "official"))[0];
 
@@ -63,6 +60,11 @@ export class FhirHelperService {
     switch(returnStyle) {
       case PatientNameReturn.fullname: {
         let fullName = "";
+        if (includePrefix) {
+          firstOrOfficialName.prefix.forEach((prefix: any) => {
+            fullName = fullName + prefix + " "
+          });
+        }
         firstOrOfficialName.given.forEach((name: any) => {
           fullName = fullName + name + " "
         });
@@ -81,7 +83,6 @@ export class FhirHelperService {
       }
     }
   }
-
 }
 
 export enum PatientNameReturn {

@@ -8,7 +8,7 @@ import {trackingNumberUrl} from "../model/fhir.constants";
 import {ToxHeader} from "../model/record-models/tox.header";
 import {FhirHelperService} from "./fhir/fhir-helper.service";
 import {BundleHelperService} from "./fhir/bundle-helper.service";
-import {Performer, ToxSummary} from "../model/record-models/tox.summary";
+import {LabResult, Performer, Specimen, ToxSummary} from "../model/record-models/tox.summary";
 
 @Injectable({
   providedIn: 'root'
@@ -83,7 +83,6 @@ export class ToxicologyHandlerService {
     const diagnosticReport = this.getDiagnosticReportFromMessageBundle(messageBundle);
     const subject = this.bundleHelper.findSubjectInBundle(diagnosticReport, messageBundle);
     const toxLabNumber = this.getTrackingNumber(diagnosticReport, TrackingNumberType.Tox);
-    console.log(diagnosticReport.issued);
     let toxHeader = new ToxHeader();
     toxHeader.fullName = this.fhirHelper.getPatientOfficialName(subject);
     toxHeader.reportDate = diagnosticReport.issued.split("T")[0] || undefined;
@@ -93,16 +92,15 @@ export class ToxicologyHandlerService {
   }
 
   constructToxSummary(messageBundle: any): ToxSummary {
-    let toxSummary = new ToxSummary()
     const diagnosticReport = this.getDiagnosticReportFromMessageBundle(messageBundle);
     const subject = this.bundleHelper.findSubjectInBundle(diagnosticReport, messageBundle);
-    toxSummary.patientId = subject.id //"6951b919-1872-448c-8893-555febe22bc1";
+    let toxSummary = new ToxSummary()
+    toxSummary.patientId = subject.id; //"6951b919-1872-448c-8893-555febe22bc1";
     toxSummary.mdiCaseNumber = this.fhirHelper.getTrackingNumber(diagnosticReport, TrackingNumberType.Mdi);
-
-
     toxSummary.performers = this.createPerformersList(diagnosticReport, messageBundle);
-
-    console.log(toxSummary)
+    toxSummary.specimens = this.createSpecimenList(diagnosticReport, messageBundle);
+    toxSummary.results = this.createLabResultList(diagnosticReport, messageBundle);
+    toxSummary.conclusion = diagnosticReport.conclusion || undefined;
     return toxSummary
   }
 
@@ -110,13 +108,50 @@ export class ToxicologyHandlerService {
   createPerformersList(diagnosticReport: any, messageBundle: any): Performer[] {
     let performers = [];
     if (diagnosticReport.performer) {
-      diagnosticReport.performer.forEach(performer => console.log(performer));
+      diagnosticReport.performer.forEach(performer => {
+          const practitionerResource = this.bundleHelper.findResourceByFullUrl(messageBundle, performer.reference);
+          const performerObject = new Performer(this.fhirHelper.getPatientOfficialName(practitionerResource, 0, true), practitionerResource);
+          performers.push(performerObject);
+        }
+      );
     }
     return performers;
   }
 
+  createSpecimenList(diagnosticReport: any, messageBundle: any): Specimen[] {
+    let specimens = [];
+    if (diagnosticReport.specimen) {
+      diagnosticReport.specimen.forEach(specimen => {
+        const specimenResource = this.bundleHelper.findResourceByFullUrl(messageBundle, specimen.reference);
+        const type = specimenResource.type?.text; // TODO: Add additional handling for other potential paths. Type is not optional.
+        const identifier = specimenResource?.accessionIdentifier?.value || ""; // TODO: Confirm this is only source of identifier to use.
+        const collected = specimenResource?.collection?.collectedDateTime || ""; // TODO: Add additional handling for other potential paths.
+        const specimenObject = new Specimen(type, identifier, collected, specimenResource);
+        specimens.push(specimenObject);
+      })
+    }
+    return specimens
+  }
 
-  // TODO: Refactor to map to boolean
+  createLabResultList(diagnosticReport: any, messageBundle: any): LabResult[] {
+    let results = [];
+    if (diagnosticReport.result) {
+      diagnosticReport.result.forEach(result => {
+        const observationResource = this.bundleHelper.findResourceByFullUrl(messageBundle, result.reference);
+        const testType = observationResource.code?.text || ""; // TODO: Add handling for more varied data, e.g. concept display.
+        const value = observationResource.valueString || ""; // TODO: Add handling for other value types.
+        const date = observationResource.effectiveDateTime; // TODO: Confirm this is the appropriate date field/add handling for other date fields.
+        const specimenResource = this.bundleHelper.findResourceByFullUrl(messageBundle, observationResource?.specimen?.reference);
+        const specimenType = specimenResource?.type?.text; // TODO: Add additionl handling for other potential paths. Combine with common code in Specimen object.
+        const labObject = new LabResult(testType, value, date, specimenType, observationResource);
+        results.push(labObject);
+      })
+    }
+    return results;
+  }
+
+
+    // TODO: Refactor to map to boolean
   isRelatedMdiDocumentAvailable(subjectId: any) {
     return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "Composition?subject=" + subjectId).pipe(
       map((searchBundle:any) => {return !!searchBundle.entry})

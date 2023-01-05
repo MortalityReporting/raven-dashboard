@@ -31,7 +31,7 @@
         <mat-panel-title>Performer(s)</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="summary-section-body">
-        SPACER SPACER SPACER
+        <app-toxicology-report-grid-section *ngIf="toxSummary?.performers" [data]="toxSummary?.performers" [columns]="['name']"></app-toxicology-report-grid-section>
       </div>
     </mat-expansion-panel>
 
@@ -41,7 +41,7 @@
         <mat-panel-title>Specimens</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="summary-section-body">
-        SPACER SPACER SPACER
+        <app-toxicology-report-grid-section *ngIf="toxSummary?.specimens" [data]="toxSummary?.specimens" [columns]="['type', 'identifier', 'collected']"></app-toxicology-report-grid-section>
       </div>
     </mat-expansion-panel>
 
@@ -51,7 +51,7 @@
         <mat-panel-title>Test Results</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="summary-section-body">
-        SPACER SPACER SPACER
+        <app-toxicology-report-grid-section *ngIf="toxSummary?.results" [data]="toxSummary?.results" [columns]="['test', 'value', 'date', 'specimen']"></app-toxicology-report-grid-section>
       </div>
     </mat-expansion-panel>
 
@@ -61,7 +61,7 @@
         <mat-panel-title>Conclusion</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="summary-section-body">
-        SPACER SPACER SPACER
+        <textarea class="conclusion-text-area" readonly [ngModel]="toxSummary.conclusion" (ngModelChange)="toxSummary?.conclusion ? toxSummary.conclusion=$event : 'No Conclusion Found'" *ngIf="toxSummary"></textarea>
       </div>
     </mat-expansion-panel>
 
