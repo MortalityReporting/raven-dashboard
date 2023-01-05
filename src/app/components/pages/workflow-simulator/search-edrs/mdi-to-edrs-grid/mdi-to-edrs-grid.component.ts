@@ -8,6 +8,7 @@ import {UtilsService} from "../../../../../service/utils.service";
 import {forkJoin, map, mergeMap, switchMap} from "rxjs";
 import {SearchEdrsService} from "../../../../../service/search-edrs.service";
 import {DecedentSimpleInfo} from "../../../../../model/decedent-simple-info";
+import {MatSelect} from "@angular/material/select";
 
 @Component({
   selector: 'app-mdi-to-edrs-grid',
@@ -27,6 +28,9 @@ export class MdiToEdrsGridComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('input') input: ElementRef;
+  @ViewChild('mannerOfDeathSelect') mannerOfDeathSelect: MatSelect;
+
+  mannerOfDeathList: string [] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -40,10 +44,10 @@ export class MdiToEdrsGridComponent implements OnInit {
   mapToDto(entry: any): DecedentGridDTO {
     let decedentDTO = new DecedentGridDTO();
     decedentDTO.decedentId = entry.resource?.id;
-    decedentDTO.firstName = entry.resource?.name[0]?.given[0];
-    decedentDTO.lastName = entry.resource?.name[0]?.family;
+    decedentDTO.firstName = entry.resource?.name?.[0]?.given[0];
+    decedentDTO.lastName = entry.resource?.name?.[0]?.family;
     decedentDTO.gender = entry.resource?.gender;
-    decedentDTO.system = entry.resource?.identifier[0]?.system || null;
+    decedentDTO.system = entry.resource?.identifier?.[0]?.system || null;
     decedentDTO.age = this.getAgeFromDob(new Date(entry.resource?.birthDate));
     return decedentDTO;
   }
@@ -70,9 +74,9 @@ export class MdiToEdrsGridComponent implements OnInit {
             this.decedentService.getDecedentObservationsByCode(decedentRecord, codes).pipe(
               map((observation: any) => {
                 decedentRecord = this.mapToDto(decedentRecord);
-                const tod = observation?.entry.find(entry => entry.resource?.code?.coding[0]?.code == loincTimeOfDeath)?.resource?.effectiveDateTime;
+                const tod = observation?.entry?.find(entry => entry.resource?.code?.coding[0]?.code == loincTimeOfDeath)?.resource?.effectiveDateTime;
                 decedentRecord.tod = tod;
-                const mannerOfDeath =  observation?.entry.find(entry => entry.resource?.code?.coding[0]?.code == loincCauseOfDeath)?.resource?.valueCodeableConcept?.coding[0]?.display;
+                const mannerOfDeath =  observation?.entry?.find(entry => entry.resource?.code?.coding[0]?.code == loincCauseOfDeath)?.resource?.valueCodeableConcept?.coding[0]?.display;
                 decedentRecord.mannerOfDeath = mannerOfDeath;
                 decedentRecord.index = i + 1;
                 return decedentRecord;
@@ -86,7 +90,7 @@ export class MdiToEdrsGridComponent implements OnInit {
           decedentRecordsList.map((decedentRecord: any, i) =>
             this.decedentService.getComposition(decedentRecord.decedentId).pipe(
               map((composition: any) => {
-                const caseNumber = composition?.entry[0]?.resource?.extension[0]?.valueIdentifier?.value;
+                const caseNumber = composition?.entry?.[0]?.resource?.extension?.[0]?.valueIdentifier?.value;
                 decedentRecord.caseNumber = caseNumber;
                 return decedentRecord
               })
@@ -98,6 +102,7 @@ export class MdiToEdrsGridComponent implements OnInit {
         next: (data) => {
           this.decedentGridDtoList = data;
           this.dataSource = new MatTableDataSource(data);
+          this.mannerOfDeathList = this.getMannerOfDeathList(this.decedentGridDtoList);
           this.dataSource.sort = this.sort;
         },
         error: (e) => {
@@ -120,7 +125,7 @@ export class MdiToEdrsGridComponent implements OnInit {
     this.searchEdrsService.setDecedentData(this.decedentInfo);
 
     this.decedentService.getComposition(decedent.decedentId).pipe(
-      switchMap(composition => this.decedentService.getDocumentBundle(composition?.entry[0]?.resource?.id))
+      switchMap(composition => this.decedentService.getDocumentBundle(composition?.entry?.[0]?.resource?.id))
     ).subscribe({
       next: result => this.searchEdrsService.setDocumentBundle(result),
       error: err => {
@@ -141,4 +146,25 @@ export class MdiToEdrsGridComponent implements OnInit {
     return Math.abs(ageDate.getUTCFullYear() - 1970);
   }
 
+  private getMannerOfDeathList(decedentGridDtoList: DecedentGridDTO[]) {
+    const result = [...new Set (decedentGridDtoList.map(decedent => decedent.mannerOfDeath))].filter(element => !!element);
+    return result;
+  }
+
+  applyMannerOfDeathFilter() {
+    const mannerOfDeath = this.mannerOfDeathSelect.value;
+    this.dataSource.filter = mannerOfDeath;
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  onClearFilters() {
+    this.mannerOfDeathSelect.value = null;
+    this.input.nativeElement.value = '';
+    this.dataSource.filter = '';
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
 }

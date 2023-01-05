@@ -20,6 +20,7 @@ export class EdrsResultsComponent implements OnInit {
   errorResponse: any;
   successResponse: any;
   selectedEdrsRecord: any;
+  edrsServer: any;
 
   constructor(
     private searchEdrsService: SearchEdrsService,
@@ -45,6 +46,13 @@ export class EdrsResultsComponent implements OnInit {
     }
   }
 
+  onChangeEndpointConfiguration() {
+    this.parentStepper.previous();
+  }
+
+  onSelectDifferentDocument() {
+    this.parentStepper.reset();
+  }
 }
 
 
