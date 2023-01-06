@@ -29,7 +29,7 @@
 
           <ng-container matColumnDef="dateOfDeath">
             <th mat-header-cell *matHeaderCellDef> Date of Death</th>
-            <td mat-cell *matCellDef="let decedent"> {{decedent.deathDate | date:'MM/dd/yyyy' }} </td>
+            <td mat-cell *matCellDef="let decedent"> {{decedent.deathDate ? (decedent.deathDate | date:'MM/dd/yyyy'): "Unknown" }} </td>
           </ng-container>
 
           <ng-container matColumnDef="mannerOfDeath">
@@ -57,6 +57,9 @@
         </table>
 
       </div>
+    </div>
+    <div class="top-spacer" *ngIf="!!successResponse && !!resultTableDataSource?.data?.length">
+      Select a case in the result table to view a summary below.
     </div>
   </mat-tab>
 
@@ -88,6 +91,5 @@
   </mat-tab>
 
 </mat-tab-group>
-<div class="top-spacer">
-  Select a case in the result table to view a summary below.
-</div>
+
+

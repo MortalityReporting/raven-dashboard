@@ -33,7 +33,7 @@ export class SearchParametersComponent implements OnInit {
 
   searchEdrsForm = this.fb.group({
     parameters: this.fb.array([])
-  })
+  });
 
   constructor(
     private fb: FormBuilder,
@@ -287,4 +287,14 @@ export class SearchParametersComponent implements OnInit {
     return matchedExtension?.valueIdentifier?.value || undefined;
   }
 
+  onClearSearch() {
+    // This here is a bit extreme, since it effectively recreates the form and we should refactor it whe we obtain ALL
+    // parameters in the order we want from the API.
+    this.searchEdrsForm = this.fb.group({
+      parameters: this.fb.array([])
+    });
+
+    this.setInitialFormControls();
+    this.clearSearchResultEmitter.emit();
+  }
 }

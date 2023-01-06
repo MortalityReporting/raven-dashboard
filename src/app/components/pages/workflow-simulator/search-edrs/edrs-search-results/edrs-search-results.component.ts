@@ -1,8 +1,9 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {Obs_DeathDate, Obs_MannerOfDeath} from "../../../../../model/mdi/profile.list";
 import {TrackingNumberType} from "../../../../../model/tracking.number.type";
 import {FhirHelperService, PatientNameReturn} from "../../../../../service/fhir/fhir-helper.service";
+import {MatTabGroup} from "@angular/material/tabs";
 
 @Component({
   selector: 'app-edrs-search-results',
@@ -13,6 +14,8 @@ export class EdrsSearchResultsComponent implements OnInit, OnChanges {
 
   @Input() successResponse: any;
   @Input() errorResponse: any;
+
+  @ViewChild(MatTabGroup) resultsTabGroup: MatTabGroup;
 
   resultTableColumns = ['officialName', 'dateOfDeath', 'mannerOfDeath', 'mdiCaseNumber', 'edrsFileNumber'];
   resultTableDataSource = new MatTableDataSource<any>();
@@ -25,9 +28,11 @@ export class EdrsSearchResultsComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if(!!changes['successResponse']?.currentValue && !!changes['successResponse']?.currentValue?.total ){
       this.parseResponseToTable(changes['successResponse']?.currentValue);
+      this.resultsTabGroup.selectedIndex = 0;
     }
     if(!!changes['errorResponse']?.currentValue){
       this.resultTableDataSource.data = [];
+      this.resultsTabGroup.selectedIndex = 0;
     }
   }
 
