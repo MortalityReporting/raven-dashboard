@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {DecedentGridDTO} from "../../../../../model/decedent.grid.dto";
 import {MatSort} from "@angular/material/sort";
@@ -9,6 +9,7 @@ import {forkJoin, map, mergeMap, switchMap} from "rxjs";
 import {SearchEdrsService} from "../../../../../service/search-edrs.service";
 import {DecedentSimpleInfo} from "../../../../../model/decedent-simple-info";
 import {MatSelect} from "@angular/material/select";
+import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-mdi-to-edrs-grid',
@@ -27,6 +28,7 @@ export class MdiToEdrsGridComponent implements OnInit {
   decedentInfo: DecedentSimpleInfo;
 
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('input') input: ElementRef;
   @ViewChild('mannerOfDeathSelect') mannerOfDeathSelect: MatSelect;
 
@@ -104,6 +106,8 @@ export class MdiToEdrsGridComponent implements OnInit {
           this.dataSource = new MatTableDataSource(data);
           this.mannerOfDeathList = this.getMannerOfDeathList(this.decedentGridDtoList);
           this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+          this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
         },
         error: (e) => {
           console.error(e);

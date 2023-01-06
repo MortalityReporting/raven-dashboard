@@ -11,6 +11,7 @@ import {UtilsService} from "../../../../../service/utils.service";
   templateUrl: './edrs-results.component.html',
   styleUrls: ['./edrs-results.component.css']
 })
+
 export class EdrsResultsComponent implements OnInit {
   @Input('parentStepper') parentStepper: MatStepper;
   decedentInfo: DecedentSimpleInfo;
