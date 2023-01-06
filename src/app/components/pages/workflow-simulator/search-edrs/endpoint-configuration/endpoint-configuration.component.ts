@@ -74,10 +74,10 @@ export class EndpointConfigurationComponent implements OnInit {
   }
 
   onViewServerMdiDocs() {
-    window.open(blueJay.serverBase + "OperationDefinition/Composition-it-mdi-documents", "_blank");
+    window.open(blueJay.serverBase + "/OperationDefinition/Composition-it-mdi-documents", "_blank");
   }
 
   onViewServerCapabilityStmt() {
-    window.open(blueJay.serverBase + "metadata", "_blank");
+    window.open(blueJay.serverBase + "/metadata", "_blank");
   }
 }

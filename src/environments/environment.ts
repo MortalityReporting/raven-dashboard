@@ -12,7 +12,8 @@ export const environment = {
 };
 
 export const blueJay = {
-  serverBase: "https://apps.hdap.gatech.edu/bluejay-fhir-server/fhir/",
+  serverBase: "https://apps.hdap.gatech.edu/bluejay-fhir-server/fhir",
+  serverBasicAuth: "client:secret",
 }
 
 /*

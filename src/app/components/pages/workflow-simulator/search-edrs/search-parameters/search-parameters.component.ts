@@ -7,6 +7,7 @@ import {TrackingNumberType} from "../../../../../model/tracking.number.type";
 import {FhirHelperService} from "../../../../../service/fhir/fhir-helper.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {DecedentSimpleInfo} from "../../../../../model/decedent-simple-info";
+import {blueJay} from "../../../../../../environments/environment";
 
 @Component({
   selector: 'app-search-parameters',
@@ -120,7 +121,7 @@ export class SearchParametersComponent implements OnInit {
 
   private executeEdrsSearch() {
     this.clearSearchResultEmitter.emit();
-    this.searchEdrsService.searchEdrs(this.getSearchParametersResourcePreview()).subscribe({
+    this.searchEdrsService.searchEdrs(blueJay.serverBase, this.getSearchParametersResourcePreview()).subscribe({
       next: value => {
         this.searchResultsEmitter.emit({ response: value, success: true });
       },

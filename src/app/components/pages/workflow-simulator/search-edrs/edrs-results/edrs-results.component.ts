@@ -21,7 +21,7 @@ export class EdrsResultsComponent implements OnInit {
   errorResponse: any;
   successResponse: any;
   selectedEdrsRecord: any;
-  edrsServer: any;
+  edrsServer: string = "BlueJay"; //TODO this will be populated from step 2 in the future
 
   constructor(
     private searchEdrsService: SearchEdrsService,
@@ -34,6 +34,11 @@ export class EdrsResultsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.searchEdrsService.decedentData$.subscribe({
+      next: value => {
+        this.decedentInfo = value;
+      }
+    });
   }
 
   updatedSearchResults(event) {

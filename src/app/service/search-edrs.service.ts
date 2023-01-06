@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {Observable, Subject} from "rxjs";
 import {DecedentSimpleInfo} from "../model/decedent-simple-info";
-import {environment} from "../../environments/environment";
+import {blueJay, environment} from "../../environments/environment";
 import {map} from "rxjs/operators";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -34,9 +34,19 @@ export class SearchEdrsService {
   }
 
 
-  searchEdrs(params): Observable<any> {
-    const operationDefinitionLocation = "Composition/$mdi-documents";
-    return this.http.post(environment.ravenFhirServer  + operationDefinitionLocation, params).pipe(map((result: any) => (
+  searchEdrs(uri, params): Observable<any> {
+
+    const authorizationData = 'Basic ' + btoa(blueJay.serverBasicAuth);
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': authorizationData
+      })
+    };
+
+    const operationDefinitionLocation = uri+ "/Composition/$mdi-documents";
+    return this.http.post(operationDefinitionLocation, params, httpOptions).pipe(map((result: any) => (
       result as Object
     )));
   }

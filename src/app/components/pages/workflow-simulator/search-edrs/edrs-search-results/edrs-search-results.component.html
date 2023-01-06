@@ -49,7 +49,11 @@
 
           <tr mat-header-row *matHeaderRowDef="resultTableColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: resultTableColumns;"></tr>
-
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" [attr.colspan]="resultTableColumns.length">
+              No Records Found.
+            </td>
+          </tr>
         </table>
 
       </div>
@@ -72,7 +76,7 @@
     <div class="response-container">
       <div *ngIf="errorResponse">
         <div>
-          <pre> {{ errorResponse | json }} </pre>
+          <pre> {{ errorResponse.error | json }} </pre>
         </div>
       </div>
       <div *ngIf="successResponse">
