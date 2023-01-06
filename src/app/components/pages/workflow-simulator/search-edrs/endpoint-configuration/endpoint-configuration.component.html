@@ -10,27 +10,40 @@
 
   <div style="margin-top: 2em">
     <mat-radio-group formControlName="inputType">
-      <mat-radio-button class="radio-button" style="margin-left: 2em" *ngFor="let inputOption of endpointTypeOptions" [value]="inputOption">
+      <mat-radio-button class="radio-button" style="margin-left: 2em" [disabled]="i > 0"
+                        *ngFor="let inputOption of endpointTypeOptions; let i = index" [value]="inputOption">
         {{ inputOption }}
       </mat-radio-button>
     </mat-radio-group>
   </div>
 
   <!-- Registered Endpoint -->
-  <div style="margin-top: 2em" formGroupName="registeredEndpoint"  *ngIf="endpointConfigurationFormGroup.controls['inputType'].value == 'Registered Endpoint'">
+  <div style="margin-top: 2em" formGroupName="registeredEndpoint"
+       *ngIf="endpointConfigurationFormGroup.controls['inputType'].value == 'Registered Endpoint'">
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="server-select">
       <mat-label>Select Endpoint</mat-label>
       <mat-select formControlName="serverEndpoint">
-        <mat-option *ngFor="let serverEndpoint of serverEndpointList" [value]="serverEndpoint.uri">
+        <mat-option
+          [disabled]="i > 0"
+          *ngFor="let serverEndpoint of serverEndpointList, let i = index" [value]="serverEndpoint.uri">
           {{ serverEndpoint.displayName }}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
-    <div style="margin-top: 1em">
-      <button type="button" mat-raised-button>{{ uiConstantsStep2.VIEW_CAPABILITY_STMT_BTN }}</button>
-      <button style="margin-left: 2em" type="button" mat-raised-button>{{ uiConstantsStep2.VIEW_SERVER_$MDI_DOCS_OP_DEFINITION_BTN }}</button>
+    <div>
+      <button class="view-item-button" type="button" mat-raised-button color="accent"
+          (click)="onViewServerCapabilityStmt()">
+        {{ uiConstantsStep2.VIEW_CAPABILITY_STMT_BTN }}
+      </button>
+    </div>
+    <div style="margin-top: 1em;">
+      <button type="button" color="accent" class="view-item-button"
+              (click)="onViewServerMdiDocs()"
+              mat-raised-button>
+        {{ uiConstantsStep2.VIEW_SERVER_$MDI_DOCS_OP_DEFINITION_BTN }}
+      </button>
     </div>
 
   </div>

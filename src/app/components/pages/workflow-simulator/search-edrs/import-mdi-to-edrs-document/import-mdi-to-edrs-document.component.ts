@@ -8,6 +8,7 @@ import {JsonValidator} from "../../../../../reactive-form-validators/json-valida
 import {ResourceTypeValidator} from "../../../../../reactive-form-validators/resource-type-validator";
 import {DecedentSimpleInfo} from "../../../../../model/decedent-simple-info";
 import {UiStringConstants} from "../../../../../providers/ui-string-constants";
+import {FhirHelperService, PatientNameReturn} from "../../../../../service/fhir/fhir-helper.service";
 
 @Component({
   selector: 'app-import-mdi-to-edrs-document',
@@ -28,7 +29,8 @@ export class ImportMdiToEdrsDocumentComponent implements OnInit {
     private dialog: MatDialog,
     private utilsService: UtilsService,
     private searchEdrsService: SearchEdrsService,
-    private uiStringConstants: UiStringConstants
+    private uiStringConstants: UiStringConstants,
+    private fhirHelperService: FhirHelperService
   ) {
     this.uiConstantsStep1 = uiStringConstants.WorkflowSimulator.searchEdrs.step1;
     this.commonUIConstants = uiStringConstants.Common;
@@ -134,7 +136,7 @@ export class ImportMdiToEdrsDocumentComponent implements OnInit {
     }
     const composition = documentBundle.entry.find(entry => entry.resource?.resourceType === "Composition");
     if(composition){
-      const caseNumber = composition?.resource?.extension[0]?.valueIdentifier?.value;
+      const caseNumber = composition?.resource?.extension?.[0]?.valueIdentifier?.value;
       decedentSimpleInfo.mdiTrackingNumber = caseNumber;
     }
     const dateTimeOfDeathObservation = this.getObservationByCode(documentBundle, "81956-5");
@@ -152,7 +154,7 @@ export class ImportMdiToEdrsDocumentComponent implements OnInit {
       return null;
     }
     const observation = documentBundle.entry
-      .find(entry => entry.resource?.resourceType === "Observation" && entry.resource?.code?.coding[0]?.code === code)?.resource;
+      .find(entry => entry.resource?.resourceType === "Observation" && entry.resource?.code?.coding?.[0]?.code === code)?.resource;
     return observation;
   }
 
@@ -161,10 +163,7 @@ export class ImportMdiToEdrsDocumentComponent implements OnInit {
       console.warn("Invalid resource passed");
       return null;
     }
-    //This title case may not be appropriate conversion
-    const family = patientResource.name[0]?.family[0].toUpperCase() + patientResource.name[0]?.family.substring(1).toLowerCase();
-    const given = patientResource.name[0]?.given[0];
-    const name = given ? (family + ', '+  given) : family;
+    const name = this.fhirHelperService.getPatientOfficialName(patientResource, PatientNameReturn.lastfirst);
 
     return name;
   }

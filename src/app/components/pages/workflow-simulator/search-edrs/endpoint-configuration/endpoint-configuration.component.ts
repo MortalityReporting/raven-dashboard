@@ -3,6 +3,7 @@ import {DecedentSimpleInfo} from "../../../../../model/decedent-simple-info";
 import {SearchEdrsService} from "../../../../../service/search-edrs.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {UiStringConstants} from "../../../../../providers/ui-string-constants";
+import {blueJay, environment} from "../../../../../../environments/environment";
 
 @Component({
   selector: 'app-endpoint-configuration',
@@ -18,7 +19,7 @@ export class EndpointConfigurationComponent implements OnInit {
 
   //TODO extract those as constants
   serverEndpointList: any[] = [
-    {uri: 'www.bluejay.edu', displayName: 'BlueJay'},
+    {uri: blueJay.serverBase, displayName: 'BlueJay'},
     {uri: 'www.gavers.edu', displayName: 'Gavers'},
   ];
 
@@ -72,4 +73,11 @@ export class EndpointConfigurationComponent implements OnInit {
     });
   }
 
+  onViewServerMdiDocs() {
+    window.open(blueJay.serverBase + "OperationDefinition/Composition-it-mdi-documents", "_blank");
+  }
+
+  onViewServerCapabilityStmt() {
+    window.open(blueJay.serverBase + "metadata", "_blank");
+  }
 }
