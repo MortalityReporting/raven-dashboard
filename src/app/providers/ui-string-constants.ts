@@ -35,6 +35,7 @@ export class UiStringConstants {
       // Step 2
       step2: {
         STEP_LABEL: `Configure Endpoint`,
+        DESCRIPTION: `Step 2 - TODO Add brief description here, see Step 1 description.`,
         DISCLAIMER: `Disclaimer about user data storage being client side and not visible to Raven/GTRI/etc`,
         VIEW_CAPABILITY_STMT_BTN: `View Server Capability Statement`,
         VIEW_SERVER_$MDI_DOCS_OP_DEFINITION_BTN: `View Server $mdi-documents Operation Definition`,
@@ -45,6 +46,7 @@ export class UiStringConstants {
       // Step 3
       step3: {
         STEP_LABEL: `Search EDRS`,
+        DESCRIPTION: `Step 3 - TODO Add brief description here, see Step 1 description.`,
         SEARCH_PARAMS_RESOURCE_PREVIEW: `Search Parameters Resource Preview`,
       },
     }

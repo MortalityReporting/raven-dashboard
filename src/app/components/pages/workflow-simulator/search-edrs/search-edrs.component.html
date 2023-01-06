@@ -4,7 +4,7 @@
 
       <mat-step label="{{ uiConstants.step1.STEP_LABEL }}">
         {{ uiConstants.step1.DESCRIPTION }}
-        <mat-card>
+        <mat-card style="margin-top: 1em">
           <mat-tab-group #mdiToEdrsTabGroup (selectedTabChange)="tabSelectionChange()">
 
             <mat-tab label="{{ uiConstants.step1.TAB_LABEL_1 }}">
@@ -30,10 +30,12 @@
       </mat-step>
 
       <mat-step label="{{ uiConstants.step2.STEP_LABEL }}">
-        <app-endpoint-configuration></app-endpoint-configuration>
+        {{ uiConstants.step2.DESCRIPTION }}
+          <app-endpoint-configuration></app-endpoint-configuration>
       </mat-step>
 
       <mat-step label="{{ uiConstants.step3.STEP_LABEL }}">
+        {{ uiConstants.step3.DESCRIPTION }}
         <app-edrs-results [parentStepper]="stepper"></app-edrs-results>
 
         <div class="top-spacer"><button mat-raised-button matStepperPrevious>Back</button></div>

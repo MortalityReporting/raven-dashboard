@@ -67,7 +67,8 @@ export class ImportMdiToEdrsDocumentComponent implements OnInit {
       })
       .subscribe(
         data => {
-          this.searchEdrsService.setDocumentBundle(data);
+          const bundle = JSON.parse(data);
+          this.searchEdrsService.setDocumentBundle(bundle);
         }
       );
   }
