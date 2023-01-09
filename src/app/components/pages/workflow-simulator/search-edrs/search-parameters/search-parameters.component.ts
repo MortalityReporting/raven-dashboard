@@ -57,14 +57,13 @@ export class SearchParametersComponent implements OnInit {
         this.operationsDatsStructure = value;
         const dataDrivenParams = value.parameter
           .filter(param => param.type === 'string')
-          .map(param => param.name)
-          .map(param => { return { display: this.toTitleCase(this.removePeriods(param)), value: param } });
+          .map(param => { return { display: this.getDisplayValueFromExtension(param), value: param.name } })
+          .filter(param => !!param.display && !!param.value);
 
         this.edrsSearchFormParams = this.edrsSearchFormParams.concat(dataDrivenParams);
         this.edrsSearchFormParams = this.edrsSearchFormParams.filter((item, index)=>{
           return (this.edrsSearchFormParams.indexOf(item) == index)
-        })
-        console.log(this.edrsSearchFormParams);
+        });
       },
       error: err => {
         console.error(err);
@@ -296,5 +295,10 @@ export class SearchParametersComponent implements OnInit {
 
     this.setInitialFormControls();
     this.clearSearchResultEmitter.emit();
+  }
+
+  private getDisplayValueFromExtension(param): string {
+    const result = param.extension?.find(extension => extension.url === "urn:gtri:mapi-label" )?.valueString;
+    return result;
   }
 }

@@ -1,4 +1,4 @@
-<mat-tab-group #resultsTabGroup>
+<mat-tab-group #resultsTabGroup style='min-height:300px'>
 
   <mat-tab label="Result">
     <div class="response-container">
@@ -20,7 +20,7 @@
 
       <!-- Render success results here -->
       <div *ngIf="successResponse">
-        <table mat-table [dataSource]="resultTableDataSource" style="width: 100%">
+        <table mat-table [dataSource]="resultTableDataSource" style="width: 100%; cursor: pointer">
 
           <ng-container matColumnDef="officialName">
             <th mat-header-cell *matHeaderCellDef> Name</th>
@@ -29,7 +29,8 @@
 
           <ng-container matColumnDef="dateOfDeath">
             <th mat-header-cell *matHeaderCellDef> Date of Death</th>
-            <td mat-cell *matCellDef="let decedent"> {{decedent.deathDate ? (decedent.deathDate | date:'MM/dd/yyyy'): "Unknown" }} </td>
+            <td mat-cell
+                *matCellDef="let decedent"> {{decedent.deathDate ? (decedent.deathDate | date:'MM/dd/yyyy') : "Unknown" }} </td>
           </ng-container>
 
           <ng-container matColumnDef="mannerOfDeath">
@@ -48,7 +49,11 @@
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="resultTableColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: resultTableColumns;"></tr>
+
+          <tr class="case-record-row" mat-row *matRowDef="let row; columns: resultTableColumns;"
+              [class.selected-case-row]="selectedCase === row"
+              (click)="selectedCase = selectedCase === row ? null : row">
+          </tr>
           <tr class="mat-row" *matNoDataRow>
             <td class="mat-cell" [attr.colspan]="resultTableColumns.length">
               No Records Found.
@@ -65,18 +70,6 @@
 
   <mat-tab label="FHIR Result">
     <div class="response-container">
-      Table containing the fhir resource.
-    </div>
-  </mat-tab>
-
-  <mat-tab label="HTTP Request">
-    <div class="response-container">
-      HTTP Request
-    </div>
-  </mat-tab>
-
-  <mat-tab label="HTTP Response">
-    <div class="response-container">
       <div *ngIf="errorResponse">
         <div>
           <pre> {{ errorResponse.error | json }} </pre>
@@ -86,6 +79,24 @@
         <div>
           <pre> {{ successResponse | json }} </pre>
         </div>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="HTTP Request">
+    <div class="response-container">
+      <div *ngIf="errorResponse || successResponse">
+        <app-http-request-info></app-http-request-info>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="HTTP Response">
+    <div class="response-container">
+      <div *ngIf="errorResponse || successResponse">
+        <app-http-response-info [errorResponse]="errorResponse"
+                                [successResponse]="successResponse">
+        </app-http-response-info>
       </div>
     </div>
   </mat-tab>

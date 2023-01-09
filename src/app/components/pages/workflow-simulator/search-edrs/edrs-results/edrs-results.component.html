@@ -23,7 +23,10 @@
   </mat-card>
 
   <mat-card style="margin-top: 1em">
-    <app-search-parameters (searchResultsEmitter)="updatedSearchResults($event)"></app-search-parameters>
+    <app-search-parameters
+      (searchResultsEmitter)="updatedSearchResults($event)"
+      (clearSearchResultEmitter)="successResponse = null; errorResponse = null">
+    </app-search-parameters>
   </mat-card>
 
   <mat-card style="margin-top: 1em">

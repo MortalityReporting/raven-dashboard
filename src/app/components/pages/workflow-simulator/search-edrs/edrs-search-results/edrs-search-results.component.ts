@@ -19,6 +19,7 @@ export class EdrsSearchResultsComponent implements OnInit, OnChanges {
 
   resultTableColumns = ['officialName', 'dateOfDeath', 'mannerOfDeath', 'mdiCaseNumber', 'edrsFileNumber'];
   resultTableDataSource = new MatTableDataSource<any>();
+  selectedCase: any;
 
   constructor(private fhirHelperService: FhirHelperService) { }
 
@@ -110,6 +111,7 @@ export class EdrsSearchResultsComponent implements OnInit, OnChanges {
   }
 
   //TODO this code simply does not work and needs to be refactored or extended properly
+
   getTrackingNumber(resource: any, type: TrackingNumberType): string {
     const extensions = resource.extension;
     const trackingNumberExtensions = extensions?.filter((extension: any) => extension.url === "http://hl7.org/fhir/us/mdi/StructureDefinition/Extension-tracking-number");

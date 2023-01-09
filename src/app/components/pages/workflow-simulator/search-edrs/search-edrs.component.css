@@ -8,3 +8,12 @@
 .action-buttons .error-message{
   align-self: flex-start;
 }
+
+tr.case-record-row:not(.selected-case-row):hover {
+  background: whitesmoke;
+}
+
+tr.selected-case-row {
+  background: whitesmoke;
+}
+

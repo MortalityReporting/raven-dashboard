@@ -13,6 +13,9 @@ export class SearchEdrsService {
   private documentBundle = new Subject<any>();
   documentBundle$ = this.documentBundle.asObservable();
 
+  private edrsHttpRequestInfo = new Subject<any>();
+  edrsHttpRequestInfo$ = this.edrsHttpRequestInfo.asObservable();
+
   private decedentData = new Subject<DecedentSimpleInfo>();
   decedentData$ = this.decedentData.asObservable();
 
@@ -21,6 +24,11 @@ export class SearchEdrsService {
   setDocumentBundle(data): void {
     this.documentBundle.next(data);
   }
+
+  setEdrsHttpRequestInfo(data): void {
+    this.edrsHttpRequestInfo.next(data);
+  }
+
 
   setDecedentData(data: DecedentSimpleInfo): void {
     this.decedentData.next(data);
@@ -46,6 +54,11 @@ export class SearchEdrsService {
     };
 
     const operationDefinitionLocation = uri+ "/Composition/$mdi-documents";
+
+    this.setEdrsHttpRequestInfo({
+      url : operationDefinitionLocation
+    });
+
     return this.http.post(operationDefinitionLocation, params, httpOptions).pipe(map((result: any) => (
       result as Object
     )));

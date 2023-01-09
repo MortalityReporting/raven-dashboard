@@ -97,6 +97,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import { SearchParametersComponent } from './components/pages/workflow-simulator/search-edrs/search-parameters/search-parameters.component';
 import { EdrsSearchResultsComponent } from './components/pages/workflow-simulator/search-edrs/edrs-search-results/edrs-search-results.component';
 import { EdrsRecordSummaryComponent } from './components/pages/workflow-simulator/search-edrs/edrs-record-summary/edrs-record-summary.component';
+import { HttpRequestInfoComponent } from './components/pages/workflow-simulator/search-edrs/http-request-info/http-request-info.component';
+import { HttpResponseInfoComponent } from './components/pages/workflow-simulator/search-edrs/http-response-info/http-response-info.component';
 
 @NgModule({
   declarations: [
@@ -135,6 +137,8 @@ import { EdrsRecordSummaryComponent } from './components/pages/workflow-simulato
     SearchParametersComponent,
     EdrsSearchResultsComponent,
     EdrsRecordSummaryComponent,
+    HttpRequestInfoComponent,
+    HttpResponseInfoComponent,
   ],
   imports: [
     BrowserModule,
