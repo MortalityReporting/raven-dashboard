@@ -26,7 +26,6 @@ export class CaseContainerComponent implements OnInit, AfterViewInit, OnDestroy 
   ) {
     route.url.subscribe(url => {
       this.currentRoute = url[1].path;
-      console.log(this.currentRoute);
     });
   }
 

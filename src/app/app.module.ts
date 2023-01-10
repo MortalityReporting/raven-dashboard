@@ -67,19 +67,21 @@ import {
   CaseComparisonDialogComponent
 } from './components/pages/case-comparison/case-comparison-dialog/case-comparison-dialog.component';
 import {CasesComponent} from "./components/pages/cases/cases.component";
-import {ToxicologyGridComponent} from './components/pages/cases/toxicology-grid/toxicology-grid.component';
-import {ToxicologyContainerComponent} from './components/pages/toxicology-container/toxicology-container.component';
-import {ToxicologyReportComponent} from './components/pages/toxicology-report/toxicology-report.component';
+import { ToxicologyGridComponent } from './components/pages/cases/toxicology-grid/toxicology-grid.component';
+import { ToxicologyReportComponent } from './components/pages/toxicology-report/toxicology-report.component';
+import { ToxicologyReportContentComponent } from './components/pages/toxicology-report/toxicology-report-content/toxicology-report-content.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import { ToxicologyReportMdiCaseComponent } from './components/pages/toxicology-report/toxicology-report-mdi-case/toxicology-report-mdi-case.component';
 import {
-  ToxicologyReportContentComponent
-} from './components/pages/toxicology-report/toxicology-report-content/toxicology-report-content.component';
-import {WorkflowSimulatorComponent} from './components/pages/workflow-simulator/workflow-simulator.component';
-import {SearchEdrsComponent} from './components/pages/workflow-simulator/search-edrs/search-edrs.component';
+    ToxicologyReportGridSectionComponent
+} from "./components/pages/toxicology-report/toxicology-report-grid-section/toxicology-report-grid-section.component";
 import {MatStepperModule} from "@angular/material/stepper";
-import {
-  MdiToEdrsGridComponent
-} from './components/pages/workflow-simulator/search-edrs/mdi-to-edrs-grid/mdi-to-edrs-grid.component';
-import {InputTextDialogComponent} from './components/widgets/input-text-dialog/input-text-dialog.component';
+import {UiStringConstants} from "./providers/ui-string-constants";
+import { SearchParametersComponent } from './components/pages/workflow-simulator/search-edrs/search-parameters/search-parameters.component';
+import { EdrsSearchResultsComponent } from './components/pages/workflow-simulator/search-edrs/edrs-search-results/edrs-search-results.component';
+import { EdrsRecordSummaryComponent } from './components/pages/workflow-simulator/search-edrs/edrs-record-summary/edrs-record-summary.component';
+import { HttpRequestInfoComponent } from './components/pages/workflow-simulator/search-edrs/http-request-info/http-request-info.component';
+import { HttpResponseInfoComponent } from './components/pages/workflow-simulator/search-edrs/http-response-info/http-response-info.component';
 import {
   ImportMdiToEdrsDocumentComponent
 } from './components/pages/workflow-simulator/search-edrs/import-mdi-to-edrs-document/import-mdi-to-edrs-document.component';
@@ -89,92 +91,93 @@ import {
 import {
   EdrsResultsComponent
 } from './components/pages/workflow-simulator/search-edrs/edrs-results/edrs-results.component';
-import {UiStringConstants} from "./providers/ui-string-constants";
 import {
   DecedentBasicInfoComponent
 } from './components/pages/workflow-simulator/search-edrs/decedent-basic-info/decedent-basic-info.component';
-import {MatCheckboxModule} from "@angular/material/checkbox";
-import { SearchParametersComponent } from './components/pages/workflow-simulator/search-edrs/search-parameters/search-parameters.component';
-import { EdrsSearchResultsComponent } from './components/pages/workflow-simulator/search-edrs/edrs-search-results/edrs-search-results.component';
-import { EdrsRecordSummaryComponent } from './components/pages/workflow-simulator/search-edrs/edrs-record-summary/edrs-record-summary.component';
-import { HttpRequestInfoComponent } from './components/pages/workflow-simulator/search-edrs/http-request-info/http-request-info.component';
-import { HttpResponseInfoComponent } from './components/pages/workflow-simulator/search-edrs/http-response-info/http-response-info.component';
+import {InputTextDialogComponent} from './components/widgets/input-text-dialog/input-text-dialog.component';
+import {
+  MdiToEdrsGridComponent
+} from "./components/pages/workflow-simulator/search-edrs/mdi-to-edrs-grid/mdi-to-edrs-grid.component";
+import {SearchEdrsComponent} from "./components/pages/workflow-simulator/search-edrs/search-edrs.component";
+import {WorkflowSimulatorComponent} from './components/pages/workflow-simulator/workflow-simulator.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    DecedentRecordsGridComponent,
-    CaseSummaryComponent,
-    CaseComparisonComponent,
-    LandingComponent,
-    CaseContainerComponent,
-    FhirExplorerComponent,
-    CaseSummaryContentComponent,
-    CaseComparisonContentComponent,
-    CaseComparisonContentFieldComponent,
-    SetFhirExplorerDirective,
-    CaseSummaryContentFieldComponent,
-    ImportCaseComponent,
-    ImportCaseFhirRecordComponent,
-    ImportCaseConnectathonTemplateComponent,
-    ConformationDialogComponent,
-    MappingsComponent,
-    ModalComponent,
-    CasesComponent,
-    ToxicologyGridComponent,
-    ToxicologyContainerComponent,
-    ToxicologyReportComponent,
-    ToxicologyReportContentComponent,
-    WorkflowSimulatorComponent,
-    SearchEdrsComponent,
-    MdiToEdrsGridComponent,
-    InputTextDialogComponent,
-    ImportMdiToEdrsDocumentComponent,
-    EndpointConfigurationComponent,
-    EdrsResultsComponent,
-    DecedentBasicInfoComponent,
-    SearchParametersComponent,
-    EdrsSearchResultsComponent,
-    EdrsRecordSummaryComponent,
-    HttpRequestInfoComponent,
-    HttpResponseInfoComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatDialogModule,
-    ReactiveFormsModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatProgressSpinnerModule,
-    MatSortModule,
-    HttpClientModule,
-    MatRadioModule,
-    FormsModule,
-    MatCardModule,
-    MatSnackBarModule,
-    FhirValidatorModule,
-    MatGridListModule,
-    MatExpansionModule,
-    MatButtonToggleModule,
-    MatTooltipModule,
-    MatListModule,
-    MatTabsModule,
-    MatSelectModule,
-    MatMenuModule,
-    ClipboardModule,
-    MatDialogModule,
-    MatStepperModule,
-    MatCheckboxModule
-  ],
+    declarations: [
+        AppComponent,
+        HeaderComponent,
+        DecedentRecordsGridComponent,
+        CaseSummaryComponent,
+        CaseComparisonComponent,
+        LandingComponent,
+        CaseContainerComponent,
+        FhirExplorerComponent,
+        CaseSummaryContentComponent,
+        CaseComparisonContentComponent,
+        CaseComparisonContentFieldComponent,
+        SetFhirExplorerDirective,
+        CaseSummaryContentFieldComponent,
+        ImportCaseComponent,
+        ImportCaseFhirRecordComponent,
+        ImportCaseConnectathonTemplateComponent,
+        ConformationDialogComponent,
+        MappingsComponent,
+        ModalComponent,
+        CasesComponent,
+        ToxicologyGridComponent,
+        ToxicologyReportComponent,
+        ToxicologyReportContentComponent,
+        ToxicologyReportMdiCaseComponent,
+        ToxicologyReportGridSectionComponent,
+        SearchEdrsComponent,
+        MdiToEdrsGridComponent,
+        InputTextDialogComponent,
+        ImportMdiToEdrsDocumentComponent,
+        EndpointConfigurationComponent,
+        EdrsResultsComponent,
+        DecedentBasicInfoComponent,
+        SearchParametersComponent,
+        EdrsSearchResultsComponent,
+        EdrsRecordSummaryComponent,
+        HttpRequestInfoComponent,
+        HttpResponseInfoComponent,
+        WorkflowSimulatorComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatDialogModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatProgressSpinnerModule,
+        MatSortModule,
+        HttpClientModule,
+        MatRadioModule,
+        FormsModule,
+        MatCardModule,
+        MatSnackBarModule,
+        FhirValidatorModule,
+        MatGridListModule,
+        MatExpansionModule,
+        MatButtonToggleModule,
+        MatTooltipModule,
+        MatListModule,
+        MatTabsModule,
+        MatSelectModule,
+        MatMenuModule,
+        ClipboardModule,
+        MatDialogModule,
+        MatStepperModule,
+        MatCheckboxModule
+    ],
+
   providers: [
     UiStringConstants,
     {provide: HTTP_INTERCEPTORS, useClass: FhirAuthInterceptor, multi: true},

@@ -1,7 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ToxicologyHandlerService} from "../../../service/toxicology-handler.service";
 import {ActivatedRoute} from "@angular/router";
-import {Observable} from "rxjs";
+import {Observable, tap} from "rxjs";
+import {FhirResourceProviderService} from "../../../service/fhir-resource-provider.service";
+import {MatIconRegistry} from "@angular/material/icon";
+import {DomSanitizer} from "@angular/platform-browser";
+import {ToxHeader} from "../../../model/record-models/tox.header";
+import {ToxSummary} from "../../../model/record-models/tox.summary";
+import {CaseSummaryContentComponent} from "../case-summary/case-summary-content/case-summary-content.component";
+import {ToxicologyReportContentComponent} from "./toxicology-report-content/toxicology-report-content.component";
 
 @Component({
   selector: 'app-toxicology-report',
@@ -9,20 +16,49 @@ import {Observable} from "rxjs";
   styleUrls: ['./toxicology-report.component.css']
 })
 export class ToxicologyReportComponent implements OnInit {
+  @ViewChild(CaseSummaryContentComponent) toxReportContentComponent: ToxicologyReportContentComponent;
 
   messageBundle$: Observable<any>;
-  toxHeader$: Observable<any>;
+  toxHeader: ToxHeader;
+  toxSummary: ToxSummary;
+
+  sidenavExpanded = false;
+  autosize: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private toxicologyHandler: ToxicologyHandlerService,
-  ) { }
+    private fhirResourceProvider: FhirResourceProviderService,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+  ) {
+    const path = "../../assets"
+    this.matIconRegistry.addSvgIcon("labs", this.domSanitizer
+      .bypassSecurityTrustResourceUrl(`${path}/labs.svg`));
+    this.matIconRegistry.addSvgIcon("lab_panel", this.domSanitizer
+      .bypassSecurityTrustResourceUrl(`${path}/lab_panel.svg`));
+    this.matIconRegistry.addSvgIcon("clinical_notes", this.domSanitizer
+      .bypassSecurityTrustResourceUrl(`${path}/clinical_notes.svg`));
+  }
 
   ngOnInit(): void {
     let toxLabId = this.route.snapshot.params['id'];
     this.messageBundle$ = this.toxicologyHandler.getMessageBundle(toxLabId);
-    this.messageBundle$.subscribe(bundle => console.log(bundle));
-    this.toxHeader$ = this.toxicologyHandler.toxHeader$;
+    this.messageBundle$.subscribe(bundle => {
+      this.fhirResourceProvider.setSelectedFhirResource(bundle);
+      this.toxHeader = this.toxicologyHandler.constructToxHeaderHeader(bundle);
+      this.toxSummary = this.toxicologyHandler.constructToxSummary(bundle);
+      }
+    );
   }
 
+  onSidenavResize(expanded: boolean) {
+    this.sidenavExpanded = expanded;
+    this.autosize = true;
+    setTimeout(() => this.autosize = false, 1);
+  }
+
+  onItemClick(id: string) {
+    this.toxReportContentComponent.onSetState(id, true);
+  }
 }

@@ -1,11 +1,16 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {TrackingNumberType} from "../../model/tracking.number.type";
+import {TerminologyHandlerService} from "../terminology-handler.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FhirHelperService {
 
-  constructor() { }
+  constructor(
+    private terminologyHandler: TerminologyHandlerService
+
+  ) { }
 
   findObservationComponentByCode(observation: any, componentCode: string): any {
     if(!observation.component || !componentCode){
@@ -14,9 +19,35 @@ export class FhirHelperService {
     return (observation.component.find((component: any) => component.code.coding[0].code === componentCode)) || undefined;
   }
 
+  // This function should only apply to Composition or DiagnosticReport. Matches by tracking number type constant.
+  getTrackingNumber(resource: any, type: TrackingNumberType = TrackingNumberType.Mdi): string {
+    const extensions = resource.extension;
+    const trackingNumberExtensions = extensions?.filter((extension: any) => extension.url === "http://hl7.org/fhir/us/mdi/StructureDefinition/Extension-tracking-number");
+    const matchedExtension = trackingNumberExtensions.find((extension: any) => extension?.valueIdentifier?.type?.coding?.[0].code === type);
+    return matchedExtension?.valueIdentifier?.value || undefined;
+  }
 
 
-  getPatientOfficialName(patientResource: any, returnStyle: PatientNameReturn = 0): string {
+// {
+//   "url": "http://hl7.org/fhir/us/mdi/StructureDefinition/Extension-tracking-number",
+//   "valueIdentifier": {
+//     "type": {
+//       "coding": [
+//         {
+//           "system": "http://hl7.org/fhir/us/mdi/CodeSystem/CodeSystem-mdi-codes",
+//           "code": "tox-lab-case-number",
+//           "display": "Toxicology Laboratory Case Number"
+//         }
+//       ]
+//     },
+//     "system": "http://uf-path-labs.org/fhir/lab-cases",
+//     "value": "R21-01580"
+//   }
+// }
+
+
+
+  getPatientOfficialName(patientResource: any, returnStyle: PatientNameReturn = 0, includePrefix: boolean = false): string {
     let nameList = patientResource.name;
     let firstOrOfficialName = (nameList.filter((humanName: any) => humanName.use === "official"))[0];
 
@@ -29,6 +60,11 @@ export class FhirHelperService {
     switch(returnStyle) {
       case PatientNameReturn.fullname: {
         let fullName = "";
+        if (includePrefix) {
+          firstOrOfficialName.prefix.forEach((prefix: any) => {
+            fullName = fullName + prefix + " "
+          });
+        }
         firstOrOfficialName.given.forEach((name: any) => {
           fullName = fullName + name + " "
         });
@@ -47,7 +83,6 @@ export class FhirHelperService {
       }
     }
   }
-
 }
 
 export enum PatientNameReturn {

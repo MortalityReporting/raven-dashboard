@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import {DecedentService} from "../../../service/decedent.service";
 import {DocumentHandlerService} from "../../../service/document-handler.service";
 import { Observable } from "rxjs";
-import {CaseHeader} from "../../../model/case-summary-models/case.header";
-import {CaseSummary} from "../../../model/case-summary-models/case.summary";
+import {CaseHeader} from "../../../model/record-models/case.header";
+import {CaseSummary} from "../../../model/record-models/case.summary";
 import {CaseComparisonContentComponent} from "./case-comparison-content/case-comparison-content.component";
 
 @Component({

@@ -1,1 +1,69 @@
-<p>toxicology-report-content works!</p>
+<div class="case-summary-content-wrapper">
+  <div class="section-button-wrapper">
+    <button mat-raised-button (click)="onOpenAll()">
+      <mat-icon>expand_more</mat-icon>
+      Expand All Sections
+    </button>
+    <button mat-raised-button (click)="onCloseAll()">
+      <mat-icon>expand_less</mat-icon>
+      Collapse All Sections
+    </button>
+    <span class="content-spacer"></span>
+
+  </div>
+  <!-- mat-expansion-panel used outside of accordion to maintain consistent styling for non collapsible div -->
+  <div class="summary-section mdi-case-number-body-padding" >
+    <div class="summary-section-body">
+      <div class="summary-section-grid">
+        <div class="grid-row">
+          <div class="grid-col-1">
+            <app-toxicology-report-mdi-case [toxSummary]="toxSummary" *ngIf="toxSummary"></app-toxicology-report-mdi-case>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <mat-accordion multi>
+    <!-- Performer(s) -->
+    <mat-expansion-panel class="summary-section" id="performers" [expanded]="isExpanded('performers')">
+      <mat-expansion-panel-header (click)="onToggleState( 'performers' )">
+        <mat-panel-title>Performer(s)</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="summary-section-body">
+        <app-toxicology-report-grid-section *ngIf="toxSummary?.performers" [data]="toxSummary?.performers" [columns]="['name']"></app-toxicology-report-grid-section>
+      </div>
+    </mat-expansion-panel>
+
+    <!-- Specimens -->
+    <mat-expansion-panel class="summary-section" id="specimens" [expanded]="isExpanded('specimens')">
+      <mat-expansion-panel-header (click)="onToggleState( 'specimens' )">
+        <mat-panel-title>Specimens</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="summary-section-body">
+        <app-toxicology-report-grid-section *ngIf="toxSummary?.specimens" [data]="toxSummary?.specimens" [columns]="['type', 'site', 'identifier', 'collected']"></app-toxicology-report-grid-section>
+      </div>
+    </mat-expansion-panel>
+
+    <!-- Test Results -->
+    <mat-expansion-panel class="summary-section" id="results" [expanded]="isExpanded('results')">
+      <mat-expansion-panel-header (click)="onToggleState( 'results' )">
+        <mat-panel-title>Test Results</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="summary-section-body">
+        <app-toxicology-report-grid-section *ngIf="toxSummary?.results" [data]="toxSummary?.results" [columns]="['test', 'value', 'date', 'specimen']"></app-toxicology-report-grid-section>
+      </div>
+    </mat-expansion-panel>
+
+    <!-- Conclusion -->
+    <mat-expansion-panel class="summary-section" id="conclusion" [expanded]="isExpanded('conclusion')">
+      <mat-expansion-panel-header (click)="onToggleState( 'conclusion' )">
+        <mat-panel-title>Conclusion</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="summary-section-body">
+        <textarea class="conclusion-text-area" readonly [ngModel]="toxSummary.conclusion" (ngModelChange)="toxSummary?.conclusion ? toxSummary.conclusion=$event : 'No Conclusion Found'" *ngIf="toxSummary"></textarea>
+      </div>
+    </mat-expansion-panel>
+
+  </mat-accordion>
+</div>

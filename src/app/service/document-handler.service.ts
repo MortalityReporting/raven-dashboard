@@ -12,8 +12,8 @@ import {
   Demographics,
   UsualWork,
   Autopsy
-} from "../model/case-summary-models/case.summary";
-import {Author, CaseHeader} from "../model/case-summary-models/case.header";
+} from "../model/record-models/case.summary";
+import {Author, CaseHeader} from "../model/record-models/case.header";
 import {TrackingNumber} from "../model/mdi/tracking.number";
 import {TerminologyHandlerService} from "./terminology-handler.service";
 import {
@@ -102,10 +102,10 @@ export class DocumentHandlerService {
     return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "Composition/" + compositionId + "/$document").pipe(
       map((documentBundle: any) => {
         this.currentDocumentBundle = documentBundle;
-        let compositionResource = this.bundleHelper.findResourceById(documentBundle, "Composition/" + compositionId);
+        let compositionResource = this.bundleHelper.findResourceByFullUrl(documentBundle, "Composition/" + compositionId);
         this.currentCompositionResource = compositionResource;
         this.subjectId = compositionResource.subject.reference
-        let patientResource = this.bundleHelper.findResourceById(documentBundle, this.subjectId);
+        let patientResource = this.bundleHelper.findResourceByFullUrl(documentBundle, this.subjectId);
         this.patientResource.next(patientResource);
         this.caseHeader.next(this.createCaseHeader(documentBundle, patientResource, compositionResource));
         this.caseSummary.next(this.createCaseSummary(documentBundle, patientResource, compositionResource));
@@ -133,7 +133,7 @@ export class DocumentHandlerService {
 
     compositionResource.author?.map(( ref: any ) => {
 
-      let practitioner = this.bundleHelper.findResourceById(documentBundle, ref.reference );
+      let practitioner = this.bundleHelper.findResourceByFullUrl(documentBundle, ref.reference );
 
       let author = new Author();
 
@@ -238,7 +238,7 @@ export class DocumentHandlerService {
 
     causeAndMannerSection?.entry.map(( entry: any) =>
     {
-      let observation = this.bundleHelper.findResourceById(documentBundle, entry.reference );
+      let observation = this.bundleHelper.findResourceByFullUrl(documentBundle, entry.reference);
 
       if (observation != null)
       {
@@ -283,6 +283,7 @@ export class DocumentHandlerService {
           }
           else if (profile === Obs_HowDeathInjuryOccurred)
           {
+            console.log(observation)
             causeAndManner.howDeathInjuryOccurred = observation.valueCodeableConcept?.text || this.defaultString;
 
             let placeOfInjuryComponent = this.fhirHelper.findObservationComponentByCode(observation, "69450-5");
@@ -345,25 +346,10 @@ export class DocumentHandlerService {
 
     return autopsy;
   }
-  // -------------------------
-  // Find and Filter Functions
-  // -------------------------
-  // // Find Death Location Resource (US Core Location Profile) through the Composition.section reference.
-  // findDeathLocation(documentBundle: any = this.currentDocumentBundle, compositionResource: any, circumstancesSection: any): any {
-  //   let deathLocationResourceId = (circumstancesSection?.entry?.find((entry: any) => entry.reference.startsWith("Location")))?.reference || undefined;
-  //   // TODO: Add handling for reference from death date?
-  //   return this.findResourceById(documentBundle, deathLocationResourceId);
-  // }
-  //
-  // findDeathLocation(documentBundle: any = this.currentDocumentBundle, compositionResource: any, circumstancesSection: any): any {
-  //   let deathLocationResourceId = (circumstancesSection?.entry?.find((entry: any) => entry.reference.startsWith("Location")))?.reference || undefined;
-  //   // TODO: Add handling for reference from death date?
-  //   return this.findResourceById(documentBundle, deathLocationResourceId);
-  // }
 
   findJurisdictionObservation(documentBundle: any = this.currentDocumentBundle, compositionResource: any, jurisdictionSection: any): any {
     let id = (jurisdictionSection?.entry?.find((entry: any) => entry.reference.startsWith("Observation")))?.reference || undefined;
-    return this.bundleHelper.findResourceById(documentBundle, id);
+    return this.bundleHelper.findResourceByFullUrl(documentBundle, id);
   }
 
   // Filter Bundle Entries by Patient Resource.
@@ -420,27 +406,6 @@ export class DocumentHandlerService {
     return trackingNumbers;
   }
 
-    // Get Tracking Number from Composition Extension
-    getTrackingNumber(compositionResource: any): TrackingNumber {
-      let trackingNumber = new TrackingNumber();
-      let extensions = compositionResource.extension;
-      let trackingNumberExtension = extensions?.find((extension: any) => extension.url === "http://hl7.org/fhir/us/mdi/StructureDefinition/Extension-tracking-number");
-      let valueIdentifier = trackingNumberExtension?.valueIdentifier;
-      trackingNumber.value = valueIdentifier?.value || "Tracking Number Not Specified";
-
-      if (valueIdentifier?.type?.text) {
-        trackingNumber.type = valueIdentifier.type.text;
-      }
-      else if (valueIdentifier?.type?.coding[0].code) {
-        let code = valueIdentifier.type?.coding[0].code;
-        trackingNumber.type = this.terminologyService.mapMdiCodeToDisplay(code);
-      }
-      else {
-        trackingNumber.type = "Unknown Type"
-      }
-      return trackingNumber;
-    }
-
   // Get SSN from Patient Identifier
   getSocialSecurityNumber(patientResource: any): string {
     let identifierList = patientResource.identifier || [];
@@ -467,13 +432,13 @@ export class DocumentHandlerService {
   }
 
   getCurrentSubjectResource(): any {
-    return this.bundleHelper.findResourceById(undefined, this.subjectId);
+    return this.bundleHelper.findResourceByFullUrl(this.currentDocumentBundle, this.subjectId);
   }
 
   getCertifier(): any {
     let certifierId = this.currentCompositionResource?.author?.[0]?.reference;
     console.log(certifierId);
-    let test = this.bundleHelper.findResourceById(this.currentDocumentBundle, certifierId);
+    let test = this.bundleHelper.findResourceByFullUrl(this.currentDocumentBundle, certifierId);
     console.log(test)
     return test;
   }

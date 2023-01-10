@@ -27,59 +27,60 @@
 </mat-toolbar>
 <mat-sidenav-container [autosize]="autosize">
   <mat-sidenav mode="side" opened>
-    <mat-nav-list>
+    <mat-nav-list aria-label="MDI to EDRS Document Navigation">
 
       <mat-list-item (click)="onItemClick('caseAdminInfo');">
-        <mat-icon [matTooltip]="!sidenavExpanded ? 'Case Admininstration Information' : ''" matTooltipPosition="right">
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Case Administration Information' : ''" matTooltipPosition="right"
+                  aria-hidden="true">
           info
         </mat-icon>
         <span *ngIf="sidenavExpanded">&nbsp;Case Administration Info</span>
       </mat-list-item>
 
       <mat-list-item (click)="onItemClick('demographics');">
-        <mat-icon [matTooltip]="!sidenavExpanded ? 'Demographics' : ''" matTooltipPosition="right">
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Demographics' : ''" matTooltipPosition="right" aria-hidden="true">
           person
         </mat-icon>
         <span *ngIf="sidenavExpanded">&nbsp;Demographics</span>
       </mat-list-item>
 
       <mat-list-item (click)="onItemClick('circumstances');">
-        <mat-icon [matTooltip]="!sidenavExpanded ? 'Circumstances' : ''" matTooltipPosition="right">
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Circumstances' : ''" matTooltipPosition="right" aria-hidden="true">
           travel_explore
         </mat-icon>
         <span *ngIf="sidenavExpanded">&nbsp;Circumstances</span>
       </mat-list-item>
 
       <mat-list-item (click)="onItemClick('jurisdiction');">
-        <mat-icon [matTooltip]="!sidenavExpanded ? 'Jurisdiction' : ''" matTooltipPosition="right">
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Jurisdiction' : ''" matTooltipPosition="right" aria-hidden="true">
           gavel
         </mat-icon>
         <span *ngIf="sidenavExpanded">&nbsp;Jurisdiction</span>
       </mat-list-item>
 
       <mat-list-item (click)="onItemClick('causeAndManner');">
-        <mat-icon [matTooltip]="!sidenavExpanded ? 'Cause and Manner of Death' : ''" matTooltipPosition="right">
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Cause and Manner of Death' : ''" matTooltipPosition="right" aria-hidden="true">
           question_mark
         </mat-icon>
         <span *ngIf="sidenavExpanded">&nbsp;Cause and Manner of Death</span>
       </mat-list-item>
 
       <mat-list-item (click)="onItemClick('medicalHistory');">
-        <mat-icon [matTooltip]="!sidenavExpanded ? 'Relevant Medical History' : ''" matTooltipPosition="right">
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Relevant Medical History' : ''" matTooltipPosition="right" aria-hidden="true">
           medical_services
         </mat-icon>
         <span *ngIf="sidenavExpanded">&nbsp;Relevant Medical History</span>
       </mat-list-item>
 
       <mat-list-item (click)="onItemClick('examAndAutopsy');">
-        <mat-icon [matTooltip]="!sidenavExpanded ? 'Exam and Autopsy Notes' : ''" matTooltipPosition="right">
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Exam and Autopsy Notes' : ''" matTooltipPosition="right" aria-hidden="true">
           description
         </mat-icon>
         <span *ngIf="sidenavExpanded">&nbsp;Exam and Autopsy Notes</span>
       </mat-list-item>
 
       <mat-list-item (click)="onItemClick('narratives');">
-        <mat-icon [matTooltip]="!sidenavExpanded ? 'Narratives' : ''" matTooltipPosition="right">
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Narratives' : ''" matTooltipPosition="right" aria-hidden="true">
           speaker_notes
         </mat-icon>
         <span *ngIf="sidenavExpanded">&nbsp;Narratives</span>

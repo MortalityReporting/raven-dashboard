@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Observable} from "rxjs";
-import {CaseSummary} from "../../../../model/case-summary-models/case.summary";
-import {Author, CaseHeader} from "../../../../model/case-summary-models/case.header";
+import {CaseSummary} from "../../../../model/record-models/case.summary";
+import {Author, CaseHeader} from "../../../../model/record-models/case.header";
 import {MatAccordion} from "@angular/material/expansion";
 import {Profiles} from "../../../../model/mdi/profile.list";
 import {FhirResourceProviderService} from "../../../../service/fhir-resource-provider.service";

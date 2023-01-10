@@ -1,0 +1,17 @@
+<div class="mdi-case-number-flex-wrapper">
+  <div class="mdi-case-number-label">
+    MDI Case Number:
+  </div>
+  <div class="mdi-case-number-value">
+    {{toxSummary?.mdiCaseNumber || "No MDI Tracking Number Found"}}
+  </div>
+  <div class="mdi-case-number-open-related">
+    <button mat-raised-button color="accent" [routerLink]="'/records/mdi/' + toxSummary.patientId"
+       *ngIf="relatedCaseAvailable" aria-label="Open Related MDI Document">
+      Open Related MDI Document
+      <mat-icon aria-hidden="true">open_in_browser</mat-icon></button>
+    <button mat-raised-button color="accent" disabled *ngIf="!relatedCaseAvailable">
+      Related Case Not Found
+      <mat-icon aria-hidden="true">info</mat-icon></button>
+  </div>
+</div>
