@@ -1,0 +1,12 @@
+<div class="row content-field">
+  <div class="col-right content-field-label">{{ uiConstants.DECEDENT_NAME }}:</div>
+  <div class="col-left content-field-value">{{ decedentInfo?.name }}</div>
+</div>
+<div class="row content-field">
+  <div class="col-right content-field-label">{{ uiConstants.DATE_TIME_OF_DEATH }}:</div>
+  <div class="col-left content-field-value">{{ decedentInfo?.dateTimeOfDeath | date: 'MM/dd/yyyy'}}</div>
+</div>
+<div class="row content-field">
+  <div class="col-right content-field-label">{{ uiConstants.MDI_TRACKING_NUMBER }}:</div>
+  <div class="col-left content-field-value">{{ decedentInfo?.mdiTrackingNumber }}</div>
+</div>

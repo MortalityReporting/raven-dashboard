@@ -11,6 +11,10 @@ export const environment = {
   ravenImportApi: "https://apps.hdap.gatech.edu/raven-import-api-dev/upload-xlsx-file"
 };
 
+export const blueJay = {
+  serverBase: "https://apps.hdap.gatech.edu/bluejay-fhir-server/fhir",
+  serverBasicAuth: "client:secret",
+}
 
 /*
  * For easier debugging in development mode, you can import the following file

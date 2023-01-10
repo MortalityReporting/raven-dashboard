@@ -1,35 +1,32 @@
-<div class="top-spacer">
 
-  <mat-form-field appearance="standard">
-    <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Search decedents" #input>
-  </mat-form-field>
+<mat-form-field appearance="standard">
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Search decedents" #input>
+</mat-form-field>
 
-  <mat-form-field appearance="outline" style="margin-left: 2em">
-    <mat-label>Manner of Death</mat-label>
-    <mat-select (selectionChange)="applyMannerOfDeathFilter()" #mannerOfDeathSelect='matSelect'>
-      <mat-option *ngFor="let mannerOfDeath of mannerOfDeathList" [value]="mannerOfDeath">
-        {{ mannerOfDeath }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+<mat-form-field appearance="outline" style="margin-left: 2em">
+  <mat-label>Manner of Death</mat-label>
+  <mat-select (selectionChange)="applyMannerOfDeathFilter()" #mannerOfDeathSelect='matSelect'>
+    <mat-option *ngFor="let mannerOfDeath of mannerOfDeathList" [value]="mannerOfDeath">
+      {{ mannerOfDeath }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<button mat-raised-button color="primary" style="margin-left: 2em" (click)="onClearFilters()">Clear Filters</button>
 
-  <button mat-raised-button color="primary" style="margin-left: 2em" (click)="onClearFilters()">Clear Filters</button>
-
-</div>
 
 <div class="spinner-container" *ngIf="isLoading">
   <mat-spinner [diameter]="70"></mat-spinner>
 </div>
 
-<table mat-table [dataSource]="dataSource" matSort matSortDisableClear matSortActive="personId">
+<table mat-table [dataSource]="dataSource" matSort matSortDisableClear matSortActive="personId" class="search-results-grid">
 
   <ng-container matColumnDef="index">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> #</th>
     <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.index}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="officialName">
+  <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Name</th>
     <td mat-cell class="pointer"
         *matCellDef="let decedent"> {{decedent.lastName | titlecase}}{{decedent.firstName ? ', ' + decedent.firstName : ''}}</td>
@@ -47,7 +44,7 @@
 
   <ng-container matColumnDef="tod">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of Death</th>
-    <td mat-cell class="pointer" *matCellDef="let decedent"> {{ decedent.tod | date: 'MM/dd/yyyy' }} </td>
+    <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.tod | date: 'MM/dd/yyyy'}} </td>
   </ng-container>
 
   <ng-container matColumnDef="mannerOfDeath">
@@ -57,14 +54,14 @@
 
   <ng-container matColumnDef="caseNumber">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> MDI Case Number</th>
-    <td mat-cell class="pointer" *matCellDef="let decedent" [matTooltip]="'System: ' + (decedent.system || 'Not Found')"> {{decedent.caseNumber }} </td>
+    <td mat-cell class="pointer" *matCellDef="let decedent" [matTooltip]="'System: ' + decedent.system"> {{decedent.caseNumber }} </td>
   </ng-container>
 
-
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onCaseSelected(row)"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onCaseSelected(row)"
+      style="cursor:pointer"
+      [ngClass]="{'selected-row': row.index === selectedCase?.index}"></tr>
 
 </table>
 
-
-
+<mat-paginator [pageSize]="10" aria-label="Select page of GitHub search results"></mat-paginator>

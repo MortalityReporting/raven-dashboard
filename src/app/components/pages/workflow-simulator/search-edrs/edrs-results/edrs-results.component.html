@@ -1,0 +1,41 @@
+<div>
+
+  <mat-card>
+    <div class="row">
+      <div class="col">
+        <app-decedent-basic-info [decedentInfo]="decedentInfo"></app-decedent-basic-info>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: center;">
+        <button mat-raised-button (click)="onSelectDifferentDocument()">Select Different Document</button>
+      </div>
+    </div>
+  </mat-card>
+
+  <mat-card style="margin-top: 1em">
+    <div class="row">
+      <div class="col" style="margin-top: 1em; flex-direction: row-reverse">
+        EDRS Server: {{ edrsServer }}
+      </div>
+      <div style="flex-direction: row-reverse">
+        <button mat-raised-button (click)="onChangeEndpointConfiguration()">Change Endpoint Configuration</button>
+      </div>
+    </div>
+  </mat-card>
+
+  <mat-card style="margin-top: 1em">
+    <app-search-parameters
+      (searchResultsEmitter)="updatedSearchResults($event)"
+      (clearSearchResultEmitter)="successResponse = null; errorResponse = null">
+    </app-search-parameters>
+  </mat-card>
+
+  <mat-card style="margin-top: 1em">
+    <app-edrs-search-results [errorResponse]="errorResponse"
+                             [successResponse]="successResponse"></app-edrs-search-results>
+  </mat-card>
+
+  <mat-card style="margin-top: 1em">
+    <app-edrs-record-summary [edrsRecord]="selectedEdrsRecord"></app-edrs-record-summary>
+  </mat-card>
+
+</div>

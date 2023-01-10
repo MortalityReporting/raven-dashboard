@@ -25,7 +25,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 }
 
-.top-spacer{
+.top-spacer {
   padding-top: 15px;
 }
 
@@ -123,6 +123,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background: #ffcdd2;
 }
 
+.push-right {
+  margin-left: auto;
+}
+
+
 
 /**
 MOVED FROM CASE SUMMARY TO USE WITH TOX AS WELL
@@ -208,3 +213,13 @@ button {
 .explorer-header-instructions {
   font-size: small;
 }
+
+/* Basic row and col classes*/
+.row {
+  display: flex;  /* aligns all child elements (flex items) in a row */
+}
+
+.col {
+  flex: 1;        /* distributes space on the line equally among items */
+}
+
