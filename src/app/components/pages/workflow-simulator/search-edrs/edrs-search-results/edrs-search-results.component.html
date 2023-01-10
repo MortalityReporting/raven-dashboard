@@ -29,8 +29,9 @@
 
           <ng-container matColumnDef="dateOfDeath">
             <th mat-header-cell *matHeaderCellDef> Date of Death</th>
-            <td mat-cell
-                *matCellDef="let decedent"> {{decedent.deathDate ? (decedent.deathDate | date:'MM/dd/yyyy') : "Unknown" }} </td>
+            <td mat-cell *matCellDef="let decedent">
+              {{decedent.deathDate ? (decedent.deathDate | date:'MM/dd/yyyy') : "Unknown" }}
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="mannerOfDeath">
@@ -52,7 +53,7 @@
 
           <tr class="case-record-row" mat-row *matRowDef="let row; columns: resultTableColumns;"
               [class.selected-case-row]="selectedCase === row"
-              (click)="selectedCase = selectedCase === row ? null : row">
+              (click)="setSelectedCase(row)">
           </tr>
           <tr class="mat-row" *matNoDataRow>
             <td class="mat-cell" [attr.colspan]="resultTableColumns.length">

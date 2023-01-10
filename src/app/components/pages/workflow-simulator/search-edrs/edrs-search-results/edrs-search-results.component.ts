@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {Obs_DeathDate, Obs_MannerOfDeath} from "../../../../../model/mdi/profile.list";
 import {TrackingNumberType} from "../../../../../model/tracking.number.type";
@@ -14,6 +14,8 @@ export class EdrsSearchResultsComponent implements OnInit, OnChanges {
 
   @Input() successResponse: any;
   @Input() errorResponse: any;
+
+  @Output() selectedCaseValueEmitter : EventEmitter<any> = new EventEmitter();
 
   @ViewChild(MatTabGroup) resultsTabGroup: MatTabGroup;
 
@@ -119,4 +121,14 @@ export class EdrsSearchResultsComponent implements OnInit, OnChanges {
     return matchedExtension?.valueIdentifier?.value || undefined;
   }
 
+  setSelectedCase(row) {
+    if(!!row){
+      this.selectedCase = row;
+    }
+    else {
+      this.selectedCase = null;
+    }
+    console.log(this.selectedCase);
+    this.selectedCaseValueEmitter.emit(this.selectedCase);
+  }
 }

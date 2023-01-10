@@ -1,11 +1,77 @@
 <mat-tab-group #caseSummaryTabGroup>
 
   <mat-tab label="Record Summary">
-    Record Summary
+    <div class="response-container">
+      <div *ngIf="edrsRecord">
+
+        <div class="row">
+          <div class="col-left">Subject Name:</div><div class="col-right">{{ edrsRecord?.officialName }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-left">Date/Time of Death: </div><div class="col-right">{{ edrsRecord?.deathDate }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-left">Date/Time of Death: </div><div class="col-right">{{ edrsRecord?.deathDate }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-left">Legal Sex at Death: </div><div class="col-right">{{ edrsRecord?.deathDate }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-left">EDRS Case Number: </div><div class="col-right">{{ edrsRecord?.deathDate }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-left">Legal Sex at Death: </div><div class="col-right">{{ edrsRecord?.deathDate }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-left">Date of Birth: </div><div class="col-right">{{ edrsRecord?.deathDate }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-left">Race: </div><div class="col-right">{{ edrsRecord?.deathDate }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-left">Ethnicity: </div><div class="col-right">{{ edrsRecord?.deathDate }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-left">City: </div><div class="col-right">{{ edrsRecord?.deathDate }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-left">State: </div><div class="col-right">{{ edrsRecord?.deathDate }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-left">State: </div><div class="col-right">{{ edrsRecord?.deathDate }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-left">Zip: </div><div class="col-right">{{ edrsRecord?.deathDate }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-left">Manner of Death: </div><div class="col-right">{{ edrsRecord?.deathDate }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-left">Immediate Cause of Death: </div><div class="col-right">{{ edrsRecord?.deathDate }}</div>
+        </div>
+
+      </div>
+    </div>
   </mat-tab>
 
   <mat-tab label="View as FHIR MDI Document Bundle">
-    View as FHIR MDI Document Bundle
+    <div class="response-container">
+      <pre *ngIf="edrsRecord?.bundleResource">{{ edrsRecord?.bundleResource | json}}</pre>
+    </div>
   </mat-tab>
 
 </mat-tab-group>

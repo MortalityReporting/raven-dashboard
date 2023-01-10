@@ -25,13 +25,16 @@
   <mat-card style="margin-top: 1em">
     <app-search-parameters
       (searchResultsEmitter)="updatedSearchResults($event)"
-      (clearSearchResultEmitter)="successResponse = null; errorResponse = null">
+      (clearSearchResultEmitter)="successResponse = null; errorResponse = null; selectedEdrsRecord = null">
     </app-search-parameters>
   </mat-card>
 
   <mat-card style="margin-top: 1em">
-    <app-edrs-search-results [errorResponse]="errorResponse"
-                             [successResponse]="successResponse"></app-edrs-search-results>
+    <app-edrs-search-results
+      [errorResponse]="errorResponse"
+      [successResponse]="successResponse"
+      (selectedCaseValueEmitter)="onEdrsRecordSelected($event)">
+    </app-edrs-search-results>
   </mat-card>
 
   <mat-card style="margin-top: 1em">
