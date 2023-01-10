@@ -1,0 +1,106 @@
+<mat-tab-group #resultsTabGroup style='min-height:300px'>
+
+  <mat-tab label="Result">
+    <div class="response-container">
+      <!-- Render error results here -->
+      <div *ngIf="errorResponse">
+        <div class="result-line-item">
+          <span class="result-label">Status:</span>
+          {{ errorResponse.status }} {{ errorResponse.statusText }}
+        </div>
+        <div *ngFor="let issue of errorResponse?.error?.issue; let index = index">
+          <div class="result-line-item"><span class="result-label">Severity:</span> {{ issue?.severity }}</div>
+          <div class="result-line-item"><span class="result-label">Text:</span> {{ issue?.details?.text }}</div>
+        </div>
+        <div>
+          <div class="result-label">Operation Outcome:</div>
+          <div class='operation-outcome-html' [innerHTML]="errorResponse?.error?.text?.div"></div>
+        </div>
+      </div>
+
+      <!-- Render success results here -->
+      <div *ngIf="successResponse">
+        <table mat-table [dataSource]="resultTableDataSource" style="width: 100%; cursor: pointer">
+
+          <ng-container matColumnDef="officialName">
+            <th mat-header-cell *matHeaderCellDef> Name</th>
+            <td mat-cell *matCellDef="let decedent"> {{decedent.officialName}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="dateOfDeath">
+            <th mat-header-cell *matHeaderCellDef> Date of Death</th>
+            <td mat-cell
+                *matCellDef="let decedent"> {{decedent.deathDate ? (decedent.deathDate | date:'MM/dd/yyyy') : "Unknown" }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="mannerOfDeath">
+            <th mat-header-cell *matHeaderCellDef> Manner of Death</th>
+            <td mat-cell *matCellDef="let decedent"> {{decedent.mannerOfDeath}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="mdiCaseNumber">
+            <th mat-header-cell *matHeaderCellDef> MDI Case Number</th>
+            <td mat-cell *matCellDef="let decedent"> {{decedent.mdiCaseNumber}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="edrsFileNumber">
+            <th mat-header-cell *matHeaderCellDef> EDRS File Number</th>
+            <td mat-cell *matCellDef="let decedent"> {{decedent.edrsFileNumber}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="resultTableColumns"></tr>
+
+          <tr class="case-record-row" mat-row *matRowDef="let row; columns: resultTableColumns;"
+              [class.selected-case-row]="selectedCase === row"
+              (click)="selectedCase = selectedCase === row ? null : row">
+          </tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" [attr.colspan]="resultTableColumns.length">
+              No Records Found.
+            </td>
+          </tr>
+        </table>
+
+      </div>
+    </div>
+    <div class="top-spacer" *ngIf="!!successResponse && !!resultTableDataSource?.data?.length">
+      Select a case in the result table to view a summary below.
+    </div>
+  </mat-tab>
+
+  <mat-tab label="FHIR Result">
+    <div class="response-container">
+      <div *ngIf="errorResponse">
+        <div>
+          <pre> {{ errorResponse.error | json }} </pre>
+        </div>
+      </div>
+      <div *ngIf="successResponse">
+        <div>
+          <pre> {{ successResponse | json }} </pre>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="HTTP Request">
+    <div class="response-container">
+      <div *ngIf="errorResponse || successResponse">
+        <app-http-request-info></app-http-request-info>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="HTTP Response">
+    <div class="response-container">
+      <div *ngIf="errorResponse || successResponse">
+        <app-http-response-info [errorResponse]="errorResponse"
+                                [successResponse]="successResponse">
+        </app-http-response-info>
+      </div>
+    </div>
+  </mat-tab>
+
+</mat-tab-group>
+
+

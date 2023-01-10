@@ -1,0 +1,8 @@
+.search-results-grid{
+  width: 100%;
+  margin: 1em 0;
+}
+
+.selected-row {
+  background-color: #E8EAF6;
+}
