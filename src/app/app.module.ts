@@ -61,7 +61,6 @@ import { ModalComponent } from './components/widgets/modal/modal.component';
 import { CaseComparisonDialogComponent } from './components/pages/case-comparison/case-comparison-dialog/case-comparison-dialog.component';
 import {CasesComponent} from "./components/pages/cases/cases.component";
 import { ToxicologyGridComponent } from './components/pages/cases/toxicology-grid/toxicology-grid.component';
-import { ToxicologyContainerComponent } from './components/pages/toxicology-container/toxicology-container.component';
 import { ToxicologyReportComponent } from './components/pages/toxicology-report/toxicology-report.component';
 import { ToxicologyReportContentComponent } from './components/pages/toxicology-report/toxicology-report-content/toxicology-report-content.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
@@ -93,7 +92,6 @@ import {
         ModalComponent,
         CasesComponent,
         ToxicologyGridComponent,
-        ToxicologyContainerComponent,
         ToxicologyReportComponent,
         ToxicologyReportContentComponent,
         ToxicologyReportMdiCaseComponent,

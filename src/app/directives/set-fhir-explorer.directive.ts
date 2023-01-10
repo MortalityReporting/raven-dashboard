@@ -1,6 +1,7 @@
 import {Directive, HostListener, Input} from '@angular/core';
 import {FhirResourceProviderService} from "../service/fhir-resource-provider.service";
 import {DocumentHandlerService} from "../service/document-handler.service";
+import {BundleHelperService} from "../service/fhir/bundle-helper.service";
 
 @Directive({
   selector: '[appSetFhirExplorer]'
@@ -25,7 +26,7 @@ export class SetFhirExplorerDirective {
     else if (this.observation)
     {
       // TODO: Refactor to provide the bundle to the directive so this is not needed...
-      this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.findResourceByProfileNamePassThrough(this.observation));
+      this.fhirResourceProvider.setSelectedFhirResource(this.bundleHelper.findResourceByFullUrl(this.documentHandler.getCurrentDocumentBundle(), this.observation));
     }
     else if (this.title) {
       switch (this.title) {
@@ -43,7 +44,8 @@ export class SetFhirExplorerDirective {
   }
 
   constructor(private fhirResourceProvider: FhirResourceProviderService,
-              private documentHandler: DocumentHandlerService
+              private documentHandler: DocumentHandlerService,
+              private bundleHelper: BundleHelperService
               ) { }
 
 }

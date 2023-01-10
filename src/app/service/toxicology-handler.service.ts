@@ -124,9 +124,10 @@ export class ToxicologyHandlerService {
       diagnosticReport.specimen.forEach(specimen => {
         const specimenResource = this.bundleHelper.findResourceByFullUrl(messageBundle, specimen.reference);
         const type = specimenResource.type?.text; // TODO: Add additional handling for other potential paths. Type is not optional.
+        const site = specimenResource.collection?.bodySite?.text || specimenResource.collection?.bodySite?.coding?.[0]?.display || ""; // TODO: Add handling for other paths once test data available.
         const identifier = specimenResource?.accessionIdentifier?.value || ""; // TODO: Confirm this is only source of identifier to use.
         const collected = specimenResource?.collection?.collectedDateTime || ""; // TODO: Add additional handling for other potential paths.
-        const specimenObject = new Specimen(type, identifier, collected, specimenResource);
+        const specimenObject = new Specimen(type, site, identifier, collected, specimenResource);
         specimens.push(specimenObject);
       })
     }

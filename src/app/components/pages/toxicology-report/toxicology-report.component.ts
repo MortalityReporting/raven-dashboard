@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ToxicologyHandlerService} from "../../../service/toxicology-handler.service";
 import {ActivatedRoute} from "@angular/router";
 import {Observable, tap} from "rxjs";
@@ -7,6 +7,8 @@ import {MatIconRegistry} from "@angular/material/icon";
 import {DomSanitizer} from "@angular/platform-browser";
 import {ToxHeader} from "../../../model/record-models/tox.header";
 import {ToxSummary} from "../../../model/record-models/tox.summary";
+import {CaseSummaryContentComponent} from "../case-summary/case-summary-content/case-summary-content.component";
+import {ToxicologyReportContentComponent} from "./toxicology-report-content/toxicology-report-content.component";
 
 @Component({
   selector: 'app-toxicology-report',
@@ -14,6 +16,7 @@ import {ToxSummary} from "../../../model/record-models/tox.summary";
   styleUrls: ['./toxicology-report.component.css']
 })
 export class ToxicologyReportComponent implements OnInit {
+  @ViewChild(CaseSummaryContentComponent) toxReportContentComponent: ToxicologyReportContentComponent;
 
   messageBundle$: Observable<any>;
   toxHeader: ToxHeader;
@@ -32,6 +35,10 @@ export class ToxicologyReportComponent implements OnInit {
     const path = "../../assets"
     this.matIconRegistry.addSvgIcon("labs", this.domSanitizer
       .bypassSecurityTrustResourceUrl(`${path}/labs.svg`));
+    this.matIconRegistry.addSvgIcon("lab_panel", this.domSanitizer
+      .bypassSecurityTrustResourceUrl(`${path}/lab_panel.svg`));
+    this.matIconRegistry.addSvgIcon("clinical_notes", this.domSanitizer
+      .bypassSecurityTrustResourceUrl(`${path}/clinical_notes.svg`));
   }
 
   ngOnInit(): void {
@@ -52,6 +59,6 @@ export class ToxicologyReportComponent implements OnInit {
   }
 
   onItemClick(id: string) {
-    //this.caseSummaryContentComponent.onSetState(id, true);
+    this.toxReportContentComponent.onSetState(id, true);
   }
 }

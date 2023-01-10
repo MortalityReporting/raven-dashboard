@@ -40,15 +40,15 @@
       </mat-list-item>
 
       <mat-list-item (click)="onItemClick('results');">
-        <mat-icon [matTooltip]="!sidenavExpanded ? 'Test Results' : ''" matTooltipPosition="right" aria-hidden="true">
-          lab_panel
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Test Results' : ''" matTooltipPosition="right" aria-hidden="true"
+                  svgIcon="lab_panel">
         </mat-icon>
         <span *ngIf="sidenavExpanded">&nbsp;Test Results</span>
       </mat-list-item>
 
       <mat-list-item (click)="onItemClick('conclusion');">
-        <mat-icon [matTooltip]="!sidenavExpanded ? 'Conclusion' : ''" matTooltipPosition="right" aria-hidden="true">
-          question_mark
+        <mat-icon [matTooltip]="!sidenavExpanded ? 'Conclusion' : ''" matTooltipPosition="right" aria-hidden="true"
+                  svgIcon="clinical_notes">
         </mat-icon>
         <span *ngIf="sidenavExpanded">&nbsp;Conclusion</span>
       </mat-list-item>

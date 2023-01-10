@@ -238,7 +238,7 @@ export class DocumentHandlerService {
 
     causeAndMannerSection?.entry.map(( entry: any) =>
     {
-      let observation = this.bundleHelper.findResourceByFullUrl(documentBundle, entry.reference );
+      let observation = this.bundleHelper.findResourceByFullUrl(documentBundle, entry.reference);
 
       if (observation != null)
       {
@@ -283,6 +283,7 @@ export class DocumentHandlerService {
           }
           else if (profile === Obs_HowDeathInjuryOccurred)
           {
+            console.log(observation)
             causeAndManner.howDeathInjuryOccurred = observation.valueCodeableConcept?.text || this.defaultString;
 
             let placeOfInjuryComponent = this.fhirHelper.findObservationComponentByCode(observation, "69450-5");
@@ -345,21 +346,6 @@ export class DocumentHandlerService {
 
     return autopsy;
   }
-  // -------------------------
-  // Find and Filter Functions
-  // -------------------------
-  // // Find Death Location Resource (US Core Location Profile) through the Composition.section reference.
-  // findDeathLocation(documentBundle: any = this.currentDocumentBundle, compositionResource: any, circumstancesSection: any): any {
-  //   let deathLocationResourceId = (circumstancesSection?.entry?.find((entry: any) => entry.reference.startsWith("Location")))?.reference || undefined;
-  //   // TODO: Add handling for reference from death date?
-  //   return this.findResourceById(documentBundle, deathLocationResourceId);
-  // }
-  //
-  // findDeathLocation(documentBundle: any = this.currentDocumentBundle, compositionResource: any, circumstancesSection: any): any {
-  //   let deathLocationResourceId = (circumstancesSection?.entry?.find((entry: any) => entry.reference.startsWith("Location")))?.reference || undefined;
-  //   // TODO: Add handling for reference from death date?
-  //   return this.findResourceById(documentBundle, deathLocationResourceId);
-  // }
 
   findJurisdictionObservation(documentBundle: any = this.currentDocumentBundle, compositionResource: any, jurisdictionSection: any): any {
     let id = (jurisdictionSection?.entry?.find((entry: any) => entry.reference.startsWith("Observation")))?.reference || undefined;
@@ -446,7 +432,7 @@ export class DocumentHandlerService {
   }
 
   getCurrentSubjectResource(): any {
-    return this.bundleHelper.findResourceByFullUrl(undefined, this.subjectId);
+    return this.bundleHelper.findResourceByFullUrl(this.currentDocumentBundle, this.subjectId);
   }
 
   getCertifier(): any {

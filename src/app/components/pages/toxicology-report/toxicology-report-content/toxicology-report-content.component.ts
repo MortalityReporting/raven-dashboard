@@ -16,7 +16,7 @@ export class ToxicologyReportContentComponent implements OnInit {
   idStateList = [
     { expanded: true,    id: 'performers' },
     { expanded: true,    id: 'specimens' },
-    { expanded: true,    id: 'testresults' },
+    { expanded: true,    id: 'results' },
     { expanded: true,    id: 'conclusion' }
   ]
 
@@ -40,6 +40,9 @@ export class ToxicologyReportContentComponent implements OnInit {
     this.accordion.closeAll()
   }
 
+  onSetState(resourceId, state){
+    this.idStateList = this.idStateList.map(element => element.id == resourceId ? {id: element.id, expanded: state} : element);
+  }
   isExpanded(elementId: string) {
     return this.idStateList.find(element => element.id == elementId)?.expanded;
   }
