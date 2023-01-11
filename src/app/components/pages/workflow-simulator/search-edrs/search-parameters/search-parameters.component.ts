@@ -94,7 +94,7 @@ export class SearchParametersComponent implements OnInit {
       this.executeEdrsSearch();
     }
     else {
-      this.errorMessage = "You must enter at least one parameter."
+      this.errorMessage = "You must enter data for at least one parameter."
     }
   }
 
