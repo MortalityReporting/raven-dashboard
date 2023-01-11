@@ -294,7 +294,6 @@ export class SearchParametersComponent implements OnInit {
   }
 
 
-  //TODO this code simply does not work and needs to be refactored or extended properly
   getTrackingNumber(resource: any, type: TrackingNumberType = TrackingNumberType.Mdi): string {
     const extensions = resource.extension;
     const trackingNumberExtensions = extensions?.filter((extension: any) => extension.url === "http://hl7.org/fhir/us/mdi/StructureDefinition/Extension-tracking-number");
