@@ -23,7 +23,6 @@ export class SearchParametersComponent implements OnInit {
   resultTableDataSource = new MatTableDataSource<any>();
   decedentInfo: DecedentSimpleInfo;
 
-  //TODO change this to a data driven solution when we have an API that can support it
   edrsSearchFormParams: any = [];
 
   searchEdrsForm = this.fb.group({
@@ -288,12 +287,6 @@ export class SearchParametersComponent implements OnInit {
       .resource;
 
     return result;
-  }
-
-  private toTitleCase(str: string): string{
-    return str.replace(/\w\S*/g, function(txt){
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    });
   }
 
   private removePeriods(str: string): string{
