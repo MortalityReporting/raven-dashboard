@@ -20,7 +20,7 @@ export class EndpointConfigurationComponent implements OnInit {
   //TODO extract those as constants
   serverEndpointList: any[] = [
     {uri: blueJay.serverBase, displayName: 'BlueJay'},
-    {uri: 'www.gavers.edu', displayName: 'Gavers'},
+    {uri: 'www.gavers.edu', displayName: 'GAVERS'},
   ];
 
   endpointConfigurationFormGroup: FormGroup

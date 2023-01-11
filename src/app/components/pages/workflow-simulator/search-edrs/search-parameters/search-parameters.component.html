@@ -49,8 +49,13 @@
       </div>
     </div>
   </div>
-  <div class="row" style="margin-top: 1em; flex-direction: row-reverse">
-    <span style="margin-left: 1em"><button type="submit" mat-raised-button color="primary">Search</button></span>
-    <span style="margin-left: 1em"><button type="button" mat-raised-button (click)="onClearSearch()">Clear Search</button></span>
+  <div class="row" style="margin-top: 1em;">
+    <div><mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error></div>
+    <div class="push-right">
+      <span style="margin-left: 1em"><button type="button" mat-raised-button (click)="onClearSearch()">Clear Search</button></span>
+      <span style="margin-left: 1em"><button type="submit" mat-raised-button color="primary">Search</button></span>
+    </div>
+
   </div>
+
 </form>

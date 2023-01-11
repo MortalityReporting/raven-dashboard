@@ -24,16 +24,13 @@ export class SearchParametersComponent implements OnInit {
   decedentInfo: DecedentSimpleInfo;
 
   //TODO change this to a data driven solution when we have an API that can support it
-  edrsSearchFormParams = [
-    { display: 'Decedent Last Name', value:  'patient.family' },
-    { display: 'Decedent First Name', value: 'patient.given'},
-    { display: 'Legal Sex at Death', value: 'patient.gender'},
-    { display: 'Date of Birth', value: 'patient.birthday'},
-  ];
+  edrsSearchFormParams: any = [];
 
   searchEdrsForm = this.fb.group({
     parameters: this.fb.array([])
   });
+
+  errorMessage: string;
 
   constructor(
     private fb: FormBuilder,
@@ -55,15 +52,30 @@ export class SearchParametersComponent implements OnInit {
     this.searchEdrsService.getOperationDefinitionList().subscribe({
       next: value => {
         this.operationsDatsStructure = value;
-        const dataDrivenParams = value.parameter
-          .filter(param => param.type === 'string')
+        // We need to flatten the data structure and for all parameters having parts,wee add tha name of the parameter
+        // value of the name. For example if the part has a name "patient" and the inner part has name "birthdate",
+        // the result we produce is "patient.birthdate". The reason we need the flat structure is to accommodate the
+        // searchEdrsForm dynamic fields.
+
+        const paramPart = value.parameter
+          .filter(param => !!param.part)
+          .map(param =>
+            param.part.map(innerParam => {innerParam.name = param.name + '.' + innerParam.name; return innerParam})
+          )
+          .flat()
           .map(param => { return { display: this.getDisplayValueFromExtension(param), value: param.name } })
           .filter(param => !!param.display && !!param.value);
 
-        this.edrsSearchFormParams = this.edrsSearchFormParams.concat(dataDrivenParams);
+        const simpleParams = value.parameter
+          .filter(param => param.type === 'string')
+          .map(param => { return { display: this.getDisplayValueFromExtension(param), value: param.name } })
+          .filter(param => !!param.display && !!param.value);
+        this.edrsSearchFormParams = paramPart.concat(paramPart);
+        this.edrsSearchFormParams = this.edrsSearchFormParams.concat(simpleParams);
         this.edrsSearchFormParams = this.edrsSearchFormParams.filter((item, index)=>{
           return (this.edrsSearchFormParams.indexOf(item) == index)
         });
+
       },
       error: err => {
         console.error(err);
@@ -77,7 +89,18 @@ export class SearchParametersComponent implements OnInit {
   }
 
   onSubmit() {
-    this.executeEdrsSearch();
+    this.errorMessage = '';
+    if(this.atLestOneParamSelected()){
+      this.executeEdrsSearch();
+    }
+    else {
+      this.errorMessage = "You must enter at least one parameter."
+    }
+  }
+
+  atLestOneParamSelected(){
+    const result = !!this.searchEdrsForm?.value?.parameters?.find(parameter => !!parameter?.valueString);
+    return result;
   }
 
   getFormControlParamTypes(index, paramsFormControl) {
@@ -136,6 +159,7 @@ export class SearchParametersComponent implements OnInit {
     // TODO: We should refactor this and use a loop. The code is too repetitive.
     // Also the API we use does not support sort order so the order we use must be hardcoded somewhere,
     // until the API is changed
+    this.errorMessage = '';
     const  givenNameFg = this.fb.group({
       name : new FormControl('patient.given'),
       valueString: new FormControl(''),
@@ -148,11 +172,11 @@ export class SearchParametersComponent implements OnInit {
     });
     this.parameters.push(lastNameFg);
 
-    const dobFg = this.fb.group({
-      name : new FormControl('mdi-case-number'),
+    const edrsNumber = this.fb.group({
+      name : new FormControl('edrs-file-number'),
       valueString: new FormControl(''),
     });
-    this.parameters.push(dobFg);
+    this.parameters.push(edrsNumber);
 
   }
 
@@ -166,7 +190,6 @@ export class SearchParametersComponent implements OnInit {
     let resultList = [];
     formParams.forEach(formParam => {
       if (formParam.name.indexOf('.') == -1) {
-        console.log(formParam);
         const result = {name : formParam.name, valueString: formParam.valueString};
         if(resultList.indexOf(result) == -1){
           resultList.push(result);
