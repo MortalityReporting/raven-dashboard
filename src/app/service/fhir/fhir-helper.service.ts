@@ -27,6 +27,12 @@ export class FhirHelperService {
     return matchedExtension?.valueIdentifier?.value || undefined;
   }
 
+  getTrackingNumberSystem(resource: any, type: TrackingNumberType = TrackingNumberType.Mdi): string {
+    const extensions = resource.extension;
+    const trackingNumberExtensions = extensions?.filter((extension: any) => extension.url === "http://hl7.org/fhir/us/mdi/StructureDefinition/Extension-tracking-number");
+    const matchedExtension = trackingNumberExtensions.find((extension: any) => extension?.valueIdentifier?.type?.coding?.[0].code === type);
+    return matchedExtension?.valueIdentifier?.system || undefined;
+  }
 
 // {
 //   "url": "http://hl7.org/fhir/us/mdi/StructureDefinition/Extension-tracking-number",
