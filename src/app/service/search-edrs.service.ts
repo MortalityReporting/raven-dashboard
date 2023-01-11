@@ -59,9 +59,7 @@ export class SearchEdrsService {
       url : operationDefinitionLocation
     });
 
-    return this.http.post(operationDefinitionLocation, params, httpOptions).pipe(map((result: any) => (
-      result as Object
-    )));
+    return this.http.post(operationDefinitionLocation, params, httpOptions);
   }
 
 }

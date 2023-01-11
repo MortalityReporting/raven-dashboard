@@ -86,19 +86,16 @@
 
   <mat-tab label="HTTP Request">
     <div class="response-container">
-      <div *ngIf="errorResponse || successResponse">
         <app-http-request-info></app-http-request-info>
-      </div>
     </div>
   </mat-tab>
 
   <mat-tab label="HTTP Response">
     <div class="response-container">
-      <div *ngIf="errorResponse || successResponse">
-        <app-http-response-info [errorResponse]="errorResponse"
-                                [successResponse]="successResponse">
+        <app-http-response-info
+          [errorResponse]="errorResponse"
+          [successResponse]="successResponse">
         </app-http-response-info>
-      </div>
     </div>
   </mat-tab>
 
