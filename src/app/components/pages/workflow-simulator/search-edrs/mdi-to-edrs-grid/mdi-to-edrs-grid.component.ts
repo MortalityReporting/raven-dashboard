@@ -10,6 +10,8 @@ import {SearchEdrsService} from "../../../../../service/search-edrs.service";
 import {DecedentSimpleInfo} from "../../../../../model/decedent-simple-info";
 import {MatSelect} from "@angular/material/select";
 import {MatPaginator} from "@angular/material/paginator";
+import {TrackingNumberType} from "../../../../../model/tracking.number.type";
+import {FhirHelperService} from "../../../../../service/fhir/fhir-helper.service";
 
 @Component({
   selector: 'app-mdi-to-edrs-grid',
@@ -39,7 +41,8 @@ export class MdiToEdrsGridComponent implements OnInit {
     private decedentService: DecedentService,
     private router: Router,
     private utilsService: UtilsService,
-    private searchEdrsService: SearchEdrsService
+    private searchEdrsService: SearchEdrsService,
+    private fhirHelperService: FhirHelperService
   ) {
   }
 
@@ -94,6 +97,8 @@ export class MdiToEdrsGridComponent implements OnInit {
               map((composition: any) => {
                 const caseNumber = composition?.entry?.[0]?.resource?.extension?.[0]?.valueIdentifier?.value;
                 decedentRecord.caseNumber = caseNumber;
+                const mdiSystem = this.fhirHelperService.getTrackingNumberSystem(composition?.entry?.[0]?.resource, TrackingNumberType.Mdi);
+                decedentRecord.system = mdiSystem;
                 return decedentRecord
               })
             )
@@ -102,8 +107,8 @@ export class MdiToEdrsGridComponent implements OnInit {
     )
       .subscribe({
         next: (data) => {
-          this.decedentGridDtoList = data;
-          this.dataSource = new MatTableDataSource(data);
+          this.decedentGridDtoList = data.filter(record => !!record.caseNumber);
+          this.dataSource = new MatTableDataSource(this.decedentGridDtoList);
           this.mannerOfDeathList = this.getMannerOfDeathList(this.decedentGridDtoList);
           this.dataSource.sort = this.sort;
           this.dataSource.paginator = this.paginator;
