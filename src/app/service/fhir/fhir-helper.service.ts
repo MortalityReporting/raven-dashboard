@@ -21,6 +21,9 @@ export class FhirHelperService {
 
   // This function should only apply to Composition or DiagnosticReport. Matches by tracking number type constant.
   getTrackingNumber(resource: any, type: TrackingNumberType = TrackingNumberType.Mdi): string {
+    if(!resource?.extension){
+      return null;
+    }
     const extensions = resource.extension;
     const trackingNumberExtensions = extensions?.filter((extension: any) => extension.url === "http://hl7.org/fhir/us/mdi/StructureDefinition/Extension-tracking-number");
     const matchedExtension = trackingNumberExtensions.find((extension: any) => extension?.valueIdentifier?.type?.coding?.[0].code === type);
@@ -28,6 +31,9 @@ export class FhirHelperService {
   }
 
   getTrackingNumberSystem(resource: any, type: TrackingNumberType = TrackingNumberType.Mdi): string {
+    if(!resource?.extension){
+      return null;
+    }
     const extensions = resource.extension;
     const trackingNumberExtensions = extensions?.filter((extension: any) => extension.url === "http://hl7.org/fhir/us/mdi/StructureDefinition/Extension-tracking-number");
     const matchedExtension = trackingNumberExtensions.find((extension: any) => extension?.valueIdentifier?.type?.coding?.[0].code === type);
