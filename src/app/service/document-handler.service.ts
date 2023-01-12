@@ -3,36 +3,36 @@ import {map, Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {DecedentService} from "./decedent.service";
 import {
+  Autopsy,
   CaseSummary,
   CauseAndManner,
   CauseOfDeathPart1,
   CauseOfDeathPart2,
   Circumstances,
-  Jurisdiction,
   Demographics,
-  UsualWork,
-  Autopsy
+  Jurisdiction
 } from "../model/record-models/case.summary";
 import {Author, CaseHeader} from "../model/record-models/case.header";
 import {TrackingNumber} from "../model/mdi/tracking.number";
 import {TerminologyHandlerService} from "./terminology-handler.service";
 import {
+  Loc_death,
+  Loc_injury,
+  Obs_CauseOfDeathPart1,
+  Obs_CauseOfDeathPart2,
   Obs_DeathDate,
-  Obs_DeathInjuryEventOccurredAtWork,
   Obs_DecedentPregnancy,
   Obs_HowDeathInjuryOccurred,
   Obs_MannerOfDeath,
   Obs_TobaccoUseContributedToDeath,
-  Obs_CauseOfDeathPart1,
-  Obs_CauseOfDeathPart2,
-  Loc_death,
-  Loc_injury,
 } from "../model/mdi/profile.list"
 import {FhirResourceProviderService} from "./fhir-resource-provider.service";
 import {Address} from "../model/fhir/types/address";
 import {EnvironmentHandlerService} from "./environment-handler.service";
 import {FhirHelperService} from "./fhir/fhir-helper.service";
 import {BundleHelperService} from "./fhir/bundle-helper.service";
+import {TrackingNumberType} from "../model/tracking.number.type";
+import {ToxRecordStub} from "../model/record-models/toxRecordStub";
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +54,9 @@ export class DocumentHandlerService {
 
   private patientResource = new Subject<any>();
   patientResource$ = this.patientResource.asObservable();
+
+  private relatedToxicology = new Subject<any>();
+  relatedToxicology$ = this.relatedToxicology.asObservable();
 
   setDocumentBundle(documentBundle){
     this.currentDocumentBundle = documentBundle;
@@ -79,6 +82,10 @@ export class DocumentHandlerService {
     this.currentCompositionResource = compositionResource;
   }
 
+  setRelatedToxicology(searchResultBundle){
+    this.relatedToxicology.next(searchResultBundle);
+  }
+
   clearObservablesAndCashedData(){
     this.setCurrentCompositionResource(null);
     this.setCurrentDocumentBundle(null);
@@ -86,6 +93,7 @@ export class DocumentHandlerService {
     this.setPatienceResource(null);
     this.setCaseSummary(null);
     this.setDocumentBundle(null);
+    this.setRelatedToxicology(null);
   }
 
   constructor(
@@ -115,6 +123,28 @@ export class DocumentHandlerService {
     );
   }
 
+  getRelatedToxicologyReports(mdiCaseNumber: string): any {
+    return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "DiagnosticReport?mdi-case-number=" + mdiCaseNumber)
+      .pipe(
+        map((resultBundle: any) => {
+          console.log(resultBundle)
+          let toxRecordList = [];
+          resultBundle.entry.forEach((bec:any) => {
+            const diagnosticReport = bec.resource;
+            let toxRecordStub = new ToxRecordStub();
+            toxRecordStub.date = diagnosticReport.issued.split("T")[0] || undefined;
+            toxRecordStub.mdiCaseNumber = this.fhirHelper.getTrackingNumber(diagnosticReport);
+            toxRecordStub.mdiCaseSystem = this.fhirHelper.getTrackingNumberSystem(diagnosticReport);
+            toxRecordStub.toxCaseNumber = this.fhirHelper.getTrackingNumber(diagnosticReport, TrackingNumberType.Tox);
+            toxRecordStub.toxCaseSystem = this.fhirHelper.getTrackingNumberSystem(diagnosticReport, TrackingNumberType.Tox);
+            console.log(toxRecordStub)
+            toxRecordList.push(toxRecordStub)
+          });
+          return toxRecordList;
+      })
+    );
+  }
+
   // -------------------------
   // Case Header Functions
   // -------------------------
@@ -130,6 +160,9 @@ export class DocumentHandlerService {
     caseHeader.deathDate = splitDateTime[0] || this.defaultString;
     caseHeader.deathTime = splitDateTime[1] || this.defaultString;
     caseHeader.trackingNumbers = this.getTrackingNumbers(compositionResource);
+    caseHeader.mdiCaseNumber = new TrackingNumber()
+    caseHeader.mdiCaseNumber.value = this.fhirHelper.getTrackingNumber(compositionResource, TrackingNumberType.Mdi) || "Unknown";
+    caseHeader.mdiCaseNumber.system = this.fhirHelper.getTrackingNumberSystem(compositionResource, TrackingNumberType.Mdi) || "Unknown";
 
     compositionResource.author?.map(( ref: any ) => {
 

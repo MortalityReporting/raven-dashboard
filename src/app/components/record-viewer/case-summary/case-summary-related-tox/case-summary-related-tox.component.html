@@ -1,3 +1,30 @@
 <div class="case-summary-content-wrapper">
+  <div class="mat-expansion-panel summary-section" >
+    <div class="mat-expansion-panel-header">
+      <span class="mat-content">
+        <span class="mat-expansion-panel-header-title">
+          Toxicology Reports Related to Case
+        </span>
+      </span>
+    </div>
+    <div class="mat-expansion-panel-content">
+      <div class="mat-expansion-panel-body">
+
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+          <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{(column)}} </th>
+            <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr class="pointer" mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClicked(row)"></tr>
+
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+
 
 </div>

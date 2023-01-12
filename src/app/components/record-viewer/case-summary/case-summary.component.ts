@@ -6,6 +6,8 @@ import {Observable} from "rxjs";
 import {CaseHeader} from "../../../model/record-models/case.header";
 import {CaseSummary} from "../../../model/record-models/case.summary";
 import {CaseSummaryContentComponent} from "./case-summary-content/case-summary-content.component";
+import {FhirHelperService} from "../../../service/fhir/fhir-helper.service";
+import {map} from "rxjs-compat/operator/map";
 
 @Component({
   selector: 'app-case-summary',
@@ -16,6 +18,8 @@ export class CaseSummaryComponent implements OnInit, OnDestroy {
   @ViewChild(CaseSummaryContentComponent) caseSummaryContentComponent: CaseSummaryContentComponent;
   caseHeader$: Observable<CaseHeader>;
   caseSummary$: Observable<CaseSummary>;
+  relatedToxicology$: Observable<any>;
+  toxicologyRecordList: any[];
   documentBundle$: Observable<any>;
   sidenavExpanded = false;
   autosize: boolean = false;
@@ -24,7 +28,8 @@ export class CaseSummaryComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private decedentService: DecedentService,
-    public documentHandler: DocumentHandlerService
+    public documentHandler: DocumentHandlerService,
+    private fhirHelper: FhirHelperService
   ) { }
 
   ngOnInit(): void {
@@ -32,9 +37,18 @@ export class CaseSummaryComponent implements OnInit, OnDestroy {
     let subjectId = this.route.snapshot.params['id'];
 
     this.decedentService.getComposition(subjectId).subscribe(
-      {next: (composition: any) => {
-          this.documentBundle$ = this.documentHandler.getDocumentBundle(composition.entry[0].resource.id);
+      {next: (compositionSearchBundle: any) => {
+          this.documentBundle$ = this.documentHandler
+            .getDocumentBundle(compositionSearchBundle.entry[0].resource.id);
           this.documentBundle$.subscribe();
+          const mdiCaseNumber = this.fhirHelper.getTrackingNumber(compositionSearchBundle.entry[0].resource);
+          this.relatedToxicology$ = this.documentHandler.getRelatedToxicologyReports(mdiCaseNumber);
+          this.relatedToxicology$.subscribe({
+            next: value => {
+              console.log(value);
+              this.toxicologyRecordList = value
+            }
+          });
         }}
     );
 

@@ -8,9 +8,9 @@
     <input type="text" value="{{ (caseHeader$ | async)?.deathDate}}" readonly>
     <input type="text" value="{{ (caseHeader$ | async)?.deathTime}}" readonly>
     <span class="content-spacer"> </span>
-    <span class="viewer-header-label">Tracking Number/Type:</span>
-    <input type="text" value="{{ (caseHeader$ | async)?.trackingNumbers[0]?.value}}" readonly>
-    <input type="text" value="{{ (caseHeader$ | async)?.trackingNumbers[0]?.type}}" readonly>
+    <span class="viewer-header-label">MDI Case Number/System:</span>
+    <input type="text" value="{{ (caseHeader$ | async)?.mdiCaseNumber?.value}}" readonly>
+    <input type="text" value="{{ (caseHeader$ | async)?.mdiCaseNumber?.system}}" readonly>
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -115,7 +115,7 @@
       <mat-icon svgIcon="lab_panel"></mat-icon>&nbsp;Related Toxicology Reports
     </ng-template>
     <ng-template matTabContent>
-      <app-case-summary-related-tox></app-case-summary-related-tox>
+      <app-case-summary-related-tox [toxicologyRecordList]="toxicologyRecordList"></app-case-summary-related-tox>
     </ng-template>
   </mat-tab>
   </mat-tab-group>
