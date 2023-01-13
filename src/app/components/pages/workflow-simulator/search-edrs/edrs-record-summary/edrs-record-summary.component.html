@@ -1,9 +1,10 @@
 <mat-tab-group #caseSummaryTabGroup>
-
   <mat-tab label="Record Summary">
     <div class="response-container">
+      <div *ngIf="!edrsRecord">
+        To view the summary, select a case from the results table above.
+      </div>
       <div *ngIf="edrsRecord">
-
         <div class="row">
           <div class="col-left">Subject Name:</div><div class="col-right">{{ edrsRecord?.officialName }}</div>
         </div>
@@ -56,7 +57,7 @@
     </div>
   </mat-tab>
 
-  <mat-tab label="View as FHIR MDI Document Bundle">
+  <mat-tab label="View as FHIR MDI Document Bundle" [disabled]="!edrsRecord">
     <div class="response-container">
       <pre *ngIf="edrsRecord?.bundleResource">{{ edrsRecord?.bundleResource | json}}</pre>
     </div>

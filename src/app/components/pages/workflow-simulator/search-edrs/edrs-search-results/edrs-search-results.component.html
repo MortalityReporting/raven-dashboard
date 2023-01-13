@@ -3,6 +3,9 @@
   <mat-tab label="Result">
     <div class="response-container">
       <!-- Render error results here -->
+      <div *ngIf="!errorResponse && !successResponse">
+        The search results will render here after a search is executed.
+      </div>
       <div *ngIf="errorResponse">
         <div class="result-line-item">
           <span class="result-label">Status:</span>
@@ -79,12 +82,9 @@
 
       </div>
     </div>
-    <div class="top-spacer" *ngIf="!!successResponse && !!resultTableDataSource?.data?.length">
-      Select a case in the result table to view a summary below.
-    </div>
   </mat-tab>
 
-  <mat-tab label="FHIR Result">
+  <mat-tab label="FHIR Result" [disabled]="!successResponse && !errorResponse">
     <div class="response-container">
       <div *ngIf="errorResponse">
         <div>
@@ -99,13 +99,13 @@
     </div>
   </mat-tab>
 
-  <mat-tab label="HTTP Request">
+  <mat-tab label="HTTP Request" [disabled]="!successResponse && !errorResponse">
     <div class="response-container">
         <app-http-request-info></app-http-request-info>
     </div>
   </mat-tab>
 
-  <mat-tab label="HTTP Response">
+  <mat-tab label="HTTP Response" [disabled]="!successResponse && !errorResponse">
     <div class="response-container">
         <app-http-response-info
           [errorResponse]="errorResponse"
