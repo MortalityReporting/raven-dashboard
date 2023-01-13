@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UiStringConstants} from "../../../../../providers/ui-string-constants";
 
 @Component({
@@ -9,6 +9,13 @@ import {UiStringConstants} from "../../../../../providers/ui-string-constants";
 export class DecedentBasicInfoComponent implements OnInit {
 
   @Input() decedentInfo: any;
+  @Input() expansionPanelEnabled: boolean = false;
+  @Input() expansionPanelExpanded: boolean = true;
+  @Input() btnEnabled: boolean = true;
+  @Input() btnVisible: boolean = true;
+  @Input() btnTitle: string = '';
+
+  @Output() btnClick : EventEmitter<string> = new EventEmitter();
   uiConstants: any
 
   constructor(private uiStringConstants: UiStringConstants) {
@@ -18,4 +25,8 @@ export class DecedentBasicInfoComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+  onBtnClick() {
+    this.btnClick.emit()
+  }
 }

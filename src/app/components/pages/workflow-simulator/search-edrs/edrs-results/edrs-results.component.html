@@ -1,17 +1,16 @@
 <div>
-
-  <mat-card>
-    <div class="row">
-      <div class="col">
-        <app-decedent-basic-info [decedentInfo]="decedentInfo"></app-decedent-basic-info>
-      </div>
-      <div style="display: flex; align-items: center; justify-content: center;">
-        <button mat-raised-button (click)="onSelectDifferentDocument()">Select Different Document</button>
-      </div>
-    </div>
-  </mat-card>
+  <app-decedent-basic-info
+    [decedentInfo] = decedentInfo
+    [expansionPanelEnabled]="true"
+    [expansionPanelExpanded]="true"
+    [btnEnabled]="true"
+    [btnVisible]="true"
+    [btnTitle]="'Select Different Document'"
+    (btnClick)="onSelectDifferentDocument()"
+  ></app-decedent-basic-info>
 
   <mat-card style="margin-top: 1em">
+    <mat-card-title>Endpoint Configuration</mat-card-title>
     <div class="row">
       <div class="col" style="margin-top: 1em; flex-direction: row-reverse">
         EDRS Server: {{ edrsServer }}
