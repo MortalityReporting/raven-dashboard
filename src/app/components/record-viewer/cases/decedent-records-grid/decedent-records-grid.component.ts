@@ -8,6 +8,8 @@ import {mergeMap, forkJoin, map} from "rxjs";
 import {UtilsService} from "../../../../service/utils.service";
 import {MatSelect} from "@angular/material/select";
 import {DatePipe} from "@angular/common";
+import {FhirHelperService} from "../../../../service/fhir/fhir-helper.service";
+import {TrackingNumberType} from "../../../../model/tracking.number.type";
 
 @Component({
   selector: 'app-decedent-records-grid',
@@ -34,6 +36,7 @@ export class DecedentRecordsGridComponent implements OnInit {
     private decedentService: DecedentService,
     private router: Router,
     private utilsService: UtilsService,
+    private fhirHelperService: FhirHelperService
   ) {
   }
 
@@ -78,6 +81,8 @@ export class DecedentRecordsGridComponent implements OnInit {
           decedentRecordsList.map((decedentRecord: any, i) =>
               this.decedentService.getComposition(decedentRecord.decedentId).pipe(
               map((searchset: any) => {
+                const mdiSystem = this.fhirHelperService.getTrackingNumberSystem(searchset?.entry?.[0]?.resource, TrackingNumberType.Mdi);
+                decedentRecord.system = mdiSystem;
                 const caseNumber = searchset?.entry?.[0]?.resource?.extension?.[0]?.valueIdentifier?.value;
                 decedentRecord.caseNumber = caseNumber;
                 return decedentRecord

@@ -59,6 +59,11 @@ export class EdrsResultsComponent implements OnInit {
   onSelectDifferentDocument() {
     this.parentStepper.reset();
   }
+
+  onEdrsRecordSelected(event: any) {
+    console.log(event);
+    this.selectedEdrsRecord = event;
+  }
 }
 
 

@@ -23,7 +23,7 @@ export class HttpResponseInfoComponent implements OnInit {
       return this.errorResponse.status;
     }
     else if(this.successResponse){
-      return this.successResponse.status;
+      return "success";
     }
     else {
       return '';

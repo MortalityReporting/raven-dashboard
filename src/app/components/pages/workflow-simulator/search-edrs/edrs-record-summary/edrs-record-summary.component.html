@@ -1,11 +1,66 @@
 <mat-tab-group #caseSummaryTabGroup>
-
   <mat-tab label="Record Summary">
-    Record Summary
+    <div class="response-container">
+      <div *ngIf="!edrsRecord">
+        Select a case from the results list to view summary here.
+      </div>
+      <div *ngIf="edrsRecord">
+        <div class="row">
+          <div class="col-left">Subject Name:</div><div class="col-right">{{ edrsRecord?.officialName }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-left">Date/Time of Death: </div><div class="col-right">{{ edrsRecord?.deceasedDateTime }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-left">EDRS Case Number: </div><div class="col-right">{{ edrsRecord?.edrsFileNumber }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-left">Legal Sex at Death: </div><div class="col-right">{{ edrsRecord?.gender }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-left">Date of Birth: </div><div class="col-right">{{ edrsRecord?.dob }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-left">Race: </div><div class="col-right">{{ edrsRecord?.race }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-left">Ethnicity: </div><div class="col-right">{{ edrsRecord?.ethnicity }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-left">City: </div><div class="col-right">{{ edrsRecord?.address.city }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-left">State: </div><div class="col-right">{{ edrsRecord?.address?.state }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-left">Zip: </div><div class="col-right">{{ edrsRecord?.address.postalCode }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-left">Manner of Death: </div><div class="col-right">TODO</div>
+        </div>
+
+        <div class="row">
+          <div class="col-left">Immediate Cause of Death: </div><div class="col-right">TODO</div>
+        </div>
+
+      </div>
+    </div>
   </mat-tab>
 
-  <mat-tab label="View as FHIR MDI Document Bundle">
-    View as FHIR MDI Document Bundle
+  <mat-tab label="View as FHIR MDI Document Bundle" [disabled]="!edrsRecord">
+    <div class="response-container">
+      <pre *ngIf="edrsRecord?.bundleResource">{{ edrsRecord?.bundleResource | json}}</pre>
+    </div>
   </mat-tab>
 
 </mat-tab-group>

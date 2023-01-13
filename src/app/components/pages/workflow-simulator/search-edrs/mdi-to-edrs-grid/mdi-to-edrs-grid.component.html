@@ -54,7 +54,7 @@
 
   <ng-container matColumnDef="caseNumber">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> MDI Case Number</th>
-    <td mat-cell class="pointer" *matCellDef="let decedent" [matTooltip]="'System: ' + decedent.system"> {{decedent.caseNumber }} </td>
+    <td mat-cell class="pointer" *matCellDef="let decedent" [matTooltip]="'System: ' + (decedent.system || 'Unknown')"> {{decedent.caseNumber }} </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
