@@ -41,3 +41,8 @@ table {
 .mat-row:nth-child(2n+1){
   background-color: #eeeeee;
 }
+
+.no-data-row-text {
+  font-weight: bold;
+  padding-left: 15px;
+}
