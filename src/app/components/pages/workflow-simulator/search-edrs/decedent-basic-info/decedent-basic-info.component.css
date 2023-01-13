@@ -24,15 +24,3 @@
 .col-right {
   flex: 40;
 }
-
-.bottom-right{
-  align-items: flex-end;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.panel-title{
-  color: #252525 !important;
-  font-weight: bold;
-}
-

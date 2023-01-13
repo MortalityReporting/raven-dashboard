@@ -9,8 +9,12 @@
     (btnClick)="onSelectDifferentDocument()"
   ></app-decedent-basic-info>
 
-  <mat-card style="margin-top: 1em">
-    <mat-card-title>Endpoint Configuration</mat-card-title>
+  <mat-expansion-panel [expanded]="true" style="margin-top: 1em">
+    <mat-expansion-panel-header>
+      <mat-panel-title class="panel-title">
+        Endpoint Configuration
+      </mat-panel-title>
+    </mat-expansion-panel-header>
     <div class="row">
       <div class="col" style="margin-top: 1em; flex-direction: row-reverse">
         EDRS Server: {{ edrsServer }}
@@ -19,14 +23,14 @@
         <button mat-raised-button (click)="onChangeEndpointConfiguration()">Change Endpoint Configuration</button>
       </div>
     </div>
-  </mat-card>
+  </mat-expansion-panel>
 
-  <mat-card style="margin-top: 1em">
+  <div style="margin-top: 1em">
     <app-search-parameters
       (searchResultsEmitter)="updatedSearchResults($event)"
       (clearSearchResultEmitter)="successResponse = null; errorResponse = null; selectedEdrsRecord = null">
     </app-search-parameters>
-  </mat-card>
+  </div>
 
   <mat-card style="margin-top: 1em">
     <app-edrs-search-results
