@@ -7,6 +7,7 @@ export class CaseHeader {
   deathTime: string;
   trackingNumbers: TrackingNumber[];
   authors: Author[];
+  mdiCaseNumber: TrackingNumber;
 
   constructor() {
     this.authors = new Array();

@@ -32,3 +32,17 @@ li mat-icon {
 mat-sidenav-container {
   height: 100%;
 }
+
+/* Related Tox Table */
+table {
+  width: 100%;
+}
+
+.mat-row:nth-child(2n+1){
+  background-color: #eeeeee;
+}
+
+.no-data-row-text {
+  font-weight: bold;
+  padding-left: 15px;
+}

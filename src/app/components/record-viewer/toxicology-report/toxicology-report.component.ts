@@ -28,18 +28,8 @@ export class ToxicologyReportComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private toxicologyHandler: ToxicologyHandlerService,
-    private fhirResourceProvider: FhirResourceProviderService,
-    private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
-  ) {
-    const path = "../../assets"
-    this.matIconRegistry.addSvgIcon("labs", this.domSanitizer
-      .bypassSecurityTrustResourceUrl(`${path}/labs.svg`));
-    this.matIconRegistry.addSvgIcon("lab_panel", this.domSanitizer
-      .bypassSecurityTrustResourceUrl(`${path}/lab_panel.svg`));
-    this.matIconRegistry.addSvgIcon("clinical_notes", this.domSanitizer
-      .bypassSecurityTrustResourceUrl(`${path}/clinical_notes.svg`));
-  }
+    private fhirResourceProvider: FhirResourceProviderService
+  ) {}
 
   ngOnInit(): void {
     let toxLabId = this.route.snapshot.params['id'];
