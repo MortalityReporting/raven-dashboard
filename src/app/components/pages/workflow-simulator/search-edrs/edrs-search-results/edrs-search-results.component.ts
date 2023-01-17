@@ -66,7 +66,7 @@ export class EdrsSearchResultsComponent implements OnInit, OnChanges {
         decedent.dob = dob;
 
         const deceasedDateTime = patientResource.deceasedDateTime;
-        decedent.dob = deceasedDateTime;
+        decedent.deceasedDateTime = deceasedDateTime;
 
         const ethnicityStr = this.documentHandlerService.getDecedentEthnicityText(patientResource.extension);
         decedent.ethnicity = ethnicityStr;
