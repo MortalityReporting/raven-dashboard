@@ -6,14 +6,10 @@ import { Router } from "@angular/router";
   templateUrl: './workflow-simulator.component.html',
   styleUrls: ['./workflow-simulator.component.css']
 })
-export class WorkflowSimulatorComponent implements OnInit {
+export class WorkflowSimulatorComponent {
 
   constructor(
     private router: Router) {
-  }
-
-  ngOnInit(): void {
-    console.log(this.router)
   }
 
   onStartWorkflow() {

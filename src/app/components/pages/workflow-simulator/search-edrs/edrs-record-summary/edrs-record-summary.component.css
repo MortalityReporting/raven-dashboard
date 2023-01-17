@@ -14,9 +14,9 @@
 }
 
 .col-left {
-  flex: 20;        /* distributes space on the line equally among items */
+  flex: 30;        /* distributes space on the line equally among items */
 }
 
 .col-right {
-  flex: 80;        /* distributes space on the line equally among items */
+  flex: 70;        /* distributes space on the line equally among items */
 }

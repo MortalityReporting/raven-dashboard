@@ -22,7 +22,7 @@ export class UiStringConstants {
       // Step 1
       step1: {
         STEP_LABEL: `Select MDI to EDRS document`,
-        DESCRIPTION: `Step 1 - Select or Import an MDI to EDRS Document (Optional) If provided, the Document Bundle is used to populate the Search Parameters. Otherwise, the Search Parameters may be manually specified.`,
+        DESCRIPTION: `Step 1 - Select or Import an MDI to EDRS Document (Optional). If provided, the Document Bundle is used to populate the Search Parameters. Otherwise, the Search Parameters may be manually specified.`,
         TAB_LABEL_1: `Select MDI to EDRS Document`,
         TAB_LABEL_2: `Import MDI to EDRS FHIR Document Bundle`,
         INPUT_FILE_BTN: `Import MDI to EDRS FHIR Document Bundle`,
@@ -47,7 +47,10 @@ export class UiStringConstants {
       step3: {
         STEP_LABEL: `Search EDRS`,
         DESCRIPTION: `Step 3 - TODO Add brief description here, see Step 1 description.`,
-        SEARCH_PARAMS_RESOURCE_PREVIEW: `Search Parameters Resource Preview`,
+        RECORD_SUMMARY_INITIAL_DESCRIPTION: `Select a case from the results list to view summary here.`,
+        RECORD_SUMMARY_TAB_LABEL: `Record Summary`,
+        VIEW_FHIR_AS_MDI_DOCUMENT_TAB_LABEL: `View as FHIR MDI Document Bundle`
+
       },
     }
   }
