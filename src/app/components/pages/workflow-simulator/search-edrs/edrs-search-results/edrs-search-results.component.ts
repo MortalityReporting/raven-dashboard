@@ -5,6 +5,9 @@ import {TrackingNumberType} from "../../../../../model/tracking.number.type";
 import {FhirHelperService, PatientNameReturn} from "../../../../../service/fhir/fhir-helper.service";
 import {MatTabGroup} from "@angular/material/tabs";
 import {DocumentHandlerService} from "../../../../../service/document-handler.service";
+import {Observable} from "rxjs";
+import {HttpParams} from "@angular/common/http";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-edrs-search-results',
@@ -25,7 +28,9 @@ export class EdrsSearchResultsComponent implements OnInit, OnChanges {
   resultTableDataSource = new MatTableDataSource<any>();
   selectedCase: any;
 
-  constructor(private fhirHelperService: FhirHelperService, private documentHandlerService: DocumentHandlerService) { }
+  constructor(
+    private fhirHelperService: FhirHelperService,
+    private documentHandlerService: DocumentHandlerService) { }
 
   ngOnInit(): void {
   }
@@ -71,6 +76,9 @@ export class EdrsSearchResultsComponent implements OnInit, OnChanges {
         const ethnicityStr = this.documentHandlerService.getDecedentEthnicityText(patientResource.extension);
         decedent.ethnicity = ethnicityStr;
 
+        const raceStr = this.documentHandlerService.getDecedentRaceText(patientResource.extension);
+        decedent.race = raceStr;
+
         const mannerOfDeathObservation = this.getObservationByProfile(bundle.resource, Obs_MannerOfDeath);
         const mannerOfDeathStr = this.getMannerOfDeathObservationStr(mannerOfDeathObservation);
         decedent.mannerOfDeath = mannerOfDeathStr;
@@ -86,7 +94,6 @@ export class EdrsSearchResultsComponent implements OnInit, OnChanges {
         const edrsFileNumber = this.getTrackingNumber(compositionResource, TrackingNumberType.Edrs);
         decedent.edrsFileNumber = edrsFileNumber;
 
-        console.log(decedent);
 
         formattedData.push(decedent);
       })
