@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
     private domSanitizer: DomSanitizer) {
   }
   ngOnInit(): void {
-    const path = "../../assets"
+    const path = "assets"
     this.matIconRegistry.addSvgIcon("labs", this.domSanitizer
       .bypassSecurityTrustResourceUrl(`${path}/labs.svg`));
     this.matIconRegistry.addSvgIcon("lab_panel", this.domSanitizer
