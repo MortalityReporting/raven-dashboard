@@ -190,9 +190,7 @@ export class SearchParametersComponent implements OnInit {
     formParams.forEach(formParam => {
       if (formParam.name.indexOf('.') == -1) {
         const result = {name : formParam.name, valueString: formParam.valueString};
-        if(resultList.indexOf(result) == -1){
-          resultList.push(result);
-        }
+        resultList.push(result);
       }
       else {
         if(resultList.length == 0){
