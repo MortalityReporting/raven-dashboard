@@ -7,6 +7,7 @@ export class ToxSummary {
   specimens: Specimen[];
   results: LabResult[];
   conclusion: string;
+  diagnosticReportResource: string;
 }
 
 export class Performer {
