@@ -1,0 +1,39 @@
+<mat-drawer-container hasBackdrop=false>
+  <mat-drawer #drawer
+              class="drawer"
+              mode="side"
+              draggable="false"
+              position="end"
+              [ngStyle]="{'width': drawerWidth}">
+    <mat-toolbar class="header">
+      <mat-icon *ngIf="drawerCollapsed" (click)="setDrawerWidth('60%');" aria-label="Expand FHIR explorer"
+                style="cursor: pointer" matTooltip="Expand FHIR Explorer">
+        chevron_left
+      </mat-icon>
+      <mat-icon *ngIf="!drawerCollapsed" (click)="setDrawerWidth('30%');" aria-label="Collapse FHIR explorer"
+                style="cursor: pointer" matTooltip="Collapse the FHIR Explorer">
+        chevron_right
+      </mat-icon>
+      <span class="content-spacer"></span>
+      <span class="explorer-header-instructions">(Note: Click the Viewer Header to return to the Bundle Resource)</span>
+      <span class="content-spacer"></span>
+      <mat-icon (click)="setDrawerWidth('30%'); drawer.close(); drawerCollapsed=true;"
+                aria-label="Close FHIR explorer"
+                style="cursor: pointer" matTooltip="Close FHIR Explorer">
+        close
+      </mat-icon>
+    </mat-toolbar>
+
+    <div class="main contents">
+      <app-fhir-explorer></app-fhir-explorer>
+    </div>
+  </mat-drawer>
+
+  <mat-drawer-content>
+    <ng-container [ngSwitch]="currentRoute">
+      <app-case-summary *ngSwitchCase="'mdi'"></app-case-summary>
+      <app-toxicology-report *ngSwitchCase="'tox'"></app-toxicology-report>
+    </ng-container>
+  </mat-drawer-content>
+
+</mat-drawer-container>

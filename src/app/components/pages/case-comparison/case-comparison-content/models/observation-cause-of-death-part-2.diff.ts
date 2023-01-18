@@ -24,12 +24,12 @@ export class ObservationCauseOfDeathPart2Diff extends ObservationDiff {
             this.performer.expected = JSON.stringify( this.expected.performer, null, 4 );
             this.performer.actual = JSON.stringify( this.actual.performer, null, 4 );
             [this.performer.style,this.performer.difference] = DiffType.doDiff( Diff.diffChars( this.performer.expected, this.performer.actual ));
-        } catch(e) {};
+        } catch(e) {}
 
         try {
             this.valueCodeableConcept.expected = JSON.stringify( this.expected.valueCodeableConcept, null, 4 );
             this.valueCodeableConcept.actual = JSON.stringify( this.actual.valueCodeableConcept, null, 4 );
             [this.valueCodeableConcept.style,this.valueCodeableConcept.difference] = DiffType.doDiff( Diff.diffChars( this.valueCodeableConcept.expected, this.valueCodeableConcept.actual ));
-        } catch(e) {};
+        } catch(e) {}
     }
 }

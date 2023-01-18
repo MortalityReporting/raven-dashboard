@@ -8,4 +8,6 @@ export class DecedentGridDTO {
   age: number;
   system: string;
   status: string;
+  mannerOfDeath: string;
+  patientResource: any
 }

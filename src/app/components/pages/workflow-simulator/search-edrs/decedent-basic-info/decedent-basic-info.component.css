@@ -1,0 +1,26 @@
+.content-field {
+  margin: 0.5em 0;
+}
+
+.content-field-label {
+  padding: 5px;
+}
+
+.content-field-value {
+  padding: 5px;
+  border: 1px #cdcdcd solid;
+  border-radius: 5px;
+  background-color: whitesmoke;
+}
+
+.row {
+  display: flex;
+}
+
+.col-left {
+  flex: 60;
+}
+
+.col-right {
+  flex: 40;
+}

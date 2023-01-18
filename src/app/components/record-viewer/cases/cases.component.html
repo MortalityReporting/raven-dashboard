@@ -1,0 +1,17 @@
+<mat-toolbar class="tool-bars" color="primary">
+  <mat-toolbar-row >
+    <span class="viewer-header-title">Record Viewer</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+<div class="container top-spacer">
+  <mat-card>
+  <mat-tab-group>
+    <mat-tab label="MDI to EDRS Documents">
+      <app-decedent-records-grid></app-decedent-records-grid>
+    </mat-tab>
+    <mat-tab label="Toxicology Reports">
+      <app-toxicology-grid></app-toxicology-grid>
+    </mat-tab>
+  </mat-tab-group>
+  </mat-card>
+</div>

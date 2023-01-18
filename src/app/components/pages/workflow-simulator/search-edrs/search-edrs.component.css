@@ -1,0 +1,29 @@
+.mat-step-header {
+  pointer-events: none !important;
+}
+.action-buttons {
+  margin-top: 1em;
+  display: flex;
+}
+.action-buttons .error-message{
+  align-self: flex-start;
+}
+
+tr.case-record-row:not(.selected-case-row):hover {
+  background: whitesmoke;
+}
+
+tr.selected-case-row {
+  background: whitesmoke;
+}
+
+.bottom-right{
+  align-items: flex-end;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.panel-title{
+  color: #252525 !important;
+  font-weight: bold;
+}

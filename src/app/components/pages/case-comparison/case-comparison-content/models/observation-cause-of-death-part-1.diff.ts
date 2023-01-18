@@ -1,18 +1,27 @@
 import * as Diff from 'diff';
 import {DiffType} from '../diff-type';
 import {ObservationDiff} from './observation.diff';
+import { DocumentHandlerService } from "../../../../../service/document-handler.service";
+import {FhirHelperService} from "../../../../../service/fhir/fhir-helper.service";
 
 export class ObservationCauseOfDeathPart1Diff extends ObservationDiff {
-    component: DiffType;
     performer: DiffType;
+    valueString: DiffType;
     valueCodeableConcept: DiffType;
 
-    constructor( actual: any, expected: any )
+  fhirHelper: FhirHelperService
+
+    constructor(
+        actual: any,
+        expected: any,
+        fhirHelper: FhirHelperService
+      )
     {
         super( actual, expected );
 
-        this.component = new DiffType();
+        this.fhirHelper = fhirHelper;
         this.performer = new DiffType();
+        this.valueString = new DiffType();
         this.valueCodeableConcept = new DiffType();
 
         this.doDiff();
@@ -23,21 +32,23 @@ export class ObservationCauseOfDeathPart1Diff extends ObservationDiff {
         super.doDiff();
 
         try {
-            this.component.expected = JSON.stringify( this.expected.component, null, 4 );
-            this.component.actual = JSON.stringify( this.actual.component, null, 4 );
-            [this.component.style,this.component.difference] = DiffType.doDiff( Diff.diffChars( this.component.expected, this.component.actual ));
-        } catch(e) {};
+            let expectedComponent = this.fhirHelper.findObservationComponentByCode(this.expected, "69440-6");
+            this.valueString.expected = JSON.stringify( expectedComponent.valueString, null, 4 );
+            let actualComponent = this.fhirHelper.findObservationComponentByCode(this.actual, "69440-6");
+            this.valueString.actual = JSON.stringify( actualComponent.valueString, null, 4 );
+            [this.valueString.style,this.valueString.difference] = DiffType.doDiff( Diff.diffChars( this.valueString.expected, this.valueString.actual ));
+        } catch(e) {}
 
         try {
             this.performer.expected = JSON.stringify( this.expected.performer, null, 4 );
             this.performer.actual = JSON.stringify( this.actual.performer, null, 4 );
             [this.performer.style,this.performer.difference] = DiffType.doDiff( Diff.diffChars( this.performer.expected, this.performer.actual ));
-        } catch(e) {};
+        } catch(e) {}
 
         try {
             this.valueCodeableConcept.expected = JSON.stringify( this.expected.valueCodeableConcept, null, 4 );
             this.valueCodeableConcept.actual = JSON.stringify( this.actual.valueCodeableConcept, null, 4 );
             [this.valueCodeableConcept.style,this.valueCodeableConcept.difference] = DiffType.doDiff( Diff.diffChars( this.valueCodeableConcept.expected, this.valueCodeableConcept.actual ));
-        } catch(e) {};
+        } catch(e) {}
     }
 }

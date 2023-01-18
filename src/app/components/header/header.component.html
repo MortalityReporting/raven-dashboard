@@ -1,12 +1,12 @@
-<mat-toolbar color="primary">
+<mat-toolbar class="header-gray">
   <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
     <mat-icon>more_vert</mat-icon>
   </button>
 
   <span style="cursor: pointer"><h1 (click)="onTitleClick();">Raven</h1></span>
 
-  <a mat-button [routerLink]="'/cases'">
-    Case Viewer
+  <a mat-button [routerLink]="'/records'">
+    Record Viewer
   </a>
 
   <a mat-button [routerLink]="'/import-case'">
@@ -19,6 +19,10 @@
 
   <a mat-button [routerLink]="'/fhir-validator'">
     FHIR Validator
+  </a>
+
+  <a mat-button [routerLink]="'/workflow-simulator'">
+    Workflow Simulator
   </a>
 
   <!-- Add links to major features as they are implemented here. -->

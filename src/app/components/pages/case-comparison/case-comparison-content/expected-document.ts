@@ -1,5 +1,5 @@
 export class ExpectedDocument {
-  value = 
+  value =
   {
     "resourceType": "Bundle",
     "id": "ba652e6a-ba37-44af-9821-b834dc0fa814",
@@ -519,5 +519,5 @@ export class ExpectedDocument {
         } ]
       }
     } ]
-  }  
+  }
 }

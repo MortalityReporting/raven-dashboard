@@ -1,6 +1,7 @@
 import {Directive, HostListener, Input} from '@angular/core';
 import {FhirResourceProviderService} from "../service/fhir-resource-provider.service";
 import {DocumentHandlerService} from "../service/document-handler.service";
+import {BundleHelperService} from "../service/fhir/bundle-helper.service";
 
 @Directive({
   selector: '[appSetFhirExplorer]'
@@ -9,17 +10,23 @@ export class SetFhirExplorerDirective {
   @Input() profile: string;
   @Input() title: string;
   @Input() observation: string;
+  @Input() resource: any;
 
   @HostListener('click', ['$event']) onClick(event: any) {
     console.log(event);
     console.log(this.title);
     console.log(this.profile);
-    if (this.profile) {
-      this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.findResourceByProfileName(undefined, this.profile));
+    if (this.resource) {
+      this.fhirResourceProvider.setSelectedFhirResource(this.resource);
+    }
+    else if (this.profile) {
+      // TODO: Refactor to provide the bundle to the directive so this is not needed...
+      this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.findResourceByProfileNamePassThrough(this.profile));
     }
     else if (this.observation)
     {
-      this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.findResourceById(undefined, this.observation));
+      // TODO: Refactor to provide the bundle to the directive so this is not needed...
+      this.fhirResourceProvider.setSelectedFhirResource(this.bundleHelper.findResourceByFullUrl(this.documentHandler.getCurrentDocumentBundle(), this.observation));
     }
     else if (this.title) {
       switch (this.title) {
@@ -36,6 +43,9 @@ export class SetFhirExplorerDirective {
     }
   }
 
-  constructor(private fhirResourceProvider: FhirResourceProviderService, private documentHandler: DocumentHandlerService) { }
+  constructor(private fhirResourceProvider: FhirResourceProviderService,
+              private documentHandler: DocumentHandlerService,
+              private bundleHelper: BundleHelperService
+              ) { }
 
 }
