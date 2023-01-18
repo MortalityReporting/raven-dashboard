@@ -63,13 +63,13 @@ export class CaseComparisonContentComponent implements OnInit {
   ]
 
   testCases = [
-    {"compositionId": "dce08915-ed89-41e3-8beb-12233dedf94a", "display": "Whago Box"}
+    {"compositionId": "9038be4e-6fcd-494a-824d-99bfd1362495", "display": "Alice Freeman"}
   ]
 
   patientResource: any;
   actualDocument: any = undefined;
   expectedDocument: any;
-  selectedTestCase = this.testCases[0];
+  selectedTestCase = this.testCases?.[0];
   documentBundleList: any[];
 
   patient: USCorePatientDiff = new USCorePatientDiff( undefined, undefined );
@@ -110,13 +110,23 @@ export class CaseComparisonContentComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    let subjectId = this.route.snapshot.params['id'];
+    let compositionId = this.route.snapshot.params['id'];
+    console.log(compositionId);
 
-    if(subjectId){ //We need to wait for the case summary for the selected case to be loaded BEFORE we do any comparisons
+    if(compositionId){ //We need to wait for the case summary for the selected case to be loaded BEFORE we do any comparisons
       this.isLoading = true;
+      this.documentHandler.getDocumentBundle(compositionId).subscribe(
+        {
+          next: (documentBundle: any) => {
+            console.log(documentBundle)
+            this.actualDocument = documentBundle
+            console.log(this.actualDocument);
+          }
+        }
+      )
       this.documentHandler.caseSummary$.subscribe({
         next: (value) => {
-          this.getDocumentBundle(this.selectedTestCase.compositionId);
+          this.getExpectedDocumentBundle(this.selectedTestCase.compositionId);
         },
         error: err => {
           console.error(err);
@@ -126,13 +136,13 @@ export class CaseComparisonContentComponent implements OnInit {
       });
     }
     else { // We do comparisons with an empty record.
-      this.getDocumentBundle(this.selectedTestCase.compositionId)
+      this.getExpectedDocumentBundle(this.selectedTestCase.compositionId)
     }
   }
 
-  getDocumentBundle(compositionId){
+  getExpectedDocumentBundle(compositionId){
     this.isLoading = true;
-    this.decedentService.getDocumentBundle(compositionId).subscribe({
+    this.documentHandler.getRawDocumentBundle(compositionId).subscribe({
       next: (documentBundle: any) => {
         this.expectedDocument = documentBundle;
         this.dodiff();
@@ -149,7 +159,7 @@ export class CaseComparisonContentComponent implements OnInit {
   onExpectedCompositionChanged( event: any ) {
     this.isLoading = true;
 
-    this.decedentService.getDocumentBundle(event.value.compositionId).subscribe({
+    this.documentHandler.getRawDocumentBundle(event.value.compositionId).subscribe({
       next: (documentBundle: any) => {
         this.accordion.closeAll();
         this.isAccordionExpanded = false;

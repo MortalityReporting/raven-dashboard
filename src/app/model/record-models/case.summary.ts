@@ -11,6 +11,7 @@ export class CaseSummary {
   medicalHistory: string = "Not Implemented"; // TODO: Implement.
   examAndAutopsy: Autopsy;
   narratives: string = "Not Implemented"; // TODO: Implement.
+  compositionId: string;
 }
 
 export class Demographics {

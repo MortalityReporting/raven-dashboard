@@ -2,16 +2,16 @@
   <div class="summary-section-grid">
     <div class="grid-row">
       <div class="grid-col-1">
-        User Document Bundle
+        User MDI to EDRS Document Bundle:
       </div>
       <div class="grid-col-1">
-        Compare Against Test Case:
+        Compare Against Valid Example Case:
       </div>
     </div>
 
     <div class="grid-row">
       <div class="grid-col-1">
-        <button mat-flat-button color="primary" (click)="onInputBundleClick()">Input User MDI FHIR Bundle</button>
+        <button mat-flat-button color="primary" (click)="onInputBundleClick()">Input MDI to EDRS Document Bundle</button>
       </div>
       <div class="grid-col-1">
         <mat-form-field>
@@ -25,6 +25,7 @@
     </div>
   </div>
 
+  <div *ngIf="actualDocument; else noActualDocument">
   <div class="section-button-wrapper" style="margin-bottom: 0.2rem">
     <button mat-raised-button (click)="onOpenAll()">
       <mat-icon>expand_more</mat-icon>
@@ -419,7 +420,13 @@
     <!-- Narratives Section -->
     <!-- TODO -->
   </mat-accordion>
+
+  </div>
+
 </div>
+<ng-template #noActualDocument>
+  Please provide an MDI to EDRS Document Bundle to perform a comparison.
+</ng-template>
 <div class="spinner-container" *ngIf="isLoading">
   <mat-spinner></mat-spinner>
 </div>
