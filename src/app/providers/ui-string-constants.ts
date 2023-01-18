@@ -35,8 +35,8 @@ export class UiStringConstants {
       // Step 2
       step2: {
         STEP_LABEL: `Configure Endpoint`,
-        DESCRIPTION: `Step 2 - TODO Add brief description here, see Step 1 description.`,
-        DISCLAIMER: `Disclaimer about user data storage being client side and not visible to Raven/GTRI/etc`,
+        DESCRIPTION: `Step 2 - Configure the EDRS endpoint. The BlueJay test server is provided as a default.`,
+        DISCLAIMER: `Please be aware that for custom endpoint configuration users are responsible for all security considerations. Raven does not store any user information, though some web browsers may attempt to store sensitive data input into form fields..`,
         VIEW_CAPABILITY_STMT_BTN: `View Server Capability Statement`,
         VIEW_SERVER_$MDI_DOCS_OP_DEFINITION_BTN: `View Server $mdi-documents Operation Definition`,
         PROCEED_TO_NEXT_STEP_BTN: `Proceed to search`,
@@ -46,7 +46,7 @@ export class UiStringConstants {
       // Step 3
       step3: {
         STEP_LABEL: `Search EDRS`,
-        DESCRIPTION: `Step 3 - TODO Add brief description here, see Step 1 description.`,
+        DESCRIPTION: `Step 3 - Set EDRS search parameters. Parameters may be automatically populated if a case was selected in Step #1. The parameter list is variable, defined by the FHIR Server's operation definition for EDRS searching. Search results are shown below. If any results were found, users may select a case and load a summary of the data.`,
         SEARCH_PARAMS_RESOURCE_PREVIEW: `Search Parameters Resource Preview`,
       },
     }
