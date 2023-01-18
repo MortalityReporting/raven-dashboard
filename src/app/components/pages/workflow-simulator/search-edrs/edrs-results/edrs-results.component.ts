@@ -61,7 +61,6 @@ export class EdrsResultsComponent implements OnInit {
   }
 
   onEdrsRecordSelected(event: any) {
-    console.log(event);
     this.selectedEdrsRecord = event;
   }
 }

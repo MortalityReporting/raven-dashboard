@@ -327,7 +327,7 @@ export class SearchParametersComponent implements OnInit {
 
       const decedentLastName = this.fhirHelperService.getPatientOfficialName(decedentData.patientResource, PatientNameReturn.lastonly);
       const lastNameFormControl =  (<FormArray>this.searchEdrsForm.controls['parameters']).at(1);
-      givenNameFormControl.patchValue({name : "patient.family", valueString: decedentFirstName});
+      lastNameFormControl.patchValue({name : "patient.family", valueString: decedentLastName});
     }
   }
 }
