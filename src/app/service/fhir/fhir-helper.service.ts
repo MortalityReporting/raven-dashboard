@@ -85,7 +85,7 @@ export class FhirHelperService {
       }
       case PatientNameReturn.lastfirst: {
         // TODO: Consider what to return if error?
-        return firstOrOfficialName?.family + " " + firstOrOfficialName?.given?.[0];
+        return firstOrOfficialName?.family + ", " + firstOrOfficialName?.given?.[0];
       }
       case PatientNameReturn.firstonly: {
         return firstOrOfficialName?.given?.[0] || ""
