@@ -81,17 +81,17 @@ export class FhirHelperService {
           fullName = fullName + name + " "
         });
         fullName = fullName + firstOrOfficialName.family;
-        return fullName;
+        return fullName.trim();
       }
       case PatientNameReturn.lastfirst: {
         // TODO: Consider what to return if error?
-        return firstOrOfficialName?.family + ", " + firstOrOfficialName?.given?.[0];
+        return firstOrOfficialName?.family.trim() + ", " + firstOrOfficialName?.given?.[0].trim();
       }
       case PatientNameReturn.firstonly: {
-        return firstOrOfficialName?.given?.[0] || ""
+        return firstOrOfficialName?.given?.[0].trim() || ""
       }
       case PatientNameReturn.lastonly: {
-        return firstOrOfficialName?.family || ""
+        return firstOrOfficialName?.family.trim() || ""
       }
     }
   }

@@ -94,7 +94,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .header-mint {
   background-color: #ABEBD2;
 }
-
+.header-orange {
+  background-color: #ffd2a6;
+}
 .primary-light {
   background-color: #9fa8da;
 }
