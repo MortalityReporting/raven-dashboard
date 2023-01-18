@@ -1,8 +1,8 @@
 <div class="mdi-case-number-flex-wrapper">
-  <div class="mdi-case-number-label">
+  <div class="mdi-case-number-label" appSetFhirExplorer [resource]="toxSummary.diagnosticReportResource">
     MDI Case Number:
   </div>
-  <div class="mdi-case-number-value">
+  <div class="mdi-case-number-value" appSetFhirExplorer [resource]="toxSummary.diagnosticReportResource">
     {{toxSummary?.mdiCaseNumber || "No MDI Tracking Number Found"}}
   </div>
   <div class="mdi-case-number-open-related">
@@ -12,6 +12,7 @@
       <mat-icon aria-hidden="true">open_in_browser</mat-icon></button>
     <button mat-raised-button color="accent" disabled *ngIf="!relatedCaseAvailable">
       Related Case Not Found
-      <mat-icon aria-hidden="true">info</mat-icon></button>
+      <mat-icon aria-hidden="true">info</mat-icon>
+    </button>
   </div>
 </div>

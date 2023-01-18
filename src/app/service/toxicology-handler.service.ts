@@ -101,6 +101,7 @@ export class ToxicologyHandlerService {
     toxSummary.specimens = this.createSpecimenList(diagnosticReport, messageBundle);
     toxSummary.results = this.createLabResultList(diagnosticReport, messageBundle);
     toxSummary.conclusion = diagnosticReport.conclusion || undefined;
+    toxSummary.diagnosticReportResource = diagnosticReport;
     return toxSummary
   }
 
