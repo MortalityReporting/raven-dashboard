@@ -18,6 +18,7 @@ export class CaseSummaryComponent implements OnInit, OnDestroy {
   @ViewChild(CaseSummaryContentComponent) caseSummaryContentComponent: CaseSummaryContentComponent;
   caseHeader$: Observable<CaseHeader>;
   caseSummary$: Observable<CaseSummary>;
+  compositionId: string;
   relatedToxicology$: Observable<any>;
   toxicologyRecordList: any[];
   documentBundle$: Observable<any>;
@@ -38,8 +39,10 @@ export class CaseSummaryComponent implements OnInit, OnDestroy {
 
     this.decedentService.getComposition(subjectId).subscribe(
       {next: (compositionSearchBundle: any) => {
+          const compositionId = compositionSearchBundle.entry[0].resource.id;
           this.documentBundle$ = this.documentHandler
-            .getDocumentBundle(compositionSearchBundle.entry[0].resource.id);
+            .getDocumentBundle(compositionId);
+          this.compositionId = compositionId;
           this.documentBundle$.subscribe();
           const mdiCaseNumber = this.fhirHelper.getTrackingNumber(compositionSearchBundle.entry[0].resource);
           this.relatedToxicology$ = this.documentHandler.getRelatedToxicologyReports(mdiCaseNumber);

@@ -130,7 +130,7 @@ export class DecedentRecordsGridComponent implements OnInit {
   }
 
   private getMannerOfDeathList(decedentGridDtoList: DecedentGridDTO[]) {
-    const result = [...new Set (decedentGridDtoList.map(decedent => decedent.mannerOfDeath))].filter(element => !!element);;
+    const result = [...new Set (decedentGridDtoList.map(decedent => decedent.mannerOfDeath))].filter(element => !!element);
     return result;
   }
 

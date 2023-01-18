@@ -30,21 +30,18 @@ export class CaseComparisonComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    let subjectId = this.route.snapshot.params['id'];
-    if (subjectId) {
-      this.decedentService.getComposition(subjectId).subscribe(
-        {next: (composition: any) => {
-            this.documentBundle$ = this.documentHandler.getDocumentBundle(composition.entry[0].resource.id);
-            this.documentBundle$.subscribe();
-          }}
-      );
-      this.caseHeader$ = this.documentHandler.caseHeader$;
-      this.caseSummary$ = this.documentHandler.caseSummary$;
-      this.patientResource$ = this.documentHandler.patientResource$;
-      this.caseSummary$.subscribe(caseSummary => {
-        caseSummary.narratives = this.documentHandler.getCurrentSubjectResource()?.text?.div;
-      })
-    }
+    // let compositionId = this.route.snapshot.params['id'];
+    // if (compositionId) {
+    //
+    //   this.documentBundle$ = this.documentHandler.getDocumentBundle(compositionId);
+    //   this.documentBundle$.subscribe();
+    //   // this.caseHeader$ = this.documentHandler.caseHeader$;
+    //   // this.caseSummary$ = this.documentHandler.caseSummary$;
+    //   this.patientResource$ = this.documentHandler.patientResource$;
+    //   // this.caseSummary$.subscribe(caseSummary => {
+    //   //   caseSummary.narratives = this.documentHandler.getCurrentSubjectResource()?.text?.div;
+    //   // })
+    // }
   }
 
   onSidenavResize(expanded: boolean) {

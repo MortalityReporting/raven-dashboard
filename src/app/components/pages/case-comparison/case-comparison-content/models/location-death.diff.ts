@@ -25,19 +25,19 @@ export class LocationDeathDiff extends LocationDiff {
             this.status.expected = JSON.stringify( this.expected.status, null, 4 );
             this.status.actual = JSON.stringify( this.actual.status, null, 4 );
             [this.status.style,this.status.difference] = DiffType.doDiff( Diff.diffChars( this.status.expected, this.status.actual ));
-        } catch(e) {};
+        } catch(e) {}
 
         try {
             this.identifier.expected = JSON.stringify( this.expected.identifier, null, 4 );
             this.identifier.actual = JSON.stringify( this.actual.identifier, null, 4 );
             [this.identifier.style,this.identifier.difference] = DiffType.doDiff( Diff.diffChars( this.identifier.expected, this.identifier.actual ));
-        } catch(e) {};
+        } catch(e) {}
 
         try {
             let style =
                 this.style === 'valid' &&
                 this.status.style === 'valid' &&
                 this.identifier.style === 'valid'
-        } catch(e) {};
+        } catch(e) {}
     }
 }

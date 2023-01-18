@@ -10,8 +10,8 @@ export class CaseHeader {
   mdiCaseNumber: TrackingNumber;
 
   constructor() {
-    this.authors = new Array();
-    this.trackingNumbers = new Array();
+    this.authors = [];
+    this.trackingNumbers = [];
   }
 }
 

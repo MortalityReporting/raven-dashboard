@@ -16,6 +16,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class CaseSummaryContentComponent implements OnInit {
   @Input() caseHeader$: Observable<CaseHeader>;
   @Input() caseSummary$: Observable<CaseSummary>;
+  @Input() compositionId: string;
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
   name: string;
@@ -98,7 +99,7 @@ export class CaseSummaryContentComponent implements OnInit {
   }
 
   onOpenInComparisonTool() {
-    this.router.navigate(['comparison/', this.route.snapshot.params['id']]);
+    this.router.navigate(['comparison/', this.compositionId]);
   }
 
   isExpanded(elementId: string) {

@@ -119,8 +119,13 @@ export class DocumentHandlerService {
         this.caseSummary.next(this.createCaseSummary(documentBundle, patientResource, compositionResource));
         this.fhirResourceProvider.setCompositionId(compositionId);
         this.fhirResourceProvider.setSelectedFhirResource(documentBundle);
+        return documentBundle;
       })
     );
+  }
+
+  getRawDocumentBundle(compositionId: string) {
+    return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "Composition/" + compositionId + "/$document");
   }
 
   getRelatedToxicologyReports(mdiCaseNumber: string): any {
@@ -129,7 +134,7 @@ export class DocumentHandlerService {
         map((resultBundle: any) => {
           console.log(resultBundle)
           let toxRecordList = [];
-          resultBundle.entry.forEach((bec:any) => {
+          resultBundle?.entry?.forEach((bec:any) => {
             const diagnosticReport = bec.resource;
             let toxRecordStub = new ToxRecordStub();
             toxRecordStub.date = diagnosticReport.issued.split("T")[0] || undefined;
@@ -196,6 +201,7 @@ export class DocumentHandlerService {
     summary.jurisdiction = this.generateJurisdiction(documentBundle, compositionResource);
     summary.causeAndManner = this.generateCauseAndManner(documentBundle, compositionResource);
     summary.examAndAutopsy = this.generateExamAndAutopsy(documentBundle, compositionResource);
+    summary.compositionId = compositionResource?.id || '';
     return summary;
   }
 
@@ -238,7 +244,7 @@ export class DocumentHandlerService {
     circumstances.injuryLocation = injuryLocationResource?.name || this.defaultString;
 
     circumstances.pregnancy = this.bundleHelper.findResourceByProfileName(documentBundle, Obs_DecedentPregnancy)?.valueCodeableConcept?.coding[0]?.display || this.defaultString; // TODO: Missing data, once available fix.
-    circumstances.tobaccoUseContributed = this.bundleHelper.findResourceByProfileName(documentBundle, Obs_TobaccoUseContributedToDeath)?.valueCodeableConcept?.coding[0]?.display || this.defaultString;; // TODO: Missing data, once available fix.
+    circumstances.tobaccoUseContributed = this.bundleHelper.findResourceByProfileName(documentBundle, Obs_TobaccoUseContributedToDeath)?.valueCodeableConcept?.coding[0]?.display || this.defaultString; // TODO: Missing data, once available fix.
 
     return circumstances;
   }
@@ -413,7 +419,7 @@ export class DocumentHandlerService {
     let extensions = compositionResource.extension;
     let trackingNumberExtensions = extensions?.filter((extension: any) => extension.url === "http://hl7.org/fhir/us/mdi/StructureDefinition/Extension-tracking-number");
 
-    let trackingNumbers = new Array();
+    let trackingNumbers = [];
 
     trackingNumberExtensions?.map(( item: any ) => {
 
