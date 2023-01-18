@@ -37,18 +37,18 @@ export class ObservationCauseOfDeathPart1Diff extends ObservationDiff {
             let actualComponent = this.fhirHelper.findObservationComponentByCode(this.actual, "69440-6");
             this.valueString.actual = JSON.stringify( actualComponent.valueString, null, 4 );
             [this.valueString.style,this.valueString.difference] = DiffType.doDiff( Diff.diffChars( this.valueString.expected, this.valueString.actual ));
-        } catch(e) {};
+        } catch(e) {}
 
         try {
             this.performer.expected = JSON.stringify( this.expected.performer, null, 4 );
             this.performer.actual = JSON.stringify( this.actual.performer, null, 4 );
             [this.performer.style,this.performer.difference] = DiffType.doDiff( Diff.diffChars( this.performer.expected, this.performer.actual ));
-        } catch(e) {};
+        } catch(e) {}
 
         try {
             this.valueCodeableConcept.expected = JSON.stringify( this.expected.valueCodeableConcept, null, 4 );
             this.valueCodeableConcept.actual = JSON.stringify( this.actual.valueCodeableConcept, null, 4 );
             [this.valueCodeableConcept.style,this.valueCodeableConcept.difference] = DiffType.doDiff( Diff.diffChars( this.valueCodeableConcept.expected, this.valueCodeableConcept.actual ));
-        } catch(e) {};
+        } catch(e) {}
     }
 }

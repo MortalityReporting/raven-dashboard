@@ -238,7 +238,7 @@ export class DocumentHandlerService {
     circumstances.injuryLocation = injuryLocationResource?.name || this.defaultString;
 
     circumstances.pregnancy = this.bundleHelper.findResourceByProfileName(documentBundle, Obs_DecedentPregnancy)?.valueCodeableConcept?.coding[0]?.display || this.defaultString; // TODO: Missing data, once available fix.
-    circumstances.tobaccoUseContributed = this.bundleHelper.findResourceByProfileName(documentBundle, Obs_TobaccoUseContributedToDeath)?.valueCodeableConcept?.coding[0]?.display || this.defaultString;; // TODO: Missing data, once available fix.
+    circumstances.tobaccoUseContributed = this.bundleHelper.findResourceByProfileName(documentBundle, Obs_TobaccoUseContributedToDeath)?.valueCodeableConcept?.coding[0]?.display || this.defaultString; // TODO: Missing data, once available fix.
 
     return circumstances;
   }
@@ -413,7 +413,7 @@ export class DocumentHandlerService {
     let extensions = compositionResource.extension;
     let trackingNumberExtensions = extensions?.filter((extension: any) => extension.url === "http://hl7.org/fhir/us/mdi/StructureDefinition/Extension-tracking-number");
 
-    let trackingNumbers = new Array();
+    let trackingNumbers = [];
 
     trackingNumberExtensions?.map(( item: any ) => {
 
