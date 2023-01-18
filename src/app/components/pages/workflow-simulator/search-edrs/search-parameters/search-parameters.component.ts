@@ -1,10 +1,10 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormArray, FormBuilder, FormControl} from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {SearchEdrsService} from "../../../../../service/search-edrs.service";
 import {UtilsService} from "../../../../../service/utils.service";
 import {Obs_DeathDate, Obs_MannerOfDeath} from "../../../../../model/mdi/profile.list";
 import {TrackingNumberType} from "../../../../../model/tracking.number.type";
-import {FhirHelperService} from "../../../../../service/fhir/fhir-helper.service";
+import {FhirHelperService, PatientNameReturn} from "../../../../../service/fhir/fhir-helper.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {DecedentSimpleInfo} from "../../../../../model/decedent-simple-info";
 import {blueJay} from "../../../../../../environments/environment";
@@ -75,6 +75,9 @@ export class SearchParametersComponent implements OnInit {
           return (this.edrsSearchFormParams.indexOf(item) == index)
         });
 
+        this.searchEdrsService.decedentData$.subscribe({
+          next: value => this.patchInitialDecedentDataToEDRSForm(value)
+        });
       },
       error: err => {
         console.error(err);
@@ -250,7 +253,7 @@ export class SearchParametersComponent implements OnInit {
   private getMannerOfDeathObservationStr(observationResource){
     if(!observationResource.resourceType
       || observationResource.resourceType != 'Observation'){
-      console.error("Empty or incorrect function parameter.");
+      console.warn("Empty or incorrect function parameter.");
       return null;
     }
     const result = observationResource.valueCodeableConcept?.coding?.[0]?.display;
@@ -262,7 +265,7 @@ export class SearchParametersComponent implements OnInit {
       || !documentBundle.resourceType || documentBundle.resourceType != "Bundle"
       || !documentBundle.type || documentBundle.type != "document"
       || !documentBundle.entry?.length){
-      console.error("Empty or incorrect function parameter.");
+      console.warn("Empty or incorrect function parameter.");
       return null;
     }
     const result = documentBundle.entry
@@ -276,7 +279,7 @@ export class SearchParametersComponent implements OnInit {
       || !documentBundle.resourceType || documentBundle.resourceType != "Bundle"
       || !documentBundle.type || documentBundle.type != "document"
       || !documentBundle.entry?.length){
-      console.error("Empty or incorrect function parameter.");
+      console.warn("Empty or incorrect function parameter.");
       return null;
     }
     const result = documentBundle.entry
@@ -313,5 +316,18 @@ export class SearchParametersComponent implements OnInit {
   private getDisplayValueFromExtension(param): string {
     const result = param.extension?.find(extension => extension.url === "urn:gtri:mapi-label" )?.valueString;
     return result;
+  }
+
+  private patchInitialDecedentDataToEDRSForm(decedentData){
+    if(decedentData?.patientResource){
+      //TODO we need to come up with a data driven solution for this. Using hardcoded array indexing is a bad idea
+      const decedentFirstName = this.fhirHelperService.getPatientOfficialName(decedentData.patientResource, PatientNameReturn.firstonly);
+      const givenNameFormControl =  (<FormArray>this.searchEdrsForm.controls['parameters']).at(0);
+      givenNameFormControl.patchValue({name : "patient.given", valueString: decedentFirstName});
+
+      const decedentLastName = this.fhirHelperService.getPatientOfficialName(decedentData.patientResource, PatientNameReturn.lastonly);
+      const lastNameFormControl =  (<FormArray>this.searchEdrsForm.controls['parameters']).at(1);
+      givenNameFormControl.patchValue({name : "patient.family", valueString: decedentFirstName});
+    }
   }
 }

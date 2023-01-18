@@ -128,11 +128,12 @@ export class ImportMdiToEdrsDocumentComponent implements OnInit {
   }
 
   private getPatientData(documentBundle: any): DecedentSimpleInfo {
-    let decedentSimpleInfo: DecedentSimpleInfo = {name: '', dateTimeOfDeath: '', mdiTrackingNumber: ''};
+    let decedentSimpleInfo: DecedentSimpleInfo = { name: '', dateTimeOfDeath: '', mdiTrackingNumber: '', patientResource: null };
     const patient = documentBundle.entry.find(entry => entry.resource?.resourceType === "Patient");
     if(patient){
       const name = this.getPatientName(patient?.resource);
       decedentSimpleInfo.name = name;
+      decedentSimpleInfo.patientResource = patient?.resource;
     }
     const composition = documentBundle.entry.find(entry => entry.resource?.resourceType === "Composition");
     if(composition){

@@ -62,7 +62,7 @@ export class EndpointConfigurationComponent implements OnInit {
   }
 
   onSubmitEndpointConfiguration() {
-    console.log(this.endpointConfigurationFormGroup);
+   // console.log(this.endpointConfigurationFormGroup);
   }
 
   ngOnInit(): void {

@@ -54,6 +54,7 @@ export class MdiToEdrsGridComponent implements OnInit {
     decedentDTO.gender = entry.resource?.gender;
     decedentDTO.system = entry.resource?.identifier?.[0]?.system || null;
     decedentDTO.age = this.getAgeFromDob(new Date(entry.resource?.birthDate));
+    decedentDTO.patientResource = entry.resource;
     return decedentDTO;
   }
 
@@ -126,11 +127,11 @@ export class MdiToEdrsGridComponent implements OnInit {
 
   onCaseSelected(decedent: any) {
     this.selectedCase = decedent;
-
     this.decedentInfo = new DecedentSimpleInfo();
     this.decedentInfo.mdiTrackingNumber = decedent.caseNumber;
     this.decedentInfo.dateTimeOfDeath = decedent.tod;
     this.decedentInfo.name = decedent.lastName + ', ' + decedent.firstName ? ', ' + decedent.firstName : '';
+    this.decedentInfo.patientResource = decedent.patientResource;
     this.searchEdrsService.setDecedentData(this.decedentInfo);
 
     this.decedentService.getComposition(decedent.decedentId).pipe(

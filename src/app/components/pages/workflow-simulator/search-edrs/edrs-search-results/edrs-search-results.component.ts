@@ -36,7 +36,6 @@ export class EdrsSearchResultsComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
     if(!!changes['successResponse']?.currentValue){
       this.parseResponseToTable(changes['successResponse']?.currentValue);
       this.resultsTabGroup.selectedIndex = 0;
