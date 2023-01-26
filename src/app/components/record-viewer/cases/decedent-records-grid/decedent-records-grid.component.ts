@@ -21,7 +21,7 @@ export class DecedentRecordsGridComponent implements OnInit {
   @ViewChild('mannerOfDeathSelect') mannerOfDeathSelect: MatSelect;
 
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['index', 'officialName', 'gender', 'tod', 'mannerOfDeath', 'caseNumber'];
+  displayedColumns: string[] = ['index', 'lastName', 'gender', 'tod', 'mannerOfDeath', 'caseNumber'];
   decedentGridDtoList: DecedentGridDTO[];
   isLoading = true;
   mannerOfDeathList: string [] = [];
