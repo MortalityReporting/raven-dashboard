@@ -104,7 +104,6 @@ export class ImportCaseFhirRecordComponent implements OnInit{
     }
     this.validationResult$.subscribe({
       next: value => {
-        console.log(value);
         this.isLoading = false;
         if (value.isValid) {
           this.importCase();
