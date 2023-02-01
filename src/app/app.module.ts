@@ -84,7 +84,7 @@ import { HttpRequestInfoComponent } from './components/pages/workflow-simulator/
 import { HttpResponseInfoComponent } from './components/pages/workflow-simulator/search-edrs/edrs-results-step/http-response-info/http-response-info.component';
 import {
   ImportMdiToEdrsDocumentComponent
-} from './components/pages/workflow-simulator/search-edrs/select-mdi-to-edrs-document-step/import-mdi-to-edrs-document/import-mdi-to-edrs-document.component';
+} from './components/pages/workflow-simulator/search-edrs/mdi-to-edrs-document-select-step/import-mdi-to-edrs-document/import-mdi-to-edrs-document.component';
 import {
   EndpointConfigurationStepComponent
 } from './components/pages/workflow-simulator/search-edrs/endpoint-configuration-step/endpoint-configuration-step.component';
@@ -97,11 +97,11 @@ import {
 import {InputTextDialogComponent} from './components/widgets/input-text-dialog/input-text-dialog.component';
 import {
   MdiToEdrsGridComponent
-} from "./components/pages/workflow-simulator/search-edrs/select-mdi-to-edrs-document-step/mdi-to-edrs-grid/mdi-to-edrs-grid.component";
+} from "./components/pages/workflow-simulator/search-edrs/mdi-to-edrs-document-select-step/mdi-to-edrs-grid/mdi-to-edrs-grid.component";
 import {SearchEdrsComponent} from "./components/pages/workflow-simulator/search-edrs/search-edrs.component";
 import {WorkflowSimulatorComponent} from './components/pages/workflow-simulator/workflow-simulator.component';
 import { CaseSummaryRelatedToxComponent } from './components/record-viewer/case-summary/case-summary-related-tox/case-summary-related-tox.component';
-import { SelectMdiToEdrsDocumentStepComponent } from './components/pages/workflow-simulator/search-edrs/select-mdi-to-edrs-document-step/select-mdi-to-edrs-document-step.component';
+import { MdiToEdrsDocumentSelectStepComponent } from './components/pages/workflow-simulator/search-edrs/mdi-to-edrs-document-select-step/mdi-to-edrs-document-select-step.component';
 
 @NgModule({
     declarations: [
@@ -144,7 +144,7 @@ import { SelectMdiToEdrsDocumentStepComponent } from './components/pages/workflo
         HttpResponseInfoComponent,
         WorkflowSimulatorComponent,
         CaseSummaryRelatedToxComponent,
-        SelectMdiToEdrsDocumentStepComponent
+        MdiToEdrsDocumentSelectStepComponent
     ],
     imports: [
         BrowserModule,

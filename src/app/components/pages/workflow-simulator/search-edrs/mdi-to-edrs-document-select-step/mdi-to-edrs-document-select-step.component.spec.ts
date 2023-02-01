@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SelectMdiToEdrsDocumentStepComponent } from './select-mdi-to-edrs-document-step.component';
+import { MdiToEdrsDocumentSelectStepComponent } from './mdi-to-edrs-document-select-step.component';
 
 describe('SelectMdiToEdrsDocumentStepComponent', () => {
-  let component: SelectMdiToEdrsDocumentStepComponent;
-  let fixture: ComponentFixture<SelectMdiToEdrsDocumentStepComponent>;
+  let component: MdiToEdrsDocumentSelectStepComponent;
+  let fixture: ComponentFixture<MdiToEdrsDocumentSelectStepComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SelectMdiToEdrsDocumentStepComponent ]
+      declarations: [ MdiToEdrsDocumentSelectStepComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SelectMdiToEdrsDocumentStepComponent);
+    fixture = TestBed.createComponent(MdiToEdrsDocumentSelectStepComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

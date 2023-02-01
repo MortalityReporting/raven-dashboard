@@ -4,11 +4,11 @@ import {SearchEdrsService} from "../../../../../service/search-edrs.service";
 import {MatStepper} from "@angular/material/stepper";
 
 @Component({
-  selector: 'app-select-mdi-to-edrs-document-step',
+  selector: 'app-mdi-to-edrs-document-select-step',
   templateUrl: './select-mdi-to-edrs-document-step.component.html',
   styleUrls: ['./select-mdi-to-edrs-document-step.component.css']
 })
-export class SelectMdiToEdrsDocumentStepComponent implements OnInit {
+export class MdiToEdrsDocumentSelectStepComponent implements OnInit {
   @Input('parentStepper') parentStepper: MatStepper;
 
   uiConstants: any;

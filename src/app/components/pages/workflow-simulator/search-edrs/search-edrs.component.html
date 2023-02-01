@@ -10,9 +10,9 @@
 
       <mat-step label="{{ uiConstants.step1.STEP_LABEL }}" [completed]="false">
         {{ uiConstants.step1.DESCRIPTION }}
-        <app-select-mdi-to-edrs-document-step
+        <app-mdi-to-edrs-document-select-step
           [parentStepper]="stepper"
-        ></app-select-mdi-to-edrs-document-step>
+        ></app-mdi-to-edrs-document-select-step>
       </mat-step>
 
       <mat-step label="{{ uiConstants.step2.STEP_LABEL }}" [completed]="false">
