@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EdrsResultsComponent } from './edrs-results.component';
+import { EdrsResultsStepComponent } from './edrs-results-step.component';
 
 describe('EdrsResultsComponent', () => {
-  let component: EdrsResultsComponent;
-  let fixture: ComponentFixture<EdrsResultsComponent>;
+  let component: EdrsResultsStepComponent;
+  let fixture: ComponentFixture<EdrsResultsStepComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EdrsResultsComponent ]
+      declarations: [ EdrsResultsStepComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EdrsResultsComponent);
+    fixture = TestBed.createComponent(EdrsResultsStepComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

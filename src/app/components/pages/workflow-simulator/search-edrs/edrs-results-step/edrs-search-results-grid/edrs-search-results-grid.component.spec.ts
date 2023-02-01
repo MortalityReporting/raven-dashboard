@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EdrsSearchResultsComponent } from './edrs-search-results.component';
+import { EdrsSearchResultsGridComponent } from './edrs-search-results-grid.component';
 
 describe('EdrsSearchResultsComponent', () => {
-  let component: EdrsSearchResultsComponent;
-  let fixture: ComponentFixture<EdrsSearchResultsComponent>;
+  let component: EdrsSearchResultsGridComponent;
+  let fixture: ComponentFixture<EdrsSearchResultsGridComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EdrsSearchResultsComponent ]
+      declarations: [ EdrsSearchResultsGridComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EdrsSearchResultsComponent);
+    fixture = TestBed.createComponent(EdrsSearchResultsGridComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

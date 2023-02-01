@@ -77,30 +77,31 @@ import {
 } from "./components/record-viewer/toxicology-report/toxicology-report-grid-section/toxicology-report-grid-section.component";
 import {MatStepperModule} from "@angular/material/stepper";
 import {UiStringConstants} from "./providers/ui-string-constants";
-import { SearchParametersComponent } from './components/pages/workflow-simulator/search-edrs/search-parameters/search-parameters.component';
-import { EdrsSearchResultsComponent } from './components/pages/workflow-simulator/search-edrs/edrs-search-results/edrs-search-results.component';
-import { EdrsRecordSummaryComponent } from './components/pages/workflow-simulator/search-edrs/edrs-record-summary/edrs-record-summary.component';
-import { HttpRequestInfoComponent } from './components/pages/workflow-simulator/search-edrs/http-request-info/http-request-info.component';
-import { HttpResponseInfoComponent } from './components/pages/workflow-simulator/search-edrs/http-response-info/http-response-info.component';
+import { SearchParametersComponent } from './components/pages/workflow-simulator/search-edrs/edrs-results-step/search-parameters/search-parameters.component';
+import { EdrsSearchResultsGridComponent } from './components/pages/workflow-simulator/search-edrs/edrs-results-step/edrs-search-results-grid/edrs-search-results-grid.component';
+import { EdrsRecordSummaryComponent } from './components/pages/workflow-simulator/search-edrs/edrs-results-step/edrs-record-summary/edrs-record-summary.component';
+import { HttpRequestInfoComponent } from './components/pages/workflow-simulator/search-edrs/edrs-results-step/http-request-info/http-request-info.component';
+import { HttpResponseInfoComponent } from './components/pages/workflow-simulator/search-edrs/edrs-results-step/http-response-info/http-response-info.component';
 import {
   ImportMdiToEdrsDocumentComponent
-} from './components/pages/workflow-simulator/search-edrs/import-mdi-to-edrs-document/import-mdi-to-edrs-document.component';
+} from './components/pages/workflow-simulator/search-edrs/select-mdi-to-edrs-document-step/import-mdi-to-edrs-document/import-mdi-to-edrs-document.component';
 import {
-  EndpointConfigurationComponent
-} from './components/pages/workflow-simulator/search-edrs/endpoint-configuration/endpoint-configuration.component';
+  EndpointConfigurationStepComponent
+} from './components/pages/workflow-simulator/search-edrs/endpoint-configuration-step/endpoint-configuration-step.component';
 import {
-  EdrsResultsComponent
-} from './components/pages/workflow-simulator/search-edrs/edrs-results/edrs-results.component';
+  EdrsResultsStepComponent
+} from './components/pages/workflow-simulator/search-edrs/edrs-results-step/edrs-results-step.component';
 import {
   DecedentBasicInfoComponent
 } from './components/pages/workflow-simulator/search-edrs/decedent-basic-info/decedent-basic-info.component';
 import {InputTextDialogComponent} from './components/widgets/input-text-dialog/input-text-dialog.component';
 import {
   MdiToEdrsGridComponent
-} from "./components/pages/workflow-simulator/search-edrs/mdi-to-edrs-grid/mdi-to-edrs-grid.component";
+} from "./components/pages/workflow-simulator/search-edrs/select-mdi-to-edrs-document-step/mdi-to-edrs-grid/mdi-to-edrs-grid.component";
 import {SearchEdrsComponent} from "./components/pages/workflow-simulator/search-edrs/search-edrs.component";
 import {WorkflowSimulatorComponent} from './components/pages/workflow-simulator/workflow-simulator.component';
 import { CaseSummaryRelatedToxComponent } from './components/record-viewer/case-summary/case-summary-related-tox/case-summary-related-tox.component';
+import { SelectMdiToEdrsDocumentStepComponent } from './components/pages/workflow-simulator/search-edrs/select-mdi-to-edrs-document-step/select-mdi-to-edrs-document-step.component';
 
 @NgModule({
     declarations: [
@@ -133,16 +134,17 @@ import { CaseSummaryRelatedToxComponent } from './components/record-viewer/case-
         MdiToEdrsGridComponent,
         InputTextDialogComponent,
         ImportMdiToEdrsDocumentComponent,
-        EndpointConfigurationComponent,
-        EdrsResultsComponent,
+        EndpointConfigurationStepComponent,
+        EdrsResultsStepComponent,
         DecedentBasicInfoComponent,
         SearchParametersComponent,
-        EdrsSearchResultsComponent,
+        EdrsSearchResultsGridComponent,
         EdrsRecordSummaryComponent,
         HttpRequestInfoComponent,
         HttpResponseInfoComponent,
         WorkflowSimulatorComponent,
-        CaseSummaryRelatedToxComponent
+        CaseSummaryRelatedToxComponent,
+        SelectMdiToEdrsDocumentStepComponent
     ],
     imports: [
         BrowserModule,
