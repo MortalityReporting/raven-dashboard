@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {SearchEdrsService} from "../../../../../service/search-edrs.service";
+import {SearchEdrsService} from "../../../../../../service/search-edrs.service";
 
 export const APPLICATION_JSON = `application-json`;
 export const POST = `POST`;

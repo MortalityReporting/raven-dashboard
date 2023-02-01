@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EndpointConfigurationComponent } from './endpoint-configuration.component';
+import { EndpointConfigurationStepComponent } from './endpoint-configuration-step.component';
 
 describe('EndpointConfigurationComponent', () => {
-  let component: EndpointConfigurationComponent;
-  let fixture: ComponentFixture<EndpointConfigurationComponent>;
+  let component: EndpointConfigurationStepComponent;
+  let fixture: ComponentFixture<EndpointConfigurationStepComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EndpointConfigurationComponent ]
+      declarations: [ EndpointConfigurationStepComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EndpointConfigurationComponent);
+    fixture = TestBed.createComponent(EndpointConfigurationStepComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

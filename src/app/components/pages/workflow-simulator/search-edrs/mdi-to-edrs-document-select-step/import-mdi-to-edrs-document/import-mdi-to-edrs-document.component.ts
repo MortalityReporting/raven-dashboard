@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {openInputTextDialog} from "../../../../widgets/input-text-dialog/input-text-dialog.component";
+import {openInputTextDialog} from "../../../../../widgets/input-text-dialog/input-text-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
-import {UtilsService} from "../../../../../service/utils.service";
-import {SearchEdrsService} from "../../../../../service/search-edrs.service";
+import {UtilsService} from "../../../../../../service/utils.service";
+import {SearchEdrsService} from "../../../../../../service/search-edrs.service";
 import {Validators} from "@angular/forms";
-import {JsonValidator} from "../../../../../reactive-form-validators/json-validator";
-import {ResourceTypeValidator} from "../../../../../reactive-form-validators/resource-type-validator";
-import {DecedentSimpleInfo} from "../../../../../model/decedent-simple-info";
-import {UiStringConstants} from "../../../../../providers/ui-string-constants";
-import {FhirHelperService, PatientNameReturn} from "../../../../../service/fhir/fhir-helper.service";
+import {JsonValidator} from "../../../../../../reactive-form-validators/json-validator";
+import {ResourceTypeValidator} from "../../../../../../reactive-form-validators/resource-type-validator";
+import {DecedentSimpleInfo} from "../../../../../../model/decedent-simple-info";
+import {UiStringConstants} from "../../../../../../providers/ui-string-constants";
+import {FhirHelperService, PatientNameReturn} from "../../../../../../service/fhir/fhir-helper.service";
 
 @Component({
   selector: 'app-import-mdi-to-edrs-document',
