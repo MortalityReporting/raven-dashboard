@@ -120,7 +120,7 @@ export class ImportCaseFhirRecordComponent implements OnInit{
     this.fhirValidatorStateService.getFhirResource().subscribe({
       next: value => {
         this.preconditionError = '';
-        this.fhirResource = value;
+        this.fhirResource = JSON.parse(value);
         this.invalidResourceFound = false;
       }
     })
