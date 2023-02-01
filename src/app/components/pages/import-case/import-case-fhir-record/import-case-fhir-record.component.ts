@@ -108,7 +108,7 @@ export class ImportCaseFhirRecordComponent implements OnInit{
         if (value.isValid) {
           this.importCase();
         } else if(Object.keys(value).length){
-          console.log(this.invalidResourceFound);
+          console.warn(this.invalidResourceFound);
           this.invalidResourceFound = true;
         }
       }});
