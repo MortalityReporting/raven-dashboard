@@ -6,7 +6,7 @@ import {MatStepper} from "@angular/material/stepper";
 @Component({
   selector: 'app-mdi-to-edrs-document-select-step',
   templateUrl: './mdi-to-edrs-document-select-step.component.html',
-  styleUrls: ['./mdi-to-edrs-document-select-step.component.css']
+  styleUrls: ['./mdi-to-edrs-document-select-step.component.scss']
 })
 export class MdiToEdrsDocumentSelectStepComponent implements OnInit {
   @Input('parentStepper') parentStepper: MatStepper;

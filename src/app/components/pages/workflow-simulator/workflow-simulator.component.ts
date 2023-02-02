@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 @Component({
   selector: 'app-workflow-simulator',
   templateUrl: './workflow-simulator.component.html',
-  styleUrls: ['./workflow-simulator.component.css']
+  styleUrls: ['./workflow-simulator.component.scss']
 })
 export class WorkflowSimulatorComponent {
 

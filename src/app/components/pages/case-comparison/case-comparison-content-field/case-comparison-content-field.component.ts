@@ -4,7 +4,7 @@ import {MatExpansionPanel} from "@angular/material/expansion";
 @Component({
   selector: 'app-case-comparison-content-field',
   templateUrl: './case-comparison-content-field.component.html',
-  styleUrls: ['./case-comparison-content-field.component.css']
+  styleUrls: ['./case-comparison-content-field.component.scss']
 })
 export class CaseComparisonContentFieldComponent implements OnInit, OnChanges{
   @Input() state: string;

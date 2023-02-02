@@ -5,7 +5,7 @@ export const APPLICATION_JSON = `application-json`;
 @Component({
   selector: 'app-http-response-info',
   templateUrl: './http-response-info.component.html',
-  styleUrls: ['./http-response-info.component.css']
+  styleUrls: ['./http-response-info.component.scss']
 })
 export class HttpResponseInfoComponent implements OnInit {
   @Input() successResponse;

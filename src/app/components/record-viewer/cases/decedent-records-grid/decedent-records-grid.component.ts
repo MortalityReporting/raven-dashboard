@@ -14,7 +14,7 @@ import {TrackingNumberType} from "../../../../model/tracking.number.type";
 @Component({
   selector: 'app-decedent-records-grid',
   templateUrl: './decedent-records-grid.component.html',
-  styleUrls: ['../cases.component.css']
+  styleUrls: ['../cases.component.scss']
 })
 export class DecedentRecordsGridComponent implements OnInit {
 

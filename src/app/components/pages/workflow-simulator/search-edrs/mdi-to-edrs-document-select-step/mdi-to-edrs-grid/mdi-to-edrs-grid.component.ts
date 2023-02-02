@@ -16,7 +16,7 @@ import {FhirHelperService} from "../../../../../../service/fhir/fhir-helper.serv
 @Component({
   selector: 'app-mdi-to-edrs-grid',
   templateUrl: './mdi-to-edrs-grid.component.html',
-  styleUrls: ['./mdi-to-edrs-grid.component.css']
+  styleUrls: ['./mdi-to-edrs-grid.component.scss']
 })
 // For now this class component is almost exactly the same as the one we use for the decedent-records-grid.
 // However, the functionality will be different and we are going to change the code at some point in the near future.

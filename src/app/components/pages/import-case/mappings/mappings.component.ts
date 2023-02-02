@@ -4,7 +4,7 @@ import {MatTableDataSource} from "@angular/material/table";
 @Component({
   selector: 'app-mappings',
   templateUrl: './mappings.component.html',
-  styleUrls: ['./mappings.component.css']
+  styleUrls: ['./mappings.component.scss']
 })
 export class MappingsComponent implements OnInit, OnChanges {
 

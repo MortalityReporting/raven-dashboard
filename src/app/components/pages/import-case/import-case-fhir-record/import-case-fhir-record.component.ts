@@ -12,7 +12,7 @@ import {openConformationDialog} from "../../../widgets/conformation-dialog/confo
 @Component({
   selector: 'app-import-case-fhir-record',
   templateUrl: './import-case-fhir-record.component.html',
-  styleUrls: ['./import-case-fhir-record.component.css']
+  styleUrls: ['./import-case-fhir-record.component.scss']
 })
 export class ImportCaseFhirRecordComponent implements OnInit{
 

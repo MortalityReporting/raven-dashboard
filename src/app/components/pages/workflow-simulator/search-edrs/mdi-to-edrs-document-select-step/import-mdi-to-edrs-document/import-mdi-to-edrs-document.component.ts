@@ -13,7 +13,7 @@ import {FhirHelperService, PatientNameReturn} from "../../../../../../service/fh
 @Component({
   selector: 'app-import-mdi-to-edrs-document',
   templateUrl: './import-mdi-to-edrs-document.component.html',
-  styleUrls: ['./import-mdi-to-edrs-document.component.css']
+  styleUrls: ['./import-mdi-to-edrs-document.component.scss']
 })
 export class ImportMdiToEdrsDocumentComponent implements OnInit {
 

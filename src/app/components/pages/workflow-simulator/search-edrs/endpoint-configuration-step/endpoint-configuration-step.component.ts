@@ -8,7 +8,7 @@ import {blueJay, environment} from "../../../../../../environments/environment";
 @Component({
   selector: 'app-endpoint-configuration-step',
   templateUrl: './endpoint-configuration-step.component.html',
-  styleUrls: ['./endpoint-configuration-step.component.css']
+  styleUrls: ['./endpoint-configuration-step.component.scss']
 })
 export class EndpointConfigurationStepComponent implements OnInit {
   endpointTypeOptions: string[];

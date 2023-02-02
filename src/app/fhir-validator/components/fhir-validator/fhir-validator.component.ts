@@ -4,7 +4,7 @@ import {ValidatorCoreComponent} from "../validator-core/validator-core.component
 @Component({
   selector: 'app-fhir-validator',
   templateUrl: './fhir-validator.component.html',
-  styleUrls: ['./fhir-validator.component.css']
+  styleUrls: ['./fhir-validator.component.scss']
 })
 export class FhirValidatorComponent implements OnInit {
 

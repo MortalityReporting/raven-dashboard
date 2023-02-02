@@ -7,12 +7,11 @@ import {CaseHeader} from "../../../model/record-models/case.header";
 import {CaseSummary} from "../../../model/record-models/case.summary";
 import {CaseSummaryContentComponent} from "./case-summary-content/case-summary-content.component";
 import {FhirHelperService} from "../../../service/fhir/fhir-helper.service";
-import {map} from "rxjs-compat/operator/map";
 
 @Component({
   selector: 'app-case-summary',
   templateUrl: './case-summary.component.html',
-  styleUrls: ['./case-summary.component.css']
+  styleUrls: ['./case-summary.component.scss']
 })
 export class CaseSummaryComponent implements OnInit, OnDestroy {
   @ViewChild(CaseSummaryContentComponent) caseSummaryContentComponent: CaseSummaryContentComponent;

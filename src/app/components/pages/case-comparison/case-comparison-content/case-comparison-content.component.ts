@@ -43,7 +43,7 @@ import {BundleHelperService} from "../../../../service/fhir/bundle-helper.servic
 @Component({
   selector: 'app-case-comparison-content',
   templateUrl: './case-comparison-content.component.html',
-  styleUrls: ['./case-comparison-content.component.css'],
+  styleUrls: ['./case-comparison-content.component.scss'],
 })
 export class CaseComparisonContentComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;

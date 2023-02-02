@@ -9,7 +9,7 @@ import {UtilsService} from "../../../../../service/utils.service";
 @Component({
   selector: 'app-edrs-results-step',
   templateUrl: './edrs-results-step.component.html',
-  styleUrls: ['./edrs-results-step.component.css']
+  styleUrls: ['./edrs-results-step.component.scss']
 })
 
 export class EdrsResultsStepComponent implements OnInit {
