@@ -12,7 +12,7 @@ import {openConformationDialog} from "../../../widgets/conformation-dialog/confo
 @Component({
   selector: 'app-import-case-fhir-record',
   templateUrl: './import-case-fhir-record.component.html',
-  styleUrls: ['./import-case-fhir-record.component.css']
+  styleUrls: ['./import-case-fhir-record.component.scss']
 })
 export class ImportCaseFhirRecordComponent implements OnInit{
 
@@ -104,12 +104,11 @@ export class ImportCaseFhirRecordComponent implements OnInit{
     }
     this.validationResult$.subscribe({
       next: value => {
-        console.log(value);
         this.isLoading = false;
         if (value.isValid) {
           this.importCase();
         } else if(Object.keys(value).length){
-          console.log(this.invalidResourceFound);
+          console.warn(this.invalidResourceFound);
           this.invalidResourceFound = true;
         }
       }});
@@ -120,7 +119,7 @@ export class ImportCaseFhirRecordComponent implements OnInit{
     this.fhirValidatorStateService.getFhirResource().subscribe({
       next: value => {
         this.preconditionError = '';
-        this.fhirResource = value;
+        this.fhirResource = JSON.parse(value);
         this.invalidResourceFound = false;
       }
     })

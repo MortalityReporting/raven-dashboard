@@ -11,7 +11,7 @@ import {TrackingNumberType} from "../../../../model/tracking.number.type";
 @Component({
   selector: 'app-toxicology-grid',
   templateUrl: './toxicology-grid.component.html',
-  styleUrls: ['../cases.component.css']
+  styleUrls: ['../cases.component.scss']
 })
 export class ToxicologyGridComponent implements OnInit {
 

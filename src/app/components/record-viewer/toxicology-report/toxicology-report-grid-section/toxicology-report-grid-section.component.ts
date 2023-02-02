@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
-import {ToxSummary} from "../../../../model/record-models/tox.summary";
 import {MatTableDataSource} from "@angular/material/table";
 import {FhirResourceProviderService} from "../../../../service/fhir-resource-provider.service";
 import {MatSort} from "@angular/material/sort";
@@ -7,7 +6,7 @@ import {MatSort} from "@angular/material/sort";
 @Component({
   selector: 'app-toxicology-report-grid-section',
   templateUrl: './toxicology-report-grid-section.component.html',
-  styleUrls: ['../toxicology-report.component.css']
+  styleUrls: ['../toxicology-report.component.scss']
 })
 export class ToxicologyReportGridSectionComponent implements OnInit, AfterViewInit {
   @Input() data: any[];

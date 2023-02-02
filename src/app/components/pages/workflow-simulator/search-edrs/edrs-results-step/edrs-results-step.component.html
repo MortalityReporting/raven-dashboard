@@ -33,11 +33,11 @@
   </div>
 
   <mat-card style="margin-top: 1em">
-    <app-edrs-search-results
+    <app-edrs-search-results-grid
       [errorResponse]="errorResponse"
       [successResponse]="successResponse"
       (selectedCaseValueEmitter)="onEdrsRecordSelected($event)">
-    </app-edrs-search-results>
+    </app-edrs-search-results-grid>
   </mat-card>
 
   <mat-card style="margin-top: 1em">

@@ -7,12 +7,12 @@ import {UiStringConstants} from "../../../../../providers/ui-string-constants";
 import {UtilsService} from "../../../../../service/utils.service";
 
 @Component({
-  selector: 'app-edrs-results',
-  templateUrl: './edrs-results.component.html',
-  styleUrls: ['./edrs-results.component.css']
+  selector: 'app-edrs-results-step',
+  templateUrl: './edrs-results-step.component.html',
+  styleUrls: ['./edrs-results-step.component.scss']
 })
 
-export class EdrsResultsComponent implements OnInit {
+export class EdrsResultsStepComponent implements OnInit {
   @Input('parentStepper') parentStepper: MatStepper;
   decedentInfo: DecedentSimpleInfo;
 

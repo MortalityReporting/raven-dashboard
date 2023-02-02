@@ -41,9 +41,7 @@ export class ImportCaseService {
     }
 
     let data = null;
-    return this.http.post(this.importFileUrl,  content, {headers: headers}).pipe(map((result: any) => (
-      result as Object
-    )));
+    return this.http.post(this.importFileUrl,  content, {headers: headers});
   }
 
   getMockResponse(): Observable<any> {
@@ -51,7 +49,7 @@ export class ImportCaseService {
   }
 
   importResource(fhirResource): Observable<any> {
-    return this.http.post( environment.ravenFhirServer, fhirResource).pipe(map((result: any) => (
+    return this.http.post(environment.ravenFhirServer, fhirResource).pipe(map((result: any) => (
       result as Object
     )));
   }

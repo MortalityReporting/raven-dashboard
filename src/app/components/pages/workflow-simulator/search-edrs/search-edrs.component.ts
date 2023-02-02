@@ -8,7 +8,7 @@ import {UiStringConstants} from "../../../../providers/ui-string-constants";
 @Component({
   selector: 'app-search-edrs',
   templateUrl: './search-edrs.component.html',
-  styleUrls: ['./search-edrs.component.css'],
+  styleUrls: ['./search-edrs.component.scss'],
   encapsulation: ViewEncapsulation.None // we need this to disable the header for the stepper and use it as an indicator
 })
 export class SearchEdrsComponent implements OnInit {

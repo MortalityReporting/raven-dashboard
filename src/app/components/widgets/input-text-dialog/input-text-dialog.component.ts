@@ -6,7 +6,7 @@ import {JsonValidator} from "../../../reactive-form-validators/json-validator";
 @Component({
   selector: 'app-input-text-dialog',
   templateUrl: './input-text-dialog.component.html',
-  styleUrls: ['./input-text-dialog.component.css']
+  styleUrls: ['./input-text-dialog.component.scss']
 })
 export class InputTextDialogComponent implements OnInit {
 

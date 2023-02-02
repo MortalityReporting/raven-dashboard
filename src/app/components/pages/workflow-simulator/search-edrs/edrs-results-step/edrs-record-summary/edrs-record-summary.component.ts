@@ -1,10 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {UiStringConstants} from "../../../../../providers/ui-string-constants";
+import {UiStringConstants} from "../../../../../../providers/ui-string-constants";
 
 @Component({
   selector: 'app-edrs-record-summary',
   templateUrl: './edrs-record-summary.component.html',
-  styleUrls: ['./edrs-record-summary.component.css']
+  styleUrls: ['./edrs-record-summary.component.scss']
 })
 export class EdrsRecordSummaryComponent implements OnInit {
 

@@ -4,7 +4,7 @@ import {UiStringConstants} from "../../../../../providers/ui-string-constants";
 @Component({
   selector: 'app-decedent-basic-info',
   templateUrl: './decedent-basic-info.component.html',
-  styleUrls: ['./decedent-basic-info.component.css']
+  styleUrls: ['./decedent-basic-info.component.scss']
 })
 export class DecedentBasicInfoComponent implements OnInit {
 

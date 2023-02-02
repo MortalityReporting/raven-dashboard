@@ -1,20 +1,17 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {Obs_DeathDate, Obs_MannerOfDeath} from "../../../../../model/mdi/profile.list";
-import {TrackingNumberType} from "../../../../../model/tracking.number.type";
-import {FhirHelperService, PatientNameReturn} from "../../../../../service/fhir/fhir-helper.service";
+import {Obs_DeathDate, Obs_MannerOfDeath} from "../../../../../../model/mdi/profile.list";
+import {TrackingNumberType} from "../../../../../../model/tracking.number.type";
+import {FhirHelperService, PatientNameReturn} from "../../../../../../service/fhir/fhir-helper.service";
 import {MatTabGroup} from "@angular/material/tabs";
-import {DocumentHandlerService} from "../../../../../service/document-handler.service";
-import {Observable} from "rxjs";
-import {HttpParams} from "@angular/common/http";
-import {map} from "rxjs/operators";
+import {DocumentHandlerService} from "../../../../../../service/document-handler.service";
 
 @Component({
-  selector: 'app-edrs-search-results',
-  templateUrl: './edrs-search-results.component.html',
-  styleUrls: ['./edrs-search-results.component.css']
+  selector: 'app-edrs-search-results-grid',
+  templateUrl: './edrs-search-results-grid.component.html',
+  styleUrls: ['./edrs-search-results-grid.component.scss']
 })
-export class EdrsSearchResultsComponent implements OnInit, OnChanges {
+export class EdrsSearchResultsGridComponent implements OnInit, OnChanges {
 
   @Input() successResponse: any;
   @Input() errorResponse: any;
@@ -23,7 +20,6 @@ export class EdrsSearchResultsComponent implements OnInit, OnChanges {
 
   @ViewChild(MatTabGroup) resultsTabGroup: MatTabGroup;
 
-  //resultTableColumns = ['officialName', 'dateOfDeath', 'mannerOfDeath', 'mdiCaseNumber', 'edrsFileNumber'];
   resultTableColumns = ['officialName', 'gender', 'address', 'edrsFileNumber'];
   resultTableDataSource = new MatTableDataSource<any>();
   selectedCase: any;

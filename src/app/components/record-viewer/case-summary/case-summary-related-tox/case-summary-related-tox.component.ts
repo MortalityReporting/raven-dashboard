@@ -8,13 +8,15 @@ import {Router} from "@angular/router";
 @Component({
   selector: 'app-case-summary-related-tox',
   templateUrl: './case-summary-related-tox.component.html',
-  styleUrls: ['../case-summary.component.css']
+  styleUrls: ['../case-summary.component.scss']
 })
 export class CaseSummaryRelatedToxComponent implements OnInit, AfterViewInit {
   @Input() toxicologyRecordList: any[];
   @ViewChild(MatSort) sort: MatSort;
+
   dataSource: MatTableDataSource<any>;
   displayedColumns = ["date", "toxCaseNumber", "toxCaseSystem"];
+
   constructor(
     private router: Router,
     ) { }

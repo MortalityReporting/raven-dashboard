@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-import-case',
   templateUrl: './import-case.component.html',
-  styleUrls: ['./import-case.component.css']
+  styleUrls: ['./import-case.component.scss']
 })
 
 export class ImportCaseComponent implements OnInit {

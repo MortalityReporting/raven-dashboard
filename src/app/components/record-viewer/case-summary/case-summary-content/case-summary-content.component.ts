@@ -11,7 +11,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 @Component({
   selector: 'app-case-summary-content',
   templateUrl: './case-summary-content.component.html',
-  styleUrls: ['./case-summary-content.component.css'],
+  styleUrls: ['./case-summary-content.component.scss'],
 })
 export class CaseSummaryContentComponent implements OnInit {
   @Input() caseHeader$: Observable<CaseHeader>;

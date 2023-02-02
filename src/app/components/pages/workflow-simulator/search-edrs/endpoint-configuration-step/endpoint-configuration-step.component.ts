@@ -6,11 +6,11 @@ import {UiStringConstants} from "../../../../../providers/ui-string-constants";
 import {blueJay, environment} from "../../../../../../environments/environment";
 
 @Component({
-  selector: 'app-endpoint-configuration',
-  templateUrl: './endpoint-configuration.component.html',
-  styleUrls: ['./endpoint-configuration.component.css']
+  selector: 'app-endpoint-configuration-step',
+  templateUrl: './endpoint-configuration-step.component.html',
+  styleUrls: ['./endpoint-configuration-step.component.scss']
 })
-export class EndpointConfigurationComponent implements OnInit {
+export class EndpointConfigurationStepComponent implements OnInit {
   endpointTypeOptions: string[];
   authenticationOptions: string [];
 
