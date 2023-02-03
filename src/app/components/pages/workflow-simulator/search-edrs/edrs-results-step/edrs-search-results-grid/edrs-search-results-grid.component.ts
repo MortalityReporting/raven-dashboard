@@ -9,7 +9,7 @@ import {DocumentHandlerService} from "../../../../../../service/document-handler
 @Component({
   selector: 'app-edrs-search-results-grid',
   templateUrl: './edrs-search-results-grid.component.html',
-  styleUrls: ['./edrs-search-results-grid.component.css']
+  styleUrls: ['./edrs-search-results-grid.component.scss']
 })
 export class EdrsSearchResultsGridComponent implements OnInit, OnChanges {
 

@@ -12,7 +12,7 @@ import {blueJay} from "../../../../../../../environments/environment";
 @Component({
   selector: 'app-search-parameters',
   templateUrl: './search-parameters.component.html',
-  styleUrls: ['./search-parameters.component.css']
+  styleUrls: ['./search-parameters.component.scss']
 })
 export class SearchParametersComponent implements OnInit {
 

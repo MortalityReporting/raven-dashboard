@@ -5,7 +5,7 @@ import {UtilsService} from "../../../../service/utils.service";
 @Component({
   selector: 'case-comparison-dialog',
   templateUrl: 'case-comparison-dialog.component.html',
-  styleUrls: ['./case-comparison-dialog.component.css'],
+  styleUrls: ['./case-comparison-dialog.component.scss'],
 })
 export class CaseComparisonDialogComponent {
   text: string = undefined;

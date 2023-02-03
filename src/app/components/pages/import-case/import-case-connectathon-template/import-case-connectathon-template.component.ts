@@ -8,7 +8,7 @@ import {MatDialog} from "@angular/material/dialog";
 @Component({
   selector: 'app-import-case-connectathon-template',
   templateUrl: './import-case-connectathon-template.component.html',
-  styleUrls: ['./import-case-connectathon-template.component.css']
+  styleUrls: ['./import-case-connectathon-template.component.scss']
 })
 export class ImportCaseConnectathonTemplateComponent implements OnInit {
 

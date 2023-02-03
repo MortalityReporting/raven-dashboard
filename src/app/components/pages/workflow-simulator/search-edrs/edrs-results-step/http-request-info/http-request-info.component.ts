@@ -7,7 +7,7 @@ export const POST = `POST`;
 @Component({
   selector: 'app-http-request-info',
   templateUrl: './http-request-info.component.html',
-  styleUrls: ['./http-request-info.component.css']
+  styleUrls: ['./http-request-info.component.scss']
 })
 
 export class HttpRequestInfoComponent implements OnInit {

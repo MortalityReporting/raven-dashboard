@@ -20,7 +20,7 @@ export interface ResponseItem {
 @Component({
   selector: 'app-validator-core',
   templateUrl: './validator-core.component.html',
-  styleUrls: ['./validator-core.component.css'],
+  styleUrls: ['./validator-core.component.scss'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0'})),

@@ -6,7 +6,7 @@ import {ToxSummary} from "../../../../model/record-models/tox.summary";
 @Component({
   selector: 'app-toxicology-report-content',
   templateUrl: './toxicology-report-content.component.html',
-  styleUrls: ['../toxicology-report.component.css']
+  styleUrls: ['../toxicology-report.component.scss']
 })
 export class ToxicologyReportContentComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;

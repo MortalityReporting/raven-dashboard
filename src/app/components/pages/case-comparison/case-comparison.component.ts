@@ -10,7 +10,7 @@ import {CaseComparisonContentComponent} from "./case-comparison-content/case-com
 @Component({
   selector: 'app-case-comparison',
   templateUrl: './case-comparison.component.html',
-  styleUrls: ['./case-comparison.component.css']
+  styleUrls: ['./case-comparison.component.scss']
 })
 export class CaseComparisonComponent implements OnInit, OnDestroy {
   @ViewChild(CaseComparisonContentComponent) caseComparisonContentComponent: CaseComparisonContentComponent;
