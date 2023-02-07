@@ -1,9 +1,9 @@
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {FormBuilder} from "@angular/forms";
-import {SearchEdrsService} from "../../../../service/search-edrs.service";
+import {SearchEdrsService} from "../../service/search-edrs.service";
 import {MatStepper} from "@angular/material/stepper";
 import {MatTabGroup} from "@angular/material/tabs";
-import {UiStringConstants} from "../../../../providers/ui-string-constants";
+import {UiStringConstants} from "../../../providers/ui-string-constants";
 
 @Component({
   selector: 'app-search-edrs',

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {UiStringConstants} from "../../../../../providers/ui-string-constants";
-import {SearchEdrsService} from "../../../../../service/search-edrs.service";
+import {UiStringConstants} from "../../../../providers/ui-string-constants";
+import {SearchEdrsService} from "../../../service/search-edrs.service";
 import {MatStepper} from "@angular/material/stepper";
 
 @Component({

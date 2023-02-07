@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {DecedentSimpleInfo} from "../../../../../model/decedent-simple-info";
-import {SearchEdrsService} from "../../../../../service/search-edrs.service";
+import {DecedentSimpleInfo} from "../../../../model/decedent-simple-info";
+import {SearchEdrsService} from "../../../service/search-edrs.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {UiStringConstants} from "../../../../../providers/ui-string-constants";
-import {blueJay, environment} from "../../../../../../environments/environment";
+import {UiStringConstants} from "../../../../providers/ui-string-constants";
+import {blueJay, environment} from "../../../../../environments/environment";
 
 @Component({
   selector: 'app-endpoint-configuration-step',

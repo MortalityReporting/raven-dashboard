@@ -6,8 +6,8 @@ import {CaseComparisonComponent} from "./components/pages/case-comparison/case-c
 import {ImportCaseComponent} from "./components/pages/import-case/import-case.component";
 import {FhirValidatorComponent} from "./fhir-validator/components/fhir-validator/fhir-validator.component";
 import {CasesComponent} from "./components/record-viewer/cases/cases.component";
-import {WorkflowSimulatorComponent} from "./components/pages/workflow-simulator/workflow-simulator.component";
-import {SearchEdrsComponent} from "./components/pages/workflow-simulator/search-edrs/search-edrs.component";
+import {WorkflowSimulatorComponent} from "./workflow-simulator/components/workflow-simulator.component";
+import {SearchEdrsComponent} from "./workflow-simulator/components/search-edrs/search-edrs.component";
 
 const routes: Routes = [
   {

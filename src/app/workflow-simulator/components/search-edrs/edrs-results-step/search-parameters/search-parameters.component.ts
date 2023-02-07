@@ -1,13 +1,13 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
-import {SearchEdrsService} from "../../../../../../service/search-edrs.service";
-import {UtilsService} from "../../../../../../service/utils.service";
-import {Obs_DeathDate, Obs_MannerOfDeath} from "../../../../../../model/mdi/profile.list";
-import {TrackingNumberType} from "../../../../../../model/tracking.number.type";
-import {FhirHelperService, PatientNameReturn} from "../../../../../../service/fhir/fhir-helper.service";
+import {SearchEdrsService} from "../../../../service/search-edrs.service";
+import {UtilsService} from "../../../../../service/utils.service";
+import {Obs_DeathDate, Obs_MannerOfDeath} from "../../../../../model/mdi/profile.list";
+import {TrackingNumberType} from "../../../../../model/tracking.number.type";
+import {FhirHelperService, PatientNameReturn} from "../../../../../service/fhir/fhir-helper.service";
 import {MatTableDataSource} from "@angular/material/table";
-import {DecedentSimpleInfo} from "../../../../../../model/decedent-simple-info";
-import {blueJay} from "../../../../../../../environments/environment";
+import {DecedentSimpleInfo} from "../../../../../model/decedent-simple-info";
+import {blueJay} from "../../../../../../environments/environment";
 
 @Component({
   selector: 'app-search-parameters',

@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {Obs_DeathDate, Obs_MannerOfDeath} from "../../../../../../model/mdi/profile.list";
-import {TrackingNumberType} from "../../../../../../model/tracking.number.type";
-import {FhirHelperService, PatientNameReturn} from "../../../../../../service/fhir/fhir-helper.service";
+import {Obs_DeathDate, Obs_MannerOfDeath} from "../../../../../model/mdi/profile.list";
+import {TrackingNumberType} from "../../../../../model/tracking.number.type";
+import {FhirHelperService, PatientNameReturn} from "../../../../../service/fhir/fhir-helper.service";
 import {MatTabGroup} from "@angular/material/tabs";
-import {DocumentHandlerService} from "../../../../../../service/document-handler.service";
+import {DocumentHandlerService} from "../../../../../service/document-handler.service";
 
 @Component({
   selector: 'app-edrs-search-results-grid',
