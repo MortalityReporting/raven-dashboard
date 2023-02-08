@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {LandingComponent} from "./components/landing/landing.component";
-import {CaseContainerComponent} from "./components/record-viewer/case-container/case-container.component";
+import {CaseContainerComponent} from "./record-viewer/components/case-container/case-container.component";
 import {CaseComparisonComponent} from "./components/pages/case-comparison/case-comparison.component";
 import {ImportCaseComponent} from "./components/pages/import-case/import-case.component";
 import {FhirValidatorComponent} from "./fhir-validator/components/fhir-validator/fhir-validator.component";
-import {CasesComponent} from "./components/record-viewer/cases/cases.component";
+import {SearchRecordsComponent} from "./record-viewer/components/search-records/search-records.component";
 import {WorkflowSimulatorComponent} from "./components/pages/workflow-simulator/workflow-simulator.component";
 import {SearchEdrsComponent} from "./components/pages/workflow-simulator/search-edrs/search-edrs.component";
 
@@ -16,7 +16,7 @@ const routes: Routes = [
   },
   {
     path: 'records',
-    component: CasesComponent
+    component: SearchRecordsComponent
   },
   {
     path: 'comparison/:id',

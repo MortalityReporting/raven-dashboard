@@ -8,7 +8,7 @@ import {JsonValidator} from "../../../../../../reactive-form-validators/json-val
 import {ResourceTypeValidator} from "../../../../../../reactive-form-validators/resource-type-validator";
 import {DecedentSimpleInfo} from "../../../../../../model/decedent-simple-info";
 import {UiStringConstants} from "../../../../../../providers/ui-string-constants";
-import {FhirHelperService, PatientNameReturn} from "../../../../../../service/fhir/fhir-helper.service";
+import {FhirHelperService, PatientNameReturn} from "../../../../../../fhir-util/services/fhir-helper.service";
 
 @Component({
   selector: 'app-import-mdi-to-edrs-document',

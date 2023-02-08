@@ -1,0 +1,123 @@
+<mat-toolbar class="tool-bars">
+  <mat-toolbar-row class="primary-lighter" appSetFhirExplorer [title]="'document'">
+    <span class="viewer-header-title">MDI to EDRS Viewer</span>
+    <span class="viewer-header-label">Subject Name:</span>
+    <input type="text" value="{{ (caseHeader$ | async)?.fullName}}" readonly>
+    <span class="content-spacer"> </span>
+    <span class="viewer-header-label">Date/Time of Death:</span>
+    <input type="text" value="{{ (caseHeader$ | async)?.deathDate}}" readonly>
+    <input type="text" value="{{ (caseHeader$ | async)?.deathTime}}" readonly>
+    <span class="content-spacer"> </span>
+    <span class="viewer-header-label">MDI Case Number/System:</span>
+    <input type="text" value="{{ (caseHeader$ | async)?.mdiCaseNumber?.value}}" readonly>
+    <input type="text" value="{{ (caseHeader$ | async)?.mdiCaseNumber?.system}}" readonly>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+
+  <mat-tab-group>
+    <mat-tab label="Document Summary View">
+      <ng-template matTabLabel>
+        <mat-icon svgIcon="clinical_notes"></mat-icon>&nbsp;Document Summary View
+      </ng-template>
+      <ng-template matTabContent>
+        <mat-sidenav-container [autosize]="autosize">
+          <mat-sidenav mode="side" opened>
+            <mat-nav-list aria-label="MDI to EDRS Document Navigation">
+
+              <mat-list-item (click)="onItemClick('caseAdminInfo');">
+                <mat-icon [matTooltip]="!sidenavExpanded ? 'Case Administration Information' : ''" matTooltipPosition="right"
+                          aria-hidden="true">
+                  info
+                </mat-icon>
+                <span *ngIf="sidenavExpanded">&nbsp;Case Administration Info</span>
+              </mat-list-item>
+
+              <mat-list-item (click)="onItemClick('demographics');">
+                <mat-icon [matTooltip]="!sidenavExpanded ? 'Demographics' : ''" matTooltipPosition="right" aria-hidden="true">
+                  person
+                </mat-icon>
+                <span *ngIf="sidenavExpanded">&nbsp;Demographics</span>
+              </mat-list-item>
+
+              <mat-list-item (click)="onItemClick('circumstances');">
+                <mat-icon [matTooltip]="!sidenavExpanded ? 'Circumstances' : ''" matTooltipPosition="right" aria-hidden="true">
+                  travel_explore
+                </mat-icon>
+                <span *ngIf="sidenavExpanded">&nbsp;Circumstances</span>
+              </mat-list-item>
+
+              <mat-list-item (click)="onItemClick('jurisdiction');">
+                <mat-icon [matTooltip]="!sidenavExpanded ? 'Jurisdiction' : ''" matTooltipPosition="right" aria-hidden="true">
+                  gavel
+                </mat-icon>
+                <span *ngIf="sidenavExpanded">&nbsp;Jurisdiction</span>
+              </mat-list-item>
+
+              <mat-list-item (click)="onItemClick('causeAndManner');">
+                <mat-icon [matTooltip]="!sidenavExpanded ? 'Cause and Manner of Death' : ''" matTooltipPosition="right" aria-hidden="true">
+                  question_mark
+                </mat-icon>
+                <span *ngIf="sidenavExpanded">&nbsp;Cause and Manner of Death</span>
+              </mat-list-item>
+
+              <mat-list-item (click)="onItemClick('medicalHistory');">
+                <mat-icon [matTooltip]="!sidenavExpanded ? 'Relevant Medical History' : ''" matTooltipPosition="right" aria-hidden="true">
+                  medical_services
+                </mat-icon>
+                <span *ngIf="sidenavExpanded">&nbsp;Relevant Medical History</span>
+              </mat-list-item>
+
+              <mat-list-item (click)="onItemClick('examAndAutopsy');">
+                <mat-icon [matTooltip]="!sidenavExpanded ? 'Exam and Autopsy Notes' : ''" matTooltipPosition="right" aria-hidden="true">
+                  description
+                </mat-icon>
+                <span *ngIf="sidenavExpanded">&nbsp;Exam and Autopsy Notes</span>
+              </mat-list-item>
+
+              <mat-list-item (click)="onItemClick('narratives');">
+                <mat-icon [matTooltip]="!sidenavExpanded ? 'Narratives' : ''" matTooltipPosition="right" aria-hidden="true">
+                  speaker_notes
+                </mat-icon>
+                <span *ngIf="sidenavExpanded">&nbsp;Narratives</span>
+              </mat-list-item>
+
+              <hr/>
+
+              <mat-list-item *ngIf="sidenavExpanded" (click)="onSidenavResize(false);" >
+                <mat-icon aria-label="Collapse Side Menu">
+                  chevron_left
+                </mat-icon>&nbsp;
+                Collapse Menu
+              </mat-list-item>
+
+              <mat-list-item *ngIf="!sidenavExpanded" (click)="onSidenavResize(true);">
+                <mat-icon aria-label="Expand Side Menu" matTooltip="Expand Side Menu" matTooltipPosition="right">
+                  chevron_right
+                </mat-icon>
+              </mat-list-item>
+
+            </mat-nav-list>
+          </mat-sidenav>
+          <mat-sidenav-content>
+            <record-viewer-case-summary-content
+              [caseHeader$]="caseHeader$"
+              [caseSummary$]="caseSummary$"
+              [compositionId]="compositionId"
+            ></record-viewer-case-summary-content>
+          </mat-sidenav-content>
+        </mat-sidenav-container>
+
+
+  </ng-template>
+  </mat-tab>
+  <mat-tab label="Related Toxicology Reports">
+    <ng-template matTabLabel>
+      <mat-icon svgIcon="lab_panel"></mat-icon>&nbsp;Related Toxicology Reports
+    </ng-template>
+    <ng-template matTabContent>
+      <record-viewer-case-summary-related-tox [toxicologyRecordList]="toxicologyRecordList"></record-viewer-case-summary-related-tox>
+    </ng-template>
+  </mat-tab>
+  </mat-tab-group>
+

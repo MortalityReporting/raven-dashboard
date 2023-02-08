@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {FhirExplorerDrawerService} from "../../service/fhir-explorer-drawer.service";
+import {FhirExplorerDrawerService} from "../../fhir-explorer/services/fhir-explorer-drawer.service";
 import { environment } from "../../../environments/environment";
 
 @Component({

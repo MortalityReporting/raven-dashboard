@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatAccordion } from "@angular/material/expansion";
-import { DocumentHandlerService } from "../../../../service/document-handler.service";
+import { DocumentHandlerService } from "../../../../record-viewer/services/document-handler.service";
 import { USCorePatientDiff } from './models/us-core-patient.diff';
 import { CompositionMdiToEdrsDiff } from './models/composition-mdi-to-edrs.diff';
 import { USCoreLocationDiff } from './models/us-core-location.diff';
@@ -15,7 +15,7 @@ import { ObservationAutopsyPerformedDiff } from './models/observation-autopsy-pe
 import { ObservationHowDeathInjuryOccurredDiff } from './models/observation-how-death-injury-occurred.diff';
 import { LocationDeathDiff } from './models/location-death.diff';
 import { LocationInjuryDiff } from './models/location-injury.diff';
-import { DecedentService } from "../../../../service/decedent.service";
+import { DecedentService } from "../../../../record-viewer/services/decedent.service";
 import { CaseComparisonDialogComponent } from '../case-comparison-dialog/case-comparison-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { UtilsService } from "../../../../service/utils.service";
@@ -37,8 +37,8 @@ import {
   USCorePatient,
   USCorePractitioner
 } from "../../../../model/mdi/profile.list"
-import {FhirHelperService} from "../../../../service/fhir/fhir-helper.service";
-import {BundleHelperService} from "../../../../service/fhir/bundle-helper.service";
+import {FhirHelperService} from "../../../../fhir-util/services/fhir-helper.service";
+import {BundleHelperService} from "../../../../fhir-util/services/bundle-helper.service";
 
 @Component({
   selector: 'app-case-comparison-content',

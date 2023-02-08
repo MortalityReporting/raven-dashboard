@@ -12,9 +12,6 @@ import {MatDialogModule} from '@angular/material/dialog'
 import {MatIconModule} from "@angular/material/icon";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatToolbarModule} from "@angular/material/toolbar";
-import {
-  DecedentRecordsGridComponent
-} from './components/record-viewer/cases/decedent-records-grid/decedent-records-grid.component';
 import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
@@ -26,8 +23,6 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {FhirValidatorModule} from "./fhir-validator/fhir-validator.module";
 import {FhirAuthInterceptor} from "./interceptors/fhir-auth.interceptor";
 import {MatGridListModule} from '@angular/material/grid-list';
-import {CaseSummaryComponent} from './components/record-viewer/case-summary/case-summary.component';
-import {CaseComparisonComponent} from './components/pages/case-comparison/case-comparison.component';
 import {
   CaseComparisonContentComponent
 } from './components/pages/case-comparison/case-comparison-content/case-comparison-content.component';
@@ -35,19 +30,11 @@ import {
   CaseComparisonContentFieldComponent
 } from './components/pages/case-comparison/case-comparison-content-field/case-comparison-content-field.component';
 import {LandingComponent} from './components/landing/landing.component';
-import {CaseContainerComponent} from './components/record-viewer/case-container/case-container.component';
-import {FhirExplorerDrawerService} from "./service/fhir-explorer-drawer.service";
+import {FhirExplorerDrawerService} from "./fhir-explorer/services/fhir-explorer-drawer.service";
 import {MatExpansionModule} from '@angular/material/expansion';
-import {FhirExplorerComponent} from './components/fhir-explorer/fhir-explorer.component';
+import {FhirExplorerComponent} from './fhir-explorer/components/fhir-explorer/fhir-explorer.component';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
-import {
-  CaseSummaryContentComponent
-} from './components/record-viewer/case-summary/case-summary-content/case-summary-content.component';
-import {SetFhirExplorerDirective} from './directives/set-fhir-explorer.directive';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import {
-  CaseSummaryContentFieldComponent
-} from './components/record-viewer/case-summary/case-summary-content-field/case-summary-content-field.component';
 import {MatListModule} from "@angular/material/list";
 import {ImportCaseComponent} from './components/pages/import-case/import-case.component';
 import {
@@ -66,15 +53,7 @@ import {ModalComponent} from './components/widgets/modal/modal.component';
 import {
   CaseComparisonDialogComponent
 } from './components/pages/case-comparison/case-comparison-dialog/case-comparison-dialog.component';
-import {CasesComponent} from "./components/record-viewer/cases/cases.component";
-import { ToxicologyGridComponent } from './components/record-viewer/cases/toxicology-grid/toxicology-grid.component';
-import { ToxicologyReportComponent } from './components/record-viewer/toxicology-report/toxicology-report.component';
-import { ToxicologyReportContentComponent } from './components/record-viewer/toxicology-report/toxicology-report-content/toxicology-report-content.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
-import { ToxicologyReportMdiCaseComponent } from './components/record-viewer/toxicology-report/toxicology-report-mdi-case/toxicology-report-mdi-case.component';
-import {
-    ToxicologyReportGridSectionComponent
-} from "./components/record-viewer/toxicology-report/toxicology-report-grid-section/toxicology-report-grid-section.component";
 import {MatStepperModule} from "@angular/material/stepper";
 import {UiStringConstants} from "./providers/ui-string-constants";
 import { SearchParametersComponent } from './components/pages/workflow-simulator/search-edrs/edrs-results-step/search-parameters/search-parameters.component';
@@ -100,36 +79,26 @@ import {
 } from "./components/pages/workflow-simulator/search-edrs/mdi-to-edrs-document-select-step/mdi-to-edrs-grid/mdi-to-edrs-grid.component";
 import {SearchEdrsComponent} from "./components/pages/workflow-simulator/search-edrs/search-edrs.component";
 import {WorkflowSimulatorComponent} from './components/pages/workflow-simulator/workflow-simulator.component';
-import { CaseSummaryRelatedToxComponent } from './components/record-viewer/case-summary/case-summary-related-tox/case-summary-related-tox.component';
 import { MdiToEdrsDocumentSelectStepComponent } from './components/pages/workflow-simulator/search-edrs/mdi-to-edrs-document-select-step/mdi-to-edrs-document-select-step.component';
+import { RecordViewerModule } from "./record-viewer/record-viewer.module";
+import { FhirUtilModule } from "./fhir-util/fhir-util.module";
+import {environment} from "../environments/environment";
+import {FhirExplorerModule} from "./fhir-explorer/fhir-explorer.module";
+import {CaseComparisonComponent} from "./components/pages/case-comparison/case-comparison.component";
 
 @NgModule({
     declarations: [
         AppComponent,
         HeaderComponent,
-        DecedentRecordsGridComponent,
-        CaseSummaryComponent,
-        CaseComparisonComponent,
         LandingComponent,
-        CaseContainerComponent,
-        FhirExplorerComponent,
-        CaseSummaryContentComponent,
         CaseComparisonContentComponent,
         CaseComparisonContentFieldComponent,
-        SetFhirExplorerDirective,
-        CaseSummaryContentFieldComponent,
         ImportCaseComponent,
         ImportCaseFhirRecordComponent,
         ImportCaseConnectathonTemplateComponent,
         ConformationDialogComponent,
         MappingsComponent,
         ModalComponent,
-        CasesComponent,
-        ToxicologyGridComponent,
-        ToxicologyReportComponent,
-        ToxicologyReportContentComponent,
-        ToxicologyReportMdiCaseComponent,
-        ToxicologyReportGridSectionComponent,
         SearchEdrsComponent,
         MdiToEdrsGridComponent,
         InputTextDialogComponent,
@@ -143,8 +112,8 @@ import { MdiToEdrsDocumentSelectStepComponent } from './components/pages/workflo
         HttpRequestInfoComponent,
         HttpResponseInfoComponent,
         WorkflowSimulatorComponent,
-        CaseSummaryRelatedToxComponent,
-        MdiToEdrsDocumentSelectStepComponent
+        MdiToEdrsDocumentSelectStepComponent,
+        CaseComparisonComponent
     ],
     imports: [
         BrowserModule,
@@ -179,7 +148,10 @@ import { MdiToEdrsDocumentSelectStepComponent } from './components/pages/workflo
         ClipboardModule,
         MatDialogModule,
         MatStepperModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        RecordViewerModule.forRoot(environment),
+        FhirUtilModule,
+        FhirExplorerModule
     ],
 
   providers: [
