@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Component, inject, OnInit, ViewChild} from '@angular/core';
 import { MatAccordion } from "@angular/material/expansion";
-import { DocumentHandlerService } from "../../../../record-viewer/services/document-handler.service";
+import { DocumentHandlerService } from "../../../../modules/record-viewer/services/document-handler.service";
 import { USCorePatientDiff } from './models/us-core-patient.diff';
 import { CompositionMdiToEdrsDiff } from './models/composition-mdi-to-edrs.diff';
 import { USCoreLocationDiff } from './models/us-core-location.diff';
@@ -15,30 +15,14 @@ import { ObservationAutopsyPerformedDiff } from './models/observation-autopsy-pe
 import { ObservationHowDeathInjuryOccurredDiff } from './models/observation-how-death-injury-occurred.diff';
 import { LocationDeathDiff } from './models/location-death.diff';
 import { LocationInjuryDiff } from './models/location-injury.diff';
-import { DecedentService } from "../../../../record-viewer/services/decedent.service";
+import { DecedentService } from "../../../../modules/record-viewer/services/decedent.service";
 import { CaseComparisonDialogComponent } from '../case-comparison-dialog/case-comparison-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { UtilsService } from "../../../../service/utils.service";
 import { ActivatedRoute } from "@angular/router";
-
-import {
-  Comp_MDItoEDRS,
-  Loc_death,
-  Loc_injury,
-  Obs_AutopsyPerformed,
-  Obs_CauseOfDeathPart1,
-  Obs_CauseOfDeathPart2,
-  Obs_DeathDate,
-  Obs_DecedentPregnancy,
-  Obs_HowDeathInjuryOccurred,
-  Obs_MannerOfDeath,
-  Obs_TobaccoUseContributedToDeath,
-  USCoreLocation,
-  USCorePatient,
-  USCorePractitioner
-} from "../../../../model/mdi/profile.list"
-import {FhirHelperService} from "../../../../fhir-util/services/fhir-helper.service";
-import {BundleHelperService} from "../../../../fhir-util/services/bundle-helper.service";
+import {FhirHelperService} from "../../../../modules/fhir-util/services/fhir-helper.service";
+import {BundleHelperService} from "../../../../modules/fhir-util/services/bundle-helper.service";
+import {ProfileProviderService} from "../../../../modules/fhir-util/services/profile-provider.service";
 
 @Component({
   selector: 'app-case-comparison-content',
@@ -100,6 +84,7 @@ export class CaseComparisonContentComponent implements OnInit {
   howDeathOccurredStatus = 'invalid';
 
   constructor(
+    private profileProvider: ProfileProviderService,
     private dialog: MatDialog,
     private decedentService: DecedentService,
     private documentHandler: DocumentHandlerService,
@@ -232,29 +217,29 @@ export class CaseComparisonContentComponent implements OnInit {
   dodiff() {
     try {
       this.mdiToEdrs = new CompositionMdiToEdrsDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, Comp_MDItoEDRS ),
-        this.bundleHelper.findResourceByProfileName( this.expectedDocument, Comp_MDItoEDRS ));
+        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Comp_MDItoEDRS ),
+        this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Comp_MDItoEDRS ));
 
       this.location = new USCoreLocationDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, USCoreLocation ),
-        this.bundleHelper.findResourceByProfileName( this.expectedDocument, USCoreLocation ));
+        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().USCoreLocation ),
+        this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().USCoreLocation ));
 
       this.tobaccoUse = new ObservationTobaccoUseDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, Obs_TobaccoUseContributedToDeath ),
-        this.bundleHelper.findResourceByProfileName( this.expectedDocument, Obs_TobaccoUseContributedToDeath ));
+        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Obs_TobaccoUseContributedToDeath ),
+        this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Obs_TobaccoUseContributedToDeath ));
 
       this.pregnancy = new ObservationDecedentPregnancyDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, Obs_DecedentPregnancy ),
-        this.bundleHelper.findResourceByProfileName( this.expectedDocument, Obs_DecedentPregnancy ));
+        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Obs_DecedentPregnancy ),
+        this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Obs_DecedentPregnancy ));
 
       this.deathDate = new ObservationDeathDateDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, Obs_DeathDate ),
-        this.bundleHelper.findResourceByProfileName( this.expectedDocument, Obs_DeathDate ),
+        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Obs_DeathDate ),
+        this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Obs_DeathDate ),
         this.fhirHelper);
 
       this.causeOfDeath1List = [];
-      let actualCauseOfDeath1List = this.bundleHelper.findResourcesByProfileName( this.actualDocument, Obs_CauseOfDeathPart1 );
-      let expectedCauseOfDeath1List = this.bundleHelper.findResourcesByProfileName( this.expectedDocument, Obs_CauseOfDeathPart1 );
+      let actualCauseOfDeath1List = this.bundleHelper.findResourcesByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Obs_CauseOfDeathPart1 );
+      let expectedCauseOfDeath1List = this.bundleHelper.findResourcesByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Obs_CauseOfDeathPart1 );
 
       this.causeAndMannerStatus = 'valid';
 
@@ -279,36 +264,36 @@ export class CaseComparisonContentComponent implements OnInit {
       }
 
       this.causeOfDeath2 = new ObservationCauseOfDeathPart2Diff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, Obs_CauseOfDeathPart2 ),
-        this.bundleHelper.findResourceByProfileName( this.expectedDocument, Obs_CauseOfDeathPart2 ));
+        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Obs_CauseOfDeathPart2 ),
+        this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Obs_CauseOfDeathPart2 ));
 
       this.mannerOfDeath = new ObservationMannerOfDeathDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, Obs_MannerOfDeath ),
-        this.bundleHelper.findResourceByProfileName( this.expectedDocument, Obs_MannerOfDeath ));
+        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Obs_MannerOfDeath ),
+        this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Obs_MannerOfDeath ));
 
       this.locationDeath = new LocationDeathDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, Loc_death ),
-        this.bundleHelper.findResourceByProfileName( this.expectedDocument, Loc_death ));
+        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Loc_death ),
+        this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Loc_death ));
 
       this.locationInjury = new LocationInjuryDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, Loc_injury ),
-        this.bundleHelper.findResourceByProfileName( this.expectedDocument, Loc_injury ));
+        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Loc_injury ),
+        this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Loc_injury ));
 
       this.patient = new USCorePatientDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, USCorePatient ),
-        this.bundleHelper.findResourceByProfileName( this.expectedDocument, USCorePatient ));
+        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().USCorePatient ),
+        this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().USCorePatient ));
 
       this.practitioner = new USCorePractitionerDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, USCorePractitioner ),
-        this.bundleHelper.findResourceByProfileName( this.expectedDocument, USCorePractitioner ));
+        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().USCorePractitioner ),
+        this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().USCorePractitioner ));
 
       this.autopsyPerformed = new ObservationAutopsyPerformedDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, Obs_AutopsyPerformed ),
-        this.bundleHelper.findResourceByProfileName( this.expectedDocument, Obs_AutopsyPerformed ));
+        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Obs_AutopsyPerformed ),
+        this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Obs_AutopsyPerformed ));
 
       this.howDeathOccurred = new ObservationHowDeathInjuryOccurredDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, Obs_HowDeathInjuryOccurred ),
-        this.bundleHelper.findResourceByProfileName( this.expectedDocument, Obs_HowDeathInjuryOccurred ));
+        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Obs_HowDeathInjuryOccurred ),
+        this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Obs_HowDeathInjuryOccurred ));
 
       this.caseAdminInfoStatus = (
         this.mdiToEdrs.extension.style === 'valid' &&

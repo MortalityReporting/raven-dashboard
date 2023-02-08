@@ -1,8 +1,8 @@
 import * as Diff from 'diff';
 import {DiffType} from '../diff-type';
 import {ObservationDiff} from './observation.diff';
-import { DocumentHandlerService } from "../../../../../record-viewer/services/document-handler.service";
-import {FhirHelperService} from "../../../../../fhir-util/services/fhir-helper.service";
+import { DocumentHandlerService } from "../../../../../modules/record-viewer/services/document-handler.service";
+import {FhirHelperService} from "../../../../../modules/fhir-util/services/fhir-helper.service";
 
 export class ObservationCauseOfDeathPart1Diff extends ObservationDiff {
     performer: DiffType;

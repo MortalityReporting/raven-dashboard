@@ -20,7 +20,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatCardModule} from "@angular/material/card";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
-import {FhirValidatorModule} from "./fhir-validator/fhir-validator.module";
+import {FhirValidatorModule} from "./modules/fhir-validator/fhir-validator.module";
 import {FhirAuthInterceptor} from "./interceptors/fhir-auth.interceptor";
 import {MatGridListModule} from '@angular/material/grid-list';
 import {
@@ -30,9 +30,8 @@ import {
   CaseComparisonContentFieldComponent
 } from './components/pages/case-comparison/case-comparison-content-field/case-comparison-content-field.component';
 import {LandingComponent} from './components/landing/landing.component';
-import {FhirExplorerDrawerService} from "./fhir-explorer/services/fhir-explorer-drawer.service";
+import {FhirExplorerDrawerService} from "./modules/fhir-explorer/services/fhir-explorer-drawer.service";
 import {MatExpansionModule} from '@angular/material/expansion';
-import {FhirExplorerComponent} from './fhir-explorer/components/fhir-explorer/fhir-explorer.component';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatListModule} from "@angular/material/list";
@@ -80,10 +79,10 @@ import {
 import {SearchEdrsComponent} from "./components/pages/workflow-simulator/search-edrs/search-edrs.component";
 import {WorkflowSimulatorComponent} from './components/pages/workflow-simulator/workflow-simulator.component';
 import { MdiToEdrsDocumentSelectStepComponent } from './components/pages/workflow-simulator/search-edrs/mdi-to-edrs-document-select-step/mdi-to-edrs-document-select-step.component';
-import { RecordViewerModule } from "./record-viewer/record-viewer.module";
-import { FhirUtilModule } from "./fhir-util/fhir-util.module";
+import { RecordViewerModule } from "./modules/record-viewer/record-viewer.module";
+import { FhirUtilModule } from "./modules/fhir-util/fhir-util.module";
 import {environment} from "../environments/environment";
-import {FhirExplorerModule} from "./fhir-explorer/fhir-explorer.module";
+import {FhirExplorerModule} from "./modules/fhir-explorer/fhir-explorer.module";
 import {CaseComparisonComponent} from "./components/pages/case-comparison/case-comparison.component";
 
 @NgModule({

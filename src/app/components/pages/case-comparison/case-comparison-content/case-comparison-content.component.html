@@ -61,42 +61,42 @@
       </app-case-comparison-content-field>
 
       <app-case-comparison-content-field
-        [state]="practitioner.name.style"
+        [state]="practitioner?.name.style"
         [title]="'Chief ME/C Name'"
         [resource]="'US Core Practitioner'"
-        [fhirPath]="practitioner.expected?.resourceType + '.name'"
-        [expected]="practitioner.name.expected"
-        [difference]="practitioner.name.difference"
+        [fhirPath]="practitioner?.expected?.resourceType + '.name'"
+        [expected]="practitioner?.name?.expected"
+        [difference]="practitioner?.name?.difference"
         [expanded]="isAccordionExpanded"
       >
       </app-case-comparison-content-field>
 
       <app-case-comparison-content-field
-        [state]="practitioner.identifier.style"
+        [state]="practitioner?.identifier.style"
         [title]="'Chief ME/C License'"
         [resource]="'US Core Practitioner'"
-        [fhirPath]="practitioner.expected?.resourceType + '.identifier'"
-        [expected]="practitioner.identifier.expected"
-        [difference]="practitioner.identifier.difference"
+        [fhirPath]="practitioner?.expected?.resourceType + '.identifier'"
+        [expected]="practitioner?.identifier.expected"
+        [difference]="practitioner?.identifier.difference"
         [expanded]="isAccordionExpanded">
       </app-case-comparison-content-field>
 
       <app-case-comparison-content-field
-        [state]="practitioner.telecom.style"
+        [state]="practitioner?.telecom.style"
         [title]="'Chief ME/C Telecom'"
         [resource]="'US Core Practitioner'"
-        [fhirPath]="practitioner.expected?.resourceType + '.telecom'"
-        [expected]="practitioner.telecom.expected"
-        [difference]="practitioner.telecom.difference"
+        [fhirPath]="practitioner?.expected?.resourceType + '.telecom'"
+        [expected]="practitioner?.telecom.expected"
+        [difference]="practitioner?.telecom.difference"
         [expanded]="isAccordionExpanded">
       </app-case-comparison-content-field>
 
       <app-case-comparison-content-field
-        [state]="practitioner.address.style"
+        [state]="practitioner?.address.style"
         [title]="'Chief ME/C Address'" [resource]="'US Core Practitioner'"
-        [fhirPath]="practitioner.expected?.resourceType+ '.address'"
-        [expected]="practitioner.address.expected"
-        [difference]="practitioner.address.difference"
+        [fhirPath]="practitioner?.expected?.resourceType+ '.address'"
+        [expected]="practitioner?.address.expected"
+        [difference]="practitioner?.address.difference"
         [expanded]="isAccordionExpanded">
       </app-case-comparison-content-field>
 
@@ -155,7 +155,7 @@
       <app-case-comparison-content-field
         [state]="patient.race.style"
         [title]="'Race'"
-        [resource]="'US Core Patien\'t'"
+        [resource]="'US Core Patient'"
         [fhirPath]="patient.expected?.resourceType + '.valueString'"
         [expected]="patient.race.expected"
         [difference]="patient.race.difference"
