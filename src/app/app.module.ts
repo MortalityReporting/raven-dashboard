@@ -49,19 +49,11 @@ import {
   CaseSummaryContentFieldComponent
 } from './components/record-viewer/case-summary/case-summary-content-field/case-summary-content-field.component';
 import {MatListModule} from "@angular/material/list";
-import {ImportCaseComponent} from './modules/import-case/components/import-case.component';
-import {
-  ImportCaseFhirRecordComponent
-} from './modules/import-case/components/import-case-fhir-record/import-case-fhir-record.component';
-import {
-  ImportCaseConnectathonTemplateComponent
-} from './modules/import-case/components/import-case-connectathon-template/import-case-connectathon-template.component';
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatSelectModule} from '@angular/material/select';
 import {MatMenuModule} from '@angular/material/menu';
 import {ConformationDialogComponent} from "./components/widgets/conformation-dialog/conformation-dialog.component";
 import {ClipboardModule} from "@angular/cdk/clipboard";
-import {MappingsComponent} from './modules/import-case/components/mappings/mappings.component';
 import {ModalComponent} from './components/widgets/modal/modal.component';
 import {
   CaseComparisonDialogComponent
@@ -95,11 +87,7 @@ import {ImportCaseModule} from "./modules/import-case/import-case.module";
         CaseComparisonContentFieldComponent,
         SetFhirExplorerDirective,
         CaseSummaryContentFieldComponent,
-        // ImportCaseComponent,
-        // ImportCaseFhirRecordComponent,
-        // ImportCaseConnectathonTemplateComponent,
         ConformationDialogComponent,
-        // MappingsComponent,
         ModalComponent,
         CasesComponent,
         ToxicologyGridComponent,
