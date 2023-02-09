@@ -1,13 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ImportCaseService} from "../../../../service/import-case.service";
+import {ImportCaseService} from "../../services/import-case.service";
 import {UtilsService} from "../../../../service/utils.service";
-import {FhirValidatorComponent} from "../../../../modules/fhir-validator/components/fhir-validator/fhir-validator.component";
-import {FhirValidatorService} from "../../../../modules/fhir-validator/service/fhir-validator.service";
-import {FhirValidatorStateService} from "../../../../modules/fhir-validator/service/fhir-validator-state.service";
+import {FhirValidatorComponent} from "../../../fhir-validator/components/fhir-validator/fhir-validator.component";
+import {FhirValidatorService} from "../../../fhir-validator/services/fhir-validator.service";
+import {FhirValidatorStateService} from "../../../fhir-validator/services/fhir-validator-state.service";
 import {Observable} from "rxjs";
-import {ValidationResults} from "../../../../modules/fhir-validator/domain/ValidationResults";
+import {ValidationResults} from "../../../fhir-validator/domain/ValidationResults";
 import {MatDialog} from "@angular/material/dialog";
-import {openConformationDialog} from "../../../widgets/conformation-dialog/conformation-dialog.component";
+import {openConformationDialog} from "../../../../components/widgets/conformation-dialog/conformation-dialog.component";
 
 @Component({
   selector: 'app-import-case-fhir-record',

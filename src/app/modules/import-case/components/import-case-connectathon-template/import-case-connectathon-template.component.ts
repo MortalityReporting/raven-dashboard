@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {ImportCaseService} from "../../../../service/import-case.service";
+import {ImportCaseService} from "../../services/import-case.service";
 import {UtilsService} from "../../../../service/utils.service";
 import {MatTableDataSource} from "@angular/material/table";
-import {openModal} from "../../../widgets/modal/modal.component";
+import {openModal} from "../../../../components/widgets/modal/modal.component";
 import {MatDialog} from "@angular/material/dialog";
 
 @Component({

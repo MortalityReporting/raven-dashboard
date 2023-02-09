@@ -97,7 +97,7 @@ export class EdrsSearchResultsGridComponent implements OnInit, OnChanges {
     }
   }
 
-  // TODO extract this to mdi service
+  // TODO extract this to mdi services
   private getMannerOfDeathObservationStr(observationResource){
     if(!observationResource?.resourceType
       || observationResource.resourceType != 'Observation'){

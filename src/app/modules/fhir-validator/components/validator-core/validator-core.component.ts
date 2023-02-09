@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {DomSanitizer} from "@angular/platform-browser";
-import {FhirValidatorService} from "../../service/fhir-validator.service";
-import {FhirValidatorStateService} from "../../service/fhir-validator-state.service";
+import {FhirValidatorService} from "../../services/fhir-validator.service";
+import {FhirValidatorStateService} from "../../services/fhir-validator-state.service";
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatTableDataSource} from "@angular/material/table";
 import {FormControl} from "@angular/forms";
