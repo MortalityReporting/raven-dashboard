@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {LandingComponent} from "./components/landing/landing.component";
 import {CaseContainerComponent} from "./modules/record-viewer/components/case-container/case-container.component";
-import {CaseComparisonComponent} from "./components/pages/case-comparison/case-comparison.component";
+import {CaseComparisonComponent} from "./modules/record-comparison/components/case-comparison/case-comparison.component";
 import {ImportCaseComponent} from "./components/pages/import-case/import-case.component";
 import {FhirValidatorComponent} from "./modules/fhir-validator/components/fhir-validator/fhir-validator.component";
 import {SearchRecordsComponent} from "./modules/record-viewer/components/search-records/search-records.component";

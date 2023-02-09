@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {Subject} from "rxjs";
-import {DocumentHandlerService} from "../modules/record-viewer/services/document-handler.service";
 import {FhirResource} from "../modules/fhir-util/models/fhir.resource";
 
 @Injectable({

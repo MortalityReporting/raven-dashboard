@@ -25,10 +25,10 @@ import {FhirAuthInterceptor} from "./interceptors/fhir-auth.interceptor";
 import {MatGridListModule} from '@angular/material/grid-list';
 import {
   CaseComparisonContentComponent
-} from './components/pages/case-comparison/case-comparison-content/case-comparison-content.component';
+} from './modules/record-comparison/components/case-comparison/case-comparison-content/case-comparison-content.component';
 import {
   CaseComparisonContentFieldComponent
-} from './components/pages/case-comparison/case-comparison-content-field/case-comparison-content-field.component';
+} from './modules/record-comparison/components/case-comparison/case-comparison-content-field/case-comparison-content-field.component';
 import {LandingComponent} from './components/landing/landing.component';
 import {FhirExplorerDrawerService} from "./modules/fhir-explorer/services/fhir-explorer-drawer.service";
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -51,7 +51,7 @@ import {MappingsComponent} from './components/pages/import-case/mappings/mapping
 import {ModalComponent} from './components/widgets/modal/modal.component';
 import {
   CaseComparisonDialogComponent
-} from './components/pages/case-comparison/case-comparison-dialog/case-comparison-dialog.component';
+} from './modules/record-comparison/components/case-comparison/case-comparison-dialog/case-comparison-dialog.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatStepperModule} from "@angular/material/stepper";
 import {UiStringConstants} from "./providers/ui-string-constants";
@@ -83,7 +83,7 @@ import { RecordViewerModule } from "./modules/record-viewer/record-viewer.module
 import { FhirUtilModule } from "./modules/fhir-util/fhir-util.module";
 import {environment} from "../environments/environment";
 import {FhirExplorerModule} from "./modules/fhir-explorer/fhir-explorer.module";
-import {CaseComparisonComponent} from "./components/pages/case-comparison/case-comparison.component";
+import {CaseComparisonComponent} from "./modules/record-comparison/components/case-comparison/case-comparison.component";
 
 @NgModule({
     declarations: [

@@ -1,6 +1,6 @@
 import {Component, inject, OnInit, ViewChild} from '@angular/core';
 import { MatAccordion } from "@angular/material/expansion";
-import { DocumentHandlerService } from "../../../../modules/record-viewer/services/document-handler.service";
+import { DocumentHandlerService } from "../../../../record-viewer/services/document-handler.service";
 import { USCorePatientDiff } from './models/us-core-patient.diff';
 import { CompositionMdiToEdrsDiff } from './models/composition-mdi-to-edrs.diff';
 import { USCoreLocationDiff } from './models/us-core-location.diff';
@@ -15,14 +15,15 @@ import { ObservationAutopsyPerformedDiff } from './models/observation-autopsy-pe
 import { ObservationHowDeathInjuryOccurredDiff } from './models/observation-how-death-injury-occurred.diff';
 import { LocationDeathDiff } from './models/location-death.diff';
 import { LocationInjuryDiff } from './models/location-injury.diff';
-import { DecedentService } from "../../../../modules/record-viewer/services/decedent.service";
+import { DecedentService } from "../../../../record-viewer/services/decedent.service";
 import { CaseComparisonDialogComponent } from '../case-comparison-dialog/case-comparison-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { UtilsService } from "../../../../service/utils.service";
+import { UtilsService } from "../../../../../service/utils.service";
 import { ActivatedRoute } from "@angular/router";
-import {FhirHelperService} from "../../../../modules/fhir-util/services/fhir-helper.service";
-import {BundleHelperService} from "../../../../modules/fhir-util/services/bundle-helper.service";
-import {ProfileProviderService} from "../../../../modules/fhir-util/services/profile-provider.service";
+import {FhirHelperService} from "../../../../fhir-util/services/fhir-helper.service";
+import {BundleHelperService} from "../../../../fhir-util/services/bundle-helper.service";
+import {ProfileProviderService} from "../../../../fhir-util/services/profile-provider.service";
+import { caseComparison } from "../../../../../../environments/environment";
 
 @Component({
   selector: 'app-case-comparison-content',
@@ -46,14 +47,12 @@ export class CaseComparisonContentComponent implements OnInit {
     { expanded: false,    id: 'examAndAutopsy' },
   ]
 
-  testCases = [
-    {"compositionId": "9038be4e-6fcd-494a-824d-99bfd1362495", "display": "Alice Freeman"}
-  ]
+  testCases: any;
 
   patientResource: any;
   actualDocument: any = undefined;
   expectedDocument: any;
-  selectedTestCase = this.testCases?.[0];
+  selectedTestCase: any = undefined;
   documentBundleList: any[];
 
   patient: USCorePatientDiff = new USCorePatientDiff( undefined, undefined );
@@ -95,6 +94,10 @@ export class CaseComparisonContentComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.testCases = caseComparison.testCases;
+    this.testCases.splice(0,0, {"display": "Select a reference record..."})
+    this.selectedTestCase = this.testCases[0];
+
     let compositionId = this.route.snapshot.params['id'];
     console.log(compositionId);
 
@@ -120,7 +123,7 @@ export class CaseComparisonContentComponent implements OnInit {
         }
       });
     }
-    else { // We do comparisons with an empty record.
+    else if (this.selectedTestCase.compositionId) { // We do comparisons with an empty record.
       this.getExpectedDocumentBundle(this.selectedTestCase.compositionId)
     }
   }
@@ -142,22 +145,24 @@ export class CaseComparisonContentComponent implements OnInit {
   }
 
   onExpectedCompositionChanged( event: any ) {
-    this.isLoading = true;
+    if (event.value !== undefined) {
+      this.isLoading = true;
 
-    this.documentHandler.getRawDocumentBundle(event.value.compositionId).subscribe({
-      next: (documentBundle: any) => {
-        this.accordion.closeAll();
-        this.isAccordionExpanded = false;
-        this.expectedDocument = documentBundle;
-        this.dodiff();
-        this.isLoading = false;
-      },
-      error: err => {
-        console.error(err);
-        this.utilsService.showErrorMessage();
-        this.isLoading = false;
-      },
-    });
+      this.documentHandler.getRawDocumentBundle(event.value.compositionId).subscribe({
+        next: (documentBundle: any) => {
+          this.accordion.closeAll();
+          this.isAccordionExpanded = false;
+          this.expectedDocument = documentBundle;
+          this.dodiff();
+          this.isLoading = false;
+        },
+        error: err => {
+          console.error(err);
+          this.utilsService.showErrorMessage();
+          this.isLoading = false;
+        },
+      });
+    }
   }
 
   onActualCompositionChanged(event: Event) {
