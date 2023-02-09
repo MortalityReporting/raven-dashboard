@@ -17,6 +17,14 @@ export const blueJay = {
   displayName: "BlueJay",
 }
 
+export const caseComparison = {
+  testCases: [
+    {"compositionId": "9038be4e-6fcd-494a-824d-99bfd1362495", "display": "Alice Freeman"}
+  ]
+
+
+}
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

@@ -1,7 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {DomSanitizer} from "@angular/platform-browser";
 import {FhirValidatorService} from "../../services/fhir-validator.service";
-import {FhirValidatorStateService} from "../../services/fhir-validator-state.service";
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatTableDataSource} from "@angular/material/table";
 import {FormControl} from "@angular/forms";
@@ -9,6 +8,7 @@ import {Subscription} from "rxjs";
 import {UtilsService} from "../../../../service/utils.service";
 import {ValidationResults} from "../../domain/ValidationResults";
 import {ValidatorConstants} from "../../providers/validator-constants";
+import {FhirValidatorStateService} from "../../service/fhir-validator-state.service";
 
 export interface ResponseItem {
   severity: string;

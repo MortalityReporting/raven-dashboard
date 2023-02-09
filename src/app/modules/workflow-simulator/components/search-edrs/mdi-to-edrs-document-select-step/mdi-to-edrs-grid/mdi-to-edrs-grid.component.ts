@@ -3,7 +3,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {DecedentGridDTO} from "../../../../../../model/decedent.grid.dto";
 import {MatSort} from "@angular/material/sort";
 import {ActivatedRoute, Router} from "@angular/router";
-import {DecedentService} from "../../../../../../service/decedent.service";
+import {DecedentService} from "../../../../../../modules/record-viewer/services/decedent.service";
 import {UtilsService} from "../../../../../../service/utils.service";
 import {forkJoin, map, mergeMap, switchMap} from "rxjs";
 import {SearchEdrsService} from "../../../../service/search-edrs.service";
@@ -11,7 +11,7 @@ import {DecedentSimpleInfo} from "../../../../../../model/decedent-simple-info";
 import {MatSelect} from "@angular/material/select";
 import {MatPaginator} from "@angular/material/paginator";
 import {TrackingNumberType} from "../../../../../../model/tracking.number.type";
-import {FhirHelperService} from "../../../../../../service/fhir/fhir-helper.service";
+import {FhirHelperService} from "../../../../../../modules/fhir-util/services/fhir-helper.service";
 
 @Component({
   selector: 'app-mdi-to-edrs-grid',

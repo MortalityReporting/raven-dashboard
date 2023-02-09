@@ -30,9 +30,6 @@ import {
 } from "./components/search-edrs/edrs-results-step/http-response-info/http-response-info.component";
 import {WorkflowSimulatorComponent} from "./components/workflow-simulator.component";
 import {
-  CaseSummaryRelatedToxComponent
-} from "../../components/record-viewer/case-summary/case-summary-related-tox/case-summary-related-tox.component";
-import {
   MdiToEdrsDocumentSelectStepComponent
 } from "./components/search-edrs/mdi-to-edrs-document-select-step/mdi-to-edrs-document-select-step.component";
 import {MatToolbarModule} from "@angular/material/toolbar";
@@ -67,10 +64,8 @@ import {MatStepperModule} from "@angular/material/stepper";
     HttpRequestInfoComponent,
     HttpResponseInfoComponent,
     WorkflowSimulatorComponent,
-    CaseSummaryRelatedToxComponent,
     MdiToEdrsDocumentSelectStepComponent],
   exports: [
-    CaseSummaryRelatedToxComponent
   ],
   imports: [
     CommonModule,

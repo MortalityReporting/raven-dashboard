@@ -12,9 +12,6 @@ import {MatDialogModule} from '@angular/material/dialog'
 import {MatIconModule} from "@angular/material/icon";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatToolbarModule} from "@angular/material/toolbar";
-import {
-  DecedentRecordsGridComponent
-} from './components/record-viewer/cases/decedent-records-grid/decedent-records-grid.component';
 import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
@@ -26,29 +23,9 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {FhirValidatorModule} from "./modules/fhir-validator/fhir-validator.module";
 import {FhirAuthInterceptor} from "./interceptors/fhir-auth.interceptor";
 import {MatGridListModule} from '@angular/material/grid-list';
-import {CaseSummaryComponent} from './components/record-viewer/case-summary/case-summary.component';
-import {CaseComparisonComponent} from './components/pages/case-comparison/case-comparison.component';
-import {
-  CaseComparisonContentComponent
-} from './components/pages/case-comparison/case-comparison-content/case-comparison-content.component';
-import {
-  CaseComparisonContentFieldComponent
-} from './components/pages/case-comparison/case-comparison-content-field/case-comparison-content-field.component';
 import {LandingComponent} from './components/landing/landing.component';
-import {CaseContainerComponent} from './components/record-viewer/case-container/case-container.component';
-import {FhirExplorerDrawerService} from "./service/fhir-explorer-drawer.service";
+import {FhirExplorerDrawerService} from "./modules/fhir-explorer/services/fhir-explorer-drawer.service";
 import {MatExpansionModule} from '@angular/material/expansion';
-import {FhirExplorerComponent} from './components/fhir-explorer/fhir-explorer.component';
-import {MatButtonToggleModule} from "@angular/material/button-toggle";
-import {
-  CaseSummaryContentComponent
-} from './components/record-viewer/case-summary/case-summary-content/case-summary-content.component';
-import {SetFhirExplorerDirective} from './directives/set-fhir-explorer.directive';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {
-  CaseSummaryContentFieldComponent
-} from './components/record-viewer/case-summary/case-summary-content-field/case-summary-content-field.component';
-import {MatListModule} from "@angular/material/list";
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatSelectModule} from '@angular/material/select';
 import {MatMenuModule} from '@angular/material/menu';
@@ -57,82 +34,71 @@ import {ClipboardModule} from "@angular/cdk/clipboard";
 import {ModalComponent} from './components/widgets/modal/modal.component';
 import {
   CaseComparisonDialogComponent
-} from './components/pages/case-comparison/case-comparison-dialog/case-comparison-dialog.component';
-import {CasesComponent} from "./components/record-viewer/cases/cases.component";
-import { ToxicologyGridComponent } from './components/record-viewer/cases/toxicology-grid/toxicology-grid.component';
-import { ToxicologyReportComponent } from './components/record-viewer/toxicology-report/toxicology-report.component';
-import { ToxicologyReportContentComponent } from './components/record-viewer/toxicology-report/toxicology-report-content/toxicology-report-content.component';
+} from './modules/record-comparison/components/case-comparison/case-comparison-dialog/case-comparison-dialog.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
-import { ToxicologyReportMdiCaseComponent } from './components/record-viewer/toxicology-report/toxicology-report-mdi-case/toxicology-report-mdi-case.component';
-import {
-    ToxicologyReportGridSectionComponent
-} from "./components/record-viewer/toxicology-report/toxicology-report-grid-section/toxicology-report-grid-section.component";
 import {MatStepperModule} from "@angular/material/stepper";
 import {UiStringConstants} from "./providers/ui-string-constants";
+
 import {WorkflowSimulatorModule} from "./modules/workflow-simulator/workflow-simulator.module";
 import {ImportCaseModule} from "./modules/import-case/import-case.module";
+import {RecordViewerModule} from "./modules/record-viewer/record-viewer.module";
+import {FhirUtilModule} from "./modules/fhir-util/fhir-util.module";
+import {environment} from "../environments/environment";
+import {FhirExplorerModule} from "./modules/fhir-explorer/fhir-explorer.module";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatListModule} from "@angular/material/list";
+import {RecordComparisonModule} from "./modules/record-comparison/record-comparison.module";
 
 @NgModule({
     declarations: [
-        AppComponent,
-        HeaderComponent,
-        DecedentRecordsGridComponent,
-        CaseSummaryComponent,
-        CaseComparisonComponent,
-        LandingComponent,
-        CaseContainerComponent,
-        FhirExplorerComponent,
-        CaseSummaryContentComponent,
-        CaseComparisonContentComponent,
-        CaseComparisonContentFieldComponent,
-        SetFhirExplorerDirective,
-        CaseSummaryContentFieldComponent,
-        ConformationDialogComponent,
-        ModalComponent,
-        CasesComponent,
-        ToxicologyGridComponent,
-        ToxicologyReportComponent,
-        ToxicologyReportContentComponent,
-        ToxicologyReportMdiCaseComponent,
-        ToxicologyReportGridSectionComponent,
+      AppComponent,
+      HeaderComponent,
+      LandingComponent,
+      ConformationDialogComponent,
+      ModalComponent,
     ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatDialogModule,
-    ReactiveFormsModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatProgressSpinnerModule,
-    MatSortModule,
-    HttpClientModule,
-    MatRadioModule,
-    FormsModule,
-    MatCardModule,
-    MatSnackBarModule,
-    FhirValidatorModule,
-    MatGridListModule,
-    MatExpansionModule,
-    MatButtonToggleModule,
-    MatTooltipModule,
-    MatListModule,
-    MatTabsModule,
-    MatSelectModule,
-    MatMenuModule,
-    ClipboardModule,
-    MatDialogModule,
-    MatStepperModule,
-    MatCheckboxModule,
-    WorkflowSimulatorModule,
-    ImportCaseModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatDialogModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatProgressSpinnerModule,
+        MatSortModule,
+        HttpClientModule,
+        MatRadioModule,
+        FormsModule,
+        MatCardModule,
+        MatSnackBarModule,
+        FhirValidatorModule,
+        MatGridListModule,
+        MatExpansionModule,
+        MatButtonToggleModule,
+        MatTooltipModule,
+        MatListModule,
+        MatTabsModule,
+        MatSelectModule,
+        MatMenuModule,
+        ClipboardModule,
+        MatDialogModule,
+        MatStepperModule,
+        MatCheckboxModule,
+        WorkflowSimulatorModule,
+        ImportCaseModule,
+        RecordViewerModule.forRoot(environment),
+        FhirUtilModule,
+        FhirExplorerModule,
+        RecordComparisonModule
+    ],
 
   providers: [
     UiStringConstants,
