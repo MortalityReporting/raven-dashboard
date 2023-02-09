@@ -37,6 +37,7 @@ import {FormsModule} from "@angular/forms";
 import {MatCardModule} from "@angular/material/card";
 import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatSortModule} from "@angular/material/sort";
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     MatCardModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatSortModule,
   ]
 })
 export class RecordViewerModule {
