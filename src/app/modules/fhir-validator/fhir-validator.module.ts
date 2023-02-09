@@ -61,7 +61,7 @@ import { FhirValidatorComponent } from './components/fhir-validator/fhir-validat
     MatChipsModule,
     MatCheckboxModule,
     MatTooltipModule,
-    MatDividerModule
+    MatDividerModule,
   ],
   exports: [
     ValidatorCoreComponent,
