@@ -10,6 +10,7 @@ import {
 import {
   CaseComparisonDialogComponent
 } from "./components/case-comparison/case-comparison-dialog/case-comparison-dialog.component";
+import {ReferenceDocumentService} from "./services/reference-document.service";
 
 
 
@@ -22,6 +23,9 @@ import {
   ],
   imports: [
     CommonModule
+  ],
+  providers: [
+    ReferenceDocumentService
   ]
 })
 export class RecordComparisonModule { }
