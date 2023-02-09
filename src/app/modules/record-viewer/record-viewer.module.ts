@@ -36,6 +36,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {FormsModule} from "@angular/forms";
 import {MatCardModule} from "@angular/material/card";
 import {MatSelectModule} from "@angular/material/select";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -92,10 +93,7 @@ import {MatSelectModule} from "@angular/material/select";
     // ClipboardModule,
     // MatDialogModule,
     // MatStepperModule,
-    // MatCheckboxModule,
-
-
-
+    MatCheckboxModule,
   ]
 })
 export class RecordViewerModule {
