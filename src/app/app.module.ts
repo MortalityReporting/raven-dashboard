@@ -23,7 +23,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatCardModule} from "@angular/material/card";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
-import {FhirValidatorModule} from "./fhir-validator/fhir-validator.module";
+import {FhirValidatorModule} from "./modules/fhir-validator/fhir-validator.module";
 import {FhirAuthInterceptor} from "./interceptors/fhir-auth.interceptor";
 import {MatGridListModule} from '@angular/material/grid-list';
 import {CaseSummaryComponent} from './components/record-viewer/case-summary/case-summary.component';
@@ -77,7 +77,7 @@ import {
 } from "./components/record-viewer/toxicology-report/toxicology-report-grid-section/toxicology-report-grid-section.component";
 import {MatStepperModule} from "@angular/material/stepper";
 import {UiStringConstants} from "./providers/ui-string-constants";
-import {WorkflowSimulatorModule} from "./workflow-simulator/workflow-simulator.module";
+import {WorkflowSimulatorModule} from "./modules/workflow-simulator/workflow-simulator.module";
 
 @NgModule({
     declarations: [

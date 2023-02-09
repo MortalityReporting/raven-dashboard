@@ -4,10 +4,10 @@ import {LandingComponent} from "./components/landing/landing.component";
 import {CaseContainerComponent} from "./components/record-viewer/case-container/case-container.component";
 import {CaseComparisonComponent} from "./components/pages/case-comparison/case-comparison.component";
 import {ImportCaseComponent} from "./components/pages/import-case/import-case.component";
-import {FhirValidatorComponent} from "./fhir-validator/components/fhir-validator/fhir-validator.component";
+import {FhirValidatorComponent} from "./modules/fhir-validator/components/fhir-validator/fhir-validator.component";
 import {CasesComponent} from "./components/record-viewer/cases/cases.component";
-import {WorkflowSimulatorComponent} from "./workflow-simulator/components/workflow-simulator.component";
-import {SearchEdrsComponent} from "./workflow-simulator/components/search-edrs/search-edrs.component";
+import {WorkflowSimulatorComponent} from "./modules/workflow-simulator/components/workflow-simulator.component";
+import {SearchEdrsComponent} from "./modules/workflow-simulator/components/search-edrs/search-edrs.component";
 
 const routes: Routes = [
   {
