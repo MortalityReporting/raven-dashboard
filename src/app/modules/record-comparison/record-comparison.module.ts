@@ -1,0 +1,47 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {CaseComparisonComponent} from "./components/case-comparison/case-comparison.component";
+import {
+  CaseComparisonContentComponent
+} from "./components/case-comparison/case-comparison-content/case-comparison-content.component";
+import {
+  CaseComparisonContentFieldComponent
+} from "./components/case-comparison/case-comparison-content-field/case-comparison-content-field.component";
+import {
+  CaseComparisonDialogComponent
+} from "./components/case-comparison/case-comparison-dialog/case-comparison-dialog.component";
+import {ReferenceDocumentService} from "./services/reference-document.service";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatListModule} from "@angular/material/list";
+import {MatIconModule} from "@angular/material/icon";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatInputModule} from "@angular/material/input";
+import {MatSelectModule} from "@angular/material/select";
+
+
+
+@NgModule({
+  declarations: [
+    CaseComparisonComponent,
+    CaseComparisonContentComponent,
+    CaseComparisonContentFieldComponent,
+    CaseComparisonDialogComponent
+  ],
+  imports: [
+    CommonModule,
+    MatSidenavModule,
+    MatListModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatProgressSpinnerModule,
+    MatExpansionModule,
+    MatInputModule,
+    MatSelectModule
+  ],
+  providers: [
+    ReferenceDocumentService
+  ]
+})
+export class RecordComparisonModule { }
