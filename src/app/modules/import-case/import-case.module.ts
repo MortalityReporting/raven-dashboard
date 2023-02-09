@@ -21,7 +21,7 @@ import {
   ImportCaseConnectathonTemplateComponent
 } from "./components/import-case-connectathon-template/import-case-connectathon-template.component";
 import {MappingsComponent} from "./components/mappings/mappings.component";
-
+import {MatButtonModule} from "@angular/material/button";
 
 
 @NgModule({
@@ -50,6 +50,7 @@ import {MappingsComponent} from "./components/mappings/mappings.component";
     MatStepperModule,
     FormsModule,
     FhirValidatorModule,
+    MatButtonModule,
   ]
 })
 export class ImportCaseModule { }

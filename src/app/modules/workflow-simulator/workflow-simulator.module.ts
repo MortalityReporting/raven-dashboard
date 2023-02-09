@@ -42,10 +42,12 @@ import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatRadioModule} from "@angular/material/radio";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatIconModule} from "@angular/material/icon";
 import {MatStepperModule} from "@angular/material/stepper";
+import {MatButtonModule} from "@angular/material/button";
+import {MatInputModule} from "@angular/material/input";
 
 
 
@@ -82,7 +84,10 @@ import {MatStepperModule} from "@angular/material/stepper";
     ReactiveFormsModule,
     MatExpansionModule,
     MatIconModule,
-    MatStepperModule
+    MatStepperModule,
+    MatButtonModule,
+    FormsModule,
+    MatInputModule
   ]
 })
 export class WorkflowSimulatorModule { }
