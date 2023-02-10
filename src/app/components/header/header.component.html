@@ -3,25 +3,25 @@
     <mat-icon>more_vert</mat-icon>
   </button>
 
-  <span style="cursor: pointer"><h1 (click)="onTitleClick();">Raven</h1></span>
+  <span style="cursor: pointer"><h1 (click)="onMenuItemSelected('/')">Raven</h1></span>
 
-  <a mat-button [routerLink]="'/records'">
+  <a mat-button (click)="onMenuItemSelected('/records')">
     Record Viewer
   </a>
 
-  <a mat-button [routerLink]="'/import-case'">
+  <a mat-button (click)="onMenuItemSelected('/import-case')">
     Import Case
   </a>
 
-  <a mat-button [routerLink]="'/comparison'">
+  <a mat-button (click)="onMenuItemSelected('/comparison')">
     Record Comparison
   </a>
 
-  <a mat-button [routerLink]="'/fhir-validator'">
+  <a mat-button (click)="onMenuItemSelected('/fhir-validator')">
     FHIR Validator
   </a>
 
-  <a mat-button [routerLink]="'/workflow-simulator'">
+  <a mat-button (click)="onMenuItemSelected('/workflow-simulator')">
     Workflow Simulator
   </a>
 
