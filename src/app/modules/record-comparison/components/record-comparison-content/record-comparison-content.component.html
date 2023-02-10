@@ -2,21 +2,12 @@
   <div class="summary-section-grid">
     <div class="grid-row">
       <div class="grid-col-1">
-        User MDI to EDRS Document Bundle:
-      </div>
-      <div class="grid-col-1">
-        Compare Against Valid Example Case:
-      </div>
-    </div>
-
-    <div class="grid-row">
-      <div class="grid-col-1">
         <button mat-raised-button color="primary" (click)="onInputBundleClick()">Input MDI to EDRS Document Bundle</button>
       </div>
       <div class="grid-col-1">
         <mat-form-field>
           <mat-select [(value)]="selectedTestCase">
-            <mat-option class="mat-option" *ngFor="let testCase of testCases" [value]="testCase">
+            <mat-option (onSelectionChange)="onReferenceDocumentChanged($event)" class="mat-option" *ngFor="let testCase of testCases" [value]="testCase">
               {{ testCase.display }}
             </mat-option>
           </mat-select>
@@ -24,13 +15,36 @@
       </div>
       <div class="grid-col-1">
         <div style="align-items: center;">
-          <button mat-raised-button color="accent" (click)="onExpectedCompositionChanged(selectedTestCase)">Compare</button>
+          <button mat-raised-button color="accent" (click)="runComparison()" [disabled]="!(userDocumentWrapper && referenceDocumentWrapper)">Compare</button>
         </div>
+      </div>
+    </div>
+    <div class="grid-row">
+      <div class="grid-col-1">
+        <div *ngIf="userDocumentWrapper">
+          <!-- TODO: Fix this up, this is temporary. Needs design and styling. -->
+          Current User MDI to EDRS Document<br>
+          Decedent Name: {{ userDocumentWrapper?.decedentName }}<br>
+          Date/Time of Death: {{ userDocumentWrapper?.dateTimeOfDeath }}<br>
+          MDI Case Number/System: {{ userDocumentWrapper?.mdiCaseNumber }}:{{ userDocumentWrapper?.mdiCaseNumberSystem}}
+        </div>
+      </div>
+      <div class="grid-col-1">
+        <div *ngIf="referenceDocumentWrapper">
+          <!-- TODO: Fix this up, this is temporary. Needs design and styling. -->
+          Current Reference MDI to EDRS Document<br>
+          Decedent Name: {{ referenceDocumentWrapper?.decedentName }}<br>
+          Date/Time of Death: {{ referenceDocumentWrapper?.dateTimeOfDeath }}<br>
+          MDI Case Number/System: {{ referenceDocumentWrapper?.mdiCaseNumber }}:{{ referenceDocumentWrapper?.mdiCaseNumberSystem}}
+        </div>
+      </div>
+      <div class="grid-col-1">
+
       </div>
     </div>
   </div>
 
-  <div *ngIf="actualDocument; else noActualDocument">
+  <div *ngIf="stateList.comparisonLoaded;">
   <div class="section-button-wrapper" style="margin-bottom: 0.2rem">
     <button mat-raised-button (click)="onOpenAll()">
       <mat-icon>expand_more</mat-icon>
@@ -55,18 +69,18 @@
       </mat-expansion-panel-header>
 
       <record-comparison-content-field
-        [state]="mdiToEdrs.extension.style"
+        [state]="mdiToEdrs?.extension?.style"
         [title]="'Tracking Numbers'"
         [resource]="'Composition MDI TO EDRS'"
-        [fhirPath]="mdiToEdrs.expected?.resourceType + '.extension'"
-        [expected]="mdiToEdrs.extension.expected"
-        [difference]="mdiToEdrs.extension.difference"
+        [fhirPath]="mdiToEdrs?.expected?.resourceType + '.extension'"
+        [expected]="mdiToEdrs?.extension?.expected"
+        [difference]="mdiToEdrs?.extension?.difference"
         [expanded]="isAccordionExpanded"
       >
       </record-comparison-content-field>
 
       <record-comparison-content-field
-        [state]="practitioner?.name.style"
+        [state]="practitioner?.name?.style"
         [title]="'Chief ME/C Name'"
         [resource]="'US Core Practitioner'"
         [fhirPath]="practitioner?.expected?.resourceType + '.name'"
@@ -77,31 +91,31 @@
       </record-comparison-content-field>
 
       <record-comparison-content-field
-        [state]="practitioner?.identifier.style"
+        [state]="practitioner?.identifier?.style"
         [title]="'Chief ME/C License'"
         [resource]="'US Core Practitioner'"
         [fhirPath]="practitioner?.expected?.resourceType + '.identifier'"
-        [expected]="practitioner?.identifier.expected"
-        [difference]="practitioner?.identifier.difference"
+        [expected]="practitioner?.identifier?.expected"
+        [difference]="practitioner?.identifier?.difference"
         [expanded]="isAccordionExpanded">
       </record-comparison-content-field>
 
       <record-comparison-content-field
-        [state]="practitioner?.telecom.style"
+        [state]="practitioner?.telecom?.style"
         [title]="'Chief ME/C Telecom'"
         [resource]="'US Core Practitioner'"
         [fhirPath]="practitioner?.expected?.resourceType + '.telecom'"
-        [expected]="practitioner?.telecom.expected"
-        [difference]="practitioner?.telecom.difference"
+        [expected]="practitioner?.telecom?.expected"
+        [difference]="practitioner?.telecom?.difference"
         [expanded]="isAccordionExpanded">
       </record-comparison-content-field>
 
       <record-comparison-content-field
-        [state]="practitioner?.address.style"
+        [state]="practitioner?.address?.style"
         [title]="'Chief ME/C Address'" [resource]="'US Core Practitioner'"
         [fhirPath]="practitioner?.expected?.resourceType+ '.address'"
-        [expected]="practitioner?.address.expected"
-        [difference]="practitioner?.address.difference"
+        [expected]="practitioner?.address?.expected"
+        [difference]="practitioner?.address?.difference"
         [expanded]="isAccordionExpanded">
       </record-comparison-content-field>
 
@@ -118,72 +132,72 @@
       </mat-expansion-panel-header>
 
       <record-comparison-content-field
-        [state]="patient.name.style"
+        [state]="patient?.name?.style"
         [title]="'Name'"
         [resource]="'US Core Patient'"
-        [fhirPath]="patient.expected?.resourceType + '.name'"
-        [expected]="patient.name.expected"
-        [difference]="patient.name.difference"
+        [fhirPath]="patient?.expected?.resourceType + '.name'"
+        [expected]="patient?.name?.expected"
+        [difference]="patient?.name?.difference"
         [expanded]="isAccordionExpanded">
       </record-comparison-content-field>
 
       <record-comparison-content-field
-        [state]="patient.gender.style"
+        [state]="patient?.gender?.style"
         [title]="'Legal Sex at Death'"
         [resource]="'US Core Patient'"
-        [fhirPath]="patient.expected?.resourceType + '.gender'"
-        [expected]="patient.gender.expected"
-        [difference]="patient.gender.difference"
+        [fhirPath]="patient?.expected?.resourceType + '.gender'"
+        [expected]="patient?.gender?.expected"
+        [difference]="patient?.gender?.difference"
         [expanded]="isAccordionExpanded">
       </record-comparison-content-field>
 
       <record-comparison-content-field
-        [state]="patient.identifier.style"
+        [state]="patient?.identifier?.style"
         [title]="'Social Security Number'"
         [resource]="'US Core Patient'"
-        [fhirPath]="patient.expected?.resourceType + '.identifier'"
-        [expected]="patient.identifier.expected"
-        [difference]="patient.identifier.difference"
+        [fhirPath]="patient?.expected?.resourceType + '.identifier'"
+        [expected]="patient?.identifier?.expected"
+        [difference]="patient?.identifier?.difference"
         [expanded]="isAccordionExpanded">
       </record-comparison-content-field>
 
       <record-comparison-content-field
-        [state]="patient.birthDate.style"
+        [state]="patient?.birthDate?.style"
         [title]="'Date of Birth'"
         [resource]="'US Core Patient'"
-        [fhirPath]="patient.expected?.resourceType + '.birthDate'"
-        [expected]="patient.birthDate.expected"
-        [difference]="patient.birthDate.difference"
+        [fhirPath]="patient?.expected?.resourceType + '.birthDate'"
+        [expected]="patient?.birthDate?.expected"
+        [difference]="patient?.birthDate?.difference"
         [expanded]="isAccordionExpanded">
       </record-comparison-content-field>
 
       <record-comparison-content-field
-        [state]="patient.race.style"
+        [state]="patient?.race?.style"
         [title]="'Race'"
         [resource]="'US Core Patient'"
-        [fhirPath]="patient.expected?.resourceType + '.valueString'"
-        [expected]="patient.race.expected"
-        [difference]="patient.race.difference"
+        [fhirPath]="patient?.expected?.resourceType + '.valueString'"
+        [expected]="patient?.race?.expected"
+        [difference]="patient?.race?.difference"
         [expanded]="isAccordionExpanded">
       </record-comparison-content-field>
 
       <record-comparison-content-field
-        [state]="patient.ethnicity.style"
+        [state]="patient?.ethnicity?.style"
         [title]="'Ethnicity'"
         [resource]="'US Core Patient'"
-        [fhirPath]="patient.expected?.resourceType + '.valueString'"
-        [expected]="patient.ethnicity.expected"
-        [difference]="patient.ethnicity.difference"
+        [fhirPath]="patient?.expected?.resourceType + '.valueString'"
+        [expected]="patient?.ethnicity?.expected"
+        [difference]="patient?.ethnicity?.difference"
         [expanded]="isAccordionExpanded">
       </record-comparison-content-field>
 
       <record-comparison-content-field
-        [state]="patient.address.style"
+        [state]="patient?.address?.style"
         [title]="'Residence'"
         [resource]="'US Core Patient'"
-        [fhirPath]="patient.expected?.resourceType + '.address'"
-        [expected]="patient.address.expected"
-        [difference]="patient.address.difference"
+        [fhirPath]="patient?.expected?.resourceType + '.address'"
+        [expected]="patient?.address?.expected"
+        [difference]="patient?.address?.difference"
         [expanded]="isAccordionExpanded">
       </record-comparison-content-field>
 
@@ -200,42 +214,42 @@
       </mat-expansion-panel-header>
 
       <record-comparison-content-field
-        [state]="locationDeath.name.style"
+        [state]="locationDeath?.name?.style"
         [title]="'Death Location'"
         [resource]="'Location-death'"
-        [fhirPath]="locationDeath.expected?.resourceType + '.name'"
-        [expected]="locationDeath.name.expected"
-        [difference]="locationDeath.name.difference"
+        [fhirPath]="locationDeath?.expected?.resourceType + '.name'"
+        [expected]="locationDeath?.name?.expected"
+        [difference]="locationDeath?.name?.difference"
         [expanded]="isAccordionExpanded">
       </record-comparison-content-field>
 
       <record-comparison-content-field
-        [state]="locationInjury.name.style"
+        [state]="locationInjury?.name?.style"
         [title]="'Injury Location'"
         [resource]="'Location-injury'"
-        [fhirPath]="locationInjury.expected?.resourceType + '.name'"
-        [expected]="locationInjury.name.expected"
-        [difference]="locationInjury.name.difference"
+        [fhirPath]="locationInjury?.expected?.resourceType + '.name'"
+        [expected]="locationInjury?.name?.expected"
+        [difference]="locationInjury?.name?.difference"
         [expanded]="isAccordionExpanded">
       </record-comparison-content-field>
 
       <record-comparison-content-field
-        [state]="tobaccoUse.valueCodeableConcept.style"
+        [state]="tobaccoUse?.valueCodeableConcept?.style"
         [title]="'Tobacco Use Contributed to Death'"
         [resource]="'Observation-tobacco-use'"
-        [fhirPath]="tobaccoUse.expected?.resourceType + '.valueCodeableConcept'"
-        [expected]="tobaccoUse.valueCodeableConcept.expected"
-        [difference]="tobaccoUse.valueCodeableConcept.difference"
+        [fhirPath]="tobaccoUse?.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="tobaccoUse?.valueCodeableConcept?.expected"
+        [difference]="tobaccoUse?.valueCodeableConcept?.difference"
         [expanded]="isAccordionExpanded">
       </record-comparison-content-field>
 
       <record-comparison-content-field
-        [state]="pregnancy.valueCodeableConcept.style"
+        [state]="pregnancy?.valueCodeableConcept?.style"
         [title]="'Decedent Pregnancy Status'"
         [resource]="'Observation-decedent-pregnancy'"
-        [fhirPath]="pregnancy.expected?.resourceType + '.valueCodeableConcept'"
-        [expected]="pregnancy.valueCodeableConcept.expected"
-        [difference]="pregnancy.valueCodeableConcept.difference"
+        [fhirPath]="pregnancy?.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="pregnancy?.valueCodeableConcept?.expected"
+        [difference]="pregnancy?.valueCodeableConcept?.difference"
         [expanded]="isAccordionExpanded">
       </record-comparison-content-field>
 
@@ -252,32 +266,32 @@
       </mat-expansion-panel-header>
 
       <record-comparison-content-field
-        [state]="deathDate.effectiveDateTime.style"
+        [state]="deathDate?.effectiveDateTime?.style"
         [title]="'Death Date/Time'"
         [resource]="'Observation-death-date'"
-        [fhirPath]="deathDate.expected?.resourceType + '.valueDateTime'"
-        [expected]="deathDate.effectiveDateTime.expected"
-        [difference]="deathDate.effectiveDateTime.difference"
+        [fhirPath]="deathDate?.expected?.resourceType + '.valueDateTime'"
+        [expected]="deathDate?.effectiveDateTime?.expected"
+        [difference]="deathDate?.effectiveDateTime?.difference"
         [expanded]="isAccordionExpanded">
       </record-comparison-content-field>
 
       <record-comparison-content-field
-        [state]="deathDate.pronouncedDateTime.style"
+        [state]="deathDate?.pronouncedDateTime?.style"
         [title]="'Pronounced Date/Time'"
         [resource]="'Observation-death-date'"
-        [fhirPath]="deathDate.expected?.resourceType + '.valueDateTime'"
-        [expected]="deathDate.pronouncedDateTime.expected"
-        [difference]="deathDate.pronouncedDateTime.difference"
+        [fhirPath]="deathDate?.expected?.resourceType + '.valueDateTime'"
+        [expected]="deathDate?.pronouncedDateTime?.expected"
+        [difference]="deathDate?.pronouncedDateTime?.difference"
         [expanded]="isAccordionExpanded">
       </record-comparison-content-field>
 
       <record-comparison-content-field
-        [state]="deathDate.method.style"
+        [state]="deathDate?.method?.style"
         [title]="'Establishment Approach'"
         [resource]="'Observation-death-date'"
-        [fhirPath]="deathDate.expected?.resourceType + '.method'"
-        [expected]="deathDate.method.expected"
-        [difference]="deathDate.method.difference"
+        [fhirPath]="deathDate?.expected?.resourceType + '.method'"
+        [expected]="deathDate?.method?.expected"
+        [difference]="deathDate?.method?.difference"
         [expanded]="isAccordionExpanded">
       </record-comparison-content-field>
 
@@ -296,93 +310,93 @@
 
       <div *ngFor="let causeOfDeath1 of causeOfDeath1List; let i = index">
         <record-comparison-content-field
-          [state]="causeOfDeath1.valueCodeableConcept.style"
+          [state]="causeOfDeath1?.valueCodeableConcept?.style"
           [title]="'Part 1 Immediate Cause Event ' + (i+1)"
           [resource]="'Observation-cause-of-death-part1'"
-          [fhirPath]="causeOfDeath1.expected?.resourceType + '.valueCodeableConcept'"
-          [expected]="causeOfDeath1.valueCodeableConcept.expected"
-          [difference]="causeOfDeath1.valueCodeableConcept.difference"
+          [fhirPath]="causeOfDeath1?.expected?.resourceType + '.valueCodeableConcept'"
+          [expected]="causeOfDeath1?.valueCodeableConcept?.expected"
+          [difference]="causeOfDeath1?.valueCodeableConcept?.difference"
           [expanded]="isAccordionExpanded">
         </record-comparison-content-field>
 
         <record-comparison-content-field
-          [state]="causeOfDeath1.valueString.style"
+          [state]="causeOfDeath1?.valueString?.style"
           [title]="'Part 1 Immediate Cause Interval ' + (i+1)"
           [resource]="'Observation-cause-of-death-part1'"
-          [fhirPath]="causeOfDeath1.expected?.resourceType + '.valueString'"
-          [expected]="causeOfDeath1.valueString.expected"
-          [difference]="causeOfDeath1.valueString.difference"
+          [fhirPath]="causeOfDeath1?.expected?.resourceType + '.valueString'"
+          [expected]="causeOfDeath1?.valueString?.expected"
+          [difference]="causeOfDeath1?.valueString?.difference"
           [expanded]="isAccordionExpanded">
         </record-comparison-content-field>
       </div>
 
       <record-comparison-content-field
-        [state]="causeOfDeath2.valueCodeableConcept.style"
+        [state]="causeOfDeath2?.valueCodeableConcept?.style"
         [title]="'Part 2 Contributing Cause'"
         [resource]="'Observation-cause-of-death-part2'"
-        [fhirPath]="causeOfDeath2.expected?.resourceType + '.valueCodeableConcept'"
-        [expected]="causeOfDeath2.valueCodeableConcept.expected"
-        [difference]="causeOfDeath2.valueCodeableConcept.difference"
+        [fhirPath]="causeOfDeath2?.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="causeOfDeath2?.valueCodeableConcept?.expected"
+        [difference]="causeOfDeath2?.valueCodeableConcept?.difference"
         [expanded]="isAccordionExpanded">
       </record-comparison-content-field>
 
       <record-comparison-content-field
-        [state]="mannerOfDeath.valueCodeableConcept.style"
+        [state]="mannerOfDeath?.valueCodeableConcept?.style"
         [title]="'Manner of Death'"
         [resource]="'Observation-manner-of-death'"
-        [fhirPath]="mannerOfDeath.expected?.resourceType + '.valueCodeableConcept'"
-        [expected]="mannerOfDeath.valueCodeableConcept.expected"
-        [difference]="mannerOfDeath.valueCodeableConcept.difference"
+        [fhirPath]="mannerOfDeath?.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="mannerOfDeath?.valueCodeableConcept?.expected"
+        [difference]="mannerOfDeath?.valueCodeableConcept?.difference"
         [expanded]="isAccordionExpanded">
       </record-comparison-content-field>
 
       <record-comparison-content-field
-        [state]="howDeathOccurred.placeOfInjury.style"
+        [state]="howDeathOccurred?.placeOfInjury?.style"
         [title]="'Place of Injury'"
         [resource]="'Observation-how-death-injury-occurred'"
-        [fhirPath]="howDeathOccurred.expected?.resourceType + '.valueCodeableConcept'"
-        [expected]="howDeathOccurred.placeOfInjury.expected"
-        [difference]="howDeathOccurred.placeOfInjury.difference"
+        [fhirPath]="howDeathOccurred?.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="howDeathOccurred?.placeOfInjury?.expected"
+        [difference]="howDeathOccurred?.placeOfInjury?.difference"
         [expanded]="isAccordionExpanded">
       </record-comparison-content-field>
 
       <record-comparison-content-field
-        [state]="howDeathOccurred.howDeathInjuryOccurred.style"
+        [state]="howDeathOccurred?.howDeathInjuryOccurred?.style"
         [title]="'How Injury Occurred'"
         [resource]="'Observation-how-death-injury-occurred'"
-        [fhirPath]="howDeathOccurred.expected?.resourceType + '.valueCodeableConcept'"
-        [expected]="howDeathOccurred.howDeathInjuryOccurred.expected"
-        [difference]="howDeathOccurred.howDeathInjuryOccurred.difference"
+        [fhirPath]="howDeathOccurred?.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="howDeathOccurred?.howDeathInjuryOccurred?.expected"
+        [difference]="howDeathOccurred?.howDeathInjuryOccurred?.difference"
         [expanded]="isAccordionExpanded">
       </record-comparison-content-field>
 
       <record-comparison-content-field
-        [state]="howDeathOccurred.effectiveDateTime.style"
+        [state]="howDeathOccurred?.effectiveDateTime?.style"
         [title]="'Injury Date/Time'"
         [resource]="'Observation-how-death-injury-occurred'"
-        [fhirPath]="howDeathOccurred.expected?.resourceType + '.effectiveDateTime'"
-        [expected]="howDeathOccurred.effectiveDateTime.expected"
-        [difference]="howDeathOccurred.effectiveDateTime.difference"
+        [fhirPath]="howDeathOccurred?.expected?.resourceType + '.effectiveDateTime'"
+        [expected]="howDeathOccurred?.effectiveDateTime?.expected"
+        [difference]="howDeathOccurred?.effectiveDateTime?.difference"
         [expanded]="isAccordionExpanded">
       </record-comparison-content-field>
 
       <record-comparison-content-field
-        [state]="howDeathOccurred.injuryOccurredAtWork.style"
+        [state]="howDeathOccurred?.injuryOccurredAtWork?.style"
         [title]="'Injury/Event Occurred at Work'"
         [resource]="'Observation-how-death-injury-occurred'"
-        [fhirPath]="howDeathOccurred.expected?.resourceType + '.valueCodeableConcept'"
-        [expected]="howDeathOccurred.injuryOccurredAtWork.expected"
-        [difference]="howDeathOccurred.injuryOccurredAtWork.difference"
+        [fhirPath]="howDeathOccurred?.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="howDeathOccurred?.injuryOccurredAtWork?.expected"
+        [difference]="howDeathOccurred?.injuryOccurredAtWork?.difference"
         [expanded]="isAccordionExpanded">
       </record-comparison-content-field>
 
       <record-comparison-content-field
-        [state]="howDeathOccurred.transportationRole.style"
+        [state]="howDeathOccurred?.transportationRole.style"
         [title]="'Transportation Role'"
         [resource]="'Observation-how-death-injury-occurred'"
-        [fhirPath]="howDeathOccurred.expected?.resourceType + '.valueCodeableConcept'"
-        [expected]="howDeathOccurred.transportationRole.expected"
-        [difference]="howDeathOccurred.transportationRole.difference"
+        [fhirPath]="howDeathOccurred?.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="howDeathOccurred?.transportationRole?.expected"
+        [difference]="howDeathOccurred?.transportationRole?.difference"
         [expanded]="isAccordionExpanded">
       </record-comparison-content-field>
     </mat-expansion-panel>
@@ -401,23 +415,23 @@
       </mat-expansion-panel-header>
 
       <record-comparison-content-field
-        [state]="autopsyPerformed.valueCodeableConcept.style"
+        [state]="autopsyPerformed?.valueCodeableConcept?.style"
         [title]="'Results Available'"
         [resource]="'Observation-autopsy-performed-indicator'"
-        [fhirPath]="autopsyPerformed.expected?.resourceType + '.valueCodeableConcept'"
-        [expected]="autopsyPerformed.valueCodeableConcept.expected"
-        [difference]="autopsyPerformed.valueCodeableConcept.difference"
+        [fhirPath]="autopsyPerformed?.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="autopsyPerformed?.valueCodeableConcept?.expected"
+        [difference]="autopsyPerformed?.valueCodeableConcept?.difference"
         [expanded]="isAccordionExpanded"
       >
       </record-comparison-content-field>
 
       <record-comparison-content-field
-        [state]="autopsyPerformed.componentValueCodeableConcept.style"
+        [state]="autopsyPerformed?.componentValueCodeableConcept?.style"
         [title]="'Autopsy Performed'"
         [resource]="'Observation-autopsy-performed-indicator'"
-        [fhirPath]="autopsyPerformed.expected?.resourceType + '.component'"
-        [expected]="autopsyPerformed.componentValueCodeableConcept.expected"
-        [difference]="autopsyPerformed.componentValueCodeableConcept.difference"
+        [fhirPath]="autopsyPerformed?.expected?.resourceType + '.component'"
+        [expected]="autopsyPerformed?.componentValueCodeableConcept?.expected"
+        [difference]="autopsyPerformed?.componentValueCodeableConcept?.difference"
         [expanded]="isAccordionExpanded">
       </record-comparison-content-field>
     </mat-expansion-panel>
@@ -429,10 +443,8 @@
   </div>
 
 </div>
-<ng-template #noActualDocument>
-  Please provide an MDI to EDRS Document Bundle to perform a comparison.
-</ng-template>
-<div class="spinner-container" *ngIf="isLoading">
-  <mat-spinner></mat-spinner>
-</div>
+
+<!--<div class="spinner-container" *ngIf="isLoading">-->
+<!--  <mat-spinner></mat-spinner>-->
+<!--</div>-->
 

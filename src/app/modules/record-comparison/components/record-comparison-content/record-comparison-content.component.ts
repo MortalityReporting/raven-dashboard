@@ -24,6 +24,10 @@ import {FhirHelperService} from "../../../fhir-util/services/fhir-helper.service
 import {BundleHelperService} from "../../../fhir-util/services/bundle-helper.service";
 import {ProfileProviderService} from "../../../fhir-util/services/profile-provider.service";
 import { caseComparison } from "../../../../../environments/environment";
+import {UserDocumentService} from "../../services/user-document.service";
+import {MdiToEDRSDocumentWrapper} from "../../models/mdiToEdrsDocumentWrapper";
+import {ReferenceDocumentService} from "../../services/reference-document.service";
+import {map} from "rxjs";
 
 @Component({
   selector: 'record-comparison-content',
@@ -47,13 +51,21 @@ export class RecordComparisonContentComponent implements OnInit {
     { expanded: false,    id: 'examAndAutopsy' },
   ]
 
+  stateList = {
+    isLoading: false,
+    comparisonLoaded: false
+  }
   testCases: any;
 
   patientResource: any;
-  actualDocument: any = undefined;
-  expectedDocument: any;
+
+  userDocumentWrapper: MdiToEDRSDocumentWrapper;
+  referenceDocumentWrapper: MdiToEDRSDocumentWrapper;
+
+  actualDocument: any = undefined; // TODO: Rename to UserDocument
+  expectedDocument: any = undefined; // TODO: Rename to ReferenceDocument
+
   selectedTestCase: any = undefined;
-  documentBundleList: any[];
 
   patient: USCorePatientDiff = new USCorePatientDiff( undefined, undefined );
   mdiToEdrs: CompositionMdiToEdrsDiff = new CompositionMdiToEdrsDiff( undefined, undefined );
@@ -83,6 +95,8 @@ export class RecordComparisonContentComponent implements OnInit {
   howDeathOccurredStatus = 'invalid';
 
   constructor(
+    private userDocumentService: UserDocumentService,
+    private referenceDocumentService: ReferenceDocumentService,
     private profileProvider: ProfileProviderService,
     private dialog: MatDialog,
     private decedentService: DecedentService,
@@ -98,62 +112,92 @@ export class RecordComparisonContentComponent implements OnInit {
     this.testCases.splice(0,0, {"display": "Select a reference record..."})
     this.selectedTestCase = this.testCases[0];
 
+    // If an "id" parameter is passed in the URL, load that case immediately.
     let compositionId = this.route.snapshot.params['id'];
     console.log(compositionId);
-
-    if(compositionId){ //We need to wait for the case summary for the selected case to be loaded BEFORE we do any comparisons
+    if (compositionId) {
       this.isLoading = true;
-      this.documentHandler.getDocumentBundle(compositionId).subscribe(
+      this.userDocumentService.getUserDocumentBundle(compositionId).subscribe(
         {
-          next: (documentBundle: any) => {
-            console.log(documentBundle)
-            this.actualDocument = documentBundle
-            console.log(this.actualDocument);
+          next: (userDocumentWrapper: MdiToEDRSDocumentWrapper) => {
+            this.userDocumentWrapper = userDocumentWrapper;
           }
         }
-      )
-      this.documentHandler.caseSummary$.subscribe({
-        next: (value) => {
-          this.getExpectedDocumentBundle(this.selectedTestCase.compositionId);
-        },
-        error: err => {
-          console.error(err);
-          this.utilsService.showErrorMessage();
-          this.isLoading = false;
-        }
-      });
+      );
     }
-    else if (this.selectedTestCase.compositionId) { // We do comparisons with an empty record.
-      this.getExpectedDocumentBundle(this.selectedTestCase.compositionId)
-    }
+
+    // Get Reference Document List
+    this.referenceDocumentService.getReferenceDocuments().subscribe(
+      {next: value => {
+          this.testCases = value;
+          this.testCases.splice(0,0, {"display": "Select a reference record..."})
+          this.selectedTestCase = this.testCases[0];
+      }}
+    );
+
+    //
+    // if(compositionId){ //We need to wait for the case summary for the selected case to be loaded BEFORE we do any comparisons
+    //   this.isLoading = true;
+    //   this.documentHandler.getDocumentBundle(compositionId).subscribe(
+    //     {
+    //       next: (documentBundle: any) => {
+    //         console.log(documentBundle)
+    //         this.actualDocument = documentBundle
+    //         console.log(this.actualDocument);
+    //       }
+    //     }
+    //   )
+    //   this.documentHandler.caseSummary$.subscribe({
+    //     next: (value) => {
+    //       this.getExpectedDocumentBundle(this.selectedTestCase.compositionId);
+    //     },
+    //     error: err => {
+    //       console.error(err);
+    //       this.utilsService.showErrorMessage();
+    //       this.isLoading = false;
+    //     }
+    //   });
+    // }
+    // else if (this.selectedTestCase.compositionId) { // We do comparisons with an empty record.
+    //   this.getExpectedDocumentBundle(this.selectedTestCase.compositionId)
+    // }
   }
 
-  getExpectedDocumentBundle(compositionId){
-    this.isLoading = true;
-    this.documentHandler.getRawDocumentBundle(compositionId).subscribe({
-      next: (documentBundle: any) => {
-        this.expectedDocument = documentBundle;
-        this.dodiff();
-        this.isLoading = false;
-      },
-      error: err => {
-        console.error(err);
-        this.utilsService.showErrorMessage();
-        this.isLoading = false;
-      }
-    });
+  runComparison() {
+    this.dodiff(this.userDocumentWrapper.documentBundle, this.referenceDocumentWrapper.documentBundle);
+    this.stateList.comparisonLoaded = true;
   }
 
-  onExpectedCompositionChanged( event: any ) {
-    if (event.value !== undefined) {
+  // getExpectedDocumentBundle(compositionId){
+  //   this.isLoading = true;
+  //   this.documentHandler.getRawDocumentBundle(compositionId).subscribe({
+  //     next: (documentBundle: any) => {
+  //       this.expectedDocument = documentBundle;
+  //       this.dodiff();
+  //       this.isLoading = false;
+  //     },
+  //     error: err => {
+  //       console.error(err);
+  //       this.utilsService.showErrorMessage();
+  //       this.isLoading = false;
+  //     }
+  //   });
+  // }
+
+  onReferenceDocumentChanged(event: any ) {
+    if (event.isUserInput === true && event.source.value.compositionId) {
       this.isLoading = true;
 
-      this.documentHandler.getRawDocumentBundle(event.value.compositionId).subscribe({
-        next: (documentBundle: any) => {
-          this.accordion.closeAll();
+      this.referenceDocumentService.getReferenceDocumentBundle(event.source.value.compositionId).pipe(
+        map( (documentBundle: any) => {return this.userDocumentService.createDocumentWrapper(documentBundle);}
+        )
+      ).subscribe({
+        next: (referenceDocumentWrapper: any) => {
+          //this.accordion.closeAll();
           this.isAccordionExpanded = false;
-          this.expectedDocument = documentBundle;
-          this.dodiff();
+          this.referenceDocumentWrapper = referenceDocumentWrapper
+          this.expectedDocument = referenceDocumentWrapper.documentBundle;
+          //this.dodiff();
           this.isLoading = false;
         },
         error: err => {
@@ -165,20 +209,20 @@ export class RecordComparisonContentComponent implements OnInit {
     }
   }
 
-  onActualCompositionChanged(event: Event) {
-    try {
-      this.actualDocument = JSON.parse( (event.target as any).value );
-      this.dodiff();
-    } catch(e) {
-      console.log(e);
-    }
-  }
+  // onActualCompositionChanged(event: Event) {
+  //   try {
+  //     this.actualDocument = JSON.parse( (event.target as any).value );
+  //     this.dodiff();
+  //   } catch(e) {
+  //     console.log(e);
+  //   }
+  // }
 
   onInputBundleClick() {
     const dialogRef = this.dialog.open( RecordComparisonDialogComponent, {data: null}).afterClosed().subscribe(data => {
       if (data) {
         this.actualDocument = JSON.parse( data );
-        this.dodiff();
+        this.dodiff(this.userDocumentWrapper.documentBundle, this.referenceDocumentWrapper.documentBundle);
         this.accordion.closeAll();
         this.isAccordionExpanded = false;
       }
@@ -216,34 +260,34 @@ export class RecordComparisonContentComponent implements OnInit {
     this.examAndAutopsyStatus = 'invalid';
     this.howDeathOccurredStatus = 'invalid';
 
-    this.dodiff();
+    this.dodiff(undefined, undefined);
   }
 
-  dodiff() {
+  dodiff(userDocument: any, referenceDocument: any) {
     try {
       this.mdiToEdrs = new CompositionMdiToEdrsDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Comp_MDItoEDRS ),
+        this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().Comp_MDItoEDRS ),
         this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Comp_MDItoEDRS ));
 
       this.location = new USCoreLocationDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().USCoreLocation ),
+        this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().USCoreLocation ),
         this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().USCoreLocation ));
 
       this.tobaccoUse = new ObservationTobaccoUseDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Obs_TobaccoUseContributedToDeath ),
+        this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().Obs_TobaccoUseContributedToDeath ),
         this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Obs_TobaccoUseContributedToDeath ));
 
       this.pregnancy = new ObservationDecedentPregnancyDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Obs_DecedentPregnancy ),
+        this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().Obs_DecedentPregnancy ),
         this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Obs_DecedentPregnancy ));
 
       this.deathDate = new ObservationDeathDateDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Obs_DeathDate ),
+        this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().Obs_DeathDate ),
         this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Obs_DeathDate ),
         this.fhirHelper);
 
       this.causeOfDeath1List = [];
-      let actualCauseOfDeath1List = this.bundleHelper.findResourcesByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Obs_CauseOfDeathPart1 );
+      let actualCauseOfDeath1List = this.bundleHelper.findResourcesByProfileName( userDocument, this.profileProvider.getMdiProfiles().Obs_CauseOfDeathPart1 );
       let expectedCauseOfDeath1List = this.bundleHelper.findResourcesByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Obs_CauseOfDeathPart1 );
 
       this.causeAndMannerStatus = 'valid';
@@ -269,35 +313,35 @@ export class RecordComparisonContentComponent implements OnInit {
       }
 
       this.causeOfDeath2 = new ObservationCauseOfDeathPart2Diff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Obs_CauseOfDeathPart2 ),
+        this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().Obs_CauseOfDeathPart2 ),
         this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Obs_CauseOfDeathPart2 ));
 
       this.mannerOfDeath = new ObservationMannerOfDeathDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Obs_MannerOfDeath ),
+        this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().Obs_MannerOfDeath ),
         this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Obs_MannerOfDeath ));
 
       this.locationDeath = new LocationDeathDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Loc_death ),
+        this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().Loc_death ),
         this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Loc_death ));
 
       this.locationInjury = new LocationInjuryDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Loc_injury ),
+        this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().Loc_injury ),
         this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Loc_injury ));
 
       this.patient = new USCorePatientDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().USCorePatient ),
+        this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().USCorePatient ),
         this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().USCorePatient ));
 
       this.practitioner = new USCorePractitionerDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().USCorePractitioner ),
+        this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().USCorePractitioner ),
         this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().USCorePractitioner ));
 
       this.autopsyPerformed = new ObservationAutopsyPerformedDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Obs_AutopsyPerformed ),
+        this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().Obs_AutopsyPerformed ),
         this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Obs_AutopsyPerformed ));
 
       this.howDeathOccurred = new ObservationHowDeathInjuryOccurredDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Obs_HowDeathInjuryOccurred ),
+        this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().Obs_HowDeathInjuryOccurred ),
         this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Obs_HowDeathInjuryOccurred ));
 
       this.caseAdminInfoStatus = (
