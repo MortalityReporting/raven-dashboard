@@ -347,6 +347,7 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
         if(err?.error?.issue){
           this.serverErrorList = err.error.issue;
         }
+        this.fhirValidatorStateService.setValidationResults({isValid: null})
         console.error(err);
       },
       complete: () => {

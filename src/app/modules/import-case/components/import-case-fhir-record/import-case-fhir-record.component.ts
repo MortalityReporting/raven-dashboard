@@ -102,6 +102,9 @@ export class ImportCaseFhirRecordComponent implements OnInit{
     if(!preconditionErrors){
       this.validator.validateFhirResource();
     }
+    else{
+      this.isLoading = false;
+    }
     this.validationResult$.subscribe({
       next: value => {
         this.isLoading = false;
@@ -111,18 +114,25 @@ export class ImportCaseFhirRecordComponent implements OnInit{
           console.warn(this.invalidResourceFound);
           this.invalidResourceFound = true;
         }
-      }});
+      }
+    });
   }
 
   ngOnInit(): void {
     this.validationResult$ = this.fhirValidatorStateService.getValidationResults();
+
     this.fhirValidatorStateService.getFhirResource().subscribe({
       next: value => {
         this.preconditionError = '';
-        this.fhirResource = JSON.parse(value);
+        if(this.utilsService.isJsonString(value)){
+          this.fhirResource = JSON.parse(value);
+        }
+        else {
+          this.fhirResource = value;
+        }
         this.invalidResourceFound = false;
       }
-    })
+    });
 
     this.fhirValidatorStateService.isResourcePasted().subscribe({
       next: value => {
