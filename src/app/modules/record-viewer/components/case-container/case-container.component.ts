@@ -25,7 +25,7 @@ export class CaseContainerComponent implements OnInit, AfterViewInit, OnDestroy 
               private fhirExplorerDrawerService: FhirExplorerDrawerService
   ) {
     route.url.subscribe(url => {
-      this.currentRoute = url[1].path;
+      this.currentRoute = url[0].path;
     });
   }
 

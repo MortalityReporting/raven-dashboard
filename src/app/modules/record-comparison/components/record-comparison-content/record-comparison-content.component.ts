@@ -1,36 +1,36 @@
 import {Component, inject, OnInit, ViewChild} from '@angular/core';
 import { MatAccordion } from "@angular/material/expansion";
-import { DocumentHandlerService } from "../../../../record-viewer/services/document-handler.service";
-import { USCorePatientDiff } from './models/us-core-patient.diff';
-import { CompositionMdiToEdrsDiff } from './models/composition-mdi-to-edrs.diff';
-import { USCoreLocationDiff } from './models/us-core-location.diff';
-import { USCorePractitionerDiff } from './models/us-core-practitioner.diff';
-import { ObservationTobaccoUseDiff } from './models/observation-tobacco-use.diff';
-import { ObservationDecedentPregnancyDiff } from './models/observation-decedent-pregnancy.diff';
-import { ObservationDeathDateDiff } from './models/observation-death-date.diff';
-import { ObservationMannerOfDeathDiff } from './models/observation-manner-of-death.diff';
-import { ObservationCauseOfDeathPart1Diff } from './models/observation-cause-of-death-part-1.diff';
-import { ObservationCauseOfDeathPart2Diff } from './models/observation-cause-of-death-part-2.diff';
-import { ObservationAutopsyPerformedDiff } from './models/observation-autopsy-performed.diff';
-import { ObservationHowDeathInjuryOccurredDiff } from './models/observation-how-death-injury-occurred.diff';
-import { LocationDeathDiff } from './models/location-death.diff';
-import { LocationInjuryDiff } from './models/location-injury.diff';
-import { DecedentService } from "../../../../record-viewer/services/decedent.service";
-import { CaseComparisonDialogComponent } from '../case-comparison-dialog/case-comparison-dialog.component';
+import { DocumentHandlerService } from "../../../record-viewer/services/document-handler.service";
+import { USCorePatientDiff } from '../../models/us-core-patient.diff';
+import { CompositionMdiToEdrsDiff } from '../../models/composition-mdi-to-edrs.diff';
+import { USCoreLocationDiff } from '../../models/us-core-location.diff';
+import { USCorePractitionerDiff } from '../../models/us-core-practitioner.diff';
+import { ObservationTobaccoUseDiff } from '../../models/observation-tobacco-use.diff';
+import { ObservationDecedentPregnancyDiff } from '../../models/observation-decedent-pregnancy.diff';
+import { ObservationDeathDateDiff } from '../../models/observation-death-date.diff';
+import { ObservationMannerOfDeathDiff } from '../../models/observation-manner-of-death.diff';
+import { ObservationCauseOfDeathPart1Diff } from '../../models/observation-cause-of-death-part-1.diff';
+import { ObservationCauseOfDeathPart2Diff } from '../../models/observation-cause-of-death-part-2.diff';
+import { ObservationAutopsyPerformedDiff } from '../../models/observation-autopsy-performed.diff';
+import { ObservationHowDeathInjuryOccurredDiff } from '../../models/observation-how-death-injury-occurred.diff';
+import { LocationDeathDiff } from '../../models/location-death.diff';
+import { LocationInjuryDiff } from '../../models/location-injury.diff';
+import { DecedentService } from "../../../record-viewer/services/decedent.service";
+import { RecordComparisonDialogComponent } from '../record-comparison-dialog/record-comparison-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { UtilsService } from "../../../../../service/utils.service";
+import { UtilsService } from "../../../../service/utils.service";
 import { ActivatedRoute } from "@angular/router";
-import {FhirHelperService} from "../../../../fhir-util/services/fhir-helper.service";
-import {BundleHelperService} from "../../../../fhir-util/services/bundle-helper.service";
-import {ProfileProviderService} from "../../../../fhir-util/services/profile-provider.service";
-import { caseComparison } from "../../../../../../environments/environment";
+import {FhirHelperService} from "../../../fhir-util/services/fhir-helper.service";
+import {BundleHelperService} from "../../../fhir-util/services/bundle-helper.service";
+import {ProfileProviderService} from "../../../fhir-util/services/profile-provider.service";
+import { caseComparison } from "../../../../../environments/environment";
 
 @Component({
-  selector: 'app-case-comparison-content',
-  templateUrl: './case-comparison-content.component.html',
-  styleUrls: ['./case-comparison-content.component.scss'],
+  selector: 'record-comparison-content',
+  templateUrl: './record-comparison-content.component.html',
+  styleUrls: ['./record-comparison-content.component.scss'],
 })
-export class CaseComparisonContentComponent implements OnInit {
+export class RecordComparisonContentComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
   isLoading = false;
@@ -175,7 +175,7 @@ export class CaseComparisonContentComponent implements OnInit {
   }
 
   onInputBundleClick() {
-    const dialogRef = this.dialog.open( CaseComparisonDialogComponent, {data: null}).afterClosed().subscribe( data => {
+    const dialogRef = this.dialog.open( RecordComparisonDialogComponent, {data: null}).afterClosed().subscribe(data => {
       if (data) {
         this.actualDocument = JSON.parse( data );
         this.dodiff();

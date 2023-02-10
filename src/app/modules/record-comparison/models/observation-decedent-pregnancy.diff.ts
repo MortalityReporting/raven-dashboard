@@ -1,9 +1,8 @@
 import * as Diff from 'diff';
-import {DiffType} from '../diff-type';
+import {DiffType} from './diff-type';
 import {ObservationDiff} from './observation.diff';
 
-export class ObservationAutopsyPerformedDiff extends ObservationDiff {
-    componentValueCodeableConcept: DiffType;
+export class ObservationDecedentPregnancyDiff extends ObservationDiff {
     status: DiffType;
     valueCodeableConcept: DiffType;
 
@@ -12,7 +11,6 @@ export class ObservationAutopsyPerformedDiff extends ObservationDiff {
         super( actual, expected );
 
         this.style = 'invalid';
-        this.componentValueCodeableConcept = new DiffType();
         this.status = new DiffType();
         this.valueCodeableConcept = new DiffType();
 
@@ -22,12 +20,6 @@ export class ObservationAutopsyPerformedDiff extends ObservationDiff {
     override doDiff()
     {
         super.doDiff();
-
-        try {
-            this.componentValueCodeableConcept.expected = JSON.stringify( this.expected.component[0].valueCodeableConcept, null, 4 );
-            this.componentValueCodeableConcept.actual = JSON.stringify( this.actual.component[0].valueCodeableConcept, null, 4 );
-            [this.componentValueCodeableConcept.style,this.componentValueCodeableConcept.difference] = DiffType.doDiff( Diff.diffChars( this.componentValueCodeableConcept.expected, this.componentValueCodeableConcept.actual ));
-        } catch(e) {}
 
         try {
             this.status.expected = JSON.stringify( this.expected.status, null, 4 );

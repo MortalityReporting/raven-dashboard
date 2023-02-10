@@ -1,16 +1,16 @@
 import * as Diff from 'diff';
-import {DiffType} from '../diff-type';
+import {DiffType} from './diff-type';
 import {ObservationDiff} from './observation.diff';
 
-export class ObservationTobaccoUseDiff extends ObservationDiff {
-    status: DiffType;
+export class ObservationCauseOfDeathPart2Diff extends ObservationDiff {
+    performer: DiffType;
     valueCodeableConcept: DiffType;
 
     constructor( actual: any, expected: any )
     {
         super( actual, expected );
 
-        this.status = new DiffType();
+        this.performer = new DiffType();
         this.valueCodeableConcept = new DiffType();
 
         this.doDiff();
@@ -21,9 +21,9 @@ export class ObservationTobaccoUseDiff extends ObservationDiff {
         super.doDiff();
 
         try {
-            this.status.expected = JSON.stringify( this.expected.status, null, 4 );
-            this.status.actual = JSON.stringify( this.actual.status, null, 4 );
-            [this.status.style,this.status.difference] = DiffType.doDiff( Diff.diffChars( this.status.expected, this.status.actual ));
+            this.performer.expected = JSON.stringify( this.expected.performer, null, 4 );
+            this.performer.actual = JSON.stringify( this.actual.performer, null, 4 );
+            [this.performer.style,this.performer.difference] = DiffType.doDiff( Diff.diffChars( this.performer.expected, this.performer.actual ));
         } catch(e) {}
 
         try {

@@ -54,7 +54,7 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="mdiToEdrs.extension.style"
         [title]="'Tracking Numbers'"
         [resource]="'Composition MDI TO EDRS'"
@@ -63,9 +63,9 @@
         [difference]="mdiToEdrs.extension.difference"
         [expanded]="isAccordionExpanded"
       >
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="practitioner?.name.style"
         [title]="'Chief ME/C Name'"
         [resource]="'US Core Practitioner'"
@@ -74,9 +74,9 @@
         [difference]="practitioner?.name?.difference"
         [expanded]="isAccordionExpanded"
       >
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="practitioner?.identifier.style"
         [title]="'Chief ME/C License'"
         [resource]="'US Core Practitioner'"
@@ -84,9 +84,9 @@
         [expected]="practitioner?.identifier.expected"
         [difference]="practitioner?.identifier.difference"
         [expanded]="isAccordionExpanded">
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="practitioner?.telecom.style"
         [title]="'Chief ME/C Telecom'"
         [resource]="'US Core Practitioner'"
@@ -94,16 +94,16 @@
         [expected]="practitioner?.telecom.expected"
         [difference]="practitioner?.telecom.difference"
         [expanded]="isAccordionExpanded">
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="practitioner?.address.style"
         [title]="'Chief ME/C Address'" [resource]="'US Core Practitioner'"
         [fhirPath]="practitioner?.expected?.resourceType+ '.address'"
         [expected]="practitioner?.address.expected"
         [difference]="practitioner?.address.difference"
         [expanded]="isAccordionExpanded">
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
 
     </mat-expansion-panel>
 
@@ -117,7 +117,7 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="patient.name.style"
         [title]="'Name'"
         [resource]="'US Core Patient'"
@@ -125,9 +125,9 @@
         [expected]="patient.name.expected"
         [difference]="patient.name.difference"
         [expanded]="isAccordionExpanded">
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="patient.gender.style"
         [title]="'Legal Sex at Death'"
         [resource]="'US Core Patient'"
@@ -135,9 +135,9 @@
         [expected]="patient.gender.expected"
         [difference]="patient.gender.difference"
         [expanded]="isAccordionExpanded">
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="patient.identifier.style"
         [title]="'Social Security Number'"
         [resource]="'US Core Patient'"
@@ -145,9 +145,9 @@
         [expected]="patient.identifier.expected"
         [difference]="patient.identifier.difference"
         [expanded]="isAccordionExpanded">
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="patient.birthDate.style"
         [title]="'Date of Birth'"
         [resource]="'US Core Patient'"
@@ -155,9 +155,9 @@
         [expected]="patient.birthDate.expected"
         [difference]="patient.birthDate.difference"
         [expanded]="isAccordionExpanded">
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="patient.race.style"
         [title]="'Race'"
         [resource]="'US Core Patient'"
@@ -165,9 +165,9 @@
         [expected]="patient.race.expected"
         [difference]="patient.race.difference"
         [expanded]="isAccordionExpanded">
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="patient.ethnicity.style"
         [title]="'Ethnicity'"
         [resource]="'US Core Patient'"
@@ -175,9 +175,9 @@
         [expected]="patient.ethnicity.expected"
         [difference]="patient.ethnicity.difference"
         [expanded]="isAccordionExpanded">
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="patient.address.style"
         [title]="'Residence'"
         [resource]="'US Core Patient'"
@@ -185,7 +185,7 @@
         [expected]="patient.address.expected"
         [difference]="patient.address.difference"
         [expanded]="isAccordionExpanded">
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
 
     </mat-expansion-panel>
 
@@ -199,7 +199,7 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="locationDeath.name.style"
         [title]="'Death Location'"
         [resource]="'Location-death'"
@@ -207,9 +207,9 @@
         [expected]="locationDeath.name.expected"
         [difference]="locationDeath.name.difference"
         [expanded]="isAccordionExpanded">
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="locationInjury.name.style"
         [title]="'Injury Location'"
         [resource]="'Location-injury'"
@@ -217,9 +217,9 @@
         [expected]="locationInjury.name.expected"
         [difference]="locationInjury.name.difference"
         [expanded]="isAccordionExpanded">
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="tobaccoUse.valueCodeableConcept.style"
         [title]="'Tobacco Use Contributed to Death'"
         [resource]="'Observation-tobacco-use'"
@@ -227,9 +227,9 @@
         [expected]="tobaccoUse.valueCodeableConcept.expected"
         [difference]="tobaccoUse.valueCodeableConcept.difference"
         [expanded]="isAccordionExpanded">
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="pregnancy.valueCodeableConcept.style"
         [title]="'Decedent Pregnancy Status'"
         [resource]="'Observation-decedent-pregnancy'"
@@ -237,7 +237,7 @@
         [expected]="pregnancy.valueCodeableConcept.expected"
         [difference]="pregnancy.valueCodeableConcept.difference"
         [expanded]="isAccordionExpanded">
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
 
     </mat-expansion-panel>
 
@@ -251,7 +251,7 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="deathDate.effectiveDateTime.style"
         [title]="'Death Date/Time'"
         [resource]="'Observation-death-date'"
@@ -259,9 +259,9 @@
         [expected]="deathDate.effectiveDateTime.expected"
         [difference]="deathDate.effectiveDateTime.difference"
         [expanded]="isAccordionExpanded">
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="deathDate.pronouncedDateTime.style"
         [title]="'Pronounced Date/Time'"
         [resource]="'Observation-death-date'"
@@ -269,9 +269,9 @@
         [expected]="deathDate.pronouncedDateTime.expected"
         [difference]="deathDate.pronouncedDateTime.difference"
         [expanded]="isAccordionExpanded">
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="deathDate.method.style"
         [title]="'Establishment Approach'"
         [resource]="'Observation-death-date'"
@@ -279,7 +279,7 @@
         [expected]="deathDate.method.expected"
         [difference]="deathDate.method.difference"
         [expanded]="isAccordionExpanded">
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
 
     </mat-expansion-panel>
 
@@ -295,7 +295,7 @@
       </mat-expansion-panel-header>
 
       <div *ngFor="let causeOfDeath1 of causeOfDeath1List; let i = index">
-        <app-case-comparison-content-field
+        <record-comparison-content-field
           [state]="causeOfDeath1.valueCodeableConcept.style"
           [title]="'Part 1 Immediate Cause Event ' + (i+1)"
           [resource]="'Observation-cause-of-death-part1'"
@@ -303,9 +303,9 @@
           [expected]="causeOfDeath1.valueCodeableConcept.expected"
           [difference]="causeOfDeath1.valueCodeableConcept.difference"
           [expanded]="isAccordionExpanded">
-        </app-case-comparison-content-field>
+        </record-comparison-content-field>
 
-        <app-case-comparison-content-field
+        <record-comparison-content-field
           [state]="causeOfDeath1.valueString.style"
           [title]="'Part 1 Immediate Cause Interval ' + (i+1)"
           [resource]="'Observation-cause-of-death-part1'"
@@ -313,10 +313,10 @@
           [expected]="causeOfDeath1.valueString.expected"
           [difference]="causeOfDeath1.valueString.difference"
           [expanded]="isAccordionExpanded">
-        </app-case-comparison-content-field>
+        </record-comparison-content-field>
       </div>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="causeOfDeath2.valueCodeableConcept.style"
         [title]="'Part 2 Contributing Cause'"
         [resource]="'Observation-cause-of-death-part2'"
@@ -324,9 +324,9 @@
         [expected]="causeOfDeath2.valueCodeableConcept.expected"
         [difference]="causeOfDeath2.valueCodeableConcept.difference"
         [expanded]="isAccordionExpanded">
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="mannerOfDeath.valueCodeableConcept.style"
         [title]="'Manner of Death'"
         [resource]="'Observation-manner-of-death'"
@@ -334,9 +334,9 @@
         [expected]="mannerOfDeath.valueCodeableConcept.expected"
         [difference]="mannerOfDeath.valueCodeableConcept.difference"
         [expanded]="isAccordionExpanded">
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="howDeathOccurred.placeOfInjury.style"
         [title]="'Place of Injury'"
         [resource]="'Observation-how-death-injury-occurred'"
@@ -344,9 +344,9 @@
         [expected]="howDeathOccurred.placeOfInjury.expected"
         [difference]="howDeathOccurred.placeOfInjury.difference"
         [expanded]="isAccordionExpanded">
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="howDeathOccurred.howDeathInjuryOccurred.style"
         [title]="'How Injury Occurred'"
         [resource]="'Observation-how-death-injury-occurred'"
@@ -354,9 +354,9 @@
         [expected]="howDeathOccurred.howDeathInjuryOccurred.expected"
         [difference]="howDeathOccurred.howDeathInjuryOccurred.difference"
         [expanded]="isAccordionExpanded">
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="howDeathOccurred.effectiveDateTime.style"
         [title]="'Injury Date/Time'"
         [resource]="'Observation-how-death-injury-occurred'"
@@ -364,9 +364,9 @@
         [expected]="howDeathOccurred.effectiveDateTime.expected"
         [difference]="howDeathOccurred.effectiveDateTime.difference"
         [expanded]="isAccordionExpanded">
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="howDeathOccurred.injuryOccurredAtWork.style"
         [title]="'Injury/Event Occurred at Work'"
         [resource]="'Observation-how-death-injury-occurred'"
@@ -374,9 +374,9 @@
         [expected]="howDeathOccurred.injuryOccurredAtWork.expected"
         [difference]="howDeathOccurred.injuryOccurredAtWork.difference"
         [expanded]="isAccordionExpanded">
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="howDeathOccurred.transportationRole.style"
         [title]="'Transportation Role'"
         [resource]="'Observation-how-death-injury-occurred'"
@@ -384,7 +384,7 @@
         [expected]="howDeathOccurred.transportationRole.expected"
         [difference]="howDeathOccurred.transportationRole.difference"
         [expanded]="isAccordionExpanded">
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
     </mat-expansion-panel>
 
     <!-- Medical History Section -->
@@ -400,7 +400,7 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="autopsyPerformed.valueCodeableConcept.style"
         [title]="'Results Available'"
         [resource]="'Observation-autopsy-performed-indicator'"
@@ -409,9 +409,9 @@
         [difference]="autopsyPerformed.valueCodeableConcept.difference"
         [expanded]="isAccordionExpanded"
       >
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
 
-      <app-case-comparison-content-field
+      <record-comparison-content-field
         [state]="autopsyPerformed.componentValueCodeableConcept.style"
         [title]="'Autopsy Performed'"
         [resource]="'Observation-autopsy-performed-indicator'"
@@ -419,7 +419,7 @@
         [expected]="autopsyPerformed.componentValueCodeableConcept.expected"
         [difference]="autopsyPerformed.componentValueCodeableConcept.difference"
         [expanded]="isAccordionExpanded">
-      </app-case-comparison-content-field>
+      </record-comparison-content-field>
     </mat-expansion-panel>
 
     <!-- Narratives Section -->

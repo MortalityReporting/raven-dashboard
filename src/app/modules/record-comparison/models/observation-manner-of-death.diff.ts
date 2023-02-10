@@ -1,5 +1,5 @@
 import * as Diff from 'diff';
-import {DiffType} from '../diff-type';
+import {DiffType} from './diff-type';
 import {ObservationDiff} from './observation.diff';
 
 export class ObservationMannerOfDeathDiff extends ObservationDiff {

@@ -1,8 +1,10 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {LandingComponent} from "./components/landing/landing.component";
 import {CaseContainerComponent} from "./modules/record-viewer/components/case-container/case-container.component";
-import {CaseComparisonComponent} from "./modules/record-comparison/components/case-comparison/case-comparison.component";
+import {
+  RecordComparisonContainerComponent
+} from "./modules/record-comparison/components/record-comparison-container/record-comparison-container.component";
 import {ImportCaseComponent} from "./modules/import-case/components/import-case.component";
 import {FhirValidatorComponent} from "./modules/fhir-validator/components/fhir-validator/fhir-validator.component";
 import {SearchRecordsComponent} from "./modules/record-viewer/components/search-records/search-records.component";
@@ -14,43 +16,54 @@ const routes: Routes = [
     path: '',
     component: LandingComponent
   },
-  {
+  { // Record Viewer Module
     path: 'records',
-    component: SearchRecordsComponent
+    children: [
+      {
+        path: '',
+        component: SearchRecordsComponent
+      },
+      {
+        path: 'mdi/:id',
+        component: CaseContainerComponent
+      },
+      {
+        path: 'tox/:id',
+        component: CaseContainerComponent
+      }
+    ],
   },
-  {
-    path: 'comparison/:id',
-    component: CaseComparisonComponent
-  },
-  {
+  { // Record Comparison Module
     path: 'comparison',
-    component: CaseComparisonComponent
+    children: [
+      {
+        path: ':id',
+        component: RecordComparisonContainerComponent
+      },
+      {
+        path: '',
+        component: RecordComparisonContainerComponent
+      },
+    ]
   },
-  {
+
+  { // FHIR Validator Module
     path: 'fhir-validator',
     component: FhirValidatorComponent
   },
-  {
-    path: 'records/mdi/:id',
-    component: CaseContainerComponent
-  },
-  {
-    path: 'records/tox/:id',
-    component: CaseContainerComponent
-  },
-  {
+  { // Import Case Module
     path: 'import-case',
     component: ImportCaseComponent
   },
-  {
+  { // Workflow Simulator Module
     path: 'workflow-simulator',
-    children:[
+    children: [
       {
-        path : '',
+        path: '',
         component: WorkflowSimulatorComponent,
       },
       {
-        path : 'search-edrs',
+        path: 'search-edrs',
         component: SearchEdrsComponent,
       }
     ]
@@ -64,4 +77,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}
