@@ -1,13 +1,13 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import {UtilsService} from "../../../../../service/utils.service";
+import {UtilsService} from "../../../../service/utils.service";
 
 @Component({
-  selector: 'case-comparison-dialog',
-  templateUrl: 'case-comparison-dialog.component.html',
-  styleUrls: ['./case-comparison-dialog.component.scss'],
+  selector: 'record-comparison-container-dialog',
+  templateUrl: 'record-comparison-dialog.component.html',
+  styleUrls: ['./record-comparison-dialog.component.scss'],
 })
-export class CaseComparisonDialogComponent {
+export class RecordComparisonDialogComponent {
   text: string = undefined;
   originalText: string = undefined;
   errorMessage: string;
@@ -15,7 +15,7 @@ export class CaseComparisonDialogComponent {
   constructor(
     @Inject( MAT_DIALOG_DATA) public data: Object,
     private utilsService: UtilsService,
-    public dialogRef: MatDialogRef<CaseComparisonDialogComponent>) {
+    public dialogRef: MatDialogRef<RecordComparisonDialogComponent>) {
     dialogRef.disableClose =true;
       if (data) {
         this.text = JSON.stringify(data, null, 2);

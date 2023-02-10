@@ -1,5 +1,5 @@
 import * as Diff from 'diff';
-import {DiffType} from '../diff-type';
+import {DiffType} from './diff-type';
 import {LocationDiff} from './location.diff';
 
 export class LocationDeathDiff extends LocationDiff {

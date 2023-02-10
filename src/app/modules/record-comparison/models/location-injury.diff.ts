@@ -1,9 +1,9 @@
 import * as Diff from 'diff';
-import {DiffType} from '../diff-type';
+import {DiffType} from './diff-type';
 import {LocationDiff} from './location.diff';
 
-export class LocationInjuryDiff extends LocationDiff { 
-    
+export class LocationInjuryDiff extends LocationDiff {
+
     constructor( actual: any, expected: any )
     {
         super( actual, expected );
@@ -14,7 +14,7 @@ export class LocationInjuryDiff extends LocationDiff {
     }
 
     override doDiff()
-    {    
+    {
         super.doDiff();
    }
 }

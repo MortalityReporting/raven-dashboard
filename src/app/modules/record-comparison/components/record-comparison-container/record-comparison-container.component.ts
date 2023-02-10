@@ -5,15 +5,15 @@ import {DocumentHandlerService} from "../../../record-viewer/services/document-h
 import { Observable } from "rxjs";
 import {CaseHeader} from "../../../record-viewer/models/case.header";
 import {CaseSummary} from "../../../record-viewer/models/case.summary";
-import {CaseComparisonContentComponent} from "./case-comparison-content/case-comparison-content.component";
+import {RecordComparisonContentComponent} from "../record-comparison-content/record-comparison-content.component";
 
 @Component({
-  selector: 'app-case-comparison',
-  templateUrl: './case-comparison.component.html',
-  styleUrls: ['./case-comparison.component.scss']
+  selector: 'record-comparison-container',
+  templateUrl: './record-comparison-container.component.html',
+  styleUrls: ['./record-comparison-container.component.scss']
 })
-export class CaseComparisonComponent implements OnInit, OnDestroy {
-  @ViewChild(CaseComparisonContentComponent) caseComparisonContentComponent: CaseComparisonContentComponent;
+export class RecordComparisonContainerComponent implements OnInit, OnDestroy {
+  @ViewChild(RecordComparisonContentComponent) caseComparisonContentComponent: RecordComparisonContentComponent;
   caseHeader$: Observable<CaseHeader>;
   caseSummary$: Observable<CaseSummary>;
   patientResource$: Observable<any>;

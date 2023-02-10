@@ -21,8 +21,8 @@ import {ConformationDialogComponent} from "./components/widgets/conformation-dia
 import {ClipboardModule} from "@angular/cdk/clipboard";
 import {ModalComponent} from './components/widgets/modal/modal.component';
 import {
-  CaseComparisonDialogComponent
-} from './modules/record-comparison/components/case-comparison/case-comparison-dialog/case-comparison-dialog.component';
+  RecordComparisonDialogComponent
+} from './modules/record-comparison/components/record-comparison-dialog/record-comparison-dialog.component';
 import {UiStringConstants} from "./providers/ui-string-constants";
 
 import {WorkflowSimulatorModule} from "./modules/workflow-simulator/workflow-simulator.module";
@@ -72,7 +72,7 @@ import {RecordComparisonModule} from "./modules/record-comparison/record-compari
     FhirExplorerDrawerService,
   ],
   bootstrap: [AppComponent],
-  entryComponents: [CaseComparisonDialogComponent],
+
 })
 export class AppModule {
 }

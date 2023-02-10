@@ -1,8 +1,8 @@
 import * as Diff from 'diff';
-import {DiffType} from '../diff-type';
+import {DiffType} from './diff-type';
 import {ObservationDiff} from './observation.diff';
 
-export class ObservationDecedentPregnancyDiff extends ObservationDiff {
+export class ObservationTobaccoUseDiff extends ObservationDiff {
     status: DiffType;
     valueCodeableConcept: DiffType;
 
@@ -10,7 +10,6 @@ export class ObservationDecedentPregnancyDiff extends ObservationDiff {
     {
         super( actual, expected );
 
-        this.style = 'invalid';
         this.status = new DiffType();
         this.valueCodeableConcept = new DiffType();
 

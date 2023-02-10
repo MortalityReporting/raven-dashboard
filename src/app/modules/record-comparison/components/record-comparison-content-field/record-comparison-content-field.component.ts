@@ -2,11 +2,11 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@an
 import {MatExpansionPanel} from "@angular/material/expansion";
 
 @Component({
-  selector: 'app-case-comparison-content-field',
-  templateUrl: './case-comparison-content-field.component.html',
-  styleUrls: ['./case-comparison-content-field.component.scss']
+  selector: 'record-comparison-content-field',
+  templateUrl: './record-comparison-content-field.component.html',
+  styleUrls: ['./record-comparison-content-field.component.scss']
 })
-export class CaseComparisonContentFieldComponent implements OnInit, OnChanges{
+export class RecordComparisonContentFieldComponent implements OnInit, OnChanges{
   @Input() state: string;
   @Input() title: string;
   @Input() resource: string;
