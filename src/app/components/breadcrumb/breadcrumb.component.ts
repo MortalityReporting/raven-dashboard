@@ -12,7 +12,9 @@ import { BreadcrumbService } from './breadcrumb.service';
 export class BreadcrumbComponent {
   breadcrumbs$: Observable<Breadcrumb[]>;
 
-  constructor(breadcrumbService: BreadcrumbService) {
-    this.breadcrumbs$ = breadcrumbService.breadcrumbs$;
+  constructor( private breadcrumbService: BreadcrumbService ) {}
+
+  ngOnInit(): void {
+    this.breadcrumbs$ = this.breadcrumbService.breadcrumbs$;
   }
 }
