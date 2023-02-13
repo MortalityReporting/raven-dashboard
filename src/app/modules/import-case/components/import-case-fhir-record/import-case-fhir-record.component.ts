@@ -88,6 +88,7 @@ export class ImportCaseFhirRecordComponent implements OnInit{
     this.fhirResource = null;
     this.preconditionError = '';
     this.validator.clearUI();
+    this.file = null;
   }
 
   onSubmit() {
