@@ -3,7 +3,7 @@ import {EnvironmentHandlerService} from "../../record-viewer/services/environmen
 import {HttpClient} from "@angular/common/http";
 import {FhirHelperService} from "../../fhir-util/services/fhir-helper.service";
 import {BundleHelperService} from "../../fhir-util/services/bundle-helper.service";
-import {BehaviorSubject, forkJoin, map, mergeMap, Observable} from "rxjs";
+import {of, forkJoin, map, mergeMap, Observable} from "rxjs";
 import {MdiToEDRSDocumentWrapper} from "../models/mdiToEdrsDocumentWrapper";
 
 @Injectable({
@@ -18,31 +18,30 @@ export class ReferenceDocumentService {
     private bundleHelper: BundleHelperService)
   {}
 
+
   getReferenceDocuments() {
-    // TODO: make call to get all flagged bundles once implemented on server.
-    return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "Composition/").pipe(
-      map((compositionSearchSetBundle: any) => (compositionSearchSetBundle.entry as Object[]))
-    ).pipe(
-      mergeMap( (compositionBecList: any[]) =>
+    return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "Bundle?type=http%3A%2F%2Fconfig.raven.app%2Fcode%7Creference")
+      .pipe(
+        map((referenceBundleSearch: any) => (referenceBundleSearch.entry as Object[]))
+      ).pipe(
+        mergeMap( (bundleBecList: any[]) =>
           forkJoin(
-            compositionBecList.map((compositionBec: any) =>{
-              //console.log(compositionBec)
-              return this.http.get(this.environmentHandler.getFhirServerBaseURL() + compositionBec.resource.subject.reference).pipe(
-                map((subject: any) => {
-                      return this.createSummary(subject, compositionBec.resource)
-                  }
-                )
-              )
+            bundleBecList.map((bundleBec: any) =>{
+              const composition = bundleBec.resource.entry[0].resource;
+              console.log(composition)
+              const subject = this.bundleHelper.findSubjectInBundle(composition, bundleBec.resource)
+              console.log(subject)
+              return of(this.createSummary(subject, bundleBec.resource));
             })
           )
+        )
       )
-    )
   }
 
-  createSummary(subject: any, composition: any): any {
+  createSummary(subject: any, bundle: any): any {
     return {
       "display": this.fhirHelper.getPatientOfficialName(subject),
-      "compositionId": composition.id
+      "bundle": bundle
     }
   }
 
