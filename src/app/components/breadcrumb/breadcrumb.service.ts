@@ -22,59 +22,102 @@ export class BreadcrumbService {
         const root = this.router.routerState.snapshot.root;
 
         // Make first call to addBreadcrumb function
-        this.addBreadcrumb(root.firstChild!, [], breadcrumbs);
+        this.addBreadcrumb(root.firstChild!, breadcrumbs);
 
         // Emit the new hierarchy
         this._breadcrumbs$.next(breadcrumbs);
       });
   }
 
+  // private buildPath(iterations: number, components: string[]) {
+  //   var path = '';
+
+  //   for (let i = 1; i <= iterations; i++) {
+  //     path = path + '/' + components[i];
+  //   }
+    
+  //   return path;
+  // }
+
   private buildPath(iterations: number, components: string[]) {
     var path = '';
 
-    for (let i = 1; i <= iterations; i++) {
-      path = path + '/' + components[i];
-    }
-    
+    components.map((item, index) => {
+      if (index > 0 && index <= iterations)
+      {
+        path = path + '/' + item;
+      }
+    })
+        
     return path;
   }
 
   private addBreadcrumb(
     route: ActivatedRouteSnapshot,
-    parentUrl: string[],
     breadcrumbs: Breadcrumb[]
   ) {
     if (route) {
-      const routeUrl = parentUrl.concat(route.url.map((url) => url.path));
+      let url = "home" + this.router.routerState.snapshot.url;
 
-      let components = routeUrl.toString().split(',');
+      let components =  url.split('/');
 
-      // only show 'home' when we're not home      
-      if (routeUrl.length > 0) {
-        components.splice(0, 0, 'home');
-      }
-      
-      for (let i = 0; i<components.length; i++) {
-        let item = components[i];
-
-        let label = item;
-
-        label = label.replace( "records", "record viewer" );
-        label = label.replace( "mdi", "mdi viewer" );
-        label = label.replace( "tox", "toxicology viewer" );
-
-        const breadcrumb = {
-            label: label,
-            url: this.buildPath(i, components),
-        };
-      
-        breadcrumbs.push(breadcrumb);
-        this.addBreadcrumb(route.firstChild!, routeUrl, breadcrumbs);   
+      components.some( (item, index) => {
+        if (item.length > 0)
+        {
+          let label = item;
+  
+          label = label.replace( "records", "record viewer" );
+          label = label.replace( "mdi", "mdi viewer" );
+          label = label.replace( "tox", "toxicology viewer" );
+  
+          const breadcrumb = {
+              label: label,
+              url: this.buildPath(index, components),
+          };
         
-        // drop the id parameter that follows mdi & tox in the url
-        if (item === "mdi" || item === "tox") {
-          break;
+          breadcrumbs.push(breadcrumb);
+          
+          if (item === "mdi" || item === "tox") {
+            return true 
+          }  
+          else
+          {
+            return false;
+          }
         }
+        else
+        {
+          return true;
+        }
+      })
+
+      // for (let i = 0; i<components.length; i++) {
+      //   let item = components[i];
+
+      //   if (item.length > 0)
+      //   {
+      //     let label = item;
+  
+      //     label = label.replace( "records", "record viewer" );
+      //     label = label.replace( "mdi", "mdi viewer" );
+      //     label = label.replace( "tox", "toxicology viewer" );
+  
+      //     const breadcrumb = {
+      //         label: label,
+      //         url: this.buildPath(i, components),
+      //     };
+        
+      //     breadcrumbs.push(breadcrumb);
+          
+      //     if (item === "mdi" || item === "tox") {
+      //       break;
+      //     }  
+      //   }
+      // }
+
+      if (breadcrumbs.length == 1)
+      {
+        breadcrumbs.pop();
       }
     }
   }

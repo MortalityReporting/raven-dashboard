@@ -1,45 +1,72 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {LandingComponent} from "./components/landing/landing.component";
-import {CaseContainerComponent} from "./components/pages/case-container/case-container.component";
-import {CaseComparisonComponent} from "./components/pages/case-comparison/case-comparison.component";
-import {ImportCaseComponent} from "./components/pages/import-case/import-case.component";
-import {FhirValidatorComponent} from "./fhir-validator/components/fhir-validator/fhir-validator.component";
-import {CasesComponent} from "./components/pages/cases/cases.component";
-import {ToxicologyContainerComponent} from "./components/pages/toxicology-container/toxicology-container.component";
+import {CaseContainerComponent} from "./modules/record-viewer/components/case-container/case-container.component";
+import {
+  RecordComparisonContainerComponent
+} from "./modules/record-comparison/components/record-comparison-container/record-comparison-container.component";
+import {ImportCaseComponent} from "./modules/import-case/components/import-case.component";
+import {FhirValidatorComponent} from "./modules/fhir-validator/components/fhir-validator/fhir-validator.component";
+import {SearchRecordsComponent} from "./modules/record-viewer/components/search-records/search-records.component";
+import {WorkflowSimulatorComponent} from "./modules/workflow-simulator/components/workflow-simulator.component";
+import {SearchEdrsComponent} from "./modules/workflow-simulator/components/search-edrs/search-edrs.component";
 
 const routes: Routes = [
   {
     path: '',
     component: LandingComponent
   },
-  {
+  { // Record Viewer Module
     path: 'records',
-    component: CasesComponent
+    children: [
+      {
+        path: '',
+        component: SearchRecordsComponent
+      },
+      {
+        path: 'mdi/:id',
+        component: CaseContainerComponent
+      },
+      {
+        path: 'tox/:id',
+        component: CaseContainerComponent
+      }
+    ],
   },
-  {
-    path: 'comparison/:id',
-    component: CaseComparisonComponent
-  },
-  {
+  { // Record Comparison Module
     path: 'comparison',
-    component: CaseComparisonComponent
+    children: [
+      {
+        path: ':id',
+        component: RecordComparisonContainerComponent
+      },
+      {
+        path: '',
+        component: RecordComparisonContainerComponent
+      },
+    ]
   },
-  {
+
+  { // FHIR Validator Module
     path: 'fhir-validator',
     component: FhirValidatorComponent
   },
-  {
-    path: 'records/mdi/:id',
-    component: CaseContainerComponent
-  },
-  {
-    path: 'records/tox/:id',
-    component: CaseContainerComponent
-  },
-  {
+  { // Import Case Module
     path: 'import-case',
     component: ImportCaseComponent
+  },
+  { // Workflow Simulator Module
+    path: 'workflow-simulator',
+    children: [
+      {
+        path: '',
+        component: WorkflowSimulatorComponent,
+      },
+      {
+        path: 'search-edrs',
+        component: SearchEdrsComponent,
+      }
+    ]
   },
   { // Do not add any paths below this point, this path MUST ALWAYS be the last path!
     path: '**', redirectTo: ''
@@ -50,4 +77,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

@@ -1,0 +1,438 @@
+<div class="case-summary-content-wrapper">
+  <div class="summary-section-grid">
+    <div class="grid-row">
+      <div class="grid-col-1">
+        User MDI to EDRS Document Bundle:
+      </div>
+      <div class="grid-col-1">
+        Compare Against Valid Example Case:
+      </div>
+    </div>
+
+    <div class="grid-row">
+      <div class="grid-col-1">
+        <button mat-raised-button color="primary" (click)="onInputBundleClick()">Input MDI to EDRS Document Bundle</button>
+      </div>
+      <div class="grid-col-1">
+        <mat-form-field>
+          <mat-select [(value)]="selectedTestCase">
+            <mat-option class="mat-option" *ngFor="let testCase of testCases" [value]="testCase">
+              {{ testCase.display }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="grid-col-1">
+        <div style="align-items: center;">
+          <button mat-raised-button color="accent" (click)="onExpectedCompositionChanged(selectedTestCase)">Compare</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="actualDocument; else noActualDocument">
+  <div class="section-button-wrapper" style="margin-bottom: 0.2rem">
+    <button mat-raised-button (click)="onOpenAll()">
+      <mat-icon>expand_more</mat-icon>
+      Expand All Sections
+    </button>
+    <button mat-raised-button (click)="onCloseAll()">
+      <mat-icon>expand_less</mat-icon>
+      Collapse All Sections
+    </button>
+  </div>
+
+  <mat-accordion multi>
+    <mat-expansion-panel class="summary-section" id="caseAdminInfo" [expanded]="isExpanded('caseAdminInfo')">
+
+      <!-- Case Administration Information Section -->
+      <mat-expansion-panel-header (click)="onToggleState( 'caseAdminInfo' )">
+        <mat-panel-title>
+          <mat-icon *ngIf="caseAdminInfoStatus=='valid'" class="valid-icon">done</mat-icon>
+          <mat-icon *ngIf="caseAdminInfoStatus=='invalid'" class="invalid-icon">error</mat-icon>
+          Case Administration Information
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <record-comparison-content-field
+        [state]="mdiToEdrs.extension.style"
+        [title]="'Tracking Numbers'"
+        [resource]="'Composition MDI TO EDRS'"
+        [fhirPath]="mdiToEdrs.expected?.resourceType + '.extension'"
+        [expected]="mdiToEdrs.extension.expected"
+        [difference]="mdiToEdrs.extension.difference"
+        [expanded]="isAccordionExpanded"
+      >
+      </record-comparison-content-field>
+
+      <record-comparison-content-field
+        [state]="practitioner?.name.style"
+        [title]="'Chief ME/C Name'"
+        [resource]="'US Core Practitioner'"
+        [fhirPath]="practitioner?.expected?.resourceType + '.name'"
+        [expected]="practitioner?.name?.expected"
+        [difference]="practitioner?.name?.difference"
+        [expanded]="isAccordionExpanded"
+      >
+      </record-comparison-content-field>
+
+      <record-comparison-content-field
+        [state]="practitioner?.identifier.style"
+        [title]="'Chief ME/C License'"
+        [resource]="'US Core Practitioner'"
+        [fhirPath]="practitioner?.expected?.resourceType + '.identifier'"
+        [expected]="practitioner?.identifier.expected"
+        [difference]="practitioner?.identifier.difference"
+        [expanded]="isAccordionExpanded">
+      </record-comparison-content-field>
+
+      <record-comparison-content-field
+        [state]="practitioner?.telecom.style"
+        [title]="'Chief ME/C Telecom'"
+        [resource]="'US Core Practitioner'"
+        [fhirPath]="practitioner?.expected?.resourceType + '.telecom'"
+        [expected]="practitioner?.telecom.expected"
+        [difference]="practitioner?.telecom.difference"
+        [expanded]="isAccordionExpanded">
+      </record-comparison-content-field>
+
+      <record-comparison-content-field
+        [state]="practitioner?.address.style"
+        [title]="'Chief ME/C Address'" [resource]="'US Core Practitioner'"
+        [fhirPath]="practitioner?.expected?.resourceType+ '.address'"
+        [expected]="practitioner?.address.expected"
+        [difference]="practitioner?.address.difference"
+        [expanded]="isAccordionExpanded">
+      </record-comparison-content-field>
+
+    </mat-expansion-panel>
+
+    <!-- Demographics Section -->
+    <mat-expansion-panel class="summary-section" id="demographics" [expanded]="isExpanded('demographics')">
+      <mat-expansion-panel-header (click)="onToggleState( 'demographics' )">
+        <mat-panel-title>
+          <mat-icon *ngIf="demographicsStatus=='valid'" class="valid-icon">done</mat-icon>
+          <mat-icon *ngIf="demographicsStatus=='invalid'" class="invalid-icon">error</mat-icon>
+          Demographics
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <record-comparison-content-field
+        [state]="patient.name.style"
+        [title]="'Name'"
+        [resource]="'US Core Patient'"
+        [fhirPath]="patient.expected?.resourceType + '.name'"
+        [expected]="patient.name.expected"
+        [difference]="patient.name.difference"
+        [expanded]="isAccordionExpanded">
+      </record-comparison-content-field>
+
+      <record-comparison-content-field
+        [state]="patient.gender.style"
+        [title]="'Legal Sex at Death'"
+        [resource]="'US Core Patient'"
+        [fhirPath]="patient.expected?.resourceType + '.gender'"
+        [expected]="patient.gender.expected"
+        [difference]="patient.gender.difference"
+        [expanded]="isAccordionExpanded">
+      </record-comparison-content-field>
+
+      <record-comparison-content-field
+        [state]="patient.identifier.style"
+        [title]="'Social Security Number'"
+        [resource]="'US Core Patient'"
+        [fhirPath]="patient.expected?.resourceType + '.identifier'"
+        [expected]="patient.identifier.expected"
+        [difference]="patient.identifier.difference"
+        [expanded]="isAccordionExpanded">
+      </record-comparison-content-field>
+
+      <record-comparison-content-field
+        [state]="patient.birthDate.style"
+        [title]="'Date of Birth'"
+        [resource]="'US Core Patient'"
+        [fhirPath]="patient.expected?.resourceType + '.birthDate'"
+        [expected]="patient.birthDate.expected"
+        [difference]="patient.birthDate.difference"
+        [expanded]="isAccordionExpanded">
+      </record-comparison-content-field>
+
+      <record-comparison-content-field
+        [state]="patient.race.style"
+        [title]="'Race'"
+        [resource]="'US Core Patient'"
+        [fhirPath]="patient.expected?.resourceType + '.valueString'"
+        [expected]="patient.race.expected"
+        [difference]="patient.race.difference"
+        [expanded]="isAccordionExpanded">
+      </record-comparison-content-field>
+
+      <record-comparison-content-field
+        [state]="patient.ethnicity.style"
+        [title]="'Ethnicity'"
+        [resource]="'US Core Patient'"
+        [fhirPath]="patient.expected?.resourceType + '.valueString'"
+        [expected]="patient.ethnicity.expected"
+        [difference]="patient.ethnicity.difference"
+        [expanded]="isAccordionExpanded">
+      </record-comparison-content-field>
+
+      <record-comparison-content-field
+        [state]="patient.address.style"
+        [title]="'Residence'"
+        [resource]="'US Core Patient'"
+        [fhirPath]="patient.expected?.resourceType + '.address'"
+        [expected]="patient.address.expected"
+        [difference]="patient.address.difference"
+        [expanded]="isAccordionExpanded">
+      </record-comparison-content-field>
+
+    </mat-expansion-panel>
+
+    <!-- Circumstances Section -->
+    <mat-expansion-panel class="summary-section" id="circumstances" [expanded]="isExpanded('circumstances')">
+      <mat-expansion-panel-header (click)="onToggleState( 'circumstances' )">
+        <mat-panel-title>
+          <mat-icon *ngIf="circumstancesStatus=='valid'" class="valid-icon">done</mat-icon>
+          <mat-icon *ngIf="circumstancesStatus=='invalid'" class="invalid-icon">error</mat-icon>
+          Circumstances
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <record-comparison-content-field
+        [state]="locationDeath.name.style"
+        [title]="'Death Location'"
+        [resource]="'Location-death'"
+        [fhirPath]="locationDeath.expected?.resourceType + '.name'"
+        [expected]="locationDeath.name.expected"
+        [difference]="locationDeath.name.difference"
+        [expanded]="isAccordionExpanded">
+      </record-comparison-content-field>
+
+      <record-comparison-content-field
+        [state]="locationInjury.name.style"
+        [title]="'Injury Location'"
+        [resource]="'Location-injury'"
+        [fhirPath]="locationInjury.expected?.resourceType + '.name'"
+        [expected]="locationInjury.name.expected"
+        [difference]="locationInjury.name.difference"
+        [expanded]="isAccordionExpanded">
+      </record-comparison-content-field>
+
+      <record-comparison-content-field
+        [state]="tobaccoUse.valueCodeableConcept.style"
+        [title]="'Tobacco Use Contributed to Death'"
+        [resource]="'Observation-tobacco-use'"
+        [fhirPath]="tobaccoUse.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="tobaccoUse.valueCodeableConcept.expected"
+        [difference]="tobaccoUse.valueCodeableConcept.difference"
+        [expanded]="isAccordionExpanded">
+      </record-comparison-content-field>
+
+      <record-comparison-content-field
+        [state]="pregnancy.valueCodeableConcept.style"
+        [title]="'Decedent Pregnancy Status'"
+        [resource]="'Observation-decedent-pregnancy'"
+        [fhirPath]="pregnancy.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="pregnancy.valueCodeableConcept.expected"
+        [difference]="pregnancy.valueCodeableConcept.difference"
+        [expanded]="isAccordionExpanded">
+      </record-comparison-content-field>
+
+    </mat-expansion-panel>
+
+    <!-- Jurisdiction Section -->
+    <mat-expansion-panel class="summary-section" id="jurisdiction" [expanded]="isExpanded('jurisdiction')">
+      <mat-expansion-panel-header (click)="onToggleState( 'jurisdiction' )">
+        <mat-panel-title>
+          <mat-icon *ngIf="jurisdictionStatus=='valid'" class="valid-icon">done</mat-icon>
+          <mat-icon *ngIf="jurisdictionStatus=='invalid'" class="invalid-icon">error</mat-icon>
+          Jurisdiction
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <record-comparison-content-field
+        [state]="deathDate.effectiveDateTime.style"
+        [title]="'Death Date/Time'"
+        [resource]="'Observation-death-date'"
+        [fhirPath]="deathDate.expected?.resourceType + '.valueDateTime'"
+        [expected]="deathDate.effectiveDateTime.expected"
+        [difference]="deathDate.effectiveDateTime.difference"
+        [expanded]="isAccordionExpanded">
+      </record-comparison-content-field>
+
+      <record-comparison-content-field
+        [state]="deathDate.pronouncedDateTime.style"
+        [title]="'Pronounced Date/Time'"
+        [resource]="'Observation-death-date'"
+        [fhirPath]="deathDate.expected?.resourceType + '.valueDateTime'"
+        [expected]="deathDate.pronouncedDateTime.expected"
+        [difference]="deathDate.pronouncedDateTime.difference"
+        [expanded]="isAccordionExpanded">
+      </record-comparison-content-field>
+
+      <record-comparison-content-field
+        [state]="deathDate.method.style"
+        [title]="'Establishment Approach'"
+        [resource]="'Observation-death-date'"
+        [fhirPath]="deathDate.expected?.resourceType + '.method'"
+        [expected]="deathDate.method.expected"
+        [difference]="deathDate.method.difference"
+        [expanded]="isAccordionExpanded">
+      </record-comparison-content-field>
+
+    </mat-expansion-panel>
+
+    <!-- Cause and Manner of Death Section -->
+    <mat-expansion-panel class="summary-section" id="causeAndManner" [expanded]="isExpanded('causeAndManner')">
+
+      <mat-expansion-panel-header (click)="onToggleState( 'causeAndManner' )">
+        <mat-panel-title>
+          <mat-icon *ngIf="causeAndMannerStatus=='valid'" class="valid-icon">done</mat-icon>
+          <mat-icon *ngIf="causeAndMannerStatus=='invalid'" class="invalid-icon">error</mat-icon>
+          Cause and Manner of Death
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div *ngFor="let causeOfDeath1 of causeOfDeath1List; let i = index">
+        <record-comparison-content-field
+          [state]="causeOfDeath1.valueCodeableConcept.style"
+          [title]="'Part 1 Immediate Cause Event ' + (i+1)"
+          [resource]="'Observation-cause-of-death-part1'"
+          [fhirPath]="causeOfDeath1.expected?.resourceType + '.valueCodeableConcept'"
+          [expected]="causeOfDeath1.valueCodeableConcept.expected"
+          [difference]="causeOfDeath1.valueCodeableConcept.difference"
+          [expanded]="isAccordionExpanded">
+        </record-comparison-content-field>
+
+        <record-comparison-content-field
+          [state]="causeOfDeath1.valueString.style"
+          [title]="'Part 1 Immediate Cause Interval ' + (i+1)"
+          [resource]="'Observation-cause-of-death-part1'"
+          [fhirPath]="causeOfDeath1.expected?.resourceType + '.valueString'"
+          [expected]="causeOfDeath1.valueString.expected"
+          [difference]="causeOfDeath1.valueString.difference"
+          [expanded]="isAccordionExpanded">
+        </record-comparison-content-field>
+      </div>
+
+      <record-comparison-content-field
+        [state]="causeOfDeath2.valueCodeableConcept.style"
+        [title]="'Part 2 Contributing Cause'"
+        [resource]="'Observation-cause-of-death-part2'"
+        [fhirPath]="causeOfDeath2.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="causeOfDeath2.valueCodeableConcept.expected"
+        [difference]="causeOfDeath2.valueCodeableConcept.difference"
+        [expanded]="isAccordionExpanded">
+      </record-comparison-content-field>
+
+      <record-comparison-content-field
+        [state]="mannerOfDeath.valueCodeableConcept.style"
+        [title]="'Manner of Death'"
+        [resource]="'Observation-manner-of-death'"
+        [fhirPath]="mannerOfDeath.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="mannerOfDeath.valueCodeableConcept.expected"
+        [difference]="mannerOfDeath.valueCodeableConcept.difference"
+        [expanded]="isAccordionExpanded">
+      </record-comparison-content-field>
+
+      <record-comparison-content-field
+        [state]="howDeathOccurred.placeOfInjury.style"
+        [title]="'Place of Injury'"
+        [resource]="'Observation-how-death-injury-occurred'"
+        [fhirPath]="howDeathOccurred.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="howDeathOccurred.placeOfInjury.expected"
+        [difference]="howDeathOccurred.placeOfInjury.difference"
+        [expanded]="isAccordionExpanded">
+      </record-comparison-content-field>
+
+      <record-comparison-content-field
+        [state]="howDeathOccurred.howDeathInjuryOccurred.style"
+        [title]="'How Injury Occurred'"
+        [resource]="'Observation-how-death-injury-occurred'"
+        [fhirPath]="howDeathOccurred.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="howDeathOccurred.howDeathInjuryOccurred.expected"
+        [difference]="howDeathOccurred.howDeathInjuryOccurred.difference"
+        [expanded]="isAccordionExpanded">
+      </record-comparison-content-field>
+
+      <record-comparison-content-field
+        [state]="howDeathOccurred.effectiveDateTime.style"
+        [title]="'Injury Date/Time'"
+        [resource]="'Observation-how-death-injury-occurred'"
+        [fhirPath]="howDeathOccurred.expected?.resourceType + '.effectiveDateTime'"
+        [expected]="howDeathOccurred.effectiveDateTime.expected"
+        [difference]="howDeathOccurred.effectiveDateTime.difference"
+        [expanded]="isAccordionExpanded">
+      </record-comparison-content-field>
+
+      <record-comparison-content-field
+        [state]="howDeathOccurred.injuryOccurredAtWork.style"
+        [title]="'Injury/Event Occurred at Work'"
+        [resource]="'Observation-how-death-injury-occurred'"
+        [fhirPath]="howDeathOccurred.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="howDeathOccurred.injuryOccurredAtWork.expected"
+        [difference]="howDeathOccurred.injuryOccurredAtWork.difference"
+        [expanded]="isAccordionExpanded">
+      </record-comparison-content-field>
+
+      <record-comparison-content-field
+        [state]="howDeathOccurred.transportationRole.style"
+        [title]="'Transportation Role'"
+        [resource]="'Observation-how-death-injury-occurred'"
+        [fhirPath]="howDeathOccurred.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="howDeathOccurred.transportationRole.expected"
+        [difference]="howDeathOccurred.transportationRole.difference"
+        [expanded]="isAccordionExpanded">
+      </record-comparison-content-field>
+    </mat-expansion-panel>
+
+    <!-- Medical History Section -->
+    <!-- TODO -->
+
+    <!-- Exam and Autopsy Section -->
+    <mat-expansion-panel class="summary-section" id="examAndAutopsy" [expanded]="isExpanded('examAndAutopsy')">
+      <mat-expansion-panel-header (click)="onToggleState( 'examAndAutopsy' )">
+        <mat-panel-title>
+          <mat-icon *ngIf="examAndAutopsyStatus=='valid'" class="valid-icon">done</mat-icon>
+          <mat-icon *ngIf="examAndAutopsyStatus=='invalid'" class="invalid-icon">error</mat-icon>
+          Exam and Autopsy
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <record-comparison-content-field
+        [state]="autopsyPerformed.valueCodeableConcept.style"
+        [title]="'Results Available'"
+        [resource]="'Observation-autopsy-performed-indicator'"
+        [fhirPath]="autopsyPerformed.expected?.resourceType + '.valueCodeableConcept'"
+        [expected]="autopsyPerformed.valueCodeableConcept.expected"
+        [difference]="autopsyPerformed.valueCodeableConcept.difference"
+        [expanded]="isAccordionExpanded"
+      >
+      </record-comparison-content-field>
+
+      <record-comparison-content-field
+        [state]="autopsyPerformed.componentValueCodeableConcept.style"
+        [title]="'Autopsy Performed'"
+        [resource]="'Observation-autopsy-performed-indicator'"
+        [fhirPath]="autopsyPerformed.expected?.resourceType + '.component'"
+        [expected]="autopsyPerformed.componentValueCodeableConcept.expected"
+        [difference]="autopsyPerformed.componentValueCodeableConcept.difference"
+        [expanded]="isAccordionExpanded">
+      </record-comparison-content-field>
+    </mat-expansion-panel>
+
+    <!-- Narratives Section -->
+    <!-- TODO -->
+  </mat-accordion>
+
+  </div>
+
+</div>
+<ng-template #noActualDocument>
+  Please provide an MDI to EDRS Document Bundle to perform a comparison.
+</ng-template>
+<div class="spinner-container" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
+

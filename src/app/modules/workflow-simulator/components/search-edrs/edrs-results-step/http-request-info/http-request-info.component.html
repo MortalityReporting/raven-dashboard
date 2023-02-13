@@ -1,0 +1,38 @@
+<div *ngIf="requestData">
+  <div class="row">
+    <div class="col-left">
+      Request URL:
+    </div>
+    <div class="col-right">
+      <pre>{{ requestData?.url }}</pre>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-left">
+      Request Method:
+    </div>
+    <div class="col-right">
+      <pre>{{ requestMethod }}</pre>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-left">
+      Accept:
+    </div>
+    <div class="col-right">
+      <pre>{{ accept }}</pre>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-left">
+      Content Type:
+    </div>
+    <div class="col-right">
+      <pre>{{ contentType }}</pre>
+    </div>
+  </div>
+</div>
+
