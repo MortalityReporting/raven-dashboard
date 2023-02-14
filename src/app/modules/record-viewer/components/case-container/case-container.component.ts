@@ -4,10 +4,6 @@ import {MatDrawer} from "@angular/material/sidenav";
 import {FhirExplorerDrawerService} from "../../../fhir-explorer/services/fhir-explorer-drawer.service";
 import {Subscription} from "rxjs";
 
-
-class DrawerService {
-}
-
 @Component({
   selector: 'record-viewer-case-container',
   templateUrl: './case-container.component.html',

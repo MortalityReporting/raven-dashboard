@@ -23,7 +23,7 @@ import {FhirHelperService} from "../../../../../../modules/fhir-util/services/fh
 export class MdiToEdrsGridComponent implements OnInit {
 
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['index', 'name', 'gender', 'tod', 'mannerOfDeath', 'caseNumber'];
+  displayedColumns: string[] = ['index', 'lastName', 'gender', 'tod', 'mannerOfDeath', 'caseNumber'];
   decedentGridDtoList: any[];
   isLoading = true;
   selectedCase: any;

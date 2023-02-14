@@ -29,18 +29,8 @@ export class BreadcrumbService {
       });
   }
 
-  // private buildPath(iterations: number, components: string[]) {
-  //   var path = '';
-
-  //   for (let i = 1; i <= iterations; i++) {
-  //     path = path + '/' + components[i];
-  //   }
-    
-  //   return path;
-  // }
-
   private buildPath(iterations: number, components: string[]) {
-    var path = '';
+    let path = '';
 
     components.map((item, index) => {
       if (index > 0 && index <= iterations)
@@ -48,7 +38,7 @@ export class BreadcrumbService {
         path = path + '/' + item;
       }
     })
-        
+
     return path;
   }
 
@@ -65,21 +55,21 @@ export class BreadcrumbService {
         if (item.length > 0)
         {
           let label = item;
-  
+
           label = label.replace( "records", "record viewer" );
           label = label.replace( "mdi", "mdi viewer" );
           label = label.replace( "tox", "toxicology viewer" );
-  
+
           const breadcrumb = {
               label: label,
               url: this.buildPath(index, components),
           };
-        
+
           breadcrumbs.push(breadcrumb);
-          
+
           if (item === "mdi" || item === "tox") {
-            return true 
-          }  
+            return true
+          }
           else
           {
             return false;
@@ -90,30 +80,6 @@ export class BreadcrumbService {
           return true;
         }
       })
-
-      // for (let i = 0; i<components.length; i++) {
-      //   let item = components[i];
-
-      //   if (item.length > 0)
-      //   {
-      //     let label = item;
-  
-      //     label = label.replace( "records", "record viewer" );
-      //     label = label.replace( "mdi", "mdi viewer" );
-      //     label = label.replace( "tox", "toxicology viewer" );
-  
-      //     const breadcrumb = {
-      //         label: label,
-      //         url: this.buildPath(i, components),
-      //     };
-        
-      //     breadcrumbs.push(breadcrumb);
-          
-      //     if (item === "mdi" || item === "tox") {
-      //       break;
-      //     }  
-      //   }
-      // }
 
       if (breadcrumbs.length == 1)
       {

@@ -48,6 +48,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
+import {MatSortModule} from "@angular/material/sort";
 
 
 
@@ -87,7 +88,8 @@ import {MatInputModule} from "@angular/material/input";
     MatStepperModule,
     MatButtonModule,
     FormsModule,
-    MatInputModule
+    MatInputModule,
+    MatSortModule
   ]
 })
 export class WorkflowSimulatorModule { }
