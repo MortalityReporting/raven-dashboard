@@ -25,8 +25,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 }
 
-.top-spacer {
-  padding-top: 15px;
+.top-padding {
+  padding-top: 16px;
+}
+
+.top-margin {
+  margin-top: 16px;
 }
 
 /*Adding some green buttons. We may have to change the color if we don't like it*/
@@ -223,5 +227,9 @@ button {
 
 .col {
   flex: 1;        /* distributes space on the line equally among items */
+}
+
+.grid-row {
+  cursor: pointer;
 }
 

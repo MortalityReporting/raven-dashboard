@@ -107,7 +107,7 @@
   </span>
 </div>
 
-<div class="row-button-wrapper top-spacer" *ngIf="isLoading && isStandalone">
+<div class="row-button-wrapper top-padding" *ngIf="isLoading && isStandalone">
   <span class="content-spacer"></span>
   <button mat-raised-button color="warn" (click)="onCancelValidation()">
     <mat-icon>cancel</mat-icon>
@@ -117,7 +117,7 @@
 
 <!-- Actions available after validator has processed data-->
 <div *ngIf="hasResponseData && !isLoading">
-  <div class="top-spacer">
+  <div class="top-padding">
 
     <div (click)="onFilterResults()">
       <mat-button-toggle-group name="severity level filter" [formControl]="severityLevelsFormControl"
@@ -151,7 +151,7 @@
       </mat-button-toggle-group>
     </div>
 
-    <div class="top-spacer" *ngIf="!isStandalone">
+    <div class="top-padding" *ngIf="!isStandalone">
       <button mat-raised-button color=primary  *ngIf="!renderValidationDetails" (click)="renderValidationDetails = true">
         <mat-icon>expand_more</mat-icon> Expand Validation Results
       </button>
@@ -261,7 +261,7 @@
 
   <!-- Resource as returned from the validator. Note that the resource returned from the validator may be
    formatted differently then the resource we sent to the validator. -->
-  <div class="top-spacer" *ngIf="renderValidationDetails">
+  <div class="top-padding" *ngIf="renderValidationDetails">
         <pre style="width: 100%">
           <div class="validator-response" [innerHTML]="parsedFhirResource"></div>
         </pre>

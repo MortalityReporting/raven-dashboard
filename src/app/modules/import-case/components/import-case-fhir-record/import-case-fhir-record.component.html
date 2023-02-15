@@ -3,7 +3,7 @@
   <div class="content-offset">
     Contents must be a complete MDI Document Bundle or Toxicology Bundle.
 
-    <div class="top-spacer">
+    <div class="top-padding">
       <input type="file" class="file-input" (click)="fileUpload.value=null"
              accept=".json"
              (change)="onFileSelected($event)" #fileUpload>
@@ -23,9 +23,9 @@
   </div>
 </div>
 
-<div class="top-spacer">
+<div class="top-padding">
   2. Submit your Bundle to the Raven FHIR Sever.
-  <div class="content-offset top-spacer">
+  <div class="content-offset top-padding">
     <button mat-raised-button color="primary" (click)="onSubmit()" *ngIf="!invalidResourceFound || preconditionError">
       <mat-icon>send</mat-icon>
       Submit

@@ -112,13 +112,13 @@ export class ImportMdiToEdrsDocumentComponent implements OnInit {
   }
 
   private validateFileContent(fileContent: any): string {
-    if(!fileContent){
+    if (!fileContent){
       return "The file is empty or not parsed correctly";
     }
-    if(this.utilsService.isJsonString(fileContent)){
+    if (this.utilsService.isJsonString(fileContent)){
       return "Invalid JSON content detected";
     }
-    if(!fileContent.resourceType){
+    if (!fileContent.resourceType){
       return 'Invalid resource detected. Missing "Resource Type" property';
     }
     if (fileContent.resourceType != "Bundle"){
@@ -129,17 +129,20 @@ export class ImportMdiToEdrsDocumentComponent implements OnInit {
 
   private getPatientData(documentBundle: any): DecedentSimpleInfo {
     let decedentSimpleInfo: DecedentSimpleInfo = { name: '', dateTimeOfDeath: '', mdiTrackingNumber: '', patientResource: null };
+
     const patient = documentBundle.entry.find(entry => entry.resource?.resourceType === "Patient");
     if(patient){
       const name = this.getPatientName(patient?.resource);
       decedentSimpleInfo.name = name;
       decedentSimpleInfo.patientResource = patient?.resource;
     }
+
     const composition = documentBundle.entry.find(entry => entry.resource?.resourceType === "Composition");
     if(composition){
       const caseNumber = composition?.resource?.extension?.[0]?.valueIdentifier?.value;
       decedentSimpleInfo.mdiTrackingNumber = caseNumber;
     }
+
     const dateTimeOfDeathObservation = this.getObservationByCode(documentBundle, "81956-5");
     if(dateTimeOfDeathObservation){
       const dateTimeOfDeath = dateTimeOfDeathObservation?.effectiveDateTime;

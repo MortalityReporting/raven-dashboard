@@ -16,7 +16,7 @@ export class FhirHelperService {
     if(!observation.component || !componentCode){
       return null;
     }
-    return (observation.component.find((component: any) => component.code.coding[0].code === componentCode)) || undefined;
+    return (observation.component.find((component: any) => component?.code?.coding?.[0]?.code === componentCode)) || undefined;
   }
 
   // This function should only apply to Composition or DiagnosticReport. Matches by tracking number type constant.
