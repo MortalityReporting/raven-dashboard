@@ -1,7 +1,6 @@
 <mat-toolbar class="tool-bars">
-  <mat-toolbar-row class="primary-lighter" appSetFhirExplorer [title]="'document'">
-    <span class="viewer-header-title">MDI to EDRS Viewer</span>
-    <span class="viewer-header-label">Subject Name:</span>
+  <mat-toolbar-row class="decedent-header" appSetFhirExplorer [title]="'document'">
+    <span class="viewer-header-label">Decedent Name:</span>
     <input type="text" value="{{ (caseHeader$ | async)?.fullName}}" readonly>
     <span class="content-spacer"> </span>
     <span class="viewer-header-label">Date/Time of Death:</span>

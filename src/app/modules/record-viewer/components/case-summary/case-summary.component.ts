@@ -11,7 +11,7 @@ import {FhirHelperService} from "../../../fhir-util/services/fhir-helper.service
 @Component({
   selector: 'record-viewer-case-summary',
   templateUrl: './case-summary.component.html',
-  styleUrls: ['./case-summary.component.scss']
+  styleUrls: ['../../record-viewer-styles.css', './case-summary.component.scss']
 })
 export class CaseSummaryComponent implements OnInit, OnDestroy {
   @ViewChild(CaseSummaryContentComponent) caseSummaryContentComponent: CaseSummaryContentComponent;

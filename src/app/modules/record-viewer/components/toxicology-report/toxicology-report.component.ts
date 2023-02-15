@@ -13,7 +13,7 @@ import {ToxicologyReportContentComponent} from "./toxicology-report-content/toxi
 @Component({
   selector: 'record-viewer-toxicology-report',
   templateUrl: './toxicology-report.component.html',
-  styleUrls: ['./toxicology-report.component.scss']
+  styleUrls: ['../../record-viewer-styles.css', './toxicology-report.component.scss']
 })
 export class ToxicologyReportComponent implements OnInit {
   @ViewChild(CaseSummaryContentComponent) toxReportContentComponent: ToxicologyReportContentComponent;

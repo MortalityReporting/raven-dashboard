@@ -20,11 +20,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {ConformationDialogComponent} from "./components/widgets/conformation-dialog/conformation-dialog.component";
 import {ClipboardModule} from "@angular/cdk/clipboard";
 import {ModalComponent} from './components/widgets/modal/modal.component';
-import {
-  RecordComparisonDialogComponent
-} from './modules/record-comparison/components/record-comparison-dialog/record-comparison-dialog.component';
 import {UiStringConstants} from "./providers/ui-string-constants";
-
 import {WorkflowSimulatorModule} from "./modules/workflow-simulator/workflow-simulator.module";
 import {ImportCaseModule} from "./modules/import-case/import-case.module";
 import {RecordViewerModule} from "./modules/record-viewer/record-viewer.module";
@@ -33,17 +29,17 @@ import {environment} from "../environments/environment";
 import {FhirExplorerModule} from "./modules/fhir-explorer/fhir-explorer.module";
 import {MatListModule} from "@angular/material/list";
 import {RecordComparisonModule} from "./modules/record-comparison/record-comparison.module";
-import {BreadcrumbComponent} from './components/breadcrumb/breadcrumb.component';
+import {BreadcrumbComponent} from './modules/common-ui/components/breadcrumb/breadcrumb.component';
+import {CommonUiModule} from "./modules/common-ui/common-ui.module";
 
 @NgModule({
-    declarations: [
-      AppComponent,
-      HeaderComponent,
-      LandingComponent,
-      ConformationDialogComponent,
-      ModalComponent,
-      BreadcrumbComponent,
-    ],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    LandingComponent,
+    ConformationDialogComponent,
+    ModalComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -66,6 +62,7 @@ import {BreadcrumbComponent} from './components/breadcrumb/breadcrumb.component'
     FhirUtilModule,
     FhirExplorerModule,
     RecordComparisonModule,
+    CommonUiModule,
   ],
 
   providers: [
@@ -75,6 +72,9 @@ import {BreadcrumbComponent} from './components/breadcrumb/breadcrumb.component'
   ],
   bootstrap: [AppComponent],
 
+  exports: [
+    BreadcrumbComponent
+  ]
 })
 export class AppModule {
 }
