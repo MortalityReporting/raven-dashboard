@@ -3,7 +3,7 @@ import {DecedentSimpleInfo} from "../../../../../model/decedent-simple-info";
 import {SearchEdrsService} from "../../../service/search-edrs.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {UiStringConstants} from "../../../../../providers/ui-string-constants";
-import {blueJay, environment} from "../../../../../../environments/environment";
+import {blueJay} from "../../../../../../environments/environment";
 
 @Component({
   selector: 'app-endpoint-configuration-step',
@@ -15,7 +15,8 @@ export class EndpointConfigurationStepComponent implements OnInit {
   authenticationOptions: string [];
 
   uiConstantsStep2: any;
-  commonUIConstants: any
+  commonUIConstants: any;
+  blueJayUri = blueJay.serverBase;
 
   //TODO extract those as constants
   serverEndpointList: any[] = [
@@ -79,5 +80,9 @@ export class EndpointConfigurationStepComponent implements OnInit {
 
   onViewServerCapabilityStmt() {
     window.open(blueJay.serverBase + "/metadata", "_blank");
+  }
+
+  onSelected(endpointConfigurationFormGroup: FormGroup) {
+    console.log(endpointConfigurationFormGroup.controls['registeredEndpoint'].value.serverEndpoint);
   }
 }

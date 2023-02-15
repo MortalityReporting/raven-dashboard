@@ -36,7 +36,7 @@ export class UiStringConstants {
       step2: {
         STEP_LABEL: `Configure Endpoint`,
         DESCRIPTION: `Step 2 - Configure the EDRS endpoint. The BlueJay test server is provided as a default.`,
-        DISCLAIMER: `Please be aware that for custom endpoint configuration users are responsible for all security considerations. Raven does not store any user information, though some web browsers may attempt to store sensitive data input into form fields..`,
+        DISCLAIMER: `Please be aware that for custom endpoint configuration users are responsible for all security considerations. Raven does not store any user information, though some web browsers may attempt to store sensitive data input into form fields.`,
         VIEW_CAPABILITY_STMT_BTN: `View Server Capability Statement`,
         VIEW_SERVER_$MDI_DOCS_OP_DEFINITION_BTN: `View Server $mdi-documents Operation Definition`,
         PROCEED_TO_NEXT_STEP_BTN: `Proceed to search`,
