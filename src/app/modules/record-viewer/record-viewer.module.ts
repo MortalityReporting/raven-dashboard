@@ -54,28 +54,28 @@ import {MatSortModule} from "@angular/material/sort";
     CaseSummaryContentFieldComponent,
     CaseSummaryRelatedToxComponent
   ],
-    imports: [
-        CommonModule,
-        FhirUtilModule, // Dependency
-        MatSidenavModule,
-        MatIconModule,
-        MatListModule,
-        MatTooltipModule,
-        MatToolbarModule,
-        MatButtonModule,
-        RouterModule,
-        FhirExplorerModule,
-        MatTableModule,
-        MatExpansionModule,
-        MatInputModule,
-        MatProgressSpinnerModule,
-        MatTabsModule,
-        FormsModule,
-        MatCardModule,
-        MatSelectModule,
-        MatCheckboxModule,
-        MatSortModule,
-    ]
+  imports: [
+    CommonModule,
+    FhirUtilModule, // Dependency
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatTooltipModule,
+    MatToolbarModule,
+    MatButtonModule,
+    RouterModule,
+    FhirExplorerModule,
+    MatTableModule,
+    MatExpansionModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
+    MatTabsModule,
+    FormsModule,
+    MatCardModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatSortModule,
+  ]
 })
 export class RecordViewerModule {
   constructor(private matIconRegistry: MatIconRegistry,

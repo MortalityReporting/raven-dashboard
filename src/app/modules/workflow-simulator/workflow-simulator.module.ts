@@ -70,26 +70,26 @@ import {MatSortModule} from "@angular/material/sort";
     MdiToEdrsDocumentSelectStepComponent],
   exports: [
   ],
-    imports: [
-        CommonModule,
-        MatToolbarModule,
-        MatCardModule,
-        MatTabsModule,
-        MatFormFieldModule,
-        MatSelectModule,
-        MatProgressSpinnerModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatTooltipModule,
-        MatRadioModule,
-        ReactiveFormsModule,
-        MatExpansionModule,
-        MatIconModule,
-        MatStepperModule,
-        MatButtonModule,
-        FormsModule,
-        MatInputModule,
-        MatSortModule
-    ]
+  imports: [
+    CommonModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatTabsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatProgressSpinnerModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatTooltipModule,
+    MatRadioModule,
+    ReactiveFormsModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatStepperModule,
+    MatButtonModule,
+    FormsModule,
+    MatInputModule,
+    MatSortModule
+  ]
 })
 export class WorkflowSimulatorModule { }

@@ -23,7 +23,12 @@ import { ActivatedRoute } from "@angular/router";
 import {FhirHelperService} from "../../../fhir-util/services/fhir-helper.service";
 import {BundleHelperService} from "../../../fhir-util/services/bundle-helper.service";
 import {ProfileProviderService} from "../../../fhir-util/services/profile-provider.service";
-import { caseComparison } from "../../../../../environments/environment";
+import {UserDocumentService} from "../../services/user-document.service";
+import {MdiToEDRSDocumentWrapper} from "../../models/mdiToEdrsDocumentWrapper";
+import {ReferenceDocumentService} from "../../services/reference-document.service";
+import {map} from "rxjs";
+import {ComparisonService} from "../../services/comparison.service";
+import {Difference} from "../../models/difference";
 
 @Component({
   selector: 'record-comparison-content',
@@ -47,13 +52,20 @@ export class RecordComparisonContentComponent implements OnInit {
     { expanded: false,    id: 'examAndAutopsy' },
   ]
 
+  stateList = {
+    isLoading: false,
+    comparisonLoaded: false
+  }
   testCases: any;
 
   patientResource: any;
-  actualDocument: any = undefined;
-  expectedDocument: any;
+
+  userDocumentWrapper: MdiToEDRSDocumentWrapper;
+  referenceDocumentWrapper: MdiToEDRSDocumentWrapper;
+  referenceDocument: any = undefined;
+  difference: Difference = undefined;
+
   selectedTestCase: any = undefined;
-  documentBundleList: any[];
 
   patient: USCorePatientDiff = new USCorePatientDiff( undefined, undefined );
   mdiToEdrs: CompositionMdiToEdrsDiff = new CompositionMdiToEdrsDiff( undefined, undefined );
@@ -83,6 +95,9 @@ export class RecordComparisonContentComponent implements OnInit {
   howDeathOccurredStatus = 'invalid';
 
   constructor(
+    private userDocumentService: UserDocumentService,
+    private referenceDocumentService: ReferenceDocumentService,
+    private comparisonService: ComparisonService,
     private profileProvider: ProfileProviderService,
     private dialog: MatDialog,
     private decedentService: DecedentService,
@@ -94,271 +109,229 @@ export class RecordComparisonContentComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.testCases = caseComparison.testCases;
-    this.testCases.splice(0,0, {"display": "Select a reference record..."})
-    this.selectedTestCase = this.testCases[0];
-
+    // If an "id" parameter is passed in the URL, load that case immediately.
     let compositionId = this.route.snapshot.params['id'];
     console.log(compositionId);
-
-    if(compositionId){ //We need to wait for the case summary for the selected case to be loaded BEFORE we do any comparisons
+    if (compositionId) {
       this.isLoading = true;
-      this.documentHandler.getDocumentBundle(compositionId).subscribe(
+      this.userDocumentService.getUserDocumentBundle(compositionId).subscribe(
         {
-          next: (documentBundle: any) => {
-            console.log(documentBundle)
-            this.actualDocument = documentBundle
-            console.log(this.actualDocument);
+          next: (userDocumentWrapper: MdiToEDRSDocumentWrapper) => {
+            this.userDocumentWrapper = userDocumentWrapper;
           }
         }
-      )
-      this.documentHandler.caseSummary$.subscribe({
-        next: (value) => {
-          this.getExpectedDocumentBundle(this.selectedTestCase.compositionId);
-        },
-        error: err => {
-          console.error(err);
-          this.utilsService.showErrorMessage();
-          this.isLoading = false;
-        }
-      });
+      );
     }
-    else if (this.selectedTestCase.compositionId) { // We do comparisons with an empty record.
-      this.getExpectedDocumentBundle(this.selectedTestCase.compositionId)
-    }
+
+    // Get Reference Document List
+    this.referenceDocumentService.getReferenceDocuments().subscribe(
+      {next: value => {
+        console.log(value);
+          this.testCases = value;
+          this.testCases.splice(0,0, {"display": "Select a reference record..."})
+          this.selectedTestCase = this.testCases[0];
+      }}
+    );
   }
 
-  getExpectedDocumentBundle(compositionId){
-    this.isLoading = true;
-    this.documentHandler.getRawDocumentBundle(compositionId).subscribe({
-      next: (documentBundle: any) => {
-        this.expectedDocument = documentBundle;
-        this.dodiff();
-        this.isLoading = false;
-      },
-      error: err => {
-        console.error(err);
-        this.utilsService.showErrorMessage();
-        this.isLoading = false;
-      }
-    });
+  runComparison() {
+    this.difference = this.comparisonService.doDiff(this.userDocumentWrapper.documentBundle, this.referenceDocument);
+    this.stateList.comparisonLoaded = true;
   }
 
-  onExpectedCompositionChanged( event: any ) {
-    if (event.value !== undefined) {
-      this.isLoading = true;
-
-      this.documentHandler.getRawDocumentBundle(event.value.compositionId).subscribe({
-        next: (documentBundle: any) => {
-          this.accordion.closeAll();
-          this.isAccordionExpanded = false;
-          this.expectedDocument = documentBundle;
-          this.dodiff();
-          this.isLoading = false;
-        },
-        error: err => {
-          console.error(err);
-          this.utilsService.showErrorMessage();
-          this.isLoading = false;
-        },
-      });
-    }
-  }
-
-  onActualCompositionChanged(event: Event) {
-    try {
-      this.actualDocument = JSON.parse( (event.target as any).value );
-      this.dodiff();
-    } catch(e) {
-      console.log(e);
+  onReferenceDocumentChanged(event: any ) {
+    if (event.isUserInput === true && event.source.value.bundle) {
+      this.referenceDocumentWrapper = this.userDocumentService.createDocumentWrapper(event.source.value.bundle);
+      this.referenceDocument = event.source.value.bundle;
+      this.stateList.comparisonLoaded = false;
     }
   }
 
   onInputBundleClick() {
     const dialogRef = this.dialog.open( RecordComparisonDialogComponent, {data: null}).afterClosed().subscribe(data => {
       if (data) {
-        this.actualDocument = JSON.parse( data );
-        this.dodiff();
-        this.accordion.closeAll();
-        this.isAccordionExpanded = false;
+        const parsedBundle = JSON.parse( data ); // TODO: Add error handling.
+        this.userDocumentWrapper = this.userDocumentService.createDocumentWrapper(parsedBundle);
+        //this.dodiff(this.userDocumentWrapper.documentBundle, this.referenceDocument);
+        //this.isAccordionExpanded = false;
       }
     });
   }
 
   clearCase() {
-    this.actualDocument = undefined;
+    this.userDocumentWrapper = undefined;
+    //
+    // this.patient = new USCorePatientDiff( undefined, undefined );
+    // this.mdiToEdrs = new CompositionMdiToEdrsDiff( undefined, undefined );
+    // this.location = new USCoreLocationDiff( undefined, undefined );
+    // this.tobaccoUse = new ObservationTobaccoUseDiff( undefined, undefined );
+    // this.pregnancy = new ObservationDecedentPregnancyDiff( undefined, undefined );
+    // this.deathDate = new ObservationDeathDateDiff( undefined, undefined);
+    // this.causeOfDeath1List = [];
+    // this.causeOfDeath2 = new ObservationCauseOfDeathPart2Diff( undefined, undefined );
+    // this.mannerOfDeath = new ObservationMannerOfDeathDiff( undefined, undefined );
+    // this.practitioner = new USCorePractitionerDiff( undefined, undefined );
+    // this.locationDeath = new LocationDeathDiff( undefined, undefined );
+    // this.locationInjury = new LocationInjuryDiff( undefined, undefined );
+    // this.autopsyPerformed = new ObservationAutopsyPerformedDiff( undefined, undefined );
+    // this.howDeathOccurred = new ObservationHowDeathInjuryOccurredDiff( undefined, undefined );
+    //
+    // this.demographicsStatus = 'invalid';
+    // this.circumstancesStatus = 'invalid';
+    // this.caseAdminInfoStatus = 'invalid';
+    // this.jurisdictionStatus = 'invalid';
+    // this.causeAndMannerStatus = 'invalid';
+    // this.medicalHistoryStatus = 'invalid';
+    // this.examAndHistoryStatus = 'invalid';
+    // this.narrativesStatus = 'invalid';
+    // this.deathDateStatus = 'invalid';
+    // this.deathDateStatus = 'invalid';
+    // this.examAndAutopsyStatus = 'invalid';
+    // this.howDeathOccurredStatus = 'invalid';
 
-    this.patient = new USCorePatientDiff( undefined, undefined );
-    this.mdiToEdrs = new CompositionMdiToEdrsDiff( undefined, undefined );
-    this.location = new USCoreLocationDiff( undefined, undefined );
-    this.tobaccoUse = new ObservationTobaccoUseDiff( undefined, undefined );
-    this.pregnancy = new ObservationDecedentPregnancyDiff( undefined, undefined );
-    this.deathDate = new ObservationDeathDateDiff( undefined, undefined, undefined);
-    this.causeOfDeath1List = [];
-    this.causeOfDeath2 = new ObservationCauseOfDeathPart2Diff( undefined, undefined );
-    this.mannerOfDeath = new ObservationMannerOfDeathDiff( undefined, undefined );
-    this.practitioner = new USCorePractitionerDiff( undefined, undefined );
-    this.locationDeath = new LocationDeathDiff( undefined, undefined );
-    this.locationInjury = new LocationInjuryDiff( undefined, undefined );
-    this.autopsyPerformed = new ObservationAutopsyPerformedDiff( undefined, undefined );
-    this.howDeathOccurred = new ObservationHowDeathInjuryOccurredDiff( undefined, undefined );
-
-    this.demographicsStatus = 'invalid';
-    this.circumstancesStatus = 'invalid';
-    this.caseAdminInfoStatus = 'invalid';
-    this.jurisdictionStatus = 'invalid';
-    this.causeAndMannerStatus = 'invalid';
-    this.medicalHistoryStatus = 'invalid';
-    this.examAndHistoryStatus = 'invalid';
-    this.narrativesStatus = 'invalid';
-    this.deathDateStatus = 'invalid';
-    this.deathDateStatus = 'invalid';
-    this.examAndAutopsyStatus = 'invalid';
-    this.howDeathOccurredStatus = 'invalid';
-
-    this.dodiff();
+    this.difference = this.comparisonService.doDiff(undefined, undefined);
   }
 
-  dodiff() {
-    try {
-      this.mdiToEdrs = new CompositionMdiToEdrsDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Comp_MDItoEDRS ),
-        this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Comp_MDItoEDRS ));
-
-      this.location = new USCoreLocationDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().USCoreLocation ),
-        this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().USCoreLocation ));
-
-      this.tobaccoUse = new ObservationTobaccoUseDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Obs_TobaccoUseContributedToDeath ),
-        this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Obs_TobaccoUseContributedToDeath ));
-
-      this.pregnancy = new ObservationDecedentPregnancyDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Obs_DecedentPregnancy ),
-        this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Obs_DecedentPregnancy ));
-
-      this.deathDate = new ObservationDeathDateDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Obs_DeathDate ),
-        this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Obs_DeathDate ),
-        this.fhirHelper);
-
-      this.causeOfDeath1List = [];
-      let actualCauseOfDeath1List = this.bundleHelper.findResourcesByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Obs_CauseOfDeathPart1 );
-      let expectedCauseOfDeath1List = this.bundleHelper.findResourcesByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Obs_CauseOfDeathPart1 );
-
-      this.causeAndMannerStatus = 'valid';
-
-      if (expectedCauseOfDeath1List != undefined) {
-        expectedCauseOfDeath1List.map((item: any, i) => {
-          let causeOfDeath1 = undefined;
-          if (actualCauseOfDeath1List != undefined && actualCauseOfDeath1List.length > i) {
-            causeOfDeath1 = new ObservationCauseOfDeathPart1Diff( actualCauseOfDeath1List[i], expectedCauseOfDeath1List[i], this.fhirHelper );
-          } else {
-            causeOfDeath1 = new ObservationCauseOfDeathPart1Diff( null, expectedCauseOfDeath1List[i], this.fhirHelper );
-          }
-          this.causeOfDeath1List.push( causeOfDeath1 );
-          if (causeOfDeath1.valueCodeableConcept.style === 'invalid')
-          {
-            this.causeAndMannerStatus = 'invalid';
-          }
-          if (causeOfDeath1.valueString.style === 'invalid')
-          {
-            this.causeAndMannerStatus = 'invalid';
-          }
-        })
-      }
-
-      this.causeOfDeath2 = new ObservationCauseOfDeathPart2Diff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Obs_CauseOfDeathPart2 ),
-        this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Obs_CauseOfDeathPart2 ));
-
-      this.mannerOfDeath = new ObservationMannerOfDeathDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Obs_MannerOfDeath ),
-        this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Obs_MannerOfDeath ));
-
-      this.locationDeath = new LocationDeathDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Loc_death ),
-        this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Loc_death ));
-
-      this.locationInjury = new LocationInjuryDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Loc_injury ),
-        this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Loc_injury ));
-
-      this.patient = new USCorePatientDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().USCorePatient ),
-        this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().USCorePatient ));
-
-      this.practitioner = new USCorePractitionerDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().USCorePractitioner ),
-        this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().USCorePractitioner ));
-
-      this.autopsyPerformed = new ObservationAutopsyPerformedDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Obs_AutopsyPerformed ),
-        this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Obs_AutopsyPerformed ));
-
-      this.howDeathOccurred = new ObservationHowDeathInjuryOccurredDiff(
-        this.bundleHelper.findResourceByProfileName( this.actualDocument, this.profileProvider.getMdiProfiles().Obs_HowDeathInjuryOccurred ),
-        this.bundleHelper.findResourceByProfileName( this.expectedDocument, this.profileProvider.getMdiProfiles().Obs_HowDeathInjuryOccurred ));
-
-      this.caseAdminInfoStatus = (
-        this.mdiToEdrs.extension.style === 'valid' &&
-        this.practitioner.name.style === 'valid' &&
-        this.practitioner.identifier.style === 'valid' &&
-        this.practitioner.telecom.style === 'valid' &&
-        this.practitioner.address.style === 'valid'
-      ) ? 'valid' : 'invalid';
-
-      this.demographicsStatus = (
-        this.patient.name.style === 'valid' &&
-        this.patient.gender.style === 'valid' &&
-        this.patient.identifier.style === 'valid' &&
-        this.patient.birthDate.style === 'valid' &&
-        this.patient.ethnicity.style === 'valid' &&
-        this.patient.race.style === 'valid' &&
-        this.patient.address.style === 'valid'
-      ) ? 'valid' : 'invalid';
-
-      this.circumstancesStatus = (
-        this.locationDeath.name.style === 'valid' &&
-        this.locationInjury.name.style === 'valid' &&
-        this.tobaccoUse.valueCodeableConcept.style === 'valid' &&
-        this.pregnancy.valueCodeableConcept.style === 'valid'
-      ) ? 'valid' : 'invalid';
-
-      this.jurisdictionStatus = (
-        this.deathDate.pronouncedDateTime.style === 'valid' &&
-        this.deathDate.effectiveDateTime.style === 'valid' &&
-        this.deathDate.method.style === 'valid'
-      ) ? 'valid' : 'invalid';
-
-      this.examAndAutopsyStatus = (
-        this.autopsyPerformed.valueCodeableConcept.style === 'valid' &&
-        this.autopsyPerformed.componentValueCodeableConcept.style === 'valid'
-      ) ? 'valid' : 'invalid';
-
-      this.causeAndMannerStatus = (
-        this.causeAndMannerStatus === 'valid' &&
-        this.howDeathOccurred.placeOfInjury.style === 'valid' &&
-        this.howDeathOccurred.howDeathInjuryOccurred.style === 'valid' &&
-        this.howDeathOccurred.effectiveDateTime.style === 'valid' &&
-        this.howDeathOccurred.injuryOccurredAtWork.style === 'valid' &&
-        this.howDeathOccurred.transportationRole.style === 'valid'
-      ) ? 'valid' : 'invalid';
-
-      if (this.causeOfDeath2.valueCodeableConcept.style === 'invalid' )
-      {
-        this.causeAndMannerStatus = 'invalid';
-      }
-
-      if (this.mannerOfDeath.valueCodeableConcept.style === 'invalid' )
-      {
-        this.causeAndMannerStatus = 'invalid';
-      }
-
-    } catch(e) {
-      console.log(e);
-    }
-  }
+  // dodiff(userDocument: any, referenceDocument: any) {
+  //   try {
+  //     this.mdiToEdrs = new CompositionMdiToEdrsDiff(
+  //       this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().Comp_MDItoEDRS ),
+  //       this.bundleHelper.findResourceByProfileName( referenceDocument, this.profileProvider.getMdiProfiles().Comp_MDItoEDRS ));
+  //
+  //     this.location = new USCoreLocationDiff(
+  //       this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().USCoreLocation ),
+  //       this.bundleHelper.findResourceByProfileName( referenceDocument, this.profileProvider.getMdiProfiles().USCoreLocation ));
+  //
+  //     this.tobaccoUse = new ObservationTobaccoUseDiff(
+  //       this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().Obs_TobaccoUseContributedToDeath ),
+  //       this.bundleHelper.findResourceByProfileName( referenceDocument, this.profileProvider.getMdiProfiles().Obs_TobaccoUseContributedToDeath ));
+  //
+  //     this.pregnancy = new ObservationDecedentPregnancyDiff(
+  //       this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().Obs_DecedentPregnancy ),
+  //       this.bundleHelper.findResourceByProfileName( referenceDocument, this.profileProvider.getMdiProfiles().Obs_DecedentPregnancy ));
+  //
+  //     this.deathDate = new ObservationDeathDateDiff(
+  //       this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().Obs_DeathDate ),
+  //       this.bundleHelper.findResourceByProfileName( referenceDocument, this.profileProvider.getMdiProfiles().Obs_DeathDate ),
+  //       this.fhirHelper);
+  //
+  //     this.causeOfDeath1List = [];
+  //     let actualCauseOfDeath1List = this.bundleHelper.findResourcesByProfileName( userDocument, this.profileProvider.getMdiProfiles().Obs_CauseOfDeathPart1 );
+  //     let expectedCauseOfDeath1List = this.bundleHelper.findResourcesByProfileName( referenceDocument, this.profileProvider.getMdiProfiles().Obs_CauseOfDeathPart1 );
+  //
+  //     this.causeAndMannerStatus = 'valid';
+  //
+  //     if (expectedCauseOfDeath1List != undefined) {
+  //       expectedCauseOfDeath1List.map((item: any, i) => {
+  //         let causeOfDeath1 = undefined;
+  //         if (actualCauseOfDeath1List != undefined && actualCauseOfDeath1List.length > i) {
+  //           causeOfDeath1 = new ObservationCauseOfDeathPart1Diff( actualCauseOfDeath1List[i], expectedCauseOfDeath1List[i], this.fhirHelper );
+  //         } else {
+  //           causeOfDeath1 = new ObservationCauseOfDeathPart1Diff( null, expectedCauseOfDeath1List[i], this.fhirHelper );
+  //         }
+  //         this.causeOfDeath1List.push( causeOfDeath1 );
+  //         if (causeOfDeath1.valueCodeableConcept.style === 'invalid')
+  //         {
+  //           this.causeAndMannerStatus = 'invalid';
+  //         }
+  //         if (causeOfDeath1.valueString.style === 'invalid')
+  //         {
+  //           this.causeAndMannerStatus = 'invalid';
+  //         }
+  //       })
+  //     }
+  //
+  //     this.causeOfDeath2 = new ObservationCauseOfDeathPart2Diff(
+  //       this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().Obs_CauseOfDeathPart2 ),
+  //       this.bundleHelper.findResourceByProfileName( referenceDocument, this.profileProvider.getMdiProfiles().Obs_CauseOfDeathPart2 ));
+  //
+  //     this.mannerOfDeath = new ObservationMannerOfDeathDiff(
+  //       this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().Obs_MannerOfDeath ),
+  //       this.bundleHelper.findResourceByProfileName( referenceDocument, this.profileProvider.getMdiProfiles().Obs_MannerOfDeath ));
+  //
+  //     this.locationDeath = new LocationDeathDiff(
+  //       this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().Loc_death ),
+  //       this.bundleHelper.findResourceByProfileName( referenceDocument, this.profileProvider.getMdiProfiles().Loc_death ));
+  //
+  //     this.locationInjury = new LocationInjuryDiff(
+  //       this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().Loc_injury ),
+  //       this.bundleHelper.findResourceByProfileName( referenceDocument, this.profileProvider.getMdiProfiles().Loc_injury ));
+  //
+  //     this.patient = new USCorePatientDiff(
+  //       this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().USCorePatient ),
+  //       this.bundleHelper.findResourceByProfileName( referenceDocument, this.profileProvider.getMdiProfiles().USCorePatient ));
+  //
+  //     this.practitioner = new USCorePractitionerDiff(
+  //       this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().USCorePractitioner ),
+  //       this.bundleHelper.findResourceByProfileName( referenceDocument, this.profileProvider.getMdiProfiles().USCorePractitioner ));
+  //
+  //     this.autopsyPerformed = new ObservationAutopsyPerformedDiff(
+  //       this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().Obs_AutopsyPerformed ),
+  //       this.bundleHelper.findResourceByProfileName( referenceDocument, this.profileProvider.getMdiProfiles().Obs_AutopsyPerformed ));
+  //
+  //     this.howDeathOccurred = new ObservationHowDeathInjuryOccurredDiff(
+  //       this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().Obs_HowDeathInjuryOccurred ),
+  //       this.bundleHelper.findResourceByProfileName( referenceDocument, this.profileProvider.getMdiProfiles().Obs_HowDeathInjuryOccurred ));
+  //
+  //     this.caseAdminInfoStatus = (
+  //       this.mdiToEdrs.extension.style === 'valid' &&
+  //       this.practitioner.name.style === 'valid' &&
+  //       this.practitioner.identifier.style === 'valid' &&
+  //       this.practitioner.telecom.style === 'valid' &&
+  //       this.practitioner.address.style === 'valid'
+  //     ) ? 'valid' : 'invalid';
+  //
+  //     this.demographicsStatus = (
+  //       this.patient.name.style === 'valid' &&
+  //       this.patient.gender.style === 'valid' &&
+  //       this.patient.identifier.style === 'valid' &&
+  //       this.patient.birthDate.style === 'valid' &&
+  //       this.patient.ethnicity.style === 'valid' &&
+  //       this.patient.race.style === 'valid' &&
+  //       this.patient.address.style === 'valid'
+  //     ) ? 'valid' : 'invalid';
+  //
+  //     this.circumstancesStatus = (
+  //       this.locationDeath.name.style === 'valid' &&
+  //       this.locationInjury.name.style === 'valid' &&
+  //       this.tobaccoUse.valueCodeableConcept.style === 'valid' &&
+  //       this.pregnancy.valueCodeableConcept.style === 'valid'
+  //     ) ? 'valid' : 'invalid';
+  //
+  //     this.jurisdictionStatus = (
+  //       this.deathDate.pronouncedDateTime.style === 'valid' &&
+  //       this.deathDate.effectiveDateTime.style === 'valid' &&
+  //       this.deathDate.method.style === 'valid'
+  //     ) ? 'valid' : 'invalid';
+  //
+  //     this.examAndAutopsyStatus = (
+  //       this.autopsyPerformed.valueCodeableConcept.style === 'valid' &&
+  //       this.autopsyPerformed.componentValueCodeableConcept.style === 'valid'
+  //     ) ? 'valid' : 'invalid';
+  //
+  //     this.causeAndMannerStatus = (
+  //       this.causeAndMannerStatus === 'valid' &&
+  //       this.howDeathOccurred.placeOfInjury.style === 'valid' &&
+  //       this.howDeathOccurred.howDeathInjuryOccurred.style === 'valid' &&
+  //       this.howDeathOccurred.effectiveDateTime.style === 'valid' &&
+  //       this.howDeathOccurred.injuryOccurredAtWork.style === 'valid' &&
+  //       this.howDeathOccurred.transportationRole.style === 'valid'
+  //     ) ? 'valid' : 'invalid';
+  //
+  //     if (this.causeOfDeath2.valueCodeableConcept.style === 'invalid' )
+  //     {
+  //       this.causeAndMannerStatus = 'invalid';
+  //     }
+  //
+  //     if (this.mannerOfDeath.valueCodeableConcept.style === 'invalid' )
+  //     {
+  //       this.causeAndMannerStatus = 'invalid';
+  //     }
+  //
+  //   } catch(e) {
+  //     console.log(e);
+  //   }
+  // }
 
   isExpanded(elementId: string) {
     return this.idStateList.find(element => element.id == elementId)?.expanded;

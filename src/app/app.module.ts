@@ -33,6 +33,7 @@ import {environment} from "../environments/environment";
 import {FhirExplorerModule} from "./modules/fhir-explorer/fhir-explorer.module";
 import {MatListModule} from "@angular/material/list";
 import {RecordComparisonModule} from "./modules/record-comparison/record-comparison.module";
+import {BreadcrumbComponent} from './components/breadcrumb/breadcrumb.component';
 
 @NgModule({
     declarations: [
@@ -41,6 +42,7 @@ import {RecordComparisonModule} from "./modules/record-comparison/record-compari
       LandingComponent,
       ConformationDialogComponent,
       ModalComponent,
+      BreadcrumbComponent,
     ],
   imports: [
     BrowserModule,

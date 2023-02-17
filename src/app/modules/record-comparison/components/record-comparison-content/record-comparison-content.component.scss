@@ -100,3 +100,16 @@ mat-card{
 .valid-icon {
   margin-right: 0.2rem; color: #388e3c; cursor: pointer;
 }
+
+.divider-margins {
+  margin: 20px;
+  border-color: black;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+.flex-cell {
+  flex: 1;
+}
