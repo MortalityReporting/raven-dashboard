@@ -1,5 +1,5 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {ActivationEnd, NavigationEnd, Router} from "@angular/router";
+import {Component, Input, OnInit} from '@angular/core';
+import {ActivationEnd, Router} from "@angular/router";
 import {filter} from "rxjs/operators";
 
 @Component({
@@ -14,6 +14,7 @@ export class ModuleHeaderComponent implements OnInit {
   moduleTitle = undefined;
   componentTitle = undefined;
   backgroundColor = undefined;
+  icon = undefined;
 
   constructor(private router: Router) { }
 
@@ -28,6 +29,7 @@ export class ModuleHeaderComponent implements OnInit {
             this.moduleTitle = event.snapshot.data.moduleConfig?.title || undefined;
             this.backgroundColor = event.snapshot.data.moduleConfig?.backgroundColor || undefined;
             this.componentTitle = event.snapshot.data.componentTitle || undefined;
+            this.icon = event.snapshot.data.moduleConfig?.icon || undefined;
           }
         }
       }

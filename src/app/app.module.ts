@@ -31,6 +31,8 @@ import {MatListModule} from "@angular/material/list";
 import {RecordComparisonModule} from "./modules/record-comparison/record-comparison.module";
 import {BreadcrumbComponent} from './modules/common-ui/components/breadcrumb/breadcrumb.component';
 import {CommonUiModule} from "./modules/common-ui/common-ui.module";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {ModuleHeaderConfig} from "../assets/configuration/module-header-config";
 
 @NgModule({
   declarations: [
@@ -58,11 +60,12 @@ import {CommonUiModule} from "./modules/common-ui/common-ui.module";
     ClipboardModule,
     WorkflowSimulatorModule,
     ImportCaseModule,
-    RecordViewerModule.forRoot(environment),
+    RecordViewerModule.forRoot(environment, ModuleHeaderConfig.RecordViewer),
     FhirUtilModule,
     FhirExplorerModule,
     RecordComparisonModule,
     CommonUiModule,
+    MatSidenavModule,
   ],
 
   providers: [

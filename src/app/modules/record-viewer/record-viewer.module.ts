@@ -38,6 +38,7 @@ import {MatCardModule} from "@angular/material/card";
 import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatSortModule} from "@angular/material/sort";
+import {ModuleHeaderConfig} from "../../../assets/configuration/module-header-config";
 
 @NgModule({
   declarations: [
@@ -87,10 +88,9 @@ export class RecordViewerModule {
       .bypassSecurityTrustResourceUrl(`${path}/lab_panel.svg`));
     this.matIconRegistry.addSvgIcon("clinical_notes", this.domSanitizer
       .bypassSecurityTrustResourceUrl(`${path}/clinical_notes.svg`));
-    console.log("yeag")
   }
 
-  public static forRoot(environment: any): ModuleWithProviders<any>{
+  public static forRoot(environment: any, config: ModuleHeaderConfig): ModuleWithProviders<any>{
     return {
       ngModule: RecordViewerModule,
       providers: [

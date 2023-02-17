@@ -32,6 +32,11 @@
                 "glob": "*.svg",
                 "input": "src/app/modules/record-viewer/assets",
                 "output": "assets"
+              },
+              {
+                "glob": "*.svg",
+                "input": "src/app/modules/common-ui/assets",
+                "output": "assets"
               }
             ],
             "styles": [
