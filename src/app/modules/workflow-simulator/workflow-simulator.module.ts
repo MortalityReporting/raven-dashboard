@@ -48,6 +48,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
+import {MatSortModule} from "@angular/material/sort";
 
 
 
@@ -69,25 +70,26 @@ import {MatInputModule} from "@angular/material/input";
     MdiToEdrsDocumentSelectStepComponent],
   exports: [
   ],
-  imports: [
-    CommonModule,
-    MatToolbarModule,
-    MatCardModule,
-    MatTabsModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatProgressSpinnerModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatTooltipModule,
-    MatRadioModule,
-    ReactiveFormsModule,
-    MatExpansionModule,
-    MatIconModule,
-    MatStepperModule,
-    MatButtonModule,
-    FormsModule,
-    MatInputModule
-  ]
+    imports: [
+        CommonModule,
+        MatToolbarModule,
+        MatCardModule,
+        MatTabsModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatProgressSpinnerModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatTooltipModule,
+        MatRadioModule,
+        ReactiveFormsModule,
+        MatExpansionModule,
+        MatIconModule,
+        MatStepperModule,
+        MatButtonModule,
+        FormsModule,
+        MatInputModule,
+        MatSortModule
+    ]
 })
 export class WorkflowSimulatorModule { }

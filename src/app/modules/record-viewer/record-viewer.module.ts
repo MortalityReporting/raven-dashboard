@@ -37,6 +37,7 @@ import {FormsModule} from "@angular/forms";
 import {MatCardModule} from "@angular/material/card";
 import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatSortModule} from "@angular/material/sort";
 
 @NgModule({
   declarations: [
@@ -53,27 +54,28 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     CaseSummaryContentFieldComponent,
     CaseSummaryRelatedToxComponent
   ],
-  imports: [
-    CommonModule,
-    FhirUtilModule, // Dependency
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    MatTooltipModule,
-    MatToolbarModule,
-    MatButtonModule,
-    RouterModule,
-    FhirExplorerModule,
-    MatTableModule,
-    MatExpansionModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
-    MatTabsModule,
-    FormsModule,
-    MatCardModule,
-    MatSelectModule,
-    MatCheckboxModule,
-  ]
+    imports: [
+        CommonModule,
+        FhirUtilModule, // Dependency
+        MatSidenavModule,
+        MatIconModule,
+        MatListModule,
+        MatTooltipModule,
+        MatToolbarModule,
+        MatButtonModule,
+        RouterModule,
+        FhirExplorerModule,
+        MatTableModule,
+        MatExpansionModule,
+        MatInputModule,
+        MatProgressSpinnerModule,
+        MatTabsModule,
+        FormsModule,
+        MatCardModule,
+        MatSelectModule,
+        MatCheckboxModule,
+        MatSortModule,
+    ]
 })
 export class RecordViewerModule {
   constructor(private matIconRegistry: MatIconRegistry,
