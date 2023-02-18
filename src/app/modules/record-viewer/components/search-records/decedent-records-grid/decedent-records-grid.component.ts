@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, Inject} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 import {DecedentGridDTO} from "../../../../../model/decedent.grid.dto";
@@ -10,11 +10,13 @@ import {MatSelect} from "@angular/material/select";
 import {DatePipe} from "@angular/common";
 import {FhirHelperService} from "../../../../fhir-util/services/fhir-helper.service";
 import {TrackingNumberType} from "../../../../../model/tracking.number.type";
+import {ModuleHeaderConfig} from "../../../../../../assets/configuration/module-header-config";
+
 
 @Component({
   selector: 'record-viewer-decedent-records-grid',
   templateUrl: './decedent-records-grid.component.html',
-  styleUrls: ['../search-records.component.scss']
+  styleUrls: ['../../../record-viewer-styles.scss','../search-records.component.scss']
 })
 export class DecedentRecordsGridComponent implements OnInit {
 
@@ -36,7 +38,8 @@ export class DecedentRecordsGridComponent implements OnInit {
     private decedentService: DecedentService,
     private router: Router,
     private utilsService: UtilsService,
-    private fhirHelperService: FhirHelperService
+    private fhirHelperService: FhirHelperService,
+    @Inject('config') public config: ModuleHeaderConfig
   ) {
   }
 
@@ -56,6 +59,7 @@ export class DecedentRecordsGridComponent implements OnInit {
     const loincTimeOfDeath = '81956-5';
     const codes = [loincCauseOfDeath, loincTimeOfDeath];
     this.isLoading = true;
+    console.log(this.isLoading);
 
     this.decedentService.getDecedentRecords().pipe(
       mergeMap((decedentRecordsList: any[]) =>

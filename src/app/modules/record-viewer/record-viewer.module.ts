@@ -39,6 +39,8 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatSortModule} from "@angular/material/sort";
 import {ModuleHeaderConfig} from "../../../assets/configuration/module-header-config";
+import {CustomSpinnerDirective} from "../common-ui/directives/custom-spinner.directive";
+import {CommonUiModule} from "../common-ui/common-ui.module";
 
 @NgModule({
   declarations: [
@@ -76,6 +78,7 @@ import {ModuleHeaderConfig} from "../../../assets/configuration/module-header-co
     MatSelectModule,
     MatCheckboxModule,
     MatSortModule,
+    CommonUiModule
   ]
 })
 export class RecordViewerModule {
@@ -97,6 +100,10 @@ export class RecordViewerModule {
         {
           provide: 'env',
           useValue: environment
+        },
+        {
+          provide: 'config',
+          useValue: config
         }
       ]
     }

@@ -3,8 +3,6 @@ import {ToxicologyHandlerService} from "../../services/toxicology-handler.servic
 import {ActivatedRoute} from "@angular/router";
 import {Observable, tap} from "rxjs";
 import {FhirResourceProviderService} from "../../../../service/fhir-resource-provider.service";
-import {MatIconRegistry} from "@angular/material/icon";
-import {DomSanitizer} from "@angular/platform-browser";
 import {ToxHeader} from "../../models/tox.header";
 import {ToxSummary} from "../../models/tox.summary";
 import {CaseSummaryContentComponent} from "../case-summary/case-summary-content/case-summary-content.component";
@@ -13,7 +11,7 @@ import {ToxicologyReportContentComponent} from "./toxicology-report-content/toxi
 @Component({
   selector: 'record-viewer-toxicology-report',
   templateUrl: './toxicology-report.component.html',
-  styleUrls: ['../../record-viewer-styles.css', './toxicology-report.component.scss']
+  styleUrls: ['../../record-viewer-styles.scss', './toxicology-report.component.scss']
 })
 export class ToxicologyReportComponent implements OnInit {
   @ViewChild(CaseSummaryContentComponent) toxReportContentComponent: ToxicologyReportContentComponent;

@@ -40,7 +40,7 @@ import {ModuleHeaderConfig} from "../assets/configuration/module-header-config";
     HeaderComponent,
     LandingComponent,
     ConformationDialogComponent,
-    ModalComponent
+    ModalComponent,
   ],
   imports: [
     BrowserModule,
