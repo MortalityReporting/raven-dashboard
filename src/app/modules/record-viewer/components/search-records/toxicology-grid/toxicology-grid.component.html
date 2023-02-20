@@ -16,7 +16,7 @@
 
 <table mat-table [dataSource]="dataSource" matSort matSortDisableClear matSortActive="personId">
 
-  <ng-container matColumnDef="name">
+  <ng-container matColumnDef="lastName">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Subject Name</th>
     <td mat-cell class="pointer"
         *matCellDef="let report"> {{report.lastName | titlecase}}{{report.firstName ? ', ' + report.firstName : ''}}</td>
