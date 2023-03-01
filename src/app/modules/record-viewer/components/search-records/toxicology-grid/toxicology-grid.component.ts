@@ -17,7 +17,7 @@ export class ToxicologyGridComponent implements OnInit {
 
 
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['name', 'reportdate', 'toxcasenumber', 'toxcasesystem', 'mdicasenumber', 'mdicasesystem'];
+  displayedColumns: string[] = ['lastName', 'reportdate', 'toxcasenumber', 'toxcasesystem', 'mdicasenumber', 'mdicasesystem'];
   toxGridDtoList: ToxicologyGridDto[];
   isLoading = true;
   showSystems = false;
