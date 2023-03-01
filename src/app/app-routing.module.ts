@@ -10,6 +10,7 @@ import {FhirValidatorComponent} from "./modules/fhir-validator/components/fhir-v
 import {SearchRecordsComponent} from "./modules/record-viewer/components/search-records/search-records.component";
 import {WorkflowSimulatorComponent} from "./modules/workflow-simulator/components/workflow-simulator.component";
 import {SearchEdrsComponent} from "./modules/workflow-simulator/components/search-edrs/search-edrs.component";
+import {ModuleHeaderConfig} from "../assets/configuration/module-header-config";
 
 const routes: Routes = [
   {
@@ -21,15 +22,18 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: SearchRecordsComponent
+        component: SearchRecordsComponent,
+        data: { moduleConfig: ModuleHeaderConfig.RecordViewer, componentTitle: "Search Records"}
       },
       {
         path: 'mdi/:id',
-        component: CaseContainerComponent
+        component: CaseContainerComponent,
+        data: { moduleConfig: ModuleHeaderConfig.RecordViewer, componentTitle: "MDI to EDRS Document Viewer"}
       },
       {
         path: 'tox/:id',
-        component: CaseContainerComponent
+        component: CaseContainerComponent,
+        data: { moduleConfig: ModuleHeaderConfig.RecordViewer, componentTitle: "Toxicology Report Viewer"}
       }
     ],
   },
@@ -38,22 +42,28 @@ const routes: Routes = [
     children: [
       {
         path: ':id',
-        component: RecordComparisonContainerComponent
+        component: RecordComparisonContainerComponent,
+        data: { moduleConfig: ModuleHeaderConfig.RecordComparison, componentTitle: "MDI to EDRS Record Comparison"}
+
       },
       {
         path: '',
-        component: RecordComparisonContainerComponent
+        component: RecordComparisonContainerComponent,
+        data: { moduleConfig: ModuleHeaderConfig.RecordComparison, componentTitle: "MDI to EDRS Record Comparison"}
       },
     ]
   },
 
   { // FHIR Validator Module
     path: 'fhir-validator',
-    component: FhirValidatorComponent
+    component: FhirValidatorComponent,
+    data: { moduleConfig: ModuleHeaderConfig.FhirValidator, componentTitle: undefined}
+
   },
   { // Import Case Module
     path: 'import-case',
-    component: ImportCaseComponent
+    component: ImportCaseComponent,
+    data: { moduleConfig: ModuleHeaderConfig.ImportRecord, componentTitle: undefined}
   },
   { // Workflow Simulator Module
     path: 'workflow-simulator',
@@ -61,10 +71,12 @@ const routes: Routes = [
       {
         path: '',
         component: WorkflowSimulatorComponent,
+        data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: undefined}
       },
       {
         path: 'search-edrs',
         component: SearchEdrsComponent,
+        data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Search EDRS"}
       }
     ]
   },

@@ -1,8 +1,7 @@
 <!-- Similar to case-summary component, it is parent component for the toxicology report-->
 <mat-toolbar class="tool-bars">
-  <mat-toolbar-row class="header-mint" appSetFhirExplorer [resource]="messageBundle$ | async">
-    <span class="viewer-header-title">Toxicology Viewer</span>
-    <span class="viewer-header-label">Subject Name:</span>
+  <mat-toolbar-row class="decedent-header" appSetFhirExplorer [resource]="messageBundle$ | async">
+    <span class="viewer-header-label">Decedent Name:</span>
     <input type="text" value="{{ toxHeader?.fullName || ''}}" readonly>
     <span class="content-spacer"> </span>
     <span class="viewer-header-label">Date Report Issued:</span>

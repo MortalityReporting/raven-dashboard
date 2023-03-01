@@ -20,12 +20,12 @@ export class SetFhirExplorerDirective {
       this.fhirResourceProvider.setSelectedFhirResource(this.resource);
     }
     else if (this.profile) {
-      // TODO: Refactor to provide the bundle to the directive so this is not needed...
+      // TODO: Refactor to provide the bundle to the directives so this is not needed...
       this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.findResourceByProfileNamePassThrough(this.profile));
     }
     else if (this.observation)
     {
-      // TODO: Refactor to provide the bundle to the directive so this is not needed...
+      // TODO: Refactor to provide the bundle to the directives so this is not needed...
       this.fhirResourceProvider.setSelectedFhirResource(this.bundleHelper.findResourceByFullUrl(this.documentHandler.getCurrentDocumentBundle(), this.observation));
     }
     else if (this.title) {

@@ -32,7 +32,7 @@ export class DocumentHandlerService {
   private subjectId: string;
   public defaultString: string = "VALUE NOT FOUND";
 
-  // TODO: Refactor this in conjunction with directive.
+  // TODO: Refactor this in conjunction with directives.
   private currentDocumentBundle: any;
   private currentCompositionResource: any;
 
