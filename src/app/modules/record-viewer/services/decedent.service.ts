@@ -26,6 +26,8 @@ export class DecedentService {
   getDecedentRecords():  Observable<any> {
     return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "Patient?_count=100")
       .pipe( map((result: any) => {
+        // By convention the API should return an empty array. However, the FHIR server we use does not.
+        // We are adding an empty array to prevent NPE errors in the components using this service.
           if (!result?.entry) {
             return [];
           }
