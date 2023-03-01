@@ -1,16 +1,16 @@
-<div style="margin-top: 1em">
+<div class="top-margin">
   <app-decedent-basic-info [decedentInfo]="decedentInfo"></app-decedent-basic-info>
 </div>
 
-<div style="margin-top: 1em">
+<div class="double-top-margin">
   {{uiConstantsStep2.DISCLAIMER}}
 </div>
 
 <form [formGroup]="endpointConfigurationFormGroup" (ngSubmit)="onSubmitEndpointConfiguration()">
 
-  <div style="margin-top: 2em">
+  <div class="double-top-margin">
     <mat-radio-group formControlName="inputType">
-      <mat-radio-button class="radio-button" style="margin-left: 2em" [disabled]="i > 0"
+      <mat-radio-button class="radio-button" class="endpoint-radio-btns" [disabled]="i > 0"
                         *ngFor="let inputOption of endpointTypeOptions; let i = index" [value]="inputOption">
         {{ inputOption }}
       </mat-radio-button>
@@ -18,7 +18,7 @@
   </div>
 
   <!-- Registered Endpoint -->
-  <div style="margin-top: 2em" formGroupName="registeredEndpoint"
+  <div class="top-margin" formGroupName="registeredEndpoint"
        *ngIf="endpointConfigurationFormGroup.controls['inputType'].value == 'Registered Endpoint'">
 
     <mat-form-field appearance="outline" class="server-select">
@@ -32,13 +32,21 @@
       </mat-select>
     </mat-form-field>
 
+    <div *ngIf="endpointConfigurationFormGroup?.controls?.['registeredEndpoint']?.value?.serverEndpoint == blueJayUri"
+         class="simple-card">
+      <div>Blue Jay is the public Raven Test EDRS.</div>
+      <div>CREDENTIALS</div>
+      <div>Username: <em>client</em> </div>
+      <div>Password: <em>secret</em> </div>
+    </div>
+
     <div>
       <button class="view-item-button" type="button" mat-raised-button color="accent"
           (click)="onViewServerCapabilityStmt()">
         {{ uiConstantsStep2.VIEW_CAPABILITY_STMT_BTN }}
       </button>
     </div>
-    <div style="margin-top: 1em;">
+    <div class="top-margin">
       <button type="button" color="accent" class="view-item-button"
               (click)="onViewServerMdiDocs()"
               mat-raised-button>
@@ -94,7 +102,7 @@
 
   </div>
 
-  <div class="top-spacer row">
+  <div class="top-padding row">
     <button mat-raised-button matStepperPrevious>Back</button>
     <div class="push-right">
       <button type="submit" mat mat-raised-button color="primary" matStepperNext>

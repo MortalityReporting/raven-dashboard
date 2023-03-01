@@ -1,9 +1,10 @@
-import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {FormBuilder} from "@angular/forms";
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {SearchEdrsService} from "../../service/search-edrs.service";
-import {MatStepper} from "@angular/material/stepper";
-import {MatTabGroup} from "@angular/material/tabs";
 import {UiStringConstants} from "../../../../providers/ui-string-constants";
+
+/*
+Parent component for the Search EDRS flow
+*/
 
 @Component({
   selector: 'app-search-edrs',
@@ -14,14 +15,9 @@ import {UiStringConstants} from "../../../../providers/ui-string-constants";
 export class SearchEdrsComponent implements OnInit {
 
   documentBundle: any;
-
-  @ViewChild('stepper') stepper: MatStepper;
-  @ViewChild('mdiToEdrsTabGroup') private mdiToEdrsTabGroup: MatTabGroup;
-
   uiConstants: any;
 
   constructor(
-    private formBuilder: FormBuilder,
     private searchEdrsService: SearchEdrsService,
     private uiStringConstants: UiStringConstants,
   ) {
@@ -36,12 +32,4 @@ export class SearchEdrsComponent implements OnInit {
     });
   }
 
-  tabSelectionChange() {
-    this.searchEdrsService.setDocumentBundle(null);
-    this.searchEdrsService.setDecedentData(null);
-  }
-
-  onAdvanceStepper() {
-    this.stepper.next();
-  }
 }

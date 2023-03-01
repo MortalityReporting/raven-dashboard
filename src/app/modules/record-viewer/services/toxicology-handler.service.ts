@@ -24,9 +24,17 @@ export class ToxicologyHandlerService {
 
   getToxicologyRecords(): Observable<any>{
     return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "DiagnosticReport?_count=100")
-      .pipe( map((result: any) => (
-        result.entry as Object[]
-      )));
+      .pipe( map((result: any) => {
+        // By convention the API should return an empty array. However, the FHIR server we use does not.
+        // We are adding an empty array to prevent NPE errors in the components using this service.
+          if (!result?.entry) {
+            return [];
+          }
+          else {
+            return result.entry as Object[];
+          }
+        }
+      ));
   }
 
   getSubject(diagnosticReport: any): Observable<any> {

@@ -1,5 +1,5 @@
 <div class="container">
-  <mat-card class="mat-elevation-z8" style="margin-top: 1em">
+  <mat-card class="mat-elevation-z8" class="top-margin">
     <mat-horizontal-stepper #stepper>
 
       <mat-step label="{{ uiConstants.step1.STEP_LABEL }}" [completed]="false">
@@ -18,7 +18,7 @@
         {{ uiConstants.step3.DESCRIPTION }}
         <app-edrs-results-step [parentStepper]="stepper"></app-edrs-results-step>
 
-        <div class="top-spacer"><button mat-raised-button matStepperPrevious>Back</button></div>
+        <div class="top-padding"><button mat-raised-button matStepperPrevious>Back</button></div>
       </mat-step>
 
     </mat-horizontal-stepper>

@@ -1,16 +1,16 @@
-<div class="top-spacer">
+<div class="top-padding">
   {{ uiConstantsStep1.UPLOAD_JSON_CONTENT_MSG}}
 </div>
 
-<div class="top-spacer">
+<div class="top-padding">
   {{ uiConstantsStep1.UPLOAD_FILE_CONTENT_MSG }}
 </div>
 
-<div class="top-spacer">
+<div class="top-padding">
   <mat-error>{{errorMessage}}</mat-error>
 </div>
 
-<div class="top-spacer">
+<div class="top-padding">
 
   <button mat-raised-button color="primary" (click)="onInputMdiToEdrsBundle()">
     Input MDI to EDRS Document Bundle
@@ -28,6 +28,6 @@
   <span id="filename">{{file?.name}}</span>
 
 </div>
-<div class="top-spacer">
+<div class="top-padding">
   <app-decedent-basic-info [decedentInfo] = "decedentData"></app-decedent-basic-info>
 </div>

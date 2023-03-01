@@ -12,6 +12,7 @@ import {MatSelect} from "@angular/material/select";
 import {MatPaginator} from "@angular/material/paginator";
 import {TrackingNumberType} from "../../../../../../model/tracking.number.type";
 import {FhirHelperService} from "../../../../../../modules/fhir-util/services/fhir-helper.service";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-mdi-to-edrs-grid',
@@ -28,6 +29,7 @@ export class MdiToEdrsGridComponent implements OnInit {
   isLoading = true;
   selectedCase: any;
   decedentInfo: DecedentSimpleInfo;
+  pipe: DatePipe;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -114,6 +116,7 @@ export class MdiToEdrsGridComponent implements OnInit {
           this.dataSource.sort = this.sort;
           this.dataSource.paginator = this.paginator;
           this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+          this.setDataSourceFilters();
         },
         error: (e) => {
           console.error(e);
@@ -175,6 +178,15 @@ export class MdiToEdrsGridComponent implements OnInit {
     this.dataSource.filter = '';
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
+    }
+  }
+
+  private setDataSourceFilters() {
+    this.pipe = new DatePipe('en');
+    const defaultPredicate = this.dataSource.filterPredicate;
+    this.dataSource.filterPredicate = (data, filter) => {
+      const formatted = this.pipe.transform(data.tod,'MM/dd/yyyy');
+      return formatted.indexOf(filter) >= 0 || defaultPredicate(data,filter) ;
     }
   }
 }

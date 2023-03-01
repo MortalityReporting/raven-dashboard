@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {FhirExplorerDrawerService} from "../../modules/fhir-explorer/services/fhir-explorer-drawer.service";
 import { environment } from "../../../environments/environment";
@@ -38,11 +38,7 @@ export class HeaderComponent {
       .subscribe(
         action => {
           if (action == 'primaryAction') {
-            console.log('primaryAction')
             this.router.navigate([path]);
-          }
-          else if(action == 'secondaryAction'){
-            console.log('secondary selected')
           }
         }
       );
@@ -50,7 +46,7 @@ export class HeaderComponent {
 
   onMenuItemSelected(path) {
     if(this.router.url.indexOf('workflow-simulator/') > 0) { //Prompt the user that they can lose their current session in the workflow simulator if they leave.
-      this.confirmPathTransition("Leaving the workflow will lose progress in the current session. Do you wish to continue?", 'workflow-simulator/');
+      this.confirmPathTransition("Leaving the workflow will lose progress in the current session. Do you wish to continue?", path);
     }
     else {
       this.router.navigate([path]);
