@@ -22,7 +22,16 @@ export class ReferenceDocumentService {
   getReferenceDocuments() {
     return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "Bundle?type=http%3A%2F%2Fconfig.raven.app%2Fcode%7Creference")
       .pipe(
-        map((referenceBundleSearch: any) => (referenceBundleSearch.entry as Object[]))
+        map((referenceBundleSearch: any) =>{
+          // By convention the API should return an empty array. However, the FHIR server we use does not.
+          // We are adding an empty array to prevent NPE errors in the components using this service.
+          if (!referenceBundleSearch?.entry) {
+            return [];
+          }
+          else {
+            return referenceBundleSearch.entry as Object[];
+          }
+        })
       ).pipe(
         mergeMap( (bundleBecList: any[]) =>
           forkJoin(
