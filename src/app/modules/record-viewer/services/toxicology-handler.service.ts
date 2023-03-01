@@ -24,9 +24,15 @@ export class ToxicologyHandlerService {
 
   getToxicologyRecords(): Observable<any>{
     return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "DiagnosticReport?_count=100")
-      .pipe( map((result: any) => (
-        result.entry as Object[]
-      )));
+      .pipe( map((result: any) => {
+          if (!result?.entry) {
+            return [];
+          }
+          else {
+            return result.entry as Object[];
+          }
+        }
+      ));
   }
 
   getSubject(diagnosticReport: any): Observable<any> {
