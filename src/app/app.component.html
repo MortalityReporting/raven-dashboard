@@ -1,12 +1,32 @@
 <!--We really shouldn't need to add much code here-->
-<div class="flex-wrapper">
-  <div class="header-wrapper">
-    <app-header></app-header>
-  </div>
-  <div>
-    <app-breadcrumb></app-breadcrumb>
-  </div>
-  <div class="router-outlet-wrapper">
-    <router-outlet></router-outlet>
-  </div>
-</div>
+<mat-drawer-container class="flex-wrapper">
+<!--  <mat-drawer #sidenav mode="side" opened-->
+<!--               style="background-color: #646064; width: 100px; height: 100%">-->
+<!--  </mat-drawer>-->
+    <div class="flex-wrapper">
+      <div class="header-wrapper">
+        <app-header></app-header>
+      </div>
+      <div>
+        <app-module-header></app-module-header>
+      </div>
+      <div class="router-outlet-wrapper">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+</mat-drawer-container>
+
+
+
+<!--REVERT TO THIS-->
+<!--<div class="flex-wrapper">-->
+<!--  <div class="header-wrapper">-->
+<!--    <app-header></app-header>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <app-module-header></app-module-header>-->
+<!--  </div>-->
+<!--  <div class="router-outlet-wrapper">-->
+<!--    <router-outlet></router-outlet>-->
+<!--  </div>-->
+<!--</div>-->

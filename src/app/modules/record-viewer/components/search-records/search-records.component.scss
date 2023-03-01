@@ -10,6 +10,11 @@ table {
   margin-left: -50px;
   margin-top: -50px;
 }
+.inline-spinner-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .header-subtitle {
   text-decoration: overline;

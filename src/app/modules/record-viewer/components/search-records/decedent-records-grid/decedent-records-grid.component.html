@@ -14,13 +14,14 @@
     </mat-select>
   </mat-form-field>
 
-  <button mat-raised-button color="primary" style="margin-left: 2em" (click)="onClearFilters()">Clear Filters</button>
+  <button mat-raised-button class="primary-color-button" style="margin-left: 2em" (click)="onClearFilters()"
+          moduleThemedButton [moduleColor]="config.backgroundColor">
+    Clear Filters
+  </button>
 
 </div>
 
-<div class="spinner-container" *ngIf="isLoading">
-  <mat-spinner [diameter]="70"></mat-spinner>
-</div>
+
 
 <table mat-table [dataSource]="dataSource" matSort matSortDisableClear matSortActive="personId">
 
@@ -64,7 +65,19 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onCaseSelected(row)"></tr>
 
+  <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell" [colSpan]="displayedColumns.length">
+    <span *ngIf="!isLoading; else loading">
+      No results found.
+    </span></td>
+  </tr>
+
 </table>
 
 
 
+<ng-template #loading>
+  <span class="inline-spinner-wrapper">
+    <mat-spinner [diameter]="72" customSpinner [spinnerColor]="config.backgroundColor"></mat-spinner>
+  </span>
+</ng-template>

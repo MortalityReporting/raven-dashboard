@@ -1,0 +1,35 @@
+.module-header {
+  color: white;
+  font-size: x-large;
+  font-weight: bold;
+  margin: 20px;
+  display: flex;
+  flex-direction: row;
+}
+
+.module-header-icon-wrapper {
+  flex: 0;
+  align-content: center;
+  padding: 5px;
+  margin: auto;
+}
+
+.module-header-label-wrapper {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 10px;
+  padding-right: 20px;
+  flex: 1;
+}
+.module-header-underline {
+  margin-top: 10px;
+  border-top: 3px solid white;
+}
+
+.module-header-icon {
+  width: 48px;
+  height: 48px;
+  font-size: 48px;
+  margin: auto;
+  padding: 0;
+}
