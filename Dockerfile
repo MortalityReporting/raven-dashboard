@@ -3,7 +3,7 @@ WORKDIR /app
 COPY . .
 
 # Set BASE_HREF
-ARG BASE_HREF
+ARG BASE_HRE
 RUN npm ci && npm run build -- --base-href $BASE_HREF
 
 # stage 2
