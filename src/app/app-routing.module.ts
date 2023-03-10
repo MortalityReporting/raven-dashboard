@@ -15,7 +15,8 @@ import {ModuleHeaderConfig} from "../assets/configuration/module-header-config";
 const routes: Routes = [
   {
     path: '',
-    component: LandingComponent
+    component: LandingComponent,
+    data: {moduleConfig: undefined, componentTitle: undefined}
   },
   { // Record Viewer Module
     path: 'records',
