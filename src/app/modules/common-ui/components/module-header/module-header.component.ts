@@ -19,12 +19,16 @@ export class ModuleHeaderComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+    console.log("I loaded?");
     this.router.events.pipe(
-      filter((event) => event instanceof ActivationEnd)
+      filter((event) => {return event instanceof ActivationEnd})
     ).subscribe(
       {
         next: (event: any) => {
-          if (event.snapshot.component !== undefined) {
+          if (event.snapshot.data !== undefined && Object.keys(event.snapshot.data).length !== 0) {
+            console.log("EVENT")
+            console.log(event)
+            console.log(event.snapshot.data)
             this.showHeader = !!(event.snapshot.data.moduleConfig);
             this.moduleTitle = event.snapshot.data.moduleConfig?.title || undefined;
             this.backgroundColor = event.snapshot.data.moduleConfig?.backgroundColor || undefined;
