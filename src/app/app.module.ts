@@ -32,7 +32,8 @@ import {BreadcrumbComponent} from './modules/common-ui/components/breadcrumb/bre
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {ModuleHeaderConfig} from "../assets/configuration/module-header-config";
 import {HeaderComponent, NavMenuComponent} from "common-ui";
-import {CommonUiModule} from "./modules/common-ui/common-ui.module"; // TODO: Rename/move components to library.
+import {CommonUiModule} from "./modules/common-ui/common-ui.module";
+import {MatTooltipModule} from "@angular/material/tooltip"; // TODO: Rename/move components to library.
 
 @NgModule({
   declarations: [
@@ -42,11 +43,13 @@ import {CommonUiModule} from "./modules/common-ui/common-ui.module"; // TODO: Re
     ModalComponent,
   ],
   imports: [
-    HeaderComponent,
-    NavMenuComponent,
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
+    // TODO: Clean up imports after refactor.
+    HeaderComponent, // Confirmed
+    NavMenuComponent, // Confirmed
+    BrowserModule, // Confirmed
+    AppRoutingModule, // Confirmed
+    BrowserAnimationsModule, // Confirmed
+    MatTooltipModule,
     MatDialogModule,
     MatCardModule,
     MatMenuModule,
