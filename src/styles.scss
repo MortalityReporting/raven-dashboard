@@ -143,6 +143,7 @@ TODO: Refactor to generalize class names and move to a common shared .css file.
 /** Collapse/Expand Button Styling **/
 .section-button-wrapper {
   display: flex;
+  margin-bottom: 16px;
 }
 
 button {
