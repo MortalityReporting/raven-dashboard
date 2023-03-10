@@ -1,20 +1,26 @@
 <!--We really shouldn't need to add much code here-->
-<mat-drawer-container class="flex-wrapper">
-<!--  <mat-drawer #sidenav mode="side" opened-->
-<!--               style="background-color: #646064; width: 100px; height: 100%">-->
-<!--  </mat-drawer>-->
-    <div class="flex-wrapper">
-      <div class="header-wrapper">
-        <app-header></app-header>
-      </div>
-      <div>
-        <app-module-header></app-module-header>
-      </div>
-      <div class="router-outlet-wrapper">
-        <router-outlet></router-outlet>
-      </div>
+<div class="page-wrapper">
+  <common-nav-menu [options]="optionConfig">
+  </common-nav-menu>
+  <div #content class="flex-wrapper">
+
+    <div class="header-wrapper">
+      <common-header
+        [title]="title"
+        [subtitle]="'FHIR Medicolegal Death Investigation Implementation Guide Reference Implementation and Testing Platform'"
+        [splitSubtitleEvenly]="true"
+        [version]="version"
+      ></common-header>
     </div>
-</mat-drawer-container>
+    <div>
+      <app-module-header></app-module-header>
+    </div>
+    <div class="router-outlet-wrapper">
+      <router-outlet></router-outlet>
+    </div>
+
+  </div>
+</div>
 
 
 

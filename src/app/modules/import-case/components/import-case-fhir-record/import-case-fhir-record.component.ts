@@ -5,7 +5,7 @@ import {FhirValidatorComponent} from "../../../fhir-validator/components/fhir-va
 import {FhirValidatorService} from "../../../fhir-validator/services/fhir-validator.service";
 import {Observable} from "rxjs";
 import {ValidationResults} from "../../../fhir-validator/domain/ValidationResults";
-import {MatDialog} from "@angular/material/dialog";
+import {MatLegacyDialog as MatDialog} from "@angular/material/legacy-dialog";
 import {openConformationDialog} from "../../../../components/widgets/conformation-dialog/conformation-dialog.component";
 import {FhirValidatorStateService} from "../../../fhir-validator/service/fhir-validator-state.service";
 

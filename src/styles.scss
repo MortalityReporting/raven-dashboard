@@ -2,6 +2,23 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+
+
+.page-wrapper {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100%;
+}
+.flex-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+}
+
 /*This is bootstrap-like container, and we can change the media queries as needed one day*/
 .container {
   padding-right: 30px;

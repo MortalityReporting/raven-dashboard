@@ -19,7 +19,6 @@ export class ModuleHeaderComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-    console.log("I loaded?");
     this.router.events.pipe(
       filter((event) => {return event instanceof ActivationEnd})
     ).subscribe(

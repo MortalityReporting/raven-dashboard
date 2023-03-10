@@ -1,12 +1,12 @@
 import {Component, OnInit, ViewChild, ElementRef, Inject} from '@angular/core';
-import {MatTableDataSource} from "@angular/material/table";
+import {MatLegacyTableDataSource as MatTableDataSource} from "@angular/material/legacy-table";
 import {MatSort} from "@angular/material/sort";
 import {DecedentGridDTO} from "../../../../../model/decedent.grid.dto";
 import {DecedentService} from "../../../services/decedent.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {mergeMap, forkJoin, map} from "rxjs";
 import {UtilsService} from "../../../../../service/utils.service";
-import {MatSelect} from "@angular/material/select";
+import {MatLegacySelect as MatSelect} from "@angular/material/legacy-select";
 import {DatePipe} from "@angular/common";
 import {FhirHelperService} from "../../../../fhir-util/services/fhir-helper.service";
 import {TrackingNumberType} from "../../../../../model/tracking.number.type";

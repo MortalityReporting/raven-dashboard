@@ -3,20 +3,19 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HeaderComponent} from './components/header/header.component';
 import {ReactiveFormsModule} from "@angular/forms";
-import {MatInputModule} from "@angular/material/input";
-import {MatButtonModule} from '@angular/material/button';
-import {MatDialogModule} from '@angular/material/dialog'
+import {MatLegacyInputModule as MatInputModule} from "@angular/material/legacy-input";
+import {MatLegacyButtonModule as MatButtonModule} from '@angular/material/legacy-button';
+import {MatLegacyDialogModule as MatDialogModule} from '@angular/material/legacy-dialog'
 import {MatIconModule} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {MatCardModule} from "@angular/material/card";
+import {MatLegacyCardModule as MatCardModule} from "@angular/material/legacy-card";
 import {FhirValidatorModule} from "./modules/fhir-validator/fhir-validator.module";
 import {FhirAuthInterceptor} from "./interceptors/fhir-auth.interceptor";
 import {LandingComponent} from './components/landing/landing.component';
 import {FhirExplorerDrawerService} from "./modules/fhir-explorer/services/fhir-explorer-drawer.service";
-import {MatMenuModule} from '@angular/material/menu';
+import {MatLegacyMenuModule as MatMenuModule} from '@angular/material/legacy-menu';
 import {ConformationDialogComponent} from "./components/widgets/conformation-dialog/conformation-dialog.component";
 import {ClipboardModule} from "@angular/cdk/clipboard";
 import {ModalComponent} from './components/widgets/modal/modal.component';
@@ -27,22 +26,24 @@ import {RecordViewerModule} from "./modules/record-viewer/record-viewer.module";
 import {FhirUtilModule} from "./modules/fhir-util/fhir-util.module";
 import {environment} from "../environments/environment";
 import {FhirExplorerModule} from "./modules/fhir-explorer/fhir-explorer.module";
-import {MatListModule} from "@angular/material/list";
+import {MatLegacyListModule as MatListModule} from "@angular/material/legacy-list";
 import {RecordComparisonModule} from "./modules/record-comparison/record-comparison.module";
 import {BreadcrumbComponent} from './modules/common-ui/components/breadcrumb/breadcrumb.component';
-import {CommonUiModule} from "./modules/common-ui/common-ui.module";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {ModuleHeaderConfig} from "../assets/configuration/module-header-config";
+import {HeaderComponent, NavMenuComponent} from "common-ui";
+import {CommonUiModule} from "./modules/common-ui/common-ui.module"; // TODO: Rename/move components to library.
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
     LandingComponent,
     ConformationDialogComponent,
     ModalComponent,
   ],
   imports: [
+    HeaderComponent,
+    NavMenuComponent,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -66,6 +67,7 @@ import {ModuleHeaderConfig} from "../assets/configuration/module-header-config";
     RecordComparisonModule,
     CommonUiModule,
     MatSidenavModule,
+    CommonUiModule,
   ],
 
   providers: [

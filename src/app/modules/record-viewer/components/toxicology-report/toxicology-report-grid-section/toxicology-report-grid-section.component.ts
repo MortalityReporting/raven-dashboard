@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
-import {MatTableDataSource} from "@angular/material/table";
+import {MatLegacyTableDataSource as MatTableDataSource} from "@angular/material/legacy-table";
 import {FhirResourceProviderService} from "../../../../../service/fhir-resource-provider.service";
 import {MatSort} from "@angular/material/sort";
 

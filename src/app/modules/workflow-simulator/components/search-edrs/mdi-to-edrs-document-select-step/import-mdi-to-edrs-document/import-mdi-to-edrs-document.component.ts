@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {openInputTextDialog} from "../../../../../../components/widgets/input-text-dialog/input-text-dialog.component";
-import {MatDialog} from "@angular/material/dialog";
+import {MatLegacyDialog as MatDialog} from "@angular/material/legacy-dialog";
 import {UtilsService} from "../../../../../../service/utils.service";
 import {SearchEdrsService} from "../../../../service/search-edrs.service";
 import {Validators} from "@angular/forms";

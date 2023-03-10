@@ -1,9 +1,9 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {MatTableDataSource} from "@angular/material/table";
+import {MatLegacyTableDataSource as MatTableDataSource} from "@angular/material/legacy-table";
 import {MatSort} from "@angular/material/sort";
 import {ActivatedRoute, Router} from "@angular/router";
 import {forkJoin, map, mergeMap} from "rxjs";
-import {PageEvent} from "@angular/material/paginator";
+import {LegacyPageEvent as PageEvent} from "@angular/material/legacy-paginator";
 import {ToxicologyHandlerService} from "../../../services/toxicology-handler.service";
 import {ToxicologyGridDto} from "../../../../../model/toxicology.grid.dto";
 import {TrackingNumberType} from "../../../../../model/tracking.number.type";

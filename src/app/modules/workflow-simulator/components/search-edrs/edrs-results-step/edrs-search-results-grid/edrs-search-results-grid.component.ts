@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {MatTableDataSource} from "@angular/material/table";
+import {MatLegacyTableDataSource as MatTableDataSource} from "@angular/material/legacy-table";
 import {Obs_DeathDate, Obs_MannerOfDeath} from "../../../../../../model/mdi/profile.list";
 import {TrackingNumberType} from "../../../../../../model/tracking.number.type";
 import {FhirHelperService, PatientNameReturn} from "../../../../../../modules/fhir-util/services/fhir-helper.service";
-import {MatTabGroup} from "@angular/material/tabs";
+import {MatLegacyTabGroup as MatTabGroup} from "@angular/material/legacy-tabs";
 import {DocumentHandlerService} from "../../../../../../modules/record-viewer/services/document-handler.service";
 
 @Component({

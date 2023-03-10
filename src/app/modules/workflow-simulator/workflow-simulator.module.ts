@@ -33,21 +33,21 @@ import {
   MdiToEdrsDocumentSelectStepComponent
 } from "./components/search-edrs/mdi-to-edrs-document-select-step/mdi-to-edrs-document-select-step.component";
 import {MatToolbarModule} from "@angular/material/toolbar";
-import {MatCardModule} from "@angular/material/card";
-import {MatTabsModule} from "@angular/material/tabs";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatSelectModule} from "@angular/material/select";
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {MatTableModule} from "@angular/material/table";
-import {MatPaginatorModule} from "@angular/material/paginator";
-import {MatTooltipModule} from "@angular/material/tooltip";
-import {MatRadioModule} from "@angular/material/radio";
+import {MatLegacyCardModule as MatCardModule} from "@angular/material/legacy-card";
+import {MatLegacyTabsModule as MatTabsModule} from "@angular/material/legacy-tabs";
+import {MatLegacyFormFieldModule as MatFormFieldModule} from "@angular/material/legacy-form-field";
+import {MatLegacySelectModule as MatSelectModule} from "@angular/material/legacy-select";
+import {MatLegacyProgressSpinnerModule as MatProgressSpinnerModule} from "@angular/material/legacy-progress-spinner";
+import {MatLegacyTableModule as MatTableModule} from "@angular/material/legacy-table";
+import {MatLegacyPaginatorModule as MatPaginatorModule} from "@angular/material/legacy-paginator";
+import {MatLegacyTooltipModule as MatTooltipModule} from "@angular/material/legacy-tooltip";
+import {MatLegacyRadioModule as MatRadioModule} from "@angular/material/legacy-radio";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatIconModule} from "@angular/material/icon";
 import {MatStepperModule} from "@angular/material/stepper";
-import {MatButtonModule} from "@angular/material/button";
-import {MatInputModule} from "@angular/material/input";
+import {MatLegacyButtonModule as MatButtonModule} from "@angular/material/legacy-button";
+import {MatLegacyInputModule as MatInputModule} from "@angular/material/legacy-input";
 import {MatSortModule} from "@angular/material/sort";
 
 

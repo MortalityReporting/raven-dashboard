@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {ImportCaseService} from "../../services/import-case.service";
 import {UtilsService} from "../../../../service/utils.service";
-import {MatTableDataSource} from "@angular/material/table";
+import {MatLegacyTableDataSource as MatTableDataSource} from "@angular/material/legacy-table";
 import {openModal} from "../../../../components/widgets/modal/modal.component";
-import {MatDialog} from "@angular/material/dialog";
+import {MatLegacyDialog as MatDialog} from "@angular/material/legacy-dialog";
 
 @Component({
   selector: 'app-import-case-connectathon-template',
