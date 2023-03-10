@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {DecedentSimpleInfo} from "../../../../../model/decedent-simple-info";
 import {SearchEdrsService} from "../../../service/search-edrs.service";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {UntypedFormBuilder, UntypedFormGroup} from "@angular/forms";
 import {UiStringConstants} from "../../../../../providers/ui-string-constants";
 import {blueJay} from "../../../../../../environments/environment";
 
@@ -24,12 +24,12 @@ export class EndpointConfigurationStepComponent implements OnInit {
     {uri: 'www.gavers.edu', displayName: 'GAVERS'},
   ];
 
-  endpointConfigurationFormGroup: FormGroup
+  endpointConfigurationFormGroup: UntypedFormGroup
   decedentInfo: DecedentSimpleInfo;
 
   constructor(
     private searchEdrsService: SearchEdrsService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     uiStringConstants: UiStringConstants
   ) {
     this.uiConstantsStep2 = uiStringConstants.WorkflowSimulator.searchEdrs.step2;
@@ -82,7 +82,7 @@ export class EndpointConfigurationStepComponent implements OnInit {
     window.open(blueJay.serverBase + "/metadata", "_blank");
   }
 
-  onSelected(endpointConfigurationFormGroup: FormGroup) {
+  onSelected(endpointConfigurationFormGroup: UntypedFormGroup) {
     console.log(endpointConfigurationFormGroup.controls['registeredEndpoint'].value.serverEndpoint);
   }
 }

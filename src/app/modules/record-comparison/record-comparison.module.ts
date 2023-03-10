@@ -25,29 +25,27 @@ import {MatCardModule} from "@angular/material/card";
 
 
 @NgModule({
-  declarations: [
-    RecordComparisonContainerComponent,
-    RecordComparisonContentComponent,
-    RecordComparisonContentFieldComponent,
-    RecordComparisonDialogComponent,
-  ],
-  imports: [
-    CommonModule,
-    MatSidenavModule,
-    MatListModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatProgressSpinnerModule,
-    MatExpansionModule,
-    MatInputModule,
-    MatSelectModule,
-    MatButtonModule,
-    MatCardModule,
-
-  ],
-  providers: [
-    ReferenceDocumentService
-  ],
-  entryComponents: [RecordComparisonDialogComponent],
+    declarations: [
+        RecordComparisonContainerComponent,
+        RecordComparisonContentComponent,
+        RecordComparisonContentFieldComponent,
+        RecordComparisonDialogComponent,
+    ],
+    imports: [
+        CommonModule,
+        MatSidenavModule,
+        MatListModule,
+        MatIconModule,
+        MatTooltipModule,
+        MatProgressSpinnerModule,
+        MatExpansionModule,
+        MatInputModule,
+        MatSelectModule,
+        MatButtonModule,
+        MatCardModule,
+    ],
+    providers: [
+        ReferenceDocumentService
+    ]
 })
 export class RecordComparisonModule { }

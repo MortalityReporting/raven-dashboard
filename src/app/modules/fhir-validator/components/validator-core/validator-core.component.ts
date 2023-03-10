@@ -3,7 +3,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {FhirValidatorService} from "../../services/fhir-validator.service";
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatTableDataSource} from "@angular/material/table";
-import {FormControl} from "@angular/forms";
+import {UntypedFormControl} from "@angular/forms";
 import {Subscription} from "rxjs";
 import {UtilsService} from "../../../../service/utils.service";
 import {ValidationResults} from "../../domain/ValidationResults";
@@ -45,7 +45,7 @@ export class ValidatorCoreComponent implements OnInit, OnChanges {
   isLoading = false;
   allExpanded = true; // Used to render collapsed/expanded all icon as well as calculate if all results are expanded/collapsed
   severityLevels: string[] = ValidatorConstants.SEVERITY_LEVELS;
-  severityLevelsFormControl = new FormControl(this.severityLevels); // A simple form control used for filtering the results.
+  severityLevelsFormControl = new UntypedFormControl(this.severityLevels); // A simple form control used for filtering the results.
   dataSource = new MatTableDataSource([]); // Data source for the report table.
   validatorSubscription$: Subscription;
   validationFinished = false;

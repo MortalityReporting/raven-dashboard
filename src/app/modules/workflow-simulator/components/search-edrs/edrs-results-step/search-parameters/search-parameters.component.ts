@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {UntypedFormArray, UntypedFormBuilder, UntypedFormControl, FormGroup} from "@angular/forms";
 import {SearchEdrsService} from "../../../../service/search-edrs.service";
 import {UtilsService} from "../../../../../../service/utils.service";
 import {Obs_DeathDate, Obs_MannerOfDeath} from "../../../../../../model/mdi/profile.list";
@@ -32,7 +32,7 @@ export class SearchParametersComponent implements OnInit {
   errorMessage: string;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private searchEdrsService: SearchEdrsService,
     private utilsService: UtilsService,
     private fhirHelperService: FhirHelperService,
@@ -87,7 +87,7 @@ export class SearchParametersComponent implements OnInit {
   }
 
   get parameters() {
-    return this.searchEdrsForm.controls["parameters"] as FormArray;
+    return this.searchEdrsForm.controls["parameters"] as UntypedFormArray;
   }
 
   onSubmit() {
@@ -127,8 +127,8 @@ export class SearchParametersComponent implements OnInit {
 
   addNewFilter(){
     const paramsFormGroup = this.fb.group({
-      name: new FormControl(''),
-      valueString: new FormControl(''),
+      name: new UntypedFormControl(''),
+      valueString: new UntypedFormControl(''),
     });
     this.parameters.push(paramsFormGroup);
   }
@@ -163,20 +163,20 @@ export class SearchParametersComponent implements OnInit {
     // until the API is changed
     this.errorMessage = '';
     const  givenNameFg = this.fb.group({
-      name : new FormControl('patient.given'),
-      valueString: new FormControl(''),
+      name : new UntypedFormControl('patient.given'),
+      valueString: new UntypedFormControl(''),
     });
     this.parameters.push(givenNameFg);
 
     const lastNameFg = this.fb.group({
-      name : new FormControl('patient.family'),
-      valueString: new FormControl(''),
+      name : new UntypedFormControl('patient.family'),
+      valueString: new UntypedFormControl(''),
     });
     this.parameters.push(lastNameFg);
 
     const edrsNumber = this.fb.group({
-      name : new FormControl('edrs-file-number'),
-      valueString: new FormControl(''),
+      name : new UntypedFormControl('edrs-file-number'),
+      valueString: new UntypedFormControl(''),
     });
     this.parameters.push(edrsNumber);
 
@@ -322,11 +322,11 @@ export class SearchParametersComponent implements OnInit {
     if(decedentData?.patientResource){
       //TODO we need to come up with a data driven solution for this. Using hardcoded array indexing is a bad idea
       const decedentFirstName = this.fhirHelperService.getPatientOfficialName(decedentData.patientResource, PatientNameReturn.firstonly);
-      const givenNameFormControl =  (<FormArray>this.searchEdrsForm.controls['parameters']).at(0);
+      const givenNameFormControl =  (<UntypedFormArray>this.searchEdrsForm.controls['parameters']).at(0);
       givenNameFormControl.patchValue({name : "patient.given", valueString: decedentFirstName});
 
       const decedentLastName = this.fhirHelperService.getPatientOfficialName(decedentData.patientResource, PatientNameReturn.lastonly);
-      const lastNameFormControl =  (<FormArray>this.searchEdrsForm.controls['parameters']).at(1);
+      const lastNameFormControl =  (<UntypedFormArray>this.searchEdrsForm.controls['parameters']).at(1);
       lastNameFormControl.patchValue({name : "patient.family", valueString: decedentLastName});
     }
   }

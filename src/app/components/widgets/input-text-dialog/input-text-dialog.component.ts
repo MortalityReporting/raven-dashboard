@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material/dialog";
-import {FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
+import {UntypedFormControl, UntypedFormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {JsonValidator} from "../../../reactive-form-validators/json-validator";
 
 @Component({
@@ -14,8 +14,8 @@ export class InputTextDialogComponent implements OnInit {
   primaryActionBtnTitle: string; // Is the action we want to take. For example Save, Delete
   secondaryActionBtnTitle: string; // Permits the user to exist without executing the primary action. For example Cancel
   isPrimaryButtonLeft: boolean = false; // Indicates the position of the primary action. If the primary action is on the left, the default button is the secondary action.
-  dialogForm = new FormGroup({
-    content: new FormControl(null)
+  dialogForm = new UntypedFormGroup({
+    content: new UntypedFormControl(null)
   });
   inputLabelText: string = 'Paste or enter content here';
   validatorErrors: string;

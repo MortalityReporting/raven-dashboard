@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {DecedentSimpleInfo} from "../../../../../model/decedent-simple-info";
 import {SearchEdrsService} from "../../../service/search-edrs.service";
 import {MatStepper} from "@angular/material/stepper";
-import {FormBuilder} from "@angular/forms";
+import {UntypedFormBuilder} from "@angular/forms";
 import {UiStringConstants} from "../../../../../providers/ui-string-constants";
 import {UtilsService} from "../../../../../service/utils.service";
 
@@ -25,7 +25,7 @@ export class EdrsResultsStepComponent implements OnInit {
 
   constructor(
     private searchEdrsService: SearchEdrsService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private utilsService: UtilsService,
     uiStringConstants: UiStringConstants,
   ) {

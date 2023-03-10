@@ -21,6 +21,7 @@ const routes: Routes = [
     path: 'records',
     children: [
       {
+        pathMatch: 'full',
         path: '',
         component: SearchRecordsComponent,
         data: { moduleConfig: ModuleHeaderConfig.RecordViewer, componentTitle: "Search Records"}
