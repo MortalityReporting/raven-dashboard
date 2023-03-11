@@ -1,6 +1,6 @@
 <div class="container top-padding">
-  <mat-card class="mat-elevation-z8 import-case">
-
+  <mat-card class="mat-elevation-z8">
+    <mat-card-content>
     <mat-radio-group
       aria-label="select import method"
       class="radio-group"
@@ -17,6 +17,7 @@
     <div *ngIf="selectedInputOption == inputOptions[1]">
     <app-import-case-connectathon-template></app-import-case-connectathon-template>
     </div>
+    </mat-card-content>
 
   </mat-card>
 
