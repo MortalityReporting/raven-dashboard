@@ -12,15 +12,15 @@ import {
 } from "./components/record-comparison-dialog/record-comparison-dialog.component";
 import {ReferenceDocumentService} from "./services/reference-document.service";
 import {MatSidenavModule} from "@angular/material/sidenav";
-import {MatLegacyListModule as MatListModule} from "@angular/material/legacy-list";
 import {MatIconModule} from "@angular/material/icon";
-import {MatLegacyTooltipModule as MatTooltipModule} from "@angular/material/legacy-tooltip";
-import {MatLegacyProgressSpinnerModule as MatProgressSpinnerModule} from "@angular/material/legacy-progress-spinner";
 import {MatExpansionModule} from "@angular/material/expansion";
-import {MatLegacyInputModule as MatInputModule} from "@angular/material/legacy-input";
-import {MatLegacySelectModule as MatSelectModule} from "@angular/material/legacy-select";
-import {MatLegacyButtonModule as MatButtonModule} from "@angular/material/legacy-button";
-import {MatLegacyCardModule as MatCardModule} from "@angular/material/legacy-card";
+import {MatListModule} from "@angular/material/list";
+import {MatSelectModule} from "@angular/material/select";
+import {MatCardModule} from "@angular/material/card";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatInputModule} from "@angular/material/input";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatButtonModule} from "@angular/material/button";
 
 
 
