@@ -4,9 +4,9 @@ import { SetFhirExplorerDirective } from "./directives/set-fhir-explorer.directi
 import { FhirExplorerComponent } from "./components/fhir-explorer/fhir-explorer.component";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
-import { MatLegacyButtonModule as MatButtonModule } from "@angular/material/legacy-button";
 import { ClipboardModule } from "@angular/cdk/clipboard";
 import {FormsModule} from "@angular/forms";
+import {MatButtonModule} from "@angular/material/button";
 
 
 
