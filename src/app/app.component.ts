@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {environment} from "../environments/environment";
 import {MatIconRegistry} from "@angular/material/icon";
 import {DomSanitizer} from "@angular/platform-browser";
-import {OptionConfig} from "common-ui";
+import {OptionConfig, HeaderConfig} from "common-ui";
 
 @Component({
   selector: 'app-root',
@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
   title = 'Raven';
   version = environment.VERSION;
   optionConfig: OptionConfig;
+  headerConfig: HeaderConfig;
 
   // TODO: remove extra code once confirmed working on live.
   constructor(
@@ -43,29 +44,48 @@ export class AppComponent implements OnInit {
           iconName: "home"
         },
         {
-          routerLink: "/",
+          routerLink: "/records",
           label: "Record Viewer",
           iconName: "record_viewer"
         },
         {
-          routerLink: "/",
+          routerLink: "/import-case",
           label: "Record Import",
           iconName: "record_import"
         },
         {
-          routerLink: "/",
+          routerLink: "/comparison",
           label: "Record Comparison",
           iconName: "record_comparison"
         },
         {
-          routerLink: "/",
+          routerLink: "/fhir-validator",
           label: "FHIR Validator",
           iconName: "fhir_validator"
         },
         {
-          routerLink: "/",
+          routerLink: "/workflow-simulator",
           label: "Workflow Simulator",
           iconName: "workflow_simulator"
+        }
+      ]
+    }
+    this.headerConfig = {
+      menuItem: [
+        {
+          label: "Documentation",
+          link: "https://ravendocs.readthedocs.io/en/latest/"
+        },
+        {
+          label: "Mortality Reporting GitHub",
+          link: "https://github.com/MortalityReporting"
+        },
+        {
+          divider: true
+        },
+        {
+          label: "FHIR Zulip Chat",
+          link: "https://chat.fhir.org"
         }
       ]
     }
