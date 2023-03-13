@@ -11,7 +11,6 @@ import {FhirValidatorModule} from "./modules/fhir-validator/fhir-validator.modul
 import {FhirAuthInterceptor} from "./interceptors/fhir-auth.interceptor";
 import {LandingComponent} from './components/landing/landing.component';
 import {FhirExplorerDrawerService} from "./modules/fhir-explorer/services/fhir-explorer-drawer.service";
-import {ConformationDialogComponent} from "./components/widgets/conformation-dialog/conformation-dialog.component";
 import {ClipboardModule} from "@angular/cdk/clipboard";
 import {ModalComponent} from './components/widgets/modal/modal.component';
 import {UiStringConstants} from "./providers/ui-string-constants";
@@ -39,7 +38,6 @@ import {HeaderComponent, NavMenuComponent} from "common-ui"; // TODO: Rename/mov
   declarations: [
     AppComponent,
     LandingComponent,
-    ConformationDialogComponent,
     ModalComponent,
   ],
   imports: [
