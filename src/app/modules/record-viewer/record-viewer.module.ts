@@ -40,6 +40,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatButtonModule} from "@angular/material/button";
+import { DecedentDisplayComponent } from './components/decedent-display/decedent-display.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import {MatButtonModule} from "@angular/material/button";
     CaseSummaryComponent,
     CaseSummaryContentComponent,
     CaseSummaryContentFieldComponent,
-    CaseSummaryRelatedToxComponent
+    CaseSummaryRelatedToxComponent,
+    DecedentDisplayComponent
   ],
   imports: [
     CommonModule,

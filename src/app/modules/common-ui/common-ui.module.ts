@@ -8,6 +8,7 @@ import {MatIconModule, MatIconRegistry} from "@angular/material/icon";
 import {DomSanitizer} from "@angular/platform-browser";
 import {CustomSpinnerDirective} from "./directives/custom-spinner.directive";
 import {ModuleThemedButtonDirective} from "./directives/moduleThemedButton.directive";
+import {MatButtonModule} from "@angular/material/button";
 
 
 
@@ -28,7 +29,8 @@ import {ModuleThemedButtonDirective} from "./directives/moduleThemedButton.direc
     CommonModule,
     MatToolbarModule,
     MatDividerModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonModule
   ]
 })
 export class CommonUiModule {

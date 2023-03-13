@@ -7,6 +7,14 @@
   flex-direction: row;
 }
 
+.module-header-fhir-explorer-wrapper {
+  flex: 0;
+  flex-basis: fit-content;
+  align-content: center;
+  padding: 15px;
+  margin: auto;
+}
+
 .module-header-icon-wrapper {
   flex: 0;
   align-content: center;
@@ -15,10 +23,7 @@
 }
 
 .module-header-label-wrapper {
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-left: 10px;
-  padding-right: 20px;
+  padding: 20px 20px 20px 10px;
   flex: 1;
 }
 .module-header-underline {

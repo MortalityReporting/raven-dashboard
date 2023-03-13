@@ -1,19 +1,23 @@
-<mat-toolbar class="tool-bars">
-  <mat-toolbar-row class="decedent-header" appSetFhirExplorer [title]="'document'">
-    <span class="viewer-header-label">Decedent Name:</span>
-    <input type="text" value="{{ (caseHeader$ | async)?.fullName}}" readonly>
-    <span class="content-spacer"> </span>
-    <span class="viewer-header-label">Date/Time of Death:</span>
-    <input type="text" value="{{ (caseHeader$ | async)?.deathDate}}" readonly>
-    <input type="text" value="{{ (caseHeader$ | async)?.deathTime}}" readonly>
-    <span class="content-spacer"> </span>
-    <span class="viewer-header-label">MDI Case Number/System:</span>
-    <input type="text" value="{{ (caseHeader$ | async)?.mdiCaseNumber?.value}}" readonly>
-    <input type="text" value="{{ (caseHeader$ | async)?.mdiCaseNumber?.system}}" readonly>
-  </mat-toolbar-row>
-</mat-toolbar>
+<!--<mat-toolbar class="tool-bars">-->
+<!--  <mat-toolbar-row class="decedent-header" appSetFhirExplorer [title]="'document'">-->
+<!--    <span class="viewer-header-label">Decedent Name:</span>-->
+<!--    <input type="text" value="{{ (caseHeader$ | async)?.fullName}}" readonly>-->
+<!--    <span class="content-spacer"> </span>-->
+<!--    <span class="viewer-header-label">Date/Time of Death:</span>-->
+<!--    <input type="text" value="{{ (caseHeader$ | async)?.deathDate}}" readonly>-->
+<!--    <input type="text" value="{{ (caseHeader$ | async)?.deathTime}}" readonly>-->
+<!--    <span class="content-spacer"> </span>-->
+<!--    <span class="viewer-header-label">MDI Case Number/System:</span>-->
+<!--    <input type="text" value="{{ (caseHeader$ | async)?.mdiCaseNumber?.value}}" readonly>-->
+<!--    <input type="text" value="{{ (caseHeader$ | async)?.mdiCaseNumber?.system}}" readonly>-->
+<!--  </mat-toolbar-row>-->
+<!--</mat-toolbar>-->
 
+<app-decedent-display appSetFhirExplorer [title]="'document'"
+  [decedentInformation]="caseHeader$ | async"
+></app-decedent-display>
 
+<div [style.margin]="'20px'">
 <mat-tab-group>
   <mat-tab label="Document Summary View">
     <ng-template matTabLabel>
@@ -119,3 +123,4 @@
     </ng-template>
   </mat-tab>
 </mat-tab-group>
+</div>

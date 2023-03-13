@@ -25,7 +25,6 @@ import {RecordComparisonModule} from "./modules/record-comparison/record-compari
 import {BreadcrumbComponent} from './modules/common-ui/components/breadcrumb/breadcrumb.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {ModuleHeaderConfig} from "../assets/configuration/module-header-config";
-import {HeaderComponent, NavMenuComponent} from "common-ui";
 import {CommonUiModule} from "./modules/common-ui/common-ui.module";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatMenuModule} from "@angular/material/menu";
@@ -33,7 +32,8 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatCardModule} from "@angular/material/card";
 import {MatListModule} from "@angular/material/list";
 import {MatInputModule} from "@angular/material/input";
-import {MatButtonModule} from "@angular/material/button"; // TODO: Rename/move components to library.
+import {MatButtonModule} from "@angular/material/button";
+import {HeaderComponent, NavMenuComponent} from "common-ui"; // TODO: Rename/move components to library.
 
 @NgModule({
   declarations: [

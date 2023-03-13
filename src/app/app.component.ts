@@ -3,6 +3,7 @@ import {environment} from "../environments/environment";
 import {MatIconRegistry} from "@angular/material/icon";
 import {DomSanitizer} from "@angular/platform-browser";
 import {OptionConfig, HeaderConfig} from "common-ui";
+import {ThemeService} from "./service/theme.service";
 
 @Component({
   selector: 'app-root',
@@ -12,16 +13,22 @@ import {OptionConfig, HeaderConfig} from "common-ui";
 export class AppComponent implements OnInit {
   title = 'Raven';
   version = environment.VERSION;
+  color = "#646064";
+  contrastColor = "#fafafa";
   optionConfig: OptionConfig;
   headerConfig: HeaderConfig;
 
   // TODO: remove extra code once confirmed working on live.
   constructor(
     private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private themeService: ThemeService
     ) {
   }
   ngOnInit(): void {
+    this.themeService.setColor(this.color);
+    this.themeService.setContrastColor(this.contrastColor);
+
     const path = "assets"
     this.matIconRegistry.addSvgIcon("home", this.domSanitizer
       .bypassSecurityTrustResourceUrl(`${path}/home.svg`));

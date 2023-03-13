@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivationEnd, Router} from "@angular/router";
 import {filter} from "rxjs/operators";
+import {FhirExplorerDrawerService} from "../../../fhir-explorer/services/fhir-explorer-drawer.service";
 
 @Component({
   selector: 'app-module-header',
@@ -16,7 +17,9 @@ export class ModuleHeaderComponent implements OnInit {
   backgroundColor = undefined;
   icon = undefined;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+              public fhirExplorerDrawerService: FhirExplorerDrawerService,
+  ) { }
 
   ngOnInit(): void {
     this.router.events.pipe(
@@ -37,5 +40,8 @@ export class ModuleHeaderComponent implements OnInit {
         }
       }
     );
+  }
+  onToggle() {
+    this.fhirExplorerDrawerService.toggle();
   }
 }
