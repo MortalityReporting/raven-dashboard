@@ -1,0 +1,51 @@
+.decedent-box {
+  border-bottom-width: 2px;
+  border-bottom-color: black;
+  border-bottom-style: solid;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+.name-box {
+  flex: 1;
+  flex-direction: row;
+  margin-top: auto;
+}
+
+.details-box {
+  flex: 1;
+  flex-direction: column;
+}
+
+.details-box div {
+  flex: 1;
+  flex-direction: row;
+  display: flex;
+}
+
+.label {
+  font-weight: bold;
+  font-size: larger;
+  flex: 1;
+  justify-content: right;
+  align-content: end;
+  text-align: right;
+}
+.value {
+  margin-left: 5px;
+  font-weight: bold;
+  font-size: larger;
+  flex: 2;
+  justify-content: left;
+
+}
+.value-name {
+  margin-left: 5px;
+  font-weight: bold;
+  font-size: xx-large;
+  flex: 2;
+  justify-content: left;
+}

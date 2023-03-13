@@ -1,15 +1,17 @@
 <!--We really shouldn't need to add much code here-->
-<div class="page-wrapper">
-  <common-nav-menu [options]="optionConfig">
+<div class="page-wrapper" [style.background-color]="contrastColor">
+  <common-nav-menu [options]="optionConfig" [backgroundColor]="color" [contrastColor]="contrastColor">
   </common-nav-menu>
   <div #content class="flex-wrapper">
 
     <div class="header-wrapper">
       <common-header
         [title]="title"
-        [subtitle]="'FHIR Medicolegal Death Investigation Implementation Guide Reference Implementation and Testing Platform'"
+        [subtitle]="'Medicolegal Death Investigation FHIR Implementation Guide Reference Implementation and Testing Platform'"
         [splitSubtitleEvenly]="true"
         [version]="version"
+        [backgroundColor]="color"
+        [configuration]="headerConfig"
       ></common-header>
     </div>
     <div>
