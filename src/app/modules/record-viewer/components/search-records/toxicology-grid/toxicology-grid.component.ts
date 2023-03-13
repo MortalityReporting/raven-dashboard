@@ -1,12 +1,11 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {MatLegacyTableDataSource as MatTableDataSource} from "@angular/material/legacy-table";
 import {MatSort} from "@angular/material/sort";
 import {ActivatedRoute, Router} from "@angular/router";
 import {forkJoin, map, mergeMap} from "rxjs";
-import {LegacyPageEvent as PageEvent} from "@angular/material/legacy-paginator";
 import {ToxicologyHandlerService} from "../../../services/toxicology-handler.service";
 import {ToxicologyGridDto} from "../../../../../model/toxicology.grid.dto";
 import {TrackingNumberType} from "../../../../../model/tracking.number.type";
+import {MatTableDataSource} from "@angular/material/table";
 
 @Component({
   selector: 'record-viewer-toxicology-grid',
@@ -84,9 +83,6 @@ export class ToxicologyGridComponent implements OnInit {
 
   onCaseSelected(row: any) {
     this.router.navigate(['records/tox/', row.toxcasesystem + "|" + row.toxcasenumber]);
-  }
-
-  pageChanged(event: PageEvent) {
   }
 
   applyFilter(event: Event) {

@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
-import {MatLegacyTableDataSource as MatTableDataSource} from "@angular/material/legacy-table";
 import {FhirResourceProviderService} from "../../../../../service/fhir-resource-provider.service";
 import {MatSort} from "@angular/material/sort";
+import {MatTableDataSource} from "@angular/material/table";
 
 @Component({
   selector: 'record-viewer-toxicology-report-grid-section',

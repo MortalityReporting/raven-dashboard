@@ -12,3 +12,9 @@
 .mat-row:nth-child(odd){
   background-color: whitesmoke;
 }
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

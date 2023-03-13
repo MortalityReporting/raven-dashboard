@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {openInputTextDialog} from "../../../../../../components/widgets/input-text-dialog/input-text-dialog.component";
-import {MatLegacyDialog as MatDialog} from "@angular/material/legacy-dialog";
 import {UtilsService} from "../../../../../../service/utils.service";
 import {SearchEdrsService} from "../../../../service/search-edrs.service";
 import {Validators} from "@angular/forms";
@@ -9,6 +8,7 @@ import {ResourceTypeValidator} from "../../../../../../reactive-form-validators/
 import {DecedentSimpleInfo} from "../../../../../../model/decedent-simple-info";
 import {UiStringConstants} from "../../../../../../providers/ui-string-constants";
 import {FhirHelperService, PatientNameReturn} from "../../../../../../modules/fhir-util/services/fhir-helper.service";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-import-mdi-to-edrs-document',

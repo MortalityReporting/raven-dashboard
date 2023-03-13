@@ -1,15 +1,17 @@
 <mat-card class="top-margin">
-  <mat-tab-group #mdiToEdrsTabGroup (selectedTabChange)="tabSelectionChange()">
+  <mat-card-content>
+    <mat-tab-group #mdiToEdrsTabGroup (selectedTabChange)="tabSelectionChange()">
 
-    <mat-tab label="{{ uiConstants.step1.TAB_LABEL_1 }}">
-      <app-mdi-to-edrs-grid></app-mdi-to-edrs-grid>
-    </mat-tab>
+      <mat-tab label="{{ uiConstants.step1.TAB_LABEL_1 }}">
+        <app-mdi-to-edrs-grid></app-mdi-to-edrs-grid>
+      </mat-tab>
 
-    <mat-tab label="{{ uiConstants.step1.TAB_LABEL_2 }}">
-      <app-import-mdi-to-edrs-document></app-import-mdi-to-edrs-document>
-    </mat-tab>
+      <mat-tab label="{{ uiConstants.step1.TAB_LABEL_2 }}">
+        <app-import-mdi-to-edrs-document></app-import-mdi-to-edrs-document>
+      </mat-tab>
 
-  </mat-tab-group>
+    </mat-tab-group>
+  </mat-card-content>
 </mat-card>
 
 <div>

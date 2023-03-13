@@ -8,8 +8,7 @@
 
 .wrapper {
   display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 10px;
+  justify-content: space-between;
 }
 
 .table-container {
@@ -36,4 +35,13 @@
   left: 50%;
   margin-left: -50px;
   margin-top: -50px;
+}
+
+.results {
+  display: flex;
+  justify-content: space-between;
+}
+
+.result-colum {
+  width: 48%;
 }

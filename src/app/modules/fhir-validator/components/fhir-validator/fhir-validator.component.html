@@ -1,8 +1,10 @@
 <!-- The section below wraps the FHIR validator when used in standalone mode (when accessed directly) -->
 <div *ngIf=isStandalone class="container top-padding">
   <mat-card class="mat-elevation-z8">
+    <mat-card-content>
     <app-validator-core [isStandalone]>
     </app-validator-core>
+    </mat-card-content>
   </mat-card>
 </div>
 

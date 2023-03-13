@@ -1,12 +1,13 @@
-<div style="margin-top: 1rem; margin-bottom: 1rem; margin-left: 1rem">
+<div class="controls">
 <mat-radio-group aria-label="Select filter option" [(ngModel)]="selectedFilter" [disabled]="!(this.mappedData?.length > 0)">
   <mat-label>Filter Results:</mat-label>
-  <mat-radio-button *ngFor="let filter of filters" [value]="filter" style="margin-left: 1rem"
+  <mat-radio-button *ngFor="let filter of filters" [value]="filter"
                     (change)="onFilterChanged(filter)">
     {{filter}}
   </mat-radio-button>
 </mat-radio-group>
 </div>
+
 <div class="table-container"  id="mappingsTable">
 <table mat-table [dataSource]="dataSource" style="width: 100%">
 

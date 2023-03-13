@@ -2,7 +2,7 @@
   1. Users may use the provided XLSX file as a template to create a set of test cases.
   This XLSX file may then be submitted to Raven, where it is then mapped to MDI FHIR records and posted to the Raven FHIR Server.
   To prevent the creation of duplicate records, existing records are overwritten.
-  <div style="margin-left: 15px; margin-right: 15px; margin-top: 1rem">
+  <div>
     Contents must be a complete MDI Document Bundle or Toxicology Bundle.
     <div class="top-padding">
       <input type="file" class="file-input" (click)="fileUpload.value=null"
@@ -28,7 +28,7 @@
 
   <div class="top-padding">
     2. Submit your Bundle to the Raven FHIR Sever.
-    <div style="margin-left: 15px; margin-top: 10px">
+    <div>
       <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="isLoading">
         <mat-icon>send</mat-icon>
         Submit
@@ -45,7 +45,7 @@
   <div class="top-padding">
     3. Review your record(s) below in a summary or as the generated FHIR Document.
     <div class="wrapper" *ngIf="isExportSuccessful">
-      <div style="width:50%;">
+      <div class="result-colum">
 
         <table mat-table [dataSource]="dataSource" style="width: 95%;" class="mat-elevation-z1">
 
@@ -78,7 +78,7 @@
 
       </div>
 
-      <div style="width: 50%">
+      <div class="result-colum">
         <mat-tab-group class="mat-elevation-z1">
           <mat-tab label="Mappings">
             <app-mappings [fhirBundle]="selectedCase"></app-mappings>

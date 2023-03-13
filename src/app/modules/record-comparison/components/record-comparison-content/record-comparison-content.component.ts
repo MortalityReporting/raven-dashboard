@@ -17,7 +17,6 @@ import { LocationDeathDiff } from '../../models/location-death.diff';
 import { LocationInjuryDiff } from '../../models/location-injury.diff';
 import { DecedentService } from "../../../record-viewer/services/decedent.service";
 import { RecordComparisonDialogComponent } from '../record-comparison-dialog/record-comparison-dialog.component';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { UtilsService } from "../../../../service/utils.service";
 import { ActivatedRoute } from "@angular/router";
 import {FhirHelperService} from "../../../fhir-util/services/fhir-helper.service";
@@ -29,6 +28,7 @@ import {ReferenceDocumentService} from "../../services/reference-document.servic
 import {map} from "rxjs";
 import {ComparisonService} from "../../services/comparison.service";
 import {Difference} from "../../models/difference";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'record-comparison-content',
