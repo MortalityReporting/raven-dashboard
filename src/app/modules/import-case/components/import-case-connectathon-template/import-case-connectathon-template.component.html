@@ -1,9 +1,8 @@
 <div>
-  1. Users may use the provided XLSX file as a template to create a set of test cases.
-  This XLSX file may then be submitted to Raven, where it is then mapped to MDI FHIR records and posted to the Raven FHIR Server.
+  1. Users may use the provided XLSX file as a template to create a set of test cases. This XLSX file may then
+  be submitted to Raven, where it is then mapped to MDI-to-EDRS records and posted to the Raven FHIR Server.
   To prevent the creation of duplicate records, existing records are overwritten.
   <div>
-    Contents must be a complete MDI Document Bundle or Toxicology Bundle.
     <div class="top-padding">
       <input type="file" class="file-input" (click)="fileUpload.value=null"
              accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
@@ -11,14 +10,14 @@
       <div>
         <button mat-raised-button (click)="onDownloadTemplate();" style="margin-bottom: 1rem" [disabled]=isLoading>
           <mat-icon>file_download</mat-icon>
-          Download Connectathon Template
+          Download MDI-to-EDRS XLSX Template
         </button>
       </div>
       <div>
       <button mat-raised-button color="success" class="upload-btn"
               (click)="clearUI(); fileUpload.click();" [disabled]=isLoading>
         <mat-icon>upload_file</mat-icon>
-        Select Connectathon Template
+        Select MDI-to-EDRS XLSX Template
       </button>
       <span id="filename">{{file?.name}}</span>
       </div>
@@ -27,7 +26,7 @@
   </div>
 
   <div class="top-padding">
-    2. Submit your Bundle to the Raven FHIR Sever.
+    2. Submit your document to Raven.
     <div>
       <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="isLoading">
         <mat-icon>send</mat-icon>
@@ -43,7 +42,7 @@
   </div>
 
   <div class="top-padding">
-    3. Review your record(s) below in a summary or as the generated FHIR Document.
+    3. Review your record(s) below.
     <div class="wrapper" *ngIf="isExportSuccessful">
       <div class="result-colum">
 
