@@ -1,75 +1,79 @@
 <!-- Similar to case-summary component, it is parent component for the toxicology report-->
-<mat-toolbar class="tool-bars">
-  <mat-toolbar-row class="decedent-header" appSetFhirExplorer [resource]="messageBundle$ | async">
-    <span class="viewer-header-label">Decedent Name:</span>
-    <input type="text" value="{{ toxHeader?.fullName || ''}}" readonly>
-    <span class="content-spacer"> </span>
-    <span class="viewer-header-label">Date Report Issued:</span>
-    <input type="text" value="{{ toxHeader?.reportDate || ''}}" readonly>
-    <span class="content-spacer"> </span>
-    <span class="viewer-header-label">Tox Lab Case Number/System:</span>
-    <input type="text" value="{{ toxHeader?.toxCaseNumber || ''}}" readonly>
-    <input type="text" value="{{ toxHeader?.toxCaseSystem || ''}}" readonly>
-  </mat-toolbar-row>
+<!--<mat-toolbar class="tool-bars">-->
+<!--  <mat-toolbar-row class="decedent-header" appSetFhirExplorer [resource]="messageBundle$ | async">-->
+<!--    <span class="viewer-header-label">Decedent Name:</span>-->
+<!--    <input type="text" value="{{ toxHeader?.fullName || ''}}" readonly>-->
+<!--    <span class="content-spacer"> </span>-->
+<!--    <span class="viewer-header-label">Date Report Issued:</span>-->
+<!--    <input type="text" value="{{ toxHeader?.reportDate || ''}}" readonly>-->
+<!--    <span class="content-spacer"> </span>-->
+<!--    <span class="viewer-header-label">Tox Lab Case Number/System:</span>-->
+<!--    <input type="text" value="{{ toxHeader?.toxCaseNumber || ''}}" readonly>-->
+<!--    <input type="text" value="{{ toxHeader?.toxCaseSystem || ''}}" readonly>-->
+<!--  </mat-toolbar-row>-->
+<!--</mat-toolbar>-->
 
-</mat-toolbar>
-<mat-sidenav-container>
-  <mat-sidenav mode="side" opened>
-    <mat-nav-list aria-label="Toxicology Record Navigation">
+<app-decedent-display [decedentInformation]="toxHeader" [type]="'tox'" appSetFhirExplorer [resource]="messageBundle$ | async"></app-decedent-display>
 
-      <mat-list-item (click)="onItemClick('mdiCaseNumber');">
-        <mat-icon [matTooltip]="!sidenavExpanded ? 'MDI Case Number' : ''" matTooltipPosition="right" aria-hidden="true">
-          info
-        </mat-icon>
-        <span *ngIf="sidenavExpanded">&nbsp;MDI Case Number </span>
-      </mat-list-item>
+<div class="record-content">
+  <mat-sidenav-container>
+    <mat-sidenav mode="side" opened>
+      <mat-nav-list aria-label="Toxicology Record Navigation">
 
-      <mat-list-item (click)="onItemClick('performers');">
-        <mat-icon [matTooltip]="!sidenavExpanded ? 'Performers' : ''" matTooltipPosition="right" aria-hidden="true">
-          person
-        </mat-icon>
-        <span *ngIf="sidenavExpanded">&nbsp;Performers</span>
-      </mat-list-item>
+        <mat-list-item (click)="onItemClick('mdiCaseNumber');">
+          <mat-icon [matTooltip]="!sidenavExpanded ? 'MDI Case Number' : ''" matTooltipPosition="right" aria-hidden="true">
+            info
+          </mat-icon>
+          <span *ngIf="sidenavExpanded">&nbsp;MDI Case Number </span>
+        </mat-list-item>
 
-      <mat-list-item (click)="onItemClick('specimens');">
-        <mat-icon [matTooltip]="!sidenavExpanded ? 'Specimens Received' : ''" matTooltipPosition="right" aria-hidden="true"
-                  svgIcon="labs">
-        </mat-icon>
-        <span *ngIf="sidenavExpanded">&nbsp;Specimens</span>
-      </mat-list-item>
+        <mat-list-item (click)="onItemClick('performers');">
+          <mat-icon [matTooltip]="!sidenavExpanded ? 'Performers' : ''" matTooltipPosition="right" aria-hidden="true">
+            person
+          </mat-icon>
+          <span *ngIf="sidenavExpanded">&nbsp;Performers</span>
+        </mat-list-item>
 
-      <mat-list-item (click)="onItemClick('results');">
-        <mat-icon [matTooltip]="!sidenavExpanded ? 'Test Results' : ''" matTooltipPosition="right" aria-hidden="true"
-                  svgIcon="lab_panel">
-        </mat-icon>
-        <span *ngIf="sidenavExpanded">&nbsp;Test Results</span>
-      </mat-list-item>
+        <mat-list-item (click)="onItemClick('specimens');">
+          <mat-icon [matTooltip]="!sidenavExpanded ? 'Specimens Received' : ''" matTooltipPosition="right" aria-hidden="true"
+                    svgIcon="labs">
+          </mat-icon>
+          <span *ngIf="sidenavExpanded">&nbsp;Specimens</span>
+        </mat-list-item>
 
-      <mat-list-item (click)="onItemClick('conclusion');">
-        <mat-icon [matTooltip]="!sidenavExpanded ? 'Conclusion' : ''" matTooltipPosition="right" aria-hidden="true"
-                  svgIcon="clinical_notes">
-        </mat-icon>
-        <span *ngIf="sidenavExpanded">&nbsp;Conclusion</span>
-      </mat-list-item>
+        <mat-list-item (click)="onItemClick('results');">
+          <mat-icon [matTooltip]="!sidenavExpanded ? 'Test Results' : ''" matTooltipPosition="right" aria-hidden="true"
+                    svgIcon="lab_panel">
+          </mat-icon>
+          <span *ngIf="sidenavExpanded">&nbsp;Test Results</span>
+        </mat-list-item>
 
-      <hr/>
+        <mat-list-item (click)="onItemClick('conclusion');">
+          <mat-icon [matTooltip]="!sidenavExpanded ? 'Conclusion' : ''" matTooltipPosition="right" aria-hidden="true"
+                    svgIcon="clinical_notes">
+          </mat-icon>
+          <span *ngIf="sidenavExpanded">&nbsp;Conclusion</span>
+        </mat-list-item>
 
-      <mat-list-item *ngIf="sidenavExpanded" (click)="onSidenavResize(false);" >
-        <mat-icon aria-label="Collapse Side Menu">
-          chevron_left
-        </mat-icon>&nbsp;
-        Collapse Menu
-      </mat-list-item>
+        <hr/>
 
-      <mat-list-item *ngIf="!sidenavExpanded" (click)="onSidenavResize(true);">
-        <mat-icon aria-label="Expand Side Menu" matTooltip="Expand Side Menu" matTooltipPosition="right">
-          chevron_right
-        </mat-icon>
-      </mat-list-item>
+        <mat-list-item *ngIf="sidenavExpanded" (click)="onSidenavResize(false);" >
+          <mat-icon aria-label="Collapse Side Menu">
+            chevron_left
+          </mat-icon>&nbsp;
+          Collapse Menu
+        </mat-list-item>
 
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <record-viewer-toxicology-report-content [toxHeader]="toxHeader" [toxSummary]="toxSummary"></record-viewer-toxicology-report-content>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+        <mat-list-item *ngIf="!sidenavExpanded" (click)="onSidenavResize(true);">
+          <mat-icon aria-label="Expand Side Menu" matTooltip="Expand Side Menu" matTooltipPosition="right">
+            chevron_right
+          </mat-icon>
+        </mat-list-item>
+
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <record-viewer-toxicology-report-content [toxHeader]="toxHeader" [toxSummary]="toxSummary"></record-viewer-toxicology-report-content>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

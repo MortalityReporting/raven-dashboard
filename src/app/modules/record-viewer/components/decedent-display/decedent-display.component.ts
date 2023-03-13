@@ -10,6 +10,8 @@ import {ThemeService} from "../../../../service/theme.service";
 })
 export class DecedentDisplayComponent {
   @Input() decedentInformation: any;
+  @Input() type: string = "mdi-to-edrs";
+
   color: any;
   textColor: string;
 
