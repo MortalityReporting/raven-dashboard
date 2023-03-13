@@ -2,8 +2,8 @@ import {Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {FhirExplorerDrawerService} from "../../modules/fhir-explorer/services/fhir-explorer-drawer.service";
 import { environment } from "../../../environments/environment";
-import {openConformationDialog} from "../widgets/conformation-dialog/conformation-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {openConformationDialog} from "common-ui";
 
 
 @Component({

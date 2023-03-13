@@ -5,9 +5,9 @@ import {FhirValidatorComponent} from "../../../fhir-validator/components/fhir-va
 import {FhirValidatorService} from "../../../fhir-validator/services/fhir-validator.service";
 import {Observable} from "rxjs";
 import {ValidationResults} from "../../../fhir-validator/domain/ValidationResults";
-import {openConformationDialog} from "../../../../components/widgets/conformation-dialog/conformation-dialog.component";
 import {FhirValidatorStateService} from "../../../fhir-validator/service/fhir-validator-state.service";
 import {MatDialog} from "@angular/material/dialog";
+import { openConformationDialog } from 'common-ui';
 
 @Component({
   selector: 'app-import-case-fhir-record',
@@ -179,7 +179,6 @@ export class ImportCaseFhirRecordComponent implements OnInit{
         primaryActionBtnTitle: "Submit",
         secondaryActionBtnTitle: "Cancel",
         width: "25em",
-        height: "15em",
         isPrimaryButtonLeft: true
       })
       .subscribe(
