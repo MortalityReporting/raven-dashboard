@@ -3,6 +3,7 @@ import {environment} from "../environments/environment";
 import {MatIconRegistry} from "@angular/material/icon";
 import {DomSanitizer} from "@angular/platform-browser";
 import {OptionConfig, HeaderConfig} from "common-ui";
+import {appConfiguration} from "../assets/configuration/app-configuration";
 import {ThemeService} from "./service/theme.service";
 
 @Component({
@@ -56,8 +57,8 @@ export class AppComponent implements OnInit {
           iconName: "record_viewer"
         },
         {
-          routerLink: "/import-case",
-          label: "Record Import",
+          routerLink: appConfiguration.modules.recordImport.route,
+          label: appConfiguration.modules.recordImport.title,
           iconName: "record_import"
         },
         {

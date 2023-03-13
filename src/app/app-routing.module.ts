@@ -11,6 +11,7 @@ import {SearchRecordsComponent} from "./modules/record-viewer/components/search-
 import {WorkflowSimulatorComponent} from "./modules/workflow-simulator/components/workflow-simulator.component";
 import {SearchEdrsComponent} from "./modules/workflow-simulator/components/search-edrs/search-edrs.component";
 import {ModuleHeaderConfig} from "../assets/configuration/module-header-config";
+import {appConfiguration} from "../assets/configuration/app-configuration";
 
 const routes: Routes = [
   {
@@ -63,9 +64,9 @@ const routes: Routes = [
 
   },
   { // Import Case Module
-    path: 'import-case',
+    path: appConfiguration.modules.recordImport.route,
     component: ImportCaseComponent,
-    data: { moduleConfig: ModuleHeaderConfig.ImportRecord, componentTitle: undefined}
+    data: { moduleConfig: ModuleHeaderConfig.RecordImport, componentTitle: undefined}
   },
   { // Workflow Simulator Module
     path: 'workflow-simulator',
