@@ -1,13 +1,11 @@
-<!--We really shouldn't need to add much code here-->
 <div class="page-wrapper" [style.background-color]="contrastColor">
   <common-nav-menu [options]="optionConfig" [backgroundColor]="color" [contrastColor]="contrastColor">
   </common-nav-menu>
   <div #content class="flex-wrapper">
-
     <div class="header-wrapper">
       <common-header
         [title]="title"
-        [subtitle]="'Medicolegal Death Investigation FHIR Implementation Guide Reference Implementation and Testing Platform'"
+        [subtitle]="subTitle"
         [splitSubtitleEvenly]="true"
         [version]="version"
         [backgroundColor]="color"
@@ -20,21 +18,5 @@
     <div class="router-outlet-wrapper">
       <router-outlet></router-outlet>
     </div>
-
   </div>
 </div>
-
-
-
-<!--REVERT TO THIS-->
-<!--<div class="flex-wrapper">-->
-<!--  <div class="header-wrapper">-->
-<!--    <app-header></app-header>-->
-<!--  </div>-->
-<!--  <div>-->
-<!--    <app-module-header></app-module-header>-->
-<!--  </div>-->
-<!--  <div class="router-outlet-wrapper">-->
-<!--    <router-outlet></router-outlet>-->
-<!--  </div>-->
-<!--</div>-->

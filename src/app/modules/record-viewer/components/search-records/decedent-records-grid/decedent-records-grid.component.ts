@@ -11,6 +11,7 @@ import {TrackingNumberType} from "../../../../../model/tracking.number.type";
 import {ModuleHeaderConfig} from "../../../../../../assets/configuration/module-header-config";
 import {MatSelect} from "@angular/material/select";
 import {MatTableDataSource} from "@angular/material/table";
+import {AppConfiguration} from "../../../../../../assets/configuration/app-configuration";
 
 
 @Component({
@@ -39,7 +40,9 @@ export class DecedentRecordsGridComponent implements OnInit {
     private router: Router,
     private utilsService: UtilsService,
     private fhirHelperService: FhirHelperService,
-    @Inject('config') public config: ModuleHeaderConfig
+    @Inject('config') public config: ModuleHeaderConfig,
+    @Inject('appConfig') public appConfig: AppConfiguration
+
   ) {
   }
 
@@ -116,7 +119,8 @@ export class DecedentRecordsGridComponent implements OnInit {
   }
 
   onCaseSelected(row: any) {
-    this.router.navigate(['records/mdi/', row.decedentId]);
+    console.log(this.appConfig)
+    this.router.navigate([`${this.appConfig.modules['recordViewer'].route}/mdi/`, row.decedentId]);
   }
 
   applyFilter(event: Event) {

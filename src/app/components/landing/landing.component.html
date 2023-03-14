@@ -3,10 +3,10 @@
 
     <div class="flex-row">
       <div class="flex-cell">
-        <mat-card (click)="onBtnClick('/records');">
+        <mat-card (click)="onBtnClick(appConfiguration?.modules?.['recordViewer']?.route);">
           <mat-card-header>
             <mat-card-title>
-              Record Viewer
+              {{appConfiguration?.modules?.['recordViewer']?.title}}
             </mat-card-title>
           </mat-card-header>
           <img src="assets/menu-viewer.png" class="card-image">
@@ -18,10 +18,10 @@
         </mat-card>
       </div>
       <div class="flex-cell">
-        <mat-card (click)="onBtnClick('/import-case');">
+        <mat-card (click)="onBtnClick(appConfiguration?.modules?.['recordImport']?.route);">
           <mat-card-header>
             <mat-card-title>
-              Import Case
+              {{appConfiguration?.modules?.['recordImport']?.title}}
             </mat-card-title>
           </mat-card-header>
           <img src="assets/menu-import.png" class="card-image">
@@ -40,10 +40,10 @@
     </div>
     <div class="flex-row">
       <div class="flex-cell">
-        <mat-card (click)="onBtnClick('/fhir-validator');">
+        <mat-card (click)="onBtnClick(appConfiguration?.modules?.['fhirValidator']?.route);">
           <mat-card-header>
             <mat-card-title>
-              FHIR Validator
+              {{appConfiguration?.modules?.['fhirValidator']?.title}}
             </mat-card-title>
           </mat-card-header>
           <img src="assets/menu-validator.png" class="card-image">
@@ -55,10 +55,10 @@
         </mat-card>
       </div>
       <div class="flex-cell">
-        <mat-card (click)="onBtnClick('/comparison');">
+        <mat-card (click)="onBtnClick(appConfiguration?.modules?.['recordComparison']?.route);">
           <mat-card-header>
             <mat-card-title>
-              Record Comparison
+              {{appConfiguration?.modules?.['recordComparison']?.title}}
             </mat-card-title>
           </mat-card-header>
           <img src="assets/menu-comparison.png" class="card-image">
@@ -77,10 +77,10 @@
     </div>
     <div class="flex-row">
       <div class="flex-cell">
-        <mat-card (click)="onBtnClick('/workflow-simulator');">
+        <mat-card (click)="onBtnClick(appConfiguration?.modules?.['workflowSimulator']?.route);">
           <mat-card-header>
             <mat-card-title>
-              Workflow Simulator
+              {{appConfiguration?.modules?.['workflowSimulator']?.title}}
             </mat-card-title>
           </mat-card-header>
             <div class="row">

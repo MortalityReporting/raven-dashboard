@@ -1,7 +1,9 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {MatTableDataSource} from "@angular/material/table";
+import {ModuleHeaderConfig} from "../../../../../../assets/configuration/module-header-config";
+import {AppConfiguration} from "../../../../../../assets/configuration/app-configuration";
 
 @Component({
   selector: 'record-viewer-case-summary-related-tox',
@@ -17,6 +19,9 @@ export class CaseSummaryRelatedToxComponent implements OnInit, AfterViewInit {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
+    @Inject('config') public config: ModuleHeaderConfig,
+    @Inject('appConfig') public appConfig: AppConfiguration
     ) { }
 
   ngOnInit(): void {
@@ -24,7 +29,8 @@ export class CaseSummaryRelatedToxComponent implements OnInit, AfterViewInit {
   }
 
   onRowClicked(row: any) {
-    this.router.navigate(['records/tox/', row.toxCaseSystem + "|" + row.toxCaseNumber]);
+    console.log("/" + this.appConfig.modules['recordViewer'].route + "/tox/" + row.toxCaseSystem + "|" + row.toxCaseNumber);
+    this.router.navigateByUrl("/" + this.appConfig.modules['recordViewer'].route + "/tox/" + encodeURIComponent(row.toxCaseSystem + "|" + row.toxCaseNumber));
   }
 
   ngAfterViewInit(): void {

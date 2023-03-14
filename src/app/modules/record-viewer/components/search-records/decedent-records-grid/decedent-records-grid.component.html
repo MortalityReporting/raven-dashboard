@@ -15,7 +15,7 @@
   </mat-form-field>
 
   <button mat-raised-button class="primary-color-button" style="margin-left: 2em" (click)="onClearFilters()"
-          moduleThemedButton [moduleColor]="config.backgroundColor">
+          [style.background-color]="config.backgroundColor" [style.color]="'white'">
     Clear Filters
   </button>
   </div>

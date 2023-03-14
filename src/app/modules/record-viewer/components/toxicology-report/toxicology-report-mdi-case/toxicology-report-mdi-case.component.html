@@ -6,7 +6,7 @@
     {{toxSummary?.mdiCaseNumber || "No MDI Tracking Number Found"}}
   </div>
   <div class="mdi-case-number-open-related">
-    <button mat-raised-button color="accent" [routerLink]="'/records/mdi/' + toxSummary.patientId"
+    <button mat-raised-button color="accent" [routerLink]="'/' + appConfig.modules['recordViewer'].route + '/mdi/' + relatedCaseAvailable"
        *ngIf="relatedCaseAvailable" aria-label="Open Related MDI Document">
       Open Related MDI Document
       <mat-icon aria-hidden="true">open_in_browser</mat-icon></button>

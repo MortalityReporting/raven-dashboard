@@ -70,29 +70,11 @@ export class RecordComparisonContentComponent implements OnInit {
   patient: USCorePatientDiff = new USCorePatientDiff( undefined, undefined );
   mdiToEdrs: CompositionMdiToEdrsDiff = new CompositionMdiToEdrsDiff( undefined, undefined );
   location: USCoreLocationDiff = new USCoreLocationDiff( undefined, undefined );
-  tobaccoUse: ObservationTobaccoUseDiff = new ObservationTobaccoUseDiff( undefined, undefined );
   pregnancy: ObservationDecedentPregnancyDiff = new ObservationDecedentPregnancyDiff( undefined, undefined );
   deathDate: ObservationDeathDateDiff;
-  causeOfDeath1List: ObservationCauseOfDeathPart1Diff[] = [];
-  causeOfDeath2: ObservationCauseOfDeathPart2Diff;
   mannerOfDeath: ObservationMannerOfDeathDiff;
   practitioner: USCorePractitionerDiff;
-  locationDeath: LocationDeathDiff = new LocationDeathDiff( undefined, undefined );
-  locationInjury: LocationInjuryDiff = new LocationInjuryDiff( undefined, undefined );
-  autopsyPerformed: ObservationAutopsyPerformedDiff = new ObservationAutopsyPerformedDiff( undefined, undefined );
-  howDeathOccurred: ObservationHowDeathInjuryOccurredDiff = new ObservationHowDeathInjuryOccurredDiff( undefined, undefined );
 
-  demographicsStatus = 'invalid';
-  circumstancesStatus = 'invalid';
-  caseAdminInfoStatus = 'invalid';
-  jurisdictionStatus = 'invalid';
-  causeAndMannerStatus = 'invalid';
-  medicalHistoryStatus = 'invalid';
-  examAndHistoryStatus = 'invalid';
-  narrativesStatus = 'invalid';
-  deathDateStatus = 'invalid';
-  examAndAutopsyStatus = 'invalid';
-  howDeathOccurredStatus = 'invalid';
 
   constructor(
     private userDocumentService: UserDocumentService,

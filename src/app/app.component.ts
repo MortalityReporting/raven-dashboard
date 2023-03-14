@@ -3,7 +3,7 @@ import {environment} from "../environments/environment";
 import {MatIconRegistry} from "@angular/material/icon";
 import {DomSanitizer} from "@angular/platform-browser";
 import {OptionConfig, HeaderConfig} from "common-ui";
-import {appConfiguration} from "../assets/configuration/app-configuration";
+import {AppConfiguration} from "../assets/configuration/app-configuration";
 import {ThemeService} from "./service/theme.service";
 
 @Component({
@@ -12,10 +12,11 @@ import {ThemeService} from "./service/theme.service";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'Raven';
+  title = AppConfiguration.config.title;
+  subTitle = AppConfiguration.config.subTitle;
   version = environment.VERSION;
-  color = "#646064";
-  contrastColor = "#fafafa";
+  color = AppConfiguration.config.color;
+  contrastColor = AppConfiguration.config.contrastColor;
   optionConfig: OptionConfig;
   headerConfig: HeaderConfig;
 
@@ -52,28 +53,28 @@ export class AppComponent implements OnInit {
           iconName: "home"
         },
         {
-          routerLink: "/records",
-          label: "Record Viewer",
+          routerLink: AppConfiguration.config.modules['recordViewer'].route,
+          label: AppConfiguration.config.modules['recordViewer'].title,
           iconName: "record_viewer"
         },
         {
-          routerLink: appConfiguration.modules.recordImport.route,
-          label: appConfiguration.modules.recordImport.title,
+          routerLink: AppConfiguration.config.modules['recordImport'].route,
+          label: AppConfiguration.config.modules['recordImport'].title,
           iconName: "record_import"
         },
         {
-          routerLink: "/comparison",
-          label: "Record Comparison",
+          routerLink: AppConfiguration.config.modules['recordComparison'].route,
+          label: AppConfiguration.config.modules['recordComparison'].title,
           iconName: "record_comparison"
         },
         {
-          routerLink: "/fhir-validator",
-          label: "FHIR Validator",
+          routerLink: AppConfiguration.config.modules['fhirValidator'].route,
+          label: AppConfiguration.config.modules['fhirValidator'].title,
           iconName: "fhir_validator"
         },
         {
-          routerLink: "/workflow-simulator",
-          label: "Workflow Simulator",
+          routerLink: AppConfiguration.config.modules['workflowSimulator'].route,
+          label: AppConfiguration.config.modules['workflowSimulator'].title,
           iconName: "workflow_simulator"
         }
       ]

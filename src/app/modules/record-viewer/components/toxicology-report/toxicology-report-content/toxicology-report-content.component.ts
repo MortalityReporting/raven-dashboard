@@ -1,7 +1,9 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {MatAccordion} from "@angular/material/expansion";
+import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
+import {MatAccordion, MatExpansionPanel} from "@angular/material/expansion";
 import {ToxHeader} from "../../../models/tox.header";
 import {ToxSummary} from "../../../models/tox.summary";
+import {ModuleHeaderConfig} from "../../../../../../assets/configuration/module-header-config";
+import {AppConfiguration} from "../../../../../../assets/configuration/app-configuration";
 
 @Component({
   selector: 'record-viewer-toxicology-report-content',
@@ -21,6 +23,8 @@ export class ToxicologyReportContentComponent implements OnInit {
   ]
 
   constructor(
+    @Inject('config') public config: ModuleHeaderConfig,
+    @Inject('appConfig') public appConfig: AppConfiguration
   ) { }
 
   ngOnInit(): void {
@@ -41,8 +45,10 @@ export class ToxicologyReportContentComponent implements OnInit {
   }
 
   onSetState(resourceId, state){
-    this.idStateList = this.idStateList.map(element => element.id == resourceId ? {id: element.id, expanded: state} : element);
+    this.idStateList = this.idStateList.map((element) => element.id === resourceId ? {id: element.id, expanded: true} : element);
+    document.getElementById(resourceId).scrollIntoView({behavior: "smooth"});
   }
+
   isExpanded(elementId: string) {
     return this.idStateList.find(element => element.id == elementId)?.expanded;
   }

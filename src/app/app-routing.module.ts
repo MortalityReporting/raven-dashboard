@@ -11,7 +11,7 @@ import {SearchRecordsComponent} from "./modules/record-viewer/components/search-
 import {WorkflowSimulatorComponent} from "./modules/workflow-simulator/components/workflow-simulator.component";
 import {SearchEdrsComponent} from "./modules/workflow-simulator/components/search-edrs/search-edrs.component";
 import {ModuleHeaderConfig} from "../assets/configuration/module-header-config";
-import {appConfiguration} from "../assets/configuration/app-configuration";
+import {AppConfiguration} from "../assets/configuration/app-configuration";
 
 const routes: Routes = [
   {
@@ -20,7 +20,7 @@ const routes: Routes = [
     data: {moduleConfig: undefined, componentTitle: undefined}
   },
   { // Record Viewer Module
-    path: 'records',
+    path: AppConfiguration.config.modules['recordViewer'].route,
     children: [
       {
         pathMatch: 'full',
@@ -41,7 +41,7 @@ const routes: Routes = [
     ],
   },
   { // Record Comparison Module
-    path: 'comparison',
+    path: AppConfiguration.config.modules['recordComparison'].route,
     children: [
       {
         path: ':id',
@@ -58,18 +58,18 @@ const routes: Routes = [
   },
 
   { // FHIR Validator Module
-    path: 'fhir-validator',
+    path: AppConfiguration.config.modules['fhirValidator'].route,
     component: FhirValidatorComponent,
     data: { moduleConfig: ModuleHeaderConfig.FhirValidator, componentTitle: undefined}
 
   },
   { // Import Case Module
-    path: appConfiguration.modules.recordImport.route,
+    path: AppConfiguration.config.modules['recordImport'].route,
     component: ImportCaseComponent,
     data: { moduleConfig: ModuleHeaderConfig.RecordImport, componentTitle: undefined}
   },
   { // Workflow Simulator Module
-    path: 'workflow-simulator',
+    path: AppConfiguration.config.modules['workflowSimulator'].route,
     children: [
       {
         path: '',

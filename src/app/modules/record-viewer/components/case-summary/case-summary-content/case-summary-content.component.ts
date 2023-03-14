@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {Observable} from "rxjs";
 import {CaseSummary} from "../../../models/case.summary";
 import {Author, CaseHeader} from "../../../models/case.header";
@@ -6,6 +6,8 @@ import {MatAccordion} from "@angular/material/expansion";
 import {FhirResourceProviderService} from "../../../../../service/fhir-resource-provider.service";
 import {DocumentHandlerService} from "../../../services/document-handler.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {ModuleHeaderConfig} from "../../../../../../assets/configuration/module-header-config";
+import {AppConfiguration} from "../../../../../../assets/configuration/app-configuration";
 
 @Component({
   selector: 'record-viewer-case-summary-content',
@@ -44,6 +46,8 @@ export class CaseSummaryContentComponent implements OnInit {
     private documentHandlerService: DocumentHandlerService,
     private route: ActivatedRoute,
     private router: Router,
+    @Inject('config') public config: ModuleHeaderConfig,
+    @Inject('appConfig') public appConfig: AppConfiguration
   ) {
   }
 
@@ -73,7 +77,8 @@ export class CaseSummaryContentComponent implements OnInit {
   }
 
   onSetState(resourceId, state){
-      this.idStateList = this.idStateList.map(element => element.id == resourceId ? {id: element.id, expanded: state} : element);
+    this.idStateList = this.idStateList.map((element) => element.id === resourceId ? {id: element.id, expanded: true} : element);
+    document.getElementById(resourceId).scrollIntoView({behavior: "smooth"});
   }
 
   onOpenAll() {
@@ -90,14 +95,8 @@ export class CaseSummaryContentComponent implements OnInit {
     this.fhirResourceProviderService.setSelectedFhirResource(null);
   }
 
-  onAuthorSelected() {
-    if(this.author){
-      this.fhirResourceProviderService.setSelectedFhirResource(this.author);
-    }
-  }
-
   onOpenInComparisonTool() {
-    this.router.navigate(['comparison/', this.compositionId]);
+    this.router.navigate([this.appConfig.modules['recordComparison'].route, this.compositionId]);
   }
 
   isExpanded(elementId: string) {

@@ -41,6 +41,7 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatButtonModule} from "@angular/material/button";
 import { DecedentDisplayComponent } from './components/decedent-display/decedent-display.component';
+import {ScrollingModule} from "@angular/cdk/scrolling";
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import { DecedentDisplayComponent } from './components/decedent-display/decedent
     MatSelectModule,
     MatCheckboxModule,
     MatSortModule,
-    CommonUiModule
+    CommonUiModule,
+    ScrollingModule
   ]
 })
 export class RecordViewerModule {
@@ -94,7 +96,7 @@ export class RecordViewerModule {
       .bypassSecurityTrustResourceUrl(`${path}/clinical_notes.svg`));
   }
 
-  public static forRoot(environment: any, config: ModuleHeaderConfig): ModuleWithProviders<any>{
+  public static forRoot(environment: any, config: ModuleHeaderConfig, appConfig: any): ModuleWithProviders<any>{
     return {
       ngModule: RecordViewerModule,
       providers: [
@@ -105,6 +107,10 @@ export class RecordViewerModule {
         {
           provide: 'config',
           useValue: config
+        },
+        {
+          provide: 'appConfig',
+          useValue: appConfig
         }
       ]
     }

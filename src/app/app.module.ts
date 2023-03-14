@@ -32,7 +32,8 @@ import {MatCardModule} from "@angular/material/card";
 import {MatListModule} from "@angular/material/list";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
-import {HeaderComponent, NavMenuComponent} from "common-ui"; // TODO: Rename/move components to library.
+import {HeaderComponent, NavMenuComponent} from "common-ui";
+import {AppConfiguration} from "../assets/configuration/app-configuration"; // TODO: Rename/move components to library.
 
 @NgModule({
   declarations: [
@@ -62,7 +63,7 @@ import {HeaderComponent, NavMenuComponent} from "common-ui"; // TODO: Rename/mov
     ClipboardModule,
     WorkflowSimulatorModule,
     ImportCaseModule,
-    RecordViewerModule.forRoot(environment, ModuleHeaderConfig.RecordViewer),
+    RecordViewerModule.forRoot(environment, ModuleHeaderConfig.RecordViewer, AppConfiguration.config),
     FhirUtilModule,
     FhirExplorerModule,
     RecordComparisonModule,

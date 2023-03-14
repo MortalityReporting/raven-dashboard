@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
 import {ActivatedRoute, Router} from "@angular/router";
 import {forkJoin, map, mergeMap} from "rxjs";
@@ -6,6 +6,7 @@ import {ToxicologyHandlerService} from "../../../services/toxicology-handler.ser
 import {ToxicologyGridDto} from "../../../../../model/toxicology.grid.dto";
 import {TrackingNumberType} from "../../../../../model/tracking.number.type";
 import {MatTableDataSource} from "@angular/material/table";
+import {AppConfiguration} from "../../../../../../assets/configuration/app-configuration";
 
 @Component({
   selector: 'record-viewer-toxicology-grid',
@@ -29,6 +30,7 @@ export class ToxicologyGridComponent implements OnInit {
     private route: ActivatedRoute,
     private toxicologyHandler: ToxicologyHandlerService,
     private router: Router,
+    @Inject('appConfig') public appConfig: AppConfiguration
   ) {
   }
 
@@ -82,7 +84,7 @@ export class ToxicologyGridComponent implements OnInit {
   }
 
   onCaseSelected(row: any) {
-    this.router.navigate(['records/tox/', row.toxcasesystem + "|" + row.toxcasenumber]);
+    this.router.navigate([`${this.appConfig.modules['recordViewer'].route}/tox/`, row.toxcasesystem + "|" + row.toxcasenumber]);
   }
 
   applyFilter(event: Event) {

@@ -162,9 +162,11 @@ export class ToxicologyHandlerService {
 
 
     // TODO: Refactor to map to boolean
-  isRelatedMdiDocumentAvailable(subjectId: any) {
-    return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "Composition?subject=" + subjectId).pipe(
-      map((searchBundle:any) => {return !!searchBundle.entry})
+  isRelatedMdiDocumentAvailable(mdiCaseNumber: any) {
+    return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "Composition?mdi-case-number=" + mdiCaseNumber).pipe(
+      map((searchBundle:any) => {
+        return searchBundle?.entry?.[0]?.resource?.subject?.reference
+      })
     );
   }
 
