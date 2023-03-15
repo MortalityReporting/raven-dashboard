@@ -1,9 +1,9 @@
-FROM node:14.21.3-alpine AS build
+FROM node:18.14.2-alpine AS build
 WORKDIR /app
 COPY . .
 
 # Set BASE_HREF
-ARG BASE_HRE
+ARG BASE_HREF
 RUN npm ci && npm run build -- --base-href $BASE_HREF
 
 # stage 2
