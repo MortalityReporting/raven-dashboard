@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {Observable} from "rxjs";
 import {CaseSummary} from "../../../models/case.summary";
 import {Author, CaseHeader} from "../../../models/case.header";
@@ -14,7 +14,7 @@ import {AppConfiguration} from "../../../../../../assets/configuration/app-confi
   templateUrl: './case-summary-content.component.html',
   styleUrls: ['./case-summary-content.component.scss'],
 })
-export class CaseSummaryContentComponent implements OnInit {
+export class CaseSummaryContentComponent implements OnInit, AfterViewInit {
   @Input() caseHeader$: Observable<CaseHeader>;
   @Input() caseSummary$: Observable<CaseSummary>;
   @Input() compositionId: string;
