@@ -21,10 +21,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /*This is bootstrap-like container, and we can change the media queries as needed one day*/
 .container {
-  padding-right: 30px;
-  padding-left: 30px;
-  margin-right: auto;
-  margin-left: auto;
+  margin: auto;
+  width: 100%;
 }
 @media (min-width: 768px) {
   .container {
