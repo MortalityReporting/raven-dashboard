@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {openInputTextDialog} from "../../../../../../components/widgets/input-text-dialog/input-text-dialog.component";
 import {UtilsService} from "../../../../../../service/utils.service";
 import {SearchEdrsService} from "../../../../service/search-edrs.service";
 import {Validators} from "@angular/forms";
@@ -9,6 +8,7 @@ import {DecedentSimpleInfo} from "../../../../../../model/decedent-simple-info";
 import {UiStringConstants} from "../../../../../../providers/ui-string-constants";
 import {FhirHelperService, PatientNameReturn} from "../../../../../../modules/fhir-util/services/fhir-helper.service";
 import {MatDialog} from "@angular/material/dialog";
+import {openTextInputDialog} from "common-ui";
 
 @Component({
   selector: 'app-import-mdi-to-edrs-document',
@@ -53,13 +53,14 @@ export class ImportMdiToEdrsDocumentComponent implements OnInit {
   onInputMdiToEdrsBundle() {
     this.file = null;
     this.errorMessage = null;
-    openInputTextDialog(
+    openTextInputDialog(
       this.dialog,
       {
         title: "Input MDI to EDRS Document Bundle ",
         primaryActionBtnTitle: "Save",
         secondaryActionBtnTitle: "Cancel",
         isPrimaryButtonLeft: false,
+        width: "50%",
         formValidators:[Validators.required, JsonValidator, ResourceTypeValidator],
         formValidationTypes: [
           { name: 'required', display:"Enter or paste content." },

@@ -4,7 +4,6 @@ import {SearchEdrsComponent} from "./components/search-edrs/search-edrs.componen
 import {
   MdiToEdrsGridComponent
 } from "./components/search-edrs/mdi-to-edrs-document-select-step/mdi-to-edrs-grid/mdi-to-edrs-grid.component";
-import {InputTextDialogComponent} from "../../components/widgets/input-text-dialog/input-text-dialog.component";
 import {
   ImportMdiToEdrsDocumentComponent
 } from "./components/search-edrs/mdi-to-edrs-document-select-step/import-mdi-to-edrs-document/import-mdi-to-edrs-document.component";
@@ -54,7 +53,6 @@ import {MatButtonModule} from "@angular/material/button";
   declarations: [
     SearchEdrsComponent,
     MdiToEdrsGridComponent,
-    InputTextDialogComponent,
     ImportMdiToEdrsDocumentComponent,
     EndpointConfigurationStepComponent,
     EdrsResultsStepComponent,

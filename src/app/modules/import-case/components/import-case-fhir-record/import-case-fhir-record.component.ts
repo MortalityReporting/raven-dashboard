@@ -7,7 +7,8 @@ import {Observable} from "rxjs";
 import {ValidationResults} from "../../../fhir-validator/domain/ValidationResults";
 import {FhirValidatorStateService} from "../../../fhir-validator/service/fhir-validator-state.service";
 import {MatDialog} from "@angular/material/dialog";
-import { openConformationDialog } from 'common-ui';
+import {openConfirmationDialog} from "common-ui";
+
 
 @Component({
   selector: 'app-import-case-fhir-record',
@@ -171,7 +172,7 @@ export class ImportCaseFhirRecordComponent implements OnInit{
   }
 
   onSubmitInvalidRecord() {
-    openConformationDialog(
+    openConfirmationDialog(
       this.dialog,
       {
         title: "Import Invalid Resource",
