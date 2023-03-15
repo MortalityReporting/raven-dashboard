@@ -33,13 +33,15 @@ import {MatListModule} from "@angular/material/list";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {HeaderComponent, NavMenuComponent} from "common-ui";
-import {AppConfiguration} from "../assets/configuration/app-configuration"; // TODO: Rename/move components to library.
+import {AppConfiguration} from "../assets/configuration/app-configuration";
+import { CardHoverDirective } from './directives/card-hover.directive'; // TODO: Rename/move components to library.
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingComponent,
     ModalComponent,
+    CardHoverDirective,
   ],
   imports: [
     // TODO: Clean up imports after refactor.
