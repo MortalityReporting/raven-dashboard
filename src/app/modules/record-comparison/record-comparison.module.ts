@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {RecordComparisonContainerComponent} from "./components/record-comparison-container/record-comparison-container.component";
 import {
   RecordComparisonContentComponent
 } from "./components/record-comparison-content/record-comparison-content.component";
@@ -26,7 +25,6 @@ import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
     declarations: [
-        RecordComparisonContainerComponent,
         RecordComparisonContentComponent,
         RecordComparisonContentFieldComponent,
         RecordComparisonDialogComponent,
