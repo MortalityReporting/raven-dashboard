@@ -1,12 +1,11 @@
 import {AppConfiguration} from "./app-configuration";
 
 export class ModuleHeaderConfig {
-
-  static RecordViewer = new ModuleHeaderConfig(AppConfiguration.config.modules["recordViewer"].title, "#6EA4BF", "record-viewer");
-  static RecordComparison = new ModuleHeaderConfig(AppConfiguration.config.modules["recordComparison"].title, "#673AB7", "record-comparison");
-  static RecordImport = new ModuleHeaderConfig(AppConfiguration.config.modules["recordImport"].title, "#4CAF50", "record-import");
-  static FhirValidator = new ModuleHeaderConfig(AppConfiguration.config.modules["fhirValidator"].title, "#dca705", "fhir-validator");
-  static WorkflowSimulator = new ModuleHeaderConfig(AppConfiguration.config.modules["workflowSimulator"].title, "#E91E63", "workflow-simulator");
+  static RecordViewer = new ModuleHeaderConfig(AppConfiguration.config.modules["recordViewer"].title, AppConfiguration.config.modules["recordViewer"].color, AppConfiguration.config.modules["recordViewer"].icon);
+  static RecordComparison = new ModuleHeaderConfig(AppConfiguration.config.modules["recordComparison"].title, AppConfiguration.config.modules["recordComparison"].color, AppConfiguration.config.modules["recordComparison"].icon);
+  static RecordImport = new ModuleHeaderConfig(AppConfiguration.config.modules["recordImport"].title, AppConfiguration.config.modules["recordImport"].color, AppConfiguration.config.modules["recordImport"].icon);
+  static FhirValidator = new ModuleHeaderConfig(AppConfiguration.config.modules["fhirValidator"].title, AppConfiguration.config.modules["fhirValidator"].color, AppConfiguration.config.modules["fhirValidator"].icon);
+  static WorkflowSimulator = new ModuleHeaderConfig(AppConfiguration.config.modules["workflowSimulator"].title, AppConfiguration.config.modules["workflowSimulator"].color, AppConfiguration.config.modules["workflowSimulator"].icon);
 
   constructor(title, backgroundColor, icon) {
     this.title = title;

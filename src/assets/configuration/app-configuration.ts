@@ -7,23 +7,33 @@ export class AppConfiguration {
     modules: {
       recordViewer: {
         title: "Record Viewer",
-        route: "record-viewer"
+        route: "record-viewer",
+        color: "#6EA4BF",
+        icon: "record-viewer"
       },
       recordImport: {
         title: "Record Import",
-        route: "record-import"
+        route: "record-import",
+        color: "#4CAF50",
+        icon: "record-import"
       },
       recordComparison: {
         title: "Record Comparison",
-        route: "record-comparison"
+        route: "record-comparison",
+        color: "#673AB7",
+        icon: "record-comparison"
       },
       fhirValidator: {
         title: "FHIR Validator",
-        route: "fhir-validator"
+        route: "fhir-validator",
+        color: "#dca705",
+        icon: "fhir-validator"
       },
       workflowSimulator: {
         title: "Workflow Simulator",
-        route: "workflow-simulator"
+        route: "workflow-simulator",
+        color: "#E91E63",
+        icon: "workflow-simulator"
       }
     }
   }
@@ -40,4 +50,6 @@ export class AppConfiguration {
 class Module {
   title: string;
   route: string;
+  color: string;
+  icon: string;
 }
