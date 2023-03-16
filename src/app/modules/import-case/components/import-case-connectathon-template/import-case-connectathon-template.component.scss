@@ -1,0 +1,47 @@
+#filename {
+  font-family: monospace; margin-left: 1em;
+}
+
+.selected-row{
+  background:#f0ebff;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.table-container {
+  position: relative;
+  min-height: 100px;
+  max-height: 400px;
+  overflow: auto;
+}
+
+.error-container {
+  border-width:1px;
+  border-style:solid;
+  border-color: red;
+  color: red;
+  padding: 1em;
+  margin-top: 1rem;
+}
+
+.spinner-container {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  top: 40%;
+  left: 50%;
+  margin-left: -50px;
+  margin-top: -50px;
+}
+
+.results {
+  display: flex;
+  justify-content: space-between;
+}
+
+.result-colum {
+  width: 48%;
+}

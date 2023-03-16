@@ -1,0 +1,32 @@
+.search-results-grid{
+  width: 100%;
+  margin: 1em 0;
+}
+
+.selected-row {
+  background-color: #E8EAF6  !important;
+}
+
+.spinner-container {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  top: 40%;
+  left: 50%;
+  margin-left: -50px;
+  margin-top: -50px;
+}
+
+#filter-form-field {
+  width: 30%
+}
+
+#manner-select-form-filed {
+  margin-left: 2em;
+  width: 25%;
+}
+
+#clear-filters-btn{
+  margin-left: 2em;
+}
+

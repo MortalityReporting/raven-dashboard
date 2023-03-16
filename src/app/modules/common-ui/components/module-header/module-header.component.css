@@ -1,0 +1,40 @@
+.module-header {
+  color: white;
+  font-size: x-large;
+  font-weight: bold;
+  margin: 20px;
+  display: flex;
+  flex-direction: row;
+}
+
+.module-header-fhir-explorer-wrapper {
+  flex: 0;
+  flex-basis: fit-content;
+  align-content: center;
+  padding: 15px;
+  margin: auto;
+}
+
+.module-header-icon-wrapper {
+  flex: 0;
+  align-content: center;
+  padding: 5px;
+  margin: auto;
+}
+
+.module-header-label-wrapper {
+  padding: 20px 20px 20px 10px;
+  flex: 1;
+}
+.module-header-underline {
+  margin-top: 10px;
+  border-top: 3px solid white;
+}
+
+.module-header-icon {
+  width: 48px;
+  height: 48px;
+  font-size: 48px;
+  margin: auto;
+  padding: 0;
+}

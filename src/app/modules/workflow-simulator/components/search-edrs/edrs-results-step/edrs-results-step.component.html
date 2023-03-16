@@ -1,0 +1,50 @@
+<div class="top-spacer">
+  <app-decedent-basic-info
+    [decedentInfo]=decedentInfo
+    [expansionPanelEnabled]="true"
+    [expansionPanelExpanded]="true"
+    [btnEnabled]="true"
+    [btnVisible]="true"
+    [btnTitle]="'Select Different Document'"
+    (btnClick)="onSelectDifferentDocument()"
+  ></app-decedent-basic-info>
+</div>
+
+<mat-expansion-panel [expanded]="true" class="top-spacer">
+  <mat-expansion-panel-header>
+    <mat-panel-title class="panel-title">
+      Endpoint Configuration
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <div class="row">
+    <div class="col" style="margin-top: 1em; flex-direction: row-reverse">
+      EDRS Server: {{ edrsServer }}
+    </div>
+    <div style="flex-direction: row-reverse">
+      <button mat-raised-button (click)="onChangeEndpointConfiguration()">Change Endpoint Configuration</button>
+    </div>
+  </div>
+</mat-expansion-panel>
+
+<div style="margin-top: 1em">
+  <app-search-parameters
+    (searchResultsEmitter)="updatedSearchResults($event)"
+    (clearSearchResultEmitter)="successResponse = null; errorResponse = null; selectedEdrsRecord = null">
+  </app-search-parameters>
+</div>
+
+<mat-card style="margin-top: 1em">
+  <app-edrs-search-results-grid
+    [errorResponse]="errorResponse"
+    [successResponse]="successResponse"
+    (selectedCaseValueEmitter)="onEdrsRecordSelected($event)">
+  </app-edrs-search-results-grid>
+</mat-card>
+
+<mat-card style="margin-top: 1em">
+  <app-edrs-record-summary
+    [edrsRecord]="selectedEdrsRecord">
+  </app-edrs-record-summary>
+</mat-card>
+
+

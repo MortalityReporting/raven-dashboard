@@ -1,0 +1,199 @@
+/*We may have to change the text area to resize dynamically as different users have different aspect ration screens.
+* see https://stackoverflow.com/questions/17772260/textarea-auto-height
+*/
+
+textarea {
+  /* original image downloaded from http://i.imgur.com/2cOaJ.png */
+  background: url(../../assets/2cOaJ.png);
+  background-attachment: local;
+  background-repeat: no-repeat;
+  padding-left: 35px;
+  padding-top: 10px;
+  border-color: #ccc;
+  margin-bottom: 8px;
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 16px;
+  width: 96%;
+  /*white-space: nowrap;*/
+}
+
+.validator-response {
+  /* original image downloaded from http://i.imgur.com/2cOaJ.png */
+  background: url(../../assets/2cOaJ.png);
+  background-attachment: local;
+  background-repeat: no-repeat;
+  padding-left: 35px;
+  padding-top: 10px;
+  font-size: 13px;
+  line-height: 16px;
+  width: 96%;
+  font-family: monospace;
+  background-color: #F8F8F8;
+  white-space: pre;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-color: #ccc;
+  border-style: solid;
+  border-width: thin;
+}
+
+.mat-radio-button {
+  margin-right: 16px;
+  margin-bottom: 10px;
+}
+
+.file-input {
+  display: none;
+}
+
+.close-icon{
+  float: right;
+  color: #5F6368
+}
+
+/* TODO we can do a better css here especially if we go with responsive design */
+#spaced-content {display:flex; flex-flow:row wrap;}
+
+
+pre {
+  white-space: pre-wrap;
+}
+
+td.mat-cell {
+  font-size: 13px;
+  font-family: monospace;
+}
+
+.location-data {
+  cursor: pointer;
+  color: #3F51B5;
+}
+
+.spinner-container {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  top: 40%;
+  left: 50%;
+  margin-left: -50px;
+  margin-top: -50px;
+}
+
+
+td , th {
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+#location-column-header {
+  min-width:200px
+}
+
+#severity-column-header {
+  min-width: 300px
+}
+
+table {
+  width: 100%;
+}
+
+tr.text-value-row {
+  height: 0;
+}
+
+.validation-result-row td {
+  border-bottom-width: 0;
+}
+
+.validation-result-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.validation-result-text-value {
+  padding: 16px;
+}
+
+.expanded-row {
+  background-color: #FAFAFF;
+}
+
+.table-row {
+  font-weight: bold;
+}
+
+.mat-button-toggle-checked {
+  color: #303f9f;
+  background-color: #e8eaf6;
+  border: 1px solid #7986cb;
+}
+
+.row-button-wrapper {
+  display: flex;
+  align-items:center;
+}
+
+mat-button-toggle{
+  font-weight: bold;
+}
+
+.mat-button-toggle-disabled {
+  background-color: whitesmoke;
+  color: #252525;
+  border: 1px solid whitesmoke;
+}
+
+.mat-column-toggle {
+  width:5% !important;
+}
+
+.mat-column-icon {
+  width:5% !important;
+}
+
+.mat-column-severity {
+  width:10% !important;
+}
+
+.mat-column-fhirPath{
+  width:70% !important;
+}
+
+.mat-column-location {
+  width:10% !important;
+}
+
+.close-button{
+  float: right;
+  right:-8px;
+}
+
+.server-error-message-container {
+  border-style: solid;
+  border-width: 1px;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  border-color: #d32f2f;
+}
+
+.server-error-status {
+  color: #d32f2f;
+  margin-left: 1em;
+  margin-top: 1em
+}
+
+.server-error-message-text {
+  margin-left: 1em;
+  margin-bottom: 1em;
+  font-family: monospace
+}
+
+#filename {
+  font-family: monospace; margin-right: 1em;
+}
+
+#format-toggle-buttons {
+  width: 25%;
+}
+

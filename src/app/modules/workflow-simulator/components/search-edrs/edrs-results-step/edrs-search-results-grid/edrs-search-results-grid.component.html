@@ -1,0 +1,102 @@
+<mat-tab-group #resultsTabGroup style='min-height:300px' mat-stretch-tabs="false">
+
+  <mat-tab label="Result">
+    <div class="response-container">
+      <!-- Render error results here -->
+      <div *ngIf="!errorResponse && !successResponse">
+        Search results will be displayed here.
+      </div>
+      <div *ngIf="errorResponse">
+        <div class="result-line-item">
+          <span class="result-label">Status:</span>
+          {{ errorResponse.status }} {{ errorResponse.statusText }}
+        </div>
+        <div *ngFor="let issue of errorResponse?.error?.issue; let index = index">
+          <div class="result-line-item"><span class="result-label">Severity:</span> {{ issue?.severity }}</div>
+          <div class="result-line-item"><span class="result-label">Text:</span> {{ issue?.details?.text }}</div>
+        </div>
+        <div>
+          <div class="result-label">Operation Outcome:</div>
+          <div class='operation-outcome-html' [innerHTML]="errorResponse?.error?.text?.div"></div>
+        </div>
+      </div>
+
+      <!-- Render success results here -->
+      <div *ngIf="successResponse">
+        <table mat-table [dataSource]="resultTableDataSource" style="width: 100%; cursor: pointer">
+
+          <ng-container matColumnDef="officialName">
+            <th mat-header-cell *matHeaderCellDef> Name</th>
+            <td mat-cell *matCellDef="let decedent"> {{decedent.officialName}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="gender">
+            <th mat-header-cell *matHeaderCellDef> Gender </th>
+            <td mat-cell *matCellDef="let decedent"> {{decedent.gender}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="address">
+            <th mat-header-cell *matHeaderCellDef> Address </th>
+            <td mat-cell *matCellDef="let decedent">
+              <div>
+                <div class="table-line">{{decedent.address?.line}}</div>
+                <div class="table-line">{{decedent.address?.city}} {{decedent.address?.state}} {{decedent.address?.postalCode }}</div>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="edrsFileNumber">
+            <th mat-header-cell *matHeaderCellDef> EDRS File Number</th>
+            <td mat-cell *matCellDef="let decedent"> {{decedent.edrsFileNumber}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="resultTableColumns"></tr>
+
+          <tr class="case-record-row" mat-row *matRowDef="let row; columns: resultTableColumns;"
+              [class.selected-case-row]="selectedCase === row"
+              (click)="setSelectedCase(row)">
+          </tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" [attr.colspan]="resultTableColumns.length">
+              No Records Found.
+            </td>
+          </tr>
+        </table>
+
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="FHIR Result" [disabled]="!successResponse && !errorResponse">
+    <div class="response-container">
+      <div *ngIf="errorResponse">
+        <div>
+          <pre> {{ errorResponse.error | json }} </pre>
+        </div>
+      </div>
+      <div *ngIf="successResponse">
+        <div>
+          <pre> {{ successResponse | json }} </pre>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="HTTP Request" [disabled]="!successResponse && !errorResponse">
+    <div class="response-container">
+        <app-http-request-info></app-http-request-info>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="HTTP Response" [disabled]="!successResponse && !errorResponse">
+    <div class="response-container">
+        <app-http-response-info
+          [errorResponse]="errorResponse"
+          [successResponse]="successResponse">
+        </app-http-response-info>
+    </div>
+  </mat-tab>
+
+</mat-tab-group>
+
+

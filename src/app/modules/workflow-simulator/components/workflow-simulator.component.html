@@ -1,0 +1,35 @@
+<div class="container">
+  <mat-card class="mat-elevation-z8" class="top-margin">
+    <mat-card-content>
+      <div id="description">
+        Select a testing workflow from the list below. You will walk through a series of steps to guide in testing of
+        that workflow using the Raven platform, with demonstrations of relevant FHIR Resources and API interactions.
+      </div>
+      <mat-card>
+
+        <mat-card-header>
+          <mat-card-title>EDRS Search</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+          The 'EDRS Search' workflow simulates searching cases in an Electronic Death Registration System (EDRS).
+          Testers
+          representing Medical Examiners/Coroners (ME/Cs) can provide search parameters executed against the BlueJay
+          EDRS
+          test server, which implements the MDI Documents FHIR Operation for search. Supported parameters include
+          primary
+          case identification fields, as well as additional data (e.g., demographics information) if it exists in
+          the test
+          EDRS case records. Search parameters and all relevant HTTP requests and responses are provided in both
+          human
+          readable forms and as FHIR resources for demonstration.
+        </mat-card-content>
+
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="onStartWorkflow()">Start Workflow</button>
+        </mat-card-actions>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+</div>
+

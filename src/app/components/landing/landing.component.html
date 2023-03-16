@@ -1,111 +1,42 @@
-<div class="container">
-  <div class="option-tile-container">
-
-    <div class="flex-row">
-      <div class="flex-cell">
-        <mat-card (click)="onBtnClick('/records');">
-          <mat-card-header>
-            <mat-card-title>
-              Record Viewer
-            </mat-card-title>
-          </mat-card-header>
-          <img src="assets/menu-viewer.png" class="card-image">
-          <mat-card-content>
-            <p>
-              View the different types of MDI records on the Raven FHIR Server and explore the underlying FHIR Resource structures. This includes both the MDI to EDRS Document Bundle and the Toxicology Report Message Bundle.
-            </p>
-          </mat-card-content>
-        </mat-card>
+<!--<div class="container">-->
+  <div class="landing-page-wrapper">
+    <div class="landing-page-content">
+      <h1 style="border-left: 16px solid black; padding-left: 8px;" [style.border-left-color]="appConfiguration.color">Welcome to the Raven Testing Platform!</h1>
+      <p>
+        Raven is a proof of concept for the Medicolegal Death Investigation (MDI)
+        FHIR Implementation Guide (IG). It provides a tool for testing conformance to the MDI
+        FHIR IG, including resource validation, record comparison, and data exchange workflows.
+      </p>
+      <p>
+        Raven also serves as an educational tool, providing examples FHIR data format (JSON and XML) and the ability
+        to browse records and see how information is mapped between major fields and the underlying FHIR resources.
+      </p>
+      <mat-divider style="border-width: 3px; margin: 8px;"></mat-divider>
+      <div class="resources">
+        <h2 style="border-left: 8px solid black; padding-left: 8px;" [style.border-left-color]="appConfiguration.color">Resources</h2>
+        <ul style="list-style-type: none; padding-left: 0">
+          <li>
+            <button mat-flat-button onclick="window.open('https://github.com/MortalityReporting', '_blank')">
+              Raven Mortality Reporting GitHub Organization <mat-icon iconPositionEnd>open_in_new</mat-icon>
+            </button>
+          </li>
+          <li>
+            <button mat-flat-button onclick="window.open('https://build.fhir.org/ig/HL7/fhir-mdi-ig/', '_blank')">
+              Medicolegal Death Investigation FHIR Implementation Guide <mat-icon iconPositionEnd>open_in_new</mat-icon>
+            </button>
+          </li>
+          <li>
+            <button mat-flat-button onclick="window.open('https://hl7.org/fhir/', '_blank')">
+              HL7 FHIR Standard <mat-icon iconPositionEnd>open_in_new</mat-icon>
+            </button>
+          </li>
+          <li>
+            <button mat-flat-button onclick="window.open('https://build.fhir.org/ig/HL7/US-Core/', '_blank')">
+              US Core FHIR Implementation Guide <mat-icon iconPositionEnd>open_in_new</mat-icon>
+            </button>
+          </li>
+        </ul>
       </div>
-      <div class="flex-cell">
-        <mat-card (click)="onBtnClick('/import-case');">
-          <mat-card-header>
-            <mat-card-title>
-              Import Case
-            </mat-card-title>
-          </mat-card-header>
-          <img src="assets/menu-import.png" class="card-image">
-          <mat-card-content>
-            <p>
-              Import a record to the Raven FHIR Server for use in other features.
-            </p>
-          </mat-card-content>
-        </mat-card>
-      </div>
-
-    </div>
-    <div class="flex-row">
-      <div class="row-spacer">
-      </div>
-    </div>
-    <div class="flex-row">
-      <div class="flex-cell">
-        <mat-card (click)="onBtnClick('/fhir-validator');">
-          <mat-card-header>
-            <mat-card-title>
-              FHIR Validator
-            </mat-card-title>
-          </mat-card-header>
-          <img src="assets/menu-validator.png" class="card-image">
-          <mat-card-content>
-            <p>
-              Validate against the structure definitions for MDI FHIR Document Bundles or individual Resources and Profiles.
-            </p>
-          </mat-card-content>
-        </mat-card>
-      </div>
-      <div class="flex-cell">
-        <mat-card (click)="onBtnClick('/comparison');">
-          <mat-card-header>
-            <mat-card-title>
-              Record Comparison
-            </mat-card-title>
-          </mat-card-header>
-          <img src="assets/menu-comparison.png" class="card-image">
-          <mat-card-content>
-            <p>
-              Compare a user generated FHIR record against a known valid example from Raven.
-            </p>
-          </mat-card-content>
-        </mat-card>
-      </div>
-
-    </div>
-    <div class="flex-row">
-      <div class="row-spacer">
-      </div>
-    </div>
-    <div class="flex-row">
-      <div class="flex-cell">
-        <mat-card (click)="onBtnClick('/workflow-simulator');">
-          <mat-card-header>
-            <mat-card-title>
-              Workflow Simulator
-            </mat-card-title>
-          </mat-card-header>
-            <div class="row">
-              <div class="col">
-                <img src="assets/menu-workflow.png" class="card-image">
-              </div>
-              <div class="col">
-                <mat-card-content>
-
-                <p>
-              Move through steps of one of several test scenarios for various MDI related workflows,
-              such as CMS to EDRS or a Toxicology Lab to CMS. The workflow simulator integrates other features.
-                </p>
-                </mat-card-content>
-
-              </div>
-            </div>
-        </mat-card>
-      </div>
-    </div>
-    <div class="flex-row">
-      <div class="row-spacer">
-      </div>
-    </div>
-    <div class="flex-row">
       <div class="flex-cell zulip-cell">
         <mat-card>
           <mat-card-content onclick="window.open('https://chat.fhir.org','_blank')">
@@ -122,6 +53,100 @@
         </mat-card>
       </div>
     </div>
+    <div class="landing-page-content">
+    <div class="option-tile-container">
+      <div class="flex-cell">
+        <mat-card #recordViewer (click)="onBtnClick(appConfiguration?.modules?.['recordViewer']?.route);"
+                  cardHover [color]="appConfiguration?.modules?.['recordViewer']?.color">
+          <mat-card-header>
+            <mat-card-title style="display:flex; align-self:center;">
+              <mat-icon [style.color]="appConfiguration?.modules?.['recordViewer']?.color"
+                        style="margin: auto 8px auto auto;">circle</mat-icon>
+              {{appConfiguration?.modules?.['recordViewer']?.title}}
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              View different types of MDI records available on the Raven FHIR Server and explore the underlying FHIR Resource
+              structures.
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="flex-cell">
+        <mat-card (click)="onBtnClick(appConfiguration?.modules?.['recordImport']?.route);"
+                  cardHover [color]="appConfiguration?.modules?.['recordImport']?.color">
+          <mat-card-header>
+            <mat-card-title style="display:flex; align-self:center;">
+              <mat-icon [style.color]="appConfiguration?.modules?.['recordImport']?.color"
+                        style="margin: auto 8px auto auto;">circle</mat-icon>
+              {{appConfiguration?.modules?.['recordImport']?.title}}
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              Import a record to the Raven FHIR Server for use in other features.
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="flex-cell">
+        <mat-card (click)="onBtnClick(appConfiguration?.modules?.['recordComparison']?.route);"
+                  cardHover [color]="appConfiguration?.modules?.['recordComparison']?.color">
+          <mat-card-header>
+            <mat-card-title style="display:flex; align-self:center;">
+              <mat-icon [style.color]="appConfiguration?.modules?.['recordComparison']?.color"
+                        style="margin: auto 8px auto auto;">circle</mat-icon>
+              {{appConfiguration?.modules?.['recordComparison']?.title}}
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              Compare a user generated FHIR record against a known valid example from Raven.
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="flex-cell">
+        <mat-card (click)="onBtnClick(appConfiguration?.modules?.['fhirValidator']?.route);"
+                  cardHover [color]="appConfiguration?.modules?.['fhirValidator']?.color">
+          <mat-card-header>
+            <mat-card-title style="display:flex; align-self:center;">
+              <mat-icon [style.color]="appConfiguration?.modules?.['fhirValidator']?.color"
+                        style="margin: auto 8px auto auto;">circle</mat-icon>
+              {{appConfiguration?.modules?.['fhirValidator']?.title}}
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              Validate against the structure definitions for MDI FHIR Document Bundles or individual Resources and
+              Profiles.
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </div>
 
+      <div class="flex-cell">
+        <mat-card (click)="onBtnClick(appConfiguration?.modules?.['workflowSimulator']?.route);"
+                  cardHover [color]="appConfiguration?.modules?.['workflowSimulator']?.color">
+          <mat-card-header>
+            <mat-card-title style="display:flex; align-self:center;">
+              <mat-icon [style.color]="appConfiguration?.modules?.['workflowSimulator']?.color"
+                style="margin: auto 8px auto auto;">circle</mat-icon>
+              {{appConfiguration?.modules?.['workflowSimulator']?.title}}
+            </mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content>
+            <p>
+              Move through steps of one of several test scenarios for various MDI related workflows, such as a Case
+              Management System (CMS) to Electronic Death Registration System (EDRS) using the {{appConfiguration?.workflowTitles?.['mdiToEdrs']}}.
+              The workflow simulator integrates other features of Raven as needed to support workflow testing.
+            </p>
+          </mat-card-content>
+
+        </mat-card>
+      </div>
+
+    </div></div>
   </div>
-</div>

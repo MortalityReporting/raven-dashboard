@@ -1,0 +1,114 @@
+<div class="top-margin">
+  <app-decedent-basic-info [decedentInfo]="decedentInfo"></app-decedent-basic-info>
+</div>
+
+<div class="double-top-margin">
+  {{uiConstantsStep2.DISCLAIMER}}
+</div>
+
+<form [formGroup]="endpointConfigurationFormGroup" (ngSubmit)="onSubmitEndpointConfiguration()">
+
+  <div class="double-top-margin">
+    <mat-radio-group formControlName="inputType">
+      <mat-radio-button class="radio-button" class="endpoint-radio-btns" [disabled]="i > 0"
+                        *ngFor="let inputOption of endpointTypeOptions; let i = index" [value]="inputOption">
+        {{ inputOption }}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <!-- Registered Endpoint -->
+  <div class="top-margin" formGroupName="registeredEndpoint"
+       *ngIf="endpointConfigurationFormGroup.controls['inputType'].value == 'Registered Endpoint'">
+
+    <mat-form-field appearance="outline" class="server-select">
+      <mat-label>Select Endpoint</mat-label>
+      <mat-select formControlName="serverEndpoint">
+        <mat-option
+          [disabled]="i > 0"
+          *ngFor="let serverEndpoint of serverEndpointList, let i = index" [value]="serverEndpoint.uri">
+          {{ serverEndpoint.displayName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div *ngIf="endpointConfigurationFormGroup?.controls?.['registeredEndpoint']?.value?.serverEndpoint == blueJayUri"
+         class="simple-card">
+      <div>Blue Jay is the public Raven Test EDRS.</div>
+      <div>CREDENTIALS</div>
+      <div>Username: <em>client</em> </div>
+      <div>Password: <em>secret</em> </div>
+    </div>
+
+    <div>
+      <button class="view-item-button" type="button" mat-raised-button color="accent"
+          (click)="onViewServerCapabilityStmt()">
+        {{ uiConstantsStep2.VIEW_CAPABILITY_STMT_BTN }}
+      </button>
+    </div>
+    <div class="top-margin">
+      <button type="button" color="accent" class="view-item-button"
+              (click)="onViewServerMdiDocs()"
+              mat-raised-button>
+        {{ uiConstantsStep2.VIEW_SERVER_$MDI_DOCS_OP_DEFINITION_BTN }}
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Custom Endpoint -->
+  <div formGroupName="customEndpoint" *ngIf="endpointConfigurationFormGroup.controls['inputType'].value == 'Custom Endpoint'">
+
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Endpoint URL</mat-label>
+        <input matInput formControlName="customEndpointUrl">
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-radio-group formControlName="authenticationType">
+        <mat-radio-button class="radio-button" *ngFor="let authenticationType of authenticationOptions"
+                          [value]="authenticationType">
+          {{ authenticationType }}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <!-- Basic Authentication -->
+    <div formGroupName="userNamePassword" *ngIf="endpointConfigurationFormGroup.value.customEndpoint.authenticationType == 'Basic'">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input type="text" matInput formControlName="username">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password">
+        </mat-form-field>
+
+    </div>
+
+    <!-- Bearer Token Authentication -->
+    <div formGroupName="bearerToken" *ngIf="endpointConfigurationFormGroup.value.customEndpoint.authenticationType == 'Bearer Token'">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Bearer Token</mat-label>
+        <textarea type="text" matInput formControlName="token"></textarea>
+      </mat-form-field>
+
+    </div>
+
+  </div>
+
+  <div class="top-padding row">
+    <button mat-raised-button matStepperPrevious>Back</button>
+    <div class="push-right">
+      <button type="submit" mat mat-raised-button color="primary" matStepperNext>
+        {{ uiConstantsStep2.PROCEED_TO_NEXT_STEP_BTN }}
+      </button>
+    </div>
+  </div>
+
+</form>

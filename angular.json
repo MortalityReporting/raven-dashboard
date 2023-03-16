@@ -27,7 +27,17 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "*.svg",
+                "input": "src/app/modules/record-viewer/assets",
+                "output": "assets"
+              },
+              {
+                "glob": "*.svg",
+                "input": "src/app/modules/common-ui/assets",
+                "output": "assets"
+              }
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
@@ -109,6 +119,5 @@
         }
       }
     }
-  },
-  "defaultProject": "raven"
+  }
 }
