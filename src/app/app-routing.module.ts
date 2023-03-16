@@ -31,12 +31,12 @@ const routes: Routes = [
       {
         path: 'mdi/:id',
         component: CaseContainerComponent,
-        data: { moduleConfig: ModuleHeaderConfig.RecordViewer, componentTitle: "MDI to EDRS Document Viewer"}
+        data: { moduleConfig: ModuleHeaderConfig.RecordViewer, componentTitle: AppConfiguration.config.workflowTitles['mdiToEdrs'] + " Viewer"}
       },
       {
         path: 'tox/:id',
         component: CaseContainerComponent,
-        data: { moduleConfig: ModuleHeaderConfig.RecordViewer, componentTitle: "Toxicology Report Viewer"}
+        data: { moduleConfig: ModuleHeaderConfig.RecordViewer, componentTitle: AppConfiguration.config.workflowTitles['toxToMdi'] + " Viewer"}
       }
     ],
   },
@@ -46,13 +46,13 @@ const routes: Routes = [
       {
         path: ':id',
         component: RecordComparisonContentComponent,
-        data: { moduleConfig: ModuleHeaderConfig.RecordComparison, componentTitle: "MDI to EDRS Record Comparison"}
+        data: { moduleConfig: ModuleHeaderConfig.RecordComparison, componentTitle: AppConfiguration.config.workflowTitles['mdiToEdrs'] + " Comparison"}
 
       },
       {
         path: '',
         component: RecordComparisonContentComponent,
-        data: { moduleConfig: ModuleHeaderConfig.RecordComparison, componentTitle: "MDI to EDRS Record Comparison"}
+        data: { moduleConfig: ModuleHeaderConfig.RecordComparison, componentTitle: AppConfiguration.config.workflowTitles['mdiToEdrs'] + " Comparison"}
       },
     ]
   },

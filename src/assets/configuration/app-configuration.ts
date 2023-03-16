@@ -4,6 +4,10 @@ export class AppConfiguration {
     subTitle: "Medicolegal Death Investigation FHIR Implementation Guide Reference Implementation and Testing Platform",
     color: "#646064",
     contrastColor: "#fafafa",
+    workflowTitles: {
+      mdiToEdrs: "MDI to EDRS Document",
+      toxToMdi: "Tox to MDI Message"
+    },
     modules: {
       recordViewer: {
         title: "Record Viewer",
@@ -42,6 +46,9 @@ export class AppConfiguration {
   subTitle: string;
   color: string;
   contrastColor: string;
+  workflowTitles: {
+    [x: string | number | symbol]: string;
+  };
   modules: {
     [x: string | number | symbol]: Module;
   };

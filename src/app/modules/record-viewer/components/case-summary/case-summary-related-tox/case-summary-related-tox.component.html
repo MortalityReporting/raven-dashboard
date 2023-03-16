@@ -3,7 +3,7 @@
     <div class="mat-expansion-panel-header">
       <span class="mat-content">
         <span class="mat-expansion-panel-header-title">
-          Toxicology Reports Related to Case
+          {{appConfig?.workflowTitles?.['toxToMdi']}}s Related to Current {{appConfig?.workflowTitles?.['mdiToEdrs']}}
         </span>
       </span>
     </div>
@@ -30,7 +30,7 @@
           <tr class="mat-row" *matNoDataRow>
             <td [attr.colspan]="displayedColumns.length">
               <span class="no-data-row-text">
-                No Toxicology Reports with matching MDI Case Number.
+                No {{appConfig?.workflowTitles?.['toxToMdi']}}s with matching MDI Case Number.
               </span>
             </td>
           </tr>

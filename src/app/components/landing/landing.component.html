@@ -67,8 +67,8 @@
           </mat-card-header>
           <mat-card-content>
             <p>
-              View the different types of MDI records on the Raven FHIR Server and explore the underlying FHIR Resource
-              structures. This includes both the MDI to EDRS Document Bundle and the Toxicology Report Message Bundle.
+              View different types of MDI records available on the Raven FHIR Server and explore the underlying FHIR Resource
+              structures.
             </p>
           </mat-card-content>
         </mat-card>
@@ -138,10 +138,10 @@
           </mat-card-header>
 
           <mat-card-content>
-
             <p>
-              Move through steps of one of several test scenarios for various MDI related workflows,
-              such as CMS to EDRS or a Toxicology Lab to CMS. The workflow simulator integrates other features.
+              Move through steps of one of several test scenarios for various MDI related workflows, such as a Case
+              Management System (CMS) to Electronic Death Registration System (EDRS) using the {{appConfiguration?.workflowTitles?.['mdiToEdrs']}}.
+              The workflow simulator integrates other features of Raven as needed to support workflow testing.
             </p>
           </mat-card-content>
 
@@ -150,133 +150,3 @@
 
     </div></div>
   </div>
-<!--</div>-->
-
-
-<!--<div class="container">-->
-<!--  <div class="option-tile-container">-->
-
-<!--    <div class="flex-row">-->
-<!--      <div class="flex-cell">-->
-<!--        <mat-card (click)="onBtnClick(appConfiguration?.modules?.['recordViewer']?.route);">-->
-<!--          <mat-card-header>-->
-<!--            <mat-card-title>-->
-<!--              {{appConfiguration?.modules?.['recordViewer']?.title}}-->
-<!--            </mat-card-title>-->
-<!--          </mat-card-header>-->
-<!--          <img src="assets/menu-viewer.png" class="card-image">-->
-<!--          <mat-card-content>-->
-<!--            <p>-->
-<!--              View the different types of MDI records on the Raven FHIR Server and explore the underlying FHIR Resource structures. This includes both the MDI to EDRS Document Bundle and the Toxicology Report Message Bundle.-->
-<!--            </p>-->
-<!--          </mat-card-content>-->
-<!--        </mat-card>-->
-<!--      </div>-->
-<!--      <div class="flex-cell">-->
-<!--        <mat-card (click)="onBtnClick(appConfiguration?.modules?.['recordImport']?.route);">-->
-<!--          <mat-card-header>-->
-<!--            <mat-card-title>-->
-<!--              {{appConfiguration?.modules?.['recordImport']?.title}}-->
-<!--            </mat-card-title>-->
-<!--          </mat-card-header>-->
-<!--          <img src="assets/menu-import.png" class="card-image">-->
-<!--          <mat-card-content>-->
-<!--            <p>-->
-<!--              Import a record to the Raven FHIR Server for use in other features.-->
-<!--            </p>-->
-<!--          </mat-card-content>-->
-<!--        </mat-card>-->
-<!--      </div>-->
-
-<!--    </div>-->
-<!--    <div class="flex-row">-->
-<!--      <div class="row-spacer">-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="flex-row">-->
-<!--      <div class="flex-cell">-->
-<!--        <mat-card (click)="onBtnClick(appConfiguration?.modules?.['fhirValidator']?.route);">-->
-<!--          <mat-card-header>-->
-<!--            <mat-card-title>-->
-<!--              {{appConfiguration?.modules?.['fhirValidator']?.title}}-->
-<!--            </mat-card-title>-->
-<!--          </mat-card-header>-->
-<!--          <img src="assets/menu-validator.png" class="card-image">-->
-<!--          <mat-card-content>-->
-<!--            <p>-->
-<!--              Validate against the structure definitions for MDI FHIR Document Bundles or individual Resources and Profiles.-->
-<!--            </p>-->
-<!--          </mat-card-content>-->
-<!--        </mat-card>-->
-<!--      </div>-->
-<!--      <div class="flex-cell">-->
-<!--        <mat-card (click)="onBtnClick(appConfiguration?.modules?.['recordComparison']?.route);">-->
-<!--          <mat-card-header>-->
-<!--            <mat-card-title>-->
-<!--              {{appConfiguration?.modules?.['recordComparison']?.title}}-->
-<!--            </mat-card-title>-->
-<!--          </mat-card-header>-->
-<!--          <img src="assets/menu-comparison.png" class="card-image">-->
-<!--          <mat-card-content>-->
-<!--            <p>-->
-<!--              Compare a user generated FHIR record against a known valid example from Raven.-->
-<!--            </p>-->
-<!--          </mat-card-content>-->
-<!--        </mat-card>-->
-<!--      </div>-->
-
-<!--    </div>-->
-<!--    <div class="flex-row">-->
-<!--      <div class="row-spacer">-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="flex-row">-->
-<!--      <div class="flex-cell">-->
-<!--        <mat-card (click)="onBtnClick(appConfiguration?.modules?.['workflowSimulator']?.route);">-->
-<!--          <mat-card-header>-->
-<!--            <mat-card-title>-->
-<!--              {{appConfiguration?.modules?.['workflowSimulator']?.title}}-->
-<!--            </mat-card-title>-->
-<!--          </mat-card-header>-->
-<!--            <div class="row">-->
-<!--              <div class="col">-->
-<!--                <img src="assets/menu-workflow.png" class="card-image">-->
-<!--              </div>-->
-<!--              <div class="col">-->
-<!--                <mat-card-content>-->
-
-<!--                <p>-->
-<!--              Move through steps of one of several test scenarios for various MDI related workflows,-->
-<!--              such as CMS to EDRS or a Toxicology Lab to CMS. The workflow simulator integrates other features.-->
-<!--                </p>-->
-<!--                </mat-card-content>-->
-
-<!--              </div>-->
-<!--            </div>-->
-<!--        </mat-card>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="flex-row">-->
-<!--      <div class="row-spacer">-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="flex-row">-->
-<!--      <div class="flex-cell zulip-cell">-->
-<!--        <mat-card>-->
-<!--          <mat-card-content onclick="window.open('https://chat.fhir.org','_blank')">-->
-<!--            <div class="zulip-row">-->
-<!--              <div class="zulip-text">-->
-<!--                For Information on the MDI IG, join the conversation in the FHIR Zulip chat!-->
-<!--                <em>https://chat.fhir.org in the #Medicolegal Death Investigation Stream</em>-->
-<!--              </div>-->
-<!--              <div class="zulip-icon">-->
-<!--                <mat-icon>open_in_new</mat-icon>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </mat-card-content>-->
-<!--        </mat-card>-->
-<!--      </div>-->
-<!--    </div>-->
-
-<!--  </div>-->
-<!--</div>-->

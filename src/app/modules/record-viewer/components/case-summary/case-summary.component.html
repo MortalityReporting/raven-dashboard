@@ -83,9 +83,9 @@
 
       </ng-template>
     </mat-tab>
-    <mat-tab label="Related Toxicology Reports">
+    <mat-tab [label]="'Related ' + appConfig?.workflowTitles?.['toxToMdi'] + 's'">
       <ng-template matTabLabel>
-        <mat-icon svgIcon="lab_panel"></mat-icon>&nbsp;Related Toxicology Reports
+        <mat-icon svgIcon="lab_panel"></mat-icon>&nbsp;Related {{appConfig?.workflowTitles?.['toxToMdi']}}s
       </ng-template>
       <ng-template matTabContent>
         <record-viewer-case-summary-related-tox [toxicologyRecordList]="toxicologyRecordList"></record-viewer-case-summary-related-tox>

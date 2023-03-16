@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
+import {AppConfiguration} from "../../../../../assets/configuration/app-configuration";
 
 @Component({
   selector: 'record-viewer-search-records',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchRecordsComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    @Inject('appConfig') public appConfig: AppConfiguration
+  ) { }
 
   ngOnInit(): void {
   }
