@@ -23,8 +23,6 @@ import {FhirHelperService} from "../../fhir-util/services/fhir-helper.service";
 })
 export class ComparisonService {
 
-
-
   constructor(
     private profileProvider: ProfileProviderService,
     private bundleHelper: BundleHelperService,
