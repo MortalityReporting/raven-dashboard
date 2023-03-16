@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {Observable} from "rxjs";
 import {CaseSummary} from "../../../models/case.summary";
 import {Author, CaseHeader} from "../../../models/case.header";
@@ -19,7 +19,6 @@ export class CaseSummaryContentComponent implements OnInit {
   @Input() caseSummary$: Observable<CaseSummary>;
   @Input() compositionId: string;
   @ViewChild(MatAccordion) accordion: MatAccordion;
-  @ViewChild('scrollableStart', { static: false }) scrollableStart: ElementRef;
 
   name: string;
   license: string;
@@ -41,7 +40,6 @@ export class CaseSummaryContentComponent implements OnInit {
   selectedId = "ID-1";
 
   author: any;
-  scrollableHeight = 0;
 
   constructor(
     private fhirResourceProviderService: FhirResourceProviderService,
@@ -49,19 +47,8 @@ export class CaseSummaryContentComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     @Inject('config') public config: ModuleHeaderConfig,
-    @Inject('appConfig') public appConfig: AppConfiguration,
+    @Inject('appConfig') public appConfig: AppConfiguration
   ) {
-  }
-
-  calculateViewPortHeight(){
-    const viewportHeight = window.innerHeight;
-    const height = this.scrollableStart.nativeElement.offsetHeight;
-    this.scrollableHeight = viewportHeight - height;
-  }
-
-  ngAfterViewInit() {
-    //TODO this is a not so quick fix on calculating the viewport to prevent scrolling the parent component
-    this.calculateViewPortHeight();
   }
 
   ngOnInit(): void {
