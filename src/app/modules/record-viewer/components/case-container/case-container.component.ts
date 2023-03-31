@@ -1,13 +1,14 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDrawer} from "@angular/material/sidenav";
 import {FhirExplorerDrawerService} from "../../../fhir-explorer/services/fhir-explorer-drawer.service";
 import {Subscription} from "rxjs";
+import {ModuleHeaderConfig} from "../../../../../assets/configuration/module-header-config";
 
 @Component({
   selector: 'record-viewer-case-container',
   templateUrl: './case-container.component.html',
-  styleUrls: ['./case-container.component.scss']
+  styleUrls: ['./case-container.component.scss', '../../record-viewer-styles.scss']
 })
 export class CaseContainerComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -18,7 +19,8 @@ export class CaseContainerComponent implements OnInit, AfterViewInit, OnDestroy 
   currentRoute: string;
 
   constructor(private route: ActivatedRoute,
-              private fhirExplorerDrawerService: FhirExplorerDrawerService
+              private fhirExplorerDrawerService: FhirExplorerDrawerService,
+              @Inject('config') public config: ModuleHeaderConfig,
   ) {
     route.url.subscribe(url => {
       this.currentRoute = url[0].path;
@@ -48,5 +50,10 @@ export class CaseContainerComponent implements OnInit, AfterViewInit, OnDestroy 
   setDrawerWidth(drawerWidth: string): void {
     this.drawerCollapsed = !this.drawerCollapsed;
     this.drawerWidth = drawerWidth;
+  }
+
+
+  scrollToTop() {
+    document.getElementById("anchorTop").scrollIntoView({behavior: "smooth"});
   }
 }

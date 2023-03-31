@@ -1,3 +1,4 @@
+
 <div class="case-summary-content-wrapper">
   <div class="section-button-wrapper">
     <button mat-raised-button (click)="onOpenAll()" [style.background-color]="config.backgroundColor" [style.color]="appConfig.contrastColor">
@@ -12,7 +13,7 @@
 
   </div>
   <!-- mat-expansion-panel used outside of accordion to maintain consistent styling for non collapsible div -->
-  <div class="summary-section mdi-case-number-body-padding" [style.border-color]="appConfig.color">
+  <div class="summary-section mdi-case-number-body-padding" #mdiCaseNumber id="mdiCaseNumber" [style.border-color]="appConfig.color">
     <div class="summary-section-body">
       <div class="summary-section-grid">
         <div class="grid-row">

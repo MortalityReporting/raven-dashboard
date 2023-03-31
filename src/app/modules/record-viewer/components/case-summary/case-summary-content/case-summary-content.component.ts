@@ -12,7 +12,7 @@ import {AppConfiguration} from "../../../../../../assets/configuration/app-confi
 @Component({
   selector: 'record-viewer-case-summary-content',
   templateUrl: './case-summary-content.component.html',
-  styleUrls: ['./case-summary-content.component.scss'],
+  styleUrls: ['./case-summary-content.component.scss', '../../../record-viewer-styles.scss'],
 })
 export class CaseSummaryContentComponent implements OnInit {
   @Input() caseHeader$: Observable<CaseHeader>;
@@ -102,4 +102,5 @@ export class CaseSummaryContentComponent implements OnInit {
   isExpanded(elementId: string) {
     return this.idStateList.find(element => element.id == elementId)?.expanded;
   }
+
 }
