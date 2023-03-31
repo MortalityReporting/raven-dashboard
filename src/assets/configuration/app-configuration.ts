@@ -12,31 +12,31 @@ export class AppConfiguration {
       recordViewer: {
         title: "Record Viewer",
         route: "record-viewer",
-        color: "#6EA4BF",
+        color: "#003057",
         icon: "record-viewer"
       },
       recordImport: {
         title: "Record Import",
         route: "record-import",
-        color: "#4CAF50",
+        color: "#428057",
         icon: "record-import"
       },
       recordComparison: {
         title: "Record Comparison",
         route: "record-comparison",
-        color: "#673AB7",
+        color: "#335963",
         icon: "record-comparison"
       },
       fhirValidator: {
         title: "FHIR Validator",
         route: "fhir-validator",
-        color: "#dca705",
+        color: "#916F2B",
         icon: "fhir-validator"
       },
       workflowSimulator: {
         title: "Workflow Simulator",
         route: "workflow-simulator",
-        color: "#E91E63",
+        color: "#B65454",
         icon: "workflow-simulator"
       }
     }
