@@ -1,24 +1,35 @@
-<div class="container top-padding">
-  <mat-card class="mat-elevation-z8">
-    <mat-card-content>
-    <mat-radio-group
-      aria-label="select import method"
-      class="radio-group"
-      [(ngModel)]="selectedInputOption">
-      <label id="radio-button-label">Import from: </label>
-      <mat-radio-button class="radio-button" *ngFor="let inputOption of inputOptions" [value]="inputOption">
-        {{inputOption}}
-      </mat-radio-button>
-    </mat-radio-group>
+<div class="import-case-container">
+  <div class="import-from-file">
+    <mat-card class="mat-elevation-z8">
+      <mat-card-content>
+        <mat-radio-group
+          aria-label="select import method"
+          class="radio-group"
+          [(ngModel)]="selectedInputOption">
+          <label id="radio-button-label">Import from: </label>
+          <mat-radio-button class="radio-button" *ngFor="let inputOption of inputOptions" [value]="inputOption">
+            {{inputOption}}
+          </mat-radio-button>
+        </mat-radio-group>
 
-    <div *ngIf="selectedInputOption == inputOptions[0]">
-      <app-import-case-fhir-record></app-import-case-fhir-record>
-    </div>
-    <div *ngIf="selectedInputOption == inputOptions[1]">
-    <app-import-case-connectathon-template></app-import-case-connectathon-template>
-    </div>
-    </mat-card-content>
-
-  </mat-card>
+        <div *ngIf="selectedInputOption == inputOptions[0]">
+          <app-import-case-fhir-record></app-import-case-fhir-record>
+        </div>
+        <div *ngIf="selectedInputOption == inputOptions[1]">
+          <app-import-case-connectathon-template></app-import-case-connectathon-template>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="import-from-template">
+    <mat-card class="mat-elevation-z8">
+      <mat-card-content>
+        Import Templates (xlsx)
+        <div *ngFor="let template of fileTemplates$ | async">
+          <app-file-template [fileTemplate]="template"></app-file-template>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
 
 </div>

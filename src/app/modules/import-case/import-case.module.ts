@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {ModuleWithProviders, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -22,6 +22,8 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatTableModule} from "@angular/material/table";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatButtonModule} from "@angular/material/button";
+import { FileTemplateComponent } from './components/file-template/file-template.component';
+import {ModuleHeaderConfig} from "../../../assets/configuration/module-header-config";
 
 
 @NgModule({
@@ -30,7 +32,8 @@ import {MatButtonModule} from "@angular/material/button";
     ImportCaseComponent,
     ImportCaseFhirRecordComponent,
     ImportCaseConnectathonTemplateComponent,
-    MappingsComponent
+    MappingsComponent,
+    FileTemplateComponent
   ],
   imports: [
     CommonModule,
@@ -53,4 +56,19 @@ import {MatButtonModule} from "@angular/material/button";
     MatButtonModule,
   ]
 })
-export class ImportCaseModule { }
+
+export class ImportCaseModule {
+  public static forRoot(environment: any, config: ModuleHeaderConfig, appConfig: any): ModuleWithProviders<any>{
+
+    const result =  {
+      ngModule: ImportCaseModule,
+      providers: [
+        {
+          provide: 'config',
+          useValue: config
+        },
+      ]
+    }
+    return result;
+  }
+}
