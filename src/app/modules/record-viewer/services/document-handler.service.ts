@@ -17,7 +17,7 @@ import {TrackingNumber} from "../models/mdi/tracking.number";
 import {TerminologyHandlerService} from "../../fhir-util/services/terminology-handler.service";
 import {FhirResourceProviderService} from "../../../service/fhir-resource-provider.service";
 import {Address} from "../../fhir-util/models/types/address";
-import {EnvironmentHandlerService} from "./environment-handler.service";
+import {EnvironmentHandlerService} from "../../fhir-util/services/environment-handler.service";
 import {FhirHelperService} from "../../fhir-util/services/fhir-helper.service";
 import {BundleHelperService} from "../../fhir-util/services/bundle-helper.service";
 import {TrackingNumberType} from "../../../model/tracking.number.type";

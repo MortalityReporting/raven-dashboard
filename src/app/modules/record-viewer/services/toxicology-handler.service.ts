@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
-import {EnvironmentHandlerService} from "./environment-handler.service";
+import {EnvironmentHandlerService} from "../../fhir-util/services/environment-handler.service";
 import {TrackingNumberType} from "../../../model/tracking.number.type";
 import { trackingNumberUrl } from "../models/mdi/tracking.number"
 import {ToxHeader} from "../models/tox.header";

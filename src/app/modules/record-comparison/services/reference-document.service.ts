@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {EnvironmentHandlerService} from "../../record-viewer/services/environment-handler.service";
+import {EnvironmentHandlerService} from "../../fhir-util/services/environment-handler.service";
 import {HttpClient} from "@angular/common/http";
 import {FhirHelperService} from "../../fhir-util/services/fhir-helper.service";
 import {BundleHelperService} from "../../fhir-util/services/bundle-helper.service";

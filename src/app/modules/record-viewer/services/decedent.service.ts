@@ -2,15 +2,18 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {map} from  "rxjs/operators";
-import {environment} from "../../../../environments/environment";
-import {EnvironmentHandlerService} from "./environment-handler.service";
+import {EnvironmentHandlerService} from "../../fhir-util/services/environment-handler.service";
+import {FhirClientService} from "../../fhir-util/services/fhir-client.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DecedentService {
 
-  constructor(private http: HttpClient, private environmentHandler: EnvironmentHandlerService) { }
+  constructor(private http: HttpClient,
+              private environmentHandler: EnvironmentHandlerService,
+              private fhirClient: FhirClientService
+  ) { }
 
   getDecedentObservationsByCode(decedent: any, codeList: string[]):  Observable<any> {
     // Headers are added in the FHIR Auth Interceptor
@@ -25,7 +28,7 @@ export class DecedentService {
 
   getDecedentRecords():  Observable<any> {
     // Headers are added in the FHIR Auth Interceptor
-    return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "Patient?_count=100")
+    return this.fhirClient.search("Patient?_count=5")
       .pipe( map((result: any) => {
         // By convention the API should return an empty array. However, the FHIR server we use does not.
         // We are adding an empty array to prevent NPE errors in the components using this service.
