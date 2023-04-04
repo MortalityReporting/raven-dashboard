@@ -59,16 +59,22 @@ import {ModuleHeaderConfig} from "../../../assets/configuration/module-header-co
 
 export class ImportCaseModule {
   public static forRoot(environment: any, config: ModuleHeaderConfig, appConfig: any): ModuleWithProviders<any>{
-
-    const result =  {
+    return {
       ngModule: ImportCaseModule,
       providers: [
+        {
+          provide: 'env',
+          useValue: environment
+        },
         {
           provide: 'config',
           useValue: config
         },
+        {
+          provide: 'appConfig',
+          useValue: appConfig
+        }
       ]
     }
-    return result;
   }
 }
