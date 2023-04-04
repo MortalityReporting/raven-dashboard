@@ -67,7 +67,7 @@ export class ImportCaseModule {
           useValue: environment
         },
         {
-          provide: 'config',
+          provide: 'importConfig',
           useValue: config
         },
         {

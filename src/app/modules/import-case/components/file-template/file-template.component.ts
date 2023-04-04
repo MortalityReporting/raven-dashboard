@@ -11,7 +11,8 @@ export class FileTemplateComponent {
   @Input() fileTemplate: FileTemplate;
 
   constructor(
-    @Inject('config') public config: ModuleHeaderConfig) {
+    @Inject('importConfig') public config: ModuleHeaderConfig) {
+    console.log(config);
   }
 
 }
