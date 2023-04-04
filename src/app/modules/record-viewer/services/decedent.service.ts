@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, skipWhile} from "rxjs";
 import {map} from  "rxjs/operators";
 import {EnvironmentHandlerService} from "../../fhir-util/services/environment-handler.service";
 import {FhirClientService} from "../../fhir-util/services/fhir-client.service";
@@ -32,7 +32,8 @@ export class DecedentService {
       .pipe( map((result: any) => {
         // By convention the API should return an empty array. However, the FHIR server we use does not.
         // We are adding an empty array to prevent NPE errors in the components using this service.
-          if (!result?.entry) {
+        console.log(result);
+          if (!result.entry) {
             return [];
           }
           else {

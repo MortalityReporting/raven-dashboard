@@ -64,7 +64,13 @@ export class DecedentRecordsGridComponent implements OnInit {
     this.isLoading = true;
     console.log(this.isLoading);
 
+    // this.decedentService.getDecedentRecords().subscribe(
+    // );
     this.decedentService.getDecedentRecords().pipe(
+      map(data => {
+        console.log(data)
+        return data
+      }),
       mergeMap((decedentRecordsList: any[]) =>
         forkJoin(
           decedentRecordsList.map((decedentRecord: any, i) =>
@@ -100,6 +106,7 @@ export class DecedentRecordsGridComponent implements OnInit {
     )
     .subscribe({
         next: (data) => {
+          console.log(data)
           this.decedentGridDtoList = data.filter(record => !!record.caseNumber);
           this.dataSource = new MatTableDataSource(this.decedentGridDtoList);
           this.dataSource.sort = this.sort;
