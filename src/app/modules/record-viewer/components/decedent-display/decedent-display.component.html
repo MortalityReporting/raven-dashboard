@@ -6,11 +6,11 @@
   </div>
   <div class="details-box" *ngIf="type === 'mdi'">
     <div>
-      <span class="label" [style.color]="color">Date/Time of Death:</span>
+      <span class="label" [style.color]="color">Date | Time of Death:</span>
       <span class="value" [style.color]="textColor">{{decedentInformation?.deathDate}} | {{decedentInformation?.deathTime}}</span>
     </div>
     <div>
-      <span class="label" [style.color]="color">MDI Case Number/System:</span>
+      <span class="label" [style.color]="color">MDI Case Number | System:</span>
       <span class="value" [style.color]="textColor">{{decedentInformation?.mdiCaseNumber?.value}} | {{decedentInformation?.mdiCaseNumber?.system}}</span>
     </div>
   </div>
