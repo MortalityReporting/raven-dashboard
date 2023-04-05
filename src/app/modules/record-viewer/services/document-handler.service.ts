@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {map, Subject} from "rxjs";
-import {HttpClient} from "@angular/common/http";
 import {DecedentService} from "./decedent.service";
 import {
   Autopsy,
@@ -23,6 +22,7 @@ import {BundleHelperService} from "../../fhir-util/services/bundle-helper.servic
 import {TrackingNumberType} from "../../../model/tracking.number.type";
 import {ToxRecordStub} from "../models/toxRecordStub";
 import {ProfileProviderService} from "../../fhir-util/services/profile-provider.service";
+import {FhirClientService} from "../../fhir-util/services/fhir-client.service";
 
 @Injectable({
   providedIn: 'root'
@@ -47,13 +47,13 @@ export class DocumentHandlerService {
 
   constructor(
     private profileProvider: ProfileProviderService,
-    private http: HttpClient,
     private fhirResourceProvider: FhirResourceProviderService,
     private decedentService: DecedentService,
     private terminologyService: TerminologyHandlerService,
     private environmentHandler: EnvironmentHandlerService,
     private fhirHelper: FhirHelperService,
-    private bundleHelper: BundleHelperService
+    private bundleHelper: BundleHelperService,
+    private fhirClient: FhirClientService
   ) {}
   setDocumentBundle(documentBundle){
     this.currentDocumentBundle = documentBundle;
@@ -96,7 +96,7 @@ export class DocumentHandlerService {
 
 
   getDocumentBundle(compositionId: string) {
-    return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "Composition/" + compositionId + "/$document").pipe(
+    return this.fhirClient.read("Composition", `${compositionId}/$document`).pipe(
       map((documentBundle: any) => {
         this.currentDocumentBundle = documentBundle;
         let compositionResource = this.bundleHelper.findResourceByFullUrl(documentBundle, "Composition/" + compositionId);
@@ -113,15 +113,9 @@ export class DocumentHandlerService {
     );
   }
 
-  getRawDocumentBundle(compositionId: string) {
-    return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "Composition/" + compositionId + "/$document");
-  }
-
   getRelatedToxicologyReports(mdiCaseNumber: string): any {
-    return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "DiagnosticReport?mdi-case-number=" + mdiCaseNumber)
-      .pipe(
+    return this.fhirClient.search("DiagnosticReport", `?mdi-case-number=${mdiCaseNumber}`).pipe(
         map((resultBundle: any) => {
-          console.log(resultBundle)
           let toxRecordList = [];
           resultBundle?.entry?.forEach((bec:any) => {
             const diagnosticReport = bec.resource;
@@ -311,7 +305,6 @@ export class DocumentHandlerService {
           }
           else if (profile === this.profileProvider.getMdiProfiles().Obs_HowDeathInjuryOccurred)
           {
-            console.log(observation)
             causeAndManner.howDeathInjuryOccurred = observation.valueCodeableConcept?.text || this.defaultString;
 
             let placeOfInjuryComponent = this.fhirHelper.findObservationComponentByCode(observation, "69450-5");
@@ -380,16 +373,6 @@ export class DocumentHandlerService {
     return this.bundleHelper.findResourceByFullUrl(documentBundle, id);
   }
 
-  // Filter Bundle Entries by Patient Resource.
-  filterPatientResources(documentBundle: any): any {
-    return documentBundle.entry.filter((entry: any) => entry.resource.resourceType === "Patient");
-  }
-
-  // Filter Bundle Entries by Observation Resource.
-  filterObservationResources(documentBundle: any): any {
-    return documentBundle.entry.filter((entry: any) => entry.resource.resourceType === "Observation");
-  }
-
   // -------------------------
   // Get Sections
   // -------------------------
@@ -443,16 +426,26 @@ export class DocumentHandlerService {
 
   // Get Race Text from Patient Extension
   getDecedentRaceText(extensions: any): string {
-    let raceExtension = extensions.find((extension: any) => extension.url === "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race");
-    let textExtension = raceExtension?.extension?.find((extension: any) => extension.url === "text");
-    return textExtension?.valueString || "Unknown";
+    if (!extensions) return "Unknown";
+    else {
+      let raceExtension = this.findExtensionByUrl(extensions, "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race");
+      let textExtension = this.findExtensionByUrl(raceExtension?.extension, "text");
+      return textExtension?.valueString || "Unknown";
+    }
   }
 
   // Get Ethnicity Text from Patient Extension
   getDecedentEthnicityText(extensions: any): string {
-    let ethnicityExtension = extensions.find((extension: any) => extension.url === "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity");
-    let textExtension = ethnicityExtension?.extension?.find((extension: any) => extension.url === "text");
-    return textExtension?.valueString || "Unknown";
+    if (!extensions) return "Unknown";
+    else {
+      let ethnicityExtension = this.findExtensionByUrl(extensions, "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity");
+      let textExtension = this.findExtensionByUrl(ethnicityExtension?.extension, "text");
+      return textExtension?.valueString || "Unknown";
+    }
+  }
+
+  private findExtensionByUrl(extensions: any[], url: string): any {
+    return extensions?.find((extension: any) => extension?.url === url);
   }
 
   getCurrentDocumentBundle(): any {

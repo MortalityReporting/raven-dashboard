@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {EnvironmentHandlerService} from "./environment-handler.service";
 import {HttpClient} from "@angular/common/http";
-import {expand, Observable, take} from "rxjs";
-import {map} from "rxjs/operators";
+import {EMPTY, expand, map, mergeMap, Observable, of, reduce, takeWhile} from "rxjs";
+import {Bundle, BundleEntryComponent, BundleType, FhirResource} from "../models/fhir.resource";
 
 @Injectable({
   providedIn: 'root'
@@ -17,19 +17,69 @@ export class FhirClientService {
     this.serverBaseUrl = this.environmentHandler.getFhirServerBaseURL();
   }
 
-  read() {
-  }
-
-  search(parameters: string, flat: boolean = false): Observable<any> {
-    return this.http.get(this.serverBaseUrl + parameters).pipe(
-      map((searchBundle: any) => {
-        console.log(searchBundle);
-        return searchBundle
-      }),
-      // TODO: Bundle Paging
-      expand( (searchBundle: any, i) => this.search(`${i}`)),
-      take(5)
+  read(resourceType: string, id: string, parameters?: string): Observable<FhirResource> {
+    // TODO: Add parameter parsing. For now, parameters required in complete http string form.
+    let requestString = this.serverBaseUrl + resourceType + "/" + id;
+    if (parameters) requestString += parameters;
+    console.log("Making Read Request: " + requestString);
+    return this.http.get(requestString).pipe(
+      map((response: any) =>
+        {
+          console.log(response)
+          return response;
+        }
+      )
     );
   }
 
+  search(resourceType: string = "", parameters: string = "", flat: boolean = false, baseUrl: boolean = true, fullUrl?: string): Observable<Bundle | FhirResource[]> {
+    const searchString = fullUrl ? fullUrl : this.createSearchRequestUrl(resourceType, parameters, baseUrl)
+    console.log("Making Search Request: " + searchString);
+    const pagination$ = this.http.get(searchString).pipe(
+      // TODO: Is there a way to type the following operator projections?
+        expand( (searchBundle: any, i) => {
+            return searchBundle?.link?.find(link => link?.relation === "next") ?
+              this.search(
+                undefined, undefined,flat = false, false,
+                searchBundle?.link?.find(link => link?.relation === "next")?.url
+              ) : EMPTY;
+          }
+        ),
+        takeWhile((searchBundle:any) => searchBundle?.link?.find(link => link?.relation === "next"), true),
+        reduce((acc, current) => acc.concat(current), []),
+      ).pipe(
+        mergeMap((searchSetList: Bundle[]) => {
+          let completeBundle: Bundle = {
+            resourceType: "Bundle",
+            type: BundleType.searchset,
+            total: 0,
+            entry: []
+          };
+          searchSetList.map((searchSetBundle: Bundle) => {
+            searchSetBundle?.entry?.map(entry => completeBundle.entry.push(entry));
+          });
+          completeBundle.total = completeBundle.entry.length;
+          return of(completeBundle)
+        })
+      );
+
+    if (flat) {
+      return pagination$.pipe(
+        map((completeBundle: Bundle) => {
+          let resourceList: FhirResource[] = [];
+          completeBundle['entry'].map((bundleEntry: BundleEntryComponent) => {
+            resourceList.push(bundleEntry.resource)
+          });
+          return resourceList;
+        }
+      ))
+    }
+    else return pagination$;
+  }
+
+  // When baseUrl = true (default) prepend the URL. Otherwise, assume a full URL is passed and take it as is.
+  private createSearchRequestUrl(resourceType: string, parameters: string, baseUrl: boolean = true): string {
+    if (baseUrl) return this.serverBaseUrl + resourceType + parameters;
+    else return resourceType + parameters;
+  }
 }
