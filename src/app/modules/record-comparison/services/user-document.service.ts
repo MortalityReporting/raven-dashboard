@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {EnvironmentHandlerService} from "../../record-viewer/services/environment-handler.service";
+import {EnvironmentHandlerService} from "../../fhir-util/services/environment-handler.service";
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs";
 import {MdiToEDRSDocumentWrapper} from "../models/mdiToEdrsDocumentWrapper";

@@ -8,7 +8,7 @@ import {AppConfiguration} from "../../../../../../assets/configuration/app-confi
 @Component({
   selector: 'record-viewer-toxicology-report-content',
   templateUrl: './toxicology-report-content.component.html',
-  styleUrls: ['../toxicology-report.component.scss']
+  styleUrls: ['../toxicology-report.component.scss', '../../../record-viewer-styles.scss']
 })
 export class ToxicologyReportContentComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
@@ -52,4 +52,5 @@ export class ToxicologyReportContentComponent implements OnInit {
   isExpanded(elementId: string) {
     return this.idStateList.find(element => element.id == elementId)?.expanded;
   }
+
 }

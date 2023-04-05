@@ -82,6 +82,13 @@ export class AppComponent implements OnInit {
     this.headerConfig = {
       menuItem: [
         {
+          label: "MDI FHIR IG STU 1",
+          link: "https://hl7.org/fhir/us/mdi/STU1/"
+        },
+        {
+          divider: true
+        },
+        {
           label: "Documentation",
           link: "https://ravendocs.readthedocs.io/en/latest/"
         },
