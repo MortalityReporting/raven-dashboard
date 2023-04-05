@@ -15,7 +15,7 @@ import {
   takeWhile,
   toArray
 } from "rxjs";
-import {map} from "rxjs/operators";
+import {filter, map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -36,54 +36,44 @@ export class FhirClientService {
   search(parameters: string, flat: boolean = false, baseUrl=true): Observable<any> {
     // When baseUrl = true (default) prepend the URL. Otherwise, assume a full URL is passed and take it as is.
     let searchString = "";
-    let searchResult = undefined;
     if (baseUrl) searchString = this.serverBaseUrl;
     searchString += parameters;
 
-    return this.http.get(searchString).pipe(
-      expand( (searchBundle: any, i) =>{
-          if (searchResult === undefined) searchResult = searchBundle;
-          else {
-            searchBundle.entry.map(entry => searchResult.entry.push(entry));
+    const pagination$ = this.http.get(searchString).pipe(
+        expand( (searchBundle: any, i) => {
+            return searchBundle?.link?.find(link => link?.relation === "next") ?
+              this.search(searchBundle?.link?.find(link => link?.relation === "next")?.url, false, false) : EMPTY;
           }
-          console.log(searchResult);
-          return searchBundle?.link?.find(link => link?.relation === "next") ?
-          this.search(searchBundle?.link?.find(link => link?.relation === "next")?.url, false, false).pipe(delay(1000)) :
-          searchResult
-      }
-      ),
-      takeWhile((searchBundle:any) => searchBundle?.link?.find(link => link?.relation === "next"), true),
-      //reduce((acc, current) => acc.concat(current), []),
-    );
+        ),
+        takeWhile((searchBundle:any) => searchBundle?.link?.find(link => link?.relation === "next"), true),
+        reduce((acc, current) => acc.concat(current), []),
+      ).pipe(
+        mergeMap((searchSetList: any[]) => {
+          let completeBundle = {
+            resourceType: "Bundle",
+            type: "searchset",
+            total: 0,
+            entry: []
+          };
+          searchSetList.map(searchSetBundle => {
+            searchSetBundle.entry.map(entry => completeBundle.entry.push(entry));
+          });
+          completeBundle.total = completeBundle.entry.length;
+          return of(completeBundle)
+        })
+      );
 
-
-    // return this.http.get(searchString).pipe(
-    //   expand( (searchBundle: any, i) => {
-    //     console.log("START OF RECURSIVE LOOP");
-    //     console.log(returnedData);
-    //       if (searchBundle?.entry) {
-    //         console.log("first if");
-    //         searchBundle?.entry.map(entry => returnedData.push(entry))
-    //         returnedData = returnedData.concat(searchBundle?.entry);
-    //         console.log(returnedData);
-    //       }
-    //       if (searchBundle?.link?.find(link => link?.relation === "next")) {
-    //         console.log("second if");
-    //         return this.search(searchBundle?.link?.find(link => link?.relation === "next")?.url, false, false)
-    //       }
-    //       else return of(returnedData)
-    //     }
-    //     // searchBundle?.link?.find(link => link?.relation === "next") ?
-    //     // this.search(searchBundle?.link?.find(link => link?.relation === "next")?.url, false, false) :
-    //     //   EMPTY
-    //   ),
-    //   takeWhile((searchBundle:any) => searchBundle?.link?.find(link => link?.relation === "next"), true),
-    //   map(data => console.log(data))
-    //   //reduce((acc, current) => acc.concat(current), []),
-    // );
+    if (flat) {
+      return pagination$.pipe(
+        map((completeBundle: any) => {
+          let resourceList = [];
+          completeBundle.entry.map((bundleEntry: any) => {
+            resourceList.push(bundleEntry.resource)
+          });
+          return resourceList;
+        }
+      ))
+    }
+    else return pagination$;
   }
 }
-// First Page = bundle
-// bundle.entry // first page of results
-// fetch page 2 (bundle 2)
-// bundle.entry.concat(bundle2.entry)

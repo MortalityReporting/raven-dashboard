@@ -28,7 +28,7 @@ export class DecedentService {
 
   getDecedentRecords():  Observable<any> {
     // Headers are added in the FHIR Auth Interceptor
-    return this.fhirClient.search("Patient?_count=5")
+    return this.fhirClient.search("Patient")
       .pipe( map((result: any) => {
         // By convention the API should return an empty array. However, the FHIR server we use does not.
         // We are adding an empty array to prevent NPE errors in the components using this service.
