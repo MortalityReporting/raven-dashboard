@@ -46,14 +46,14 @@ export class DecedentRecordsGridComponent implements OnInit {
   ) {
   }
 
-  mapToDto(entry: any): DecedentGridDTO {
+  mapToDto(resource: any): DecedentGridDTO {
     let decedentDTO = new DecedentGridDTO();
-    decedentDTO.decedentId = entry.resource?.id;
-    decedentDTO.firstName = entry.resource?.name?.[0]?.given[0];
-    decedentDTO.lastName = entry.resource?.name?.[0]?.family;
-    decedentDTO.gender = entry.resource?.gender;
-    decedentDTO.system = entry.resource?.identifier?.[0]?.system || null;
-    decedentDTO.age = this.getAgeFromDob(new Date(entry.resource?.birthDate));
+    decedentDTO.decedentId = resource?.id;
+    decedentDTO.firstName = resource?.name?.[0]?.given[0];
+    decedentDTO.lastName = resource?.name?.[0]?.family;
+    decedentDTO.gender = resource?.gender;
+    decedentDTO.system = resource?.identifier?.[0]?.system || null;
+    decedentDTO.age = this.getAgeFromDob(new Date(resource?.birthDate));
     return decedentDTO;
   }
 
@@ -68,7 +68,6 @@ export class DecedentRecordsGridComponent implements OnInit {
     // );
     this.decedentService.getDecedentRecords().pipe(
       map(data => {
-        console.log(data)
         return data
       }),
       mergeMap((decedentRecordsList: any[]) =>

@@ -28,9 +28,6 @@ export class ModuleHeaderComponent implements OnInit {
       {
         next: (event: any) => {
           if (event.snapshot.data !== undefined && Object.keys(event.snapshot.data).length !== 0) {
-            console.log("EVENT")
-            console.log(event)
-            console.log(event.snapshot.data)
             this.showHeader = !!(event.snapshot.data.moduleConfig);
             this.moduleTitle = event.snapshot.data.moduleConfig?.title || undefined;
             this.backgroundColor = event.snapshot.data.moduleConfig?.backgroundColor || undefined;

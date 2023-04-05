@@ -52,7 +52,6 @@ export class CaseSummaryComponent implements OnInit, OnDestroy {
           this.relatedToxicology$ = this.documentHandler.getRelatedToxicologyReports(mdiCaseNumber);
           this.relatedToxicology$.subscribe({
             next: value => {
-              console.log(value);
               this.toxicologyRecordList = value
             }
           });
