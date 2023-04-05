@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from "rxjs/operators";
 import {environment} from "../../../../environments/environment";
+import {FileTemplate} from "../models/file-template";
 
 
 @Injectable({
@@ -12,6 +13,8 @@ export class ImportCaseService {
 
   // API url
   importFileUrl = environment.ravenImportApi;
+  //TODO remove hardcoded url
+  templatesUrl = "https://hapi.fhir.org/baseR4/DocumentReference?type=raven-template";
 
   constructor(private http:HttpClient) { }
 
@@ -52,5 +55,15 @@ export class ImportCaseService {
     return this.http.post(environment.ravenFhirServer, fhirResource).pipe(map((result: any) => (
       result as Object
     )));
+  }
+
+  getFileTemplates(): Observable<FileTemplate[]>{
+    return this.http.get(this.templatesUrl).pipe(map((result: any) => {
+      const fileTemplateList: FileTemplate[] = result.entry.map(entry => {
+        const fileTemplate: FileTemplate = { uri:  entry.resource.content[0].attachment.url, description: entry.resource.description };
+        return fileTemplate;
+      });
+      return fileTemplateList;
+    }));
   }
 }

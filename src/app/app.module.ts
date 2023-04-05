@@ -64,7 +64,7 @@ import { CardHoverDirective } from './directives/card-hover.directive'; // TODO:
     FhirValidatorModule,
     ClipboardModule,
     WorkflowSimulatorModule,
-    ImportCaseModule,
+    ImportCaseModule.forRoot(environment, ModuleHeaderConfig.RecordImport, AppConfiguration.config),
     RecordViewerModule.forRoot(environment, ModuleHeaderConfig.RecordViewer, AppConfiguration.config),
     FhirUtilModule,
     FhirExplorerModule,
