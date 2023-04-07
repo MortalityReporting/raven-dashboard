@@ -1,18 +1,11 @@
-<!-- The section below wraps the FHIR validator when used in standalone mode (when accessed directly) -->
-<div *ngIf=isStandalone class="container top-padding">
+<!--&lt;!&ndash; The section below wraps the FHIR validator when used in standalone mode (when accessed directly) &ndash;&gt;-->
+<div class="container top-padding">
   <mat-card class="mat-elevation-z8">
     <mat-card-content>
-    <app-validator-core [isStandalone]>
-    </app-validator-core>
+      <lib-ngx-fhir-validator
+      [validatorTitle]="'FHIR Validator'"
+      [validationInputFormat]="validationTextFormat"
+      ></lib-ngx-fhir-validator>
     </mat-card-content>
   </mat-card>
 </div>
-
-
-<!-- The section below wraps the FHIR validator when not used as standalone,
-  for example when the validator is child component -->
-<app-validator-core
-  *ngIf="!isStandalone"
-  [isStandalone]="isStandalone"
-  [renderValidationDetails]="renderValidationDetails">
-</app-validator-core>

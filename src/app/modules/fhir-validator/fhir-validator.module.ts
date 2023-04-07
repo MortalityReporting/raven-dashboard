@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ValidatorCoreComponent } from './components/validator-core/validator-core.component';
 import {BrowserModule} from "@angular/platform-browser";
 import {AppRoutingModule} from "../../app-routing.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -10,7 +9,6 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatSortModule} from "@angular/material/sort";
 import {HttpClientModule} from "@angular/common/http";
-import {ValidatorConstants} from "./providers/validator-constants";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatDividerModule} from "@angular/material/divider";
 import { FhirValidatorComponent } from './components/fhir-validator/fhir-validator.component'
@@ -27,12 +25,10 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatButtonModule} from "@angular/material/button";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatRadioModule} from "@angular/material/radio";
-
-
+import {NgxFhirValidatorModule} from "ngx-fhir-validator";
 
 @NgModule({
     declarations: [
-        ValidatorCoreComponent,
         FhirValidatorComponent,
     ],
   imports: [
@@ -62,14 +58,9 @@ import {MatRadioModule} from "@angular/material/radio";
     MatCheckboxModule,
     MatTooltipModule,
     MatDividerModule,
+    NgxFhirValidatorModule,
   ],
   exports: [
-    ValidatorCoreComponent,
-    FhirValidatorComponent
   ],
-
-    providers: [
-        ValidatorConstants
-    ]
 })
 export class FhirValidatorModule { }
