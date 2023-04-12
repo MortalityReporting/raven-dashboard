@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {ModuleWithProviders, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {BrowserModule} from "@angular/platform-browser";
 import {AppRoutingModule} from "../../app-routing.module";
@@ -26,6 +26,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatRadioModule} from "@angular/material/radio";
 import {NgxFhirValidatorModule} from "ngx-fhir-validator";
+import {ModuleHeaderConfig} from "../../../assets/configuration/module-header-config";
 
 @NgModule({
     declarations: [
@@ -63,4 +64,25 @@ import {NgxFhirValidatorModule} from "ngx-fhir-validator";
   exports: [
   ],
 })
-export class FhirValidatorModule { }
+export class FhirValidatorModule {
+  public static forRoot(environment: any, config: ModuleHeaderConfig, appConfig: any): ModuleWithProviders<FhirValidatorModule>{
+    return {
+      ngModule: FhirValidatorModule,
+      providers: [
+        {
+          provide: 'env',
+          useValue: environment
+        },
+        {
+          provide: 'config',
+          useValue: config
+        },
+        {
+          provide: 'appConfig',
+          useValue: appConfig
+        }
+      ]
+    }
+  }
+
+}
