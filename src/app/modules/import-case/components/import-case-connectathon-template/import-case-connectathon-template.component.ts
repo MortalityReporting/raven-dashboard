@@ -87,7 +87,8 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
         this.isLoading = true;
         this.error = null;
         //this.importCaseService.getMockResponse().subscribe({
-        this.importCaseService.uploadFile(this.file).subscribe({
+        const apiParam = this.importCaseForm.controls['fileTemplate'].value.apiImportParameter;
+        this.importCaseService.uploadFile(this.file, apiParam).subscribe({
           next: value => {
             this.isLoading = false;
             this.dataSource = new MatTableDataSource(value);
@@ -111,15 +112,6 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
         this.utilsService.showErrorMessage("Please select a file to upload")
       }
     }
-  }
-
-  onDownloadTemplate(){
-    const link = document.createElement('a');
-    document.body.appendChild(link);
-    link.href = 'https://github.com/MortalityReporting/raven-import-and-submit-api/blob/master/MDI_Raven_Excel_Schema.xlsx?raw=true';
-    link.target="_blank";
-    link.click();
-    document.body.removeChild(link);
   }
 
   scrollToTop(el: HTMLDivElement) {

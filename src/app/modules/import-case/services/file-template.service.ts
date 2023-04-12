@@ -21,7 +21,11 @@ export class FileTemplateService {
   getFileTemplates(): Observable<FileTemplate[]>{
     return this.http.get(this.templatesUrl).pipe(map((result: any) => {
       const fileTemplateList: FileTemplate[] = result.entry.map(entry => {
-        const fileTemplate: FileTemplate = { uri:  entry.resource.content[0].attachment.url, description: entry.resource.description };
+        const fileTemplate: FileTemplate = {
+          uri:  entry.resource.content[0].attachment.url,
+          description: entry.resource.description,
+          apiImportParameter: entry.resource?.extension?.find(extension => extension.url == "raven-import-api-parameter")?.valueString ?? ''
+        };
         return fileTemplate;
       });
       return fileTemplateList;

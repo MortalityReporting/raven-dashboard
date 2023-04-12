@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from "rxjs/operators";
 import {environment} from "../../../../environments/environment";
@@ -16,13 +16,16 @@ export class ImportCaseService {
 
   constructor(private http:HttpClient) { }
 
-  uploadFile(file): Observable<any> {
+  uploadFile(file, apiImportParameter: string): Observable<any> {
+
+    let params = new HttpParams()
+      .set('type', apiImportParameter)
 
     const formData = new FormData();
 
     formData.append("file", file, file.name);
 
-    return this.http.post(this.importFileUrl, formData)
+    return this.http.post(this.importFileUrl, formData, {params:params})
   }
 
   uploadFileContent(content, contentFormat): Observable<any>{
