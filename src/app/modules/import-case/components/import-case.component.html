@@ -16,7 +16,9 @@
           <app-import-case-fhir-record></app-import-case-fhir-record>
         </div>
         <div *ngIf="selectedInputOption == inputOptions[1]">
-          <app-import-case-connectathon-template></app-import-case-connectathon-template>
+          <app-import-case-connectathon-template
+            [fileTemplates]="fileTemplates$ | async"
+          ></app-import-case-connectathon-template>
         </div>
       </mat-card-content>
     </mat-card>
