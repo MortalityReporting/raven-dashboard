@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 import {FhirExplorerDrawerService} from "../../modules/fhir-explorer/services/fhir-explorer-drawer.service";
 import { environment } from "../../../environments/environment";
 import {MatDialog} from "@angular/material/dialog";
-import {openConformationDialog} from "common-ui";
+import {openConfirmationDialog} from "common-ui";
 
 
 @Component({
@@ -25,7 +25,7 @@ export class HeaderComponent {
   }
 
   confirmPathTransition(confirmationMessage, path) {
-    openConformationDialog(
+    openConfirmationDialog(
       this.dialog,
       {
         title: "",

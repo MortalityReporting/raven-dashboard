@@ -8,7 +8,8 @@ export const environment = {
   production: false,
   ravenFhirServer: "https://apps.hdap.gatech.edu/raven-fhir-server-dev/fhir/",
   ravenFhirServerBasicAuth: "client:secret",
-  ravenImportApi: "https://apps.hdap.gatech.edu/raven-import-api-dev/upload-xlsx-file"
+  ravenImportApi: "https://apps.hdap.gatech.edu/raven-import-api-dev/upload-xlsx-file",
+  fhirValidator: "https://apps.hdap.gatech.edu/HL7ValidatorService/fhir"
 };
 
 export const blueJay = {
