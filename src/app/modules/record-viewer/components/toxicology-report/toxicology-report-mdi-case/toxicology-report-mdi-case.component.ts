@@ -22,7 +22,7 @@ export class ToxicologyReportMdiCaseComponent implements OnInit {
   ngOnInit(): void {
     this.toxHandler.isRelatedMdiDocumentAvailable(this.toxSummary.mdiCaseNumber).subscribe(
       (result => {
-        this.relatedCaseAvailable = result.split('/')[1];
+        this.relatedCaseAvailable = result?.split('/')[1];
       })
     );
   }

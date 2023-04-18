@@ -79,7 +79,11 @@ export class ToxicologyGridComponent implements OnInit {
     toxDto.toxcasenumber = toxTrackingNumber?.value || undefined;
     toxDto.toxcasesystem = toxTrackingNumber?.system || undefined;
     toxDto.mdicasenumber = mdiTrackingNumber?.value || undefined;
-    toxDto.mdicasesystem = mdiTrackingNumber?.system || undefined
+    toxDto.mdicasesystem = mdiTrackingNumber?.system || undefined;
+
+    if (!toxDto.toxcasenumber || !toxDto.toxcasesystem) {
+      toxDto.error = true;
+    }
     return toxDto;
   }
 

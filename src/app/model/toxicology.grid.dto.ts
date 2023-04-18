@@ -7,4 +7,5 @@ export class ToxicologyGridDto {
   toxcasesystem: string;
   mdicasenumber?: string;
   mdicasesystem?: string;
+  error?: boolean = false;
 }

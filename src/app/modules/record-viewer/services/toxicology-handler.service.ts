@@ -25,8 +25,6 @@ export class ToxicologyHandlerService {
   getToxicologyRecords(): Observable<any>{
     return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "DiagnosticReport?_count=100")
       .pipe( map((result: any) => {
-        // By convention the API should return an empty array. However, the FHIR server we use does not.
-        // We are adding an empty array to prevent NPE errors in the components using this service.
           if (!result?.entry) {
             return [];
           }
@@ -48,15 +46,28 @@ export class ToxicologyHandlerService {
   getTrackingNumber(resource: any, type: TrackingNumberType): any {
     let trackingNumber = undefined;
     const trackingNumberExtensions = resource.extension?.filter(extension => extension.url === trackingNumberUrl);
-    trackingNumberExtensions.forEach(extension => {
-      if (extension.valueIdentifier?.type?.coding?.[0]?.code === type) {
-        trackingNumber = {
-          "value": extension.valueIdentifier?.value,
-          "system": extension.valueIdentifier?.system || "System Not Specified"
+
+    if (!trackingNumberExtensions) {
+      console.error(`${resource.resourceType}/${resource.id} is missing ${type} extension.`);
+      return undefined;
+    }
+    else {
+      trackingNumberExtensions.forEach(extension => {
+        if (extension.valueIdentifier?.type?.coding?.[0]?.code === type) {
+          const value = extension.valueIdentifier?.value || undefined;
+          const system = extension.valueIdentifier?.system || undefined;
+
+          if (!value) console.error(`${resource.resourceType}/${resource.id} is missing element 'value' in ${type} extension.`);
+          if (!system) console.error(`${resource.resourceType}/${resource.id} is missing element 'system' in ${type} extension.`);
+
+          trackingNumber = {
+            "value": value,
+            "system": system
+          }
         }
-      }
-    });
-    return trackingNumber;
+      });
+      return trackingNumber;
+    }
   }
 
   // toxLabId is a fully qualified system|code value.
@@ -66,7 +77,7 @@ export class ToxicologyHandlerService {
       this.environmentHandler.getFhirServerBaseURL() + "DiagnosticReport/$toxicology-message",
       parametersResource
     ).pipe(
-      map((searchBundle: any) => searchBundle.entry[0].resource)
+      map((searchBundle: any) => searchBundle?.entry?.[0]?.resource)
     );
   }
 
