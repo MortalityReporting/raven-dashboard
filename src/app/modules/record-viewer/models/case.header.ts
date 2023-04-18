@@ -3,11 +3,10 @@ import {TrackingNumber} from "./mdi/tracking.number";
 export class CaseHeader {
   fullName: string;
   gender: string;
-  deathDate: string;
-  deathTime: string;
   trackingNumbers: TrackingNumber[];
   authors: Author[];
   mdiCaseNumber: TrackingNumber;
+  deathDateTime: string;
 
   constructor() {
     this.authors = [];
