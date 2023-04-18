@@ -37,42 +37,42 @@ export class FhirClientService {
     console.log("Making Search Request: " + searchString);
     const pagination$ = this.http.get(searchString).pipe(
       // TODO: Is there a way to type the following operator projections?
-        expand( (searchBundle: any, i) => {
-            return searchBundle?.link?.find(link => link?.relation === "next") ?
-              this.search(
-                undefined, undefined,flat = false, false,
-                searchBundle?.link?.find(link => link?.relation === "next")?.url
-              ) : EMPTY;
-          }
-        ),
-        takeWhile((searchBundle:any) => searchBundle?.link?.find(link => link?.relation === "next"), true),
-        reduce((acc, current) => acc.concat(current), []),
-      ).pipe(
-        mergeMap((searchSetList: Bundle[]) => {
-          let completeBundle: Bundle = {
-            resourceType: "Bundle",
-            type: BundleType.searchset,
-            total: 0,
-            entry: []
-          };
-          searchSetList.map((searchSetBundle: Bundle) => {
-            searchSetBundle?.entry?.map(entry => completeBundle.entry.push(entry));
-          });
-          completeBundle.total = completeBundle.entry.length;
-          return of(completeBundle)
-        })
-      );
+      expand( (searchBundle: any, i) => {
+          return searchBundle?.link?.find(link => link?.relation === "next") ?
+            this.search(
+              undefined, undefined,flat = false, false,
+              searchBundle?.link?.find(link => link?.relation === "next")?.url
+            ) : EMPTY;
+        }
+      ),
+      takeWhile((searchBundle:any) => searchBundle?.link?.find(link => link?.relation === "next"), true),
+      reduce((acc, current) => acc.concat(current), []),
+    ).pipe(
+      mergeMap((searchSetList: Bundle[]) => {
+        let completeBundle: Bundle = {
+          resourceType: "Bundle",
+          type: BundleType.searchset,
+          total: 0,
+          entry: []
+        };
+        searchSetList.map((searchSetBundle: Bundle) => {
+          searchSetBundle?.entry?.map(entry => completeBundle.entry.push(entry));
+        });
+        completeBundle.total = completeBundle.entry.length;
+        return of(completeBundle)
+      })
+    );
 
     if (flat) {
       return pagination$.pipe(
         map((completeBundle: Bundle) => {
-          let resourceList: FhirResource[] = [];
-          completeBundle['entry'].map((bundleEntry: BundleEntryComponent) => {
-            resourceList.push(bundleEntry.resource)
-          });
-          return resourceList;
-        }
-      ))
+            let resourceList: FhirResource[] = [];
+            completeBundle['entry'].map((bundleEntry: BundleEntryComponent) => {
+              resourceList.push(bundleEntry.resource)
+            });
+            return resourceList;
+          }
+        ))
     }
     else return pagination$;
   }
