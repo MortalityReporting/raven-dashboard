@@ -20,17 +20,29 @@ export class Performer {
 }
 
 export class Specimen {
-  constructor(type: string, bodysite: string, identifier: string, collected: string, specimenResource: any) {
+  constructor(
+    type: string, site: string, identifier: string, collected: string,
+    received: string, condition: string, container: string, note: string,
+    specimenResource: any
+  ) {
     this.type = type;
-    this.site = bodysite;
+    this.site = site;
     this.identifier = identifier;
     this.collected = collected;
+    this.received = received;
+    this.condition = condition;
+    this.container = container;
+    this.note = note;
     this.resource = specimenResource;
   }
   type: string;
   site: string;
   identifier: string;
   collected: string;
+  received: string;
+  condition: string;
+  container: string;
+  note: string;
   resource: any;
 }
 

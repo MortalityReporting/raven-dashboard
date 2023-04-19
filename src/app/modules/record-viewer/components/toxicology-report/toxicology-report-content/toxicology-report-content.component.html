@@ -42,7 +42,10 @@
         <mat-panel-title>Specimens</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="summary-section-body">
-        <record-viewer-toxicology-report-grid-section *ngIf="toxSummary?.specimens" [data]="toxSummary?.specimens" [columns]="['type', 'site', 'identifier', 'collected']"></record-viewer-toxicology-report-grid-section>
+        <record-viewer-toxicology-report-grid-section
+          *ngIf="toxSummary?.specimens" [data]="toxSummary?.specimens"
+          [columns]="['type', 'site', 'identifier', 'collected', 'received', 'condition', 'container']">
+        </record-viewer-toxicology-report-grid-section>
       </div>
     </mat-expansion-panel>
 
