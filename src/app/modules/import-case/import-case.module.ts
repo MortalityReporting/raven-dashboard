@@ -24,6 +24,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatButtonModule} from "@angular/material/button";
 import { FileTemplateComponent } from './components/file-template/file-template.component';
 import {ModuleHeaderConfig} from "../../../assets/configuration/module-header-config";
+import {NgxFhirValidatorModule} from "ngx-fhir-validator";
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import {ModuleHeaderConfig} from "../../../assets/configuration/module-header-co
     FormsModule,
     FhirValidatorModule,
     MatButtonModule,
+    NgxFhirValidatorModule,
   ]
 })
 

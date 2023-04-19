@@ -8,16 +8,10 @@
              accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
              (change)="onFileSelected($event)" #fileUpload>
       <div>
-        <button mat-raised-button (click)="onDownloadTemplate();" style="margin-bottom: 1rem" [disabled]=isLoading>
-          <mat-icon>file_download</mat-icon>
-          Download MDI-to-EDRS XLSX Template
-        </button>
-      </div>
-      <div>
       <button mat-raised-button color="success" class="upload-btn"
               (click)="clearUI(); fileUpload.click();" [disabled]=isLoading>
         <mat-icon>upload_file</mat-icon>
-        Select MDI-to-EDRS XLSX Template
+        Select XLSX Template
       </button>
       <span id="filename">{{file?.name}}</span>
       </div>
@@ -26,12 +20,29 @@
   </div>
 
   <div class="top-padding">
+    <div class="row">
     2. Submit your document to Raven.
-    <div>
-      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="isLoading">
-        <mat-icon>send</mat-icon>
-        Submit
-      </button>
+    </div>
+    <div class="top-margin">
+      <form [formGroup]="importCaseForm" (ngSubmit)="onSubmit()" class="row">
+        <mat-form-field appearance="outline" style="min-width: 50%">
+          <mat-label>Select Template</mat-label>
+          <mat-select formControlName="fileTemplate">
+            <mat-option *ngFor="let template of fileTemplates" [value]="template">
+              {{template.description}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="fileTemplate.errors?.['required']">
+            Please select a template from the list above
+          </mat-error>
+        </mat-form-field>
+        <div class="content-spacer"></div>
+        <button mat-stroked-button type=submit
+                [style.background-color]="config.backgroundColor"
+                [style.color]="'white'"[disabled]="isLoading">
+          Submit
+        </button>
+      </form>
     </div>
   </div>
 

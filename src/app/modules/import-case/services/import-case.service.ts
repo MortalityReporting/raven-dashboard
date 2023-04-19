@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from "rxjs/operators";
 import {environment} from "../../../../environments/environment";
@@ -13,18 +13,19 @@ export class ImportCaseService {
 
   // API url
   importFileUrl = environment.ravenImportApi;
-  //TODO remove hardcoded url
-  templatesUrl = "https://hapi.fhir.org/baseR4/DocumentReference?type=raven-template";
 
   constructor(private http:HttpClient) { }
 
-  uploadFile(file): Observable<any> {
+  uploadFile(file, apiImportParameter: string): Observable<any> {
+
+    let params = new HttpParams()
+      .set('type', apiImportParameter)
 
     const formData = new FormData();
 
     formData.append("file", file, file.name);
 
-    return this.http.post(this.importFileUrl, formData)
+    return this.http.post(this.importFileUrl, formData, {params:params})
   }
 
   uploadFileContent(content, contentFormat): Observable<any>{
@@ -55,15 +56,5 @@ export class ImportCaseService {
     return this.http.post(environment.ravenFhirServer, fhirResource).pipe(map((result: any) => (
       result as Object
     )));
-  }
-
-  getFileTemplates(): Observable<FileTemplate[]>{
-    return this.http.get(this.templatesUrl).pipe(map((result: any) => {
-      const fileTemplateList: FileTemplate[] = result.entry.map(entry => {
-        const fileTemplate: FileTemplate = { uri:  entry.resource.content[0].attachment.url, description: entry.resource.description };
-        return fileTemplate;
-      });
-      return fileTemplateList;
-    }));
   }
 }
