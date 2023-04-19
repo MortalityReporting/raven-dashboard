@@ -1,7 +1,7 @@
 import {Component, Inject, Input} from '@angular/core';
 import {ModuleHeaderConfig} from "../../../../../assets/configuration/module-header-config";
-import {FhirExplorerDrawerService} from "../../../fhir-explorer/services/fhir-explorer-drawer.service";
 import {ThemeService} from "../../../../service/theme.service";
+
 
 @Component({
   selector: 'app-decedent-display',
