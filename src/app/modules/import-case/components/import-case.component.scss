@@ -5,11 +5,13 @@
 
 .import-from-file {
   flex-basis: 75%;
+  max-width: 75%;
   padding: 0px 8px 8px 20px;
 }
 
 .import-from-template {
   flex-basis: 25%;
+  max-width: 25%;
   padding: 0px 20px 8px 8px;
 }
 

@@ -1,26 +1,21 @@
-<div>
+<!--<div>-->
   1. Select a FHIR JSON file to upload and preview or paste your FHIR Bundle directly in the provided area.
   To prevent the creation of duplicate records, existing records are overwritten.
   <div class="content-offset">
-    <div class="top-padding">
-      <input type="file" class="file-input" (click)="fileUpload.value=null"
-             accept=".json"
-             (change)="onFileSelected($event)" #fileUpload>
-      <button mat-raised-button color="success" class="upload-btn"
-              (click)="clearUI(); fileUpload.click();" [disabled]=isLoading>
-        <mat-icon>post_add</mat-icon>
-        Select File
-      </button>
-      <span id="filename">{{file?.name}}</span>
-    </div>
-
-    <app-fhir-validator [isStandalone]=false></app-fhir-validator>
+    <lib-ngx-fhir-validator
+      [formatResourceBtnShown]="false"
+      [resultDetailsExpandBtnShown]="false"
+      [validationResultsExpanded]="true"
+      [submitBtnShown]="false"
+      [cancelValidationBtnShown]="false"
+      [clearValidatorBtnShown]="false"
+      (onValidation)="onValidation($event)"
+      (onApiError)="onValidationError($event)"
+      (onResourceContentChanged)="onResourceContentChanged($event)"
+    />
 
   </div>
-  <div class="error-text mat-error">
-    {{preconditionError}}
-  </div>
-</div>
+<!--</div>-->
 
 <div class="top-padding">
   2. Submit your Bundle to the Raven.

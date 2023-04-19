@@ -144,9 +144,7 @@ export class DocumentHandlerService {
     let genderString = patientResource.gender || this.defaultString;
     caseHeader.gender = genderString.substring(0,1).toUpperCase() + genderString.substring(1);
     let deathDateResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.profileProvider.getMdiProfiles().Obs_DeathDate);
-    let splitDateTime = deathDateResource?.valueDateTime?.split("T") || []; //TODO: Add more handling to this for other forms of dateTime?
-    caseHeader.deathDate = splitDateTime[0] || this.defaultString;
-    caseHeader.deathTime = splitDateTime[1] || this.defaultString;
+    caseHeader.deathDateTime = deathDateResource?.valueDateTime || this.defaultString;
     caseHeader.trackingNumbers = this.getTrackingNumbers(compositionResource);
     caseHeader.mdiCaseNumber = new TrackingNumber()
     caseHeader.mdiCaseNumber.value = this.fhirHelper.getTrackingNumber(compositionResource, TrackingNumberType.Mdi) || "Unknown";

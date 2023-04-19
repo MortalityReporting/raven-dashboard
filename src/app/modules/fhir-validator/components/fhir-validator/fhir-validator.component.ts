@@ -1,33 +1,13 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {ValidatorCoreComponent} from "../validator-core/validator-core.component";
+import {Component} from '@angular/core';
+import {ValidatorInput} from "ngx-fhir-validator";
 
 @Component({
   selector: 'app-fhir-validator',
   templateUrl: './fhir-validator.component.html',
   styleUrls: ['./fhir-validator.component.scss']
 })
-export class FhirValidatorComponent implements OnInit {
+export class FhirValidatorComponent {
 
-  @Input() isStandalone: boolean = true;
-  @Input() renderValidationDetails: any;
-
-  @ViewChild(ValidatorCoreComponent) validatorCore: FhirValidatorComponent;
-
-  constructor() { }
-
-  validateFhirResource(resource?: any, recourseFormat?: string){
-    this.validatorCore.validateFhirResource(resource, recourseFormat);
-  }
-
-  clearValidationErrors(){
-    this.validatorCore.clearValidationErrors();
-  }
-
-  clearUI(){
-    this.validatorCore.clearUI();
-  }
-
-  ngOnInit(): void {
-  }
+  validationTextFormat: ValidatorInput = {format: 'xml and json', accepts: 'text/*,.xml,.json'};
 
 }
