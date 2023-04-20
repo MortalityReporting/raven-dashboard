@@ -32,7 +32,8 @@
               <div *ngFor="let trackingNumber of (caseHeader$ | async)?.trackingNumbers">
                 <record-viewer-case-summary-content-field [label]="trackingNumber.type" [value]="trackingNumber.value"
                                                           appSetFhirExplorer
-                                                          [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Composition-mdi-to-edrs'"></record-viewer-case-summary-content-field>
+                                                          [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Composition-mdi-to-edrs'">
+                </record-viewer-case-summary-content-field>
               </div>
             </div>
             <div class="grid-col-1">

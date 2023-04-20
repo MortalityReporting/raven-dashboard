@@ -12,7 +12,7 @@
     <span class="content-spacer"></span>
 
   </div>
-  <!-- mat-expansion-panel used outside of accordion to maintain consistent styling for non collapsible div -->
+
   <div class="summary-section mdi-case-number-body-padding" #mdiCaseNumber id="mdiCaseNumber" [style.border-color]="appConfig.color">
     <div class="summary-section-body">
       <div class="summary-section-grid">
@@ -64,7 +64,12 @@
       <mat-expansion-panel-header (click)="onToggleState( 'conclusion' )">
         <mat-panel-title>Conclusion</mat-panel-title>
       </mat-expansion-panel-header>
-      <div class="summary-section-body">
+      <div class="summary-section-body"
+           appSetFhirExplorer
+           [profile]="fhirProfiles.ToxToMdi.Tox_Diagnostic_Report"
+           [bundle]="messageBundle"
+           [type]="'tox-to-mdi'"
+      >
         <textarea class="conclusion-text-area" readonly [ngModel]="toxSummary.conclusion" (ngModelChange)="toxSummary?.conclusion ? toxSummary.conclusion=$event : 'No Conclusion Found'" *ngIf="toxSummary"></textarea>
       </div>
     </mat-expansion-panel>

@@ -1,4 +1,22 @@
 // Use this file to modify profile defining URLs.
+import {Injectable} from "@angular/core";
+
+@Injectable()
+export class FHIRProfileConstants {
+  static Profiles = new FHIRProfileConstants();
+
+  USCore = {
+    USCoreLocation: "http://hl7.org/fhir/us/core/StructureDefinition/us-core-location",
+    USCorePatient: "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient",
+    USCorePractitioner: "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner"
+  }
+
+  ToxToMdi = {
+    Tox_Diagnostic_Report: "http://hl7.org/fhir/us/mdi/StructureDefinition/DiagnosticReport-toxicology-to-mdi"
+  }
+}
+
+// TODO: Shift all of this into the object above and refactor related parts of the code.
 
 export const USCoreLocation: string = "http://hl7.org/fhir/us/core/StructureDefinition/us-core-location";
 export const USCorePatient: string = "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient";

@@ -42,6 +42,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatButtonModule} from "@angular/material/button";
 import { DecedentDisplayComponent } from './components/decedent-display/decedent-display.component';
 import {ScrollingModule} from "@angular/cdk/scrolling";
+import {NoteComponent} from "./components/note/note.component";
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import {ScrollingModule} from "@angular/cdk/scrolling";
     CaseSummaryContentComponent,
     CaseSummaryContentFieldComponent,
     CaseSummaryRelatedToxComponent,
-    DecedentDisplayComponent
+    DecedentDisplayComponent,
+    NoteComponent
   ],
   imports: [
     CommonModule,
@@ -96,7 +98,7 @@ export class RecordViewerModule {
       .bypassSecurityTrustResourceUrl(`${path}/clinical_notes.svg`));
   }
 
-  public static forRoot(environment: any, config: ModuleHeaderConfig, appConfig: any): ModuleWithProviders<any>{
+  public static forRoot(environment: any, config: ModuleHeaderConfig, appConfig: any, fhirProfiles): ModuleWithProviders<any>{
     return {
       ngModule: RecordViewerModule,
       providers: [
@@ -111,6 +113,10 @@ export class RecordViewerModule {
         {
           provide: 'appConfig',
           useValue: appConfig
+        },
+        {
+          provide: 'fhirProfiles',
+          useValue: fhirProfiles
         }
       ]
     }

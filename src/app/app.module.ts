@@ -13,7 +13,6 @@ import {LandingComponent} from './components/landing/landing.component';
 import {FhirExplorerDrawerService} from "./modules/fhir-explorer/services/fhir-explorer-drawer.service";
 import {ClipboardModule} from "@angular/cdk/clipboard";
 import {ModalComponent} from './components/widgets/modal/modal.component';
-import {UiStringConstants} from "./providers/ui-string-constants";
 import {WorkflowSimulatorModule} from "./modules/workflow-simulator/workflow-simulator.module";
 import {ImportCaseModule} from "./modules/import-case/import-case.module";
 import {RecordViewerModule} from "./modules/record-viewer/record-viewer.module";
@@ -34,14 +33,17 @@ import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {HeaderComponent, NavMenuComponent} from "common-ui";
 import {AppConfiguration} from "../assets/configuration/app-configuration";
-import { CardHoverDirective } from './directives/card-hover.directive'; // TODO: Rename/move components to library.
+import { CardHoverDirective } from './directives/card-hover.directive';
+
+import { UiStringConstants } from "./providers/ui-string-constants";
+import { FHIRProfileConstants } from "./providers/fhir-profile-constants";
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingComponent,
     ModalComponent,
-    CardHoverDirective,
+    CardHoverDirective
   ],
   imports: [
     // TODO: Clean up imports after refactor.
@@ -65,7 +67,7 @@ import { CardHoverDirective } from './directives/card-hover.directive'; // TODO:
     ClipboardModule,
     WorkflowSimulatorModule,
     ImportCaseModule.forRoot(environment, ModuleHeaderConfig.RecordImport, AppConfiguration.config),
-    RecordViewerModule.forRoot(environment, ModuleHeaderConfig.RecordViewer, AppConfiguration.config),
+    RecordViewerModule.forRoot(environment, ModuleHeaderConfig.RecordViewer, AppConfiguration.config, FHIRProfileConstants.Profiles),
     FhirUtilModule,
     FhirExplorerModule,
     RecordComparisonModule,
@@ -76,6 +78,7 @@ import { CardHoverDirective } from './directives/card-hover.directive'; // TODO:
 
   providers: [
     UiStringConstants,
+    FHIRProfileConstants,
     {provide: HTTP_INTERCEPTORS, useClass: FhirAuthInterceptor, multi: true},
     FhirExplorerDrawerService,
   ],

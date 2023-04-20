@@ -4,6 +4,7 @@ import {ToxHeader} from "../../../models/tox.header";
 import {ToxSummary} from "../../../models/tox.summary";
 import {ModuleHeaderConfig} from "../../../../../../assets/configuration/module-header-config";
 import {AppConfiguration} from "../../../../../../assets/configuration/app-configuration";
+import {FHIRProfileConstants} from "../../../../../providers/fhir-profile-constants";
 
 @Component({
   selector: 'record-viewer-toxicology-report-content',
@@ -14,6 +15,7 @@ export class ToxicologyReportContentComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
   @Input() toxHeader: ToxHeader;
   @Input() toxSummary: ToxSummary;
+  @Input() messageBundle: any;
 
   idStateList = [
     { expanded: true,    id: 'performers' },
@@ -24,7 +26,8 @@ export class ToxicologyReportContentComponent implements OnInit {
 
   constructor(
     @Inject('config') public config: ModuleHeaderConfig,
-    @Inject('appConfig') public appConfig: AppConfiguration
+    @Inject('appConfig') public appConfig: AppConfiguration,
+    @Inject('fhirProfiles') public fhirProfiles: FHIRProfileConstants
   ) { }
 
   ngOnInit(): void {
