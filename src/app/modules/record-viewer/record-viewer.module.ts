@@ -43,6 +43,9 @@ import {MatButtonModule} from "@angular/material/button";
 import { DecedentDisplayComponent } from './components/decedent-display/decedent-display.component';
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import {NoteComponent} from "./components/note/note.component";
+import {
+  ToxicologyReportCertifierComponent
+} from "./components/toxicology-report/toxicology-report-certifier/toxicology-report-certifier.component";
 
 @NgModule({
   declarations: [
@@ -52,6 +55,7 @@ import {NoteComponent} from "./components/note/note.component";
     CaseContainerComponent,
     ToxicologyReportComponent,
     ToxicologyReportContentComponent,
+    ToxicologyReportCertifierComponent,
     ToxicologyReportGridSectionComponent,
     ToxicologyReportMdiCaseComponent,
     CaseSummaryComponent,
@@ -59,7 +63,7 @@ import {NoteComponent} from "./components/note/note.component";
     CaseSummaryContentFieldComponent,
     CaseSummaryRelatedToxComponent,
     DecedentDisplayComponent,
-    NoteComponent
+    NoteComponent,
   ],
   imports: [
     CommonModule,

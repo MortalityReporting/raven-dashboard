@@ -1,0 +1,32 @@
+<div class="mdi-case-number-flex-wrapper column">
+  <div class="bottom-spacer">
+    <span class="field-label" appSetFhirExplorer [resource]="certifier.certifyingToxicologist.resource">
+      Certifying Toxicologist:
+    </span>
+    <span class="field-value" appSetFhirExplorer [resource]="certifier.certifyingToxicologist.resource">
+      {{certifier?.certifyingToxicologist?.name || "Certifying Toxicologist Not Found"}}
+    </span>
+  </div>
+  <div class="bottom-spacer">
+    <span class="field-label" appSetFhirExplorer [resource]="certifier.certifyingToxicologist.resource">
+      Organization:
+    </span>
+    <span class="field-value" appSetFhirExplorer [resource]="certifier.certifyingToxicologist.resource">
+      {{certifier?.organizationName || "Organization Name Not Found"}}
+    </span>
+  </div>
+  <div class="bottom-spacer">
+    <span class="field-label" appSetFhirExplorer [resource]="certifier.certifyingToxicologist.resource">
+      Organization Address:
+    </span>
+    <span class="field-value" appSetFhirExplorer [resource]="certifier.certifyingToxicologist.resource">
+      {{certifier?.organizationAddress || "Organization Address Not Found"}}
+    </span>
+  </div>
+  <div>
+    <div class="field-label bottom-spacer">
+      Additional Performers
+    </div>
+    <record-viewer-toxicology-report-grid-section *ngIf="toxSummary?.performers" [data]="toxSummary?.performers" [columns]="['name']"></record-viewer-toxicology-report-grid-section>
+  </div>
+</div>

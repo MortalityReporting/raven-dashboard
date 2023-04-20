@@ -1,13 +1,34 @@
 import {FhirHelperService} from "../../fhir-util/services/fhir-helper.service";
 
+/**
+ * @field mdiCaseNumber - The MDI Tracking Number linked to an MDI-to-EDRS record.
+ * @field certifier - The primary performer considered the certifying Toxicologist and the Tox Lab details.
+ * @field performers - A full list of all performers included in the Diagnostic Report.
+ */
 export class ToxSummary {
   patientId: string;
   mdiCaseNumber: string;
+  certifier?: CertifierAndOrganization;
   performers: Performer[];
   specimens: Specimen[];
   results: LabResult[];
   conclusion: string;
   diagnosticReportResource: string;
+}
+
+export class CertifierAndOrganization {
+  constructor(certifyingToxicologist: Performer,
+    organizationName?: string, organizationAddress?: string, organizationResource?: any
+  ) {
+    this.certifyingToxicologist = certifyingToxicologist;
+    if (organizationName) this.organizationName = organizationName;
+    if (organizationAddress) this.organizationAddress = organizationAddress;
+    if (organizationResource) this.organizationResource = organizationResource;
+  }
+  certifyingToxicologist: Performer;
+  organizationName?: string;
+  organizationAddress?: string;
+  organizationResource?: string;
 }
 
 export class Performer {

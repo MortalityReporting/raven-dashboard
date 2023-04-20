@@ -8,7 +8,7 @@ import { trackingNumberUrl } from "../models/mdi/tracking.number"
 import {ToxHeader} from "../models/tox.header";
 import {FhirHelperService} from "../../fhir-util/services/fhir-helper.service";
 import {BundleHelperService} from "../../fhir-util/services/bundle-helper.service";
-import {LabResult, Performer, Specimen, ToxSummary} from "../models/tox.summary";
+import {CertifierAndOrganization, LabResult, Performer, Specimen, ToxSummary} from "../models/tox.summary";
 
 @Injectable({
   providedIn: 'root'
@@ -117,6 +117,7 @@ export class ToxicologyHandlerService {
     toxSummary.patientId = subject.id; //"6951b919-1872-448c-8893-555febe22bc1";
     toxSummary.mdiCaseNumber = this.fhirHelper.getTrackingNumber(diagnosticReport, TrackingNumberType.Mdi);
     toxSummary.performers = this.createPerformersList(diagnosticReport, messageBundle);
+    toxSummary.certifier = this.createCertifier(toxSummary.performers[0], diagnosticReport, messageBundle);
     toxSummary.specimens = this.createSpecimenList(diagnosticReport, messageBundle);
     toxSummary.results = this.createLabResultList(diagnosticReport, messageBundle);
     toxSummary.conclusion = diagnosticReport.conclusion || undefined;
@@ -136,6 +137,10 @@ export class ToxicologyHandlerService {
       );
     }
     return performers;
+  }
+
+  createCertifier(certifier: Performer, diagnosticReport: any, messageBundle: any): CertifierAndOrganization {
+    return new CertifierAndOrganization(certifier)
   }
 
   createSpecimenList(diagnosticReport: any, messageBundle: any): Specimen[] {

@@ -32,7 +32,7 @@
         <mat-panel-title>Performer(s)</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="summary-section-body">
-        <record-viewer-toxicology-report-grid-section *ngIf="toxSummary?.performers" [data]="toxSummary?.performers" [columns]="['name']"></record-viewer-toxicology-report-grid-section>
+        <record-viewer-toxicology-report-certifier *ngIf="toxSummary?.certifier" [certifier]="toxSummary?.certifier" [toxSummary]="toxSummary"></record-viewer-toxicology-report-certifier>
       </div>
     </mat-expansion-panel>
 

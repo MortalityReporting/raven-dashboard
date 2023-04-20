@@ -50,6 +50,17 @@ mat-sidenav-container {
   margin: auto;
 }
 
+.field-label {
+  margin: auto;
+  font-weight: bold;
+  flex: 1;
+}
+
+.field-value {
+  flex: 1;
+  margin: auto;
+}
+
 .mdi-case-number-open-related {
   flex: 2;
   margin-right: 10px;
@@ -80,4 +91,12 @@ table {
 
 .conclusion-text-area {
   width: 100%;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.bottom-spacer {
+  margin-bottom: 16px;
 }
