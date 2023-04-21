@@ -4,7 +4,7 @@ import {AppConfiguration} from "../../../../../assets/configuration/app-configur
 @Component({
   selector: 'record-viewer-search-records',
   templateUrl: './search-records.component.html',
-  styleUrls: ['./search-records.component.scss']
+  styleUrls: ['./search-records.component.scss', '../../record-viewer-styles.scss']
 })
 export class SearchRecordsComponent implements OnInit, OnDestroy {
 

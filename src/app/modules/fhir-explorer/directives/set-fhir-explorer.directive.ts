@@ -16,18 +16,19 @@ export class SetFhirExplorerDirective {
   @Input() bundle: any;
 
   @HostListener('click', ['$event']) onClick(event: any) {
-    console.log(event);
-    console.log(this.title);
-    console.log(this.profile);
     if (this.resource) {
       this.fhirResourceProvider.setSelectedFhirResource(this.resource);
     }
     else if (this.profile) {
+      // if (!this.bundle) throw new Error();
       // TODO: Refactor to provide the bundle to the directives so this is not needed...
       if (this.type === "tox-to-mdi") {
         this.fhirResourceProvider.setSelectedFhirResource(this.bundleHelper.findResourceByProfileName(this.bundle, this.profile));
       }
-      else this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.findResourceByProfileNamePassThrough(this.profile));
+      else {
+        //this.fhirResourceProvider.setSelectedFhirResource(this.bundleHelper.findResourceByProfileName(this.bundle, this.profile));
+        this.fhirResourceProvider.setSelectedFhirResource(this.documentHandler.findResourceByProfileNamePassThrough(this.profile));
+      }
     }
     else if (this.observation)
     {
