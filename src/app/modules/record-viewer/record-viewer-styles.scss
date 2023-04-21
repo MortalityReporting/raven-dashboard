@@ -25,3 +25,16 @@
   right: 20px;
   z-index: 99;
 }
+
+label {
+  font-weight: bold;
+}
+input {
+  background-color: #f0f0f0;
+  border: none;
+}
+textarea {
+  background-color: #f0f0f0;
+  border: none;
+  font-family: inherit;
+}
