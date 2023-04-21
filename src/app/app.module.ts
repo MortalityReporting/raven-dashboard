@@ -70,7 +70,7 @@ import { FHIRProfileConstants } from "./providers/fhir-profile-constants";
     RecordViewerModule.forRoot(environment, ModuleHeaderConfig.RecordViewer, AppConfiguration.config, FHIRProfileConstants.Profiles),
     FhirUtilModule,
     FhirExplorerModule,
-    RecordComparisonModule,
+    RecordComparisonModule.forRoot(FHIRProfileConstants.Profiles),
     CommonUiModule,
     MatSidenavModule,
     CommonUiModule,
@@ -78,12 +78,14 @@ import { FHIRProfileConstants } from "./providers/fhir-profile-constants";
 
   providers: [
     UiStringConstants,
-    FHIRProfileConstants,
+    {
+      provide: 'fhirProfiles',
+      useValue: FHIRProfileConstants.Profiles
+    },
     {provide: HTTP_INTERCEPTORS, useClass: FhirAuthInterceptor, multi: true},
     FhirExplorerDrawerService,
   ],
   bootstrap: [AppComponent],
-
   exports: [
     BreadcrumbComponent
   ]

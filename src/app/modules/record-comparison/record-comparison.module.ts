@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {ModuleWithProviders, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   RecordComparisonContentComponent
@@ -20,6 +20,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatInputModule} from "@angular/material/input";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatButtonModule} from "@angular/material/button";
+import {ModuleHeaderConfig} from "../../../assets/configuration/module-header-config";
 
 
 
@@ -46,4 +47,16 @@ import {MatButtonModule} from "@angular/material/button";
         ReferenceDocumentService
     ]
 })
-export class RecordComparisonModule { }
+export class RecordComparisonModule {
+  public static forRoot(fhirProfiles): ModuleWithProviders<RecordComparisonModule>{
+    return {
+      ngModule: RecordComparisonModule,
+      providers: [
+        {
+          provide: 'fhirProfiles',
+          useValue: fhirProfiles
+        }
+      ]
+    }
+  }
+}

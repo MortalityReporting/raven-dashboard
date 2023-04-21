@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {CompositionMdiToEdrsDiff} from "../models/composition-mdi-to-edrs.diff";
 import {USCoreLocationDiff} from "../models/us-core-location.diff";
 import {ObservationTobaccoUseDiff} from "../models/observation-tobacco-use.diff";
@@ -13,10 +13,10 @@ import {USCorePatientDiff} from "../models/us-core-patient.diff";
 import {USCorePractitionerDiff} from "../models/us-core-practitioner.diff";
 import {ObservationAutopsyPerformedDiff} from "../models/observation-autopsy-performed.diff";
 import {ObservationHowDeathInjuryOccurredDiff} from "../models/observation-how-death-injury-occurred.diff";
-import {ProfileProviderService} from "../../fhir-util/services/profile-provider.service";
 import {BundleHelperService} from "../../fhir-util/services/bundle-helper.service";
 import {Difference} from "../models/difference";
 import {FhirHelperService} from "../../fhir-util/services/fhir-helper.service";
+import {FHIRProfileConstants} from "../../../providers/fhir-profile-constants";
 
 @Injectable({
   providedIn: 'root'
@@ -24,9 +24,9 @@ import {FhirHelperService} from "../../fhir-util/services/fhir-helper.service";
 export class ComparisonService {
 
   constructor(
-    private profileProvider: ProfileProviderService,
     private bundleHelper: BundleHelperService,
-    private fhirHelper: FhirHelperService
+    private fhirHelper: FhirHelperService,
+    @Inject('fhirProfiles') public fhirProfiles: FHIRProfileConstants
   ) { }
 
 
@@ -35,34 +35,34 @@ export class ComparisonService {
     let difference = new Difference();
     try {
       difference.mdiToEdrs = new CompositionMdiToEdrsDiff(
-        this.bundleHelper.findResourceByProfileName(userDocument, this.profileProvider.getMdiProfiles().Comp_MDItoEDRS ),
-        this.bundleHelper.findResourceByProfileName(referenceDocument, this.profileProvider.getMdiProfiles().Comp_MDItoEDRS)
+        this.bundleHelper.findResourceByProfileName(userDocument, this.fhirProfiles.MdiToEdrs.Comp_MDItoEDRS ),
+        this.bundleHelper.findResourceByProfileName(referenceDocument, this.fhirProfiles.MdiToEdrs.Comp_MDItoEDRS)
       );
 
       difference.location = new USCoreLocationDiff(
-        this.bundleHelper.findResourceByProfileName(userDocument, this.profileProvider.getMdiProfiles().USCoreLocation),
-        this.bundleHelper.findResourceByProfileName(referenceDocument, this.profileProvider.getMdiProfiles().USCoreLocation)
+        this.bundleHelper.findResourceByProfileName(userDocument, this.fhirProfiles.USCore.USCoreLocation),
+        this.bundleHelper.findResourceByProfileName(referenceDocument, this.fhirProfiles.USCore.USCoreLocation)
       );
 
       difference.tobaccoUse = new ObservationTobaccoUseDiff(
-        this.bundleHelper.findResourceByProfileName(userDocument, this.profileProvider.getMdiProfiles().Obs_TobaccoUseContributedToDeath),
-        this.bundleHelper.findResourceByProfileName(referenceDocument, this.profileProvider.getMdiProfiles().Obs_TobaccoUseContributedToDeath)
+        this.bundleHelper.findResourceByProfileName(userDocument, this.fhirProfiles.MdiToEdrs.Obs_TobaccoUseContributedToDeath),
+        this.bundleHelper.findResourceByProfileName(referenceDocument, this.fhirProfiles.MdiToEdrs.Obs_TobaccoUseContributedToDeath)
       );
 
       difference.pregnancy = new ObservationDecedentPregnancyDiff(
-        this.bundleHelper.findResourceByProfileName(userDocument, this.profileProvider.getMdiProfiles().Obs_DecedentPregnancy ),
-        this.bundleHelper.findResourceByProfileName(referenceDocument, this.profileProvider.getMdiProfiles().Obs_DecedentPregnancy )
+        this.bundleHelper.findResourceByProfileName(userDocument, this.fhirProfiles.MdiToEdrs.Obs_DecedentPregnancy ),
+        this.bundleHelper.findResourceByProfileName(referenceDocument, this.fhirProfiles.MdiToEdrs.Obs_DecedentPregnancy )
       );
 
       difference.deathDate = new ObservationDeathDateDiff(
-        this.bundleHelper.findResourceByProfileName(userDocument, this.profileProvider.getMdiProfiles().Obs_DeathDate ),
-        this.bundleHelper.findResourceByProfileName(referenceDocument, this.profileProvider.getMdiProfiles().Obs_DeathDate ),
+        this.bundleHelper.findResourceByProfileName(userDocument, this.fhirProfiles.MdiToEdrs.Obs_DeathDate ),
+        this.bundleHelper.findResourceByProfileName(referenceDocument, this.fhirProfiles.MdiToEdrs.Obs_DeathDate ),
         this.fhirHelper
       );
 
       difference.causeOfDeath1List = [];
-      let actualCauseOfDeath1List = this.bundleHelper.findResourcesByProfileName(userDocument, this.profileProvider.getMdiProfiles().Obs_CauseOfDeathPart1);
-      let expectedCauseOfDeath1List = this.bundleHelper.findResourcesByProfileName(referenceDocument, this.profileProvider.getMdiProfiles().Obs_CauseOfDeathPart1);
+      let actualCauseOfDeath1List = this.bundleHelper.findResourcesByProfileName(userDocument, this.fhirProfiles.MdiToEdrs.Obs_CauseOfDeathPart1);
+      let expectedCauseOfDeath1List = this.bundleHelper.findResourcesByProfileName(referenceDocument, this.fhirProfiles.MdiToEdrs.Obs_CauseOfDeathPart1);
 
       difference.causeAndMannerStatus = 'valid';
 
@@ -87,36 +87,36 @@ export class ComparisonService {
       }
 
       difference.causeOfDeath2 = new ObservationCauseOfDeathPart2Diff(
-        this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().Obs_CauseOfDeathPart2 ),
-        this.bundleHelper.findResourceByProfileName( referenceDocument, this.profileProvider.getMdiProfiles().Obs_CauseOfDeathPart2 ));
+        this.bundleHelper.findResourceByProfileName( userDocument, this.fhirProfiles.MdiToEdrs.Obs_CauseOfDeathPart2 ),
+        this.bundleHelper.findResourceByProfileName( referenceDocument, this.fhirProfiles.MdiToEdrs.Obs_CauseOfDeathPart2 ));
 
       difference.mannerOfDeath = new ObservationMannerOfDeathDiff(
-        this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().Obs_MannerOfDeath ),
-        this.bundleHelper.findResourceByProfileName( referenceDocument, this.profileProvider.getMdiProfiles().Obs_MannerOfDeath ));
+        this.bundleHelper.findResourceByProfileName( userDocument, this.fhirProfiles.MdiToEdrs.Obs_MannerOfDeath ),
+        this.bundleHelper.findResourceByProfileName( referenceDocument, this.fhirProfiles.MdiToEdrs.Obs_MannerOfDeath ));
 
       difference.locationDeath = new LocationDeathDiff(
-        this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().Loc_death ),
-        this.bundleHelper.findResourceByProfileName( referenceDocument, this.profileProvider.getMdiProfiles().Loc_death ));
+        this.bundleHelper.findResourceByProfileName( userDocument, this.fhirProfiles.MdiToEdrs.Loc_death ),
+        this.bundleHelper.findResourceByProfileName( referenceDocument, this.fhirProfiles.MdiToEdrs.Loc_death ));
 
       difference.locationInjury = new LocationInjuryDiff(
-        this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().Loc_injury ),
-        this.bundleHelper.findResourceByProfileName( referenceDocument, this.profileProvider.getMdiProfiles().Loc_injury ));
+        this.bundleHelper.findResourceByProfileName( userDocument, this.fhirProfiles.MdiToEdrs.Loc_injury ),
+        this.bundleHelper.findResourceByProfileName( referenceDocument, this.fhirProfiles.MdiToEdrs.Loc_injury ));
 
       difference.patient = new USCorePatientDiff(
-        this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().USCorePatient ),
-        this.bundleHelper.findResourceByProfileName( referenceDocument, this.profileProvider.getMdiProfiles().USCorePatient ));
+        this.bundleHelper.findResourceByProfileName( userDocument, this.fhirProfiles.USCore.USCorePatient ),
+        this.bundleHelper.findResourceByProfileName( referenceDocument, this.fhirProfiles.USCore.USCorePatient ));
 
       difference.practitioner = new USCorePractitionerDiff(
-        this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().USCorePractitioner ),
-        this.bundleHelper.findResourceByProfileName( referenceDocument, this.profileProvider.getMdiProfiles().USCorePractitioner ));
+        this.bundleHelper.findResourceByProfileName( userDocument, this.fhirProfiles.USCore.USCorePractitioner ),
+        this.bundleHelper.findResourceByProfileName( referenceDocument, this.fhirProfiles.USCore.USCorePractitioner ));
 
       difference.autopsyPerformed = new ObservationAutopsyPerformedDiff(
-        this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().Obs_AutopsyPerformed ),
-        this.bundleHelper.findResourceByProfileName( referenceDocument, this.profileProvider.getMdiProfiles().Obs_AutopsyPerformed ));
+        this.bundleHelper.findResourceByProfileName( userDocument, this.fhirProfiles.MdiToEdrs.Obs_AutopsyPerformed ),
+        this.bundleHelper.findResourceByProfileName( referenceDocument, this.fhirProfiles.MdiToEdrs.Obs_AutopsyPerformed ));
 
       difference.howDeathOccurred = new ObservationHowDeathInjuryOccurredDiff(
-        this.bundleHelper.findResourceByProfileName( userDocument, this.profileProvider.getMdiProfiles().Obs_HowDeathInjuryOccurred ),
-        this.bundleHelper.findResourceByProfileName( referenceDocument, this.profileProvider.getMdiProfiles().Obs_HowDeathInjuryOccurred ));
+        this.bundleHelper.findResourceByProfileName( userDocument, this.fhirProfiles.MdiToEdrs.Obs_HowDeathInjuryOccurred ),
+        this.bundleHelper.findResourceByProfileName( referenceDocument, this.fhirProfiles.MdiToEdrs.Obs_HowDeathInjuryOccurred ));
 
       difference.caseAdminInfoStatus = (
         difference.mdiToEdrs.extension.style === 'valid' &&

@@ -37,9 +37,9 @@ export class FHIRProfileConstants {
 
 // TODO: Shift all of this into the object above and refactor related parts of the code.
 
-export const USCoreLocation: string = "http://hl7.org/fhir/us/core/StructureDefinition/us-core-location";
-export const USCorePatient: string = "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient";
-export const USCorePractitioner: string = "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner";
+// export const USCoreLocation: string = "http://hl7.org/fhir/us/core/StructureDefinition/us-core-location";
+// export const USCorePatient: string = "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient";
+// export const USCorePractitioner: string = "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner";
 
 export const Comp_MDItoEDRS: string = "http://hl7.org/fhir/us/mdi/StructureDefinition/Composition-mdi-to-edrs";
 export const Doc_MDItoEDRS: string = "http://hl7.org/fhir/us/mdi/StructureDefinition/Bundle-document-mdi-to-edrs";

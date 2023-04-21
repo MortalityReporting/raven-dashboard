@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {map, Subject} from "rxjs";
 import {DecedentService} from "./decedent.service";
 import {
@@ -21,8 +21,8 @@ import {FhirHelperService} from "../../fhir-util/services/fhir-helper.service";
 import {BundleHelperService} from "../../fhir-util/services/bundle-helper.service";
 import {TrackingNumberType} from "../../../model/tracking.number.type";
 import {ToxRecordStub} from "../models/toxRecordStub";
-import {ProfileProviderService} from "../../fhir-util/services/profile-provider.service";
 import {FhirClientService} from "../../fhir-util/services/fhir-client.service";
+import {FHIRProfileConstants} from "../../../providers/fhir-profile-constants";
 
 @Injectable({
   providedIn: 'root'
@@ -46,14 +46,14 @@ export class DocumentHandlerService {
   relatedToxicology$ = this.relatedToxicology.asObservable();
 
   constructor(
-    private profileProvider: ProfileProviderService,
     private fhirResourceProvider: FhirResourceProviderService,
     private decedentService: DecedentService,
     private terminologyService: TerminologyHandlerService,
     private environmentHandler: EnvironmentHandlerService,
     private fhirHelper: FhirHelperService,
     private bundleHelper: BundleHelperService,
-    private fhirClient: FhirClientService
+    private fhirClient: FhirClientService,
+    @Inject('fhirProfiles') public fhirProfiles: FHIRProfileConstants
   ) {}
   setDocumentBundle(documentBundle){
     this.currentDocumentBundle = documentBundle;
@@ -143,7 +143,7 @@ export class DocumentHandlerService {
     caseHeader.fullName = this.fhirHelper.getPatientOfficialName(patientResource);
     let genderString = patientResource.gender || this.defaultString;
     caseHeader.gender = genderString.substring(0,1).toUpperCase() + genderString.substring(1);
-    let deathDateResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.profileProvider.getMdiProfiles().Obs_DeathDate);
+    let deathDateResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Obs_DeathDate);
     caseHeader.deathDateTime = deathDateResource?.valueDateTime || this.defaultString;
     caseHeader.trackingNumbers = this.getTrackingNumbers(compositionResource);
     caseHeader.mdiCaseNumber = new TrackingNumber()
@@ -218,14 +218,14 @@ export class DocumentHandlerService {
   generateCircumstances(documentBundle: any, compositionResource: any): Circumstances {
     let circumstances: Circumstances = new Circumstances();
 
-    let deathLocationResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.profileProvider.getMdiProfiles().Loc_death);
-    let injuryLocationResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.profileProvider.getMdiProfiles().Loc_injury);
+    let deathLocationResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Loc_death);
+    let injuryLocationResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Loc_injury);
 
     circumstances.deathLocation = deathLocationResource?.name || this.defaultString;
     circumstances.injuryLocation = injuryLocationResource?.name || this.defaultString;
 
-    circumstances.pregnancy = this.bundleHelper.findResourceByProfileName(documentBundle, this.profileProvider.getMdiProfiles().Obs_DecedentPregnancy)?.valueCodeableConcept?.coding[0]?.display || this.defaultString; // TODO: Missing data, once available fix.
-    circumstances.tobaccoUseContributed = this.bundleHelper.findResourceByProfileName(documentBundle, this.profileProvider.getMdiProfiles().Obs_TobaccoUseContributedToDeath)?.valueCodeableConcept?.coding[0]?.display || this.defaultString; // TODO: Missing data, once available fix.
+    circumstances.pregnancy = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Obs_DecedentPregnancy)?.valueCodeableConcept?.coding[0]?.display || this.defaultString; // TODO: Missing data, once available fix.
+    circumstances.tobaccoUseContributed = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Obs_TobaccoUseContributedToDeath)?.valueCodeableConcept?.coding[0]?.display || this.defaultString; // TODO: Missing data, once available fix.
 
     return circumstances;
   }
@@ -268,7 +268,7 @@ export class DocumentHandlerService {
         {
           let profile = observation.meta.profile[0];
 
-          if (profile === this.profileProvider.getMdiProfiles().Obs_CauseOfDeathPart1)
+          if (profile === this.fhirProfiles.MdiToEdrs.Obs_CauseOfDeathPart1)
           {
             let causeOfDeathPart1 = new CauseOfDeathPart1();
 
@@ -284,7 +284,7 @@ export class DocumentHandlerService {
 
             causeAndManner.causeOfDeathPart1.push( causeOfDeathPart1 );
           }
-          else if (profile === this.profileProvider.getMdiProfiles().Obs_CauseOfDeathPart2)
+          else if (profile === this.fhirProfiles.MdiToEdrs.Obs_CauseOfDeathPart2)
           {
             let causeOfDeathPart2 = new CauseOfDeathPart2();
             causeOfDeathPart2.id = entry.reference;
@@ -292,7 +292,7 @@ export class DocumentHandlerService {
 
             causeAndManner.causeOfDeathPart2.push( causeOfDeathPart2 );
           }
-          else if (profile === this.profileProvider.getMdiProfiles().Obs_MannerOfDeath)
+          else if (profile === this.fhirProfiles.MdiToEdrs.Obs_MannerOfDeath)
           {
             let coding = observation.valueCodeableConcept?.coding;
 
@@ -301,7 +301,7 @@ export class DocumentHandlerService {
               causeAndManner.mannerOfDeath = coding[0]?.display
             }
           }
-          else if (profile === this.profileProvider.getMdiProfiles().Obs_HowDeathInjuryOccurred)
+          else if (profile === this.fhirProfiles.MdiToEdrs.Obs_HowDeathInjuryOccurred)
           {
             causeAndManner.howDeathInjuryOccurred = observation.valueCodeableConcept?.text || this.defaultString;
 

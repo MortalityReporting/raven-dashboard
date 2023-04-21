@@ -21,11 +21,9 @@ import { UtilsService } from "../../../../service/utils.service";
 import { ActivatedRoute } from "@angular/router";
 import {FhirHelperService} from "../../../fhir-util/services/fhir-helper.service";
 import {BundleHelperService} from "../../../fhir-util/services/bundle-helper.service";
-import {ProfileProviderService} from "../../../fhir-util/services/profile-provider.service";
 import {UserDocumentService} from "../../services/user-document.service";
 import {MdiToEDRSDocumentWrapper} from "../../models/mdiToEdrsDocumentWrapper";
 import {ReferenceDocumentService} from "../../services/reference-document.service";
-import {map} from "rxjs";
 import {ComparisonService} from "../../services/comparison.service";
 import {Difference} from "../../models/difference";
 import {MatDialog} from "@angular/material/dialog";
@@ -80,14 +78,11 @@ export class RecordComparisonContentComponent implements OnInit {
     private userDocumentService: UserDocumentService,
     private referenceDocumentService: ReferenceDocumentService,
     private comparisonService: ComparisonService,
-    private profileProvider: ProfileProviderService,
     private dialog: MatDialog,
     private decedentService: DecedentService,
     private documentHandler: DocumentHandlerService,
     private utilsService: UtilsService,
     private route: ActivatedRoute,
-    private fhirHelper: FhirHelperService,
-    private bundleHelper: BundleHelperService
   ) { }
 
   ngOnInit(): void {
