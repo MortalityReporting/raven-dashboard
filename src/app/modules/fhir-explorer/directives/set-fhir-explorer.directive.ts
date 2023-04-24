@@ -8,7 +8,6 @@ import {FhirExplorerService} from "../services/fhir-explorer.service";
 })
 export class SetFhirExplorerDirective {
   @Input() profile: string;
-  @Input() title: string;
   @Input() observation: string;
   @Input() resource: any;
   @Input() type: string = "mdi-to-edrs"; // TODO: Setup as enum.
@@ -39,15 +38,6 @@ export class SetFhirExplorerDirective {
       // TODO: Refactor to provide the bundle to the directives so this is not needed...
       console.error("Remove any calls to this. (OBSERVATION)");
       this.fhirExplorerService.setSelectedFhirResource(this.bundleHelper.findResourceByFullUrl(this.documentHandler.getCurrentDocumentBundle(), this.observation));
-    }
-    else if (this.title) {
-      // TODO: Remove this once cleaned up.
-      console.error("Remove any calls to this. (TITLE)");
-      switch (this.title) {
-        case "certifier":
-          //this.fhirExplorerService.setSelectedFhirResource(this.documentHandler.getCertifier());
-          break;
-      }
     }
   }
 

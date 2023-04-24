@@ -47,18 +47,18 @@
                            style="width: 40%"></span>
                   <span style="float: right">
                     <label style="margin-right: 5px">LIC: </label>
-                    <input type="text" value="{{license}}" appSetFhirExplorer [title]="'certifier'" readonly
+                    <input type="text" value="{{license}}" appSetFhirExplorer [resource]="(caseSummary$ | async)?.certifierResource" readonly
                            style="width: 70%; float: right">
                   </span>
                 </div>
                 <div style="padding: 5px; width: 100%">
                   <span style="margin-right: 5px"><label>Phone #: </label></span>
-                  <input type="text" value="{{phone}}" appSetFhirExplorer [title]="'certifier'" readonly
+                  <input type="text" value="{{phone}}" appSetFhirExplorer [resource]="(caseSummary$ | async)?.certifierResource" readonly
                          style="width: 75%; float: right;">
                 </div>
                 <div style="padding: 5px; width: 100%">
                   <span style="margin-right: 5px"><label>Address: </label></span>
-                  <textarea type="text" value="{{addressLine}}" appSetFhirExplorer [title]="'certifier'" readonly
+                  <textarea type="text" value="{{addressLine}}" appSetFhirExplorer [resource]="(caseSummary$ | async)?.certifierResource" readonly
                             rows="3" style="width: 100%; margin-right: 5px" [style.resize]="'none'"></textarea>
                 </div>
               </div>
