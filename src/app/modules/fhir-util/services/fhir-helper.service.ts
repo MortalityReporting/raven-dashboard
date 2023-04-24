@@ -70,14 +70,14 @@ export class FhirHelperService {
       case PatientNameReturn.fullname: {
         let fullName = "";
         if (includePrefix) {
-          firstOrOfficialName.prefix.forEach((prefix: any) => {
+          firstOrOfficialName?.prefix?.forEach((prefix: any) => {
             fullName = fullName + prefix + " "
           });
         }
-        firstOrOfficialName.given.forEach((name: any) => {
+        firstOrOfficialName?.given?.forEach((name: any) => {
           fullName = fullName + name + " "
         });
-        fullName = fullName + firstOrOfficialName.family;
+        fullName = fullName + (firstOrOfficialName?.family || "");
         return fullName.trim();
       }
       case PatientNameReturn.lastfirst: {

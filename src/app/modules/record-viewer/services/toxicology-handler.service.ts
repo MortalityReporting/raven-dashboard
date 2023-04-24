@@ -10,6 +10,7 @@ import {BundleHelperService} from "../../fhir-util/services/bundle-helper.servic
 import {CertifierAndOrganization, LabResult, Performer, Specimen, ToxSummary} from "../models/tox.summary";
 import {FhirClientService} from "../../fhir-util/services/fhir-client.service";
 import {FhirResource} from "../../fhir-util/models/fhir.resource";
+import {Address} from "../../fhir-util/models/types/address";
 
 @Injectable({
   providedIn: 'root'
@@ -128,15 +129,12 @@ export class ToxicologyHandlerService {
     if (diagnosticReport.performer) {
       diagnosticReport.performer.forEach(performer => {
         const performerResource = this.bundleHelper.findResourceByFullUrl(messageBundle, performer.reference);
-        console.log(performerResource);
         let performerObject: Performer;
           if (performerResource.resourceType === "Practitioner") {
             performerObject = new Performer(this.fhirHelper.getOfficialName(performerResource, 0, true), performerResource);
           }
           else if (performerResource.resourceType === "PractitionerRole") {
-            console.log("PractitionerRole Found, ", performerResource.practitioner.reference);
             const practitionerResource = this.bundleHelper.findResourceByFullUrl(messageBundle, performerResource.practitioner.reference);
-            console.log(practitionerResource);
             performerObject = new Performer(this.fhirHelper.getOfficialName(practitionerResource, 0, true), practitionerResource);
           }
           if (performerObject) performers.push(performerObject);
@@ -147,7 +145,20 @@ export class ToxicologyHandlerService {
   }
 
   createCertifier(certifier: Performer, diagnosticReport: any, messageBundle: any): CertifierAndOrganization {
-    return new CertifierAndOrganization(certifier)
+    const firstPerformerReference = diagnosticReport?.performer?.[0]?.reference;
+    const firstPerformerResource = this.bundleHelper.findResourceByFullUrl(messageBundle, firstPerformerReference);
+
+    let certifierAndOrganization: CertifierAndOrganization;
+    if (firstPerformerResource?.resourceType === "PractitionerRole") {
+      const organizationResource: FhirResource = this.bundleHelper.findResourceByFullUrl(messageBundle, firstPerformerResource?.organization?.reference);
+      const organizationName: string = organizationResource?.['name'];
+      const organizationAddress: Address = new Address(organizationResource);
+      certifierAndOrganization = new CertifierAndOrganization(certifier, organizationName, organizationAddress.toString(), organizationResource);
+    }
+    else {
+      certifierAndOrganization = new CertifierAndOrganization(certifier);
+    }
+    return certifierAndOrganization;
   }
 
   createSpecimenList(diagnosticReport: any, messageBundle: any): Specimen[] {
