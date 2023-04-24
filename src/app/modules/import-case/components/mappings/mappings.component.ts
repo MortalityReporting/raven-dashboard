@@ -1,97 +1,119 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
+import {FileTemplateService} from "../../services/file-template.service";
+import {animate, state, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-mappings',
   templateUrl: './mappings.component.html',
-  styleUrls: ['./mappings.component.scss']
+  styleUrls: ['./mappings.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
-export class MappingsComponent implements OnInit, OnChanges {
+export class MappingsComponent implements OnChanges {
+  @Input() fhirBundle;
 
-  @Input() fhirBundle: any;
-  displayedColumns: string[] = ['name', 'value', 'status'];
-  dataSource = new MatTableDataSource<any>();
   selectedFilter: string = 'Show Mapped';
   filters: string[] = ['Show Mapped', 'Show Not Mapped', 'Show All'];
-  mappedData: any[];
-  constructor() { }
+  innerTableDisplayedColumns: string[] = ['name','status', 'value'];
+  parsedResponse: any;
+  dataSource: MatTableDataSource<any>;
+  columnsToDisplay  = ['name', 'status', 'value'];
+  expandedRow: any | null;
+  selectedRow: any;
+  statusFilter: string | null = 'mapped';
 
-  ngOnInit(): void {
+  constructor(private fileTemplateService: FileTemplateService) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes['fhirBundle'].currentValue){
-      const value = changes['fhirBundle'].currentValue;
-      //Create initial mapping. The response is object as opposed to an array of objects.
-      this.mappedData = Object.keys(value.fields).map(key => {
-        return {
-          name: key,
-          status: value.fields[key].status,
-          value: value.fields[key],
+    console.log(changes);
+    if(this.fhirBundle && this.statusFilter){
+      this.setDataSource(this.fhirBundle, this.statusFilter);
+    }
+  }
+
+  setDataSource(value, statusFilter) {
+    // this.mockResponse = value;
+    // value = value[0];
+    this.parsedResponse = Object.keys(value?.fields).map(key => {
+      return {
+        name: key,
+        valueObject: value.fields[key],
+      }
+    })
+      .map(element => {
+        if (element?.valueObject?.length || element?.valueObject?.length === 0) {
+          const inner = element?.valueObject
+            .map(inner => {
+              return Object.keys(inner).map(key => {
+                return {
+                  name: key,
+                  valueObject: inner[key],
+                }
+              });
+            });
+          element.valueObject = inner;
+          return element;
+        } else {
+          return element;
         }
       })
-        .map(element=> {
-        if(element.value.length){
-          const result  = element.value.map(inner => {
-            return Object.keys(inner).map(el=> {
-              const result = {
-                name: element.name + '-' + el,
-                value: inner[el].value,
-                status: inner[el].status,
-              }
-              return result;
-            });
-          })
-          return result
+      .map(element => {
+        if (element.valueObject?.length) {
+          const mapped = element.valueObject.map((inner, index) => {
+            const result = {
+              name: element.name + " " + (index + 1),
+              valueObject: inner
+            }
+            return result
+          });
+          return mapped;
+        } else {
+          return element;
         }
-        else {
-          return {
-            name: element.name,
-            value: element.value.value,
-            status: element.status,
-          }
+      })
+      .flat().sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1))
+      .filter(element => {
+        if (!statusFilter || !element.valueObject.status) {
+          return true;
+        } else {
+          return element.valueObject.status === statusFilter;
         }
-      }).flat().flat()//we need to execute the flat operation twice, because the array is nested twice.
-        .filter( el => !!el.status)
-        .map( value =>
-        {
-          if(value.status?.toLowerCase() === 'unmapped'){
-            value.status = 'Not Mapped';
-            return value;
-          }
-          else {
-            return value;
-          }
-        })
-        .sort((a,b) => (a.name.toLowerCase() > b.name.toLowerCase() ? -1 : 1))
-        .sort((a,b) => (a.status.toLowerCase() > b.status.toLowerCase() ? 1 : -1))
-        .filter(value => value.status !== 'success');
+      });
 
-      this.dataSource.data = this.mappedData.filter(element => element.status === "mapped");
-      this.selectedFilter = this.filters[0];
-
-      // When the user selects a new case we want the table with the mappings to scroll to the top.
-      const mappingsTable = document.getElementById('mappingsTable');
-      if(mappingsTable) {
-        mappingsTable.scrollTop = 0;
+    this.parsedResponse.forEach(element => {
+      if (element.valueObject.length) {
+        element.valueObject = element.valueObject.filter(inner => inner.valueObject.status === statusFilter);
       }
-    }
+    })
+
+    this.dataSource = this.parsedResponse;
   }
 
-  onFilterChanged(filter: string) {
-    if(this.mappedData?.length > 0) {
-      if (filter === this.filters[0]) {
-        this.dataSource.data = this.mappedData.filter(element => element.status === "mapped");
-      }
-      else if (filter === this.filters[1]) {
-        this.dataSource.data = this.mappedData.filter(value => value.status === "not mapped")
-      }
-      else if (filter === this.filters[2]) {
-        this.dataSource.data = this.mappedData;
-      }
-    }
-    //When the user selects new filter, we want to scroll the table back to the top
-    const mappingsTable = document.getElementById('mappingsTable');
-    mappingsTable.scrollTop = 0;
+
+  onRowClick(row: any) {
+    this.selectedRow = row;
   }
+
+  onFilterChanged(selectedFilter: string) {
+    let filter = ''
+    if(selectedFilter === 'Show Mapped'){
+      filter = 'mapped'
+    }
+    else if(selectedFilter === 'Show Not Mapped'){
+      filter = 'not mapped';
+    }
+    else {
+      filter = null;
+    }
+    this.setDataSource(this.fhirBundle, filter)
+  }
+
+
 }
