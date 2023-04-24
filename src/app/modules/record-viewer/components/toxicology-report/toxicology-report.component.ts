@@ -1,14 +1,13 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {ToxicologyHandlerService} from "../../services/toxicology-handler.service";
 import {ActivatedRoute} from "@angular/router";
-import {Observable, tap} from "rxjs";
-import {FhirResourceProviderService} from "../../../../service/fhir-resource-provider.service";
+import {Observable} from "rxjs";
 import {ToxHeader} from "../../models/tox.header";
 import {ToxSummary} from "../../models/tox.summary";
-import {CaseSummaryContentComponent} from "../case-summary/case-summary-content/case-summary-content.component";
 import {ToxicologyReportContentComponent} from "./toxicology-report-content/toxicology-report-content.component";
 import {ModuleHeaderConfig} from "../../../../../assets/configuration/module-header-config";
 import {AppConfiguration} from "../../../../../assets/configuration/app-configuration";
+import {FhirExplorerService} from "../../../fhir-explorer/services/fhir-explorer.service";
 
 @Component({
   selector: 'record-viewer-toxicology-report',
@@ -28,7 +27,7 @@ export class ToxicologyReportComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private toxicologyHandler: ToxicologyHandlerService,
-    private fhirResourceProvider: FhirResourceProviderService,
+    private fhirExplorerService: FhirExplorerService,
     @Inject('config') public config: ModuleHeaderConfig,
     @Inject('appConfig') public appConfig: AppConfiguration
   ) {}
@@ -37,7 +36,7 @@ export class ToxicologyReportComponent implements OnInit {
     let toxLabId = this.route.snapshot.params['id'];
     this.messageBundle$ = this.toxicologyHandler.getMessageBundle(toxLabId);
     this.messageBundle$.subscribe(bundle => {
-      this.fhirResourceProvider.setSelectedFhirResource(bundle);
+      this.fhirExplorerService.setSelectedFhirResource(bundle);
       this.toxHeader = this.toxicologyHandler.constructToxHeaderHeader(bundle);
       this.toxSummary = this.toxicologyHandler.constructToxSummary(bundle);
       }

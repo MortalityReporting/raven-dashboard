@@ -14,7 +14,6 @@ import {
 import {Author, CaseHeader} from "../models/case.header";
 import {TrackingNumber} from "../models/mdi/tracking.number";
 import {TerminologyHandlerService} from "../../fhir-util/services/terminology-handler.service";
-import {FhirResourceProviderService} from "../../../service/fhir-resource-provider.service";
 import {Address} from "../../fhir-util/models/types/address";
 import {EnvironmentHandlerService} from "../../fhir-util/services/environment-handler.service";
 import {FhirHelperService} from "../../fhir-util/services/fhir-helper.service";
@@ -23,6 +22,7 @@ import {TrackingNumberType} from "../../../model/tracking.number.type";
 import {ToxRecordStub} from "../models/toxRecordStub";
 import {FhirClientService} from "../../fhir-util/services/fhir-client.service";
 import {FHIRProfileConstants} from "../../../providers/fhir-profile-constants";
+import {FhirExplorerService} from "../../fhir-explorer/services/fhir-explorer.service";
 
 @Injectable({
   providedIn: 'root'
@@ -46,7 +46,7 @@ export class DocumentHandlerService {
   relatedToxicology$ = this.relatedToxicology.asObservable();
 
   constructor(
-    private fhirResourceProvider: FhirResourceProviderService,
+    private fhirExplorerService: FhirExplorerService,
     private decedentService: DecedentService,
     private terminologyService: TerminologyHandlerService,
     private environmentHandler: EnvironmentHandlerService,
@@ -106,8 +106,11 @@ export class DocumentHandlerService {
         this.patientResource.next(patientResource);
         this.caseHeader.next(this.createCaseHeader(documentBundle, patientResource, compositionResource));
         this.caseSummary.next(this.createCaseSummary(documentBundle, patientResource, compositionResource));
-        this.fhirResourceProvider.setCompositionId(compositionId);
-        this.fhirResourceProvider.setSelectedFhirResource(documentBundle);
+
+        // TODO: This should happen in component not service.
+        //this.fhirResourceProvider.setCompositionId(compositionId);
+        this.fhirExplorerService.setSelectedFhirResource(documentBundle);
+
         return documentBundle;
       })
     );

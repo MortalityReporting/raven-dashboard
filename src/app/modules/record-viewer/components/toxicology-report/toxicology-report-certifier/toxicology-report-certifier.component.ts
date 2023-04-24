@@ -1,5 +1,4 @@
 import {Component, Input} from '@angular/core';
-import {FhirResourceProviderService} from "../../../../../service/fhir-resource-provider.service";
 import {CertifierAndOrganization, ToxSummary} from "../../../models/tox.summary";
 
 
@@ -12,6 +11,6 @@ export class ToxicologyReportCertifierComponent {
   @Input() certifier: CertifierAndOrganization;
   @Input() toxSummary: ToxSummary;
 
-  constructor(private fhirResourceProvider: FhirResourceProviderService) { }
+  constructor() { }
 
 }

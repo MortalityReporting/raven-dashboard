@@ -1,9 +1,8 @@
 import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {Observable} from "rxjs";
 import {CaseSummary} from "../../../models/case.summary";
-import {Author, CaseHeader} from "../../../models/case.header";
+import {CaseHeader} from "../../../models/case.header";
 import {MatAccordion} from "@angular/material/expansion";
-import {FhirResourceProviderService} from "../../../../../service/fhir-resource-provider.service";
 import {DocumentHandlerService} from "../../../services/document-handler.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ModuleHeaderConfig} from "../../../../../../assets/configuration/module-header-config";
@@ -42,7 +41,6 @@ export class CaseSummaryContentComponent implements OnInit {
   author: any;
 
   constructor(
-    private fhirResourceProviderService: FhirResourceProviderService,
     private documentHandlerService: DocumentHandlerService,
     private route: ActivatedRoute,
     private router: Router,
@@ -89,10 +87,6 @@ export class CaseSummaryContentComponent implements OnInit {
   onCloseAll() {
     this.idStateList.forEach(element => element.expanded = false);
     this.accordion.closeAll()
-  }
-
-  onNotImplementedItemSelected() {
-    this.fhirResourceProviderService.setSelectedFhirResource(null);
   }
 
   onOpenInComparisonTool() {
