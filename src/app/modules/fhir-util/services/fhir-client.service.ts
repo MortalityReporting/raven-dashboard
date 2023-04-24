@@ -24,7 +24,7 @@ export class FhirClientService {
     return this.http.get(requestString).pipe(
       map((response: any) =>
         {
-          console.log(response)
+          //console.log(response)
           return response;
         }
       )

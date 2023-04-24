@@ -67,9 +67,7 @@
       <div class="summary-section-body"
            appSetFhirExplorer
            [profile]="fhirProfiles.ToxToMdi.Tox_Diagnostic_Report"
-           [bundle]="messageBundle"
-           [type]="'tox-to-mdi'"
-      >
+           [bundle]="messageBundle">
         <textarea class="conclusion-text-area" readonly [ngModel]="toxSummary.conclusion" (ngModelChange)="toxSummary?.conclusion ? toxSummary.conclusion=$event : 'No Conclusion Found'" *ngIf="toxSummary"></textarea>
       </div>
     </mat-expansion-panel>

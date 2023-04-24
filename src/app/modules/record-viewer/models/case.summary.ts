@@ -13,6 +13,7 @@ export class CaseSummary {
   examAndAutopsy: Autopsy;
   narratives: string = "Not Implemented"; // TODO: Implement.
   compositionId: string;
+  documentBundleResource: FhirResource;
   certifierResource: FhirResource;
 }
 

@@ -32,7 +32,8 @@
               <div *ngFor="let trackingNumber of (caseHeader$ | async)?.trackingNumbers">
                 <record-viewer-case-summary-content-field [label]="trackingNumber.type" [value]="trackingNumber.value"
                                                           appSetFhirExplorer
-                                                          [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Composition-mdi-to-edrs'">
+                                                          [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Composition-mdi-to-edrs'"
+                                                          [bundle]="documentBundle">
                 </record-viewer-case-summary-content-field>
               </div>
             </div>
@@ -174,13 +175,17 @@
               <record-viewer-case-summary-content-field [label]="'Death Location'"
                                                         [value]="(caseSummary$ | async)?.circumstances.deathLocation"
                                                         appSetFhirExplorer
-                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Location-death'"></record-viewer-case-summary-content-field>
+                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Location-death'"
+                                                        [bundle]="documentBundle">
+              </record-viewer-case-summary-content-field>
             </div>
             <div class="grid-col-1">
               <record-viewer-case-summary-content-field [label]="'Injury Location'"
                                                         [value]="(caseSummary$ | async)?.circumstances.injuryLocation"
                                                         appSetFhirExplorer
-                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Location-injury'"></record-viewer-case-summary-content-field>
+                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Location-injury'"
+                                                        [bundle]="documentBundle">
+              </record-viewer-case-summary-content-field>
             </div>
           </div>
           <div class="grid-row">
@@ -188,13 +193,17 @@
               <record-viewer-case-summary-content-field [label]="'Tobacco Use Contributed to Death'"
                                                         [value]="(caseSummary$ | async)?.circumstances.tobaccoUseContributed"
                                                         appSetFhirExplorer
-                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-tobacco-use-contributed-to-death'"></record-viewer-case-summary-content-field>
+                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-tobacco-use-contributed-to-death'"
+                                                        [bundle]="documentBundle">
+              </record-viewer-case-summary-content-field>
             </div>
             <div class="grid-col-1">
               <record-viewer-case-summary-content-field [label]="'Decedent Pregnancy Status'"
                                                         [value]="(caseSummary$ | async)?.circumstances.pregnancy"
                                                         appSetFhirExplorer
-                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-decedent-pregnancy'"></record-viewer-case-summary-content-field>
+                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-decedent-pregnancy'"
+                                                        [bundle]="documentBundle">
+              </record-viewer-case-summary-content-field>
             </div>
           </div>
         </div>
@@ -212,13 +221,17 @@
               <record-viewer-case-summary-content-field [label]="'Death Date/Time'"
                                                         [value]="(caseSummary$ | async)?.jurisdiction.deathDateTime"
                                                         appSetFhirExplorer
-                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date'"></record-viewer-case-summary-content-field>
+                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date'"
+                                                        [bundle]="documentBundle">
+              </record-viewer-case-summary-content-field>
             </div>
             <div class="grid-col-1">
               <record-viewer-case-summary-content-field [label]="'Pronounced Date/Time'"
                                                         [value]="(caseSummary$ | async)?.jurisdiction.pronouncedDateTime"
                                                         appSetFhirExplorer
-                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date'"></record-viewer-case-summary-content-field>
+                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date'"
+                                                        [bundle]="documentBundle">
+              </record-viewer-case-summary-content-field>
             </div>
           </div>
           <div class="grid-row">
@@ -226,13 +239,17 @@
               <record-viewer-case-summary-content-field [label]="'Establishment Approach'"
                                                         [value]="(caseSummary$ | async)?.jurisdiction.establishmentApproach"
                                                         appSetFhirExplorer
-                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date'"></record-viewer-case-summary-content-field>
+                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date'"
+                                                        [bundle]="documentBundle">
+              </record-viewer-case-summary-content-field>
             </div>
             <div class="grid-col-1">
               <record-viewer-case-summary-content-field [label]="'Type of Death Location'"
                                                         [value]="(caseSummary$ | async)?.jurisdiction.typeOfDeathLocation"
                                                         appSetFhirExplorer
-                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date'"></record-viewer-case-summary-content-field>
+                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date'"
+                                                        [bundle]="documentBundle">
+              </record-viewer-case-summary-content-field>
             </div>
           </div>
         </div>
@@ -259,10 +276,10 @@
                   <th>Interval</th>
                 </tr>
                 <tr *ngFor="let cause of (caseSummary$ | async)?.causeAndManner?.causeOfDeathPart1">
-                  <td appSetFhirExplorer [observation]="cause.id">
+                  <td appSetFhirExplorer [resourceId]="cause.id" [bundle]="documentBundle">
                     {{cause.event}}
                   </td>
-                  <td appSetFhirExplorer [observation]="cause.id">
+                  <td appSetFhirExplorer [resourceId]="cause.id" [bundle]="documentBundle">
                     {{cause.interval}}
                   </td>
                 </tr>
@@ -285,7 +302,7 @@
                   <th>Event</th>
                 </tr>
                 <tr *ngFor="let cause of (caseSummary$ | async)?.causeAndManner?.causeOfDeathPart2;">
-                  <td appSetFhirExplorer [observation]="cause.id">
+                  <td appSetFhirExplorer [resourceId]="cause.id" [bundle]="documentBundle">
                     {{cause.value}}
                   </td>
                 </tr>
@@ -302,13 +319,17 @@
               <record-viewer-case-summary-content-field [label]="'Manner of Death'"
                                                         [value]="(caseSummary$ | async)?.causeAndManner.mannerOfDeath"
                                                         appSetFhirExplorer
-                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-manner-of-death'"></record-viewer-case-summary-content-field>
+                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-manner-of-death'"
+                                                        [bundle]="documentBundle">
+              </record-viewer-case-summary-content-field>
             </div>
             <div class="grid-col-1">
               <record-viewer-case-summary-content-field [label]="'Place of Injury'"
                                                         [value]="(caseSummary$ | async)?.causeAndManner.placeOfInjury"
                                                         appSetFhirExplorer
-                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"></record-viewer-case-summary-content-field>
+                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"
+                                                        [bundle]="documentBundle">
+              </record-viewer-case-summary-content-field>
             </div>
           </div>
           <div class="grid-row">
@@ -316,13 +337,17 @@
               <record-viewer-case-summary-content-field [label]="'How Injury Occurred'"
                                                         [value]="(caseSummary$ | async)?.causeAndManner.howDeathInjuryOccurred"
                                                         appSetFhirExplorer
-                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"></record-viewer-case-summary-content-field>
+                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"
+                                                        [bundle]="documentBundle">
+              </record-viewer-case-summary-content-field>
             </div>
             <div class="grid-col-1">
               <record-viewer-case-summary-content-field [label]="'Injury Date/Time'"
                                                         [value]="(caseSummary$ | async)?.causeAndManner.injuryDateTime"
                                                         appSetFhirExplorer
-                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"></record-viewer-case-summary-content-field>
+                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"
+                                                        [bundle]="documentBundle">
+              </record-viewer-case-summary-content-field>
             </div>
           </div>
           <div class="grid-row">
@@ -330,13 +355,17 @@
               <record-viewer-case-summary-content-field [label]="'Injury/Event Occurred at Work'"
                                                         [value]="(caseSummary$ | async)?.causeAndManner.workInjuryIndicator"
                                                         appSetFhirExplorer
-                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"></record-viewer-case-summary-content-field>
+                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"
+                                                        [bundle]="documentBundle">
+              </record-viewer-case-summary-content-field>
             </div>
             <div class="grid-col-1">
               <record-viewer-case-summary-content-field [label]="'Transportation Role'"
                                                         [value]="(caseSummary$ | async)?.causeAndManner.transportationRole"
                                                         appSetFhirExplorer
-                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"></record-viewer-case-summary-content-field>
+                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"
+                                                        [bundle]="documentBundle">
+              </record-viewer-case-summary-content-field>
             </div>
           </div>
         </div>
@@ -365,13 +394,17 @@
               <record-viewer-case-summary-content-field [label]="'Autopsy Performed?'"
                                                         [value]="(caseSummary$ | async)?.examAndAutopsy.performed"
                                                         appSetFhirExplorer
-                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-autopsy-performed-indicator'"></record-viewer-case-summary-content-field>
+                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-autopsy-performed-indicator'"
+                                                        [bundle]="documentBundle">
+              </record-viewer-case-summary-content-field>
             </div>
             <div class="grid-col-1">
               <record-viewer-case-summary-content-field [label]="'Results Available?'"
                                                         [value]="(caseSummary$ | async)?.examAndAutopsy.resultsAvailable"
                                                         appSetFhirExplorer
-                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-autopsy-performed-indicator'"></record-viewer-case-summary-content-field>
+                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-autopsy-performed-indicator'"
+                                                        [bundle]="documentBundle">
+              </record-viewer-case-summary-content-field>
             </div>
           </div>
         </div>

@@ -57,7 +57,6 @@ export class FhirHelperService {
 
 
   getOfficialName(resource: any, returnStyle: PatientNameReturn = 0, includePrefix: boolean = false): string {
-    console.log(resource);
     let nameList = resource.name;
     let firstOrOfficialName = (nameList.filter((humanName: any) => humanName.use === "official"))[0];
 

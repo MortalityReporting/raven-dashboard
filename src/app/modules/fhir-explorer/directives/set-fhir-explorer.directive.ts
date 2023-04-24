@@ -1,5 +1,4 @@
 import {Directive, HostListener, Input} from '@angular/core';
-import {DocumentHandlerService} from "../../record-viewer/services/document-handler.service";
 import {BundleHelperService} from "../../fhir-util/services/bundle-helper.service";
 import {FhirExplorerService} from "../services/fhir-explorer.service";
 
@@ -7,11 +6,10 @@ import {FhirExplorerService} from "../services/fhir-explorer.service";
   selector: '[appSetFhirExplorer]'
 })
 export class SetFhirExplorerDirective {
-  @Input() profile: string;
-  @Input() observation: string;
-  @Input() resource: any;
-  @Input() type: string = "mdi-to-edrs"; // TODO: Setup as enum.
   @Input() bundle: any;
+  @Input() profile: string;
+  @Input() resourceId: string;
+  @Input() resource: any;
 
   /**
    * Priority order:
@@ -23,26 +21,20 @@ export class SetFhirExplorerDirective {
     if (this.resource) {
       this.fhirExplorerService.setSelectedFhirResource(this.resource);
     }
-    else if (this.profile) {
-      // if (!this.bundle) throw new Error();
-      // TODO: Refactor to provide the bundle to the directives so this is not needed...
-      if (this.type === "tox-to-mdi") {
-        this.fhirExplorerService.setSelectedFhirResource(this.bundleHelper.findResourceByProfileName(this.bundle, this.profile));
-      }
-      else {
-        //this.fhirExplorerService.setSelectedFhirResource(this.bundleHelper.findResourceByProfileName(this.bundle, this.profile));
-        this.fhirExplorerService.setSelectedFhirResource(this.documentHandler.findResourceByProfileNamePassThrough(this.profile));
-      }
+    else if (!this.bundle) {
+      throw new Error(`Bundle input required if passing [resourceId] or [profile].`)
     }
-    else if (this.observation) {
-      // TODO: Refactor to provide the bundle to the directives so this is not needed...
-      console.error("Remove any calls to this. (OBSERVATION)");
-      this.fhirExplorerService.setSelectedFhirResource(this.bundleHelper.findResourceByFullUrl(this.documentHandler.getCurrentDocumentBundle(), this.observation));
+    else if (this.resourceId) {
+      this.fhirExplorerService.setSelectedFhirResource(this.bundleHelper.findResourceByFullUrl(this.bundle, this.resourceId));
+    }
+    else if (this.profile) {
+      this.fhirExplorerService.setSelectedFhirResource(this.bundleHelper.findResourceByProfileName(this.bundle, this.profile));
+    }
+    else {
+      throw new Error(`Missing inputs. Possible Combinations: [resource], [resourceId] + [bundle], [profile] + [bundle].`)
     }
   }
 
   constructor(private fhirExplorerService: FhirExplorerService,
-              private documentHandler: DocumentHandlerService, // TODO: Remove
-              private bundleHelper: BundleHelperService) { }
-
+              private bundleHelper: BundleHelperService) {}
 }

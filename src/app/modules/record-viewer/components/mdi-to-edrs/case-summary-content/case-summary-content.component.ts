@@ -7,6 +7,7 @@ import {DocumentHandlerService} from "../../../services/document-handler.service
 import {ActivatedRoute, Router} from "@angular/router";
 import {ModuleHeaderConfig} from "../../../../../../assets/configuration/module-header-config";
 import {AppConfiguration} from "../../../../../../assets/configuration/app-configuration";
+import {FhirResource} from "../../../../fhir-util/models/fhir.resource";
 
 @Component({
   selector: 'record-viewer-case-summary-content',
@@ -17,6 +18,7 @@ export class CaseSummaryContentComponent implements OnInit {
   @Input() caseHeader$: Observable<CaseHeader>;
   @Input() caseSummary$: Observable<CaseSummary>;
   @Input() compositionId: string;
+  @Input() documentBundle: FhirResource;
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
   name: string;

@@ -186,8 +186,11 @@ export class DocumentHandlerService {
     summary.examAndAutopsy = this.generateExamAndAutopsy(documentBundle, compositionResource);
     summary.compositionId = compositionResource?.id || '';
 
+    summary.documentBundleResource = documentBundle;
+
     const certifierId = this.currentCompositionResource?.author?.[0]?.reference;
     summary.certifierResource = this.bundleHelper.findResourceByFullUrl(documentBundle, certifierId);
+
     return summary;
   }
 
