@@ -5,16 +5,40 @@
   overflow: auto;
 }
 
-.mat-row:nth-child(even){
-  background-color: white;
-}
-
-.mat-row:nth-child(odd){
-  background-color: whitesmoke;
-}
-
 .controls {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+tr.case-record-detail-row {
+  height: 0;
+}
+
+.mat-icon {
+  vertical-align: middle;
+}
+
+.mapped{
+  color: darkgreen;
+}
+
+.not-mapped{
+  color: darkred;
+}
+
+.mat-column-name {
+  width: 30%
+}
+
+.mat-column-status{
+  width: 20%
+}
+
+.mat-column-value {
+  width: 50%
+}
+
+.inner-records{
+  padding-left: 0px
 }
