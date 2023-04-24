@@ -43,7 +43,7 @@
               <div *ngIf="author">
                 <div style="padding: 5px; width: 100%">
                   <span><label style="margin-right: 5px">Name: </label>
-                    <input type="text" value="{{name}}" appSetFhirExplorer [title]="'certifier'" readonly
+                    <input type="text" value="{{name}}" appSetFhirExplorer [resource]="(caseSummary$ | async)?.certifierResource" readonly
                            style="width: 40%"></span>
                   <span style="float: right">
                     <label style="margin-right: 5px">LIC: </label>
@@ -77,23 +77,23 @@
           <div class="grid-row">
             <div class="grid-col-1">
               <record-viewer-case-summary-content-field [label]="'Legal Sex at Death'"
-                                                        [value]="(caseSummary$ | async)?.demographics.gender"
+                                                        [value]="(caseSummary$ | async)?.demographics?.gender"
                                                         appSetFhirExplorer
-                                                        [title]="'subject'"></record-viewer-case-summary-content-field>
+                                                        [resource]="(caseSummary$ | async)?.demographics?.patientResource"></record-viewer-case-summary-content-field>
             </div>
             <div class="grid-col-1">
               <record-viewer-case-summary-content-field [label]="'Social Security Number'"
-                                                        [value]="(caseSummary$ | async)?.demographics.ssn"
+                                                        [value]="(caseSummary$ | async)?.demographics?.ssn"
                                                         appSetFhirExplorer
-                                                        [title]="'subject'"></record-viewer-case-summary-content-field>
+                                                        [resource]="(caseSummary$ | async)?.demographics?.patientResource"></record-viewer-case-summary-content-field>
             </div>
           </div>
           <div class="grid-row">
             <div class="grid-col-1">
               <record-viewer-case-summary-content-field [label]="'Date of Birth'"
-                                                        [value]="(caseSummary$ | async)?.demographics.birthDate"
+                                                        [value]="(caseSummary$ | async)?.demographics?.birthDate"
                                                         appSetFhirExplorer
-                                                        [title]="'subject'"></record-viewer-case-summary-content-field>
+                                                        [resource]="(caseSummary$ | async)?.demographics?.patientResource"></record-viewer-case-summary-content-field>
             </div>
             <div class="grid-col-1">
             </div>
@@ -101,15 +101,15 @@
           <div class="grid-row">
             <div class="grid-col-1">
               <record-viewer-case-summary-content-field [label]="'Race'"
-                                                        [value]="(caseSummary$ | async)?.demographics.race"
+                                                        [value]="(caseSummary$ | async)?.demographics?.race"
                                                         appSetFhirExplorer
-                                                        [title]="'subject'"></record-viewer-case-summary-content-field>
+                                                        [resource]="(caseSummary$ | async)?.demographics?.patientResource"></record-viewer-case-summary-content-field>
             </div>
             <div class="grid-col-1">
               <record-viewer-case-summary-content-field [label]="'Ethnicity'"
-                                                        [value]="(caseSummary$ | async)?.demographics.ethnicity"
+                                                        [value]="(caseSummary$ | async)?.demographics?.ethnicity"
                                                         appSetFhirExplorer
-                                                        [title]="'subject'"></record-viewer-case-summary-content-field>
+                                                        [resource]="(caseSummary$ | async)?.demographics?.patientResource"></record-viewer-case-summary-content-field>
             </div>
           </div>
           <br/>
@@ -124,39 +124,39 @@
               <record-viewer-case-summary-content-field [label]="'Address Line 1'"
                                                         [value]="(caseSummary$ | async)?.demographics?.address?.line1"
                                                         appSetFhirExplorer
-                                                        [title]="'subject'"></record-viewer-case-summary-content-field>
+                                                        [resource]="(caseSummary$ | async)?.demographics?.patientResource"></record-viewer-case-summary-content-field>
             </div>
             <div class="grid-col-1">
               <record-viewer-case-summary-content-field [label]="'Address Line 2'"
                                                         [value]="(caseSummary$ | async)?.demographics?.address?.line2"
                                                         appSetFhirExplorer
-                                                        [title]="'subject'"></record-viewer-case-summary-content-field>
+                                                        [resource]="(caseSummary$ | async)?.demographics?.patientResource"></record-viewer-case-summary-content-field>
             </div>
           </div>
           <div class="grid-row">
             <div class="grid-col-1">
               <record-viewer-case-summary-content-field [label]="'City'"
-                                                        [value]="(caseSummary$ | async)?.demographics.address.city"
+                                                        [value]="(caseSummary$ | async)?.demographics.address?.city"
                                                         appSetFhirExplorer
-                                                        [title]="'subject'"></record-viewer-case-summary-content-field>
+                                                        [resource]="(caseSummary$ | async)?.demographics?.patientResource"></record-viewer-case-summary-content-field>
             </div>
             <div class="grid-col-1">
               <record-viewer-case-summary-content-field [label]="'State'"
-                                                        [value]="(caseSummary$ | async)?.demographics.address.state"
+                                                        [value]="(caseSummary$ | async)?.demographics?.address?.state"
                                                         appSetFhirExplorer
-                                                        [title]="'subject'"></record-viewer-case-summary-content-field>
+                                                        [resource]="(caseSummary$ | async)?.demographics?.patientResource"></record-viewer-case-summary-content-field>
             </div>
             <div class="grid-col-1">
               <record-viewer-case-summary-content-field [label]="'Zip Code'"
-                                                        [value]="(caseSummary$ | async)?.demographics.address.zip"
+                                                        [value]="(caseSummary$ | async)?.demographics?.address?.zip"
                                                         appSetFhirExplorer
-                                                        [title]="'subject'"></record-viewer-case-summary-content-field>
+                                                        [resource]="(caseSummary$ | async)?.demographics?.patientResource"></record-viewer-case-summary-content-field>
             </div>
             <div class="grid-col-1">
               <record-viewer-case-summary-content-field [label]="'Country'"
-                                                        [value]="(caseSummary$ | async)?.demographics.address.country"
+                                                        [value]="(caseSummary$ | async)?.demographics?.address?.country"
                                                         appSetFhirExplorer
-                                                        [title]="'subject'"></record-viewer-case-summary-content-field>
+                                                        [resource]="(caseSummary$ | async)?.demographics?.patientResource"></record-viewer-case-summary-content-field>
             </div>
           </div>
         </div>

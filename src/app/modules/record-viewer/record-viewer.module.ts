@@ -4,21 +4,21 @@ import { FhirUtilModule } from "../fhir-util/fhir-util.module";
 import { SearchRecordsComponent } from "./components/search-records/search-records.component";
 import { DecedentRecordsGridComponent } from "./components/search-records/decedent-records-grid/decedent-records-grid.component";
 import { ToxicologyGridComponent } from "./components/search-records/toxicology-grid/toxicology-grid.component";
-import { ToxicologyReportComponent } from "./components/toxicology-report/toxicology-report.component";
-import { ToxicologyReportContentComponent } from "./components/toxicology-report/toxicology-report-content/toxicology-report-content.component";
-import { ToxicologyReportGridSectionComponent } from "./components/toxicology-report/toxicology-report-grid-section/toxicology-report-grid-section.component";
-import { ToxicologyReportMdiCaseComponent } from "./components/toxicology-report/toxicology-report-mdi-case/toxicology-report-mdi-case.component";
-import { CaseSummaryComponent } from "./components/case-summary/case-summary.component";
-import { CaseContainerComponent } from "./components/case-container/case-container.component";
+import { ToxicologyReportComponent } from "./components/tox-to-mdi/toxicology-report.component";
+import { ToxicologyReportContentComponent } from "./components/tox-to-mdi/toxicology-report-content/toxicology-report-content.component";
+import { ToxicologyReportGridSectionComponent } from "./components/tox-to-mdi/toxicology-report-grid-section/toxicology-report-grid-section.component";
+import { ToxicologyReportMdiCaseComponent } from "./components/tox-to-mdi/toxicology-report-mdi-case/toxicology-report-mdi-case.component";
+import { CaseSummaryComponent } from "./components/mdi-to-edrs/case-summary.component";
+import { CaseContainerComponent } from "./components/viewer-container/case-container.component";
 import {
   CaseSummaryContentComponent
-} from "./components/case-summary/case-summary-content/case-summary-content.component";
+} from "./components/mdi-to-edrs/case-summary-content/case-summary-content.component";
 import {
   CaseSummaryContentFieldComponent
-} from "./components/case-summary/case-summary-content-field/case-summary-content-field.component";
+} from "./components/mdi-to-edrs/case-summary-content-field/case-summary-content-field.component";
 import {
   CaseSummaryRelatedToxComponent
-} from "./components/case-summary/case-summary-related-tox/case-summary-related-tox.component";
+} from "./components/mdi-to-edrs/case-summary-related-tox/case-summary-related-tox.component";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatIconModule, MatIconRegistry} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
@@ -45,7 +45,7 @@ import {ScrollingModule} from "@angular/cdk/scrolling";
 import {NoteComponent} from "./components/note/note.component";
 import {
   ToxicologyReportCertifierComponent
-} from "./components/toxicology-report/toxicology-report-certifier/toxicology-report-certifier.component";
+} from "./components/tox-to-mdi/toxicology-report-certifier/toxicology-report-certifier.component";
 
 @NgModule({
   declarations: [

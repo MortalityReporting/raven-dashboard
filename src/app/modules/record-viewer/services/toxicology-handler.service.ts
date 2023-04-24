@@ -1,14 +1,15 @@
 import {Injectable} from '@angular/core';
-import {Observable} from "rxjs";
+import {Observable, skipWhile, tap} from "rxjs";
 import {map} from "rxjs/operators";
-import {HttpClient} from "@angular/common/http";
 import {EnvironmentHandlerService} from "../../fhir-util/services/environment-handler.service";
 import {TrackingNumberType} from "../../../model/tracking.number.type";
-import { trackingNumberUrl } from "../models/mdi/tracking.number"
+import {trackingNumberUrl} from "../models/mdi/tracking.number"
 import {ToxHeader} from "../models/tox.header";
 import {FhirHelperService} from "../../fhir-util/services/fhir-helper.service";
 import {BundleHelperService} from "../../fhir-util/services/bundle-helper.service";
 import {CertifierAndOrganization, LabResult, Performer, Specimen, ToxSummary} from "../models/tox.summary";
+import {FhirClientService} from "../../fhir-util/services/fhir-client.service";
+import {FhirResource} from "../../fhir-util/models/fhir.resource";
 
 @Injectable({
   providedIn: 'root'
@@ -16,30 +17,27 @@ import {CertifierAndOrganization, LabResult, Performer, Specimen, ToxSummary} fr
 export class ToxicologyHandlerService {
 
   constructor(
-    private http: HttpClient,
+    private fhirClient: FhirClientService,
     private environmentHandler: EnvironmentHandlerService,
     private fhirHelper: FhirHelperService,
     private bundleHelper: BundleHelperService
   ) { }
 
   getToxicologyRecords(): Observable<any>{
-    return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "DiagnosticReport?_count=100")
-      .pipe( map((result: any) => {
-          if (!result?.entry) {
-            return [];
-          }
-          else {
-            return result.entry as Object[];
-          }
-        }
-      ));
+    return this.fhirClient.search("DiagnosticReport", "", true).pipe(
+      tap(console.log),
+      skipWhile((result: any) => {
+        return !result
+      })
+    );
   }
 
   getSubject(diagnosticReport: any): Observable<any> {
     // NOTE: THIS REQUIRED IN THE DATA AND SHOULD NEVER BE NULL
+    console.log(diagnosticReport);
     const subjectReference = diagnosticReport?.subject?.reference;
     let subjectId = subjectReference.split("/").pop();
-    return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "Patient/" + subjectId);
+    return this.fhirClient.read("Patient", subjectId);
   }
 
   // This is designed for DiagnosticReport but should work for Composition as well.
@@ -72,9 +70,9 @@ export class ToxicologyHandlerService {
 
   // toxLabId is a fully qualified system|code value.
   getMessageBundle(toxLabId: string): Observable<any> {
-    const parametersResource = this.createToxSearchParametersResource(toxLabId);
-    return this.http.post(
-      this.environmentHandler.getFhirServerBaseURL() + "DiagnosticReport/$toxicology-message",
+    const parametersResource: FhirResource = this.createToxSearchParametersResource(toxLabId);
+    return this.fhirClient.search(
+      "DiagnosticReport/$toxicology-message",
       parametersResource
     ).pipe(
       map((searchBundle: any) => searchBundle?.entry?.[0]?.resource)
@@ -94,8 +92,7 @@ export class ToxicologyHandlerService {
   }
 
   getDiagnosticReportFromMessageBundle(messageBundle: any): any {
-    const diagnosticReport = messageBundle?.entry?.find(bec => bec.resource.resourceType === "DiagnosticReport").resource;
-    return diagnosticReport;
+    return messageBundle?.entry?.find(bec => bec.resource.resourceType === "DiagnosticReport").resource;
   }
 
   constructToxHeaderHeader(messageBundle: any): ToxHeader {
@@ -103,7 +100,7 @@ export class ToxicologyHandlerService {
     const subject = this.bundleHelper.findSubjectInBundle(diagnosticReport, messageBundle);
     const toxLabNumber = this.getTrackingNumber(diagnosticReport, TrackingNumberType.Tox);
     let toxHeader = new ToxHeader();
-    toxHeader.fullName = this.fhirHelper.getPatientOfficialName(subject);
+    toxHeader.fullName = this.fhirHelper.getOfficialName(subject);
     toxHeader.reportDate = diagnosticReport.issued.split("T")[0] || undefined;
     toxHeader.toxCaseNumber = toxLabNumber.value;
     toxHeader.toxCaseSystem = toxLabNumber.system;
@@ -114,7 +111,7 @@ export class ToxicologyHandlerService {
     const diagnosticReport = this.getDiagnosticReportFromMessageBundle(messageBundle);
     const subject = this.bundleHelper.findSubjectInBundle(diagnosticReport, messageBundle);
     let toxSummary = new ToxSummary()
-    toxSummary.patientId = subject.id; //"6951b919-1872-448c-8893-555febe22bc1";
+    toxSummary.patientId = subject.id;
     toxSummary.mdiCaseNumber = this.fhirHelper.getTrackingNumber(diagnosticReport, TrackingNumberType.Mdi);
     toxSummary.performers = this.createPerformersList(diagnosticReport, messageBundle);
     toxSummary.certifier = this.createCertifier(toxSummary.performers[0], diagnosticReport, messageBundle);
@@ -130,9 +127,19 @@ export class ToxicologyHandlerService {
     let performers = [];
     if (diagnosticReport.performer) {
       diagnosticReport.performer.forEach(performer => {
-          const practitionerResource = this.bundleHelper.findResourceByFullUrl(messageBundle, performer.reference);
-          const performerObject = new Performer(this.fhirHelper.getPatientOfficialName(practitionerResource, 0, true), practitionerResource);
-          performers.push(performerObject);
+        const performerResource = this.bundleHelper.findResourceByFullUrl(messageBundle, performer.reference);
+        console.log(performerResource);
+        let performerObject: Performer;
+          if (performerResource.resourceType === "Practitioner") {
+            performerObject = new Performer(this.fhirHelper.getOfficialName(performerResource, 0, true), performerResource);
+          }
+          else if (performerResource.resourceType === "PractitionerRole") {
+            console.log("PractitionerRole Found, ", performerResource.practitioner.reference);
+            const practitionerResource = this.bundleHelper.findResourceByFullUrl(messageBundle, performerResource.practitioner.reference);
+            console.log(practitionerResource);
+            performerObject = new Performer(this.fhirHelper.getOfficialName(practitionerResource, 0, true), practitionerResource);
+          }
+          if (performerObject) performers.push(performerObject);
         }
       );
     }
@@ -184,10 +191,8 @@ export class ToxicologyHandlerService {
     return results;
   }
 
-
-    // TODO: Refactor to map to boolean
   isRelatedMdiDocumentAvailable(mdiCaseNumber: any) {
-    return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "Composition?mdi-case-number=" + mdiCaseNumber).pipe(
+    return this.fhirClient.search("Composition", `?mdi-case-number=${mdiCaseNumber}`).pipe(
       map((searchBundle:any) => {
         return searchBundle?.entry?.[0]?.resource?.subject?.reference
       })

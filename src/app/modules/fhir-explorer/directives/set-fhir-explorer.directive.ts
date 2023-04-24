@@ -45,13 +45,7 @@ export class SetFhirExplorerDirective {
       console.error("Remove any calls to this. (TITLE)");
       switch (this.title) {
         case "certifier":
-          this.fhirExplorerService.setSelectedFhirResource(this.documentHandler.getCertifier());
-          break;
-        case "subject":
-          this.fhirExplorerService.setSelectedFhirResource(this.documentHandler.getCurrentSubjectResource());
-          break;
-        case "document":
-          this.fhirExplorerService.setSelectedFhirResource(this.documentHandler.getCurrentDocumentBundle());
+          //this.fhirExplorerService.setSelectedFhirResource(this.documentHandler.getCertifier());
           break;
       }
     }

@@ -54,7 +54,7 @@ export class EdrsSearchResultsGridComponent implements OnInit, OnChanges {
         decedent.bundleResource = bundle;
 
         const patientResource = this.findResourceByType(bundle.resource, "Patient");
-        const officialName = this.fhirHelperService.getPatientOfficialName(patientResource, PatientNameReturn.lastfirst);
+        const officialName = this.fhirHelperService.getOfficialName(patientResource, PatientNameReturn.lastfirst);
         decedent.officialName = officialName;
 
         const genderStr = this.toTitleCase(patientResource.gender);

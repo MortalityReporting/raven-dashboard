@@ -11,9 +11,8 @@ export class FhirClientService {
 
   private readonly serverBaseUrl: string;
 
-  constructor(
-    private http: HttpClient,
-    private environmentHandler: EnvironmentHandlerService) {
+  constructor(private http: HttpClient,
+              private environmentHandler: EnvironmentHandlerService) {
     this.serverBaseUrl = this.environmentHandler.getFhirServerBaseURL();
   }
 
@@ -32,10 +31,21 @@ export class FhirClientService {
     );
   }
 
-  search(resourceType: string = "", parameters: string = "", flat: boolean = false, baseUrl: boolean = true, fullUrl?: string): Observable<Bundle | FhirResource[]> {
-    const searchString = fullUrl ? fullUrl : this.createSearchRequestUrl(resourceType, parameters, baseUrl)
+  search(resourceType: string = "", parameters: string | FhirResource = "", flat: boolean = false, baseUrl: boolean = true, fullUrl?: string): Observable<Bundle | FhirResource[]> {
+    let searchString: string = "";
+    let pagination$: Observable<Bundle>;
+
+    if (typeof parameters === 'string' || parameters instanceof String) {
+      searchString = fullUrl ? fullUrl : this.createSearchRequestUrl(resourceType, parameters as string, baseUrl)
+      pagination$ = this.http.get<Bundle>(searchString);
+    }
+    else {
+      searchString = fullUrl ? fullUrl : this.createSearchRequestUrl(resourceType, "", baseUrl)
+      pagination$ = this.http.post<Bundle>(searchString, parameters);
+    }
     console.log("Making Search Request: " + searchString);
-    const pagination$ = this.http.get(searchString).pipe(
+
+    pagination$.pipe(
       // TODO: Is there a way to type the following operator projections?
       expand( (searchBundle: any, i) => {
           return searchBundle?.link?.find(link => link?.relation === "next") ?
@@ -82,4 +92,5 @@ export class FhirClientService {
     if (baseUrl) return this.serverBaseUrl + resourceType + parameters;
     else return resourceType + parameters;
   }
+
 }

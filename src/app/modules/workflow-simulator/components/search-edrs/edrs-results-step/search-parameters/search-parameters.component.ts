@@ -227,7 +227,7 @@ export class SearchParametersComponent implements OnInit {
       decedent.bundleResource = bundle;
 
       const patientResource = this.getPatientResource(bundle.resource);
-      const officialName = this.fhirHelperService.getPatientOfficialName(patientResource);
+      const officialName = this.fhirHelperService.getOfficialName(patientResource);
       decedent.officialName = officialName;
 
       const mannerOfDeathObservation = this.getObservationByProfile(bundle.resource, Obs_MannerOfDeath);
@@ -321,11 +321,11 @@ export class SearchParametersComponent implements OnInit {
   private patchInitialDecedentDataToEDRSForm(decedentData){
     if(decedentData?.patientResource){
       //TODO we need to come up with a data driven solution for this. Using hardcoded array indexing is a bad idea
-      const decedentFirstName = this.fhirHelperService.getPatientOfficialName(decedentData.patientResource, PatientNameReturn.firstonly);
+      const decedentFirstName = this.fhirHelperService.getOfficialName(decedentData.patientResource, PatientNameReturn.firstonly);
       const givenNameFormControl =  (<UntypedFormArray>this.searchEdrsForm.controls['parameters']).at(0);
       givenNameFormControl.patchValue({name : "patient.given", valueString: decedentFirstName});
 
-      const decedentLastName = this.fhirHelperService.getPatientOfficialName(decedentData.patientResource, PatientNameReturn.lastonly);
+      const decedentLastName = this.fhirHelperService.getOfficialName(decedentData.patientResource, PatientNameReturn.lastonly);
       const lastNameFormControl =  (<UntypedFormArray>this.searchEdrsForm.controls['parameters']).at(1);
       lastNameFormControl.patchValue({name : "patient.family", valueString: decedentLastName});
     }

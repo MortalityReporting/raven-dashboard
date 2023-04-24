@@ -1,4 +1,4 @@
-<app-decedent-display appSetFhirExplorer [title]="'document'"
+<app-decedent-display appSetFhirExplorer [resource]="documentBundle$ | async"
   [decedentInformation]="caseHeader$ | async" [type]="'mdi'"
 ></app-decedent-display>
 

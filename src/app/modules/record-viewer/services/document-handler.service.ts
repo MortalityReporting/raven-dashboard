@@ -108,7 +108,6 @@ export class DocumentHandlerService {
         this.caseSummary.next(this.createCaseSummary(documentBundle, patientResource, compositionResource));
 
         // TODO: This should happen in component not service.
-        //this.fhirResourceProvider.setCompositionId(compositionId);
         this.fhirExplorerService.setSelectedFhirResource(documentBundle);
 
         return documentBundle;
@@ -143,7 +142,7 @@ export class DocumentHandlerService {
   createCaseHeader(documentBundle: any, patientResource: any, compositionResource: any): CaseHeader {
 
     let caseHeader = new CaseHeader();
-    caseHeader.fullName = this.fhirHelper.getPatientOfficialName(patientResource);
+    caseHeader.fullName = this.fhirHelper.getOfficialName(patientResource);
     let genderString = patientResource.gender || this.defaultString;
     caseHeader.gender = genderString.substring(0,1).toUpperCase() + genderString.substring(1);
     let deathDateResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Obs_DeathDate);
@@ -186,11 +185,16 @@ export class DocumentHandlerService {
     summary.causeAndManner = this.generateCauseAndManner(documentBundle, compositionResource);
     summary.examAndAutopsy = this.generateExamAndAutopsy(documentBundle, compositionResource);
     summary.compositionId = compositionResource?.id || '';
+
+    const certifierId = this.currentCompositionResource?.author?.[0]?.reference;
+    summary.certifierResource = this.bundleHelper.findResourceByFullUrl(documentBundle, certifierId);
     return summary;
   }
 
   generateDemographics(documentBundle: any, compositionResource: any, patientResource: any): Demographics {
     let demographics: Demographics = new Demographics();
+
+    demographics.patientResource = patientResource;
 
     // Setup Basic Demographics from Patient Resource Directly
     demographics.aliases = patientResource.name || this.defaultString;
@@ -455,14 +459,6 @@ export class DocumentHandlerService {
 
   getCurrentSubjectResource(): any {
     return this.bundleHelper.findResourceByFullUrl(this.currentDocumentBundle, this.subjectId);
-  }
-
-  getCertifier(): any {
-    let certifierId = this.currentCompositionResource?.author?.[0]?.reference;
-    console.log(certifierId);
-    let test = this.bundleHelper.findResourceByFullUrl(this.currentDocumentBundle, certifierId);
-    console.log(test)
-    return test;
   }
 
   // TODO: REFACTOR DIRECTIVE AND REMOVE THIS FUNCTION
