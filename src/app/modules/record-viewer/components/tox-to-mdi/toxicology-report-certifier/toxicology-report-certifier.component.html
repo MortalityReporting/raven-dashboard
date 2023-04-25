@@ -1,32 +1,35 @@
-<div class="mdi-case-number-flex-wrapper column">
-  <div class="bottom-spacer">
-    <span class="field-label" appSetFhirExplorer [resource]="certifier.certifyingToxicologist.resource">
-      Certifying Toxicologist:
-    </span>
-    <span class="field-value" appSetFhirExplorer [resource]="certifier.certifyingToxicologist.resource">
-      {{certifier?.certifyingToxicologist?.name || "Certifying Toxicologist Not Found"}}
-    </span>
+<div class="certifier-wrapper bottom-spacer">
+
+  <!-- CERTIFYING TOXICOLOGIST NAME -->
+  <div class="field-label" appSetFhirExplorer [resource]="certifier.certifyingToxicologist.resource">
+    Certifying Toxicologist:
   </div>
-  <div class="bottom-spacer">
-    <span class="field-label" appSetFhirExplorer [resource]="certifier.certifyingToxicologist.resource">
-      Organization:
-    </span>
-    <span class="field-value" appSetFhirExplorer [resource]="certifier.certifyingToxicologist.resource">
-      {{certifier?.organizationName || "Organization Name Not Found"}}
-    </span>
+  <div class="field-value" appSetFhirExplorer [resource]="certifier.certifyingToxicologist.resource">
+    {{certifier?.certifyingToxicologist?.name || "Certifying Toxicologist Not Found"}}
   </div>
-  <div class="bottom-spacer">
-    <span class="field-label" appSetFhirExplorer [resource]="certifier.certifyingToxicologist.resource">
-      Organization Address:
-    </span>
-    <span class="field-value" appSetFhirExplorer [resource]="certifier.certifyingToxicologist.resource">
-      {{certifier?.organizationAddress || "Organization Address Not Found"}}
-    </span>
+
+  <!-- ORGANIZATION NAME -->
+  <div class="field-label" appSetFhirExplorer [resource]="certifier.certifyingToxicologist.resource">
+    Organization:
   </div>
-  <div>
-    <div class="field-label bottom-spacer">
-      Additional Performers
-    </div>
+  <div class="field-value" appSetFhirExplorer [resource]="certifier.certifyingToxicologist.resource">
+    {{certifier?.organizationName || "Organization Name Not Found"}}
+  </div>
+
+  <!-- ORGANIZATION NAME -->
+  <div class="field-label" appSetFhirExplorer [resource]="certifier.certifyingToxicologist.resource">
+    Organization Address:
+  </div>
+  <div class="field-value" appSetFhirExplorer [resource]="certifier.certifyingToxicologist.resource">
+    {{certifier?.organizationAddress || "Organization Address Not Found"}}
+  </div>
+
+  <!-- ADDITIONAL PERFORMERS -->
+  <div class="field-label grid-cell-span-2">
+    Additional Performers
+  </div>
+  <div class="grid-cell-span-2">
     <record-viewer-toxicology-report-grid-section *ngIf="toxSummary?.performers" [data]="toxSummary?.performers" [columns]="['name']"></record-viewer-toxicology-report-grid-section>
   </div>
+
 </div>

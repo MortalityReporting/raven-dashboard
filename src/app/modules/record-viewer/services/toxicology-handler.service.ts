@@ -171,7 +171,7 @@ export class ToxicologyHandlerService {
         const identifier = specimenResource?.accessionIdentifier?.value || ""; // TODO: Confirm this is only source of identifier to use.
         const collected = specimenResource?.collection?.collectedDateTime || ""; // TODO: Add additional handling for other potential paths.
         const received = specimenResource?.receivedTime || ""; // TODO: See above.
-        const condition = specimenResource?.condition?.coding?.[0]?.text || ""; // TODO: See above.
+        const condition = specimenResource?.condition?.[0].text || specimenResource?.condition?.[0].coding?.[0]?.display || ""; // TODO: See above.
         const container = specimenResource?.container?.identifier || "";
         const note = specimenResource?.container?.note || "";
         const specimenObject = new Specimen(

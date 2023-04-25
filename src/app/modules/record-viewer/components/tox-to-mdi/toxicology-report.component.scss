@@ -100,3 +100,16 @@ table {
 .bottom-spacer {
   margin-bottom: 16px;
 }
+
+.certifier-wrapper {
+  display: grid;
+  grid-template-columns: fit-content(100%) 1fr;
+  row-gap: 8px;
+  > div {
+    background-color: pink;
+  }
+}
+
+.grid-cell-span-2 {
+  grid-column: 1 / span 2;
+}
