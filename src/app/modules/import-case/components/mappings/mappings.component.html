@@ -1,9 +1,9 @@
 <div class="controls">
   <mat-radio-group aria-label="Select filter option" [(ngModel)]="selectedFilter" [disabled]="false">
-    <mat-label>Filter Results:</mat-label>
+    <mat-label>Show:</mat-label>
     <mat-radio-button *ngFor="let filter of filters" [value]="filter"
                       (change)="onFilterChanged(filter)">
-      {{filter}}
+      <span class="radio-btn-label">{{filter}}</span>
     </mat-radio-button>
   </mat-radio-group>
 </div>
