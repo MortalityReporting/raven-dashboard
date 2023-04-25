@@ -1,6 +1,7 @@
 <div>
-  1. Users may use the provided XLSX file as a template to create a set of test cases. This XLSX file may then
-  be submitted to Raven, where it is then mapped to MDI-to-EDRS records and posted to the Raven FHIR Server.
+  <h3>1. Create Test Cases</h3>
+  Users may use one of the provided XLSX files on the right as a template to create a set of test cases for a given workflow.
+  This XLSX file can be submitted to Raven and mapped to FHIR MDI IG resources, and then posted to the Raven FHIR Server.
   To prevent the creation of duplicate records, existing records are overwritten.
   <div>
     <div class="top-padding">
@@ -8,32 +9,34 @@
              accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
              (change)="onFileSelected($event)" #fileUpload>
       <div>
-      <button mat-raised-button color="success" class="upload-btn"
-              (click)="clearUI(); fileUpload.click();" [disabled]=isLoading>
-        <mat-icon>upload_file</mat-icon>
-        Select XLSX Template
-      </button>
-      <span id="filename">{{file?.name}}</span>
-      </div>
     </div>
-
   </div>
 
   <div class="top-padding">
+    <h3>2. Submit Test Cases to Raven</h3>
     <div class="row">
-    2. Submit your document to Raven.
+      Select your completed spreadsheet, the type of the template used, and submit to raven.
     </div>
+    <div class="row top-margin">
+    <button mat-raised-button color="success" class="upload-btn"
+            (click)="clearUI(); fileUpload.click();" [disabled]=isLoading>
+      <mat-icon>upload_file</mat-icon>
+      Browse for Import Spreadsheet
+    </button>
+    <span id="filename">{{file?.name}}</span>
+    </div>
+  </div>
     <div class="top-margin">
       <form [formGroup]="importCaseForm" (ngSubmit)="onSubmit()" class="row">
         <mat-form-field appearance="outline" style="min-width: 50%">
-          <mat-label>Select Template</mat-label>
+          <mat-label>Select Template Type</mat-label>
           <mat-select formControlName="fileTemplate">
             <mat-option *ngFor="let template of fileTemplates" [value]="template">
               {{template.description}}
             </mat-option>
           </mat-select>
           <mat-error *ngIf="fileTemplate.errors?.['required']">
-            Please select a template from the list above
+            Please select a template type above...
           </mat-error>
         </mat-form-field>
         <div class="content-spacer"></div>
@@ -53,7 +56,8 @@
   </div>
 
   <div class="top-padding">
-    3. Review your record(s) below.
+    <h3>3. Review Test Case Mapping</h3>
+    <div *ngIf="!isExportSuccessful || errorsGenerated">Review available once spreadsheet is submitted.</div>
     <div class="wrapper" *ngIf="isExportSuccessful">
       <div class="result-colum">
 
