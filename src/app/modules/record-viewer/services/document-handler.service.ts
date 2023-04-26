@@ -182,10 +182,10 @@ export class DocumentHandlerService {
   createCaseSummary(documentBundle: any, patientResource: any, compositionResource: any): CaseSummary {
     let summary: CaseSummary = new CaseSummary();
     summary.demographics = this.generateDemographics(documentBundle, compositionResource, patientResource);
-    summary.circumstances = this.generateCircumstances(documentBundle, compositionResource);
+    summary.circumstances = this.generateCircumstances(documentBundle);
     summary.jurisdiction = this.generateJurisdiction(documentBundle, compositionResource);
     summary.causeAndManner = this.generateCauseAndManner(documentBundle, compositionResource);
-    summary.examAndAutopsy = this.generateExamAndAutopsy(documentBundle, compositionResource);
+    summary.examAndAutopsy = this.generateExamAndAutopsy(documentBundle);
     summary.compositionId = compositionResource?.id || '';
 
     summary.documentBundleResource = documentBundle;
@@ -227,7 +227,7 @@ export class DocumentHandlerService {
     return demographics;
   }
 
-  generateCircumstances(documentBundle: any, compositionResource: any): Circumstances {
+  generateCircumstances(documentBundle: any): Circumstances {
     let circumstances: Circumstances = new Circumstances();
 
     let deathLocationResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Loc_death);
@@ -364,7 +364,7 @@ export class DocumentHandlerService {
     return causeAndManner;
   }
 
-  generateExamAndAutopsy(documentBundle: any, compositionResource: any): Autopsy {
+  generateExamAndAutopsy(documentBundle: any): Autopsy {
     let autopsy: Autopsy = new Autopsy();
     // let autopsySection = this.getSection(compositionResource, "exam-autopsy");
     let observation = this.bundleHelper.findResourcesByProfileName(documentBundle, "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-autopsy-performed-indicator")[0];
