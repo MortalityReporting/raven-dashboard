@@ -13,14 +13,16 @@ import {
 } from "../models/case.summary";
 import {Author, CaseHeader} from "../models/case.header";
 import {TrackingNumber} from "../models/mdi/tracking.number";
-import {TerminologyHandlerService} from "../../fhir-util/services/terminology-handler.service";
-import {Address} from "../../fhir-util/models/types/address";
-import {EnvironmentHandlerService} from "../../fhir-util/services/environment-handler.service";
-import {FhirHelperService} from "../../fhir-util/services/fhir-helper.service";
-import {BundleHelperService} from "../../fhir-util/services/bundle-helper.service";
+import {
+  Address,
+  BundleHelperService,
+  EnvironmentHandlerService,
+  FhirClientService,
+  FhirHelperService,
+  TerminologyHandlerService
+} from "../../fhir-util";
 import {TrackingNumberType} from "../../../model/tracking.number.type";
 import {ToxRecordStub} from "../models/toxRecordStub";
-import {FhirClientService} from "../../fhir-util/services/fhir-client.service";
 import {FHIRProfileConstants} from "../../../providers/fhir-profile-constants";
 import {FhirExplorerService} from "../../fhir-explorer/services/fhir-explorer.service";
 

@@ -9,7 +9,7 @@ import {FhirHelperService} from "../../fhir-util/services/fhir-helper.service";
 import {BundleHelperService} from "../../fhir-util/services/bundle-helper.service";
 import {CertifierAndOrganization, LabResult, Performer, Specimen, ToxSummary} from "../models/tox.summary";
 import {FhirClientService} from "../../fhir-util/services/fhir-client.service";
-import {FhirResource} from "../../fhir-util/models/fhir.resource";
+import {FhirResource} from "../../fhir-util/models/base/fhir.resource";
 import {Address} from "../../fhir-util/models/types/address";
 
 @Injectable({

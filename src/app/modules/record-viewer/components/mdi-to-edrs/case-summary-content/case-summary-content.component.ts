@@ -7,7 +7,7 @@ import {DocumentHandlerService} from "../../../services/document-handler.service
 import {ActivatedRoute, Router} from "@angular/router";
 import {ModuleHeaderConfig} from "../../../../../../assets/configuration/module-header-config";
 import {AppConfiguration} from "../../../../../../assets/configuration/app-configuration";
-import {FhirResource} from "../../../../fhir-util/models/fhir.resource";
+import {FhirResource} from "../../../../fhir-util/models/base/fhir.resource";
 
 @Component({
   selector: 'record-viewer-case-summary-content',

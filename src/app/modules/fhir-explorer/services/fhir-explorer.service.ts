@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, Subject} from 'rxjs';
-import {FhirResource} from "../../fhir-util/models/fhir.resource";
+import {FhirResource} from "../../fhir-util/models/base/fhir.resource";
 
 @Injectable({
   providedIn: 'root'

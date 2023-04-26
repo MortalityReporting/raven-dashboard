@@ -1,7 +1,4 @@
-export interface FhirResource extends Object{
-  resourceType: string;
-  [key: string]: any;
-}
+import {FhirResource} from "../base/fhir.resource";
 
 export class Bundle implements FhirResource {
   resourceType: string = "Bundle";
@@ -30,9 +27,4 @@ export enum BundleType {
   searchset = "searchset",
   collection = "collection",
   subscriptionNotification = "subscription-notification"
-}
-
-
-export class Type {
-
 }

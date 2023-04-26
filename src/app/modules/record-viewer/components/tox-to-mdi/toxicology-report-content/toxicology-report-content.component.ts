@@ -5,7 +5,7 @@ import {ToxSummary} from "../../../models/tox.summary";
 import {ModuleHeaderConfig} from "../../../../../../assets/configuration/module-header-config";
 import {AppConfiguration} from "../../../../../../assets/configuration/app-configuration";
 import {FHIRProfileConstants} from "../../../../../providers/fhir-profile-constants";
-import {FhirResource} from "../../../../fhir-util/models/fhir.resource";
+import {FhirResource} from "../../../../fhir-util/models/base/fhir.resource";
 
 @Component({
   selector: 'record-viewer-toxicology-report-content',

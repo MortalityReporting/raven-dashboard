@@ -1,6 +1,7 @@
-import {FhirResource} from "../fhir.resource";
+import {FhirResource} from "../base/fhir.resource";
+import {FhirType} from "../base/fhir.type";
 
-export class Address {
+export class Address implements FhirType {
   line1: string;
   line2: string;
   city: string;

@@ -2,7 +2,8 @@ import {Injectable} from '@angular/core';
 import {EnvironmentHandlerService} from "./environment-handler.service";
 import {HttpClient} from "@angular/common/http";
 import {EMPTY, expand, map, mergeMap, Observable, of, reduce, takeWhile} from "rxjs";
-import {Bundle, BundleEntryComponent, BundleType, FhirResource} from "../models/fhir.resource";
+import {FhirResource} from "../models/base/fhir.resource";
+import {Bundle, BundleEntryComponent, BundleType} from "../models/resources/bundle";
 
 @Injectable({
   providedIn: 'root'

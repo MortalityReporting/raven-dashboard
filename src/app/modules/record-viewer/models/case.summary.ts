@@ -2,7 +2,7 @@ import {HumanName} from "../../fhir-util/models/types/human.name";
 import {Identifier} from "../../fhir-util/models/types/identifier";
 import {CodeableConcept} from "../../fhir-util/models/types/codeable.cocept";
 import {Address} from "../../fhir-util/models/types/address";
-import {FhirResource} from "../../fhir-util/models/fhir.resource";
+import {FhirResource} from "../../fhir-util/models/base/fhir.resource";
 
 export class CaseSummary {
   demographics: Demographics;
