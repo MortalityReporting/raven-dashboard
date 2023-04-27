@@ -26,13 +26,8 @@
 
 <table mat-table [dataSource]="dataSource" matSort matSortDisableClear matSortActive="personId">
 
-  <ng-container matColumnDef="index">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> #</th>
-    <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.index}} </td>
-  </ng-container>
-
   <ng-container matColumnDef="lastName">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Name</th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Decedent Name</th>
     <td mat-cell class="pointer"
         *matCellDef="let decedent"> {{decedent.lastName | titlecase}}{{decedent.firstName ? ', ' + decedent.firstName : ''}}</td>
   </ng-container>

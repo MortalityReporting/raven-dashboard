@@ -40,7 +40,7 @@ export class UserDocumentService {
   createDocumentWrapper(documentBundle: any): MdiToEDRSDocumentWrapper {
     const composition = documentBundle.entry[0].resource;
     let documentWrapper = new MdiToEDRSDocumentWrapper()
-    documentWrapper.decedentName = this.fhirHelper.getPatientOfficialName(
+    documentWrapper.decedentName = this.fhirHelper.getOfficialName(
       this.bundleHelper.findSubjectInBundle(composition, documentBundle)
     );
     documentWrapper.dateTimeOfDeath = "" // TODO: Add get dateTime of Death

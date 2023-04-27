@@ -6,7 +6,7 @@
   </mat-form-field>
   <span class="content-spacer"></span>
   <div style="margin: auto">
-    <mat-checkbox [(ngModel)]="showSystems">Show Systems</mat-checkbox>
+
   </div>
 </div>
 
@@ -17,52 +17,60 @@
 <table mat-table [dataSource]="dataSource" matSort matSortDisableClear matSortActive="personId">
 
   <ng-container matColumnDef="lastName">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Subject Name</th>
-    <td mat-cell class="pointer"
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Decedent Name</th>
+    <td mat-cell
         *matCellDef="let report"> {{report.lastName | titlecase}}{{report.firstName ? ', ' + report.firstName : ''}}</td>
   </ng-container>
 
   <ng-container matColumnDef="reportdate">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Report Date</th>
-    <td mat-cell class="pointer" *matCellDef="let report"> {{report.reportdate | date: 'MM/dd/yyyy'}} </td>
+    <td mat-cell *matCellDef="let report"> {{report.reportdate | date: 'MM/dd/yyyy'}} </td>
   </ng-container>
 
   <ng-container matColumnDef="toxcasenumber">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>
         Toxicology Case Number<br>
     </th>
-    <td mat-cell class="pointer" *matCellDef="let report">
+    <td mat-cell *matCellDef="let report">
       {{report.toxcasenumber}}
     </td>
   </ng-container>
 
   <ng-container matColumnDef="toxcasesystem">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header [hidden]="!showSystems">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
       Toxicology Case System<br>
     </th>
-    <td mat-cell class="pointer" *matCellDef="let report" [hidden]="!showSystems">
+    <td mat-cell *matCellDef="let report">
       {{report.toxcasesystem}}
     </td>
   </ng-container>
 
   <ng-container matColumnDef="mdicasenumber">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> MDI Tracking Number</th>
-    <td mat-cell class="pointer" *matCellDef="let report">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> MDI Case Number</th>
+    <td mat-cell *matCellDef="let report">
       {{report.mdicasenumber}}
     </td>
   </ng-container>
 
   <ng-container matColumnDef="mdicasesystem">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header [hidden]="!showSystems">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
       MDI Case System<br>
     </th>
-    <td mat-cell class="pointer" *matCellDef="let report" [hidden]="!showSystems">
+    <td mat-cell *matCellDef="let report">
       {{report.mdicasesystem}}
     </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onCaseSelected(row)"></tr>
+  <tr mat-row
+      *matRowDef="let row; columns: displayedColumns;"
+      (click)="!row.error ? onCaseSelected(row) : null"
+      [style.cursor]="!row.error ? 'pointer' : 'not-allowed'"
+      [style.background-color]="!row.error ? null : '#FFD6D6'"
+      [matTooltip]="row.error ? 'Error in record, please see logs.' : null"
+      matTooltipPosition="before"
+  >
+  </tr>
 
 </table>
 

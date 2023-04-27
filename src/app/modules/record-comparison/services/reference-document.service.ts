@@ -49,7 +49,7 @@ export class ReferenceDocumentService {
 
   createSummary(subject: any, bundle: any): any {
     return {
-      "display": this.fhirHelper.getPatientOfficialName(subject),
+      "display": this.fhirHelper.getOfficialName(subject),
       "bundle": bundle
     }
   }

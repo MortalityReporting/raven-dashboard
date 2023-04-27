@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {Obs_DeathDate, Obs_MannerOfDeath} from "../../../../../../model/mdi/profile.list";
+import {Obs_DeathDate, Obs_MannerOfDeath} from "../../../../../../providers/fhir-profile-constants";
 import {TrackingNumberType} from "../../../../../../model/tracking.number.type";
 import {FhirHelperService, PatientNameReturn} from "../../../../../../modules/fhir-util/services/fhir-helper.service";
 import {DocumentHandlerService} from "../../../../../../modules/record-viewer/services/document-handler.service";
@@ -54,7 +54,7 @@ export class EdrsSearchResultsGridComponent implements OnInit, OnChanges {
         decedent.bundleResource = bundle;
 
         const patientResource = this.findResourceByType(bundle.resource, "Patient");
-        const officialName = this.fhirHelperService.getPatientOfficialName(patientResource, PatientNameReturn.lastfirst);
+        const officialName = this.fhirHelperService.getOfficialName(patientResource, PatientNameReturn.lastfirst);
         decedent.officialName = officialName;
 
         const genderStr = this.toTitleCase(patientResource.gender);

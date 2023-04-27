@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {ModuleWithProviders, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   RecordComparisonContentComponent
@@ -20,8 +20,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatInputModule} from "@angular/material/input";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatButtonModule} from "@angular/material/button";
-
-
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
     declarations: [
@@ -29,21 +28,34 @@ import {MatButtonModule} from "@angular/material/button";
         RecordComparisonContentFieldComponent,
         RecordComparisonDialogComponent,
     ],
-    imports: [
-        CommonModule,
-        MatSidenavModule,
-        MatListModule,
-        MatIconModule,
-        MatTooltipModule,
-        MatProgressSpinnerModule,
-        MatExpansionModule,
-        MatInputModule,
-        MatSelectModule,
-        MatButtonModule,
-        MatCardModule,
-    ],
+  imports: [
+    CommonModule,
+    MatSidenavModule,
+    MatListModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatProgressSpinnerModule,
+    MatExpansionModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatCardModule,
+    MatDialogModule,
+  ],
     providers: [
         ReferenceDocumentService
     ]
 })
-export class RecordComparisonModule { }
+export class RecordComparisonModule {
+  public static forRoot(fhirProfiles): ModuleWithProviders<RecordComparisonModule>{
+    return {
+      ngModule: RecordComparisonModule,
+      providers: [
+        {
+          provide: 'fhirProfiles',
+          useValue: fhirProfiles
+        }
+      ]
+    }
+  }
+}

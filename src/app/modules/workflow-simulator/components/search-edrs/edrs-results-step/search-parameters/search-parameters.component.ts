@@ -2,7 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {UntypedFormArray, UntypedFormBuilder, UntypedFormControl, FormGroup} from "@angular/forms";
 import {SearchEdrsService} from "../../../../service/search-edrs.service";
 import {UtilsService} from "../../../../../../service/utils.service";
-import {Obs_DeathDate, Obs_MannerOfDeath} from "../../../../../../model/mdi/profile.list";
+import {Obs_DeathDate, Obs_MannerOfDeath} from "../../../../../../providers/fhir-profile-constants";
 import {TrackingNumberType} from "../../../../../../model/tracking.number.type";
 import {FhirHelperService, PatientNameReturn} from "../../../../../../modules/fhir-util/services/fhir-helper.service";
 import {DecedentSimpleInfo} from "../../../../../../model/decedent-simple-info";
@@ -227,7 +227,7 @@ export class SearchParametersComponent implements OnInit {
       decedent.bundleResource = bundle;
 
       const patientResource = this.getPatientResource(bundle.resource);
-      const officialName = this.fhirHelperService.getPatientOfficialName(patientResource);
+      const officialName = this.fhirHelperService.getOfficialName(patientResource);
       decedent.officialName = officialName;
 
       const mannerOfDeathObservation = this.getObservationByProfile(bundle.resource, Obs_MannerOfDeath);
@@ -321,11 +321,11 @@ export class SearchParametersComponent implements OnInit {
   private patchInitialDecedentDataToEDRSForm(decedentData){
     if(decedentData?.patientResource){
       //TODO we need to come up with a data driven solution for this. Using hardcoded array indexing is a bad idea
-      const decedentFirstName = this.fhirHelperService.getPatientOfficialName(decedentData.patientResource, PatientNameReturn.firstonly);
+      const decedentFirstName = this.fhirHelperService.getOfficialName(decedentData.patientResource, PatientNameReturn.firstonly);
       const givenNameFormControl =  (<UntypedFormArray>this.searchEdrsForm.controls['parameters']).at(0);
       givenNameFormControl.patchValue({name : "patient.given", valueString: decedentFirstName});
 
-      const decedentLastName = this.fhirHelperService.getPatientOfficialName(decedentData.patientResource, PatientNameReturn.lastonly);
+      const decedentLastName = this.fhirHelperService.getOfficialName(decedentData.patientResource, PatientNameReturn.lastonly);
       const lastNameFormControl =  (<UntypedFormArray>this.searchEdrsForm.controls['parameters']).at(1);
       lastNameFormControl.patchValue({name : "patient.family", valueString: decedentLastName});
     }

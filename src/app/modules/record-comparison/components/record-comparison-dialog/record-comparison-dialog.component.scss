@@ -1,9 +1,12 @@
 .text-area {
-    min-width: 600px;
-    min-height: 600px;
+  margin: auto;
+  width: 80%;
+  height: 80%;
+  min-width: 600px;
+  min-height: 400px;
 }
 
-.dialog-container{
+mat-dialog-container{
   padding: 16px;
 }
 

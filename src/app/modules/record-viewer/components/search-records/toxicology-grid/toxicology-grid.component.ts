@@ -41,11 +41,10 @@ export class ToxicologyGridComponent implements OnInit {
     this.toxicologyHandler.getToxicologyRecords().pipe(
       mergeMap((diagnosticReportList: any[]) =>
         forkJoin(
-          // IMPORTANT: Each list item is not a DiagnosticReport, but a bundle entry component wrapping one.
-          diagnosticReportList.map((diagnosticReportBec: any, i) =>
-            this.toxicologyHandler.getSubject(diagnosticReportBec.resource).pipe(
+          diagnosticReportList.map((diagnosticReport: any, i) =>
+            this.toxicologyHandler.getSubject(diagnosticReport).pipe(
               map((subject: any) => {
-                let diagnosticReportDto = this.mapToDto(diagnosticReportBec.resource, subject);
+                let diagnosticReportDto = this.mapToDto(diagnosticReport, subject);
                 return diagnosticReportDto;
               })
             )
@@ -53,7 +52,7 @@ export class ToxicologyGridComponent implements OnInit {
       )
     ).subscribe({
       next: (data) => {
-        this.toxGridDtoList = []//data;
+        this.toxGridDtoList = []; // Initialize data.
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.sort = this.sort;
       },
@@ -79,7 +78,11 @@ export class ToxicologyGridComponent implements OnInit {
     toxDto.toxcasenumber = toxTrackingNumber?.value || undefined;
     toxDto.toxcasesystem = toxTrackingNumber?.system || undefined;
     toxDto.mdicasenumber = mdiTrackingNumber?.value || undefined;
-    toxDto.mdicasesystem = mdiTrackingNumber?.system || undefined
+    toxDto.mdicasesystem = mdiTrackingNumber?.system || undefined;
+
+    if (!toxDto.toxcasenumber || !toxDto.toxcasesystem) {
+      toxDto.error = true;
+    }
     return toxDto;
   }
 

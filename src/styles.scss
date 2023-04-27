@@ -82,7 +82,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   color: #FF4081
 }
 
-.pointer {cursor: pointer;}
+.pointer {
+  cursor: pointer;
+}
 
 .content-spacer{
   flex: 1 1 auto;

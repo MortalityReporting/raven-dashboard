@@ -168,7 +168,7 @@ export class ImportMdiToEdrsDocumentComponent implements OnInit {
       console.warn("Invalid resource passed");
       return null;
     }
-    const name = this.fhirHelperService.getPatientOfficialName(patientResource, PatientNameReturn.lastfirst);
+    const name = this.fhirHelperService.getOfficialName(patientResource, PatientNameReturn.lastfirst);
 
     return name;
   }

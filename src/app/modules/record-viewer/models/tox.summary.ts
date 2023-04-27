@@ -1,13 +1,34 @@
 import {FhirHelperService} from "../../fhir-util/services/fhir-helper.service";
 
+/**
+ * @field mdiCaseNumber - The MDI Tracking Number linked to an MDI-to-EDRS record.
+ * @field certifier - The primary performer considered the certifying Toxicologist and the Tox Lab details.
+ * @field performers - A full list of all performers included in the Diagnostic Report.
+ */
 export class ToxSummary {
   patientId: string;
   mdiCaseNumber: string;
+  certifier?: CertifierAndOrganization;
   performers: Performer[];
   specimens: Specimen[];
   results: LabResult[];
   conclusion: string;
   diagnosticReportResource: string;
+}
+
+export class CertifierAndOrganization {
+  constructor(certifyingToxicologist: Performer,
+    organizationName?: string, organizationAddress?: string, organizationResource?: any
+  ) {
+    this.certifyingToxicologist = certifyingToxicologist;
+    if (organizationName) this.organizationName = organizationName;
+    if (organizationAddress) this.organizationAddress = organizationAddress;
+    if (organizationResource) this.organizationResource = organizationResource;
+  }
+  certifyingToxicologist: Performer;
+  organizationName?: string;
+  organizationAddress?: string;
+  organizationResource?: string;
 }
 
 export class Performer {
@@ -20,17 +41,29 @@ export class Performer {
 }
 
 export class Specimen {
-  constructor(type: string, bodysite: string, identifier: string, collected: string, specimenResource: any) {
+  constructor(
+    type: string, site: string, identifier: string, collected: string,
+    received: string, condition: string, container: string, note: string,
+    specimenResource: any
+  ) {
     this.type = type;
-    this.site = bodysite;
+    this.site = site;
     this.identifier = identifier;
     this.collected = collected;
+    this.received = received;
+    this.condition = condition;
+    this.container = container;
+    this.note = note;
     this.resource = specimenResource;
   }
   type: string;
   site: string;
   identifier: string;
   collected: string;
+  received: string;
+  condition: string;
+  container: string;
+  note: string;
   resource: any;
 }
 
