@@ -7,6 +7,7 @@ import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { ClipboardModule } from "@angular/cdk/clipboard";
 import {FormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 
 
@@ -26,6 +27,7 @@ import {MatButtonModule} from "@angular/material/button";
     MatButtonModule,
     ClipboardModule,
     FormsModule,
+    MatTooltipModule,
 
   ]
 })

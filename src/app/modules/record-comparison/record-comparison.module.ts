@@ -20,9 +20,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatInputModule} from "@angular/material/input";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatButtonModule} from "@angular/material/button";
-import {ModuleHeaderConfig} from "../../../assets/configuration/module-header-config";
-
-
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
     declarations: [
@@ -30,19 +28,20 @@ import {ModuleHeaderConfig} from "../../../assets/configuration/module-header-co
         RecordComparisonContentFieldComponent,
         RecordComparisonDialogComponent,
     ],
-    imports: [
-        CommonModule,
-        MatSidenavModule,
-        MatListModule,
-        MatIconModule,
-        MatTooltipModule,
-        MatProgressSpinnerModule,
-        MatExpansionModule,
-        MatInputModule,
-        MatSelectModule,
-        MatButtonModule,
-        MatCardModule,
-    ],
+  imports: [
+    CommonModule,
+    MatSidenavModule,
+    MatListModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatProgressSpinnerModule,
+    MatExpansionModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatCardModule,
+    MatDialogModule,
+  ],
     providers: [
         ReferenceDocumentService
     ]
