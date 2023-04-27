@@ -6,9 +6,7 @@
 }
 
 .controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-left: 16px;
 }
 
 tr.case-record-detail-row {
@@ -28,17 +26,22 @@ tr.case-record-detail-row {
 }
 
 .mat-column-name {
-  width: 30%
+  width: 35%;
 }
 
 .mat-column-status{
-  width: 20%
+  width: 20%;
 }
 
 .mat-column-value {
-  width: 50%
+  width: 45%;
 }
 
 .inner-records{
   padding-left: 0
+
+}
+
+.radio-btn-label{
+  margin-right: 8px;
 }

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable, skipWhile} from "rxjs";
 import {map} from  "rxjs/operators";
-import {EnvironmentHandlerService} from "../../fhir-util/services/environment-handler.service";
-import {FhirClientService} from "../../fhir-util/services/fhir-client.service";
+import {EnvironmentHandlerService} from "../../fhir-util";
+import {FhirClientService} from "../../fhir-util";
 
 @Injectable({
   providedIn: 'root'

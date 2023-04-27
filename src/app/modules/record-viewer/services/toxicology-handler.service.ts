@@ -1,16 +1,16 @@
 import {Injectable} from '@angular/core';
 import {Observable, skipWhile, tap} from "rxjs";
 import {map} from "rxjs/operators";
-import {EnvironmentHandlerService} from "../../fhir-util/services/environment-handler.service";
+import {EnvironmentHandlerService} from "../../fhir-util";
 import {TrackingNumberType} from "../../../model/tracking.number.type";
 import {trackingNumberUrl} from "../models/mdi/tracking.number"
 import {ToxHeader} from "../models/tox.header";
-import {FhirHelperService} from "../../fhir-util/services/fhir-helper.service";
-import {BundleHelperService} from "../../fhir-util/services/bundle-helper.service";
+import {FhirHelperService} from "../../fhir-util";
+import {BundleHelperService} from "../../fhir-util";
 import {CertifierAndOrganization, LabResult, Performer, Specimen, ToxSummary} from "../models/tox.summary";
-import {FhirClientService} from "../../fhir-util/services/fhir-client.service";
-import {FhirResource} from "../../fhir-util/models/base/fhir.resource";
-import {Address} from "../../fhir-util/models/types/address";
+import {FhirClientService} from "../../fhir-util";
+import {FhirResource} from "../../fhir-util";
+import {Address} from "../../fhir-util";
 
 @Injectable({
   providedIn: 'root'

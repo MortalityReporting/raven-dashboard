@@ -18,22 +18,22 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 export class MappingsComponent implements OnChanges {
   @Input() fhirBundle;
 
-  selectedFilter: string = 'Show Mapped';
-  filters: string[] = ['Show Mapped', 'Show Not Mapped', 'Show All'];
+  selectedFilter: string = 'All';
+  filters: string[] = ['All', 'Mapped', 'Not Mapped'];
   innerTableDisplayedColumns: string[] = ['name','status', 'value'];
   parsedResponse: any;
   dataSource: MatTableDataSource<any>;
   columnsToDisplay  = ['name', 'status', 'value'];
   expandedRow: any | null;
   selectedRow: any;
-  statusFilter: string | null = 'mapped';
+  statusFilter: string | null = null;
 
   constructor(private fileTemplateService: FileTemplateService) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
-    if(this.fhirBundle && this.statusFilter){
+    if(this.fhirBundle){
       this.setDataSource(this.fhirBundle, this.statusFilter);
     }
   }
@@ -88,7 +88,7 @@ export class MappingsComponent implements OnChanges {
       });
 
     this.parsedResponse.forEach(element => {
-      if (element.valueObject.length) {
+      if (element.valueObject.length && statusFilter) {
         element.valueObject = element.valueObject.filter(inner => inner.valueObject.status === statusFilter);
       }
     })
@@ -103,10 +103,10 @@ export class MappingsComponent implements OnChanges {
 
   onFilterChanged(selectedFilter: string) {
     let filter = ''
-    if(selectedFilter === 'Show Mapped'){
+    if(selectedFilter === 'Mapped'){
       filter = 'mapped'
     }
-    else if(selectedFilter === 'Show Not Mapped'){
+    else if(selectedFilter === 'Not Mapped'){
       filter = 'not mapped';
     }
     else {
