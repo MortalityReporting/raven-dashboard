@@ -11,7 +11,7 @@ import {FileTemplateService} from "../services/file-template.service";
 
 export class ImportCaseComponent implements OnInit {
 
-  inputOptions: string[] = ['MDI-to-EDRS Document', 'Template (XLSX File)'];
+  inputOptions: string[] = ['MDI FHIR Bundle', 'Template (XLSX File)'];
   selectedInputOption: string = this.inputOptions[0];
   fileTemplates$: Observable<FileTemplate[]>;
 
