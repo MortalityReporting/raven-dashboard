@@ -102,7 +102,6 @@ export class MdiToEdrsGridComponent implements OnInit {
                 decedentRecord.caseNumber = caseNumber;
                 const mdiSystem = this.fhirHelperService.getTrackingNumberSystem(composition?.entry?.[0]?.resource, TrackingNumberType.Mdi);
                 decedentRecord.system = mdiSystem;
-                console.log(decedentRecord);
                 return decedentRecord
               })
             )
