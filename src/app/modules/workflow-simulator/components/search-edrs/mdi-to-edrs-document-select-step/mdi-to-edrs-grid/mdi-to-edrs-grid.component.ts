@@ -2,7 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {DecedentGridDTO} from "../../../../../../model/decedent.grid.dto";
 import {MatSort} from "@angular/material/sort";
 import {ActivatedRoute, Router} from "@angular/router";
-import {DecedentService} from "../../../../../../modules/record-viewer/services/decedent.service";
+import {DecedentService} from "../../../../../record-viewer/services/decedent.service";
 import {UtilsService} from "../../../../../../service/utils.service";
 import {forkJoin, map, mergeMap, switchMap} from "rxjs";
 import {SearchEdrsService} from "../../../../service/search-edrs.service";
