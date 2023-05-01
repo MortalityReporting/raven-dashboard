@@ -8,7 +8,7 @@ import {forkJoin, map, mergeMap, switchMap} from "rxjs";
 import {SearchEdrsService} from "../../../../service/search-edrs.service";
 import {DecedentSimpleInfo} from "../../../../../../model/decedent-simple-info";
 import {TrackingNumberType} from "../../../../../../model/tracking.number.type";
-import {FhirHelperService} from "../../../../../../modules/fhir-util/services/fhir-helper.service";
+import {FhirHelperService, PatientNameReturn} from "../../../../../../modules/fhir-util/services/fhir-helper.service";
 import {DatePipe} from "@angular/common";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
@@ -50,13 +50,13 @@ export class MdiToEdrsGridComponent implements OnInit {
 
   mapToDto(entry: any): DecedentGridDTO {
     let decedentDTO = new DecedentGridDTO();
-    decedentDTO.decedentId = entry.resource?.id;
-    decedentDTO.firstName = entry.resource?.name?.[0]?.given[0];
-    decedentDTO.lastName = entry.resource?.name?.[0]?.family;
-    decedentDTO.gender = entry.resource?.gender;
-    decedentDTO.system = entry.resource?.identifier?.[0]?.system || null;
-    decedentDTO.age = this.getAgeFromDob(new Date(entry.resource?.birthDate));
-    decedentDTO.patientResource = entry.resource;
+    decedentDTO.decedentId = entry?.id;
+    decedentDTO.firstName = this.fhirHelperService.getOfficialName(entry, PatientNameReturn.firstonly);
+    decedentDTO.lastName = this.fhirHelperService.getOfficialName(entry, PatientNameReturn.lastonly);
+    decedentDTO.gender = entry?.gender;
+    decedentDTO.system = entry.identifier?.[0]?.system || null;
+    decedentDTO.age = this.getAgeFromDob(new Date(entry.birthDate));
+    decedentDTO.patientResource = entry;
     return decedentDTO;
   }
 
@@ -81,12 +81,14 @@ export class MdiToEdrsGridComponent implements OnInit {
           decedentRecordsList.map((decedentRecord: any, i) =>
             this.decedentService.getDecedentObservationsByCode(decedentRecord, codes).pipe(
               map((observation: any) => {
+                // console.log(decedentRecord);
                 decedentRecord = this.mapToDto(decedentRecord);
                 const tod = observation?.entry?.find(entry => entry.resource?.code?.coding[0]?.code == loincTimeOfDeath)?.resource?.effectiveDateTime;
                 decedentRecord.tod = tod;
                 const mannerOfDeath =  observation?.entry?.find(entry => entry.resource?.code?.coding[0]?.code == loincCauseOfDeath)?.resource?.valueCodeableConcept?.coding[0]?.display;
                 decedentRecord.mannerOfDeath = mannerOfDeath;
                 decedentRecord.index = i + 1;
+                // console.log(decedentRecord);
                 return decedentRecord;
               })
             )
@@ -102,6 +104,7 @@ export class MdiToEdrsGridComponent implements OnInit {
                 decedentRecord.caseNumber = caseNumber;
                 const mdiSystem = this.fhirHelperService.getTrackingNumberSystem(composition?.entry?.[0]?.resource, TrackingNumberType.Mdi);
                 decedentRecord.system = mdiSystem;
+                console.log(decedentRecord);
                 return decedentRecord
               })
             )
