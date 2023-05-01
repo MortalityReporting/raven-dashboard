@@ -81,14 +81,12 @@ export class MdiToEdrsGridComponent implements OnInit {
           decedentRecordsList.map((decedentRecord: any, i) =>
             this.decedentService.getDecedentObservationsByCode(decedentRecord, codes).pipe(
               map((observation: any) => {
-                // console.log(decedentRecord);
                 decedentRecord = this.mapToDto(decedentRecord);
                 const tod = observation?.entry?.find(entry => entry.resource?.code?.coding[0]?.code == loincTimeOfDeath)?.resource?.effectiveDateTime;
                 decedentRecord.tod = tod;
                 const mannerOfDeath =  observation?.entry?.find(entry => entry.resource?.code?.coding[0]?.code == loincCauseOfDeath)?.resource?.valueCodeableConcept?.coding[0]?.display;
                 decedentRecord.mannerOfDeath = mannerOfDeath;
                 decedentRecord.index = i + 1;
-                // console.log(decedentRecord);
                 return decedentRecord;
               })
             )
