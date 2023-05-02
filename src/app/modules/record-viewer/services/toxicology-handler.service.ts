@@ -1,16 +1,21 @@
 import {Injectable} from '@angular/core';
 import {Observable, skipWhile, tap} from "rxjs";
 import {map} from "rxjs/operators";
-import {EnvironmentHandlerService} from "../../fhir-util";
 import {TrackingNumberType} from "../../../model/tracking.number.type";
-import {trackingNumberUrl} from "../models/mdi/tracking.number"
 import {ToxHeader} from "../models/tox.header";
-import {FhirHelperService} from "../../fhir-util";
-import {BundleHelperService} from "../../fhir-util";
+import {
+  Address,
+  BundleHelperService,
+  CodeType,
+  EnvironmentHandlerService,
+  FhirClientService,
+  FhirHelperService,
+  FhirResource, StringType
+} from "../../fhir-util";
 import {CertifierAndOrganization, LabResult, Performer, Specimen, ToxSummary} from "../models/tox.summary";
-import {FhirClientService} from "../../fhir-util";
-import {FhirResource} from "../../fhir-util";
-import {Address} from "../../fhir-util";
+import {trackingNumberUrl} from "../../fhir-mdi-library";
+import {Extension} from "../../fhir-util/models/base/fhir.extension";
+
 
 @Injectable({
   providedIn: 'root'
@@ -25,11 +30,13 @@ export class ToxicologyHandlerService {
   ) { }
 
   getToxicologyRecords(): Observable<any>{
+
+    const code = new CodeType("jaodjsoij");
+    let test = new Extension("test", code);
+    console.log(test.getValue())
+
     return this.fhirClient.search("DiagnosticReport", "", true).pipe(
-      tap(console.log),
-      skipWhile((result: any) => {
-        return !result
-      })
+      skipWhile((result: any) => !result)
     );
   }
 

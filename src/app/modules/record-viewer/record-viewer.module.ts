@@ -46,6 +46,7 @@ import {NoteComponent} from "./components/note/note.component";
 import {
   ToxicologyReportCertifierComponent
 } from "./components/tox-to-mdi/toxicology-report-certifier/toxicology-report-certifier.component";
+import {FhirMdiLibraryModule} from "../fhir-mdi-library/fhir-mdi-library.module";
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import {
   imports: [
     CommonModule,
     FhirUtilModule, // Dependency
+    FhirMdiLibraryModule, // Dependency
     MatSidenavModule,
     MatIconModule,
     MatListModule,

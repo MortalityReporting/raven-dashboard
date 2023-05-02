@@ -12,7 +12,6 @@ import {
   Jurisdiction
 } from "../models/case.summary";
 import {Author, CaseHeader} from "../models/case.header";
-import {TrackingNumber} from "../models/mdi/tracking.number";
 import {
   Address,
   BundleHelperService,
@@ -25,6 +24,7 @@ import {TrackingNumberType} from "../../../model/tracking.number.type";
 import {ToxRecordStub} from "../models/toxRecordStub";
 import {FHIRProfileConstants} from "../../../providers/fhir-profile-constants";
 import {FhirExplorerService} from "../../fhir-explorer/services/fhir-explorer.service";
+import {TrackingNumberExtension} from "../../fhir-mdi-library";
 
 @Injectable({
   providedIn: 'root'
@@ -150,7 +150,7 @@ export class DocumentHandlerService {
     let deathDateResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Obs_DeathDate);
     caseHeader.deathDateTime = deathDateResource?.valueDateTime || this.defaultString;
     caseHeader.trackingNumbers = this.getTrackingNumbers(compositionResource);
-    caseHeader.mdiCaseNumber = new TrackingNumber()
+    caseHeader.mdiCaseNumber = new TrackingNumberExtension()
     caseHeader.mdiCaseNumber.value = this.fhirHelper.getTrackingNumber(compositionResource, TrackingNumberType.Mdi) || "Unknown";
     caseHeader.mdiCaseNumber.system = this.fhirHelper.getTrackingNumberSystem(compositionResource, TrackingNumberType.Mdi) || "Unknown";
 
@@ -397,7 +397,7 @@ export class DocumentHandlerService {
   // -------------------------
 
   // Get Tracking Numbers from Composition Extension
-  getTrackingNumbers(compositionResource: any): TrackingNumber[] {
+  getTrackingNumbers(compositionResource: any): TrackingNumberExtension[] {
     let extensions = compositionResource.extension;
     let trackingNumberExtensions = extensions?.filter((extension: any) => extension.url === "http://hl7.org/fhir/us/mdi/StructureDefinition/Extension-tracking-number");
 
@@ -405,7 +405,7 @@ export class DocumentHandlerService {
 
     trackingNumberExtensions?.map(( item: any ) => {
 
-      let trackingNumber = new TrackingNumber();
+      let trackingNumber = new TrackingNumberExtension();
 
       let valueIdentifier = item?.valueIdentifier;
       trackingNumber.value = valueIdentifier?.value || "Tracking Number Not Specified";
