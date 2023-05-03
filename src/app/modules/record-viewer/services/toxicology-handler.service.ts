@@ -119,7 +119,7 @@ export class ToxicologyHandlerService {
     const diagnosticReport = this.getDiagnosticReportFromMessageBundle(messageBundle);
     const subject = this.bundleHelper.findSubjectInBundle(diagnosticReport, messageBundle);
     let toxSummary = new ToxSummary()
-    toxSummary.patientId = subject.id;
+    toxSummary.patientId = subject?.['id'];
     toxSummary.mdiCaseNumber = this.fhirHelper.getTrackingNumber(diagnosticReport, TrackingNumberType.Mdi);
     toxSummary.performers = this.createPerformersList(diagnosticReport, messageBundle);
     toxSummary.certifier = this.createCertifier(toxSummary.performers[0], diagnosticReport, messageBundle);
