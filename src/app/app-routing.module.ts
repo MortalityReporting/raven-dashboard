@@ -89,9 +89,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  // See https://angular.io/guide/router#hashlocationstrategy for HashLocationStrategy
-  // Also see this post: https://stackoverflow.com/questions/49365057/angular-deployment-without-server-error-securityerror-failed-to-execute-rep
-  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
