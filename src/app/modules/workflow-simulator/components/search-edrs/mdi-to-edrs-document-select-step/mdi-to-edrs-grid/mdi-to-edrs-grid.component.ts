@@ -2,13 +2,13 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {DecedentGridDTO} from "../../../../../../model/decedent.grid.dto";
 import {MatSort} from "@angular/material/sort";
 import {ActivatedRoute, Router} from "@angular/router";
-import {DecedentService} from "../../../../../../modules/record-viewer/services/decedent.service";
+import {DecedentService} from "../../../../../record-viewer/services/decedent.service";
 import {UtilsService} from "../../../../../../service/utils.service";
 import {forkJoin, map, mergeMap, switchMap} from "rxjs";
 import {SearchEdrsService} from "../../../../service/search-edrs.service";
 import {DecedentSimpleInfo} from "../../../../../../model/decedent-simple-info";
 import {TrackingNumberType} from "../../../../../../model/tracking.number.type";
-import {FhirHelperService} from "../../../../../../modules/fhir-util/services/fhir-helper.service";
+import {FhirHelperService, PatientNameReturn} from "../../../../../../modules/fhir-util/services/fhir-helper.service";
 import {DatePipe} from "@angular/common";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
@@ -50,13 +50,13 @@ export class MdiToEdrsGridComponent implements OnInit {
 
   mapToDto(entry: any): DecedentGridDTO {
     let decedentDTO = new DecedentGridDTO();
-    decedentDTO.decedentId = entry.resource?.id;
-    decedentDTO.firstName = entry.resource?.name?.[0]?.given[0];
-    decedentDTO.lastName = entry.resource?.name?.[0]?.family;
-    decedentDTO.gender = entry.resource?.gender;
-    decedentDTO.system = entry.resource?.identifier?.[0]?.system || null;
-    decedentDTO.age = this.getAgeFromDob(new Date(entry.resource?.birthDate));
-    decedentDTO.patientResource = entry.resource;
+    decedentDTO.decedentId = entry?.id;
+    decedentDTO.firstName = this.fhirHelperService.getOfficialName(entry, PatientNameReturn.firstonly);
+    decedentDTO.lastName = this.fhirHelperService.getOfficialName(entry, PatientNameReturn.lastonly);
+    decedentDTO.gender = entry?.gender;
+    decedentDTO.system = entry.identifier?.[0]?.system || null;
+    decedentDTO.age = this.getAgeFromDob(new Date(entry.birthDate));
+    decedentDTO.patientResource = entry;
     return decedentDTO;
   }
 
