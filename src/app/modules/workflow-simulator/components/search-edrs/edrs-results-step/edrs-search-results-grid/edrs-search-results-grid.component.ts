@@ -2,9 +2,9 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import {Obs_DeathDate, Obs_MannerOfDeath} from "../../../../../../providers/fhir-profile-constants";
 import {TrackingNumberType} from "../../../../../../model/tracking.number.type";
 import {FhirHelperService, PatientNameReturn} from "../../../../../../modules/fhir-util/services/fhir-helper.service";
-import {DocumentHandlerService} from "../../../../../../modules/record-viewer/services/document-handler.service";
 import {MatTabGroup} from "@angular/material/tabs";
 import {MatTableDataSource} from "@angular/material/table";
+import {MdiToEdrsDocumentHandlerService} from "../../../../../record-viewer";
 
 @Component({
   selector: 'app-edrs-search-results-grid',
@@ -26,7 +26,7 @@ export class EdrsSearchResultsGridComponent implements OnInit, OnChanges {
 
   constructor(
     private fhirHelperService: FhirHelperService,
-    private documentHandlerService: DocumentHandlerService) { }
+    private documentHandlerService: MdiToEdrsDocumentHandlerService) { }
 
   ngOnInit(): void {
   }

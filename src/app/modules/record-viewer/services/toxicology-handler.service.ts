@@ -33,7 +33,6 @@ export class ToxicologyHandlerService {
 
     const code = new CodeType("jaodjsoij");
     let test = new Extension("test", code);
-    console.log(test.getValue())
 
     return this.fhirClient.search("DiagnosticReport", "", true).pipe(
       skipWhile((result: any) => !result)
@@ -42,7 +41,6 @@ export class ToxicologyHandlerService {
 
   getSubject(diagnosticReport: any): Observable<any> {
     // NOTE: THIS REQUIRED IN THE DATA AND SHOULD NEVER BE NULL
-    console.log(diagnosticReport);
     const subjectReference = diagnosticReport?.subject?.reference;
     let subjectId = subjectReference.split("/").pop();
     return this.fhirClient.read("Patient", subjectId);

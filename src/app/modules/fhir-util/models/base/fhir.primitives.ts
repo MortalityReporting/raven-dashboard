@@ -1,8 +1,9 @@
 /**
  * Wrappers for string primitive to explicitly type in constructors. Do not use otherwise.
  */
+import {FhirType} from "./fhir.type";
 
-class PrimitiveType {
+class PrimitiveType implements FhirType {
   constructor(value: any) {
     this.value = value;
   }

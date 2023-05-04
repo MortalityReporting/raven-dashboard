@@ -1,6 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import { MatAccordion } from "@angular/material/expansion";
-import { DocumentHandlerService } from "../../../record-viewer/services/document-handler.service";
 import { USCorePatientDiff } from '../../models/us-core-patient.diff';
 import { CompositionMdiToEdrsDiff } from '../../models/composition-mdi-to-edrs.diff';
 import { USCoreLocationDiff } from '../../models/us-core-location.diff';
@@ -18,6 +17,7 @@ import {ReferenceDocumentService} from "../../services/reference-document.servic
 import {ComparisonService} from "../../services/comparison.service";
 import {Difference} from "../../models/difference";
 import {MatDialog} from "@angular/material/dialog";
+import {MdiToEdrsDocumentHandlerService} from "../../../record-viewer";
 
 @Component({
   selector: 'record-comparison-content',
@@ -71,7 +71,7 @@ export class RecordComparisonContentComponent implements OnInit {
     private comparisonService: ComparisonService,
     private dialog: MatDialog,
     private decedentService: DecedentService,
-    private documentHandler: DocumentHandlerService,
+    private documentHandler: MdiToEdrsDocumentHandlerService,
     private utilsService: UtilsService,
     private route: ActivatedRoute,
   ) { }

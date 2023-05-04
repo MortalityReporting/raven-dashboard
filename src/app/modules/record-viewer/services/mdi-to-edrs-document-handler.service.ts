@@ -29,7 +29,7 @@ import {TrackingNumberExtension} from "../../fhir-mdi-library";
 @Injectable({
   providedIn: 'root'
 })
-export class DocumentHandlerService {
+export class MdiToEdrsDocumentHandlerService {
 
   private subjectId: string;
   public defaultString: string = "VALUE NOT FOUND";
@@ -254,7 +254,7 @@ export class DocumentHandlerService {
     jurisdiction.typeOfDeathLocation = typeOfDeathLocationComponent?.valueCodeableConcept?.text ||
       typeOfDeathLocationComponent?.valueCodeableConcept?.coding?.[0].display || typeOfDeathLocationComponent?.valueCodeableConcept?.coding?.[0].code || this.defaultString;
     jurisdiction.establishmentApproach = observation?.method?.text || observation?.method?.coding?.[0]?.display || observation?.method?.coding?.[0]?.code || this.defaultString;
-    jurisdiction.deathDateTime = observation?.effectiveDateTime?.replace( "T", " " ) || this.defaultString;
+    jurisdiction.deathDateTime = observation?.valueDateTime?.replace( "T", " " ) || this.defaultString;
 
     // Search for component by code. 80616-6
     jurisdiction.pronouncedDateTime = pronouncedDateTimeComponent?.valueDateTime || this.defaultString;

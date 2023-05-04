@@ -3,7 +3,7 @@ import {Observable} from "rxjs";
 import {CaseSummary} from "../../../models/case.summary";
 import {CaseHeader} from "../../../models/case.header";
 import {MatAccordion} from "@angular/material/expansion";
-import {DocumentHandlerService} from "../../../services/document-handler.service";
+import {MdiToEdrsDocumentHandlerService} from "../../../services/mdi-to-edrs-document-handler.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ModuleHeaderConfig} from "../../../../../../assets/configuration/module-header-config";
 import {AppConfiguration} from "../../../../../../assets/configuration/app-configuration";
@@ -43,7 +43,7 @@ export class CaseSummaryContentComponent implements OnInit {
   author: any;
 
   constructor(
-    private documentHandlerService: DocumentHandlerService,
+    private documentHandlerService: MdiToEdrsDocumentHandlerService,
     private route: ActivatedRoute,
     private router: Router,
     @Inject('config') public config: ModuleHeaderConfig,

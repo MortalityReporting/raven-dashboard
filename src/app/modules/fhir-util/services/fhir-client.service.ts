@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {EnvironmentHandlerService} from "./environment-handler.service";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams, HttpParamsOptions} from "@angular/common/http";
 import {EMPTY, expand, map, mergeMap, Observable, of, reduce, takeWhile} from "rxjs";
 import {FhirResource} from "../models/base/fhir.resource";
 import {Bundle, BundleEntryComponent, BundleType} from "../models/resources/bundle";
@@ -32,17 +32,22 @@ export class FhirClientService {
     );
   }
 
-  search(resourceType: string = "", parameters: string | FhirResource = "", flat: boolean = false, baseUrl: boolean = true, fullUrl?: string): Observable<Bundle | FhirResource[]> {
+  search(resourceType: string = "", parameters: string | FhirResource = "",
+         flat: boolean = false, baseUrl: boolean = true,
+         fullUrl?: string,
+         httpParams: HttpParams = new HttpParams()
+  ): Observable<Bundle | FhirResource[]> {
+
     let searchString: string = "";
     let pagination$: Observable<Bundle>;
 
     if (typeof parameters === 'string' || parameters instanceof String) {
       searchString = fullUrl ? fullUrl : this.createSearchRequestUrl(resourceType, parameters as string, baseUrl)
-      pagination$ = this.http.get<Bundle>(searchString);
+      pagination$ = this.http.get<Bundle>(searchString, {params: httpParams});
     }
     else {
       searchString = fullUrl ? fullUrl : this.createSearchRequestUrl(resourceType, "", baseUrl)
-      pagination$ = this.http.post<Bundle>(searchString, parameters);
+      pagination$ = this.http.post<Bundle>(searchString, parameters, {params: httpParams});
     }
     console.log("Making Search Request: " + searchString);
 

@@ -82,7 +82,11 @@ import { FHIRProfileConstants } from "./providers/fhir-profile-constants";
       provide: 'fhirProfiles',
       useValue: FHIRProfileConstants.Profiles
     },
-    {provide: HTTP_INTERCEPTORS, useClass: FhirAuthInterceptor, multi: true},
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: FhirAuthInterceptor,
+      multi: true
+    },
     FhirExplorerDrawerService,
   ],
   bootstrap: [AppComponent],
