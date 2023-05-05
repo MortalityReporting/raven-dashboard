@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ActivationEnd, Router} from "@angular/router";
 import {filter} from "rxjs/operators";
 import {FhirExplorerDrawerService} from "../../../fhir-explorer/services/fhir-explorer-drawer.service";
+import {ModuleHeaderService} from "../../../../service/module-header.service";
 
 @Component({
   selector: 'app-module-header',
@@ -19,24 +20,17 @@ export class ModuleHeaderComponent implements OnInit {
 
   constructor(private router: Router,
               public fhirExplorerDrawerService: FhirExplorerDrawerService,
+              private moduleHeaderService: ModuleHeaderService
   ) { }
 
   ngOnInit(): void {
-    this.router.events.pipe(
-      filter((event) => {return event instanceof ActivationEnd})
-    ).subscribe(
-      {
-        next: (event: any) => {
-          if (event.snapshot.data !== undefined && Object.keys(event.snapshot.data).length !== 0) {
-            this.showHeader = !!(event.snapshot.data.moduleConfig);
-            this.moduleTitle = event.snapshot.data.moduleConfig?.title || undefined;
-            this.backgroundColor = event.snapshot.data.moduleConfig?.backgroundColor || undefined;
-            this.componentTitle = event.snapshot.data.componentTitle || undefined;
-            this.icon = event.snapshot.data.moduleConfig?.icon || undefined;
-          }
-        }
-      }
-    );
+    this.moduleHeaderService.moduleHeaderConfig$.subscribe(value => {
+      this.showHeader = value.showHeader;
+      this.moduleTitle = value.moduleTitle;
+      this.backgroundColor = value.backgroundColor;
+      this.componentTitle = value.componentTitle;
+      this.icon = value.icon;
+    });
   }
   onToggle() {
     this.fhirExplorerDrawerService.toggle();
