@@ -20,11 +20,10 @@ import {
   FhirHelperService,
   TerminologyHandlerService
 } from "../../fhir-util";
-import {TrackingNumberType} from "../../../model/tracking.number.type";
 import {ToxRecordStub} from "../models/toxRecordStub";
 import {FHIRProfileConstants} from "../../../providers/fhir-profile-constants";
 import {FhirExplorerService} from "../../fhir-explorer/services/fhir-explorer.service";
-import {TrackingNumberExtension} from "../../fhir-mdi-library";
+import {TrackingNumberExtension, TrackingNumberType} from "../../fhir-mdi-library";
 
 @Injectable({
   providedIn: 'root'
