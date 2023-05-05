@@ -108,8 +108,6 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
             this.errorsGenerated = true;
           }
         });
-      } else {
-        this.utilsService.showErrorMessage("Please select a file to upload")
       }
     }
   }
