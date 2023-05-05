@@ -28,7 +28,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {DomSanitizer} from "@angular/platform-browser";
 import {FormsModule} from "@angular/forms";
 import {MatSortModule} from "@angular/material/sort";
-import {ModuleHeaderConfig} from "../../../assets/configuration/module-header-config";
+import {ModuleHeaderConfig} from "../../providers/module-header-config";
 import {CommonUiModule} from "../common-ui/common-ui.module";
 import {MatTableModule} from "@angular/material/table";
 import {MatSelectModule} from "@angular/material/select";

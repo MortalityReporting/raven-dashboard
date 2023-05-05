@@ -21,12 +21,15 @@
 <div class="top-padding">
   <h3>2. Submit MDI FHIR Bundle to Raven</h3>
   <div class="content-offset top-padding">
-    <button mat-raised-button color="primary" (click)="onSubmit()" *ngIf="!invalidResourceFound || preconditionError">
+    <button mat-raised-button color="primary" (click)="onSubmit()" *ngIf="!invalidResourceFound || preconditionError"
+            [style.background-color]="config.backgroundColor" [style.color]="'white'">
       <mat-icon>send</mat-icon>
       Submit
     </button>
     <button mat-raised-button color="warn" (click)="onSubmitInvalidRecord()"
-            *ngIf="invalidResourceFound && !preconditionError && !isLoading">
+            *ngIf="invalidResourceFound && !preconditionError && !isLoading"
+            [style.background-color]="config.backgroundColor" [style.color]="'white'"
+    >
       <mat-icon>send</mat-icon>
       Submit Invalid Record
     </button>

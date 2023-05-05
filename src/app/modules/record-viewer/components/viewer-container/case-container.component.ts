@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {MatDrawer} from "@angular/material/sidenav";
 import {FhirExplorerDrawerService} from "../../../fhir-explorer/services/fhir-explorer-drawer.service";
 import {Subscription} from "rxjs";
-import {ModuleHeaderConfig} from "../../../../../assets/configuration/module-header-config";
+import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 
 @Component({
   selector: 'record-viewer-case-container',

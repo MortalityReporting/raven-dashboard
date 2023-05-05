@@ -5,8 +5,8 @@ import {CaseHeader} from "../../../models/case.header";
 import {MatAccordion} from "@angular/material/expansion";
 import {MdiToEdrsDocumentHandlerService} from "../../../services/mdi-to-edrs-document-handler.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {ModuleHeaderConfig} from "../../../../../../assets/configuration/module-header-config";
-import {AppConfiguration} from "../../../../../../assets/configuration/app-configuration";
+import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
+import {AppConfiguration} from "../../../../../providers/app-configuration";
 import {FhirResource} from "../../../../fhir-util/models/base/fhir.resource";
 
 @Component({

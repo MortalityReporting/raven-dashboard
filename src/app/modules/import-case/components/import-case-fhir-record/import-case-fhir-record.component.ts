@@ -1,10 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {ImportCaseService} from "../../services/import-case.service";
 import {UtilsService} from "../../../../service/utils.service";
 import {FhirValidatorComponent} from "../../../fhir-validator/components/fhir-validator/fhir-validator.component";
 import {MatDialog} from "@angular/material/dialog";
 import {openConfirmationDialog} from "common-ui";
 import {NgxFhirValidatorComponent, ValidationResults} from "ngx-fhir-validator";
+import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 
 @Component({
   selector: 'app-import-case-fhir-record',
@@ -22,7 +23,9 @@ export class ImportCaseFhirRecordComponent implements OnInit{
   preconditionError: string;
   constructor(private importCaseService: ImportCaseService,
               private utilsService: UtilsService,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog,
+              @Inject('importConfig') public config: ModuleHeaderConfig,
+  ) { }
 
   importCase(){
     this.isLoading = true;

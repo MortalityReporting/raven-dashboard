@@ -19,7 +19,9 @@
     </div>
     <div class="row top-margin">
     <button mat-raised-button color="success" class="upload-btn"
-            (click)="clearUI(); fileUpload.click();" [disabled]=isLoading>
+            (click)="clearUI(); fileUpload.click();" [disabled]=isLoading
+            [style.background-color]="config.backgroundColor" [style.color]="'white'"
+    >
       <mat-icon>upload_file</mat-icon>
       Browse for Import Spreadsheet
     </button>
@@ -40,9 +42,9 @@
           </mat-error>
         </mat-form-field>
         <div class="content-spacer"></div>
-        <button mat-stroked-button type=submit
+        <button mat-raised-button type=submit
                 [style.background-color]="config.backgroundColor"
-                [style.color]="'white'"[disabled]="isLoading">
+                [style.color]="'white'" [disabled]="isLoading">
           Submit
         </button>
       </form>

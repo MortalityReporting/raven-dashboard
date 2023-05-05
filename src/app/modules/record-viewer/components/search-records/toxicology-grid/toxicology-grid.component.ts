@@ -2,11 +2,11 @@ import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
 import {ActivatedRoute, Router} from "@angular/router";
 import {forkJoin, map, mergeMap} from "rxjs";
-import {ToxicologyHandlerService} from "../../../services/toxicology-handler.service";
 import {ToxicologyGridDto} from "../../../../../model/toxicology.grid.dto";
 import {TrackingNumberType} from "../../../../../model/tracking.number.type";
 import {MatTableDataSource} from "@angular/material/table";
-import {AppConfiguration} from "../../../../../../assets/configuration/app-configuration";
+import {AppConfiguration} from "../../../../../providers/app-configuration";
+import {ToxToMdiMessageHandlerService} from "../../../services/tox-to-mdi-message-handler.service";
 
 @Component({
   selector: 'record-viewer-toxicology-grid',
@@ -28,7 +28,7 @@ export class ToxicologyGridComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private toxicologyHandler: ToxicologyHandlerService,
+    private toxicologyHandler: ToxToMdiMessageHandlerService,
     private router: Router,
     @Inject('appConfig') public appConfig: AppConfiguration
   ) {

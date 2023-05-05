@@ -47,10 +47,14 @@ import {MatDialogModule} from "@angular/material/dialog";
     ]
 })
 export class RecordComparisonModule {
-  public static forRoot(fhirProfiles): ModuleWithProviders<RecordComparisonModule>{
+  public static forRoot(config, fhirProfiles): ModuleWithProviders<RecordComparisonModule>{
     return {
       ngModule: RecordComparisonModule,
       providers: [
+        {
+          provide: 'comparisonConfig',
+          useValue: config
+        },
         {
           provide: 'fhirProfiles',
           useValue: fhirProfiles

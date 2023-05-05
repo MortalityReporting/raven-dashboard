@@ -8,7 +8,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {FileTemplate} from "../../models/file-template";
 import {FileTemplateService} from "../../services/file-template.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {ModuleHeaderConfig} from "../../../../../assets/configuration/module-header-config";
+import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 
 
 @Component({

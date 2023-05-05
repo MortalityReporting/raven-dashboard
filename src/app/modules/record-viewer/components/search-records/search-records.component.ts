@@ -1,5 +1,5 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
-import {AppConfiguration} from "../../../../../assets/configuration/app-configuration";
+import {AppConfiguration} from "../../../../providers/app-configuration";
 
 @Component({
   selector: 'record-viewer-search-records',

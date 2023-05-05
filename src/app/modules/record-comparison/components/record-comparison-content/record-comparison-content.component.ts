@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import { MatAccordion } from "@angular/material/expansion";
 import { USCorePatientDiff } from '../../models/us-core-patient.diff';
 import { CompositionMdiToEdrsDiff } from '../../models/composition-mdi-to-edrs.diff';
@@ -18,6 +18,7 @@ import {ComparisonService} from "../../services/comparison.service";
 import {Difference} from "../../models/difference";
 import {MatDialog} from "@angular/material/dialog";
 import {MdiToEdrsDocumentHandlerService} from "../../../record-viewer";
+import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 
 @Component({
   selector: 'record-comparison-content',
@@ -66,6 +67,7 @@ export class RecordComparisonContentComponent implements OnInit {
 
 
   constructor(
+    @Inject('comparisonConfig') public config: ModuleHeaderConfig,
     private userDocumentService: UserDocumentService,
     private referenceDocumentService: ReferenceDocumentService,
     private comparisonService: ComparisonService,

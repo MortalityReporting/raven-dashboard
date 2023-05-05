@@ -20,7 +20,7 @@ import {Extension} from "../../fhir-util/models/base/fhir.extension";
 @Injectable({
   providedIn: 'root'
 })
-export class ToxicologyHandlerService {
+export class ToxToMdiMessageHandlerService {
 
   constructor(
     private fhirClient: FhirClientService,

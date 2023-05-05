@@ -2,8 +2,8 @@ import {AfterViewInit, Component, Inject, Input, OnInit, ViewChild} from '@angul
 import {MatSort} from "@angular/material/sort";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatTableDataSource} from "@angular/material/table";
-import {ModuleHeaderConfig} from "../../../../../../assets/configuration/module-header-config";
-import {AppConfiguration} from "../../../../../../assets/configuration/app-configuration";
+import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
+import {AppConfiguration} from "../../../../../providers/app-configuration";
 
 @Component({
   selector: 'record-viewer-case-summary-related-tox',
