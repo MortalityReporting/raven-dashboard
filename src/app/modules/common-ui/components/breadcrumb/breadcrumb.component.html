@@ -1,9 +1,9 @@
 <ol id="breadcrumbNav" class="breadcrumb-nav">
     <li *ngFor="let breadcrumb of breadcrumbs$ | async; let i = index">
-      <a *ngIf="i != (breadcrumbs$ | async)?.length - 1" [href]="breadcrumb.url"
+      <a *ngIf="i != (breadcrumbs$ | async)?.length - 1" [routerLink]="breadcrumb.url"
         >{{ breadcrumb.label }}
       </a>
-  
+
       <span
         class="breadcrumb-last-li"
         *ngIf="i == (breadcrumbs$ | async)?.length - 1"
