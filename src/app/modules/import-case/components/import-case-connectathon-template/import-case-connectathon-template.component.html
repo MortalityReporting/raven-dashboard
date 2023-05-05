@@ -18,18 +18,22 @@
       Select your completed spreadsheet, the type of the template used, and submit to raven.
     </div>
     <div class="row top-margin">
-    <button mat-raised-button color="success" class="upload-btn"
-            (click)="clearUI(); fileUpload.click();" [disabled]=isLoading
-            [style.background-color]="config.backgroundColor" [style.color]="'white'"
-    >
-      <mat-icon>upload_file</mat-icon>
-      Browse for Import Spreadsheet
-    </button>
-    <span id="filename">{{file?.name}}</span>
+      <button mat-raised-button color="success" class="upload-btn"
+              (click)="clearUI(); fileUpload.click();" [disabled]=isLoading
+              [style.background-color]="config.backgroundColor" [style.color]="'white'"
+      >
+        <mat-icon>upload_file</mat-icon>
+        Browse for Import Spreadsheet
+      </button>
+      <span class="file-name">{{file?.name}}
+        <mat-error
+          *ngIf="form.submitted &&!file">No File Selected.
+        </mat-error>
+      </span>
     </div>
   </div>
     <div class="top-margin">
-      <form [formGroup]="importCaseForm" (ngSubmit)="onSubmit()" class="row">
+      <form [formGroup]="importCaseForm" (ngSubmit)="onSubmit()" class="row" #form="ngForm" >
         <mat-form-field appearance="outline" style="min-width: 50%">
           <mat-label>Select Template Type</mat-label>
           <mat-select formControlName="fileTemplate">
@@ -67,17 +71,20 @@
 
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Name</th>
-            <td mat-cell *matCellDef="let case"> {{case.fhirResponse.name}} </td>
+            <td mat-cell *matCellDef="let record"> {{record.fhirResponse.name}} </td>
           </ng-container>
 
           <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef> Status</th>
-            <td mat-cell *matCellDef="let case"> {{case.fhirResponse.status}} </td>
+            <td mat-cell *matCellDef="let record"
+                [ngClass]="record.fhirResponse?.status?.toLowerCase() == 'success' ? 'success': 'error' ">
+              {{record.fhirResponse.status}}
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="state">
-            <th mat-header-cell *matHeaderCellDef> State</th>
-            <td mat-cell *matCellDef="let case"> {{case.fhirResponse.state}} </td>
+            <th mat-header-cell *matHeaderCellDef> Response</th>
+            <td mat-cell *matCellDef="let record"> {{record.fhirResponse.statusCode}} </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
