@@ -1,7 +1,7 @@
 import {Period} from "./period";
 import {FhirType} from "../base/fhir.type";
 
-export class HumanName implements FhirType {
+export class HumanName extends FhirType {
   use: string;
   text: string;
   family: string;

@@ -1,5 +1,5 @@
 import {FhirElement} from "./fhir.element";
-import {CodeableConcept} from "../types/codeable.cocept";
+import {CodeableConcept} from "../types/codeable.concept";
 import {Coding} from "../types/coding";
 import {CodeType, StringType} from "./fhir.primitives";
 import {Address} from "../types/address";

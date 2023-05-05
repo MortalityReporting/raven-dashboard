@@ -15,6 +15,7 @@ import {Author, CaseHeader} from "../models/case.header";
 import {
   Address,
   BundleHelperService,
+  CodeableConcept,
   EnvironmentHandlerService,
   FhirClientService,
   FhirHelperService,
@@ -128,7 +129,7 @@ export class MdiToEdrsDocumentHandlerService {
           resultBundle?.entry?.forEach((bec:any) => {
             const diagnosticReport = bec.resource;
             let toxRecordStub = new ToxRecordStub();
-            toxRecordStub.date = diagnosticReport.issued.split("T")[0] || undefined;
+            toxRecordStub.date = diagnosticReport?.issued?.split("T")[0] ?? undefined;
             toxRecordStub.mdiCaseNumber = this.fhirHelper.getTrackingNumber(diagnosticReport);
             toxRecordStub.mdiCaseSystem = this.fhirHelper.getTrackingNumberSystem(diagnosticReport);
             toxRecordStub.toxCaseNumber = this.fhirHelper.getTrackingNumber(diagnosticReport, TrackingNumberType.Tox);
@@ -236,11 +237,18 @@ export class MdiToEdrsDocumentHandlerService {
     let deathLocationResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Loc_death);
     let injuryLocationResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Loc_injury);
 
-    circumstances.deathLocation = deathLocationResource?.name || this.defaultString;
-    circumstances.injuryLocation = injuryLocationResource?.name || this.defaultString;
+    console.log(deathLocationResource);
+    console.log(injuryLocationResource);
 
-    circumstances.pregnancy = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Obs_DecedentPregnancy)?.valueCodeableConcept?.coding[0]?.display || this.defaultString; // TODO: Missing data, once available fix.
-    circumstances.tobaccoUseContributed = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Obs_TobaccoUseContributedToDeath)?.valueCodeableConcept?.coding[0]?.display || this.defaultString; // TODO: Missing data, once available fix.
+    circumstances.deathLocation = deathLocationResource?.name ?? this.defaultString;
+    circumstances.injuryLocation = injuryLocationResource?.name ?? this.defaultString;
+
+    const pregnancyResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Obs_DecedentPregnancy);
+    circumstances.pregnancy = pregnancyResource?.valueCodeableConcept?.coding[0]?.display || this.defaultString; // TODO: Missing data, once available fix.
+
+    const tobaccoUseResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Obs_TobaccoUseContributedToDeath);
+    const tobaccoUseCc: CodeableConcept = new CodeableConcept(tobaccoUseResource?.valueCodeableConcept);
+    circumstances.tobaccoUseContributed = tobaccoUseCc?.toString() ?? this.defaultString;
 
     return circumstances;
   }
@@ -260,7 +268,7 @@ export class MdiToEdrsDocumentHandlerService {
     jurisdiction.deathDateTime = observation?.valueDateTime?.replace( "T", " " ) || this.defaultString;
 
     // Search for component by code. 80616-6
-    jurisdiction.pronouncedDateTime = pronouncedDateTimeComponent?.valueDateTime?.replace( "T", " " ) ?? this.defaultString;
+    jurisdiction.pronouncedDateTime = pronouncedDateTimeComponent?.valueDateTime?.replace( "T", " " ) || this.defaultString;
 
     return jurisdiction;
   }
@@ -313,7 +321,7 @@ export class MdiToEdrsDocumentHandlerService {
             causeAndManner.transportationRole = transportationRoleValue?.text || transportationRoleValue?.coding?.[0]?.display || transportationRoleValue?.coding?.[0]?.code || this.defaultString;
 
             if (observation?.effectiveDateTime) {
-              causeAndManner.injuryDateTime = observation?.effectiveDateTime?.replace( "T", " " ) ?? this.defaultString;
+              causeAndManner.injuryDateTime = observation?.effectiveDateTime?.replace( "T", " " ) || this.defaultString;
             }
             else if (observation?._effectiveDateTime != null) {
               let year = 0;
