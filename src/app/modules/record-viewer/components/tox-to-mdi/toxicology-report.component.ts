@@ -1,13 +1,13 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {ToxicologyHandlerService} from "../../services/toxicology-handler.service";
 import {ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs";
 import {ToxHeader} from "../../models/tox.header";
 import {ToxSummary} from "../../models/tox.summary";
 import {ToxicologyReportContentComponent} from "./toxicology-report-content/toxicology-report-content.component";
-import {ModuleHeaderConfig} from "../../../../../assets/configuration/module-header-config";
-import {AppConfiguration} from "../../../../../assets/configuration/app-configuration";
+import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
+import {AppConfiguration} from "../../../../providers/app-configuration";
 import {FhirExplorerService} from "../../../fhir-explorer/services/fhir-explorer.service";
+import {ToxToMdiMessageHandlerService} from "../../services/tox-to-mdi-message-handler.service";
 
 @Component({
   selector: 'record-viewer-toxicology-report',
@@ -26,7 +26,7 @@ export class ToxicologyReportComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private toxicologyHandler: ToxicologyHandlerService,
+    private toxicologyHandler: ToxToMdiMessageHandlerService,
     private fhirExplorerService: FhirExplorerService,
     @Inject('config') public config: ModuleHeaderConfig,
     @Inject('appConfig') public appConfig: AppConfiguration

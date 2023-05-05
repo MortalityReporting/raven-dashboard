@@ -3,7 +3,7 @@ import {environment} from "../environments/environment";
 import {MatIconRegistry} from "@angular/material/icon";
 import {DomSanitizer} from "@angular/platform-browser";
 import {OptionConfig, HeaderConfig} from "common-ui";
-import {AppConfiguration} from "../assets/configuration/app-configuration";
+import {AppConfiguration} from "./providers/app-configuration";
 import {ThemeService} from "./service/theme.service";
 
 @Component({

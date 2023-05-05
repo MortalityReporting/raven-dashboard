@@ -5,7 +5,8 @@ import {FhirValidatorComponent} from "../../../fhir-validator/components/fhir-va
 import {MatDialog} from "@angular/material/dialog";
 import {openConfirmationDialog} from "common-ui";
 import {NgxFhirValidatorComponent, ValidationResults} from "ngx-fhir-validator";
-import {ModuleHeaderConfig} from "../../../../../assets/configuration/module-header-config";
+import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
+
 
 @Component({
   selector: 'app-import-case-fhir-record',

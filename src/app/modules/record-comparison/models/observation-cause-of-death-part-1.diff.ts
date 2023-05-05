@@ -1,9 +1,7 @@
 import * as Diff from 'diff';
 import {DiffType} from './diff-type';
 import {ObservationDiff} from './observation.diff';
-import { DocumentHandlerService } from "../../record-viewer/services/document-handler.service";
-import {FhirHelperService} from "../../fhir-util/services/fhir-helper.service";
-import {Inject, Injectable} from "@angular/core";
+import {FhirHelperService} from "../../fhir-util";
 
 export class ObservationCauseOfDeathPart1Diff extends ObservationDiff {
     performer: DiffType;

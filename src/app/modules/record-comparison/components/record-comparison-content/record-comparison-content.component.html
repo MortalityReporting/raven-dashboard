@@ -2,7 +2,10 @@
   <div class="summary-section-grid">
     <div class="grid-row">
       <div class="grid-col-1">
-        <button mat-raised-button color="primary" (click)="onInputBundleClick()">Input MDI to EDRS Document Bundle
+        <button mat-raised-button
+                [style.background-color]="config.backgroundColor"
+                [style.color]="'white'"
+                (click)="onInputBundleClick()">Input MDI to EDRS Document Bundle
         </button>
       </div>
       <div class="grid-col-1">
@@ -18,7 +21,11 @@
       <div class="grid-col-1">
         <div style="align-items: center;">
           <button mat-raised-button color="accent" (click)="runComparison()"
-                  [disabled]="!(userDocumentWrapper && referenceDocument)">Compare
+                  [style.background-color]="(userDocumentWrapper && referenceDocument) ?
+                   config.backgroundColor : '0 0 0 0.12'"
+                  [style.color]="'white'"
+                  [disabled]="!(userDocumentWrapper && referenceDocument)">
+            Compare
           </button>
         </div>
       </div>

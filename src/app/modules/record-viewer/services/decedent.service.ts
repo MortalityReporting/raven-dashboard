@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {HttpParams} from "@angular/common/http";
 import {Observable, skipWhile} from "rxjs";
-import {map} from  "rxjs/operators";
 import {EnvironmentHandlerService} from "../../fhir-util";
 import {FhirClientService} from "../../fhir-util";
 
@@ -10,7 +9,7 @@ import {FhirClientService} from "../../fhir-util";
 })
 export class DecedentService {
 
-  constructor(private http: HttpClient,
+  constructor(
               private environmentHandler: EnvironmentHandlerService,
               private fhirClient: FhirClientService
   ) { }
@@ -21,9 +20,7 @@ export class DecedentService {
       .set('patient', decedent.id)
       .set('code', codeList.toString())
 
-    // return this.http.get(this.getFhirServerBaseURL() + "Observation?patient=" + decedent.resource.id + "&code=81956-5")
-    return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "Observation" , {params: params})
-      .pipe( map((result: any) => result));
+    return this.fhirClient.search("Observation", "", false, true, "", params)
   }
 Z
   getDecedentRecords():  Observable<any> {
@@ -37,14 +34,14 @@ Z
 
   getComposition(subjectId: string): Observable<any> {
     return this.fhirClient.search(`Composition`,`?subject=${subjectId}`)
-    //return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "Composition?subject=" + subjectId);
   }
 
   getDocumentBundle(compositionId: string): Observable<any> {
-    return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "Composition/" + compositionId + "/$document");
+    return this.fhirClient.read("Composition", compositionId, "/$document")
   }
 
-  getMockResponse(): Observable<any> {
-    return this.http.get('../../assets/data/case_comparion_demo_data.json')
-  }
+  // TODO: Update demo data and move to unit testing.
+  // getMockResponse(): Observable<any> {
+  //   return this.http.get('../../assets/data/case_comparion_demo_data.json')
+  // }
 }

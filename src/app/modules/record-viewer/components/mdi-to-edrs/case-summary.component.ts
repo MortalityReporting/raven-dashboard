@@ -1,15 +1,14 @@
 import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {DecedentService} from "../../services/decedent.service";
-import {DocumentHandlerService} from "../../services/document-handler.service";
+import {MdiToEdrsDocumentHandlerService} from "../../services/mdi-to-edrs-document-handler.service";
 import {Observable} from "rxjs";
 import {CaseHeader} from "../../models/case.header";
 import {CaseSummary} from "../../models/case.summary";
 import {CaseSummaryContentComponent} from "./case-summary-content/case-summary-content.component";
-import {FhirHelperService} from "../../../fhir-util/services/fhir-helper.service";
-import {ModuleHeaderConfig} from "../../../../../assets/configuration/module-header-config";
-import {AppConfiguration} from "../../../../../assets/configuration/app-configuration";
-import {ThemePalette} from "@angular/material/core";
+import {FhirHelperService} from "../../../fhir-util";
+import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
+import {AppConfiguration} from "../../../../providers/app-configuration";
 
 @Component({
   selector: 'record-viewer-case-summary',
@@ -31,7 +30,7 @@ export class CaseSummaryComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private decedentService: DecedentService,
-    public documentHandler: DocumentHandlerService,
+    public documentHandler: MdiToEdrsDocumentHandlerService,
     private fhirHelper: FhirHelperService,
     @Inject('config') public config: ModuleHeaderConfig,
     @Inject('appConfig') public appConfig: AppConfiguration

@@ -28,7 +28,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {DomSanitizer} from "@angular/platform-browser";
 import {FormsModule} from "@angular/forms";
 import {MatSortModule} from "@angular/material/sort";
-import {ModuleHeaderConfig} from "../../../assets/configuration/module-header-config";
+import {ModuleHeaderConfig} from "../../providers/module-header-config";
 import {CommonUiModule} from "../common-ui/common-ui.module";
 import {MatTableModule} from "@angular/material/table";
 import {MatSelectModule} from "@angular/material/select";
@@ -46,6 +46,7 @@ import {NoteComponent} from "./components/note/note.component";
 import {
   ToxicologyReportCertifierComponent
 } from "./components/tox-to-mdi/toxicology-report-certifier/toxicology-report-certifier.component";
+import {FhirMdiLibraryModule} from "../fhir-mdi-library/fhir-mdi-library.module";
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import {
   imports: [
     CommonModule,
     FhirUtilModule, // Dependency
+    FhirMdiLibraryModule, // Dependency
     MatSidenavModule,
     MatIconModule,
     MatListModule,

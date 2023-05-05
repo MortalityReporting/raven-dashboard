@@ -1,8 +1,8 @@
-import {HumanName} from "../../fhir-util/models/types/human.name";
-import {Identifier} from "../../fhir-util/models/types/identifier";
-import {CodeableConcept} from "../../fhir-util/models/types/codeable.cocept";
-import {Address} from "../../fhir-util/models/types/address";
-import {FhirResource} from "../../fhir-util/models/base/fhir.resource";
+import {HumanName} from "../../fhir-util";
+import {Identifier} from "../../fhir-util";
+import {CodeableConcept} from "../../fhir-util";
+import {Address} from "../../fhir-util";
+import {FhirResource} from "../../fhir-util";
 
 export class CaseSummary {
   demographics: Demographics;

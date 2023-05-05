@@ -1,6 +1,6 @@
 import {Component, Inject, Input, OnInit} from '@angular/core';
 import {FileTemplate} from "../../models/file-template";
-import {ModuleHeaderConfig} from "../../../../../assets/configuration/module-header-config";
+import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {FileTemplateService} from "../../services/file-template.service";
 
 @Component({

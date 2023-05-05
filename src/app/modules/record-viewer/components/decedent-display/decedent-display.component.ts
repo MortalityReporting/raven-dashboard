@@ -1,5 +1,5 @@
 import {Component, Inject, Input} from '@angular/core';
-import {ModuleHeaderConfig} from "../../../../../assets/configuration/module-header-config";
+import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {ThemeService} from "../../../../service/theme.service";
 
 

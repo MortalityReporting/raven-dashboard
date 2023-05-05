@@ -7,8 +7,8 @@ import {FhirValidatorComponent} from "./modules/fhir-validator/components/fhir-v
 import {SearchRecordsComponent} from "./modules/record-viewer/components/search-records/search-records.component";
 import {WorkflowSimulatorComponent} from "./modules/workflow-simulator/components/workflow-simulator.component";
 import {SearchEdrsComponent} from "./modules/workflow-simulator/components/search-edrs/search-edrs.component";
-import {ModuleHeaderConfig} from "../assets/configuration/module-header-config";
-import {AppConfiguration} from "../assets/configuration/app-configuration";
+import {ModuleHeaderConfig} from "./providers/module-header-config";
+import {AppConfiguration} from "./providers/app-configuration";
 import {
   RecordComparisonContentComponent
 } from "./modules/record-comparison/components/record-comparison-content/record-comparison-content.component";

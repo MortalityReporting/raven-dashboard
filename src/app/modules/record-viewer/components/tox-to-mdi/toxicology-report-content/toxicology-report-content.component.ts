@@ -2,10 +2,10 @@ import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {MatAccordion, MatExpansionPanel} from "@angular/material/expansion";
 import {ToxHeader} from "../../../models/tox.header";
 import {ToxSummary} from "../../../models/tox.summary";
-import {ModuleHeaderConfig} from "../../../../../../assets/configuration/module-header-config";
-import {AppConfiguration} from "../../../../../../assets/configuration/app-configuration";
+import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
+import {AppConfiguration} from "../../../../../providers/app-configuration";
 import {FHIRProfileConstants} from "../../../../../providers/fhir-profile-constants";
-import {FhirResource} from "../../../../fhir-util/models/base/fhir.resource";
+import {FhirResource} from "../../../../fhir-util";
 
 @Component({
   selector: 'record-viewer-toxicology-report-content',

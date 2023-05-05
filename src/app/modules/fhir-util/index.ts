@@ -1,3 +1,7 @@
+export * from "./models/base/fhir.base";
+export * from "./models/base/fhir.element";
+export * from "./models/base/fhir.extension";
+export * from "./models/base/fhir.primitives";
 export * from "./models/base/fhir.resource";
 export * from "./models/base/fhir.type";
 

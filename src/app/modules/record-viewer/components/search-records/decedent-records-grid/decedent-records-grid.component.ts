@@ -8,10 +8,10 @@ import {UtilsService} from "../../../../../service/utils.service";
 import {DatePipe} from "@angular/common";
 import {FhirHelperService} from "../../../../fhir-util/services/fhir-helper.service";
 import {TrackingNumberType} from "../../../../../model/tracking.number.type";
-import {ModuleHeaderConfig} from "../../../../../../assets/configuration/module-header-config";
+import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
 import {MatSelect} from "@angular/material/select";
 import {MatTableDataSource} from "@angular/material/table";
-import {AppConfiguration} from "../../../../../../assets/configuration/app-configuration";
+import {AppConfiguration} from "../../../../../providers/app-configuration";
 
 
 @Component({

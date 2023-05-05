@@ -22,7 +22,7 @@ import {FhirExplorerModule} from "./modules/fhir-explorer/fhir-explorer.module";
 import {RecordComparisonModule} from "./modules/record-comparison/record-comparison.module";
 import {BreadcrumbComponent} from './modules/common-ui/components/breadcrumb/breadcrumb.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
-import {ModuleHeaderConfig} from "../assets/configuration/module-header-config";
+import {ModuleHeaderConfig} from "./providers/module-header-config";
 import {CommonUiModule} from "./modules/common-ui/common-ui.module";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatMenuModule} from "@angular/material/menu";
@@ -32,7 +32,7 @@ import {MatListModule} from "@angular/material/list";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {HeaderComponent, NavMenuComponent} from "common-ui";
-import {AppConfiguration} from "../assets/configuration/app-configuration";
+import {AppConfiguration} from "./providers/app-configuration";
 import { CardHoverDirective } from './directives/card-hover.directive';
 
 import { UiStringConstants } from "./providers/ui-string-constants";
@@ -70,7 +70,7 @@ import { FHIRProfileConstants } from "./providers/fhir-profile-constants";
     RecordViewerModule.forRoot(environment, ModuleHeaderConfig.RecordViewer, AppConfiguration.config, FHIRProfileConstants.Profiles),
     FhirUtilModule,
     FhirExplorerModule,
-    RecordComparisonModule.forRoot(FHIRProfileConstants.Profiles),
+    RecordComparisonModule.forRoot(ModuleHeaderConfig.RecordComparison, FHIRProfileConstants.Profiles),
     CommonUiModule,
     MatSidenavModule,
     CommonUiModule,
@@ -82,7 +82,11 @@ import { FHIRProfileConstants } from "./providers/fhir-profile-constants";
       provide: 'fhirProfiles',
       useValue: FHIRProfileConstants.Profiles
     },
-    {provide: HTTP_INTERCEPTORS, useClass: FhirAuthInterceptor, multi: true},
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: FhirAuthInterceptor,
+      multi: true
+    },
     FhirExplorerDrawerService,
   ],
   bootstrap: [AppComponent],
