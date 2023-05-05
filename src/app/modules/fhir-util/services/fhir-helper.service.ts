@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
-import {TrackingNumberType} from "../../../model/tracking.number.type";
-import {TerminologyHandlerService} from "./terminology-handler.service";
+import {TrackingNumberType} from "../../fhir-mdi-library";
 
 @Injectable({
   providedIn: 'root'

@@ -3,7 +3,7 @@
  */
 import {FhirType} from "./fhir.type";
 
-class PrimitiveType implements FhirType {
+export class PrimitiveType {
   constructor(value: any) {
     this.value = value;
   }

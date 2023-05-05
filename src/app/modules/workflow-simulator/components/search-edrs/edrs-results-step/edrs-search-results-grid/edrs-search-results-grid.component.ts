@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {Obs_DeathDate, Obs_MannerOfDeath} from "../../../../../../providers/fhir-profile-constants";
-import {TrackingNumberType} from "../../../../../../model/tracking.number.type";
 import {FhirHelperService, PatientNameReturn} from "../../../../../../modules/fhir-util/services/fhir-helper.service";
 import {MatTabGroup} from "@angular/material/tabs";
 import {MatTableDataSource} from "@angular/material/table";
 import {MdiToEdrsDocumentHandlerService} from "../../../../../record-viewer";
+import {TrackingNumberType} from "../../../../../fhir-mdi-library";
 
 @Component({
   selector: 'app-edrs-search-results-grid',

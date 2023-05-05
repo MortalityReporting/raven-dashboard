@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable, skipWhile, tap} from "rxjs";
 import {map} from "rxjs/operators";
-import {TrackingNumberType} from "../../../model/tracking.number.type";
 import {ToxHeader} from "../models/tox.header";
 import {
   Address,
@@ -13,7 +12,7 @@ import {
   FhirResource, StringType
 } from "../../fhir-util";
 import {CertifierAndOrganization, LabResult, Performer, Specimen, ToxSummary} from "../models/tox.summary";
-import {trackingNumberUrl} from "../../fhir-mdi-library";
+import {TrackingNumberType, trackingNumberUrl} from "../../fhir-mdi-library";
 import {Extension} from "../../fhir-util/models/base/fhir.extension";
 
 
