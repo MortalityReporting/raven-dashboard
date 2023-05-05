@@ -1,7 +1,3 @@
-#filename {
-  font-family: monospace; margin-left: 1em;
-}
-
 .selected-row{
   background:#f0ebff;
 }
@@ -44,4 +40,19 @@
 
 .result-colum {
   width: 48%;
+}
+
+
+.success{
+  color: darkgreen;
+}
+
+.error{
+  color: darkred;
+}
+
+.file-name {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }

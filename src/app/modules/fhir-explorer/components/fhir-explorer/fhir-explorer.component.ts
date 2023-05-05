@@ -1,8 +1,7 @@
 import {Component, OnInit, ElementRef} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {FhirExplorerService} from 'src/app/modules/fhir-explorer/services/fhir-explorer.service';
 import {UtilsService} from "../../../../service/utils.service";
-import {MdiToEdrsDocumentHandlerService} from "../../../record-viewer";
+import {FhirExplorerService} from "../../services/fhir-explorer.service";
 
 @Component({
   selector: 'app-fhir-explorer',

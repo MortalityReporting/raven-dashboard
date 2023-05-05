@@ -9,6 +9,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {CustomSpinnerDirective} from "./directives/custom-spinner.directive";
 import {ModuleThemedButtonDirective} from "./directives/moduleThemedButton.directive";
 import {MatButtonModule} from "@angular/material/button";
+import {RouterLink} from "@angular/router";
 
 
 
@@ -25,13 +26,14 @@ import {MatButtonModule} from "@angular/material/button";
     CustomSpinnerDirective,
     ModuleThemedButtonDirective
   ],
-  imports: [
-    CommonModule,
-    MatToolbarModule,
-    MatDividerModule,
-    MatIconModule,
-    MatButtonModule
-  ]
+    imports: [
+        CommonModule,
+        MatToolbarModule,
+        MatDividerModule,
+        MatIconModule,
+        MatButtonModule,
+        RouterLink
+    ]
 })
 export class CommonUiModule {
   constructor(private matIconRegistry: MatIconRegistry,
