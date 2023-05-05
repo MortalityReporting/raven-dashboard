@@ -11,6 +11,8 @@
     [submitBtnShown]="false"
     [cancelValidationBtnShown]="false"
     [clearValidatorBtnShown]="false"
+    [buttonTxtColor] = "'white'"
+    [buttonBackgroundColor] = "config.backgroundColor"
     (onValidation)="onValidation($event)"
     (onApiError)="onValidationError($event)"
     (onResourceContentChanged)="onResourceContentChanged($event)"
@@ -21,8 +23,8 @@
 <div class="top-padding">
   <h3>2. Submit MDI FHIR Bundle to Raven</h3>
   <div class="content-offset top-padding">
-    <button mat-raised-button color="primary" (click)="onSubmit()" *ngIf="!invalidResourceFound || preconditionError"
-            [style.background-color]="config.backgroundColor" [style.color]="'white'">
+    <button mat-raised-button [style.background-color]="config.backgroundColor" [style.color]="'white'"
+            (click)="onSubmit()" *ngIf="!invalidResourceFound || preconditionError">
       <mat-icon>send</mat-icon>
       Submit
     </button>

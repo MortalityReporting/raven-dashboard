@@ -7,6 +7,7 @@ import {openConfirmationDialog} from "common-ui";
 import {NgxFhirValidatorComponent, ValidationResults} from "ngx-fhir-validator";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 
+
 @Component({
   selector: 'app-import-case-fhir-record',
   templateUrl: './import-case-fhir-record.component.html',
@@ -21,11 +22,13 @@ export class ImportCaseFhirRecordComponent implements OnInit{
   fhirResource: any;
   invalidResourceFound: boolean = false;
   preconditionError: string;
-  constructor(private importCaseService: ImportCaseService,
-              private utilsService: UtilsService,
-              private dialog: MatDialog,
-              @Inject('importConfig') public config: ModuleHeaderConfig,
-  ) { }
+
+  constructor(
+    @Inject('importConfig') public config: ModuleHeaderConfig,
+    private importCaseService: ImportCaseService,
+    private utilsService: UtilsService,
+    private dialog: MatDialog) {
+  }
 
   importCase(){
     this.isLoading = true;
