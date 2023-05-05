@@ -32,9 +32,9 @@ export class MappingsComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
     if(this.fhirBundle){
       this.setDataSource(this.fhirBundle, this.statusFilter);
+      this.selectedFilter = this.filters?.[0];
     }
   }
 
