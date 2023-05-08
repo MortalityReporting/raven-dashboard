@@ -4,7 +4,7 @@ import {ObservationDiff} from './observation.diff';
 import {FhirHelperService} from "../../fhir-util";
 
 export class ObservationDeathDateDiff extends ObservationDiff {
-    effectiveDateTime: DiffType;
+    //effectiveDateTime: DiffType;
     method: DiffType;
     pronouncedDateTime: DiffType;
     status: DiffType;
@@ -22,7 +22,7 @@ export class ObservationDeathDateDiff extends ObservationDiff {
         super( actual, expected );
 
         this.fhirHelper = fhirHelper;
-        this.effectiveDateTime = new DiffType();
+        //this.effectiveDateTime = new DiffType();
         this.method = new DiffType();
         this.pronouncedDateTime = new DiffType();
         this.status = new DiffType();
@@ -68,11 +68,11 @@ export class ObservationDeathDateDiff extends ObservationDiff {
             [this.status.style,this.status.difference] = DiffType.doDiff( Diff.diffChars( this.status.expected, this.status.actual ));
         } catch(e) {}
 
-        try {
-            this.effectiveDateTime.expected = this.expected.effectiveDateTime ;
-            this.effectiveDateTime.actual = this.actual.effectiveDateTime;
-            [this.effectiveDateTime.style,this.effectiveDateTime.difference] = DiffType.doDiff( Diff.diffChars( this.effectiveDateTime.expected, this.effectiveDateTime.actual ));
-        } catch(e) {}
+        // try {
+        //     this.effectiveDateTime.expected = this.expected.effectiveDateTime ;
+        //     this.effectiveDateTime.actual = this.actual.effectiveDateTime;
+        //     [this.effectiveDateTime.style,this.effectiveDateTime.difference] = DiffType.doDiff( Diff.diffChars( this.effectiveDateTime.expected, this.effectiveDateTime.actual ));
+        // } catch(e) {}
 
         try {
             this.valueDateTime.expected = JSON.stringify( this.expected.valueDateTime, null, 4 );

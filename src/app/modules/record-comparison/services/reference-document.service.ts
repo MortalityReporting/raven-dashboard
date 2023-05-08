@@ -37,9 +37,7 @@ export class ReferenceDocumentService {
           forkJoin(
             bundleBecList.map((bundleBec: any) =>{
               const composition = bundleBec.resource.entry[0].resource;
-              console.log(composition)
               const subject = this.bundleHelper.findSubjectInBundle(composition, bundleBec.resource)
-              console.log(subject)
               return of(this.createSummary(subject, bundleBec.resource));
             })
           )

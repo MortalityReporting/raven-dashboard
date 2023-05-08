@@ -83,6 +83,5 @@ export class EndpointConfigurationStepComponent implements OnInit {
   }
 
   onSelected(endpointConfigurationFormGroup: UntypedFormGroup) {
-    console.log(endpointConfigurationFormGroup.controls['registeredEndpoint'].value.serverEndpoint);
   }
 }

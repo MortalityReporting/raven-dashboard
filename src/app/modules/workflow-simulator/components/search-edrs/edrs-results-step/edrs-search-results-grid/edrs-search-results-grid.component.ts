@@ -161,7 +161,6 @@ export class EdrsSearchResultsGridComponent implements OnInit, OnChanges {
     else {
       this.selectedCase = null;
     }
-    console.log(this.selectedCase);
     this.selectedCaseValueEmitter.emit(this.selectedCase);
   }
 

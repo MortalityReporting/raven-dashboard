@@ -24,9 +24,9 @@ export class RecordComparisonContentFieldComponent implements OnInit, OnChanges{
 
   ngOnInit(): void {
     let strippedDifferenceString = new DOMParser().parseFromString(this.difference, 'text/html').documentElement;
-    this.differenceHasContents = !!(strippedDifferenceString.childNodes[1].childNodes[0].childNodes[0].childNodes[0]);
-    console.log(strippedDifferenceString.childNodes[1].childNodes[0].childNodes[0].childNodes[0]);
-    console.log(this.differenceHasContents);
+    this.differenceHasContents = !!(strippedDifferenceString?.childNodes?.[1]?.childNodes?.[0]?.childNodes?.[0]?.childNodes?.[0]);
+    // console.log(strippedDifferenceString?.childNodes?.[1]?.childNodes?.[0]?.childNodes?.[0]?.childNodes?.[0]);
+    // console.log(this.differenceHasContents);
   }
 
   ngOnChanges(changes: SimpleChanges): void {

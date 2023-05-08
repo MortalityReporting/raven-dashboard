@@ -28,11 +28,12 @@ export class ObservationHowDeathInjuryOccurredDiff extends ObservationDiff {
         super.doDiff();
 
         try {
-            this.effectiveDateTime.expected = JSON.stringify( this.expected._effectiveDateTime.extension[0], null, 4 );
-            this.howDeathInjuryOccurred.expected = JSON.stringify( this.expected.valueCodeableConcept, null, 4 );
-            let expectedPlaceOfInjuryCode = this.expected.component.filter( (item : any ) => item.code.coding[0].code === "69450-5");
-            this.placeOfInjury.expected = JSON.stringify( expectedPlaceOfInjuryCode[0].valueCodeableConcept, null, 4 );
-            let expectedInjuryOccurredAtWork = this.expected.component.filter( (item : any ) => item.code.coding[0].code === "69444-8");
+            // TODO: Move codes to provider in MDI library.
+            this.effectiveDateTime.expected = JSON.stringify( this.expected?._effectiveDateTime?.extension?.[0], null, 4 );
+            this.howDeathInjuryOccurred.expected = JSON.stringify( this.expected?.valueCodeableConcept, null, 4 );
+            let expectedPlaceOfInjuryCode = this.expected?.component?.filter( (item : any ) => item?.code?.coding?.[0]?.code === "69450-5");
+            this.placeOfInjury.expected = JSON.stringify( expectedPlaceOfInjuryCode?.[0]?.valueCodeableConcept, null, 4 );
+            let expectedInjuryOccurredAtWork = this.expected?.component?.filter( (item : any ) => item?.code?.coding?.[0]?.code === "69444-8");
             this.injuryOccurredAtWork.expected = JSON.stringify( expectedInjuryOccurredAtWork?.[0]?.valueCodeableConcept, null, 4 );
             let expectedTransportationRole = this.expected.component.filter( (item : any ) => item?.code?.coding?.[0]?.code === "69451-3");
             this.transportationRole.expected = JSON.stringify( expectedTransportationRole?.[0]?.valueCodeableConcept, null, 4 );

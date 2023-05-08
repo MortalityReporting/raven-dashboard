@@ -67,7 +67,7 @@ export class ImportCaseFhirRecordComponent implements OnInit{
             this.importCase();
           }
           else if(action == 'secondaryAction'){
-            console.log('secondary selected');
+            //console.log('secondary selected');
           }
         }
       );
