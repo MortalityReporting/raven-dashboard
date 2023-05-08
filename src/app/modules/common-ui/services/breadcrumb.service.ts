@@ -36,9 +36,9 @@ export class BreadcrumbService {
         if (index === 0) { //build home breadcrumb
           return {label: 'Home', url: url};
         } else if (index === 1 && routerNaviEndValue.moduleTitle) {
-          return {label: routerNaviEndValue.moduleTitle, url: url + './' + item}
+          return {label: routerNaviEndValue.moduleTitle, url: url + '/' + item}
         } else if (index === 2 && routerNaviEndValue.moduleTitle) {
-          return {label: routerNaviEndValue.componentTitle, url: url + '../' + item}
+          return {label: routerNaviEndValue.componentTitle, url: url + '/' + item}
         } else return null;
       })
         .filter(element => element != null);
