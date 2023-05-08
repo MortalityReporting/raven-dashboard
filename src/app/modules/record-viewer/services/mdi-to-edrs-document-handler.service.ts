@@ -134,7 +134,6 @@ export class MdiToEdrsDocumentHandlerService {
             toxRecordStub.mdiCaseSystem = this.fhirHelper.getTrackingNumberSystem(diagnosticReport);
             toxRecordStub.toxCaseNumber = this.fhirHelper.getTrackingNumber(diagnosticReport, TrackingNumberType.Tox);
             toxRecordStub.toxCaseSystem = this.fhirHelper.getTrackingNumberSystem(diagnosticReport, TrackingNumberType.Tox);
-            console.log(toxRecordStub)
             toxRecordList.push(toxRecordStub)
           });
           return toxRecordList;
@@ -241,9 +240,6 @@ export class MdiToEdrsDocumentHandlerService {
 
     let deathLocationResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Loc_death);
     let injuryLocationResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Loc_injury);
-
-    console.log(deathLocationResource);
-    console.log(injuryLocationResource);
 
     circumstances.deathLocation = deathLocationResource?.name ?? this.defaultString;
     circumstances.injuryLocation = injuryLocationResource?.name ?? this.defaultString;

@@ -62,7 +62,6 @@ export class DecedentRecordsGridComponent implements OnInit {
     const loincTimeOfDeath = '81956-5';
     const codes = [loincCauseOfDeath, loincTimeOfDeath];
     this.isLoading = true;
-    console.log(this.isLoading);
 
     // this.decedentService.getDecedentRecords().subscribe(
     // );
@@ -105,7 +104,6 @@ export class DecedentRecordsGridComponent implements OnInit {
     )
     .subscribe({
         next: (data) => {
-          console.log(data)
           this.decedentGridDtoList = data.filter(record => !!record.caseNumber);
           this.dataSource = new MatTableDataSource(this.decedentGridDtoList);
           this.dataSource.sort = this.sort;
@@ -125,7 +123,6 @@ export class DecedentRecordsGridComponent implements OnInit {
   }
 
   onCaseSelected(row: any) {
-    console.log(this.appConfig)
     this.router.navigate([`${this.appConfig.modules['recordViewer'].route}/mdi/`, row.decedentId]);
   }
 

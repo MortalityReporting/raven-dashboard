@@ -19,7 +19,6 @@ export class CaseSummaryRelatedToxComponent implements OnInit, AfterViewInit {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     @Inject('config') public config: ModuleHeaderConfig,
     @Inject('appConfig') public appConfig: AppConfiguration
     ) { }
@@ -29,7 +28,7 @@ export class CaseSummaryRelatedToxComponent implements OnInit, AfterViewInit {
   }
 
   onRowClicked(row: any) {
-    console.log("/" + this.appConfig.modules['recordViewer'].route + "/tox/" + row.toxCaseSystem + "|" + row.toxCaseNumber);
+    //console.log("/" + this.appConfig.modules['recordViewer'].route + "/tox/" + row.toxCaseSystem + "|" + row.toxCaseNumber);
     this.router.navigateByUrl("/" + this.appConfig.modules['recordViewer'].route + "/tox/" + encodeURIComponent(row.toxCaseSystem + "|" + row.toxCaseNumber));
   }
 

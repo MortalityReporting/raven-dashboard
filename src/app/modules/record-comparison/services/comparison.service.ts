@@ -176,7 +176,7 @@ export class ComparisonService {
     } catch(e) {
       console.log(e);
     }
-    console.log(difference)
+    //console.log(difference)
     return difference;
   }
 

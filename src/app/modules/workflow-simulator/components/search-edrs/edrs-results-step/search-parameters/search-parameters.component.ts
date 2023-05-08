@@ -245,7 +245,6 @@ export class SearchParametersComponent implements OnInit {
 
       formattedData.push(decedent);
     })
-    console.log(formattedData);
     this.resultTableDataSource.data = formattedData;
   }
 
