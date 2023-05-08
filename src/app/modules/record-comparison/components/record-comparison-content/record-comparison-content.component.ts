@@ -19,6 +19,7 @@ import {Difference} from "../../models/difference";
 import {MatDialog} from "@angular/material/dialog";
 import {MdiToEdrsDocumentHandlerService} from "../../../record-viewer";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
+import {FieldConfig, Fields} from "../../providers/field.config";
 
 @Component({
   selector: 'record-comparison-content',
@@ -28,9 +29,11 @@ import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 export class RecordComparisonContentComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
+  /**
+   * UI State Variables
+   * */
   isLoading = false;
   isAccordionExpanded = false;
-
   idStateList = [
     { expanded: true,     id: 'caseAdminInfo' },
     { expanded: false,    id: 'demographics' },
@@ -41,21 +44,29 @@ export class RecordComparisonContentComponent implements OnInit {
     { expanded: false,    id: 'circumstances' },
     { expanded: false,    id: 'examAndAutopsy' },
   ]
-
   stateList = {
     isLoading: false,
     comparisonLoaded: false
   }
+
+  /**
+   * Reference Case List
+   * */
   testCases: any;
-
-  patientResource: any;
-
-  userDocumentWrapper: MdiToEDRSDocumentWrapper;
-  referenceDocumentWrapper: MdiToEDRSDocumentWrapper;
-  referenceDocument: any = undefined;
-  difference: Difference = undefined;
-
   selectedTestCase: any = undefined;
+
+  /**
+   * MDI to EDRS Documents with Wrappers to be compared.
+   * */
+  userDocumentWrapper: MdiToEDRSDocumentWrapper; // A
+  referenceDocumentWrapper: MdiToEDRSDocumentWrapper; // B
+  difference: Difference = undefined; // Difference between A and B
+
+  /**
+   * Comparison Field Configuration
+   * */
+  fields: Fields = new Fields();
+
 
   patient: USCorePatientDiff = new USCorePatientDiff( undefined, undefined );
   mdiToEdrs: CompositionMdiToEdrsDiff = new CompositionMdiToEdrsDiff( undefined, undefined );
@@ -76,7 +87,7 @@ export class RecordComparisonContentComponent implements OnInit {
     private documentHandler: MdiToEdrsDocumentHandlerService,
     private utilsService: UtilsService,
     private route: ActivatedRoute,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     // If an "id" parameter is passed in the URL, load that case immediately.
@@ -105,14 +116,14 @@ export class RecordComparisonContentComponent implements OnInit {
   }
 
   runComparison() {
-    this.difference = this.comparisonService.doDiff(this.userDocumentWrapper.documentBundle, this.referenceDocument);
+    this.difference = this.comparisonService.doDiff(this.userDocumentWrapper.documentBundle, this.referenceDocumentWrapper.documentBundle);
     this.stateList.comparisonLoaded = true;
   }
 
   onReferenceDocumentChanged(event: any ) {
     if (event.isUserInput === true && event.source.value.bundle) {
       this.referenceDocumentWrapper = this.userDocumentService.createDocumentWrapper(event.source.value.bundle);
-      this.referenceDocument = event.source.value.bundle;
+      //this.referenceDocument = event.source.value.bundle;
       this.stateList.comparisonLoaded = false;
     }
   }

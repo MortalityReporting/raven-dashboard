@@ -21,10 +21,10 @@
       <div class="grid-col-1">
         <div style="align-items: center;">
           <button mat-raised-button color="accent" (click)="runComparison()"
-                  [style.background-color]="(userDocumentWrapper && referenceDocument) ?
+                  [style.background-color]="(userDocumentWrapper && referenceDocumentWrapper) ?
                    config.backgroundColor : '0 0 0 0.12'"
                   [style.color]="'white'"
-                  [disabled]="!(userDocumentWrapper && referenceDocument)">
+                  [disabled]="!(userDocumentWrapper && referenceDocumentWrapper)">
             Compare
           </button>
         </div>
@@ -240,21 +240,23 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
 
+        <!-- Location - Death -->
         <record-comparison-content-field
           [state]="difference.locationDeath?.name?.style"
-          [title]="'Death Location'"
-          [resource]="'Location-death'"
-          [fhirPath]="difference.locationDeath?.expected?.resourceType + '.name'"
+          [title]="fields.deathLocation.title"
+          [resource]="fields.deathLocation.profile"
+          [fhirPath]="fields.deathLocation.fhirPath"
           [expected]="difference.locationDeath?.name?.expected"
           [difference]="difference.locationDeath?.name?.difference"
           [expanded]="isAccordionExpanded">
         </record-comparison-content-field>
 
+        <!-- Location - Injury -->
         <record-comparison-content-field
           [state]="difference.locationInjury?.name?.style"
-          [title]="'Injury Location'"
-          [resource]="'Location-injury'"
-          [fhirPath]="difference.locationInjury?.expected?.resourceType + '.name'"
+          [title]="fields.injuryLocation.title"
+          [resource]="fields.injuryLocation.profile"
+          [fhirPath]="fields.injuryLocation.fhirPath"
           [expected]="difference.locationInjury?.name?.expected"
           [difference]="difference.locationInjury?.name?.difference"
           [expanded]="isAccordionExpanded">

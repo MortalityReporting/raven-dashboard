@@ -21,6 +21,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule} from "@angular/material/dialog";
+import {Fields} from "./providers/field.config";
 
 @NgModule({
     declarations: [
@@ -43,7 +44,7 @@ import {MatDialogModule} from "@angular/material/dialog";
     MatDialogModule,
   ],
     providers: [
-        ReferenceDocumentService
+        ReferenceDocumentService,
     ]
 })
 export class RecordComparisonModule {
@@ -58,7 +59,8 @@ export class RecordComparisonModule {
         {
           provide: 'fhirProfiles',
           useValue: fhirProfiles
-        }
+        },
+
       ]
     }
   }
