@@ -294,13 +294,14 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
 
+        <!-- Observation - Death Date -->
         <record-comparison-content-field
-          [state]="difference.deathDate?.effectiveDateTime?.style"
-          [title]="'Death Date/Time'"
-          [resource]="'Observation-death-date'"
-          [fhirPath]="difference.deathDate?.expected?.resourceType + '.valueDateTime'"
-          [expected]="difference.deathDate?.effectiveDateTime?.expected"
-          [difference]="difference.deathDate?.effectiveDateTime?.difference"
+          [state]="difference.deathDate?.valueDateTime?.style"
+          [title]="fields.deathDateTime.title"
+          [resource]="fields.deathDateTime.profile"
+          [fhirPath]="fields.deathDateTime.fhirPath"
+          [expected]="difference.deathDate?.valueDateTime?.expected"
+          [difference]="difference.deathDate?.valueDateTime?.difference"
           [expanded]="isAccordionExpanded">
         </record-comparison-content-field>
 

@@ -145,7 +145,7 @@ export class ComparisonService {
 
       difference.jurisdictionStatus = (
         difference.deathDate.pronouncedDateTime.style === 'valid' &&
-        difference.deathDate.effectiveDateTime.style === 'valid' &&
+        difference.deathDate.valueDateTime.style === 'valid' &&
         difference.deathDate.method.style === 'valid'
       ) ? 'valid' : 'invalid';
 
