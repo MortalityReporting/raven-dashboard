@@ -1,7 +1,7 @@
 import {FhirResource} from "../base/fhir.resource";
 import {FhirType} from "../base/fhir.type";
 
-export class Address implements FhirType {
+export class Address extends FhirType {
   line1: string;
   line2: string;
   city: string;
@@ -9,7 +9,7 @@ export class Address implements FhirType {
   zip: string;
   country: string;
 
-  toString(): string {
+  override toString(): string {
     let addressString: string = "";
     Object.keys(this).map(key => {
       if (this[key]) addressString += this[key] + ", ";
@@ -19,6 +19,7 @@ export class Address implements FhirType {
   }
 
   constructor(resource?: FhirResource) {
+    super();
     if (!resource?.["address"]) return;
     const addressElement = resource?.['address']?.[0];
     this.line1 = addressElement?.line?.[0] || undefined;

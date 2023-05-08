@@ -11,3 +11,9 @@ export class TrackingNumberExtension {
 }
 
 export const trackingNumberUrl = "http://hl7.org/fhir/us/mdi/StructureDefinition/Extension-tracking-number"
+
+export enum TrackingNumberType {
+  Mdi = "mdi-case-number",
+  Edrs = "edrs-file-number",
+  Tox = "tox-lab-case-number"
+}

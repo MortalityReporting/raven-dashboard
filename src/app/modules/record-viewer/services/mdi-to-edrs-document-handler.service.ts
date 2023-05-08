@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {map, Subject} from "rxjs";
+import {map, Observable, Subject} from "rxjs";
 import {DecedentService} from "./decedent.service";
 import {
   Autopsy,
@@ -15,16 +15,16 @@ import {Author, CaseHeader} from "../models/case.header";
 import {
   Address,
   BundleHelperService,
+  CodeableConcept,
   EnvironmentHandlerService,
   FhirClientService,
   FhirHelperService,
   TerminologyHandlerService
 } from "../../fhir-util";
-import {TrackingNumberType} from "../../../model/tracking.number.type";
-import {ToxRecordStub} from "../models/toxRecordStub";
+import {ToxRecordStub} from "../models/tox-record-stub";
 import {FHIRProfileConstants} from "../../../providers/fhir-profile-constants";
 import {FhirExplorerService} from "../../fhir-explorer/services/fhir-explorer.service";
-import {TrackingNumberExtension} from "../../fhir-mdi-library";
+import {TrackingNumberExtension, TrackingNumberType} from "../../fhir-mdi-library";
 
 @Injectable({
   providedIn: 'root'
@@ -57,6 +57,7 @@ export class MdiToEdrsDocumentHandlerService {
     private fhirClient: FhirClientService,
     @Inject('fhirProfiles') public fhirProfiles: FHIRProfileConstants
   ) {}
+
   setDocumentBundle(documentBundle){
     this.currentDocumentBundle = documentBundle;
   }
@@ -65,7 +66,7 @@ export class MdiToEdrsDocumentHandlerService {
     this.caseSummary.next(caseSummary);
   }
 
-  setPatienceResource(patientResource){
+  setPatientResource(patientResource){
     this.patientResource.next(patientResource);
   }
 
@@ -89,13 +90,11 @@ export class MdiToEdrsDocumentHandlerService {
     this.setCurrentCompositionResource(null);
     this.setCurrentDocumentBundle(null);
     this.setCaseHeader(null);
-    this.setPatienceResource(null);
+    this.setPatientResource(null);
     this.setCaseSummary(null);
     this.setDocumentBundle(null);
     this.setRelatedToxicology(null);
   }
-
-
 
   getDocumentBundle(compositionId: string) {
     return this.fhirClient.read("Composition", `${compositionId}/$document`).pipe(
@@ -117,14 +116,20 @@ export class MdiToEdrsDocumentHandlerService {
     );
   }
 
-  getRelatedToxicologyReports(mdiCaseNumber: string): any {
+  /**
+   * Get a summarized list of tox-to-mdi records (Toxicology Reports) related to a particular mdi-to-edrs document.
+   *
+   * @param {string} mdiCaseNumber the MDI tracking number for a mdi-to-edrs document.
+   * @returns {Observable<ToxRecordStub[]>} an Observable of an array of ToxRecordStub objects.
+   **/
+  getRelatedToxicologyReports(mdiCaseNumber: string): Observable<ToxRecordStub[]> {
     return this.fhirClient.search("DiagnosticReport", `?mdi-case-number=${mdiCaseNumber}`).pipe(
         map((resultBundle: any) => {
           let toxRecordList = [];
           resultBundle?.entry?.forEach((bec:any) => {
             const diagnosticReport = bec.resource;
             let toxRecordStub = new ToxRecordStub();
-            toxRecordStub.date = diagnosticReport.issued.split("T")[0] || undefined;
+            toxRecordStub.date = diagnosticReport?.issued?.split("T")[0] ?? undefined;
             toxRecordStub.mdiCaseNumber = this.fhirHelper.getTrackingNumber(diagnosticReport);
             toxRecordStub.mdiCaseSystem = this.fhirHelper.getTrackingNumberSystem(diagnosticReport);
             toxRecordStub.toxCaseNumber = this.fhirHelper.getTrackingNumber(diagnosticReport, TrackingNumberType.Tox);
@@ -142,7 +147,6 @@ export class MdiToEdrsDocumentHandlerService {
   // -------------------------
 
   createCaseHeader(documentBundle: any, patientResource: any, compositionResource: any): CaseHeader {
-
     let caseHeader = new CaseHeader();
     caseHeader.fullName = this.fhirHelper.getOfficialName(patientResource);
     let genderString = patientResource.gender || this.defaultString;
@@ -233,11 +237,18 @@ export class MdiToEdrsDocumentHandlerService {
     let deathLocationResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Loc_death);
     let injuryLocationResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Loc_injury);
 
-    circumstances.deathLocation = deathLocationResource?.name || this.defaultString;
-    circumstances.injuryLocation = injuryLocationResource?.name || this.defaultString;
+    console.log(deathLocationResource);
+    console.log(injuryLocationResource);
 
-    circumstances.pregnancy = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Obs_DecedentPregnancy)?.valueCodeableConcept?.coding[0]?.display || this.defaultString; // TODO: Missing data, once available fix.
-    circumstances.tobaccoUseContributed = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Obs_TobaccoUseContributedToDeath)?.valueCodeableConcept?.coding[0]?.display || this.defaultString; // TODO: Missing data, once available fix.
+    circumstances.deathLocation = deathLocationResource?.name ?? this.defaultString;
+    circumstances.injuryLocation = injuryLocationResource?.name ?? this.defaultString;
+
+    const pregnancyResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Obs_DecedentPregnancy);
+    circumstances.pregnancy = pregnancyResource?.valueCodeableConcept?.coding[0]?.display || this.defaultString; // TODO: Missing data, once available fix.
+
+    const tobaccoUseResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Obs_TobaccoUseContributedToDeath);
+    const tobaccoUseCc: CodeableConcept = new CodeableConcept(tobaccoUseResource?.valueCodeableConcept);
+    circumstances.tobaccoUseContributed = tobaccoUseCc?.toString() ?? this.defaultString;
 
     return circumstances;
   }
@@ -257,79 +268,62 @@ export class MdiToEdrsDocumentHandlerService {
     jurisdiction.deathDateTime = observation?.valueDateTime?.replace( "T", " " ) || this.defaultString;
 
     // Search for component by code. 80616-6
-    jurisdiction.pronouncedDateTime = pronouncedDateTimeComponent?.valueDateTime || this.defaultString;
+    jurisdiction.pronouncedDateTime = pronouncedDateTimeComponent?.valueDateTime?.replace( "T", " " ) || this.defaultString;
 
     return jurisdiction;
   }
 
   generateCauseAndManner(documentBundle: any, compositionResource: any): CauseAndManner {
-
     let causeAndManner: CauseAndManner = new CauseAndManner();
+    let causeAndMannerSection = compositionResource?.section?.find(
+      (section: any) => section?.code?.coding?.some((coding: any) => coding?.code === "cause-manner"));
 
-    let causeAndMannerSection = compositionResource.section.find((section: any) => section.code.coding.some((coding: any) => coding.code === "cause-manner"));
-
-    causeAndMannerSection?.entry.map(( entry: any) =>
+    causeAndMannerSection?.entry?.map(( entry: any) =>
     {
       let observation = this.bundleHelper.findResourceByFullUrl(documentBundle, entry.reference);
 
-      if (observation != null)
-      {
+      if (observation != null) {
         let length = observation.meta?.profile?.length || 0;
-
-        if (length > 0)
-        {
+        if (length > 0) {
           let profile = observation.meta.profile[0];
-
-          if (profile === this.fhirProfiles.MdiToEdrs.Obs_CauseOfDeathPart1)
-          {
+          if (profile === this.fhirProfiles.MdiToEdrs.Obs_CauseOfDeathPart1) {
             let causeOfDeathPart1 = new CauseOfDeathPart1();
-
-            observation.component?.map(( entry: any ) =>
-            {
+            observation.component?.map(( entry: any ) => {
               if (entry.valueString != null) {
                 causeOfDeathPart1.interval = entry.valueString;
               }
             })
-
             causeOfDeathPart1.id = entry.reference;
             causeOfDeathPart1.event = observation.valueCodeableConcept?.text || undefined;
-
             causeAndManner.causeOfDeathPart1.push( causeOfDeathPart1 );
           }
-          else if (profile === this.fhirProfiles.MdiToEdrs.Obs_CauseOfDeathPart2)
-          {
+          else if (profile === this.fhirProfiles.MdiToEdrs.Obs_CauseOfDeathPart2) {
             let causeOfDeathPart2 = new CauseOfDeathPart2();
             causeOfDeathPart2.id = entry.reference;
             causeOfDeathPart2.value = observation.valueCodeableConcept?.text || this.defaultString;
-
             causeAndManner.causeOfDeathPart2.push( causeOfDeathPart2 );
           }
-          else if (profile === this.fhirProfiles.MdiToEdrs.Obs_MannerOfDeath)
-          {
+          else if (profile === this.fhirProfiles.MdiToEdrs.Obs_MannerOfDeath) {
             let coding = observation.valueCodeableConcept?.coding;
-
-            if (coding != null && coding.length > 0)
-            {
+            if (coding != null && coding.length > 0) {
               causeAndManner.mannerOfDeath = coding[0]?.display
             }
           }
-          else if (profile === this.fhirProfiles.MdiToEdrs.Obs_HowDeathInjuryOccurred)
-          {
+          else if (profile === this.fhirProfiles.MdiToEdrs.Obs_HowDeathInjuryOccurred) {
             causeAndManner.howDeathInjuryOccurred = observation.valueCodeableConcept?.text || this.defaultString;
-
             let placeOfInjuryComponent = this.fhirHelper.findObservationComponentByCode(observation, "69450-5");
             causeAndManner.placeOfInjury = placeOfInjuryComponent?.valueCodeableConcept?.text || this.defaultString;
-
             let workInjuryIndicatorComponent = this.fhirHelper.findObservationComponentByCode(observation, "69444-8");
             let workInjuryIndicatorValue = workInjuryIndicatorComponent?.valueCodeableConcept;
             causeAndManner.workInjuryIndicator = workInjuryIndicatorValue?.text || workInjuryIndicatorValue?.coding?.[0]?.display || workInjuryIndicatorValue?.coding?.[0]?.code || this.defaultString;
-
             let transportationRoleComponent = this.fhirHelper.findObservationComponentByCode(observation, "69451-3");
             let transportationRoleValue = transportationRoleComponent?.valueCodeableConcept;
             causeAndManner.transportationRole = transportationRoleValue?.text || transportationRoleValue?.coding?.[0]?.display || transportationRoleValue?.coding?.[0]?.code || this.defaultString;
 
-            if (observation._effectiveDateTime != null)
-            {
+            if (observation?.effectiveDateTime) {
+              causeAndManner.injuryDateTime = observation?.effectiveDateTime?.replace( "T", " " ) || this.defaultString;
+            }
+            else if (observation?._effectiveDateTime != null) {
               let year = 0;
               let month = 0;
               let day = 0;

@@ -3,11 +3,11 @@ import {UntypedFormArray, UntypedFormBuilder, UntypedFormControl, FormGroup} fro
 import {SearchEdrsService} from "../../../../service/search-edrs.service";
 import {UtilsService} from "../../../../../../service/utils.service";
 import {Obs_DeathDate, Obs_MannerOfDeath} from "../../../../../../providers/fhir-profile-constants";
-import {TrackingNumberType} from "../../../../../../model/tracking.number.type";
 import {FhirHelperService, PatientNameReturn} from "../../../../../../modules/fhir-util/services/fhir-helper.service";
 import {DecedentSimpleInfo} from "../../../../../../model/decedent-simple-info";
 import {blueJay} from "../../../../../../../environments/environment";
 import {MatTableDataSource} from "@angular/material/table";
+import {TrackingNumberType} from "../../../../../fhir-mdi-library";
 
 @Component({
   selector: 'app-search-parameters',

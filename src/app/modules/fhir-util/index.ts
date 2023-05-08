@@ -10,7 +10,7 @@ export * from "./models/resources/bundle";
 
 /** FHIR Type Models **/
 export * from "./models/types/address";
-export * from "./models/types/codeable.cocept";
+export * from "./models/types/codeable.concept";
 export * from "./models/types/coding";
 export * from "./models/types/human.name";
 export * from "./models/types/identifier";

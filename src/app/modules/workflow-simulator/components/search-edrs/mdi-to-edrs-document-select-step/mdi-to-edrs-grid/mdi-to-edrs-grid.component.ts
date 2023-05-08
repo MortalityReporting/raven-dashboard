@@ -7,12 +7,12 @@ import {UtilsService} from "../../../../../../service/utils.service";
 import {forkJoin, map, mergeMap, switchMap} from "rxjs";
 import {SearchEdrsService} from "../../../../service/search-edrs.service";
 import {DecedentSimpleInfo} from "../../../../../../model/decedent-simple-info";
-import {TrackingNumberType} from "../../../../../../model/tracking.number.type";
 import {FhirHelperService, PatientNameReturn} from "../../../../../../modules/fhir-util/services/fhir-helper.service";
 import {DatePipe} from "@angular/common";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSelect} from "@angular/material/select";
+import {TrackingNumberType} from "../../../../../fhir-mdi-library";
 
 @Component({
   selector: 'app-mdi-to-edrs-grid',
