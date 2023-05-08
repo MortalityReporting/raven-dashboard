@@ -39,8 +39,8 @@
             </mat-card-subtitle>
             <mat-card-content>
               Decedent Name: {{ userDocumentWrapper?.decedentName }}<br>
-              Date/Time of Death: {{ userDocumentWrapper?.dateTimeOfDeath }}<br>
-              MDI Case Number/System: {{ userDocumentWrapper?.mdiCaseNumber }}:{{ userDocumentWrapper?.mdiCaseNumberSystem}}
+              <!-- TODO: Date/Time of Death: {{ userDocumentWrapper?.dateTimeOfDeath }}<br> -->
+              MDI Case Number | System: {{ userDocumentWrapper?.mdiCaseNumber }} | {{ userDocumentWrapper?.mdiCaseNumberSystem}}
             </mat-card-content>
           </mat-card>
 
@@ -51,9 +51,9 @@
           <mat-card>
             <mat-card-subtitle>Current Reference MDI to EDRS Document</mat-card-subtitle>
             <mat-card-content>
-              Decedent Name: {{ referenceDocumentWrapper?.decedentName }}<br>
-              Date/Time of Death: {{ referenceDocumentWrapper?.dateTimeOfDeath }}<br>
-              MDI Case Number/System: {{ referenceDocumentWrapper?.mdiCaseNumber }}:{{ referenceDocumentWrapper?.mdiCaseNumberSystem}}
+              <strong>Decedent Name:</strong> {{ referenceDocumentWrapper?.decedentName }}<br>
+              <!-- TODO: Date/Time of Death: {{ referenceDocumentWrapper?.dateTimeOfDeath }}<br> -->
+              <strong>MDI Case Number | System:</strong> {{ referenceDocumentWrapper?.mdiCaseNumber }} | {{ referenceDocumentWrapper?.mdiCaseNumberSystem}}
             </mat-card-content>
           </mat-card>
         </div>
