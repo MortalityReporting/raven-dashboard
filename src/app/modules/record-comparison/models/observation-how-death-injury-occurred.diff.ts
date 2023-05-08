@@ -50,9 +50,9 @@ export class ObservationHowDeathInjuryOccurredDiff extends ObservationDiff {
     let actualTransportationRole = this.actual.component.filter((item: any) => item?.code?.coding?.[0]?.code === "69451-3");
     this.transportationRole.actual = JSON.stringify(actualTransportationRole?.[0]?.valueCodeableConcept, null, 4);
 
-    [this.effectiveDateTime.style, this.effectiveDateTime.difference] = DiffType.doDiff(Diff.diffChars(this.effectiveDateTime.expected, this.effectiveDateTime.actual));
-    [this.howDeathInjuryOccurred.style, this.howDeathInjuryOccurred.difference] = DiffType.doDiff(Diff.diffChars(this.howDeathInjuryOccurred.expected, this.howDeathInjuryOccurred.actual));
-    [this.placeOfInjury.style, this.placeOfInjury.difference] = DiffType.doDiff(Diff.diffChars(this.placeOfInjury.expected, this.placeOfInjury.actual));
+    [this.effectiveDateTime.style, this.effectiveDateTime.difference] = DiffType.doDiff(Diff.diffChars(this.effectiveDateTime.expected || "", this.effectiveDateTime.actual || ""));
+    [this.howDeathInjuryOccurred.style, this.howDeathInjuryOccurred.difference] = DiffType.doDiff(Diff.diffChars(this.howDeathInjuryOccurred.expected || "", this.howDeathInjuryOccurred.actual || ""));
+    [this.placeOfInjury.style, this.placeOfInjury.difference] = DiffType.doDiff(Diff.diffChars(this.placeOfInjury.expected || "", this.placeOfInjury.actual || ""));
     [this.injuryOccurredAtWork.style, this.injuryOccurredAtWork.difference] = DiffType.doDiff(Diff.diffChars(this.injuryOccurredAtWork?.expected || "", this.injuryOccurredAtWork?.actual || ""));
     [this.transportationRole.style, this.transportationRole.difference] = DiffType.doDiff(Diff.diffChars(this.transportationRole?.expected || "", this.transportationRole?.actual || ""));
   }
