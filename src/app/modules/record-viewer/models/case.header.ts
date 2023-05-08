@@ -1,13 +1,12 @@
-import {TrackingNumber} from "./mdi/tracking.number";
+import {TrackingNumberExtension} from "../../fhir-mdi-library";
 
 export class CaseHeader {
   fullName: string;
   gender: string;
-  deathDate: string;
-  deathTime: string;
-  trackingNumbers: TrackingNumber[];
+  trackingNumbers: TrackingNumberExtension[];
   authors: Author[];
-  mdiCaseNumber: TrackingNumber;
+  mdiCaseNumber: TrackingNumberExtension;
+  deathDateTime: string;
 
   constructor() {
     this.authors = [];

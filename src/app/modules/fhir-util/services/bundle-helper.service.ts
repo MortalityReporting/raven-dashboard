@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import {FhirResource} from "../models/base/fhir.resource";
+import {Bundle} from "../models/resources/bundle";
 
 @Injectable({
   providedIn: 'root'
@@ -8,9 +10,33 @@ export class BundleHelperService {
   constructor() { }
 
   // Passing a resource with a subject and a bundle, this will find that subject in the bundle.
-  findSubjectInBundle(resource: any, bundle: any): any {
-    const subjectId = resource?.subject?.reference?.split("/").pop();
-    const subject = bundle.entry.find(bec => bec.resource.id === subjectId).resource;
+  /**
+   *
+   * @param resource - Any FHIR Resource with a subject field.
+   * @param bundle - The FHIR Bundle to locate the subject resource within.
+   * @returns a FHIR Resource (typically a Patient) which is the subject referenced.
+   *
+   * @example
+   * ```
+   * resource = {
+   *   "resourceType": "Observation",
+   *   "subject": { "reference": "Patient/1234"}
+   * }
+   * bundle = {
+   *   ... // abbreviated
+   *   "entry": [{
+   *     "resource": {"resourceType": "Patient", "id": "1234"}
+   *   }]
+   * }
+   *
+   *
+   * ```
+   *
+   * TODO: Handle passing a resource without a subject or that uses patient/etc.
+   **/
+  findSubjectInBundle(resource: FhirResource, bundle: Bundle): FhirResource {
+    const subjectId = resource?.['subject']?.reference?.split("/").pop();
+    const subject = bundle.entry.find(bec => bec?.resource?.['id'] === subjectId).resource;
     return subject; // Return subject resource
   }
 

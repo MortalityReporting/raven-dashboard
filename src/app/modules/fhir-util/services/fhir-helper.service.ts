@@ -1,16 +1,12 @@
 import {Injectable} from '@angular/core';
-import {TrackingNumberType} from "../../../model/tracking.number.type";
-import {TerminologyHandlerService} from "./terminology-handler.service";
+import {TrackingNumberType} from "../../fhir-mdi-library";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FhirHelperService {
 
-  constructor(
-    private terminologyHandler: TerminologyHandlerService
-
-  ) { }
+  constructor() { }
 
   findObservationComponentByCode(observation: any, componentCode: string): any {
     if(!observation.component || !componentCode){
@@ -59,8 +55,8 @@ export class FhirHelperService {
 
 
 
-  getPatientOfficialName(patientResource: any, returnStyle: PatientNameReturn = 0, includePrefix: boolean = false): string {
-    let nameList = patientResource.name;
+  getOfficialName(resource: any, returnStyle: PatientNameReturn = 0, includePrefix: boolean = false): string {
+    let nameList = resource.name;
     let firstOrOfficialName = (nameList.filter((humanName: any) => humanName.use === "official"))[0];
 
     // If No Official Name is Found, use First HumanName in List
@@ -73,14 +69,14 @@ export class FhirHelperService {
       case PatientNameReturn.fullname: {
         let fullName = "";
         if (includePrefix) {
-          firstOrOfficialName.prefix.forEach((prefix: any) => {
+          firstOrOfficialName?.prefix?.forEach((prefix: any) => {
             fullName = fullName + prefix + " "
           });
         }
-        firstOrOfficialName.given.forEach((name: any) => {
+        firstOrOfficialName?.given?.forEach((name: any) => {
           fullName = fullName + name + " "
         });
-        fullName = fullName + firstOrOfficialName.family;
+        fullName = fullName + (firstOrOfficialName?.family || "");
         return fullName.trim();
       }
       case PatientNameReturn.lastfirst: {

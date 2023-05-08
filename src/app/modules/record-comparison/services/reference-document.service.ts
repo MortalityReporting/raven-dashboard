@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {EnvironmentHandlerService} from "../../record-viewer/services/environment-handler.service";
+import {EnvironmentHandlerService} from "../../fhir-util/services/environment-handler.service";
 import {HttpClient} from "@angular/common/http";
 import {FhirHelperService} from "../../fhir-util/services/fhir-helper.service";
 import {BundleHelperService} from "../../fhir-util/services/bundle-helper.service";
@@ -37,9 +37,7 @@ export class ReferenceDocumentService {
           forkJoin(
             bundleBecList.map((bundleBec: any) =>{
               const composition = bundleBec.resource.entry[0].resource;
-              console.log(composition)
               const subject = this.bundleHelper.findSubjectInBundle(composition, bundleBec.resource)
-              console.log(subject)
               return of(this.createSummary(subject, bundleBec.resource));
             })
           )
@@ -49,7 +47,7 @@ export class ReferenceDocumentService {
 
   createSummary(subject: any, bundle: any): any {
     return {
-      "display": this.fhirHelper.getPatientOfficialName(subject),
+      "display": this.fhirHelper.getOfficialName(subject),
       "bundle": bundle
     }
   }

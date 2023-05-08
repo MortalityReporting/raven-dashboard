@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {Obs_DeathDate, Obs_MannerOfDeath} from "../../../../../../model/mdi/profile.list";
-import {TrackingNumberType} from "../../../../../../model/tracking.number.type";
+import {Obs_DeathDate, Obs_MannerOfDeath} from "../../../../../../providers/fhir-profile-constants";
 import {FhirHelperService, PatientNameReturn} from "../../../../../../modules/fhir-util/services/fhir-helper.service";
-import {DocumentHandlerService} from "../../../../../../modules/record-viewer/services/document-handler.service";
 import {MatTabGroup} from "@angular/material/tabs";
 import {MatTableDataSource} from "@angular/material/table";
+import {MdiToEdrsDocumentHandlerService} from "../../../../../record-viewer";
+import {TrackingNumberType} from "../../../../../fhir-mdi-library";
 
 @Component({
   selector: 'app-edrs-search-results-grid',
@@ -26,7 +26,7 @@ export class EdrsSearchResultsGridComponent implements OnInit, OnChanges {
 
   constructor(
     private fhirHelperService: FhirHelperService,
-    private documentHandlerService: DocumentHandlerService) { }
+    private documentHandlerService: MdiToEdrsDocumentHandlerService) { }
 
   ngOnInit(): void {
   }
@@ -54,7 +54,7 @@ export class EdrsSearchResultsGridComponent implements OnInit, OnChanges {
         decedent.bundleResource = bundle;
 
         const patientResource = this.findResourceByType(bundle.resource, "Patient");
-        const officialName = this.fhirHelperService.getPatientOfficialName(patientResource, PatientNameReturn.lastfirst);
+        const officialName = this.fhirHelperService.getOfficialName(patientResource, PatientNameReturn.lastfirst);
         decedent.officialName = officialName;
 
         const genderStr = this.toTitleCase(patientResource.gender);
@@ -161,7 +161,6 @@ export class EdrsSearchResultsGridComponent implements OnInit, OnChanges {
     else {
       this.selectedCase = null;
     }
-    console.log(this.selectedCase);
     this.selectedCaseValueEmitter.emit(this.selectedCase);
   }
 

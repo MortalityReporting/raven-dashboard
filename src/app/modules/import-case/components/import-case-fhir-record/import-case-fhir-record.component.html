@@ -1,36 +1,37 @@
-<div>
-  1. Select a FHIR JSON file to upload and preview or paste your FHIR Bundle directly in the provided area.
-  To prevent the creation of duplicate records, existing records are overwritten.
-  <div class="content-offset">
-    <div class="top-padding">
-      <input type="file" class="file-input" (click)="fileUpload.value=null"
-             accept=".json"
-             (change)="onFileSelected($event)" #fileUpload>
-      <button mat-raised-button color="success" class="upload-btn"
-              (click)="clearUI(); fileUpload.click();" [disabled]=isLoading>
-        <mat-icon>post_add</mat-icon>
-        Select File
-      </button>
-      <span id="filename">{{file?.name}}</span>
-    </div>
+<div class="top-margin">
+  <h3>1. Select an MDI FHIR Bundle (JSON)</h3>
+</div>
+<p>You may select a local JSON file or paste the JSON directly into the provided area below.</p>
+<p><b> Warning:</b> To prevent the creation of duplicate records, existing records are overwritten.</p>
+<div class="content-offset">
+  <lib-ngx-fhir-validator
+    [formatResourceBtnShown]="false"
+    [resultDetailsExpandBtnShown]="false"
+    [validationResultsExpanded]="true"
+    [submitBtnShown]="false"
+    [cancelValidationBtnShown]="false"
+    [clearValidatorBtnShown]="false"
+    [buttonTxtColor] = "'white'"
+    [buttonBackgroundColor] = "config.backgroundColor"
+    (onValidation)="onValidation($event)"
+    (onApiError)="onValidationError($event)"
+    (onResourceContentChanged)="onResourceContentChanged($event)"
+  />
 
-    <app-fhir-validator [isStandalone]=false></app-fhir-validator>
-
-  </div>
-  <div class="error-text mat-error">
-    {{preconditionError}}
-  </div>
 </div>
 
 <div class="top-padding">
-  2. Submit your Bundle to the Raven.
+  <h3>2. Submit MDI FHIR Bundle to Raven</h3>
   <div class="content-offset top-padding">
-    <button mat-raised-button color="primary" (click)="onSubmit()" *ngIf="!invalidResourceFound || preconditionError">
+    <button mat-raised-button [style.background-color]="config.backgroundColor" [style.color]="'white'"
+            (click)="onSubmit()" *ngIf="!invalidResourceFound || preconditionError">
       <mat-icon>send</mat-icon>
       Submit
     </button>
     <button mat-raised-button color="warn" (click)="onSubmitInvalidRecord()"
-            *ngIf="invalidResourceFound && !preconditionError && !isLoading">
+            *ngIf="invalidResourceFound && !preconditionError && !isLoading"
+            [style.background-color]="config.backgroundColor" [style.color]="'white'"
+    >
       <mat-icon>send</mat-icon>
       Submit Invalid Record
     </button>

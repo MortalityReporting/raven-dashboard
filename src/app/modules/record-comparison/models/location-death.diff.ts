@@ -28,12 +28,6 @@ export class LocationDeathDiff extends LocationDiff {
         } catch(e) {}
 
         try {
-            this.identifier.expected = JSON.stringify( this.expected.identifier, null, 4 );
-            this.identifier.actual = JSON.stringify( this.actual.identifier, null, 4 );
-            [this.identifier.style,this.identifier.difference] = DiffType.doDiff( Diff.diffChars( this.identifier.expected, this.identifier.actual ));
-        } catch(e) {}
-
-        try {
             let style =
                 this.style === 'valid' &&
                 this.status.style === 'valid' &&

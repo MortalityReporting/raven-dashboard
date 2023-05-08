@@ -16,11 +16,17 @@ export class RecordComparisonContentFieldComponent implements OnInit, OnChanges{
   @Input() difference: string;
   @Input() expanded: boolean;
 
+  differenceHasContents: boolean;
+
   @ViewChild(MatExpansionPanel) matExpansionPanel: MatExpansionPanel;
 
   constructor() { }
 
   ngOnInit(): void {
+    let strippedDifferenceString = new DOMParser().parseFromString(this.difference, 'text/html').documentElement;
+    this.differenceHasContents = !!(strippedDifferenceString?.childNodes?.[1]?.childNodes?.[0]?.childNodes?.[0]?.childNodes?.[0]);
+    // console.log(strippedDifferenceString?.childNodes?.[1]?.childNodes?.[0]?.childNodes?.[0]?.childNodes?.[0]);
+    // console.log(this.differenceHasContents);
   }
 
   ngOnChanges(changes: SimpleChanges): void {

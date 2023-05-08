@@ -3,7 +3,7 @@ import {environment} from "../environments/environment";
 import {MatIconRegistry} from "@angular/material/icon";
 import {DomSanitizer} from "@angular/platform-browser";
 import {OptionConfig, HeaderConfig} from "common-ui";
-import {AppConfiguration} from "../assets/configuration/app-configuration";
+import {AppConfiguration} from "./providers/app-configuration";
 import {ThemeService} from "./service/theme.service";
 
 @Component({
@@ -81,6 +81,13 @@ export class AppComponent implements OnInit {
     }
     this.headerConfig = {
       menuItem: [
+        {
+          label: "MDI FHIR IG STU 1",
+          link: "https://hl7.org/fhir/us/mdi/STU1/"
+        },
+        {
+          divider: true
+        },
         {
           label: "Documentation",
           link: "https://ravendocs.readthedocs.io/en/latest/"

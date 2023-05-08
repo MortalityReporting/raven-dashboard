@@ -1,9 +1,7 @@
 import {Component, OnInit, ElementRef} from '@angular/core';
-import {FhirResourceProviderService} from "../../../../service/fhir-resource-provider.service";
 import {HttpClient} from "@angular/common/http";
-import {DocumentHandlerService} from "../../../record-viewer/services/document-handler.service";
-import {FhirExplorerService} from 'src/app/modules/fhir-explorer/services/fhir-explorer.service';
 import {UtilsService} from "../../../../service/utils.service";
+import {FhirExplorerService} from "../../services/fhir-explorer.service";
 
 @Component({
   selector: 'app-fhir-explorer',
@@ -19,13 +17,12 @@ export class FhirExplorerComponent implements OnInit {
 
   constructor(
     private httpClient: HttpClient,
-    private documentHandler: DocumentHandlerService,
+    //private documentHandler: MdiToEdrsDocumentHandlerService,
     private fhirExplorerService: FhirExplorerService,
-    private fhirResourceProvider: FhirResourceProviderService,
     private utilsService: UtilsService,
     private elRef: ElementRef
   ) {
-      this.fhirResourceProvider.fhirResource$.subscribe( resource => {
+      this.fhirExplorerService.fhirResource$.subscribe( resource => {
 
       this.fhirResource = resource;
 
@@ -70,8 +67,7 @@ export class FhirExplorerComponent implements OnInit {
     else {
       // TODO not sure why this is a good idea and we need to fix this code ASAP !!!
       // This should do the translation we are doing in the constructor
-      const resource = this.documentHandler.getCurrentSubjectResource();
-      this.fhirResourceProvider.setSelectedFhirResource(this.fhirResource);
+      this.fhirExplorerService.setSelectedFhirResource(this.fhirResource);
     }
   }
 

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
-import {AppConfiguration} from "../../../assets/configuration/app-configuration";
-import {ModuleHeaderConfig} from "../../../assets/configuration/module-header-config";
+import {AppConfiguration} from "../../providers/app-configuration";
 
 @Component({
   selector: 'app-landing',

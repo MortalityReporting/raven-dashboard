@@ -1,35 +1,88 @@
 <div class="controls">
-<mat-radio-group aria-label="Select filter option" [(ngModel)]="selectedFilter" [disabled]="!(this.mappedData?.length > 0)">
-  <mat-label>Filter Results:</mat-label>
-  <mat-radio-button *ngFor="let filter of filters" [value]="filter"
-                    (change)="onFilterChanged(filter)">
-    {{filter}}
-  </mat-radio-button>
-</mat-radio-group>
+  <mat-radio-group aria-label="Select filter option" [(ngModel)]="selectedFilter" [disabled]="false">
+    <mat-label>Show:</mat-label>
+    <mat-radio-button *ngFor="let filter of filters" [value]="filter"
+                      (change)="onFilterChanged(filter)">
+      <span class="radio-btn-label">{{filter}}</span>
+    </mat-radio-button>
+  </mat-radio-group>
 </div>
 
-<div class="table-container"  id="mappingsTable">
-<table mat-table [dataSource]="dataSource" style="width: 100%">
+<div class="table-container">
+  <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let row">
+        <mat-icon style="margin-right: 8px"*ngIf="row?.valueObject?.length> 0 && row != expandedRow">expand_more</mat-icon>
+        <mat-icon style="margin-right: 8px"*ngIf="row?.valueObject?.length> 0 && row == expandedRow">expand_less</mat-icon>
+        <span class="data-name">{{row.name}}</span>
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef> Field </th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-  </ng-container>
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let row" [ngClass]="row.valueObject?.status == 'mapped' ? 'mapped': 'not-mapped' ">
+        {{row?.valueObject?.status}}
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="value">
-    <th mat-header-cell *matHeaderCellDef> Value </th>
-    <td mat-cell *matCellDef="let element"> {{element.value}} </td>
-  </ng-container>
+    <ng-container matColumnDef="value">
+      <th mat-header-cell *matHeaderCellDef>Value</th>
+      <td mat-cell *matCellDef="let row">
+        {{row?.valueObject?.value}}
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="status">
-    <th mat-header-cell *matHeaderCellDef> Status </th>
-    <td mat-cell *matCellDef="let element"> {{element.status | titlecase }} </td>
-  </ng-container>
+    <ng-container matColumnDef="expandedRow">
+      <td mat-cell
+          *matCellDef="let innerRow"
+          class="inner-records"
+          [attr.colspan]="columnsToDisplay.length">
+        <div class="case-record-detail" *ngIf="innerRow.valueObject?.length"
+             [@detailExpand]="innerRow == expandedRow ? 'expanded' : 'collapsed'">
+          <table mat-table [dataSource]="innerRow.valueObject">
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let inner"> {{inner.name}} </td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let inner" [ngClass]="inner.valueObject?.status == 'mapped' ? 'mapped': 'not-mapped' ">
+                {{inner?.valueObject?.status}}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="value">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let inner"> {{inner?.valueObject?.value}} </td>
+            </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  <tr class="mat-row" *matNoDataRow>
-    <td class="mat-cell">No records loaded.</td>
-  </tr>
-</table>
+            <tr mat-row *matRowDef="let innerRow; columns: innerTableDisplayedColumns;"
+                (click)="onRowClick( innerRow )" style="cursor: pointer">
+            </tr>
+          </table>
+        </div>
+
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: columnsToDisplay; let i = dataIndex;"
+      class="case-record-row"
+      (click)="expandedRow = expandedRow === row ? null : row"
+      [ngStyle]="{'cursor': row?.valueObject?.length ? 'pointer' : '' }"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: ['expandedRow']"
+      class="case-record-detail-row"
+    ></tr>
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell">No records loaded.</td>
+    </tr>
+
+  </table>
+
 </div>

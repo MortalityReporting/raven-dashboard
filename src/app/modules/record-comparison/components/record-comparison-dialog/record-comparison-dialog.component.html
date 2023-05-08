@@ -1,11 +1,11 @@
-<div mat-dialog-content class="dialog-container">
+<mat-dialog-content>
   <textarea class="text-area" placeholder="Paste your Document Bundle here."
             (input)="onTextAreaChanged($event)">{{text}}</textarea>
   <div class="mat-error">{{errorMessage}}</div>
-  <div mat-dialog-actions class="mat-dialog-actions">
+  <mat-dialog-actions>
     <button mat-raised-button (click)="onClose();" cdkFocusInitial>Close</button>
     <button mat-raised-button color="primary" (click)="onSaveButtonClick();" style="margin-left: 1rem" cdkFocusInitial>
       Save
     </button>
-  </div>
-</div>
+  </mat-dialog-actions>
+</mat-dialog-content>

@@ -2,7 +2,10 @@
   <div class="summary-section-grid">
     <div class="grid-row">
       <div class="grid-col-1">
-        <button mat-raised-button color="primary" (click)="onInputBundleClick()">Input MDI to EDRS Document Bundle
+        <button mat-raised-button
+                [style.background-color]="config.backgroundColor"
+                [style.color]="'white'"
+                (click)="onInputBundleClick()">Input MDI to EDRS Document Bundle
         </button>
       </div>
       <div class="grid-col-1">
@@ -18,7 +21,11 @@
       <div class="grid-col-1">
         <div style="align-items: center;">
           <button mat-raised-button color="accent" (click)="runComparison()"
-                  [disabled]="!(userDocumentWrapper && referenceDocument)">Compare
+                  [style.background-color]="(userDocumentWrapper && referenceDocumentWrapper) ?
+                   config.backgroundColor : '0 0 0 0.12'"
+                  [style.color]="'white'"
+                  [disabled]="!(userDocumentWrapper && referenceDocumentWrapper)">
+            Compare
           </button>
         </div>
       </div>
@@ -32,8 +39,8 @@
             </mat-card-subtitle>
             <mat-card-content>
               Decedent Name: {{ userDocumentWrapper?.decedentName }}<br>
-              Date/Time of Death: {{ userDocumentWrapper?.dateTimeOfDeath }}<br>
-              MDI Case Number/System: {{ userDocumentWrapper?.mdiCaseNumber }}:{{ userDocumentWrapper?.mdiCaseNumberSystem}}
+              <!-- TODO: Date/Time of Death: {{ userDocumentWrapper?.dateTimeOfDeath }}<br> -->
+              MDI Case Number | System: {{ userDocumentWrapper?.mdiCaseNumber }} | {{ userDocumentWrapper?.mdiCaseNumberSystem}}
             </mat-card-content>
           </mat-card>
 
@@ -44,9 +51,9 @@
           <mat-card>
             <mat-card-subtitle>Current Reference MDI to EDRS Document</mat-card-subtitle>
             <mat-card-content>
-              Decedent Name: {{ referenceDocumentWrapper?.decedentName }}<br>
-              Date/Time of Death: {{ referenceDocumentWrapper?.dateTimeOfDeath }}<br>
-              MDI Case Number/System: {{ referenceDocumentWrapper?.mdiCaseNumber }}:{{ referenceDocumentWrapper?.mdiCaseNumberSystem}}
+              <strong>Decedent Name:</strong> {{ referenceDocumentWrapper?.decedentName }}<br>
+              <!-- TODO: Date/Time of Death: {{ referenceDocumentWrapper?.dateTimeOfDeath }}<br> -->
+              <strong>MDI Case Number | System:</strong> {{ referenceDocumentWrapper?.mdiCaseNumber }} | {{ referenceDocumentWrapper?.mdiCaseNumberSystem}}
             </mat-card-content>
           </mat-card>
         </div>
@@ -233,21 +240,23 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
 
+        <!-- Location - Death -->
         <record-comparison-content-field
           [state]="difference.locationDeath?.name?.style"
-          [title]="'Death Location'"
-          [resource]="'Location-death'"
-          [fhirPath]="difference.locationDeath?.expected?.resourceType + '.name'"
+          [title]="fields.deathLocation.title"
+          [resource]="fields.deathLocation.profile"
+          [fhirPath]="fields.deathLocation.fhirPath"
           [expected]="difference.locationDeath?.name?.expected"
           [difference]="difference.locationDeath?.name?.difference"
           [expanded]="isAccordionExpanded">
         </record-comparison-content-field>
 
+        <!-- Location - Injury -->
         <record-comparison-content-field
           [state]="difference.locationInjury?.name?.style"
-          [title]="'Injury Location'"
-          [resource]="'Location-injury'"
-          [fhirPath]="difference.locationInjury?.expected?.resourceType + '.name'"
+          [title]="fields.injuryLocation.title"
+          [resource]="fields.injuryLocation.profile"
+          [fhirPath]="fields.injuryLocation.fhirPath"
           [expected]="difference.locationInjury?.name?.expected"
           [difference]="difference.locationInjury?.name?.difference"
           [expanded]="isAccordionExpanded">
@@ -285,13 +294,14 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
 
+        <!-- Observation - Death Date -->
         <record-comparison-content-field
-          [state]="difference.deathDate?.effectiveDateTime?.style"
-          [title]="'Death Date/Time'"
-          [resource]="'Observation-death-date'"
-          [fhirPath]="difference.deathDate?.expected?.resourceType + '.valueDateTime'"
-          [expected]="difference.deathDate?.effectiveDateTime?.expected"
-          [difference]="difference.deathDate?.effectiveDateTime?.difference"
+          [state]="difference.deathDate?.valueDateTime?.style"
+          [title]="fields.deathDateTime.title"
+          [resource]="fields.deathDateTime.profile"
+          [fhirPath]="fields.deathDateTime.fhirPath"
+          [expected]="difference.deathDate?.valueDateTime?.expected"
+          [difference]="difference.deathDate?.valueDateTime?.difference"
           [expanded]="isAccordionExpanded">
         </record-comparison-content-field>
 

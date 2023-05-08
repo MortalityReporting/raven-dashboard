@@ -1,6 +1,7 @@
-<div>
-  1. Users may use the provided XLSX file as a template to create a set of test cases. This XLSX file may then
-  be submitted to Raven, where it is then mapped to MDI-to-EDRS records and posted to the Raven FHIR Server.
+<div class="top-margin">
+  <h3>1. Create Test Cases</h3>
+  Users may use one of the provided XLSX files on the right as a template to create a set of test cases for a given workflow.
+  This XLSX file can be submitted to Raven and mapped to FHIR MDI IG resources, and then posted to the Raven FHIR Server.
   To prevent the creation of duplicate records, existing records are overwritten.
   <div>
     <div class="top-padding">
@@ -8,30 +9,49 @@
              accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
              (change)="onFileSelected($event)" #fileUpload>
       <div>
-        <button mat-raised-button (click)="onDownloadTemplate();" style="margin-bottom: 1rem" [disabled]=isLoading>
-          <mat-icon>file_download</mat-icon>
-          Download MDI-to-EDRS XLSX Template
-        </button>
-      </div>
-      <div>
-      <button mat-raised-button color="success" class="upload-btn"
-              (click)="clearUI(); fileUpload.click();" [disabled]=isLoading>
-        <mat-icon>upload_file</mat-icon>
-        Select MDI-to-EDRS XLSX Template
-      </button>
-      <span id="filename">{{file?.name}}</span>
-      </div>
     </div>
-
   </div>
 
   <div class="top-padding">
-    2. Submit your document to Raven.
-    <div>
-      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="isLoading">
-        <mat-icon>send</mat-icon>
-        Submit
+    <h3>2. Submit Test Cases to Raven</h3>
+    <div class="row">
+      Select your completed spreadsheet, the type of the template used, and submit to raven.
+    </div>
+    <div class="row top-margin">
+      <button mat-raised-button color="success" class="upload-btn"
+              (click)="clearUI(); fileUpload.click();" [disabled]=isLoading
+              [style.background-color]="config.backgroundColor" [style.color]="'white'"
+      >
+        <mat-icon>upload_file</mat-icon>
+        Browse for Import Spreadsheet
       </button>
+      <span class="file-name">{{file?.name}}
+        <mat-error
+          *ngIf="form.submitted &&!file">No File Selected.
+        </mat-error>
+      </span>
+    </div>
+  </div>
+    <div class="top-margin">
+      <form [formGroup]="importCaseForm" (ngSubmit)="onSubmit()" class="row" #form="ngForm" >
+        <mat-form-field appearance="outline" style="min-width: 50%">
+          <mat-label>Select Template Type</mat-label>
+          <mat-select formControlName="fileTemplate">
+            <mat-option *ngFor="let template of fileTemplates" [value]="template">
+              {{template.description}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="fileTemplate.errors?.['required']">
+            Please select a template type above...
+          </mat-error>
+        </mat-form-field>
+        <div class="content-spacer"></div>
+        <button mat-raised-button type=submit
+                [style.background-color]="config.backgroundColor"
+                [style.color]="'white'" [disabled]="isLoading">
+          Submit
+        </button>
+      </form>
     </div>
   </div>
 
@@ -42,7 +62,8 @@
   </div>
 
   <div class="top-padding">
-    3. Review your record(s) below.
+    <h3>3. Review Test Case Mapping</h3>
+    <div *ngIf="!isExportSuccessful || errorsGenerated">Review available once spreadsheet is submitted.</div>
     <div class="wrapper" *ngIf="isExportSuccessful">
       <div class="result-colum">
 
@@ -50,17 +71,20 @@
 
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Name</th>
-            <td mat-cell *matCellDef="let case"> {{case.fhirResponse.name}} </td>
+            <td mat-cell *matCellDef="let record"> {{record.fhirResponse.name}} </td>
           </ng-container>
 
           <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef> Status</th>
-            <td mat-cell *matCellDef="let case"> {{case.fhirResponse.status}} </td>
+            <td mat-cell *matCellDef="let record"
+                [ngClass]="record.fhirResponse?.status?.toLowerCase() == 'success' ? 'success': 'error' ">
+              {{record.fhirResponse.status}}
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="state">
-            <th mat-header-cell *matHeaderCellDef> State</th>
-            <td mat-cell *matCellDef="let case"> {{case.fhirResponse.state}} </td>
+            <th mat-header-cell *matHeaderCellDef> Response</th>
+            <td mat-cell *matCellDef="let record"> {{record.fhirResponse.statusCode}} </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

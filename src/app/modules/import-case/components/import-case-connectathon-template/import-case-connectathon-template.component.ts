@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {ImportCaseService} from "../../services/import-case.service";
 import {UtilsService} from "../../../../service/utils.service";
 
 import {openModal} from "../../../../components/widgets/modal/modal.component";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatDialog} from "@angular/material/dialog";
+import {FileTemplate} from "../../models/file-template";
+import {FileTemplateService} from "../../services/file-template.service";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 
 
 @Component({
@@ -13,6 +17,7 @@ import {MatDialog} from "@angular/material/dialog";
   styleUrls: ['./import-case-connectathon-template.component.scss']
 })
 export class ImportCaseConnectathonTemplateComponent implements OnInit {
+  @Input() fileTemplates: FileTemplate[] = []
 
   isLoading: boolean = false;
   selectedCase: any;
@@ -24,11 +29,29 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
   errorsGenerated: boolean = false;
   error: any;
 
-  constructor(private importCaseService: ImportCaseService,
-              private utilsService: UtilsService,
-              private dialog: MatDialog) { }
+  fileTemplate = new FormControl('', [Validators.required]);
+
+  importCaseForm = new FormGroup({
+    fileTemplate: new FormControl<FileTemplate| null>(null,[Validators.required])
+  });
+  // selectedFileTemplate: any;
+
+  constructor(
+    @Inject('importConfig') public config: ModuleHeaderConfig,
+    private importCaseService: ImportCaseService,
+    private fileTemplateService: FileTemplateService,
+    private utilsService: UtilsService,
+    private dialog: MatDialog,
+    private formBuilder: FormBuilder
+ ) { }
 
   ngOnInit(): void {
+
+    this.fileTemplateService.selectedFileTemplate$.subscribe({
+      next: value =>
+          this.importCaseForm.controls['fileTemplate'].setValue(this.fileTemplates.find(template => template.description == value.description))
+      }
+    );
   }
 
   onFileSelected(event: any) {
@@ -56,47 +79,37 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
   }
 
   onSubmit() {
-    this.utilsService.closeNotification();
-    if(this.file) {
-      this.isExportSuccessful = false;
-      this.errorsGenerated = false;
-      this.isLoading = true;
-      this.error = null;
-      //this.importCaseService.getMockResponse().subscribe({
-      this.importCaseService.uploadFile(this.file).subscribe({
-        next: value => {
-          this.isLoading = false;
-          this.dataSource = new MatTableDataSource(value);
-          if(value?.length > 0){
-            this.selectedCase = value[0];
+    if (this.importCaseForm.valid) {
+      this.utilsService.closeNotification();
+      if (this.file) {
+        this.isExportSuccessful = false;
+        this.errorsGenerated = false;
+        this.isLoading = true;
+        this.error = null;
+        //this.importCaseService.getMockResponse().subscribe({
+        const apiParam = this.importCaseForm.controls['fileTemplate'].value.apiImportParameter;
+        this.importCaseService.uploadFile(this.file, apiParam).subscribe({
+          next: value => {
+            this.isLoading = false;
+            this.dataSource = new MatTableDataSource(value);
+            if (value?.length > 0) {
+              this.selectedCase = value[0];
+            } else {
+              this.selectedCase = null;
+            }
+            this.isExportSuccessful = true;
+          },
+          error: err => {
+            console.error(err);
+            this.error = err;
+            this.isLoading = false;
+            this.utilsService.showErrorMessage("Error uploading file " + this.file?.name);
+            this.file = null;
+            this.errorsGenerated = true;
           }
-          else {
-            this.selectedCase = null;
-          }
-          this.isExportSuccessful = true;
-        },
-        error: err => {
-          console.error(err);
-          this.error = err;
-          this.isLoading = false;
-          this.utilsService.showErrorMessage("Error uploading file " + this.file?.name);
-          this.file = null;
-          this.errorsGenerated = true;
-        }
-      });
+        });
+      }
     }
-    else {
-      this.utilsService.showErrorMessage("Please select a file to upload")
-    }
-  }
-
-  onDownloadTemplate(){
-    const link = document.createElement('a');
-    document.body.appendChild(link);
-    link.href = 'https://github.com/MortalityReporting/raven-import-and-submit-api/blob/master/MDI_Raven_Excel_Schema.xlsx?raw=true';
-    link.target="_blank";
-    link.click();
-    document.body.removeChild(link);
   }
 
   scrollToTop(el: HTMLDivElement) {

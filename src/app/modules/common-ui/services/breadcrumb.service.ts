@@ -1,8 +1,14 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import {ActivatedRouteSnapshot, Router} from '@angular/router';
+import {BehaviorSubject} from 'rxjs';
 import { Breadcrumb } from '../models/breadcrumb';
+import {ModuleHeaderService} from "../../../service/module-header.service";
+
+export interface RouterNaviEndValue{
+  header?: boolean | null,
+  moduleTitle?: string | null,
+  componentTitle?: string | null,
+}
 
 @Injectable({
   providedIn: 'root',
@@ -11,80 +17,34 @@ export class BreadcrumbService {
   private readonly _breadcrumbs$ = new BehaviorSubject<Breadcrumb[]>([]);
   readonly breadcrumbs$ = this._breadcrumbs$.asObservable();
 
-  constructor(private router: Router) {
-    this.router.events
-      .pipe(
-        // Filter the NavigationEnd events as the breadcrumb is updated only when the route reaches its end
-        filter((event) => event instanceof NavigationEnd)
-      )
-      .subscribe((event) => {
-        const breadcrumbs: Breadcrumb[] = [];
-        const root = this.router.routerState.snapshot.root;
+  constructor(private router: Router,
+              private moduleHeaderService: ModuleHeaderService) {
 
-        // Make first call to addBreadcrumb function
-        this.addBreadcrumb(root.firstChild!, breadcrumbs);
-
-        // Emit the new hierarchy
-        this._breadcrumbs$.next(breadcrumbs);
-      });
-  }
-
-  private buildPath(iterations: number, components: string[]) {
-    let path = '';
-
-    components.map((item, index) => {
-      if (index > 0 && index <= iterations)
-      {
-        path = path + '/' + item;
-      }
+    moduleHeaderService.moduleHeaderConfig$.subscribe(moduleHeaderConfig => {
+      const root = this.router.routerState.snapshot.root;
+      this._breadcrumbs$.next(this.getBreadcrumbNew(root.firstChild, moduleHeaderConfig));
     })
-
-    return path;
   }
+  private getBreadcrumbNew(route: ActivatedRouteSnapshot, routerNaviEndValue: RouterNaviEndValue): Breadcrumb[] {
+    let breadcrumbs: Breadcrumb[] = []
+    let url = this.router.routerState.snapshot.url;
+    let components = url.split('/');
 
-  private addBreadcrumb(
-    route: ActivatedRouteSnapshot,
-    breadcrumbs: Breadcrumb[]
-  ) {
-    if (route) {
-      let url = "home" + this.router.routerState.snapshot.url;
-
-      let components =  url.split('/');
-
-      components.some( (item, index) => {
-        if (item.length > 0)
-        {
-          let label = item;
-
-          label = label.replace( "records", "record viewer" );
-          label = label.replace( "mdi", "mdi viewer" );
-          label = label.replace( "tox", "toxicology viewer" );
-
-          const breadcrumb = {
-              label: label,
-              url: this.buildPath(index, components),
-          };
-
-          breadcrumbs.push(breadcrumb);
-
-          if (item === "mdi" || item === "tox") {
-            return true
-          }
-          else
-          {
-            return false;
-          }
-        }
-        else
-        {
-          return true;
-        }
+    if (components.filter(item => !!item.length).length > 0) {
+      breadcrumbs = components.map((item, index) => {
+        let url = ''
+        if (index === 0) { //build home breadcrumb
+          return {label: 'Home', url: url};
+        } else if (index === 1 && routerNaviEndValue.moduleTitle) {
+          return {label: routerNaviEndValue.moduleTitle, url: url + '/' + item}
+        } else if (index === 2 && routerNaviEndValue.moduleTitle) {
+          return {label: routerNaviEndValue.componentTitle, url: url + '/' + item}
+        } else return null;
       })
-
-      if (breadcrumbs.length == 1)
-      {
-        breadcrumbs.pop();
-      }
+        .filter(element => element != null);
     }
+
+    return breadcrumbs
   }
+
 }

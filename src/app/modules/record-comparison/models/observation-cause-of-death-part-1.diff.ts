@@ -1,9 +1,7 @@
 import * as Diff from 'diff';
 import {DiffType} from './diff-type';
 import {ObservationDiff} from './observation.diff';
-import { DocumentHandlerService } from "../../record-viewer/services/document-handler.service";
-import {FhirHelperService} from "../../fhir-util/services/fhir-helper.service";
-import {Inject, Injectable} from "@angular/core";
+import {FhirHelperService} from "../../fhir-util";
 
 export class ObservationCauseOfDeathPart1Diff extends ObservationDiff {
     performer: DiffType;
@@ -30,11 +28,10 @@ export class ObservationCauseOfDeathPart1Diff extends ObservationDiff {
     override doDiff()
     {
         super.doDiff();
-        console.log("Running diff cod1")
+        //console.log("Running diff cod1")
 
         try {
             let expectedComponent = this.fhirHelper.findObservationComponentByCode(this.expected, "69440-6");
-            console.log(expectedComponent);
             this.valueString.expected = JSON.stringify( expectedComponent.valueString, null, 4 );
             let actualComponent = this.fhirHelper.findObservationComponentByCode(this.actual, "69440-6");
             this.valueString.actual = JSON.stringify( actualComponent.valueString, null, 4 );
