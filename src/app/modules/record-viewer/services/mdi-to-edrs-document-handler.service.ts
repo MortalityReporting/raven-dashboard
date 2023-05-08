@@ -214,6 +214,11 @@ export class MdiToEdrsDocumentHandlerService {
     demographics.address = new Address();
     demographics.address.line1 = patientResource.address?.[0]?.line?.[0] || this.defaultString;
     demographics.address.line2 = patientResource.address?.[0]?.line?.[1] || this.defaultString;
+    // In a lot of cases an address can have a line 1 only and not hav a line 2
+    // In such cases we should not render the default string.
+    if(demographics.address.line1 !== this.defaultString && demographics.address.line2 === this.defaultString){
+      demographics.address.line2 = '';
+    }
     demographics.address.city = patientResource.address?.[0]?.city || this.defaultString;
     demographics.address.state = patientResource.address?.[0]?.state || this.defaultString;
     demographics.address.zip = patientResource.address?.[0]?.postalCode || this.defaultString;
