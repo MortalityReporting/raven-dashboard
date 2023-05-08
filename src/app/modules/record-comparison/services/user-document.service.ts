@@ -29,7 +29,6 @@ export class UserDocumentService {
 
   createDocumentWrapper(documentBundle: Bundle): MdiToEDRSDocumentWrapper {
     const composition = documentBundle.entry[0].resource;
-    console.log(composition)
     let documentWrapper = new MdiToEDRSDocumentWrapper()
     documentWrapper.decedentName = this.fhirHelper.getOfficialName(
       this.bundleHelper.findSubjectInBundle(composition, documentBundle)
@@ -38,7 +37,6 @@ export class UserDocumentService {
     documentWrapper.mdiCaseNumber = this.fhirHelper.getTrackingNumber(composition);
     documentWrapper.mdiCaseNumberSystem = this.fhirHelper.getTrackingNumberSystem(composition)
     documentWrapper.documentBundle = documentBundle;
-    console.log(documentWrapper);
     return documentWrapper;
   }
 }
