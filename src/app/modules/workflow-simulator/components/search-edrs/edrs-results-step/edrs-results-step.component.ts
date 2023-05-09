@@ -39,6 +39,12 @@ export class EdrsResultsStepComponent implements OnInit {
         this.decedentInfo = value;
       }
     });
+    console.log("IN STEP 3")
+    this.searchEdrsService.endpoint$.subscribe({
+      next: value => {
+        console.log(value)
+      }
+    })
   }
 
   updatedSearchResults(event) {

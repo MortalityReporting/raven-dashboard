@@ -10,7 +10,7 @@
 
   <div class="double-top-margin">
     <mat-radio-group formControlName="inputType">
-      <mat-radio-button class="radio-button" class="endpoint-radio-btns" [disabled]="i > 0"
+      <mat-radio-button class="radio-button" class="endpoint-radio-btns"
                         *ngFor="let inputOption of endpointTypeOptions; let i = index" [value]="inputOption">
         {{ inputOption }}
       </mat-radio-button>
