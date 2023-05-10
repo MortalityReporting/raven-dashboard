@@ -33,11 +33,14 @@ export class SearchEdrsService {
   }
 
   setEndpoint(endpoint: string, basic: {username: string, password: string}) {
-    this.endpoint.next({
-      endpoint: endpoint,
-      auth: basic
+    if (!endpoint) this.endpoint.next(undefined);
+    else {
+      this.endpoint.next({
+        endpoint: endpoint,
+        auth: basic
+      }
+      )
     }
-    )
   }
 
   setDecedentData(data: DecedentSimpleInfo): void {

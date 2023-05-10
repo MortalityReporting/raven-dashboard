@@ -169,7 +169,7 @@ export class EdrsSearchResultsGridComponent implements OnInit, OnChanges {
       return null;
     }
 
-    const address = patientResourceAddress.find(address => address.use == 'home' && address.type == "physical");
+    const address = patientResourceAddress.find(address => address.use == 'home');
     const addressLine = address?.line?.join(', ');
     const addressCity = address?.city;
     const addressState = address?.state;
