@@ -31,6 +31,8 @@ export class SearchParametersComponent implements OnInit {
 
   errorMessage: string;
 
+  customEndpoint: any;
+
   constructor(
     private fb: UntypedFormBuilder,
     private searchEdrsService: SearchEdrsService,
@@ -40,6 +42,9 @@ export class SearchParametersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.searchEdrsService.endpoint$.subscribe(
+      {next: value => {this.customEndpoint = value}})
+
     this.setInitialFormControls();
 
     this.searchEdrsService.decedentData$.subscribe({
@@ -143,18 +148,41 @@ export class SearchParametersComponent implements OnInit {
     return result;
   }
 
+// {
+//   "endpoint": "grsgrsgrsg",
+//   "auth": {
+//     "username": "rsgrsgrs",
+//     "password": "rsgrsg"
+//   }
+// }
+
   private executeEdrsSearch() {
     this.clearSearchResultEmitter.emit();
-    this.searchEdrsService.searchEdrs(blueJay.serverBase, this.getSearchParametersResourcePreview()).subscribe({
-      next: value => {
-        this.searchResultsEmitter.emit({ response: value, success: true });
-      },
-      error: err => {
-        console.error(err);
-        this.utilsService.showErrorMessage();
-        this.searchResultsEmitter.emit({ response: err, success: false });
-      }
-    });
+    if (this.customEndpoint) {
+      this.searchEdrsService.searchEdrs(this.customEndpoint.endpoint,
+        this.getSearchParametersResourcePreview(), this.customEndpoint.auth).subscribe({
+        next: value => {
+          this.searchResultsEmitter.emit({ response: value, success: true });
+        },
+        error: err => {
+          console.error(err);
+          this.utilsService.showErrorMessage();
+          this.searchResultsEmitter.emit({ response: err, success: false });
+        }
+      });
+    }
+    else {
+      this.searchEdrsService.searchEdrs(blueJay.serverBase, this.getSearchParametersResourcePreview()).subscribe({
+        next: value => {
+          this.searchResultsEmitter.emit({ response: value, success: true });
+        },
+        error: err => {
+          console.error(err);
+          this.utilsService.showErrorMessage();
+          this.searchResultsEmitter.emit({ response: err, success: false });
+        }
+      });
+    }
   }
 
   private setInitialFormControls(){

@@ -19,6 +19,9 @@ export class SearchEdrsService {
   private decedentData = new Subject<DecedentSimpleInfo>();
   decedentData$ = this.decedentData.asObservable();
 
+  private endpoint = new Subject<any>();
+  endpoint$ = this.endpoint.asObservable();
+
   constructor(private http:HttpClient) { }
 
   setDocumentBundle(data): void {
@@ -29,6 +32,13 @@ export class SearchEdrsService {
     this.edrsHttpRequestInfo.next(data);
   }
 
+  setEndpoint(endpoint: string, basic: {username: string, password: string}) {
+    this.endpoint.next({
+      endpoint: endpoint,
+      auth: basic
+    }
+    )
+  }
 
   setDecedentData(data: DecedentSimpleInfo): void {
     this.decedentData.next(data);
@@ -42,9 +52,13 @@ export class SearchEdrsService {
   }
 
 
-  searchEdrs(uri, params): Observable<any> {
+  searchEdrs(uri, params, auth?): Observable<any> {
 
-    const authorizationData = 'Basic ' + btoa(blueJay.serverBasicAuth);
+    let authorizationData: string = 'Basic ' + btoa(blueJay.serverBasicAuth);
+    if (auth) {
+      const basicAuthString = `${auth.username}:${auth.password}`;
+      authorizationData = 'Basic ' + btoa(basicAuthString);
+    }
 
     const httpOptions = {
       headers: new HttpHeaders({
