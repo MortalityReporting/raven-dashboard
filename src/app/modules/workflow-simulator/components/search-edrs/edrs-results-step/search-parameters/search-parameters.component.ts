@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
 import {UntypedFormArray, UntypedFormBuilder, UntypedFormControl, FormGroup} from "@angular/forms";
 import {SearchEdrsService} from "../../../../service/search-edrs.service";
 import {UtilsService} from "../../../../../../service/utils.service";
@@ -8,6 +8,7 @@ import {DecedentSimpleInfo} from "../../../../../../model/decedent-simple-info";
 import {blueJay} from "../../../../../../../environments/environment";
 import {MatTableDataSource} from "@angular/material/table";
 import {TrackingNumberType} from "../../../../../fhir-mdi-library";
+import {ModuleHeaderConfig} from "../../../../../../providers/module-header-config";
 
 @Component({
   selector: 'app-search-parameters',
@@ -38,6 +39,7 @@ export class SearchParametersComponent implements OnInit {
     private searchEdrsService: SearchEdrsService,
     private utilsService: UtilsService,
     private fhirHelperService: FhirHelperService,
+    @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
   ) {
   }
 

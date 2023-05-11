@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {DecedentSimpleInfo} from "../../../../../model/decedent-simple-info";
 import {SearchEdrsService} from "../../../service/search-edrs.service";
 import {UntypedFormBuilder, UntypedFormGroup} from "@angular/forms";
 import {UiStringConstants} from "../../../../../providers/ui-string-constants";
 import {blueJay} from "../../../../../../environments/environment";
+import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
 
 @Component({
   selector: 'app-endpoint-configuration-step',
@@ -28,6 +29,7 @@ export class EndpointConfigurationStepComponent implements OnInit {
   decedentInfo: DecedentSimpleInfo;
 
   constructor(
+    @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
     private searchEdrsService: SearchEdrsService,
     private formBuilder: UntypedFormBuilder,
     uiStringConstants: UiStringConstants
