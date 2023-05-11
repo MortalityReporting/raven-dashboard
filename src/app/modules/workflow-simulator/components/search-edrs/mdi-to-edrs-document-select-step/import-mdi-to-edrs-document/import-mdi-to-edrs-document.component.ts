@@ -146,7 +146,7 @@ export class ImportMdiToEdrsDocumentComponent implements OnInit {
 
     const dateTimeOfDeathObservation = this.getObservationByCode(documentBundle, "81956-5");
     if(dateTimeOfDeathObservation){
-      const dateTimeOfDeath = dateTimeOfDeathObservation?.effectiveDateTime;
+      const dateTimeOfDeath = dateTimeOfDeathObservation?.valueDateTime;
       decedentSimpleInfo.dateTimeOfDeath = dateTimeOfDeath;
     }
 
