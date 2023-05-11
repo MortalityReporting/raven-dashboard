@@ -27,6 +27,7 @@ import {MatChipsModule} from "@angular/material/chips";
 import {MatRadioModule} from "@angular/material/radio";
 import {NgxFhirValidatorModule} from "ngx-fhir-validator";
 import {environment} from "../../../environments/environment";
+import {ModuleHeaderConfig} from "../../providers/module-header-config";
 
 @NgModule({
     declarations: [
@@ -65,7 +66,7 @@ import {environment} from "../../../environments/environment";
   ],
 })
 export class FhirValidatorModule {
-  public static forRoot(environment: any): ModuleWithProviders<FhirValidatorModule>{
+  public static forRoot(environment: any, config: ModuleHeaderConfig, appConfig: any): ModuleWithProviders<any> {
     return {
       ngModule: FhirValidatorModule,
       providers: [
@@ -73,8 +74,15 @@ export class FhirValidatorModule {
           provide: 'env',
           useValue: environment
         },
+        {
+          provide: 'fhirValidatorConfig',
+          useValue: config
+        },
+        {
+          provide: 'appConfig',
+          useValue: appConfig
+        }
       ]
     }
   }
-
 }

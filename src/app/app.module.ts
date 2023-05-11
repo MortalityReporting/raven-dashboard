@@ -63,7 +63,7 @@ import { FHIRProfileConstants } from "./providers/fhir-profile-constants";
     ReactiveFormsModule,
     MatIconModule,
     HttpClientModule,
-    FhirValidatorModule.forRoot(environment),
+    FhirValidatorModule.forRoot(environment, ModuleHeaderConfig.FhirValidator, AppConfiguration.config),
     ClipboardModule,
     WorkflowSimulatorModule.forRoot(environment, ModuleHeaderConfig.WorkflowSimulator, AppConfiguration.config),
     ImportCaseModule.forRoot(environment, ModuleHeaderConfig.RecordImport, AppConfiguration.config),
