@@ -11,8 +11,8 @@ export class DecedentBasicInfoComponent implements OnInit {
   @Input() decedentInfo: any;
   @Input() expansionPanelEnabled: boolean = false;
   @Input() expansionPanelExpanded: boolean = true;
-  @Input() btnEnabled: boolean = true;
-  @Input() btnVisible: boolean = true;
+  @Input() btnEnabled: boolean = false;
+  @Input() btnVisible: boolean = false;
   @Input() btnTitle: string = '';
 
   @Output() btnClick : EventEmitter<string> = new EventEmitter();

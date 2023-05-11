@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import { Router } from "@angular/router";
+import {ModuleHeaderConfig} from "../../../providers/module-header-config";
 
 /*
 This is a top level component. It used to store workflow simulator children components.
@@ -14,6 +15,7 @@ This is a top level component. It used to store workflow simulator children comp
 export class WorkflowSimulatorComponent {
 
   constructor(
+    @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
     private router: Router) {
   }
 
