@@ -118,6 +118,39 @@
           }
         }
       }
+    },
+    "ngx-hisb-logger": {
+      "projectType": "library",
+      "root": "projects/ngx-hisb-logger",
+      "sourceRoot": "projects/ngx-hisb-logger/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ngx-hisb-logger/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-hisb-logger/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ngx-hisb-logger/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/ngx-hisb-logger/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
     }
   }
 }
