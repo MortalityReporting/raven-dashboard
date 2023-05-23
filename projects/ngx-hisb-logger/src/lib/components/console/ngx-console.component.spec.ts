@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ConsoleComponent } from './console.component';
+import { NgxConsoleComponent } from './ngx-console.component';
 
 describe('ConsoleComponent', () => {
-  let component: ConsoleComponent;
-  let fixture: ComponentFixture<ConsoleComponent>;
+  let component: NgxConsoleComponent;
+  let fixture: ComponentFixture<NgxConsoleComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConsoleComponent ]
+      declarations: [ NgxConsoleComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ConsoleComponent);
+    fixture = TestBed.createComponent(NgxConsoleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

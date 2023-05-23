@@ -49,6 +49,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatButtonModule} from "@angular/material/button";
 import {ModuleHeaderConfig} from "../../providers/module-header-config";
+import {NgxHisbLoggerModule} from "ngx-hisb-logger";
+import { OnboardingComponent } from './components/onboarding/onboarding.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +66,9 @@ import {ModuleHeaderConfig} from "../../providers/module-header-config";
     HttpRequestInfoComponent,
     HttpResponseInfoComponent,
     WorkflowSimulatorComponent,
-    MdiToEdrsDocumentSelectStepComponent],
+    MdiToEdrsDocumentSelectStepComponent,
+    OnboardingComponent,
+  ],
   exports: [
   ],
   imports: [
@@ -86,8 +90,9 @@ import {ModuleHeaderConfig} from "../../providers/module-header-config";
     MatButtonModule,
     FormsModule,
     MatInputModule,
-    MatSortModule
-  ]
+    MatSortModule,
+    NgxHisbLoggerModule
+  ],
 })
 export class WorkflowSimulatorModule {
   public static forRoot(environment: any, config: ModuleHeaderConfig, appConfig: any): ModuleWithProviders<any> {

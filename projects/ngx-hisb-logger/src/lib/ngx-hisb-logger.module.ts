@@ -1,16 +1,26 @@
 import { NgModule } from '@angular/core';
-import { ConsoleComponent } from './components/console/console.component';
+import { NgxConsoleComponent } from './components/console/ngx-console.component';
+import {AsyncPipe, CommonModule, JsonPipe} from "@angular/common";
+import {LoggerService} from "./services/logger.service";
+import {BrowserModule} from "@angular/platform-browser";
 
 
 
 @NgModule({
   declarations: [
-    ConsoleComponent
+    NgxConsoleComponent
   ],
   imports: [
+    JsonPipe,
+    AsyncPipe,
+    CommonModule,
+    BrowserModule
   ],
   exports: [
-    ConsoleComponent
+    NgxConsoleComponent
+  ],
+  providers: [
+   LoggerService
   ]
 })
 export class NgxHisbLoggerModule { }

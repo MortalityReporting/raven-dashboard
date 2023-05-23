@@ -22,4 +22,8 @@ export class WorkflowSimulatorComponent {
   onStartWorkflow() {
     this.router.navigate(['/workflow-simulator/search-edrs']);
   }
+
+  onStartOnboarding() {
+    this.router.navigate(['/workflow-simulator/onboarding']);
+  }
 }

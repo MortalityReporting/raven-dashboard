@@ -3,5 +3,5 @@
  */
 
 export * from './lib/ngx-hisb-logger.module';
-export * from './lib/components/console/console.component';
-export * from './lib/services/loger.service';
+export * from './lib/components/console/ngx-console.component';
+export * from './lib/services/logger.service';

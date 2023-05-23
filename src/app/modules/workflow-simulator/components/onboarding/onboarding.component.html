@@ -1,0 +1,7 @@
+<div style="margin: 0 20px">
+<lib-console [logs] = "loggerData"></lib-console>
+<button mat-raised-button color="primary" (click)="logMessage('info')">Generate Info</button>
+<button mat-raised-button color="accent" (click)="logMessage('warn')">Generate Warning</button>
+<button mat-raised-button color="warn" (click)="logMessage('error')">Generate Error</button>
+<button mat-raised-button (click)="clearLog()">Clear Log</button>
+</div>

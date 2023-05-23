@@ -12,6 +12,7 @@ import {AppConfiguration} from "./providers/app-configuration";
 import {
   RecordComparisonContentComponent
 } from "./modules/record-comparison/components/record-comparison-content/record-comparison-content.component";
+import {OnboardingComponent} from "./modules/workflow-simulator/components/onboarding/onboarding.component";
 
 const routes: Routes = [
   {
@@ -80,6 +81,11 @@ const routes: Routes = [
         path: 'search-edrs',
         component: SearchEdrsComponent,
         data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Search EDRS"}
+      },
+      {
+        path: 'onboarding',
+        component: OnboardingComponent,
+        data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Onboarding Process"}
       }
     ]
   },
