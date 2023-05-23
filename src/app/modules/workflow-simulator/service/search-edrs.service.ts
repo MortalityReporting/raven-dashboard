@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import {Observable, Subject} from "rxjs";
 import {DecedentSimpleInfo} from "../../../model/decedent-simple-info";
-import {blueJay, environment} from "../../../../environments/environment";
+// import {blueJay, environment} from "../../../../environments/environment";
 import {map} from "rxjs/operators";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {EnvironmentHandlerService} from "../../fhir-util";
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,10 @@ export class SearchEdrsService {
   private endpoint = new Subject<any>();
   endpoint$ = this.endpoint.asObservable();
 
-  constructor(private http:HttpClient) { }
+  constructor(
+    private http:HttpClient,
+    private environmentHandler: EnvironmentHandlerService,
+  ) { }
 
   setDocumentBundle(data): void {
     this.documentBundle.next(data);
@@ -49,7 +53,7 @@ export class SearchEdrsService {
 
   getOperationDefinitionList(): Observable<any> {
     const operationDefinitionLocation = "OperationDefinition/Composition-it-mdi-documents";
-    return this.http.get(environment.ravenFhirServer + operationDefinitionLocation).pipe(map((result: any) => (
+    return this.http.get(this.environmentHandler.getFhirServerBaseURL() + operationDefinitionLocation).pipe(map((result: any) => (
       result as Object
     )));
   }
@@ -57,7 +61,7 @@ export class SearchEdrsService {
 
   searchEdrs(uri, params, auth?): Observable<any> {
 
-    let authorizationData: string = 'Basic ' + btoa(blueJay.serverBasicAuth);
+    let authorizationData: string = 'Basic ' + btoa(auth);
     if (auth) {
       const basicAuthString = `${auth.username}:${auth.password}`;
       authorizationData = 'Basic ' + btoa(basicAuthString);

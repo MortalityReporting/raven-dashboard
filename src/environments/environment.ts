@@ -9,14 +9,9 @@ export const environment = {
   ravenFhirServer: "https://apps.hdap.gatech.edu/raven-fhir-server-dev/fhir/",
   ravenFhirServerBasicAuth: "client:secret",
   ravenImportApi: "https://apps.hdap.gatech.edu/raven-import-api-dev/upload-xlsx-file",
-  fhirValidator: "https://apps.hdap.gatech.edu/HL7ValidatorService/fhir"
+  fhirValidator: "https://apps.hdap.gatech.edu/HL7ValidatorService/fhir",
+  blueJayServerBase: "https://apps.hdap.gatech.edu/bluejay-fhir-server/fhir"
 };
-
-export const blueJay = {
-  serverBase: "https://apps.hdap.gatech.edu/bluejay-fhir-server/fhir",
-  serverBasicAuth: "client:secret",
-  displayName: "BlueJay",
-}
 
 /*
  * For easier debugging in development mode, you can import the following file

@@ -5,10 +5,10 @@ import {UtilsService} from "../../../../../../service/utils.service";
 import {Obs_DeathDate, Obs_MannerOfDeath} from "../../../../../../providers/fhir-profile-constants";
 import {FhirHelperService, PatientNameReturn} from "../../../../../../modules/fhir-util/services/fhir-helper.service";
 import {DecedentSimpleInfo} from "../../../../../../model/decedent-simple-info";
-import {blueJay} from "../../../../../../../environments/environment";
 import {MatTableDataSource} from "@angular/material/table";
 import {TrackingNumberType} from "../../../../../fhir-mdi-library";
 import {ModuleHeaderConfig} from "../../../../../../providers/module-header-config";
+import {EnvironmentHandlerService} from "../../../../../fhir-util";
 
 @Component({
   selector: 'app-search-parameters',
@@ -19,6 +19,7 @@ export class SearchParametersComponent implements OnInit {
 
   @Output() searchResultsEmitter : EventEmitter<any> = new EventEmitter();
   @Output() clearSearchResultEmitter : EventEmitter<any> = new EventEmitter();
+  private readonly BLUE_JAY_AUTH = "client:secret"
 
   operationsDatsStructure: any;
   resultTableDataSource = new MatTableDataSource<any>();
@@ -39,6 +40,7 @@ export class SearchParametersComponent implements OnInit {
     private searchEdrsService: SearchEdrsService,
     private utilsService: UtilsService,
     private fhirHelperService: FhirHelperService,
+    private environmentHandler: EnvironmentHandlerService,
     @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
   ) {
   }
@@ -174,7 +176,7 @@ export class SearchParametersComponent implements OnInit {
       });
     }
     else {
-      this.searchEdrsService.searchEdrs(blueJay.serverBase, this.getSearchParametersResourcePreview()).subscribe({
+      this.searchEdrsService.searchEdrs(this.environmentHandler.getFhirServerBaseURL(), this.getSearchParametersResourcePreview(), this.BLUE_JAY_AUTH).subscribe({
         next: value => {
           this.searchResultsEmitter.emit({ response: value, success: true });
         },
