@@ -5,54 +5,72 @@
         Select a testing workflow from the list below. You will walk through a series of steps to guide in testing of
         that workflow using the Raven platform, with demonstrations of relevant FHIR Resources and API interactions.
       </div>
+      <div class="outline success">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Onboarding</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="card-container">
+              <div class="description">
+                Onboarding module temporary text
+              </div>
+              <div class="status-icon success">
+                <mat-icon>done</mat-icon>
+                success
+              </div>
+            </div>
+          </mat-card-content>
 
-      <mat-card>
+          <mat-card-actions>
+            <button mat-raised-button
+                    [style.background-color]="config.backgroundColor"
+                    [style.color]="'white'"
+                    (click)="onStartOnboarding()">Start Onboarding Process
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
 
-        <mat-card-header>
-          <mat-card-title>Onboarding</mat-card-title>
-        </mat-card-header>
+      <div class="outline paused top-margin">
+        <mat-card>
 
-        <mat-card-content>
-          Onboarding module temporary text
-        </mat-card-content>
+          <mat-card-header>
+            <mat-card-title>EDRS Search</mat-card-title>
+          </mat-card-header>
 
-        <mat-card-actions>
-          <button mat-raised-button
-                  [style.background-color]="config.backgroundColor"
-                  [style.color]="'white'"
-                  (click)="onStartOnboarding()">Start Onboarding Process
-          </button>
-        </mat-card-actions>
-      </mat-card>
+          <mat-card-content>
+            <div class="card-container">
+              <div class="description">
+                The 'EDRS Search' workflow simulates searching cases in an Electronic Death Registration System (EDRS).
+                Testers
+                representing Medical Examiners/Coroners (ME/Cs) can provide search parameters executed against the
+                BlueJay
+                EDRS
+                test server, which implements the MDI Documents FHIR Operation for search. Supported parameters include
+                primary
+                case identification fields, as well as additional data (e.g., demographics information) if it exists in
+                the test
+                EDRS case records. Search parameters and all relevant HTTP requests and responses are provided in both
+                human
+                readable forms and as FHIR resources for demonstration.
+              </div>
+              <div class="status-icon paused">
+                <mat-icon>pause</mat-icon>
+                in progress
+              </div>
+            </div>
+          </mat-card-content>
 
-      <mat-card>
-
-        <mat-card-header>
-          <mat-card-title>EDRS Search</mat-card-title>
-        </mat-card-header>
-
-        <mat-card-content>
-          The 'EDRS Search' workflow simulates searching cases in an Electronic Death Registration System (EDRS).
-          Testers
-          representing Medical Examiners/Coroners (ME/Cs) can provide search parameters executed against the BlueJay
-          EDRS
-          test server, which implements the MDI Documents FHIR Operation for search. Supported parameters include
-          primary
-          case identification fields, as well as additional data (e.g., demographics information) if it exists in
-          the test
-          EDRS case records. Search parameters and all relevant HTTP requests and responses are provided in both
-          human
-          readable forms and as FHIR resources for demonstration.
-        </mat-card-content>
-
-        <mat-card-actions>
-          <button mat-raised-button
-                  [style.background-color]="config.backgroundColor"
-                  [style.color]="'white'"
-                  (click)="onStartWorkflow()">Start Workflow
-          </button>
-        </mat-card-actions>
-      </mat-card>
+          <mat-card-actions>
+            <button mat-raised-button
+                    [style.background-color]="config.backgroundColor"
+                    [style.color]="'white'"
+                    (click)="onStartWorkflow()">Start Workflow
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>
