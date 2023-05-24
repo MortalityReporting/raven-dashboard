@@ -9,7 +9,6 @@ export class LogLine {
   attachment?: any;
 
   constructor(line: string, level: LogLevel, source: string, tags?: string[], attachment?: any){
-    console.log(level)
     this.timeStamp = new Date();
     this.line = line;
     this.level =  level;

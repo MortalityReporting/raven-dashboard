@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {LogLine} from "../../modal/log-line";
 
 @Component({
@@ -6,6 +6,18 @@ import {LogLine} from "../../modal/log-line";
   templateUrl: './ngx-console.component.html',
   styleUrls: ['./ngx-console.component.css']
 })
-export class NgxConsoleComponent {
-  @Input() logs: LogLine[] = []
+export class NgxConsoleComponent implements OnChanges{
+  @ViewChild('terminal') private myScrollContainer: ElementRef;
+  @Input() logs: LogLine[] = [];
+
+  scrollToElement(): void {
+    this.myScrollContainer.nativeElement.scroll({
+      top: this.myScrollContainer.nativeElement.scrollHeight,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.scrollToElement()
+  }
 }
