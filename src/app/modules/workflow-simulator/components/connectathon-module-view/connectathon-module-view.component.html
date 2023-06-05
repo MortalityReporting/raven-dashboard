@@ -1,15 +1,22 @@
-<div class="flex-container">
+<div class="flex-container top-margin">
   <div class="column name header">Name</div>
   <div class="column description header">Description</div>
   <div class="column status header">Status</div>
   <div class="column action header"></div>
-    <ng-container *ngFor="let module of workflowModules">
-        <div class="column name">{{module.displayName}}</div>
-        <div class="column description">{{module.description}}</div>
-        <div class="column status">{{module.status}}</div>
-        <div class="column action">
-          <button mat-raised-button (click)="launchWorkflow(module)">LAUNCH</button>
-        </div>
-    </ng-container>
-
+  <ng-container *ngFor="let module of workflowModules">
+    <div class="column name">
+      <div class="inner-content centered-content">
+        {{module.displayName}}
+      </div>
+    </div>
+    <div class="column description">
+      <div class="inner-content">{{module.description}}</div>
+    </div>
+    <div class="column status">
+      <div class="inner-content centered-content">{{module.status}}</div>
+    </div>
+    <div class="column action centered-content">
+      <button mat-raised-button (click)="launchWorkflow(module)">LAUNCH</button>
+    </div>
+  </ng-container>
 </div>

@@ -18,6 +18,8 @@ export class NgxConsoleComponent implements OnChanges{
     });
   }
   ngOnChanges(changes: SimpleChanges): void {
-    this.scrollToElement()
+    if(this.myScrollContainer?.nativeElement){
+      this.scrollToElement();
+    }
   }
 }

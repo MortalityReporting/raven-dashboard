@@ -1,12 +1,14 @@
 .flex-container {
   display: flex;
   flex-wrap: wrap;
+  background-color: lightgrey;
+  padding: 8px 4px;
+  border-radius: 4px;
 }
 
 .column {
   flex: 1;
   padding: 8px;
-  border: 1px solid #5F6368;
 }
 
 .name {
@@ -15,6 +17,7 @@
 
 .description {
   flex-basis: 50%;
+  font-size: small;
 }
 
 .status {
@@ -29,4 +32,18 @@
   font-weight: bold;
   background-color: lightgray;
   text-align: center;
+}
+
+.inner-content {
+  background-color: whitesmoke;
+  height: 100%;
+  min-height: 100%;
+  border-radius: 5px;
+  padding: 4px;
+}
+
+.centered-content{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
