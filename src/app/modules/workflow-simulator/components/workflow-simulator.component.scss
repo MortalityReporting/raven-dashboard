@@ -1,6 +1,6 @@
 $success-color: #4CAF50;
 $error-color: #F44336;
-$disable-color: #9E9E9E;
+$not-started-color: #9E9E9E;
 $paused-color: #2196F3;
 
 .description{
@@ -10,6 +10,22 @@ $paused-color: #2196F3;
   border-radius: 6px;
   border-style: solid;
   border-width: 2px;
+}
+
+.title.success{
+  color: $success-color;
+}
+
+.title.error{
+  color: $error-color;
+}
+
+.title.paused{
+  color: $paused-color;
+}
+
+.title.not-started{
+  color: $not-started-color;
 }
 
 .paused.outline {
@@ -24,8 +40,8 @@ $paused-color: #2196F3;
   border-color: $error-color;
 }
 
-.disabled.outline {
-  border-color: $disable-color;
+.not-started.outline {
+  border-color: $not-started-color;
 }
 
 .card-container{
@@ -57,6 +73,15 @@ $paused-color: #2196F3;
   color: $paused-color;
 }
 
-.status-icon.disabled {
-  color: $disable-color;
+.status-icon.not-started {
+  color: $not-started-color;
+}
+
+.mat-mdc-radio-button ~ .mat-mdc-radio-button {
+  margin-left: 16px;
+}
+
+.right-aligned{
+  display: flex;
+  justify-content: flex-end;
 }

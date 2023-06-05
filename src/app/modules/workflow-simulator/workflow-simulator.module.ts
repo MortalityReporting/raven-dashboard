@@ -51,6 +51,9 @@ import {MatButtonModule} from "@angular/material/button";
 import {ModuleHeaderConfig} from "../../providers/module-header-config";
 import {NgxHisbLoggerModule} from "ngx-hisb-logger";
 import { OnboardingComponent } from './components/onboarding/onboarding.component';
+import { AvailableModuleComponent } from './components/available-module-view/available-module/available-module.component';
+import { ConnectathonModuleViewComponent } from './components/connectathon-module-view/connectathon-module-view.component';
+import { AvailableModuleViewComponent } from './components/available-module-view/available-module-view.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +71,9 @@ import { OnboardingComponent } from './components/onboarding/onboarding.componen
     WorkflowSimulatorComponent,
     MdiToEdrsDocumentSelectStepComponent,
     OnboardingComponent,
+    AvailableModuleComponent,
+    ConnectathonModuleViewComponent,
+    AvailableModuleViewComponent,
   ],
   exports: [
   ],

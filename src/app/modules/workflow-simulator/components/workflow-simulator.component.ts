@@ -1,10 +1,14 @@
-import {Component, Inject} from '@angular/core';
-import { Router } from "@angular/router";
+import {Component, Inject, OnInit} from '@angular/core';
+import {Router} from "@angular/router";
 import {ModuleHeaderConfig} from "../../../providers/module-header-config";
+
+import {WorkflowService} from "../service/workflow.service";
+import {WorkflowModule} from "../model/workflow-module";
+import {Observable} from "rxjs";
 
 /*
 This is a top level component. It used to store workflow simulator children components.
- */
+*/
 
 @Component({
   selector: 'app-workflow-simulator',
@@ -12,11 +16,18 @@ This is a top level component. It used to store workflow simulator children comp
   styleUrls: ['./workflow-simulator.component.scss']
 })
 
-export class WorkflowSimulatorComponent {
+export class WorkflowSimulatorComponent implements OnInit {
+
+  readonly viewList =
+    [{name: 'Connechathon View', value: 'connechathonView'}, {name: 'Available Modules View', value: 'availableModulesView'}];
+  selectedView = this.viewList[0];
+
+  workflowModules: Observable<WorkflowModule[]>;
 
   constructor(
     @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
-    private router: Router) {
+    private router: Router,
+    private workflowService: WorkflowService) {
   }
 
   onStartWorkflow() {
@@ -25,5 +36,9 @@ export class WorkflowSimulatorComponent {
 
   onStartOnboarding() {
     this.router.navigate(['/workflow-simulator/onboarding']);
+  }
+
+  ngOnInit(): void {
+    this.workflowModules = this.workflowService.workflowModules$;
   }
 }
