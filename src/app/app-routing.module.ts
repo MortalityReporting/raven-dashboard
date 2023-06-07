@@ -71,23 +71,25 @@ const routes: Routes = [
   },
   { // Workflow Simulator Module
     path: AppConfiguration.config.modules['workflowSimulator'].route,
-    children: [
-      {
-        path: '',
-        component: WorkflowSimulatorComponent,
-        data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: undefined}
-      },
-      {
-        path: 'search-edrs',
-        component: SearchEdrsComponent,
-        data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Search EDRS"}
-      },
-      {
-        path: 'onboarding',
-        component: OnboardingComponent,
-        data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Onboarding Process"}
-      }
-    ]
+    component: WorkflowSimulatorComponent,
+    data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: undefined}
+    // children: [
+    //   {
+    //     path: '',
+    //     component: WorkflowSimulatorComponent,
+    //     data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: undefined}
+    //   },
+    //   {
+    //     path: 'search-edrs',
+    //     component: SearchEdrsComponent,
+    //     data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Search EDRS"}
+    //   },
+    //   {
+    //     path: 'onboarding',
+    //     component: OnboardingComponent,
+    //     data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Onboarding Process"}
+    //   }
+    // ]
   },
   { // Do not add any paths below this point, this path MUST ALWAYS be the last path!
     path: '**', redirectTo: ''

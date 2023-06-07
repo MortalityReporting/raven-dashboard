@@ -1,7 +1,105 @@
-<div style="margin: 0 20px">
-<lib-console [logs] = "loggerData"></lib-console>
-<button mat-raised-button color="primary" (click)="logMessage('info')">Generate Info</button>
-<button mat-raised-button color="accent" (click)="logMessage('warn')">Generate Warning</button>
-<button mat-raised-button color="warn" (click)="logMessage('error')">Generate Error</button>
-<button mat-raised-button (click)="clearLog()">Clear Log</button>
+<div class="row">
+  <div class="col" style="padding: 0 16px">
+  <form [formGroup]="onboardingForm" #form=ngForm (ngSubmit)="onSubmit()">
+    <div>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Connection Type</mat-label>
+        <mat-select formControlName="connectionType" (selectionChange)="onConnectionTypeSelected()"
+                    [(value)]="selectedConnectionType">
+          <mat-option *ngFor="let connectionType of connectionTypes" [value]="connectionType">
+            {{connectionType.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Endpoint URL</mat-label>
+        <input type="text" matInput formControlName="endpointUrl">
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="onboardingForm.controls['token']">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Token</mat-label>
+        <textarea type="text" matInput formControlName="token" rows="10"></textarea>
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="onboardingForm.controls['user']">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>User</mat-label>
+        <input type="text" matInput formControlName="user">
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="onboardingForm.controls['password']">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput formControlName="password">
+      </mat-form-field>
+    </div>
+    <div>
+      <div>
+        <mat-checkbox formControlName="customizeHeaders" (change)="onCustomizeHeadersSelectionChange()">Customize
+          Headers?
+        </mat-checkbox>
+      </div>
+    </div>
+    <ng-container  *ngIf="onboardingForm.controls['headerParameters']" formArrayName="headerParameters">
+
+      <ng-container *ngFor="let headerParam of headerParams.controls; let index = index">
+
+        <div [formGroupName]="index">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Key</mat-label>
+            <input matInput type="text" formControlName="key"/>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="margin-left: 1em">
+            <mat-label>Value</mat-label>
+            <input matInput type="text" formControlName="value"/>
+          </mat-form-field>
+
+          <button mat-icon-button style="margin-left: 1em" aria-label="Remove Key Value" color="warn"
+                  type="button"
+                  matTooltip="Remove Parameter"
+                  (click)="onDeleteHeaderParam(index)">
+            <mat-icon>close</mat-icon>
+          </button>
+
+        </div>
+      </ng-container>
+      <button *ngIf="onboardingForm.controls['customizeHeaders']?.value === true"
+              mat-flat-button aria-label="Add Header Params" color="primary" (click)="addHeaderParam()">
+        <mat-icon>add</mat-icon>
+        Add Header Params
+      </button>
+    </ng-container>
+  </form>
+  </div>
+  <div class="col" style="padding: 0 16px">
+    <div>
+    <button mat-raised-button aria-label="Test Connection" color="primary" type="submit" (click)="onTestConnection()">
+      <mat-icon>lan</mat-icon>
+      Test Connection
+    </button>
+    </div>
+    <mat-tab-group class="top-margin">
+      <mat-tab label="First"><pre> {{ onboardingForm.value | json }} </pre></mat-tab>
+      <mat-tab label="Second"> Content 2 </mat-tab>
+      <mat-tab label="Third"> Content 3 </mat-tab>
+    </mat-tab-group>
+  </div>
+
+</div>
+
+<div style="margin: 20px 20px">
+  <lib-console [logs]="loggerData"></lib-console>
+  <button mat-raised-button color="primary" (click)="logMessage('info')">Generate Info</button>
+  <button mat-raised-button color="accent" (click)="logMessage('warn')">Generate Warning</button>
+  <button mat-raised-button color="warn" (click)="logMessage('error')">Generate Error</button>
+  <button mat-raised-button (click)="clearLog()">Clear Log</button>
 </div>

@@ -1,30 +1,42 @@
 <div style="margin: 20px">
-  <div>
-    The Workflow Simulator is designed to support MDI FHIR IG testing events. Each event, or other distinct set of
-    tests, is collects any number of individual tests into a "module". Users will register with their email address
-    and select the testing modules in which they wish to participate through the "Manage Registered Modules" option
-    above. A report may then be generated for a given user based on their success for each test. Users may also view
-    all available tests individually if they wish to run any outside of the scope of an event or other testing module.
-  </div>
-  <div class="right-aligned top-margin">
-    <div *ngIf="selectedView == viewList[0]">
-      <button mat-raised-button>Manage Registered Modules</button>
-      <button mat-raised-button (click)="selectedView = viewList[1]">View All Tests</button>
+  <div *ngIf="!launchedTest">
+    <div>
+      The Workflow Simulator is designed to support MDI FHIR IG testing events. Each event, or other distinct set of
+      tests, is collects any number of individual tests into a "module". Users will register with their email address
+      and select the testing modules in which they wish to participate through the "Manage Registered Modules" option
+      above. A report may then be generated for a given user based on their success for each test. Users may also view
+      all available tests individually if they wish to run any outside of the scope of an event or other testing module.
     </div>
-    <div *ngIf="selectedView == viewList[1]">
-      <button mat-raised-button (click)="selectedView = viewList[0]">Return to Testing Even Module</button>
+    <div class="right-aligned top-margin">
+      <div *ngIf="selectedView == viewList[0]">
+        <button mat-raised-button>Manage Registered Modules</button>
+        <button mat-raised-button (click)="selectedView = viewList[1]">View All Tests</button>
+      </div>
+      <div *ngIf="selectedView == viewList[1]">
+        <button mat-raised-button (click)="selectedView = viewList[0]">Return to Testing Even Module</button>
+      </div>
     </div>
+
+    <app-connectathon-module-view
+      *ngIf="selectedView == viewList[0]"
+      (testSelectedEvent)="onTestSelected($event)"
+      [workflowModules]="workflowModules | async">
+    </app-connectathon-module-view>
+
+    <app-available-module-view
+      *ngIf="selectedView == viewList[1]"
+      [workflowModules]="workflowModules | async">
+    </app-available-module-view>
   </div>
-
-  <app-connectathon-module-view
-    *ngIf="selectedView == viewList[0]"
-    [workflowModules]="workflowModules | async">
-  </app-connectathon-module-view>
-
-  <app-available-module-view
-    *ngIf="selectedView == viewList[1]"
-    [workflowModules]="workflowModules | async">
-  </app-available-module-view>
-
+  <div *ngIf="launchedTest === CurrentTest.onboarding">
+    <app-onboarding></app-onboarding>
+  </div>
+  <div *ngIf="launchedTest === CurrentTest.searchEDRS">
+    <app-search-edrs></app-search-edrs>
+  </div>
+  <div *ngIf="launchedTest === CurrentTest.updateEDRS">
+    <app-search-edrs></app-search-edrs>
+  </div>
 </div>
+
 

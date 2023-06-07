@@ -54,6 +54,7 @@ import { OnboardingComponent } from './components/onboarding/onboarding.componen
 import { AvailableModuleComponent } from './components/available-module-view/available-module/available-module.component';
 import { ConnectathonModuleViewComponent } from './components/connectathon-module-view/connectathon-module-view.component';
 import { AvailableModuleViewComponent } from './components/available-module-view/available-module-view.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -97,7 +98,8 @@ import { AvailableModuleViewComponent } from './components/available-module-view
     FormsModule,
     MatInputModule,
     MatSortModule,
-    NgxHisbLoggerModule
+    NgxHisbLoggerModule,
+    MatCheckboxModule
   ],
 })
 export class WorkflowSimulatorModule {
