@@ -55,6 +55,7 @@ import { AvailableModuleComponent } from './components/available-module-view/ava
 import { ConnectathonModuleViewComponent } from './components/connectathon-module-view/connectathon-module-view.component';
 import { AvailableModuleViewComponent } from './components/available-module-view/available-module-view.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatDividerModule} from "@angular/material/divider";
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     MatInputModule,
     MatSortModule,
     NgxHisbLoggerModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatDividerModule
   ],
 })
 export class WorkflowSimulatorModule {

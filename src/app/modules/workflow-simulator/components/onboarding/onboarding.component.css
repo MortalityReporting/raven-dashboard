@@ -1,3 +1,9 @@
 .full-width {
   width: 100%;
 }
+.box {
+  display: flex;
+}
+.push {
+  margin-left: auto;
+}
