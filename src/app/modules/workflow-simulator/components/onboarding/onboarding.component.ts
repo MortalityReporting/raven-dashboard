@@ -1,7 +1,15 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {LoggerService} from "../../../../../../projects/ngx-hisb-logger/src/lib/services/logger.service";
 import {LogLine} from "../../../../../../projects/ngx-hisb-logger/src/lib/modal/log-line";
-import {FormControl, FormGroup, NgForm, UntypedFormArray, UntypedFormBuilder, UntypedFormControl} from "@angular/forms";
+import {
+  FormControl,
+  FormGroup,
+  NgForm,
+  UntypedFormArray,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  Validators
+} from "@angular/forms";
 import {BasicNameValueType} from "../../../../model/basic-name-value-type";
 import {OnboardingService} from "../../service/onboarding.service";
 
@@ -21,9 +29,9 @@ export class OnboardingComponent implements OnInit {
   @ViewChild('form') form: NgForm;
 
   onboardingForm: FormGroup = new FormGroup({
-    connectionType: new FormControl(''),
-    requestType: new FormControl(''),
-    endpointUrl: new FormControl(''),
+    connectionType: new FormControl('', Validators.required),
+    requestType: new FormControl('', Validators.required),
+    endpointUrl: new FormControl('', Validators.required),
     customizeHeaders: new FormControl(false),
     addQueryParams: new FormControl(false),
     addRequestBody: new FormControl(false),
@@ -32,7 +40,10 @@ export class OnboardingComponent implements OnInit {
   selectedConnectionType: BasicNameValueType;
   componentName = this.constructor.name;
   requestTypes: RequestType[] = [RequestType.GET, RequestType.PUT, RequestType.POST];
-  connectionTypes: BasicNameValueType[] = [{value: "basicAuth" ,name: 'Basic Auth'}, {value: "token", name:'Token'}];
+  connectionTypes: BasicNameValueType[] = [
+    {value: "basicAuth" ,name: 'Basic Auth'},
+    {value: "token", name:'Bearer Token'},
+    {value: "custom", name:'Custom'}];
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -59,24 +70,56 @@ export class OnboardingComponent implements OnInit {
 
   ngOnInit(): void {
     this.log.logStream$.subscribe(value=> this.loggerData = value);
+    this.onboardingForm.controls['requestType'].patchValue(RequestType.GET);
+    this.onboardingForm.controls['connectionType'].patchValue(this.connectionTypes[0]);
+    this.onboardingForm.controls['addRequestBody'].disable();
+    this.onboardingForm.controls['addQueryParams'].disable();
+    this.onboardingForm.addControl('user', new FormControl('', Validators.required));
+    this.onboardingForm.addControl('password', new FormControl('', Validators.required));
+    console.log(this.onboardingForm);
   }
 
   onConnectionTypeSelected() {
     if(this.selectedConnectionType.value === 'basicAuth'){
-      this.onboardingForm.addControl('user', new FormControl(''));
-      this.onboardingForm.addControl('password', new FormControl(''));
+      this.onboardingForm.addControl('user', new FormControl('', Validators.required));
+      this.onboardingForm.addControl('password', new FormControl('', Validators.required));
       this.onboardingForm.removeControl('token');
+
+      if(this.onboardingForm.controls['addQueryParams'].value){
+        this.onboardingForm.removeControl("queryParameters");
+        this.onboardingForm.controls['addQueryParams'].patchValue(false);
+      }
+      this.onboardingForm.controls['addQueryParams'].disable();
+
+      if(this.onboardingForm.controls['addRequestBody'].value){
+        this.onboardingForm.removeControl("requestBody");
+        this.onboardingForm.controls['addRequestBody'].patchValue(false);
+      }
+      this.onboardingForm.controls['addRequestBody'].disable();
+
     }
     else {
       this.onboardingForm.removeControl('user');
       this.onboardingForm.removeControl('password');
-      this.onboardingForm.addControl('token', new FormControl(''));
+      this.onboardingForm.addControl('token', new FormControl('', Validators.required));
+      this.onboardingForm.controls['addQueryParams'].enable();
+      this.onboardingForm.controls['addRequestBody'].enable();
     }
     console.log(this.onboardingForm);
   }
 
   protected readonly undefined = undefined;
 
+  private validateAllFormFields(formGroup: FormGroup) {         //{1}
+    Object.keys(formGroup.controls).forEach(field => {  //{2}
+      const control = formGroup.get(field);             //{3}
+      if (control instanceof FormControl) {             //{4}
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {        //{5}
+        this.validateAllFormFields(control);            //{6}
+      }
+    });
+  }
 
   onSubmit() {
     console.log(this.onboardingForm);
@@ -90,7 +133,9 @@ export class OnboardingComponent implements OnInit {
     //   error: err => console.error(err)
     // });
 
-    this.onboardingService.onLogin().subscribe({
+    this.validateAllFormFields(this.onboardingForm);
+
+    this.onboardingService.onLogin("request").subscribe({
       next: value => console.log(value),
       error: err => {
         console.error(err);
@@ -123,7 +168,7 @@ export class OnboardingComponent implements OnInit {
       this.addQueryParam();
     }
     else {
-      this.onboardingForm.removeControl('queryParameters')
+      this.onboardingForm.removeControl('queryParameters');
     }
   }
   onDeleteHeaderParam(index){
@@ -157,7 +202,13 @@ export class OnboardingComponent implements OnInit {
   }
 
   onRequestTypeSelected() {
-
+    if(this.onboardingForm.value.requestTypes === RequestType.GET){
+      this.onboardingForm.controls['addRequestBody'].disable();
+      this.onboardingForm.removeControl('requestBody');
+    }
+    else if(this.onboardingForm.value.connectionType != this.connectionTypes[0]){
+      this.onboardingForm.controls['addRequestBody'].enable();
+    }
   }
   onAddRequestBody() {
     if(this.onboardingForm.value.addRequestBody) {

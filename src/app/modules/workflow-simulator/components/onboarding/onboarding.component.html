@@ -7,7 +7,7 @@
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Connection Type</mat-label>
         <mat-select formControlName="connectionType" (selectionChange)="onConnectionTypeSelected()"
-                    [(value)]="selectedConnectionType">
+                    [(value)]="selectedConnectionType" required>
           <mat-option *ngFor="let connectionType of connectionTypes" [value]="connectionType">
             {{connectionType.name}}
           </mat-option>
@@ -18,8 +18,8 @@
     <!-- Request Type -->
     <div class="box">
       <mat-form-field appearance="outline" style="max-width: 20%">
-        <mat-label>Request type</mat-label>
-        <mat-select formControlName="connectionType" (selectionChange)="onRequestTypeSelected()">
+        <mat-label>Request</mat-label>
+        <mat-select formControlName="requestType" (selectionChange)="onRequestTypeSelected()" required>
           <mat-option *ngFor="let requestType of requestTypes" [value]="requestType">
             {{ requestType }}
           </mat-option>
@@ -28,7 +28,11 @@
       <mat-form-field appearance="outline" class="push" style="max-width: 100%; min-width: 75%">
         <mat-label>Endpoint URL</mat-label>
         <input type="text" matInput formControlName="endpointUrl">
+        <mat-error *ngIf="onboardingForm.controls['endpointUrl']?.errors['required']">
+          Endpoint URL is required
+        </mat-error>
       </mat-form-field>
+
     </div>
 
     <!-- Token -->
@@ -36,6 +40,9 @@
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Token</mat-label>
         <textarea type="text" matInput formControlName="token" rows="10"></textarea>
+        <mat-error *ngIf="onboardingForm?.controls?.['token']?.errors?.['required']">
+          Token is required
+        </mat-error>
       </mat-form-field>
     </div>
 
@@ -44,6 +51,9 @@
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>User</mat-label>
         <input type="text" matInput formControlName="user">
+        <mat-error *ngIf="onboardingForm?.controls?.['user']?.errors?.['required']">
+          Username is required
+        </mat-error>
       </mat-form-field>
     </div>
 
@@ -52,14 +62,17 @@
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Password</mat-label>
         <input type="password" matInput formControlName="password">
+        <mat-error *ngIf="onboardingForm?.controls?.['password']?.errors?.['required']">
+          Password is required
+        </mat-error>
       </mat-form-field>
     </div>
 
     <!-- Header Params -->
     <div>
       <div>
-        <mat-checkbox formControlName="customizeHeaders" (change)="onCustomizeHeadersSelectionChange()">Customize
-          Headers?
+        <mat-checkbox formControlName="customizeHeaders" (change)="onCustomizeHeadersSelectionChange()">
+          Customize Headers
         </mat-checkbox>
       </div>
     </div>
@@ -101,7 +114,7 @@
     <!-- Query Params -->
     <div>
       <div>
-        <mat-checkbox formControlName="addQueryParams" (change)="onAddQueryParamsSelectionChange()">Add Query Params?
+        <mat-checkbox formControlName="addQueryParams" (change)="onAddQueryParamsSelectionChange()">Add Query Params
         </mat-checkbox>
       </div>
     </div>
@@ -143,7 +156,7 @@
     <!-- Request Body -->
     <div>
       <div>
-        <mat-checkbox formControlName="addRequestBody" (change)="onAddRequestBody()">Add Request Body?
+        <mat-checkbox formControlName="addRequestBody" (change)="onAddRequestBody()">Add Request/Modify Body
         </mat-checkbox>
       </div>
     </div>

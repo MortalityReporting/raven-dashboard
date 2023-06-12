@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
-import {map, catchError} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
+import {RequestType} from "../components/onboarding/onboarding.component";
 
 @Injectable({
   providedIn: 'root'
@@ -33,17 +34,53 @@ export class OnboardingService {
       )
   };
 
-  onLogin(): Observable<any>{
-    const requestBody = {
-      email: 'ptassev3@gatech.edu',
-      password: "Start111",
-      returnSecureToken: true
-    };
+  onLogin(request: any): Observable<any> {
+    request = {
+      type: RequestType.GET,
+      username: "plamen",
+      password: "testPassword",
+      connection: 'basicAuth',
+    }
 
-    return this.http.post(this.authRestApi, requestBody)
-      .pipe(map(response => {
-          return response;
-        }),
-      )
+    if(request?.type === RequestType.GET && request.connection === 'basicAuth'){
+      const auth = (request.username + ":" +request.password);
+      let authorizationData: string = 'Basic ' + btoa(auth);
+
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          'Authorization': authorizationData
+        })
+      };
+
+      console.log(httpOptions);
+
+      return this.http.get("http://httpbin.org/basic-auth/foo/bar", httpOptions)
+        .pipe(map(response => {
+            return response;
+          }),
+        )
+      // return this.http.get("http://127.0.0.1:8000/api/users/me", httpOptions)
+      //   .pipe(map(response => {
+      //       return response;
+      //     }),
+      //   )
+    }
+    else {
+      return throwError("Invalid Request");
+    }
+    // const requestBody = {
+    //   email: 'ptassev3@gatech.edu',
+    //   password: "Start111",
+    //   returnSecureToken: true
+    // };
+    //
+    //
+    //
+    // return this.http.post(this.authRestApi, requestBody)
+    //   .pipe(map(response => {
+    //       return response;
+    //     }),
+    //   )
   };
 }
