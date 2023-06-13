@@ -13,7 +13,8 @@ export const environment = {
  // ravenImportApi: "https://raven.heat.icl.gtri.org/raven-import-api/upload-xlsx-file",
   ravenImportApi: "https://raven.dev.heat.icl.gtri.org/raven-import-api/upload-xlsx-file",
   fhirValidator: "https://apps.hdap.gatech.edu/HL7ValidatorService/fhir",
-  blueJayServerBase: "https://apps.hdap.gatech.edu/bluejay-fhir-server/fhir"
+  // blueJayServerBase: "https://apps.hdap.gatech.edu/bluejay-fhir-server/fhir",
+  blueJayServerBase: "https://bluejay.heat.icl.gtri.org/mdi-fhir-server"
 };
 
 /*
