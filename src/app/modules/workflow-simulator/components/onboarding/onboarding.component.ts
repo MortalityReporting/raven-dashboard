@@ -12,6 +12,7 @@ import {
 } from "@angular/forms";
 import {BasicNameValueType} from "../../../../model/basic-name-value-type";
 import {OnboardingService} from "../../service/onboarding.service";
+import {OnboardingHttpRequest} from "../../model/onboarding-http-request";
 
 export enum RequestType {
   "GET"= "GET",
@@ -134,15 +135,32 @@ export class OnboardingComponent implements OnInit {
     // });
 
     this.validateAllFormFields(this.onboardingForm);
-
-    this.onboardingService.onLogin("request").subscribe({
-      next: value => console.log(value),
+    if (!this.onboardingForm.valid) {
+      return;
+    }
+    console.log(this.onboardingForm.value);
+    const request: OnboardingHttpRequest = new OnboardingHttpRequest(this.onboardingForm.value);
+    this.onboardingService.onLogin(request).subscribe({
+      next: value => {
+        console.log(value);
+        this.log.info("Successful login to " + request.url, this.componentName)
+      },
       error: err => {
         console.error(err);
         this.log.error(JSON.stringify(err), this.componentName)
       }
     });
+
   }
+
+    // this.onboardingService.onLogin("request").subscribe({
+    //   next: value => console.log(value),
+    //   error: err => {
+    //     console.error(err);
+    //     this.log.error(JSON.stringify(err), this.componentName)
+    //   }
+    // });
+  // }
 
   get queryParams() {
     return this.onboardingForm.controls["queryParameters"] as UntypedFormArray;
