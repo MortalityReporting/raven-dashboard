@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {Observable, Subject} from "rxjs";
 import {DecedentSimpleInfo} from "../../../model/decedent-simple-info";
-import {blueJay, environment} from "../../../../environments/environment";
 import {map} from "rxjs/operators";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {EnvironmentHandlerService} from "../../fhir-util";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,13 @@ export class SearchEdrsService {
   private decedentData = new Subject<DecedentSimpleInfo>();
   decedentData$ = this.decedentData.asObservable();
 
-  constructor(private http:HttpClient) { }
+  private endpoint = new Subject<any>();
+  endpoint$ = this.endpoint.asObservable();
+
+  constructor(
+    private http:HttpClient,
+    private environmentHandler: EnvironmentHandlerService,
+  ) { }
 
   setDocumentBundle(data): void {
     this.documentBundle.next(data);
@@ -29,6 +35,16 @@ export class SearchEdrsService {
     this.edrsHttpRequestInfo.next(data);
   }
 
+  setEndpoint(endpoint: string, basic: {username: string, password: string}) {
+    if (!endpoint) this.endpoint.next(undefined);
+    else {
+      this.endpoint.next({
+          endpoint: endpoint,
+          auth: basic
+        }
+      )
+    }
+  }
 
   setDecedentData(data: DecedentSimpleInfo): void {
     this.decedentData.next(data);
@@ -36,15 +52,19 @@ export class SearchEdrsService {
 
   getOperationDefinitionList(): Observable<any> {
     const operationDefinitionLocation = "OperationDefinition/Composition-it-mdi-documents";
-    return this.http.get(environment.ravenFhirServer + operationDefinitionLocation).pipe(map((result: any) => (
+    return this.http.get(this.environmentHandler.getFhirServerBaseURL() + operationDefinitionLocation).pipe(map((result: any) => (
       result as Object
     )));
   }
 
 
-  searchEdrs(uri, params): Observable<any> {
+  searchEdrs(uri, params, auth?): Observable<any> {
 
-    const authorizationData = 'Basic ' + btoa(blueJay.serverBasicAuth);
+    let authorizationData: string = 'Basic ' + btoa(auth);
+    if (auth) {
+      const basicAuthString = `${auth.username}:${auth.password}`;
+      authorizationData = 'Basic ' + btoa(basicAuthString);
+    }
 
     const httpOptions = {
       headers: new HttpHeaders({

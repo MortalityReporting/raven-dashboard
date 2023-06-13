@@ -1,13 +1,14 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
 import {UntypedFormArray, UntypedFormBuilder, UntypedFormControl, FormGroup} from "@angular/forms";
 import {SearchEdrsService} from "../../../../service/search-edrs.service";
 import {UtilsService} from "../../../../../../service/utils.service";
 import {Obs_DeathDate, Obs_MannerOfDeath} from "../../../../../../providers/fhir-profile-constants";
 import {FhirHelperService, PatientNameReturn} from "../../../../../../modules/fhir-util/services/fhir-helper.service";
 import {DecedentSimpleInfo} from "../../../../../../model/decedent-simple-info";
-import {blueJay} from "../../../../../../../environments/environment";
 import {MatTableDataSource} from "@angular/material/table";
 import {TrackingNumberType} from "../../../../../fhir-mdi-library";
+import {ModuleHeaderConfig} from "../../../../../../providers/module-header-config";
+import {EnvironmentHandlerService} from "../../../../../fhir-util";
 
 @Component({
   selector: 'app-search-parameters',
@@ -18,6 +19,7 @@ export class SearchParametersComponent implements OnInit {
 
   @Output() searchResultsEmitter : EventEmitter<any> = new EventEmitter();
   @Output() clearSearchResultEmitter : EventEmitter<any> = new EventEmitter();
+  private readonly BLUE_JAY_AUTH = "client:secret"
 
   operationsDatsStructure: any;
   resultTableDataSource = new MatTableDataSource<any>();
@@ -31,15 +33,22 @@ export class SearchParametersComponent implements OnInit {
 
   errorMessage: string;
 
+  customEndpoint: any;
+
   constructor(
     private fb: UntypedFormBuilder,
     private searchEdrsService: SearchEdrsService,
     private utilsService: UtilsService,
     private fhirHelperService: FhirHelperService,
+    private environmentHandler: EnvironmentHandlerService,
+    @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
   ) {
   }
 
   ngOnInit(): void {
+    this.searchEdrsService.endpoint$.subscribe(
+      {next: value => {this.customEndpoint = value}})
+
     this.setInitialFormControls();
 
     this.searchEdrsService.decedentData$.subscribe({
@@ -145,16 +154,31 @@ export class SearchParametersComponent implements OnInit {
 
   private executeEdrsSearch() {
     this.clearSearchResultEmitter.emit();
-    this.searchEdrsService.searchEdrs(blueJay.serverBase, this.getSearchParametersResourcePreview()).subscribe({
-      next: value => {
-        this.searchResultsEmitter.emit({ response: value, success: true });
-      },
-      error: err => {
-        console.error(err);
-        this.utilsService.showErrorMessage();
-        this.searchResultsEmitter.emit({ response: err, success: false });
-      }
-    });
+    if (this.customEndpoint) {
+      this.searchEdrsService.searchEdrs(this.customEndpoint.endpoint,
+        this.getSearchParametersResourcePreview(), this.customEndpoint.auth).subscribe({
+        next: value => {
+          this.searchResultsEmitter.emit({ response: value, success: true });
+        },
+        error: err => {
+          console.error(err);
+          this.utilsService.showErrorMessage();
+          this.searchResultsEmitter.emit({ response: err, success: false });
+        }
+      });
+    }
+    else {
+      this.searchEdrsService.searchEdrs(this.environmentHandler.getFhirServerBaseURL(), this.getSearchParametersResourcePreview(), this.BLUE_JAY_AUTH).subscribe({
+        next: value => {
+          this.searchResultsEmitter.emit({ response: value, success: true });
+        },
+        error: err => {
+          console.error(err);
+          this.utilsService.showErrorMessage();
+          this.searchResultsEmitter.emit({ response: err, success: false });
+        }
+      });
+    }
   }
 
   private setInitialFormControls(){
