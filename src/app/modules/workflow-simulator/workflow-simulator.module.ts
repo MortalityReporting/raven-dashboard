@@ -50,12 +50,13 @@ import {MatRadioModule} from "@angular/material/radio";
 import {MatButtonModule} from "@angular/material/button";
 import {ModuleHeaderConfig} from "../../providers/module-header-config";
 import {NgxHisbLoggerModule} from "ngx-hisb-logger";
-import { OnboardingComponent } from './components/onboarding/onboarding.component';
+import { HttpConnectionComponent } from './components/onboarding/http-connection/http-connection.component';
 import { AvailableModuleComponent } from './components/available-module-view/available-module/available-module.component';
 import { ConnectathonModuleViewComponent } from './components/connectathon-module-view/connectathon-module-view.component';
 import { AvailableModuleViewComponent } from './components/available-module-view/available-module-view.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatDividerModule} from "@angular/material/divider";
+import { OnboardingComponent } from './components/onboarding/onboarding.component';
 
 @NgModule({
   declarations: [
@@ -72,10 +73,11 @@ import {MatDividerModule} from "@angular/material/divider";
     HttpResponseInfoComponent,
     WorkflowSimulatorComponent,
     MdiToEdrsDocumentSelectStepComponent,
-    OnboardingComponent,
+    HttpConnectionComponent,
     AvailableModuleComponent,
     ConnectathonModuleViewComponent,
     AvailableModuleViewComponent,
+    OnboardingComponent,
   ],
   exports: [
   ],

@@ -12,7 +12,7 @@ import {AppConfiguration} from "./providers/app-configuration";
 import {
   RecordComparisonContentComponent
 } from "./modules/record-comparison/components/record-comparison-content/record-comparison-content.component";
-import {OnboardingComponent} from "./modules/workflow-simulator/components/onboarding/onboarding.component";
+import {HttpConnectionComponent} from "./modules/workflow-simulator/components/onboarding/http-connection/http-connection.component";
 
 const routes: Routes = [
   {
@@ -85,8 +85,8 @@ const routes: Routes = [
     //     data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Search EDRS"}
     //   },
     //   {
-    //     path: 'onboarding',
-    //     component: OnboardingComponent,
+    //     path: 'http-connection',
+    //     component: HttpConnectionComponent,
     //     data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Onboarding Process"}
     //   }
     // ]

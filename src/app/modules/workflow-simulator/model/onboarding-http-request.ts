@@ -1,5 +1,5 @@
-import {RequestType} from "../components/onboarding/onboarding.component";
 import {BasicNameValueType} from "../../../model/basic-name-value-type";
+import {RequestType} from "../components/onboarding/http-connection/http-connection.component";
 
 interface FormValue {
   endpointUrl: string;

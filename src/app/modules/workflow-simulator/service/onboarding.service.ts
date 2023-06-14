@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {catchError, map} from "rxjs/operators";
-import {RequestType} from "../components/onboarding/onboarding.component";
 import {OnboardingHttpRequest} from "../model/onboarding-http-request";
+import {RequestType} from "../components/onboarding/http-connection/http-connection.component";
 
 @Injectable({
   providedIn: 'root'
