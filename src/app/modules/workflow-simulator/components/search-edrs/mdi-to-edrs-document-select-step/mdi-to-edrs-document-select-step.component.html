@@ -17,7 +17,9 @@
 <div>
   <div class="action-buttons">
     <div class="push-right">
-      <button mat-raised-button color="primary" (click)="onAdvanceStepper()" class="action-button">
+      <button mat-raised-button
+              [style.background-color]="config.backgroundColor"
+              [style.color]="'white'"(click)="onAdvanceStepper()" class="action-button">
         {{ uiConstants.step1.PROCEED_TO_NEXT_STEP_BTN }}
       </button>
     </div>
