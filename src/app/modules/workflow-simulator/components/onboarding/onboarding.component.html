@@ -1,9 +1,6 @@
-<mat-card>
-  <mat-card-content>
-    <app-http-connection></app-http-connection>
-  </mat-card-content>
-</mat-card>
-
+<app-http-connection></app-http-connection>
+<ng-template #viewContainerRef></ng-template>
+<button mat-button (click)="addChild()">Add Item</button>
 <mat-card class="top-margin">
   <mat-card-content>
     <mat-card-title>

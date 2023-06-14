@@ -1,10 +1,12 @@
+<mat-card>
+  <mat-card-content>
 <div class="row">
   <div class="col" style="padding: 0 16px">
   <form [formGroup]="onboardingForm" #form=ngForm (ngSubmit)="onSubmit()">
 
     <!-- Connection Type -->
     <div>
-      <mat-form-field appearance="outline" class="full-width">
+      <mat-form-field appearance="outline" class="full-width mat-form-field-no-padding">
         <mat-label>Connection Type</mat-label>
         <mat-select formControlName="connectionType" (selectionChange)="onConnectionTypeSelected()"
                     [(value)]="selectedConnectionType" required>
@@ -57,7 +59,7 @@
       </mat-form-field>
 
     <!-- Password -->
-      <mat-form-field appearance="outline" *ngIf="onboardingForm.controls['password']" class="push" style="width: 45%" >
+      <mat-form-field appearance="outline" *ngIf="onboardingForm.controls['password']" class="push-right" style="width: 45%" >
         <mat-label>Password</mat-label>
         <input type="password" matInput formControlName="password">
         <mat-error *ngIf="onboardingForm?.controls?.['password']?.errors?.['required']">
@@ -78,14 +80,14 @@
 
       <ng-container *ngFor="let headerParam of headerParams.controls; let index = index">
 
-        <div [formGroupName]="index">
+        <div [formGroupName]="index" class="box">
 
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" style="width: 40%">
             <mat-label>Key</mat-label>
             <input matInput type="text" formControlName="key"/>
           </mat-form-field>
 
-          <mat-form-field appearance="outline" style="margin-left: 1em">
+          <mat-form-field appearance="outline" class="push-right" style="width: 40%">
             <mat-label>Value</mat-label>
             <input matInput type="text" formControlName="value"/>
           </mat-form-field>
@@ -122,12 +124,12 @@
 
         <div [formGroupName]="index">
 
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" style="width: 40%">
             <mat-label>Key</mat-label>
             <input matInput type="text" formControlName="key"/>
           </mat-form-field>
 
-          <mat-form-field appearance="outline" style="margin-left: 1em">
+          <mat-form-field appearance="outline" class="push-right" style="width: 40%">
             <mat-label>Value</mat-label>
             <input matInput type="text" formControlName="value"/>
           </mat-form-field>
@@ -184,3 +186,5 @@
   <!-- End Query Params -->
 
 </div>
+  </mat-card-content>
+</mat-card>
