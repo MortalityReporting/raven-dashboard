@@ -3,7 +3,7 @@ import { Observable, Subject} from "rxjs";
 import {FileTemplate} from "../models/file-template";
 import {map} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
-import {environment} from "../../../../environments/environment";
+import {EnvironmentHandlerService} from "../../fhir-util";
 
 @Injectable({
   providedIn: 'root'
@@ -11,15 +11,17 @@ import {environment} from "../../../../environments/environment";
 export class FileTemplateService {
 
   private selectedFileTemplate = new Subject<FileTemplate>();
-  ravenApi = environment.ravenFhirServer;
   selectedFileTemplate$ = this.selectedFileTemplate.asObservable();
   setSelectedFileTemplate(selectedFileTemplate: FileTemplate) {
     this.selectedFileTemplate.next(selectedFileTemplate);
   }
 
-  constructor(private http:HttpClient) { }
+  constructor(
+    private http:HttpClient,
+    private environmentHandler: EnvironmentHandlerService
+  ) { }
   getFileTemplates(): Observable<FileTemplate[]>{
-    return this.http.get(this.ravenApi + 'DocumentReference?type=raven-template').pipe(map((result: any) => {
+    return this.http.get(this.environmentHandler.getFhirServerBaseURL() + 'DocumentReference?type=raven-template').pipe(map((result: any) => {
       const fileTemplateList: FileTemplate[] = result.entry.map(entry => {
         const fileTemplate: FileTemplate = {
           uri:  entry.resource.content[0].attachment.url,
