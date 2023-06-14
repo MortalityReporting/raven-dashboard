@@ -39,9 +39,9 @@ export class SearchEdrsService {
     if (!endpoint) this.endpoint.next(undefined);
     else {
       this.endpoint.next({
-          endpoint: endpoint,
-          auth: basic
-        }
+        endpoint: endpoint,
+        auth: basic
+      }
       )
     }
   }

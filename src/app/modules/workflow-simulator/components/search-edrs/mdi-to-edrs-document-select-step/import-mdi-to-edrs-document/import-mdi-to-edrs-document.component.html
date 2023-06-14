@@ -12,7 +12,10 @@
 
 <div class="top-padding">
 
-  <button mat-raised-button color="primary" (click)="onInputMdiToEdrsBundle()">
+  <button mat-raised-button
+          [style.background-color]="config.backgroundColor"
+          [style.color]="'white'"
+          (click)="onInputMdiToEdrsBundle()">
     Input MDI to EDRS Document Bundle
   </button>
 

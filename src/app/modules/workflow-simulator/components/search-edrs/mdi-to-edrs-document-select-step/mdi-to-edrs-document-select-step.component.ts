@@ -1,7 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {UiStringConstants} from "../../../../../providers/ui-string-constants";
 import {SearchEdrsService} from "../../../service/search-edrs.service";
 import {MatStepper} from "@angular/material/stepper";
+import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
 
 @Component({
   selector: 'app-mdi-to-edrs-document-select-step',
@@ -14,6 +15,7 @@ export class MdiToEdrsDocumentSelectStepComponent implements OnInit {
   uiConstants: any;
 
   constructor(
+    @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
     private uiStringConstants: UiStringConstants,
     private searchEdrsService: SearchEdrsService
   ) {

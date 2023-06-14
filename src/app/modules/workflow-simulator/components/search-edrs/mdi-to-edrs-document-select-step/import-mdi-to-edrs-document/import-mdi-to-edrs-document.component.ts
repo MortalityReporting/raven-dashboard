@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {UtilsService} from "../../../../../../service/utils.service";
 import {SearchEdrsService} from "../../../../service/search-edrs.service";
 import {Validators} from "@angular/forms";
@@ -9,6 +9,7 @@ import {UiStringConstants} from "../../../../../../providers/ui-string-constants
 import {FhirHelperService, PatientNameReturn} from "../../../../../../modules/fhir-util/services/fhir-helper.service";
 import {MatDialog} from "@angular/material/dialog";
 import {openTextInputDialog} from "common-ui";
+import {ModuleHeaderConfig} from "../../../../../../providers/module-header-config";
 
 @Component({
   selector: 'app-import-mdi-to-edrs-document',
@@ -26,6 +27,7 @@ export class ImportMdiToEdrsDocumentComponent implements OnInit {
   commonUIConstants: any
 
   constructor(
+    @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
     private dialog: MatDialog,
     private utilsService: UtilsService,
     private searchEdrsService: SearchEdrsService,
@@ -146,7 +148,7 @@ export class ImportMdiToEdrsDocumentComponent implements OnInit {
 
     const dateTimeOfDeathObservation = this.getObservationByCode(documentBundle, "81956-5");
     if(dateTimeOfDeathObservation){
-      const dateTimeOfDeath = dateTimeOfDeathObservation?.effectiveDateTime;
+      const dateTimeOfDeath = dateTimeOfDeathObservation?.valueDateTime;
       decedentSimpleInfo.dateTimeOfDeath = dateTimeOfDeath;
     }
 

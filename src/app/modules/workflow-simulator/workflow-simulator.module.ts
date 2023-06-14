@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {ModuleWithProviders, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {SearchEdrsComponent} from "./components/search-edrs/search-edrs.component";
 import {
@@ -48,6 +48,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatButtonModule} from "@angular/material/button";
+import {ModuleHeaderConfig} from "../../providers/module-header-config";
 
 @NgModule({
   declarations: [
@@ -88,4 +89,24 @@ import {MatButtonModule} from "@angular/material/button";
     MatSortModule
   ]
 })
-export class WorkflowSimulatorModule { }
+export class WorkflowSimulatorModule {
+  public static forRoot(environment: any, config: ModuleHeaderConfig, appConfig: any): ModuleWithProviders<any> {
+    return {
+      ngModule: WorkflowSimulatorModule,
+      providers: [
+        {
+          provide: 'env',
+          useValue: environment
+        },
+        {
+          provide: 'workflowSimulatorConfig',
+          useValue: config
+        },
+        {
+          provide: 'appConfig',
+          useValue: appConfig
+        }
+      ]
+    }
+  }
+}

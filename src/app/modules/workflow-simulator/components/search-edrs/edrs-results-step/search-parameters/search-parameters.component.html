@@ -56,7 +56,11 @@
       <div><mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error></div>
       <div class="push-right">
         <span style="margin-left: 1em"><button type="button" mat-raised-button (click)="onClearSearch()">Clear Search</button></span>
-        <span style="margin-left: 1em"><button type="submit" mat-raised-button color="primary">Search</button></span>
+        <span style="margin-left: 1em">
+          <button type="submit" mat-raised-button
+                  [style.background-color]="config.backgroundColor"
+                  [style.color]="'white'">Search</button>
+        </span>
       </div>
 
     </div>

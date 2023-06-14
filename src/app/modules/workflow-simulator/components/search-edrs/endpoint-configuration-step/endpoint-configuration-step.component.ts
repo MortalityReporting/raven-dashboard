@@ -68,18 +68,18 @@ export class EndpointConfigurationStepComponent implements OnInit {
 
   onSubmitEndpointConfiguration() {
     //TODO: Replace, this is super quick implementation mid event.
-    if (this.endpointConfigurationFormGroup.controls['inputType'].value === "Custom Endpoint") {
-      const custom = this.endpointConfigurationFormGroup.controls['customEndpoint'].value;
-      console.log(custom)
-      const endpoint = custom.customEndpointUrl;
-      const userPass = custom.userNamePassword;
-      this.searchEdrsService.setEndpoint(
-        endpoint, userPass
-      )
-    }
-    else {
+   if (this.endpointConfigurationFormGroup.controls['inputType'].value === "Custom Endpoint") {
+     const custom = this.endpointConfigurationFormGroup.controls['customEndpoint'].value;
+     console.log(custom)
+     const endpoint = custom.customEndpointUrl;
+     const userPass = custom.userNamePassword;
+     this.searchEdrsService.setEndpoint(
+       endpoint, userPass
+     )
+   }
+   else {
       this.searchEdrsService.setEndpoint(undefined, undefined); // TODO: Redo this.
-    }
+   }
   }
 
   ngOnInit(): void {

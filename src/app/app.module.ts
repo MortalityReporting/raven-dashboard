@@ -65,7 +65,7 @@ import { FHIRProfileConstants } from "./providers/fhir-profile-constants";
     HttpClientModule,
     FhirValidatorModule.forRoot(environment),
     ClipboardModule,
-    WorkflowSimulatorModule,
+    WorkflowSimulatorModule.forRoot(environment, ModuleHeaderConfig.WorkflowSimulator, AppConfiguration.config),
     ImportCaseModule.forRoot(environment, ModuleHeaderConfig.RecordImport, AppConfiguration.config),
     RecordViewerModule.forRoot(environment, ModuleHeaderConfig.RecordViewer, AppConfiguration.config, FHIRProfileConstants.Profiles),
     FhirUtilModule,

@@ -13,7 +13,10 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <button mat-raised-button color="primary" id="clear-filters-btn" (click)="onClearFilters()">Clear Filters</button>
+    <button mat-raised-button [style.background-color]="config.backgroundColor"
+            [style.color]="'white'" id="clear-filters-btn" (click)="onClearFilters()">
+      Clear Filters
+    </button>
   </div>
 
 

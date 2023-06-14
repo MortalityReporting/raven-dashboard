@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {DecedentGridDTO} from "../../../../../../model/decedent.grid.dto";
 import {MatSort} from "@angular/material/sort";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -13,6 +13,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSelect} from "@angular/material/select";
 import {TrackingNumberType} from "../../../../../fhir-mdi-library";
+import {ModuleHeaderConfig} from "../../../../../../providers/module-header-config";
 
 @Component({
   selector: 'app-mdi-to-edrs-grid',
@@ -39,6 +40,7 @@ export class MdiToEdrsGridComponent implements OnInit {
   mannerOfDeathList: string [] = [];
 
   constructor(
+    @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
     private route: ActivatedRoute,
     private decedentService: DecedentService,
     private router: Router,
