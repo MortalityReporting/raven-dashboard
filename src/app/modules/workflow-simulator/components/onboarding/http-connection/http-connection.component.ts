@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {LoggerService} from "../../../../../../../projects/ngx-hisb-logger/src/lib/services/logger.service";
 import {
   FormControl,
@@ -26,6 +26,8 @@ export enum RequestType {
 export class HttpConnectionComponent implements OnInit {
 
   @ViewChild('form') form: NgForm;
+  @Output() removeConnection: EventEmitter<void> = new EventEmitter<void>();
+  @Input() showRemoveBtn: boolean = true;
 
   onboardingForm: FormGroup = new FormGroup({
     connectionType: new FormControl('', Validators.required),

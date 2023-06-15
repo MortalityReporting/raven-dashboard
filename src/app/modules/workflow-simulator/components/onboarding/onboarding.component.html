@@ -1,6 +1,11 @@
-<app-http-connection></app-http-connection>
-<ng-template #viewContainerRef></ng-template>
-<button mat-button (click)="addChild()">Add Item</button>
+<app-http-connection [showRemoveBtn]=false></app-http-connection>
+<ng-template #httpConnectionContainerRef></ng-template>
+<div style="margin-top: -8px">
+  <button mat-raised-button color="primary" (click)="addHttpConnectionComponent()">
+    <mat-icon>add</mat-icon>
+    Add Connection
+  </button>
+</div>
 <mat-card class="top-margin">
   <mat-card-content>
     <mat-card-title>
