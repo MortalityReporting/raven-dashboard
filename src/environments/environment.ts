@@ -6,11 +6,11 @@ import packageInfo from '../../package.json';
 export const environment = {
   VERSION: packageInfo.version + "-dev",
   production: false,
-  ravenFhirServer: "https://apps.hdap.gatech.edu/raven-fhir-server-dev/fhir/",
-  ravenFhirServerBasicAuth: "client:secret",
-  ravenImportApi: "https://apps.hdap.gatech.edu/raven-import-api-dev/upload-xlsx-file",
-  fhirValidator: "https://apps.hdap.gatech.edu/HL7ValidatorService/fhir",
-  blueJayServerBase: "https://apps.hdap.gatech.edu/bluejay-fhir-server/fhir"
+  ravenFhirServer: "",
+  ravenFhirServerBasicAuth: "",
+  ravenImportApi: "",
+  fhirValidator: "",
+  blueJayServerBase: ""
 };
 
 /*
