@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable, Subject} from "rxjs";
 import {DecedentSimpleInfo} from "../../../model/decedent-simple-info";
-// import {blueJay, environment} from "../../../../environments/environment";
 import {map} from "rxjs/operators";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {EnvironmentHandlerService} from "../../fhir-util";
