@@ -1,4 +1,4 @@
-import {Component, ComponentFactory, ComponentRef, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {LogLine} from "../../../../../../projects/ngx-hisb-logger/src/lib/modal/log-line";
 import {LoggerService} from "../../../../../../projects/ngx-hisb-logger/src/lib/services/logger.service";
 import {HttpConnectionComponent} from "./http-connection/http-connection.component";
