@@ -27,7 +27,8 @@ export class HttpConnectionComponent implements OnInit {
 
   @ViewChild('form') form: NgForm;
   @Output() removeConnection: EventEmitter<void> = new EventEmitter<void>();
-  @Input() showRemoveBtn: boolean = true;
+  @Input() renderRemoveButton = true;
+
 
   onboardingForm: FormGroup = new FormGroup({
     connectionType: new FormControl('', Validators.required),

@@ -1,7 +1,6 @@
-import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LogLine} from "../../../../../../projects/ngx-hisb-logger/src/lib/modal/log-line";
 import {LoggerService} from "../../../../../../projects/ngx-hisb-logger/src/lib/services/logger.service";
-import {HttpConnectionComponent} from "./http-connection/http-connection.component";
 
 @Component({
   selector: 'app-onboarding',
@@ -9,22 +8,12 @@ import {HttpConnectionComponent} from "./http-connection/http-connection.compone
   styleUrls: ['./onboarding.component.css']
 })
 export class OnboardingComponent implements OnInit{
-  @ViewChild('httpConnectionContainerRef', { read: ViewContainerRef }) httpConnectionContainer: ViewContainerRef;
   constructor(
     private log: LoggerService,
   ){}
-  addHttpConnectionComponent() {
-    const componentRef = this.httpConnectionContainer.createComponent(HttpConnectionComponent);
-    componentRef.instance.removeConnection.subscribe(() => this.removeHttpConnectionComponent(componentRef));
-  }
-
-  removeHttpConnectionComponent(componentRef: any) {
-    const index = this.httpConnectionContainer.indexOf(componentRef.hostView);
-    this.httpConnectionContainer.remove(index);
-    componentRef.destroy();
-  }
 
   loggerData: LogLine[];
+  componentCounterArray: number[] = [0];
 
   clearLog(){
     this.log.clear()
@@ -32,5 +21,13 @@ export class OnboardingComponent implements OnInit{
 
   ngOnInit(): void {
     this.log.logStream$.subscribe(value=> this.loggerData = value);
+  }
+
+  addComponent() {
+    this.componentCounterArray.push(this.componentCounterArray.length -1);
+  }
+
+  removeComponent(index: number) {
+    this.componentCounterArray.splice(index, 1);
   }
 }
