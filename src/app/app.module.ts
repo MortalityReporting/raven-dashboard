@@ -37,6 +37,7 @@ import { CardHoverDirective } from './directives/card-hover.directive';
 
 import { UiStringConstants } from "./providers/ui-string-constants";
 import { FHIRProfileConstants } from "./providers/fhir-profile-constants";
+import {UserManagementModule} from "./modules/user-management/user-management.module";
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { FHIRProfileConstants } from "./providers/fhir-profile-constants";
     CommonUiModule,
     MatSidenavModule,
     CommonUiModule,
+    UserManagementModule
   ],
 
   providers: [

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {EnvironmentHandlerService} from "./environment-handler.service";
-import {HttpClient, HttpParams, HttpParamsOptions} from "@angular/common/http";
-import {EMPTY, expand, map, mergeMap, Observable, of, reduce, takeWhile} from "rxjs";
+import {HttpClient, HttpEvent, HttpEventType, HttpParams, HttpParamsOptions, HttpRequest} from "@angular/common/http";
+import {EMPTY, expand, map, mergeMap, Observable, of, reduce, takeWhile, tap} from "rxjs";
 import {FhirResource} from "../models/base/fhir.resource";
 import {Bundle, BundleEntryComponent, BundleType} from "../models/resources/bundle";
 
@@ -15,6 +15,18 @@ export class FhirClientService {
   constructor(private http: HttpClient,
               private environmentHandler: EnvironmentHandlerService) {
     this.serverBaseUrl = this.environmentHandler.getFhirServerBaseURL();
+  }
+
+  create(resourceType: string, resource: any): Observable<FhirResource> {
+    let requestString = this.serverBaseUrl + resourceType + "/";
+    //const req = new HttpRequest('POST', requestString, resource)
+    //return this.http.request(req);
+    return this.http.post<FhirResource>(requestString, resource);
+  }
+
+  update(resourceType: string, resource: FhirResource): Observable<FhirResource> {
+    let requestString = this.serverBaseUrl + resourceType + "/";
+    return this.http.put<FhirResource>(requestString, resource);
   }
 
   read(resourceType: string, id: string, parameters?: string): Observable<FhirResource> {
@@ -83,9 +95,11 @@ export class FhirClientService {
       return pagination$.pipe(
         map((completeBundle: Bundle) => {
             let resourceList: FhirResource[] = [];
-            completeBundle['entry'].map((bundleEntry: BundleEntryComponent) => {
-              resourceList.push(bundleEntry.resource)
-            });
+            if (completeBundle['entry']) {
+              completeBundle['entry'].map((bundleEntry: BundleEntryComponent) => {
+                resourceList.push(bundleEntry.resource)
+              });
+            }
             return resourceList;
           }
         ))
