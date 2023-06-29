@@ -21,3 +21,6 @@ export { EnvironmentHandlerService } from "./services/environment-handler.servic
 export { FhirClientService } from "./services/fhir-client.service";
 export { FhirHelperService } from "./services/fhir-helper.service";
 export { TerminologyHandlerService } from "./services/terminology-handler.service"
+
+/** Pipes **/
+export * from "./pipes/doc-ref-base64-transform.pipe"

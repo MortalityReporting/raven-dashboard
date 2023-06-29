@@ -28,14 +28,15 @@ export class UserProfileManagerService {
         map((results: FhirResource[] | Bundle) => {
           return (results as FhirResource[])?.length === 0 ? null :
             UserProfile.constructFromFHIR(results[0])
-        }));
+        }),
+        single()
+      );
   }
 
   createUserProfile(name: string, email: string): Observable<UserProfile> {
     let userProfile = UserProfile.constructFromStrings(name, email);
     let request$ = this.fhirClient.create("Practitioner", userProfile.toFhirJSON()).pipe(
         map((result: FhirResource) => {
-          console.log(result);
           if (result.resourceType === "OperationOutcome") return null; // TODO: Add error handling
           else {
             return UserProfile.constructFromFHIR(result)
@@ -56,5 +57,15 @@ export class UserProfileManagerService {
       }),
       single()
     );
+  }
+
+  getUserProfileImage(id: string) {
+    return this.fhirClient.search("DocumentReference", `?subject=Practitioner/${id}`, true).pipe(
+      map((results: FhirResource[] | Bundle) => {
+        console.log(results)
+        return (results as FhirResource[])?.length === 0 ? null :
+          results[0]
+      })
+    )
   }
 }

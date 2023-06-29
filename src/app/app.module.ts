@@ -38,6 +38,8 @@ import { CardHoverDirective } from './directives/card-hover.directive';
 import { UiStringConstants } from "./providers/ui-string-constants";
 import { FHIRProfileConstants } from "./providers/fhir-profile-constants";
 import {UserManagementModule} from "./modules/user-management/user-management.module";
+import {AuthModule} from "@auth0/auth0-angular";
+import { DocRefBase64TransformPipe } from './modules/fhir-util/pipes/doc-ref-base64-transform.pipe';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,7 @@ import {UserManagementModule} from "./modules/user-management/user-management.mo
     CardHoverDirective
   ],
   imports: [
+
     // TODO: Clean up imports after refactor.
     HeaderComponent, // Confirmed
     NavMenuComponent, // Confirmed
@@ -93,7 +96,8 @@ import {UserManagementModule} from "./modules/user-management/user-management.mo
   ],
   bootstrap: [AppComponent],
   exports: [
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    DocRefBase64TransformPipe
   ]
 })
 export class AppModule {
