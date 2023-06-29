@@ -44,6 +44,8 @@ export class AppComponent implements OnInit {
       .bypassSecurityTrustResourceUrl(`${path}/workflow-simulator.svg`));
     this.matIconRegistry.addSvgIcon("fhir_validator", this.domSanitizer
       .bypassSecurityTrustResourceUrl(`${path}/fhir-validator.svg`));
+    this.matIconRegistry.addSvgIcon("admin_panel", this.domSanitizer
+      .bypassSecurityTrustResourceUrl(`${path}/admin-panel.svg`));
 
     this.optionConfig = {
       options: [
@@ -76,6 +78,11 @@ export class AppComponent implements OnInit {
           routerLink: AppConfiguration.config.modules['workflowSimulator'].route,
           label: AppConfiguration.config.modules['workflowSimulator'].title,
           iconName: "workflow_simulator"
+        },
+        {
+          routerLink: AppConfiguration.config.modules['adminPanel'].route,
+          label: AppConfiguration.config.modules['adminPanel'].title,
+          iconName: "admin_panel"
         }
       ]
     }

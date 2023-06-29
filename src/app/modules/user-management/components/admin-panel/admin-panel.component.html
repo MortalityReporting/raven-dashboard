@@ -7,16 +7,20 @@
       <img [src]="(currentUserImage$ | async) ? ((currentUserImage$ | async) | docrefBase64) : '/assets/portrait_placeholder.png'" class="profile-image">
 
     </span>
-    <button (click)="auth.logout({ logoutParams: { returnTo: 'https://localhost:4200/workflow-simulator/admin' } })">
+    <button (click)="auth.logout({ logoutParams: { returnTo: env.adminLogoutUrl } })">
       Log out
     </button>
   </ng-container>
 
   <ng-template #loggedOut>
-    <button (click)="auth.loginWithRedirect({appState: {target: '/workflow-simulator/admin'}})">Log in</button>
+    <button (click)="auth.loginWithRedirect({appState: {target: '/admin-panel'}})">Log in</button>
   </ng-template>
   </div>
   <pre>
 {{currentUser$ | async | json}}
   </pre>
+
+  <ng-container *ngIf="auth.isAuthenticated$ | async">
+
+  </ng-container>
 </div>

@@ -5,6 +5,7 @@ import {UserProfileManagerService} from "../../services/user-profile-manager.ser
 import {concat, from, map, Observable, of, skipWhile, tap} from "rxjs";
 import {AuthService, User} from '@auth0/auth0-angular';
 import {UserProfile} from "../../models/user-profile";
+import {environment as env} from "../../../../../environments/environment";
 
 @Component({
   selector: 'app-admin-panel',
@@ -14,10 +15,12 @@ import {UserProfile} from "../../models/user-profile";
 export class AdminPanelComponent {
   currentUser$: Observable<UserProfile> = new Observable<UserProfile>(null);
   currentUserImage$: Observable<any> = new Observable<any>(null)
+  env = env;
 
   constructor(
     private userProfileManager: UserProfileManagerService,
-    public auth: AuthService) {
+    public auth: AuthService,
+    ) {
 
     // TODO: REMOVE, PROVIDED FOR EXAMPLES/TESTING
     // this.userProfileManager.checkIfUserEmailExists("user@example.com").pipe(
