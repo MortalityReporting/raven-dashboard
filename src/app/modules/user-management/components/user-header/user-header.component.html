@@ -1,0 +1,15 @@
+  <div class="user-profile-header">
+    <ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOut">
+    <span *ngIf="auth.user$ | async as user">
+      {{ user.name }} ({{ user.email }})
+    </span>
+      <button (click)="auth.logout({ logoutParams: { returnTo: env.adminLogoutUrl } })">
+        Log out
+      </button>
+    </ng-container>
+
+    <ng-template #loggedOut>
+      <button (click)="auth.loginWithRedirect({appState: {target: '/admin-panel'}})">Log in</button>
+    </ng-template>
+    <mat-icon>person</mat-icon>
+  </div>

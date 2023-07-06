@@ -49,6 +49,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatButtonModule} from "@angular/material/button";
 import {ModuleHeaderConfig} from "../../providers/module-header-config";
+import { RegisteredModulesComponent } from './components/registered-modules/registered-modules.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import {ModuleHeaderConfig} from "../../providers/module-header-config";
     HttpRequestInfoComponent,
     HttpResponseInfoComponent,
     WorkflowSimulatorComponent,
-    MdiToEdrsDocumentSelectStepComponent],
+    MdiToEdrsDocumentSelectStepComponent,
+    RegisteredModulesComponent],
   exports: [
   ],
   imports: [

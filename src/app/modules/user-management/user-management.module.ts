@@ -2,16 +2,21 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import {AuthModule} from "@auth0/auth0-angular";
-import {AppModule} from "../../app.module";
 import {FhirUtilModule} from "../fhir-util/fhir-util.module";
 import {environment} from "../../../environments/environment";
 import { LoggedInComponent } from './components/logged-in/logged-in.component';
+import { UserHeaderComponent } from './components/user-header/user-header.component';
+import {MatIconModule} from "@angular/material/icon";
 
 
 @NgModule({
   declarations: [
     AdminPanelComponent,
-    LoggedInComponent
+    LoggedInComponent,
+    UserHeaderComponent
+  ],
+  exports: [
+    UserHeaderComponent
   ],
   imports: [
     // Auth0 Testing
@@ -24,6 +29,7 @@ import { LoggedInComponent } from './components/logged-in/logged-in.component';
     }),
     CommonModule,
     FhirUtilModule,
+    MatIconModule,
   ]
 })
 export class UserManagementModule { }

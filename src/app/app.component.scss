@@ -9,6 +9,13 @@
 
 .header-wrapper {
   flex: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+common-header {
+  flex: 1
 }
 
 .content-wrapper {
