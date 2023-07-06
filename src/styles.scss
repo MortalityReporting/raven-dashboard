@@ -257,7 +257,6 @@ button {
 /** User Profile **/
 .user-profile-header {
   width: 100%;
-  padding: 8px;
   background-color: #5F6368;
   color: white;
   display: flex;
@@ -267,5 +266,9 @@ button {
   height: 64px;
   border-radius: 50%;
   background-color: white;
-  border: 1px solid black;
+  border: 0 solid black;
+}
+.profile-wrapper {
+  display: flex;
+  flex-direction: row;
 }
