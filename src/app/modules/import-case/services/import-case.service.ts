@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from "rxjs/operators";
-import {environment} from "../../../../environments/environment";
-import {FileTemplate} from "../models/file-template";
+import {EnvironmentHandlerService} from "../../fhir-util";
 
 
 @Injectable({
@@ -11,10 +10,10 @@ import {FileTemplate} from "../models/file-template";
 })
 export class ImportCaseService {
 
-  // API url
-  importFileUrl = environment.ravenImportApi;
-
-  constructor(private http:HttpClient) { }
+  constructor(
+    private environmentHandler: EnvironmentHandlerService,
+    private http:HttpClient
+  ) { }
 
   uploadFile(file, apiImportParameter: string): Observable<any> {
 
@@ -25,7 +24,7 @@ export class ImportCaseService {
 
     formData.append("file", file, file.name);
 
-    return this.http.post(this.importFileUrl, formData, {params:params})
+    return this.http.post(this.environmentHandler.getFhirImportServerURL(), formData, {params:params})
   }
 
   uploadFileContent(content, contentFormat): Observable<any>{
@@ -45,7 +44,7 @@ export class ImportCaseService {
     }
 
     let data = null;
-    return this.http.post(this.importFileUrl,  content, {headers: headers});
+    return this.http.post(this.environmentHandler.getFhirImportServerURL(),  content, {headers: headers});
   }
 
   getMockResponse(): Observable<any> {
@@ -53,7 +52,7 @@ export class ImportCaseService {
   }
 
   importResource(fhirResource): Observable<any> {
-    return this.http.post(environment.ravenFhirServer, fhirResource).pipe(map((result: any) => (
+    return this.http.post(this.environmentHandler.getFhirServerBaseURL(), fhirResource).pipe(map((result: any) => (
       result as Object
     )));
   }

@@ -3,8 +3,8 @@ import {DecedentSimpleInfo} from "../../../../../model/decedent-simple-info";
 import {SearchEdrsService} from "../../../service/search-edrs.service";
 import {UntypedFormBuilder, UntypedFormGroup} from "@angular/forms";
 import {UiStringConstants} from "../../../../../providers/ui-string-constants";
-import {blueJay} from "../../../../../../environments/environment";
 import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
+import {EnvironmentHandlerService} from "../../../../fhir-util";
 
 @Component({
   selector: 'app-endpoint-configuration-step',
@@ -12,28 +12,23 @@ import {ModuleHeaderConfig} from "../../../../../providers/module-header-config"
   styleUrls: ['./endpoint-configuration-step.component.scss']
 })
 export class EndpointConfigurationStepComponent implements OnInit {
+  blueJayUri = '';
+  endpointConfigurationFormGroup: UntypedFormGroup
+  decedentInfo: DecedentSimpleInfo;
   endpointTypeOptions: string[];
   authenticationOptions: string [];
 
   uiConstantsStep2: any;
   commonUIConstants: any;
-  blueJayUri = blueJay.serverBase;
-
-  //TODO extract those as constants
-  serverEndpointList: any[] = [
-    {uri: blueJay.serverBase, displayName: 'BlueJay'},
-    {uri: 'www.gavers.edu', displayName: 'GAVERS'},
-  ];
-
-  endpointConfigurationFormGroup: UntypedFormGroup
-  decedentInfo: DecedentSimpleInfo;
-
   constructor(
     @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
     private searchEdrsService: SearchEdrsService,
     private formBuilder: UntypedFormBuilder,
-    uiStringConstants: UiStringConstants
+    uiStringConstants: UiStringConstants,
+    private environmentHandler: EnvironmentHandlerService,
   ) {
+    this.blueJayUri = this.environmentHandler.getBlueJayServerBase();
+
     this.uiConstantsStep2 = uiStringConstants.WorkflowSimulator.searchEdrs.step2;
     this.commonUIConstants = uiStringConstants.Common;
 
@@ -64,6 +59,13 @@ export class EndpointConfigurationStepComponent implements OnInit {
     });
   }
 
+
+  //TODO extract those as constants
+  serverEndpointList: any[] = [
+    {uri: this.blueJayUri, displayName: 'BlueJay'},
+    {uri: 'www.gavers.edu', displayName: 'GAVERS'},
+  ];
+
   onSubmitEndpointConfiguration() {
     //TODO: Replace, this is super quick implementation mid event.
    if (this.endpointConfigurationFormGroup.controls['inputType'].value === "Custom Endpoint") {
@@ -89,11 +91,11 @@ export class EndpointConfigurationStepComponent implements OnInit {
   }
 
   onViewServerMdiDocs() {
-    window.open(blueJay.serverBase + "/OperationDefinition/Composition-it-mdi-documents", "_blank");
+    window.open(this.environmentHandler.getBlueJayServerBase() + "/OperationDefinition/Composition-it-mdi-documents", "_blank");
   }
 
   onViewServerCapabilityStmt() {
-    window.open(blueJay.serverBase + "/metadata", "_blank");
+    window.open(this.environmentHandler.getBlueJayServerBase()  + "/metadata", "_blank");
   }
 
   onSelected(endpointConfigurationFormGroup: UntypedFormGroup) {
