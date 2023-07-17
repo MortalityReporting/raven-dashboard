@@ -7,6 +7,9 @@ import {environment} from "../../../environments/environment";
 import { LoggedInComponent } from './components/logged-in/logged-in.component';
 import { UserHeaderComponent } from './components/user-header/user-header.component';
 import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
+import {MatMenuModule} from "@angular/material/menu";
+import {MatDividerModule} from "@angular/material/divider";
 
 
 @NgModule({
@@ -30,6 +33,9 @@ import {MatIconModule} from "@angular/material/icon";
     CommonModule,
     FhirUtilModule,
     MatIconModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatDividerModule,
   ]
 })
 export class UserManagementModule { }
