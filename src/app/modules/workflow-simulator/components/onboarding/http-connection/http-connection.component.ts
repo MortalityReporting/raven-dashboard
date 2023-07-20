@@ -77,11 +77,11 @@ export class HttpConnectionComponent implements OnInit {
     this.onboardingForm.controls['addQueryParams'].disable();
     this.onboardingForm.addControl('user', new FormControl('', Validators.required));
     this.onboardingForm.addControl('password', new FormControl('', Validators.required));
-    console.log(this.onboardingForm);
+
   }
 
   onConnectionTypeSelected() {
-    if(this.selectedConnectionType.value === 'basicAuth'){
+    if(this.selectedConnectionType.value == this.connectionTypes[0].value){
       this.onboardingForm.addControl('user', new FormControl('', Validators.required));
       this.onboardingForm.addControl('password', new FormControl('', Validators.required));
       this.onboardingForm.removeControl('token');
@@ -98,6 +98,14 @@ export class HttpConnectionComponent implements OnInit {
       }
       this.onboardingForm.controls['addRequestBody'].disable();
 
+    }
+    else if(this.selectedConnectionType.value == this.connectionTypes[1].value){
+      this.onboardingForm.controls['addRequestBody'].patchValue(false);
+      this.onboardingForm.controls['addRequestBody'].disable();
+      if(!this.onboardingForm.controls['token']){
+        this.onboardingForm.addControl('token', new FormControl('', Validators.required));
+      }
+      this.onboardingForm.removeControl("requestBody");
     }
     else {
       this.onboardingForm.removeControl('user');
@@ -134,10 +142,10 @@ export class HttpConnectionComponent implements OnInit {
     //   error: err => console.error(err)
     // });
 
-    this.validateAllFormFields(this.onboardingForm);
-    if (!this.onboardingForm.valid) {
-      return;
-    }
+    // this.validateAllFormFields(this.onboardingForm);
+    // if (!this.onboardingForm.valid) {
+    //   return;
+    // }
     console.log(this.onboardingForm.value);
     const request: OnboardingHttpRequest = new OnboardingHttpRequest(this.onboardingForm.value);
     this.onboardingService.onLogin(request).subscribe({
@@ -220,12 +228,24 @@ export class HttpConnectionComponent implements OnInit {
   }
 
   onRequestTypeSelected() {
-    if(this.onboardingForm.value.requestTypes === RequestType.GET){
+    if(this.onboardingForm.value.requestType === RequestType.GET){
       this.onboardingForm.controls['addRequestBody'].disable();
+      this.onboardingForm.controls['addQueryParams'].enable();
       this.onboardingForm.removeControl('requestBody');
     }
-    else if(this.onboardingForm.value.connectionType != this.connectionTypes[0]){
+    else if(this.onboardingForm.value.requestType == RequestType.PUT){
       this.onboardingForm.controls['addRequestBody'].enable();
+      this.onboardingForm.controls['addQueryParams'].enable();
+      if(!this.onboardingForm.controls['requestBody']){
+        this.onboardingForm.addControl('requestBody', new FormControl(''));
+      }
+    }
+    else if(this.onboardingForm.value.requestType == RequestType.POST){
+      this.onboardingForm.controls['addRequestBody'].enable();
+      this.onboardingForm.controls['addQueryParams'].enable();
+      if(!this.onboardingForm.controls['requestBody']){
+        this.onboardingForm.addControl('requestBody', new FormControl(''));
+      }
     }
   }
   onAddRequestBody() {

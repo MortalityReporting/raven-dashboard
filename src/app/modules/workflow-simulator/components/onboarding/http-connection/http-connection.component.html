@@ -127,7 +127,7 @@
 
             <ng-container *ngFor="let queryParams of queryParams.controls; let index = index">
 
-              <div [formGroupName]="index">
+              <div [formGroupName]="index" class="box">
 
                 <mat-form-field appearance="outline" style="width: 40%">
                   <mat-label>Key</mat-label>
@@ -161,7 +161,8 @@
           <!-- Request Body -->
           <div>
             <div>
-              <mat-checkbox formControlName="addRequestBody" (change)="onAddRequestBody()">Add Request/Modify Body
+              <mat-checkbox formControlName="addRequestBody" (change)="onAddRequestBody()">
+                Add Request/Modify Body
               </mat-checkbox>
             </div>
           </div>
