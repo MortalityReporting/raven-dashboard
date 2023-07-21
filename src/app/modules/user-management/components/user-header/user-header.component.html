@@ -12,7 +12,7 @@
     </ng-template>
     <div *ngIf="auth.user$ | async as user">
       <img
-           [src]="user.picture"
+           [src]="user?.picture ? user.picture : '/assets/portrait_placeholder.png'"
            referrerpolicy="no-referrer"
            class="profile-image"
            [matMenuTriggerFor]="userMenu">

@@ -1,34 +1,37 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
 import {EventModuleManagerService, UserProfileManagerService} from "../../../user-management";
-import {mergeMap, skipWhile} from "rxjs";
+import {combineLatest, forkJoin, merge, mergeMap, Observable, skipWhile} from "rxjs";
 import {EventRegistration} from "../../../user-management/models/event-registration";
 import {EventModule} from "../../../user-management/models/event-module";
 
 @Component({
   selector: 'app-registered-modules',
   templateUrl: './registered-modules.component.html',
-  styleUrls: ['./registered-modules.component.css']
+  styleUrls: ['./registered-modules.component.scss']
 })
 export class RegisteredModulesComponent implements OnInit{
-  events: EventModule[];
   registrations: EventRegistration[];
 
   constructor(
       public auth: AuthService,
-      private eventModuleManager: EventModuleManagerService,
+      public eventModuleManager: EventModuleManagerService,
       private userProfileManager: UserProfileManagerService
   ) {
   }
 
   ngOnInit(): void {
-    this.eventModuleManager.getAllEvents().subscribe({
-        next: value => {this.events = value}}
-    )
-    this.userProfileManager.currentUser$.pipe(
-      skipWhile(value => !value),
-      mergeMap(user => this.eventModuleManager.getAllRegistrations(user.fhirId))
-    ).subscribe({next: value => {this.registrations = value}})
+    let events$ = this.eventModuleManager.getAllEvents();
+    let user$ = this.userProfileManager.currentUser$;
+    combineLatest([events$, user$]).pipe(
+        skipWhile(combinedResults => combinedResults.some(result => result === undefined)),
+        mergeMap(combinedResults => {
+          const events = combinedResults[0];
+          const user = combinedResults[1];
+          return this.eventModuleManager.getAllRegistrations(user.fhirId, events);}
+    )).subscribe({
+      next: registrations => this.registrations = registrations
+    });
   }
 
 

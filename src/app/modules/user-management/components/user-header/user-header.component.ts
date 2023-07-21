@@ -32,25 +32,4 @@ export class UserHeaderComponent {
       }
     )
   }
-
-  //
-  // getUserDetails(name: string, email: string) {
-  //   this.userProfileManager.getUserProfile(email).subscribe({
-  //     next: (userProfile: UserProfile) => {
-  //       if (userProfile) {
-  //         this.userProfileManager.setCurrentUser(userProfile);
-  //       }
-  //       else {
-  //         console.log("User Profile not found on FHIR Server, creating new Resource.")
-  //         this.userProfileManager.createUserProfile(name, email);
-  //       }
-  //       this.currentUser$.pipe(
-  //         map((userProfile: UserProfile) => {
-  //           // this.getUserProfileImage(userProfile.fhirId);
-  //           return userProfile
-  //         })
-  //       )
-  //     }
-  //   });
-  // }
 }

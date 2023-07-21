@@ -15,6 +15,9 @@ import {
 import {AdminPanelComponent} from "./modules/user-management/components/admin-panel/admin-panel.component";
 import {AuthGuard} from "@auth0/auth0-angular";
 import {LoggedInComponent} from "./modules/user-management/components/logged-in/logged-in.component";
+import {
+  RegisteredModulesComponent
+} from "./modules/workflow-simulator/components/registered-modules/registered-modules.component";
 
 const routes: Routes = [
   {
@@ -74,9 +77,14 @@ const routes: Routes = [
   { // Workflow Simulator Module
     path: AppConfiguration.config.modules['workflowSimulator'].route,
     children: [
+      // {
+      //   path: '',
+      //   component: WorkflowSimulatorComponent,
+      //   data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: undefined}
+      // },
       {
         path: '',
-        component: WorkflowSimulatorComponent,
+        component: RegisteredModulesComponent,
         data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: undefined}
       },
       {
