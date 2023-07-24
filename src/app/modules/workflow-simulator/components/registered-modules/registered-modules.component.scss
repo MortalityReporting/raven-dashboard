@@ -1,0 +1,40 @@
+.event-module-status-table {
+  display: flex;
+  flex-direction: column;
+  background-color: lightgrey;
+  > .event-header {
+    grid-column-start: span 3;
+    font-size: larger;
+    font-weight: bold;
+    padding: 8px;
+    background-color: darkgrey;
+  }
+  > .event-footer {
+    justify-self: end;
+    align-self: end;
+    padding: 8px;
+    font-size: larger;
+    font-weight: bold;
+  }
+  > .event-row {
+    margin-left: 8px;
+    margin-bottom: 8px;
+    display: grid;
+    grid-template-columns: 20% auto 20% minmax(0px, 100px);
+    > .event-row-cell {
+      margin-right: 8px;
+      padding: 4px;
+      background-color: white;
+    }
+    > .event-row-cell-button {
+      margin-right: 8px;
+    }
+  }
+  > .event-row-header {
+    @extend .event-row;
+    text-align: center;
+    font-weight: bold;
+    width: 100%;
+  }
+
+}

@@ -1,0 +1,13 @@
+<div class="content-wrapper">
+  <ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOut">
+
+  </ng-container>
+
+  <ng-template #loggedOut>
+    Please login to an account with appropriate permissions to access this component.
+  </ng-template>
+
+  <pre>
+    {{ currentUser | json}}
+  </pre>
+</div>

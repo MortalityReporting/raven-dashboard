@@ -20,6 +20,7 @@
     "@angular/platform-browser": "^15.2.2",
     "@angular/platform-browser-dynamic": "^15.2.2",
     "@angular/router": "^15.2.2",
+    "@auth0/auth0-angular": "^2.1.0",
     "common-ui": "github:SmartChartSuite/common-ui",
     "diff": "^5.1.0",
     "ngx-fhir-validator": "github:SmartChartSuite/ngx-fhir-validator",
@@ -41,6 +42,7 @@
     "karma-coverage": "~2.1.0",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "ng-packagr": "^15.2.2",
     "typescript": "~4.8.4"
   }
 }

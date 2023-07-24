@@ -1,0 +1,25 @@
+.terminal{
+  font-family: monospace;
+  height: 200px;
+  overflow-y: scroll;
+  background-color: #252525;
+  color: whitesmoke;
+  padding: 8px 8px 32px 8px;
+  border-radius: 4px;
+}
+
+.ERROR{
+  color: red
+}
+
+.INFO {
+  color: whitesmoke;
+}
+
+.WARN{
+  color: #ffc107;
+}
+
+.DEBUG{
+  color: #3F51B5;
+}

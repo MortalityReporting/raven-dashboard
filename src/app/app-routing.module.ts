@@ -12,6 +12,13 @@ import {AppConfiguration} from "./providers/app-configuration";
 import {
   RecordComparisonContentComponent
 } from "./modules/record-comparison/components/record-comparison-content/record-comparison-content.component";
+import {AdminPanelComponent} from "./modules/user-management/components/admin-panel/admin-panel.component";
+import {AuthGuard} from "@auth0/auth0-angular";
+import {LoggedInComponent} from "./modules/user-management/components/logged-in/logged-in.component";
+import {
+  RegisteredModulesComponent
+} from "./modules/workflow-simulator/components/registered-modules/registered-modules.component";
+
 
 const routes: Routes = [
   {
@@ -82,6 +89,18 @@ const routes: Routes = [
         data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Search EDRS"}
       }
     ]
+  },
+  {
+    path: AppConfiguration.config.modules['adminPanel'].route,
+    component: AdminPanelComponent,
+    data: { moduleConfig: ModuleHeaderConfig.AdminPanel, componentTitle: undefined},
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'logged-in',
+    component: LoggedInComponent,
+    data: { moduleConfig: undefined, componentTitle: undefined},
+    canActivate: [AuthGuard]
   },
   { // Do not add any paths below this point, this path MUST ALWAYS be the last path!
     path: '**', redirectTo: ''

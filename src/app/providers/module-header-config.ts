@@ -6,6 +6,7 @@ export class ModuleHeaderConfig {
   static RecordImport = new ModuleHeaderConfig(AppConfiguration.config.modules["recordImport"].title, AppConfiguration.config.modules["recordImport"].color, AppConfiguration.config.modules["recordImport"].icon);
   static FhirValidator = new ModuleHeaderConfig(AppConfiguration.config.modules["fhirValidator"].title, AppConfiguration.config.modules["fhirValidator"].color, AppConfiguration.config.modules["fhirValidator"].icon);
   static WorkflowSimulator = new ModuleHeaderConfig(AppConfiguration.config.modules["workflowSimulator"].title, AppConfiguration.config.modules["workflowSimulator"].color, AppConfiguration.config.modules["workflowSimulator"].icon);
+  static AdminPanel = new ModuleHeaderConfig(AppConfiguration.config.modules["adminPanel"].title, AppConfiguration.config.modules["adminPanel"].color, AppConfiguration.config.modules["adminPanel"].icon)
 
   constructor(title, backgroundColor, icon) {
     this.title = title;

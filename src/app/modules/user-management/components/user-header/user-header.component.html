@@ -1,0 +1,41 @@
+  <div class="user-profile-header">
+    <ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOut" class="profile-wrapper">
+    </ng-container>
+
+    <ng-template #loggedOut>
+      <button mat-flat-button
+              (click)="auth.loginWithRedirect({appState: {target: '/admin-panel'}})"
+              class="login-button">
+        <mat-icon>login</mat-icon>
+        Sign In
+      </button>
+    </ng-template>
+    <div *ngIf="auth.user$ | async as user">
+      <img
+           [src]="user?.picture ? user.picture : '/assets/portrait_placeholder.png'"
+           referrerpolicy="no-referrer"
+           class="profile-image"
+           [matMenuTriggerFor]="userMenu">
+      <mat-menu #userMenu="matMenu" style="width: 250px;">
+        <div mat-menu-item>
+          <div class="user-card">
+            <img
+              [src]="user.picture"
+              referrerpolicy="no-referrer"
+              class="profile-image"
+            >
+            <div class="details">
+              <div class="name">{{user.name}}</div>
+              <div class="email">{{user.email}}</div>
+            </div>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <button mat-menu-item
+                (click)="auth.logout({ logoutParams: { returnTo: env.adminLogoutUrl } })">
+          <mat-icon>logout</mat-icon>
+          Sign Out
+        </button>
+      </mat-menu>
+    </div>
+  </div>
