@@ -129,24 +129,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 /* Color Shades */
-.header-gray {
-  background-color: #646064;
-  color: #fff;
-}
-
-.header-mint {
-  background-color: #ABEBD2;
-}
-.header-orange {
-  background-color: #ffd2a6;
-}
-.primary-light {
-  background-color: #9fa8da;
-}
-
-.primary-lighter {
-  background-color: #bfc8fa;
-}
 
 .mat-snack-bar-container {
   margin-top: 10em !important;
@@ -340,3 +322,28 @@ button {
   }
 }
 
+/** Workflow Simulator Test Container **/
+.test-container-wrapper {
+  @extend .flex-col;
+  @extend .full-screen;
+}
+
+.test-container-bar {
+  height: 50px;
+}
+
+.test-container-header {
+  @extend .content-wrapper;
+  @extend .test-container-bar;
+  border-bottom: 5px solid rgb(100, 96, 100);
+}
+
+.test-container-footer {
+  @extend .content-wrapper;
+  @extend .test-container-bar;
+  border-top: 5px solid rgb(100, 96, 100);
+}
+
+.test-container-body {
+  @extend .content-wrapper;
+}

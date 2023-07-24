@@ -3,6 +3,7 @@ import {AuthService} from "@auth0/auth0-angular";
 import {EventModuleManagerService, UserProfileManagerService} from "../../../user-management";
 import {combineLatest, mergeMap, skipWhile} from "rxjs";
 import {EventRegistration} from "../../../user-management/models/event-registration";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-registered-modules',
@@ -15,7 +16,8 @@ export class RegisteredModulesComponent implements OnInit{
   constructor(
       public auth: AuthService,
       public eventModuleManager: EventModuleManagerService,
-      private userProfileManager: UserProfileManagerService
+      private userProfileManager: UserProfileManagerService,
+      private router: Router
   ) {
   }
 
@@ -33,5 +35,10 @@ export class RegisteredModulesComponent implements OnInit{
     });
   }
 
-
+  loadTestContainer(eventItem: any, eventRegistration: any) {
+    this.router.navigate(['/workflow-simulator/test'], {state: {
+        eventItem: eventItem,
+        eventRegistration: eventRegistration
+      } }).then(r => console.log(r));
+  }
 }

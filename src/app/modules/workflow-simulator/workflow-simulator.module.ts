@@ -58,6 +58,7 @@ import { AvailableModuleViewComponent } from './components/available-module-view
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatDividerModule} from "@angular/material/divider";
 import { OnboardingComponent } from './components/onboarding/onboarding.component';
+import { TestContainerComponent } from './components/test-container/test-container.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { OnboardingComponent } from './components/onboarding/onboarding.componen
     ConnectathonModuleViewComponent,
     AvailableModuleViewComponent,
     OnboardingComponent,
+    TestContainerComponent,
   ],
   exports: [
   ],

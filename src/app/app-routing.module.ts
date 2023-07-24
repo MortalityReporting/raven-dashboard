@@ -18,6 +18,7 @@ import {LoggedInComponent} from "./modules/user-management/components/logged-in/
 import {
   RegisteredModulesComponent
 } from "./modules/workflow-simulator/components/registered-modules/registered-modules.component";
+import {TestContainerComponent} from "./modules/workflow-simulator/components/test-container/test-container.component";
 
 
 const routes: Routes = [
@@ -87,7 +88,12 @@ const routes: Routes = [
         path: 'search-edrs',
         component: SearchEdrsComponent,
         data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Search EDRS"}
-      }
+      },
+      {
+        path: 'test',
+        component: TestContainerComponent,
+        data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: undefined}
+      },
     ]
   },
   {
