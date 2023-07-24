@@ -26,6 +26,9 @@ export class OnboardingHttpRequest {
 
   //Basic Auth Constructor
   constructor(formValue: FormValue){
+    if(formValue.requestType == RequestType.GET){
+
+    }
     this.url = formValue.endpointUrl;
     this.requestType = formValue.requestType;
     this.connectionType = formValue.connectionType.value;

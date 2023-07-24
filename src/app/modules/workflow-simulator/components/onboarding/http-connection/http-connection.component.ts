@@ -18,6 +18,22 @@ export enum RequestType {
   "PUT" = "PUT",
   "POST" = "POST"
 }
+
+export const RequestTypeOptions = [RequestType.GET, RequestType.PUT, RequestType.POST];
+
+
+export enum ConnectionType {
+  basicAuth = 'basicAuth',
+  token = 'token',
+  custom = 'custom'
+}
+
+export const ConnectionTypeOptions: Record<ConnectionType, { value: ConnectionType; name: string }> = {
+  [ConnectionType.basicAuth]: { value: ConnectionType.basicAuth, name: 'Basic Auth' },
+  [ConnectionType.token]: { value: ConnectionType.token, name: 'Bearer Token' },
+  [ConnectionType.custom]: { value: ConnectionType.custom, name: 'Custom' }
+};
+
 @Component({
   selector: 'app-http-connection',
   templateUrl: './http-connection.component.html',
@@ -28,7 +44,8 @@ export class HttpConnectionComponent implements OnInit {
   @ViewChild('form') form: NgForm;
   @Output() removeConnection: EventEmitter<void> = new EventEmitter<void>();
   @Input() renderRemoveButton = true;
-
+  protected readonly ConnectionTypeOptionsArray = Object.values(ConnectionTypeOptions);
+  protected readonly RequestTypeOptions = RequestTypeOptions;
 
   onboardingForm: FormGroup = new FormGroup({
     connectionType: new FormControl('', Validators.required),
@@ -41,11 +58,6 @@ export class HttpConnectionComponent implements OnInit {
 
   selectedConnectionType: BasicNameValueType;
   componentName = this.constructor.name;
-  requestTypes: RequestType[] = [RequestType.GET, RequestType.PUT, RequestType.POST];
-  connectionTypes: BasicNameValueType[] = [
-    {value: "basicAuth" ,name: 'Basic Auth'},
-    {value: "token", name:'Bearer Token'},
-    {value: "custom", name:'Custom'}];
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -72,16 +84,17 @@ export class HttpConnectionComponent implements OnInit {
 
   ngOnInit(): void {
     this.onboardingForm.controls['requestType'].patchValue(RequestType.GET);
-    this.onboardingForm.controls['connectionType'].patchValue(this.connectionTypes[0]);
+    // this.onboardingForm.controls['connectionType'].patchValue(this.connectionTypes[0]);
+    this.onboardingForm.controls['connectionType'].patchValue(ConnectionTypeOptions[ConnectionType.basicAuth]);
     this.onboardingForm.controls['addRequestBody'].disable();
     this.onboardingForm.controls['addQueryParams'].disable();
     this.onboardingForm.addControl('user', new FormControl('', Validators.required));
     this.onboardingForm.addControl('password', new FormControl('', Validators.required));
-
   }
 
   onConnectionTypeSelected() {
-    if(this.selectedConnectionType.value == this.connectionTypes[0].value){
+    // if(this.selectedConnectionType.value == this.connectionTypes[0].value){
+      if(this.selectedConnectionType.value == ConnectionType.basicAuth){
       this.onboardingForm.addControl('user', new FormControl('', Validators.required));
       this.onboardingForm.addControl('password', new FormControl('', Validators.required));
       this.onboardingForm.removeControl('token');
@@ -99,7 +112,7 @@ export class HttpConnectionComponent implements OnInit {
       this.onboardingForm.controls['addRequestBody'].disable();
 
     }
-    else if(this.selectedConnectionType.value == this.connectionTypes[1].value){
+    else if(this.selectedConnectionType.value == ConnectionType.token){
       this.onboardingForm.controls['addRequestBody'].patchValue(false);
       this.onboardingForm.controls['addRequestBody'].disable();
       if(!this.onboardingForm.controls['token']){
@@ -114,7 +127,6 @@ export class HttpConnectionComponent implements OnInit {
       this.onboardingForm.controls['addQueryParams'].enable();
       this.onboardingForm.controls['addRequestBody'].enable();
     }
-    console.log(this.onboardingForm);
   }
 
   protected readonly undefined = undefined;
@@ -132,22 +144,14 @@ export class HttpConnectionComponent implements OnInit {
 
   onSubmit() {
     console.log(this.onboardingForm);
-    // this.onboardingService.onPostData({"name": "Test Name", "content": "Test Content"}).subscribe({
-    //   next: value => console.log(value),
-    //   error: err => console.error(err)
-    // });
-
-    // this.onboardingService.onGetData().subscribe({
-    //   next: value => console.log(value),
-    //   error: err => console.error(err)
-    // });
-
-    // this.validateAllFormFields(this.onboardingForm);
-    // if (!this.onboardingForm.valid) {
-    //   return;
-    // }
-    console.log(this.onboardingForm.value);
+    //https://raven.heat.icl.gtri.org/mdi-fhir-server
+    this.validateAllFormFields(this.onboardingForm);
+    if (!this.onboardingForm.valid) {
+      console.error("Invalid Connection Registration Form.")
+      return;
+    }
     const request: OnboardingHttpRequest = new OnboardingHttpRequest(this.onboardingForm.value);
+    console.log(request);
     this.onboardingService.onLogin(request).subscribe({
       next: value => {
         console.log(value);
@@ -160,15 +164,6 @@ export class HttpConnectionComponent implements OnInit {
     });
 
   }
-
-    // this.onboardingService.onLogin("request").subscribe({
-    //   next: value => console.log(value),
-    //   error: err => {
-    //     console.error(err);
-    //     this.log.error(JSON.stringify(err), this.componentName)
-    //   }
-    // });
-  // }
 
   get queryParams() {
     return this.onboardingForm.controls["queryParameters"] as UntypedFormArray;
@@ -256,4 +251,5 @@ export class HttpConnectionComponent implements OnInit {
       this.onboardingForm.removeControl('requestBody')
     }
   }
+
 }

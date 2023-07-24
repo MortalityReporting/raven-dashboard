@@ -15,22 +15,21 @@ export class OnboardingService {
 
   onPostData(postData: any): Observable<any>{return this.http.post(this.firebaseUrl + 'posts.json', postData)};
 
-  onGetData(): Observable<any>{
+  onGetData(): Observable<any> {
     return this.http.get(this.firebaseUrl + 'posts.json', {observe: 'response'})
       .pipe(map(response => {
-      const postArray = [];
-      for(const key in response.body){
-        if (response.body.hasOwnProperty(key)){
-          postArray.push({...response.body[key], id: key});
-        }
-      }
-      return postArray;
-    }),
-        catchError(error =>  {
+          const postArray = [];
+          for (const key in response.body) {
+            if (response.body.hasOwnProperty(key)) {
+              postArray.push({...response.body[key], id: key});
+            }
+          }
+          return postArray;
+        }),
+        catchError(error => {
           //log to console
           return throwError(error);
         })
-
       )
   };
 
@@ -44,8 +43,9 @@ export class OnboardingService {
     // }
 
     //handle basic auth requests
-    if(request.connectionType === 'basicAuth') {
-      const auth = (request.user + ":" + request.password);
+    // if(request.connectionType === 'basicAuth') {
+      //const auth = (request.user + ":" + request.password);
+      const auth = ("client:secret");
       let authorizationData: string = 'Basic ' + btoa(auth);
 
       const httpOptions = {
@@ -55,29 +55,38 @@ export class OnboardingService {
         })
       };
 
-      if (request.requestType == RequestType.GET) {
-        return this.http.get(request.url, httpOptions)
-          .pipe(map(response => {
-              return response;
-            }),
-          )
+    const credentials = btoa("client:secret");
 
-      } else if (request.requestType == RequestType.PUT) {
-        return this.http.get(request.url, httpOptions)
-          .pipe(map(response => {
-              return response;
-            }),
-          )
-      } else if (request.requestType == RequestType.POST) {
-        return this.http.get(request.url, httpOptions)
-          .pipe(map(response => {
-              return response;
-            }),
-          )
-      }
-      else {
-        return throwError("Invalid Request");
-      }
+    return this.http.get("https://raven.dev.heat.icl.gtri.org/mdi-fhir-server/fhir/Patient", httpOptions)
+    // return this.http.get("https://raven.dev.heat.icl.gtri.org/mdi-fhir-server/fhir/Patient", {
+    //   headers: new HttpHeaders({Authorization: authorizationData})})
+
+    // return this.http.get("https://raven.dev.heat.icl.gtri.org/mdi-fhir-server/fhir/Patient", {
+    //   headers: new HttpHeaders({Authorization: `Basic ${credentials}`})})
+      // }
+      // if (request.requestType == RequestType.GET) {
+      //   return this.http.get(request.url, httpOptions)
+      //     .pipe(map(response => {
+      //         return response;
+      //       }),
+      //     )
+      //
+      // } else if (request.requestType == RequestType.PUT) {
+      //   return this.http.get(request.url, httpOptions)
+      //     .pipe(map(response => {
+      //         return response;
+      //       }),
+      //     )
+      // } else if (request.requestType == RequestType.POST) {
+      //   return this.http.get(request.url, httpOptions)
+      //     .pipe(map(response => {
+      //         return response;
+      //       }),
+      //     )
+      // }
+      // else {
+      //   return throwError("Invalid Request");
+      // }
       // const requestBody = {
       //   email: 'ptassev3@gatech.edu',
       //   password: "Start111",
@@ -91,9 +100,9 @@ export class OnboardingService {
       //       return response;
       //     }),
       //   )
+      // }
+      // else {
+      //   return throwError("Invalid Request");
+
     }
-    else {
-      return throwError("Invalid Request");
-    }
-  };
 }
