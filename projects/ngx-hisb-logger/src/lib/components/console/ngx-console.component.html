@@ -1,0 +1,5 @@
+<div class="terminal" #terminal>
+  <div *ngFor="let item of logs">
+    <div [ngClass]="item.level">{{item.timeStamp | date : 'yyyy-MM-dd hh:mm:ss'}} - {{item.source}} - {{item.level}} - {{item.line}}</div>
+  </div>
+</div>

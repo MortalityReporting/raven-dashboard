@@ -12,6 +12,11 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "ngx-hisb-logger": [
+        "dist/ngx-hisb-logger"
+      ]
+    },
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,

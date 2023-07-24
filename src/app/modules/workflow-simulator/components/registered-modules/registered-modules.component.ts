@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
 import {EventModuleManagerService, UserProfileManagerService} from "../../../user-management";
-import {combineLatest, forkJoin, merge, mergeMap, Observable, skipWhile} from "rxjs";
+import {combineLatest, mergeMap, skipWhile} from "rxjs";
 import {EventRegistration} from "../../../user-management/models/event-registration";
-import {EventModule} from "../../../user-management/models/event-module";
 
 @Component({
   selector: 'app-registered-modules',

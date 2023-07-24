@@ -2,25 +2,44 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+/* Base SCSS Classes */
+.full-screen {
+  width: 100%;
+  height: 100%;
+}
 
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  @extend .flex;
+  flex-direction: column;
+}
+
+.flex-row {
+  @extend .flex;
+  flex-direction: row;
+}
+/* END BASE CLASSES */
 
 .page-wrapper {
-  display: flex;
-  flex-direction: row;
+  @extend .flex-row;
   height: 100vh;
   width: 100%;
 }
+
 .flex-wrapper {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+  @extend .flex-col;
+  @extend .full-screen;
   justify-content: stretch;
   align-items: stretch;
 }
+
 .content-wrapper {
   margin: 20px;
 }
+
 
 /*This is bootstrap-like container, and we can change the media queries as needed one day*/
 .container {
@@ -162,7 +181,7 @@ TODO: Refactor to generalize class names and move to a common shared .css file.
 
 /** Collapse/Expand Button Styling **/
 .section-button-wrapper {
-  display: flex;
+  @extend .flex;
   margin-bottom: 16px;
 }
 
@@ -186,15 +205,14 @@ button {
 }
 
 .summary-section-grid .grid-row {
-  display: flex;
+  @extend .flex;
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
 }
 
 .summary-section-grid .grid-col-1 {
-  display: flex;
-  flex-direction: column;
+  @extend .flex-col;
   flex: 1;
   padding-left: 10px;
 }
@@ -214,6 +232,14 @@ button {
 .mat-form-field {
   margin-left: 10px;
 }
+
+.full-width {
+  width: 100%;
+}
+.box {
+  display: flex;
+}
+
 
 /** Alias Table Styling **/
 .alias-table {
@@ -243,7 +269,7 @@ button {
 
 /* Basic row and col classes*/
 .row {
-  display: flex;  /* aligns all child elements (flex items) in a row */
+  @extend .flex;  /* aligns all child elements (flex items) in a row */
 }
 
 .col {

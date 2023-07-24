@@ -19,6 +19,7 @@ import {
   RegisteredModulesComponent
 } from "./modules/workflow-simulator/components/registered-modules/registered-modules.component";
 
+
 const routes: Routes = [
   {
     path: '',
@@ -77,14 +78,9 @@ const routes: Routes = [
   { // Workflow Simulator Module
     path: AppConfiguration.config.modules['workflowSimulator'].route,
     children: [
-      // {
-      //   path: '',
-      //   component: WorkflowSimulatorComponent,
-      //   data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: undefined}
-      // },
       {
         path: '',
-        component: RegisteredModulesComponent,
+        component: WorkflowSimulatorComponent,
         data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: undefined}
       },
       {

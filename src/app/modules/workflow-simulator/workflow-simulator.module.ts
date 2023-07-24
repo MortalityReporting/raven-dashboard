@@ -50,6 +50,14 @@ import {MatRadioModule} from "@angular/material/radio";
 import {MatButtonModule} from "@angular/material/button";
 import {ModuleHeaderConfig} from "../../providers/module-header-config";
 import { RegisteredModulesComponent } from './components/registered-modules/registered-modules.component';
+import {NgxHisbLoggerModule} from "ngx-hisb-logger";
+import { HttpConnectionComponent } from './components/onboarding/http-connection/http-connection.component';
+import { AvailableModuleComponent } from './components/available-module-view/available-module/available-module.component';
+import { ConnectathonModuleViewComponent } from './components/connectathon-module-view/connectathon-module-view.component';
+import { AvailableModuleViewComponent } from './components/available-module-view/available-module-view.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatDividerModule} from "@angular/material/divider";
+import { OnboardingComponent } from './components/onboarding/onboarding.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +74,13 @@ import { RegisteredModulesComponent } from './components/registered-modules/regi
     HttpResponseInfoComponent,
     WorkflowSimulatorComponent,
     MdiToEdrsDocumentSelectStepComponent,
-    RegisteredModulesComponent],
+    RegisteredModulesComponent,
+    HttpConnectionComponent,
+    AvailableModuleComponent,
+    ConnectathonModuleViewComponent,
+    AvailableModuleViewComponent,
+    OnboardingComponent,
+  ],
   exports: [
   ],
   imports: [
@@ -88,8 +102,11 @@ import { RegisteredModulesComponent } from './components/registered-modules/regi
     MatButtonModule,
     FormsModule,
     MatInputModule,
-    MatSortModule
-  ]
+    MatSortModule,
+    NgxHisbLoggerModule,
+    MatCheckboxModule,
+    MatDividerModule
+  ],
 })
 export class WorkflowSimulatorModule {
   public static forRoot(environment: any, config: ModuleHeaderConfig, appConfig: any): ModuleWithProviders<any> {

@@ -1,3 +1,87 @@
-#description{
-  margin-bottom: 1em
+$success-color: #4CAF50;
+$error-color: #F44336;
+$not-started-color: #9E9E9E;
+$paused-color: #2196F3;
+
+.description{
+  margin-bottom: 2em;
+}
+.outline {
+  border-radius: 6px;
+  border-style: solid;
+  border-width: 2px;
+}
+
+.title.success{
+  color: $success-color;
+}
+
+.title.error{
+  color: $error-color;
+}
+
+.title.paused{
+  color: $paused-color;
+}
+
+.title.not-started{
+  color: $not-started-color;
+}
+
+.paused.outline {
+  border-color: $paused-color;
+}
+
+.success.outline {
+  border-color: $success-color;
+}
+
+.error.outline {
+  border-color: $error-color;
+}
+
+.not-started.outline {
+  border-color: $not-started-color;
+}
+
+.card-container{
+  display: flex;
+}
+
+.description {
+  flex: 80;
+}
+
+.status-icon {
+  flex: 20;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  filter: brightness(0.75);
+}
+
+.status-icon.success {
+  color: $success-color;
+}
+
+.status-icon.error {
+  color: $error-color;
+}
+
+.status-icon.paused {
+  color: $paused-color;
+}
+
+.status-icon.not-started {
+  color: $not-started-color;
+}
+
+.mat-mdc-radio-button ~ .mat-mdc-radio-button {
+  margin-left: 16px;
+}
+
+.right-aligned{
+  display: flex;
+  justify-content: flex-end;
 }
