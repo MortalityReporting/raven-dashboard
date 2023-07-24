@@ -34,17 +34,6 @@ export class OnboardingService {
   };
 
   onLogin(request: OnboardingHttpRequest): Observable<any> {
-    // request = {
-    //   url: "https://raven.dev.heat.icl.gtri.org/mdi-fhir-server/fhir/Patient",
-    //   requestType: RequestType.GET,
-    //   username: "client",
-    //   password: "secret",
-    //   connectionType: 'basicAuth',
-    // }
-
-    //handle basic auth requests
-    // if(request.connectionType === 'basicAuth') {
-      //const auth = (request.user + ":" + request.password);
       const auth = ("client:secret");
       let authorizationData: string = 'Basic ' + btoa(auth);
 
@@ -58,8 +47,6 @@ export class OnboardingService {
     const credentials = btoa("client:secret");
 
     return this.http.get("https://raven.dev.heat.icl.gtri.org/mdi-fhir-server/fhir/Patient", httpOptions)
-    // return this.http.get("https://raven.dev.heat.icl.gtri.org/mdi-fhir-server/fhir/Patient", {
-    //   headers: new HttpHeaders({Authorization: authorizationData})})
 
     // return this.http.get("https://raven.dev.heat.icl.gtri.org/mdi-fhir-server/fhir/Patient", {
     //   headers: new HttpHeaders({Authorization: `Basic ${credentials}`})})
