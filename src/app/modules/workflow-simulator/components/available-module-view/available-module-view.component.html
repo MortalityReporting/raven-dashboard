@@ -1,7 +1,7 @@
-<div class="description">
-  Select a testing workflow from the list below. You will walk through a series of steps to guide in testing of
-  that workflow using the Raven platform, with demonstrations of relevant FHIR Resources and API interactions.
-</div>
-<div  *ngFor="let workflowModule of workflowModules">
-  <app-available-module [workflowModule]="workflowModule"></app-available-module>
+<div style="margin: 0 16px">
+  <div class="top-margin">
+    Select a testing workflow from the list below. You will walk through a series of steps to guide in testing of
+    that workflow using the Raven platform, with demonstrations of relevant FHIR Resources and API interactions.
+  </div>
+  <app-connectathon-module-view [workflowModules]="workflowModules"></app-connectathon-module-view>
 </div>

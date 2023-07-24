@@ -3,7 +3,7 @@ import {BehaviorSubject} from "rxjs";
 import {WorkflowModule} from "../model/workflow-module";
 import {ModuleStatus} from "../model/module-status";
 
-const WORKFLOW_MODULES: WorkflowModule[] = [
+export const WORKFLOW_MODULES: WorkflowModule[] = [
   new WorkflowModule('onboarding', 'Onboarding', 1, "Onboarding module description", ModuleStatus.inProgress),
   new WorkflowModule('searchEdrs', 'Search EDRS', 0,'The "EDRS Search" workflow simulates ' +
     'searching cases in an Electronic Death Registration System (EDRS). Testers representing Medical Examiners/Coroners (ME/Cs) ' +

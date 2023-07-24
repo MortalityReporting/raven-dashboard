@@ -10,14 +10,9 @@ import {CurrentTest} from "../../model/current-test";
 export class ConnectathonModuleViewComponent {
   @Input() workflowModules: WorkflowModule[];
   @Output() testSelectedEvent = new EventEmitter<CurrentTest>();
-  constructor(private router: Router,) {
+  constructor(private router: Router) {
   }
   launchWorkflow(module: WorkflowModule) {
-    if(module.name.toLowerCase() === CurrentTest.searchEDRS.toLowerCase()){
-      this.testSelectedEvent.emit(CurrentTest.searchEDRS);
-    }
-    else if(module.name.toLowerCase() === CurrentTest.onboarding.toLowerCase()){
-      this.testSelectedEvent.emit(CurrentTest.onboarding);
-    }
+    this.router.navigate([`/workflow-simulator/${module.name}`]);
   }
 }

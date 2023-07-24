@@ -1,12 +1,19 @@
 <div class="content-wrapper">
 
-  <!-- Header with instructions  -->
-  <!-- Tabs w/ Registered Modules | Individual Standalone Tests -->
+  <mat-tab-group mat-stretch-tabs="false">
 
-  <!-- Tab 1 -->
-  <app-registered-modules></app-registered-modules>
+    <!-- Tab 1: Registered Modules-->
+    <mat-tab label="Registered Modules">
+      <app-registered-modules></app-registered-modules>
+    </mat-tab>
 
-  <!-- Tab 2 -->
-  <!-- <app-standalone-tests></app-standalone-tests> -->
+    <!-- Tab 2: Individual Standalone Tests-->
+    <mat-tab label="Individual Standalone Tests">
+      <app-available-module-view></app-available-module-view>
+      <!--  Rename to <app-standalone-tests></app-standalone-tests> -->
+    </mat-tab>
+
+  </mat-tab-group>
+
 </div>
 

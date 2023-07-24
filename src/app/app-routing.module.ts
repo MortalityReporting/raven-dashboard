@@ -18,6 +18,7 @@ import {LoggedInComponent} from "./modules/user-management/components/logged-in/
 import {
   RegisteredModulesComponent
 } from "./modules/workflow-simulator/components/registered-modules/registered-modules.component";
+import {OnboardingComponent} from "./modules/workflow-simulator/components/onboarding/onboarding.component";
 
 
 const routes: Routes = [
@@ -87,6 +88,11 @@ const routes: Routes = [
         path: 'search-edrs',
         component: SearchEdrsComponent,
         data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Search EDRS"}
+      },
+      {
+        path: 'onboarding',
+        component: OnboardingComponent,
+        data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Onboarding"}
       }
     ]
   },
