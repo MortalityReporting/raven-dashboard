@@ -173,23 +173,23 @@
             </mat-form-field>
           </div>
           <!-- End Request Body -->
-          <div *ngIf="renderRemoveButton">
-            <button mat-raised-button type="button" color="warn" (click)="removeConnection.emit()">
-              <mat-icon>remove</mat-icon>
-              Remove Connection
+          <div>
+            <button mat-raised-button aria-label="Test Connection" color="primary" type="submit"
+                    (click)="onTestConnection()">
+              <mat-icon>lan</mat-icon>
+              Test Connection
             </button>
+            <span *ngIf="renderRemoveButton">
+              <button mat-raised-button type="button" color="warn" (click)="removeConnection.emit()">
+                <mat-icon>remove</mat-icon>
+                Remove Connection
+              </button>
+            </span>
           </div>
         </form>
 
       </div>
       <div class="col" style="padding: 0 16px">
-        <div>
-          <button mat-raised-button aria-label="Test Connection" color="primary" type="submit"
-                  (click)="onTestConnection()">
-            <mat-icon>lan</mat-icon>
-            Test Connection
-          </button>
-        </div>
         <mat-tab-group class="top-margin">
           <mat-tab label="HTTP Response">
             <pre> {{ onboardingForm.value | json }} </pre>
