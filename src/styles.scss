@@ -1,45 +1,84 @@
+$primary-color: rgb(100, 96, 100);
+
 /* You can add global styles to this file, and also import other style files */
-html, body { height: 100%; }
+html, body { height: 100%; width: 100% }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+app-root { display: flex; height: 100%; width: 100% }
 
 /* Base SCSS Classes */
-.full-screen {
-  width: 100%;
-  height: 100%;
-}
+.full-screen { height: 100%; width: 100%; }
 
 .flex {
   display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  justify-content: stretch;
+  > * {
+    flex: 0 0 auto;
+  }
 }
 
-.flex-col {
-  @extend .flex;
-  flex-direction: column;
-}
-
-.flex-row {
-  @extend .flex;
-  flex-direction: row;
-}
-/* END BASE CLASSES */
+.flex-col { @extend .flex; flex-direction: column; }
+.flex-row { @extend .flex; flex-direction: row; }
+.flex-col-simple { display: flex; flex-direction: column; }
+.flex-row-simple { display: flex; flex-direction: row; }
 
 .page-wrapper {
-  @extend .flex-row;
-  height: 100vh;
-  width: 100%;
+  @extend .flex;
+  @extend .full-screen;
+  flex: 1;
+}
+
+.app-content-wrapper {
+  @extend .flex-col;
+  @extend .full-screen;
+  flex: 1;
+}
+
+.app-content-header-wrapper {
+  flex: 0;
+}
+
+.component-wrapper {
+  @extend .flex-col;
+  flex: 1;
+}
+
+.app-content-body-wrapper {
+  @extend .flex-col;
+  flex: 1;
+  > * {
+    @extend .component-wrapper;
+  }
+  > .app-patient-summary-header, router-outlet {
+    flex: 0 0 auto;
+  }
+  > router-outlet {
+    margin: 0;
+  }
 }
 
 .flex-wrapper {
   @extend .flex-col;
-  @extend .full-screen;
-  justify-content: stretch;
-  align-items: stretch;
+  flex: 1;
 }
+.scrollable { overflow-y: scroll; scroll-behavior: smooth; }
+.pointer { cursor: pointer; }
 
-.content-wrapper {
-  margin: 20px;
-}
+/* Margin Wrappers */
+.margin-sm { margin: 8px; }
+.margin-md { margin: 16px; }
+.margin-lg { margin: 24px; }
+.padding-sm { padding: 8px; }
+.padding-md { padding: 16px; }
+.padding-lg { padding: 24px; }
 
+.margin-bottom-md { margin-bottom: 16px; }
+
+.top-padding { padding-top: 16px; }
+.top-margin { margin-top: 16px; }
+
+/* END BASE CLASSES */
 
 /*This is bootstrap-like container, and we can change the media queries as needed one day*/
 .container {
@@ -62,13 +101,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 }
 
-.top-padding {
-  padding-top: 16px;
-}
-
-.top-margin {
-  margin-top: 16px;
-}
+.content-spacer{flex: 1 1 auto;}
 
 /*Adding some green buttons. We may have to change the color if we don't like it*/
 .mat-button.mat-success {
@@ -84,95 +117,29 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   color: #28a745;
 }
 
-.success-color{
-  color: #28a745;
-}
+.success-color{ color: #28a745; }
+.danger-color{ color: #dc3549; }
+.warning-color{ color: #ffc107; }
+.md-primary-color{ color: #3F51B5; }
+.md-accent-color{ color: #FF4081; }
+.warning-mark { background-color: #fff2cc; }
+.error-mark { background-color: #ffcccc; }
+.info-mark { background-color: #dcedc8; }
+.note-mark { background-color: #e3f2fd; }
 
-.danger-color{
-  color: #dc3549;
-}
-
-.warning-color{
-  color: #ffc107;
-}
-
-.md-primary-color{
-  color: #3F51B5
-}
-
-.md-accent-color{
-  color: #FF4081
-}
-
-.pointer {
-  cursor: pointer;
-}
-
-.content-spacer{
-  flex: 1 1 auto;
-}
-
-.warning-mark {
-  background-color: #fff2cc;
-}
-
-.error-mark {
-  background-color: #ffcccc;
-}
-
-.info-mark {
-  background-color: #dcedc8;
-}
-
-.note-mark {
-  background-color: #e3f2fd;
-}
-
+.diff-added-color{ background: #fff59d; }
+.diff-removed-color{ background: #ffcdd2; }
 /* Color Shades */
-.header-gray {
-  background-color: #646064;
-  color: #fff;
-}
 
-.header-mint {
-  background-color: #ABEBD2;
-}
-.header-orange {
-  background-color: #ffd2a6;
-}
-.primary-light {
-  background-color: #9fa8da;
-}
+/** SnackBar Overrides **/
+.mat-snack-bar-container { margin-top: 10em !important; }
+.mat-simple-snackbar { color: whitesmoke !important; }
 
-.primary-lighter {
-  background-color: #bfc8fa;
-}
-
-.mat-snack-bar-container {
-  margin-top: 10em !important;
-}
-
-.mat-simple-snackbar {
-  color: whitesmoke !important;
-}
-
-.file-input {
-  display: none;
-}
-
-.diff-added-color{
-  background: #fff59d;
-}
-
-.diff-removed-color{
-  background: #ffcdd2;
-}
+.file-input { display: none; }
 
 .push-right {
   margin-left: auto;
 }
-
-
 
 /**
 MOVED FROM CASE SUMMARY TO USE WITH TOX AS WELL
@@ -185,9 +152,9 @@ TODO: Refactor to generalize class names and move to a common shared .css file.
   margin-bottom: 16px;
 }
 
-button {
-  margin: 5px;
-}
+//button {
+//  margin: 5px;
+//}
 
 /** Summary Section Styling **/
 
@@ -198,10 +165,6 @@ button {
 
 .summary-section-body {
   padding: 5px;
-}
-
-.case-summary-content-wrapper {
-  padding: 20px;
 }
 
 .summary-section-grid .grid-row {
@@ -236,6 +199,7 @@ button {
 .full-width {
   width: 100%;
 }
+
 .box {
   display: flex;
 }
@@ -280,63 +244,106 @@ button {
   cursor: pointer;
 }
 
-/** User Profile **/
-.user-profile-header {
-  height: 64px;
-  background-color: #5F6368;
-  color: white;
-  display: flex;
-  flex-direction: row;
-  > * {
-    justify-self: center;
-    align-self: center;
-    padding: 8px;
+/** Record Viewer Container **/
+.viewer-container-wrapper {
+  @extend .full-screen;
+  @extend .flex-col-simple;
+  flex: 1;
+  align-content: stretch;
+  align-items: stretch;
+  overflow-y: hidden;
+  > .viewer-container-header {
+    margin-left: 16px;
+    margin-right: 16px;
   }
-}
-.profile-image {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  justify-self: center;
-  align-self: center;
-  border: 0 solid black;
-}
-.profile-image-lg {
-  @extend .profile-image;
-  width: 64px;
-  height: 64px;
-}
-.login-button {
-  margin-right: 8px;
-}
-.user-card {
-  display: flex;
-  flex-direction: row;
-  overflow: hidden;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  margin-bottom: 4px;
-  border-radius: 5px;
-  > .details {
-    margin-left: 8px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  > .viewer-container-body {
+    @extend .padding-md;
+    @extend .flex-row-simple;
+    flex: 1;
+    scroll-behavior: smooth;
+    overflow-y: hidden;
+    align-content: stretch;
+    align-items: stretch;
     > * {
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
-      line-height: 20px;
+      @extend .scrollable;
+      scroll-behavior: smooth;
+      overflow-y: scroll;
     }
-    > .name {
-      font-weight: bold;
-      font-size: small;
+    > .viewer-container-body-content {
+      flex: 1;
     }
-    > .email {
-      font-size: x-small;
-      font-style: italic;
+    > .viewer-container-body-fhir-explorer {
+      width: 30%;
+      > .fhir-explorer-header {
+        @extend .center-contents;
+        @extend .flex-row-simple;
+        @extend .padding-sm;
+        font-weight: bold;
+        font-size: larger;
+        > * {
+          @extend .center-contents;
+        }
+      }
     }
   }
 }
 
+/** Workflow Simulator Test Container **/
+.test-container-bar {
+  @extend .flex-row;
+  height: 50px;
+  min-height: 50px;
+  max-height: 50px;
+  margin: 0;
+  padding: 0;
+  > * {
+    flex: 1;
+  }
+}
+
+.center-contents {
+  justify-items: center;
+  text-align: center;
+  align-self: center;
+}
+
+.test-container-wrapper {
+  @extend .margin-bottom-md;
+  @extend .full-screen;
+  @extend .flex-col-simple;
+  flex: 1;
+  align-content: stretch;
+  align-items: stretch;
+  overflow-y: hidden;
+  > .test-container-body {
+    @extend .padding-md;
+    @extend .scrollable;
+    border-left: 1px solid rgb(100, 96, 100);
+    border-right: 1px solid rgb(100, 96, 100);
+  }
+  > .test-container-header {
+    @extend .padding-md;
+    @extend .test-container-bar;
+    border-bottom: 2px solid rgb(100, 96, 100);
+    > * {
+      @extend .center-contents;
+    }
+    > .test-container-header-event-name {
+      font-size: larger;
+    }
+    > .test-container-header-test-name {
+      font-size: x-large;
+    }
+  }
+  > .test-container-footer {
+    @extend .padding-md;
+    @extend .test-container-bar;
+    border-top: 2px solid rgb(100, 96, 100);
+    > * {
+      @extend .center-contents;
+    }
+    > .test-container-footer-status {
+      font-size: larger;
+    }
+  }
+}

@@ -1,0 +1,99 @@
+<div class="viewer-container-wrapper">
+  <div class="viewer-container-header">
+    <app-decedent-display appSetFhirExplorer [resource]="documentBundle$ | async"
+                          [decedentInformation]="caseHeader$ | async" [type]="'mdi'">
+    </app-decedent-display>
+  </div>
+  <div class="viewer-container-body">
+    <app-mdi-to-edrs-viewer-nav-menu></app-mdi-to-edrs-viewer-nav-menu>
+    <record-viewer-case-summary-content
+      class="viewer-container-body-content"
+      [caseHeader$]="caseHeader$"
+      [caseSummary$]="caseSummary$"
+      [compositionId]="compositionId"
+      [documentBundle]="documentBundle$ | async"
+    ></record-viewer-case-summary-content>
+
+    <div class="viewer-container-body-fhir-explorer">
+      <div class="fhir-explorer-header"
+        [style.background-color]="config.backgroundColor"
+        [style.color]="appConfig.contrastColor"
+      >
+<!--        <mat-icon *ngIf="drawerCollapsed" (click)="setDrawerWidth('60%');" aria-label="Expand FHIR explorer"-->
+<!--                  style="cursor: pointer" matTooltip="Expand FHIR Explorer">-->
+<!--          chevron_left-->
+<!--        </mat-icon>-->
+<!--        <mat-icon *ngIf="!drawerCollapsed" (click)="setDrawerWidth('30%');" aria-label="Collapse FHIR explorer"-->
+<!--                  style="cursor: pointer" matTooltip="Collapse the FHIR Explorer">-->
+<!--          chevron_right-->
+<!--        </mat-icon>-->
+<!--        <span class="content-spacer"></span>-->
+<!--        <span class="explorer-header-instructions">(Note: Click the Viewer Header to return to the Bundle Resource)</span>-->
+        <span class="explorer-header-instructions">
+                  FHIR Explorer
+        </span>
+        <span class="content-spacer"></span>
+        <mat-icon (click)="setDrawerWidth('30%'); drawer.close(); drawerCollapsed=true;"
+                  aria-label="Close FHIR explorer"
+                  style="cursor: pointer" matTooltip="Close FHIR Explorer">
+          close
+        </mat-icon>
+      </div>
+      <app-fhir-explorer></app-fhir-explorer>
+
+    </div>
+
+
+  </div>
+</div>
+
+<!--  <mat-tab-group mat-stretch-tabs="false">-->
+<!--    <mat-tab label="Document Summary View">-->
+<!--      <ng-template matTabLabel>-->
+<!--        <mat-icon svgIcon="clinical_notes"></mat-icon>&nbsp;Document Summary View-->
+<!--      </ng-template>-->
+<!--      <ng-template matTabContent>-->
+<!--      </ng-template>-->
+<!--    </mat-tab>-->
+<!--    <mat-tab [label]="'Related ' + appConfig?.workflowTitles?.['toxToMdi'] + 's'">-->
+<!--      <ng-template matTabLabel>-->
+<!--        <mat-icon svgIcon="lab_panel"></mat-icon>&nbsp;Related {{appConfig?.workflowTitles?.['toxToMdi']}}s-->
+<!--      </ng-template>-->
+<!--      <ng-template matTabContent>-->
+<!--      </ng-template>-->
+<!--    </mat-tab>-->
+<!--  </mat-tab-group>-->
+
+<!--  <mat-drawer-container hasBackdrop=false>-->
+<!--    <mat-drawer #drawer class="drawer" mode="side" draggable="false" position="end" [ngStyle]="{'width': drawerWidth}">-->
+<!--      <mat-toolbar class="header">-->
+<!--        <mat-icon *ngIf="drawerCollapsed" (click)="setDrawerWidth('60%');" aria-label="Expand FHIR explorer"-->
+<!--                  style="cursor: pointer" matTooltip="Expand FHIR Explorer">-->
+<!--          chevron_left-->
+<!--        </mat-icon>-->
+<!--        <mat-icon *ngIf="!drawerCollapsed" (click)="setDrawerWidth('30%');" aria-label="Collapse FHIR explorer"-->
+<!--                  style="cursor: pointer" matTooltip="Collapse the FHIR Explorer">-->
+<!--          chevron_right-->
+<!--        </mat-icon>-->
+<!--        <span class="content-spacer"></span>-->
+<!--        <span class="explorer-header-instructions">(Note: Click the Viewer Header to return to the Bundle Resource)</span>-->
+<!--        <span class="content-spacer"></span>-->
+<!--        <mat-icon (click)="setDrawerWidth('30%'); drawer.close(); drawerCollapsed=true;"-->
+<!--                  aria-label="Close FHIR explorer"-->
+<!--                  style="cursor: pointer" matTooltip="Close FHIR Explorer">-->
+<!--          close-->
+<!--        </mat-icon>-->
+<!--      </mat-toolbar>-->
+<!--      <div class="main contents">-->
+<!--        <app-fhir-explorer></app-fhir-explorer>-->
+<!--      </div>-->
+<!--    </mat-drawer>-->
+
+<!--    <mat-drawer-content>-->
+<!--      <div>-->
+
+<!--      </div>-->
+<!--    </mat-drawer-content>-->
+
+<!--  </mat-drawer-container>-->
+<!--</div>-->

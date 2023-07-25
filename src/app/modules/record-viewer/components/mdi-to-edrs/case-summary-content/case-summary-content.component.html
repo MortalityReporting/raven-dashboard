@@ -1,4 +1,3 @@
-<div class="case-summary-content-wrapper">
 
   <div class="section-button-wrapper">
     <button mat-raised-button (click)="onOpenAll()" [style.background-color]="config.backgroundColor"
@@ -16,8 +15,12 @@
             [style.color]="appConfig.contrastColor">Open in Comparison Tool
     </button>
   </div>
-  <mat-accordion multi>
 
+<!--  <record-viewer-case-summary-related-tox-->
+<!--    [toxicologyRecordList]="toxicologyRecordList">-->
+<!--  </record-viewer-case-summary-related-tox>-->
+
+  <mat-accordion multi>
     <mat-expansion-panel class="summary-section" id="caseAdminInfo" [expanded]="isExpanded('caseAdminInfo')">
       <mat-expansion-panel-header (click)="onToggleState( 'caseAdminInfo' )">
         <mat-panel-title>Case Administration Information</mat-panel-title>
@@ -421,9 +424,3 @@
     </mat-expansion-panel>
 
   </mat-accordion>
-</div>
-
-
-
-
-

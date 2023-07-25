@@ -56,6 +56,7 @@ import { StandaloneTestsComponent } from './components/standlone-tests/standalon
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatDividerModule} from "@angular/material/divider";
 import { OnboardingComponent } from './components/tests/onboarding/onboarding.component';
+import { TestContainerComponent } from './components/test-container/test-container.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { OnboardingComponent } from './components/tests/onboarding/onboarding.co
     HttpConnectionComponent,
     StandaloneTestsComponent,
     OnboardingComponent,
+    TestContainerComponent,
   ],
   exports: [
   ],

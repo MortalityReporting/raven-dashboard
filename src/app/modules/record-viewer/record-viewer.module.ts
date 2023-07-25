@@ -47,6 +47,9 @@ import {
   ToxicologyReportCertifierComponent
 } from "./components/tox-to-mdi/toxicology-report-certifier/toxicology-report-certifier.component";
 import {FhirMdiLibraryModule} from "../fhir-mdi-library/fhir-mdi-library.module";
+import { MdiToEdrsViewerComponent } from './components/mdi-to-edrs-viewer/mdi-to-edrs-viewer.component';
+import { MdiToEdrsViewerNavMenuComponent } from './components/mdi-to-edrs-viewer/mdi-to-edrs-viewer-nav-menu/mdi-to-edrs-viewer-nav-menu.component';
+import { MdiToEdrsViewerBodyComponent } from './components/mdi-to-edrs-viewer/mdi-to-edrs-viewer-body/mdi-to-edrs-viewer-body.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +68,9 @@ import {FhirMdiLibraryModule} from "../fhir-mdi-library/fhir-mdi-library.module"
     CaseSummaryRelatedToxComponent,
     DecedentDisplayComponent,
     NoteComponent,
+    MdiToEdrsViewerComponent,
+    MdiToEdrsViewerNavMenuComponent,
+    MdiToEdrsViewerBodyComponent,
   ],
   imports: [
     CommonModule,

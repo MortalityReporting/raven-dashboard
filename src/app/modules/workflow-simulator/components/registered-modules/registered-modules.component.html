@@ -1,4 +1,4 @@
-<div class="content-wrapper">
+<div>
   <ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOut">
     <span *ngIf="auth.user$ | async as user">
       Current User: {{ user.name }} ({{ user.email }})
@@ -38,7 +38,7 @@
         {{item.status}}
       </div>
       <div class="event-row-cell-button">
-        <button mat-flat-button>
+        <button mat-flat-button (click)="loadTestContainer(item, reg)">
           Launch
         </button>
       </div>

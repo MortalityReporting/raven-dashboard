@@ -16,6 +16,7 @@ import {AdminPanelComponent} from "./modules/user-management/components/admin-pa
 import {AuthGuard} from "@auth0/auth0-angular";
 import {LoggedInComponent} from "./modules/user-management/components/logged-in/logged-in.component";
 import {OnboardingComponent} from "./modules/workflow-simulator/components/tests/onboarding/onboarding.component";
+import {TestContainerComponent} from "./modules/workflow-simulator/components/test-container/test-container.component";
 
 
 const routes: Routes = [
@@ -90,7 +91,12 @@ const routes: Routes = [
         path: 'onboarding',
         component: OnboardingComponent,
         data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Onboarding"}
-      }
+      },
+      {
+        path: 'test',
+        component: TestContainerComponent,
+        data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Test"}
+      },
     ]
   },
   {

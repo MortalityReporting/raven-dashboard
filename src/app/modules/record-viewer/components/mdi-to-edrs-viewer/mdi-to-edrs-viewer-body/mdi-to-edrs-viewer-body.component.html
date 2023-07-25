@@ -1,0 +1,18 @@
+<div class="viewer-body">
+
+  <app-mdi-to-edrs-viewer-nav-menu></app-mdi-to-edrs-viewer-nav-menu>
+
+  <div class="flex-col-simple">
+    <record-viewer-case-summary-content
+      [caseHeader$]="caseHeader$"
+      [caseSummary$]="caseSummary$"
+      [compositionId]="compositionId"
+      [documentBundle]="documentBundle$ | async"
+    ></record-viewer-case-summary-content>
+<!--    <record-viewer-case-summary-related-tox-->
+<!--      [toxicologyRecordList]="toxicologyRecordList">-->
+<!--    </record-viewer-case-summary-related-tox>-->
+
+  </div>
+
+</div>

@@ -1,0 +1,35 @@
+<div class="test-container-wrapper">
+  <div class="test-container-header">
+    <div class="test-container-header-event-name">
+      Event: {{ eventRegistration.eventModule.title }}
+    </div>
+    <div class="test-container-header-test-name">
+      {{ eventItem.name }}
+    </div>
+    <div>
+    </div>
+  </div>
+  <div class="test-container-body">
+
+    <app-search-edrs></app-search-edrs>
+
+  </div>
+  <div class="test-container-footer">
+    <div class="test-container-footer-return">
+      <button color="primary" mat-flat-button>
+        <mat-icon>arrow_back</mat-icon>
+        Return to Event Modules
+      </button>
+    </div>
+    <div class="test-container-footer-upload">
+      <button color="primary" mat-flat-button>
+        <mat-icon>upload</mat-icon>
+        Upload Documentation
+      </button>
+      No Documents Currently Submitted
+    </div>
+    <div class="test-container-footer-status">
+      Current Status: {{ eventItem.status }}
+    </div>
+  </div>
+</div>
