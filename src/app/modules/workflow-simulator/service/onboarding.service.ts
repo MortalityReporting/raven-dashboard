@@ -34,62 +34,40 @@ export class OnboardingService {
   };
 
   onLogin(request: OnboardingHttpRequest): Observable<any> {
-      const auth = ("client:secret");
-      let authorizationData: string = 'Basic ' + btoa(auth);
+    // console.log(request);
+    // const auth = ("client:secret");
+    // let authorizationData: string = 'Basic ' + btoa(auth);
+    //
+    // const httpOptions = {
+    //   headers: new HttpHeaders({
+    //     'Content-Type': 'application/json',
+    //     'Authorization': authorizationData
+    //   })
+    // };
+    // console.log(httpOptions);
+    // return this.http.get("https://raven.dev.heat.icl.gtri.org/mdi-fhir-server/fhir/Patient", httpOptions)
+    // console.log(request.httpOptions);
+    if (request.requestType == RequestType.GET) {
+      return this.http.get(request.url, request.httpOptions)
+        .pipe(map(response => {
+            return response;
+          }),
+        )
 
-      const httpOptions = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Authorization': authorizationData
-        })
-      };
-
-    const credentials = btoa("client:secret");
-
-    return this.http.get("https://raven.dev.heat.icl.gtri.org/mdi-fhir-server/fhir/Patient", httpOptions)
-
-    // return this.http.get("https://raven.dev.heat.icl.gtri.org/mdi-fhir-server/fhir/Patient", {
-    //   headers: new HttpHeaders({Authorization: `Basic ${credentials}`})})
-      // }
-      // if (request.requestType == RequestType.GET) {
-      //   return this.http.get(request.url, httpOptions)
-      //     .pipe(map(response => {
-      //         return response;
-      //       }),
-      //     )
-      //
-      // } else if (request.requestType == RequestType.PUT) {
-      //   return this.http.get(request.url, httpOptions)
-      //     .pipe(map(response => {
-      //         return response;
-      //       }),
-      //     )
-      // } else if (request.requestType == RequestType.POST) {
-      //   return this.http.get(request.url, httpOptions)
-      //     .pipe(map(response => {
-      //         return response;
-      //       }),
-      //     )
-      // }
-      // else {
-      //   return throwError("Invalid Request");
-      // }
-      // const requestBody = {
-      //   email: 'ptassev3@gatech.edu',
-      //   password: "Start111",
-      //   returnSecureToken: true
-      // };
-      //
-      //
-      //
-      // return this.http.post(this.authRestApi, requestBody)
-      //   .pipe(map(response => {
-      //       return response;
-      //     }),
-      //   )
-      // }
-      // else {
-      //   return throwError("Invalid Request");
-
+    } else if (request.requestType == RequestType.PUT) {
+      return this.http.put(request.url, request.body, request.httpOptions)
+        .pipe(map(response => {
+            return response;
+          }),
+        )
+    } else if (request.requestType == RequestType.POST) {
+      return this.http.post(request.url, request.body, request.httpOptions)
+        .pipe(map(response => {
+            return response;
+          }),
+        )
+    } else {
+      return throwError("Invalid Request");
     }
+  }
 }

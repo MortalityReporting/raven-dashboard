@@ -1,5 +1,6 @@
 import {BasicNameValueType} from "../../../model/basic-name-value-type";
-import {RequestType} from "../components/onboarding/http-connection/http-connection.component";
+import {ConnectionType, RequestType} from "../components/onboarding/http-connection/http-connection.component";
+import {HttpHeaders, HttpParams} from "@angular/common/http";
 
 interface FormValue {
   endpointUrl: string;
@@ -17,23 +18,36 @@ export class OnboardingHttpRequest {
   url: string;
   requestType: RequestType;
   connectionType: string;
-  user?: string;
-  password?: string;
-  requestBody?: any;
+  body?: any;
   requestParams?: any;
   queryParams?: any;
   headerParams?: any;
+  httpOptions: any
 
   //Basic Auth Constructor
   constructor(formValue: FormValue){
-    if(formValue.requestType == RequestType.GET){
+    if (formValue.requestType == RequestType.GET && formValue.connectionType.value == ConnectionType.basicAuth) {
+      const auth = (`${formValue.user}:${formValue.password}`);
+      const authorizationData: string = 'Basic ' + btoa(auth);
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': authorizationData
+      });
 
+      const queryParams = new HttpParams(formValue.queryParams)
+      this.httpOptions = {params: queryParams, headers}
+        this.httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': authorizationData
+        }),
+
+      }
+      // TODO add code for additional header params if needed
     }
     this.url = formValue.endpointUrl;
     this.requestType = formValue.requestType;
     this.connectionType = formValue.connectionType.value;
-    this.user = formValue.user;
-    this.password = formValue.password;
     this.headerParams = formValue.headerParams ?? null;
   }
 }
