@@ -1,36 +1,36 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {SearchEdrsComponent} from "./components/search-edrs/search-edrs.component";
+import {SearchEdrsComponent} from "./components/tests/search-edrs/search-edrs.component";
 import {
   MdiToEdrsGridComponent
-} from "./components/search-edrs/mdi-to-edrs-document-select-step/mdi-to-edrs-grid/mdi-to-edrs-grid.component";
+} from "./components/tests/search-edrs/mdi-to-edrs-document-select-step/mdi-to-edrs-grid/mdi-to-edrs-grid.component";
 import {
   ImportMdiToEdrsDocumentComponent
-} from "./components/search-edrs/mdi-to-edrs-document-select-step/import-mdi-to-edrs-document/import-mdi-to-edrs-document.component";
+} from "./components/tests/search-edrs/mdi-to-edrs-document-select-step/import-mdi-to-edrs-document/import-mdi-to-edrs-document.component";
 import {
   EndpointConfigurationStepComponent
-} from "./components/search-edrs/endpoint-configuration-step/endpoint-configuration-step.component";
-import {EdrsResultsStepComponent} from "./components/search-edrs/edrs-results-step/edrs-results-step.component";
-import {DecedentBasicInfoComponent} from "./components/search-edrs/decedent-basic-info/decedent-basic-info.component";
+} from "./components/tests/search-edrs/endpoint-configuration-step/endpoint-configuration-step.component";
+import {EdrsResultsStepComponent} from "./components/tests/search-edrs/edrs-results-step/edrs-results-step.component";
+import {DecedentBasicInfoComponent} from "./components/tests/search-edrs/decedent-basic-info/decedent-basic-info.component";
 import {
   SearchParametersComponent
-} from "./components/search-edrs/edrs-results-step/search-parameters/search-parameters.component";
+} from "./components/tests/search-edrs/edrs-results-step/search-parameters/search-parameters.component";
 import {
   EdrsSearchResultsGridComponent
-} from "./components/search-edrs/edrs-results-step/edrs-search-results-grid/edrs-search-results-grid.component";
+} from "./components/tests/search-edrs/edrs-results-step/edrs-search-results-grid/edrs-search-results-grid.component";
 import {
   EdrsRecordSummaryComponent
-} from "./components/search-edrs/edrs-results-step/edrs-record-summary/edrs-record-summary.component";
+} from "./components/tests/search-edrs/edrs-results-step/edrs-record-summary/edrs-record-summary.component";
 import {
   HttpRequestInfoComponent
-} from "./components/search-edrs/edrs-results-step/http-request-info/http-request-info.component";
+} from "./components/tests/search-edrs/edrs-results-step/http-request-info/http-request-info.component";
 import {
   HttpResponseInfoComponent
-} from "./components/search-edrs/edrs-results-step/http-response-info/http-response-info.component";
+} from "./components/tests/search-edrs/edrs-results-step/http-response-info/http-response-info.component";
 import {WorkflowSimulatorComponent} from "./components/workflow-simulator.component";
 import {
   MdiToEdrsDocumentSelectStepComponent
-} from "./components/search-edrs/mdi-to-edrs-document-select-step/mdi-to-edrs-document-select-step.component";
+} from "./components/tests/search-edrs/mdi-to-edrs-document-select-step/mdi-to-edrs-document-select-step.component";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatExpansionModule} from "@angular/material/expansion";
@@ -51,13 +51,11 @@ import {MatButtonModule} from "@angular/material/button";
 import {ModuleHeaderConfig} from "../../providers/module-header-config";
 import { RegisteredModulesComponent } from './components/registered-modules/registered-modules.component';
 import {NgxHisbLoggerModule} from "ngx-hisb-logger";
-import { HttpConnectionComponent } from './components/onboarding/http-connection/http-connection.component';
-import { AvailableModuleComponent } from './components/available-module-view/available-module/available-module.component';
-import { ConnectathonModuleViewComponent } from './components/connectathon-module-view/connectathon-module-view.component';
-import { AvailableModuleViewComponent } from './components/available-module-view/available-module-view.component';
+import { HttpConnectionComponent } from './components/tests/onboarding/http-connection/http-connection.component';
+import { StandaloneTestsComponent } from './components/standlone-tests/standalone-tests.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatDividerModule} from "@angular/material/divider";
-import { OnboardingComponent } from './components/onboarding/onboarding.component';
+import { OnboardingComponent } from './components/tests/onboarding/onboarding.component';
 
 @NgModule({
   declarations: [
@@ -76,9 +74,7 @@ import { OnboardingComponent } from './components/onboarding/onboarding.componen
     MdiToEdrsDocumentSelectStepComponent,
     RegisteredModulesComponent,
     HttpConnectionComponent,
-    AvailableModuleComponent,
-    ConnectathonModuleViewComponent,
-    AvailableModuleViewComponent,
+    StandaloneTestsComponent,
     OnboardingComponent,
   ],
   exports: [

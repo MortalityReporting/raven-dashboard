@@ -6,7 +6,7 @@ import {ImportCaseComponent} from "./modules/import-case/components/import-case.
 import {FhirValidatorComponent} from "./modules/fhir-validator/components/fhir-validator/fhir-validator.component";
 import {SearchRecordsComponent} from "./modules/record-viewer/components/search-records/search-records.component";
 import {WorkflowSimulatorComponent} from "./modules/workflow-simulator/components/workflow-simulator.component";
-import {SearchEdrsComponent} from "./modules/workflow-simulator/components/search-edrs/search-edrs.component";
+import {SearchEdrsComponent} from "./modules/workflow-simulator/components/tests/search-edrs/search-edrs.component";
 import {ModuleHeaderConfig} from "./providers/module-header-config";
 import {AppConfiguration} from "./providers/app-configuration";
 import {
@@ -15,10 +15,7 @@ import {
 import {AdminPanelComponent} from "./modules/user-management/components/admin-panel/admin-panel.component";
 import {AuthGuard} from "@auth0/auth0-angular";
 import {LoggedInComponent} from "./modules/user-management/components/logged-in/logged-in.component";
-import {
-  RegisteredModulesComponent
-} from "./modules/workflow-simulator/components/registered-modules/registered-modules.component";
-import {OnboardingComponent} from "./modules/workflow-simulator/components/onboarding/onboarding.component";
+import {OnboardingComponent} from "./modules/workflow-simulator/components/tests/onboarding/onboarding.component";
 
 
 const routes: Routes = [

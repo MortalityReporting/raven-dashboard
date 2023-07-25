@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {catchError, map} from "rxjs/operators";
 import {OnboardingHttpRequest} from "../model/onboarding-http-request";
-import {RequestType} from "../components/onboarding/http-connection/http-connection.component";
+import {RequestType} from "../components/tests/onboarding/http-connection/http-connection.component";
 
 @Injectable({
   providedIn: 'root'
