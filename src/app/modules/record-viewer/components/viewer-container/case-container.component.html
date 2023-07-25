@@ -1,12 +1,4 @@
-
-<div>
-  <button (click)="scrollToTop()" mat-fab class="floating-button" [style.background-color]="config.backgroundColor">
-    <mat-icon>keyboard_arrow_up</mat-icon>
-  </button>
-</div>
-
-
-<mat-drawer-container hasBackdrop=false>
+<mat-drawer-container hasBackdrop=false class="viewer-container">
   <mat-drawer #drawer
               class="drawer"
               mode="side"
@@ -41,9 +33,15 @@
     <div #anchorTop id="anchorTop"></div>
 
     <ng-container [ngSwitch]="currentRoute">
-      <record-viewer-case-summary *ngSwitchCase="'mdi'"></record-viewer-case-summary>
+      <app-mdi-to-edrs-viewer *ngSwitchCase="'mdi'"></app-mdi-to-edrs-viewer>
       <record-viewer-toxicology-report *ngSwitchCase="'tox'"></record-viewer-toxicology-report>
     </ng-container>
   </mat-drawer-content>
 
 </mat-drawer-container>
+
+<div>
+  <button (click)="scrollToTop()" mat-fab class="floating-button" [style.background-color]="config.backgroundColor">
+    <mat-icon>keyboard_arrow_up</mat-icon>
+  </button>
+</div>

@@ -1,3 +1,5 @@
+$primary-color: rgb(100, 96, 100);
+
 /* You can add global styles to this file, and also import other style files */
 html, body { height: 100%; width: 100% }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
@@ -60,7 +62,7 @@ app-root { display: flex; height: 100%; width: 100% }
   @extend .flex-col;
   flex: 1;
 }
-.scrollable { overflow-y: scroll; }
+.scrollable { overflow-y: scroll; scroll-behavior: smooth; }
 .pointer { cursor: pointer; }
 
 /* Margin Wrappers */
@@ -99,6 +101,7 @@ app-root { display: flex; height: 100%; width: 100% }
   }
 }
 
+.content-spacer{flex: 1 1 auto;}
 
 /*Adding some green buttons. We may have to change the color if we don't like it*/
 .mat-button.mat-success {
@@ -114,67 +117,25 @@ app-root { display: flex; height: 100%; width: 100% }
   color: #28a745;
 }
 
-.success-color{
-  color: #28a745;
-}
+.success-color{ color: #28a745; }
+.danger-color{ color: #dc3549; }
+.warning-color{ color: #ffc107; }
+.md-primary-color{ color: #3F51B5; }
+.md-accent-color{ color: #FF4081; }
+.warning-mark { background-color: #fff2cc; }
+.error-mark { background-color: #ffcccc; }
+.info-mark { background-color: #dcedc8; }
+.note-mark { background-color: #e3f2fd; }
 
-.danger-color{
-  color: #dc3549;
-}
-
-.warning-color{
-  color: #ffc107;
-}
-
-.md-primary-color{
-  color: #3F51B5
-}
-
-.md-accent-color{
-  color: #FF4081
-}
-
-.content-spacer{
-  flex: 1 1 auto;
-}
-
-.warning-mark {
-  background-color: #fff2cc;
-}
-
-.error-mark {
-  background-color: #ffcccc;
-}
-
-.info-mark {
-  background-color: #dcedc8;
-}
-
-.note-mark {
-  background-color: #e3f2fd;
-}
-
+.diff-added-color{ background: #fff59d; }
+.diff-removed-color{ background: #ffcdd2; }
 /* Color Shades */
 
-.mat-snack-bar-container {
-  margin-top: 10em !important;
-}
+/** SnackBar Overrides **/
+.mat-snack-bar-container { margin-top: 10em !important; }
+.mat-simple-snackbar { color: whitesmoke !important; }
 
-.mat-simple-snackbar {
-  color: whitesmoke !important;
-}
-
-.file-input {
-  display: none;
-}
-
-.diff-added-color{
-  background: #fff59d;
-}
-
-.diff-removed-color{
-  background: #ffcdd2;
-}
+.file-input { display: none; }
 
 .push-right {
   margin-left: auto;
@@ -191,9 +152,9 @@ TODO: Refactor to generalize class names and move to a common shared .css file.
   margin-bottom: 16px;
 }
 
-button {
-  margin: 5px;
-}
+//button {
+//  margin: 5px;
+//}
 
 /** Summary Section Styling **/
 
@@ -283,7 +244,49 @@ button {
   cursor: pointer;
 }
 
-
+/** Record Viewer Container **/
+.viewer-container-wrapper {
+  @extend .full-screen;
+  @extend .flex-col-simple;
+  flex: 1;
+  align-content: stretch;
+  align-items: stretch;
+  overflow-y: hidden;
+  > .viewer-container-header {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+  > .viewer-container-body {
+    @extend .padding-md;
+    @extend .flex-row-simple;
+    flex: 1;
+    scroll-behavior: smooth;
+    overflow-y: hidden;
+    align-content: stretch;
+    align-items: stretch;
+    > * {
+      @extend .scrollable;
+      scroll-behavior: smooth;
+      overflow-y: scroll;
+    }
+    > .viewer-container-body-content {
+      flex: 1;
+    }
+    > .viewer-container-body-fhir-explorer {
+      width: 30%;
+      > .fhir-explorer-header {
+        @extend .center-contents;
+        @extend .flex-row-simple;
+        @extend .padding-sm;
+        font-weight: bold;
+        font-size: larger;
+        > * {
+          @extend .center-contents;
+        }
+      }
+    }
+  }
+}
 
 /** Workflow Simulator Test Container **/
 .test-container-bar {
@@ -303,6 +306,7 @@ button {
   text-align: center;
   align-self: center;
 }
+
 .test-container-wrapper {
   @extend .margin-bottom-md;
   @extend .full-screen;
@@ -313,8 +317,7 @@ button {
   overflow-y: hidden;
   > .test-container-body {
     @extend .padding-md;
-    scroll-behavior: smooth;
-    overflow-y: scroll;
+    @extend .scrollable;
     border-left: 1px solid rgb(100, 96, 100);
     border-right: 1px solid rgb(100, 96, 100);
   }

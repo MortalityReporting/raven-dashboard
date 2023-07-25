@@ -19,6 +19,9 @@ import {
   RegisteredModulesComponent
 } from "./modules/workflow-simulator/components/registered-modules/registered-modules.component";
 import {TestContainerComponent} from "./modules/workflow-simulator/components/test-container/test-container.component";
+import {
+  MdiToEdrsViewerComponent
+} from "./modules/record-viewer/components/mdi-to-edrs-viewer/mdi-to-edrs-viewer.component";
 
 
 const routes: Routes = [
@@ -38,7 +41,7 @@ const routes: Routes = [
       },
       {
         path: 'mdi/:id',
-        component: CaseContainerComponent,
+        component: MdiToEdrsViewerComponent,
         data: { moduleConfig: ModuleHeaderConfig.RecordViewer, componentTitle: AppConfiguration.config.workflowTitles['mdiToEdrs'] + " Viewer"}
       },
       {
