@@ -8,7 +8,7 @@ import {environment as env} from "../../../../../environments/environment";
 @Component({
   selector: 'app-user-header',
   templateUrl: './user-header.component.html',
-  styleUrls: ['./user-header.component.css']
+  styleUrls: ['./user-header.component.scss']
 })
 export class UserHeaderComponent {
   currentUser$: Observable<UserProfile> = new Observable<UserProfile>(null);

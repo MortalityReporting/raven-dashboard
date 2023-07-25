@@ -1,45 +1,82 @@
 /* You can add global styles to this file, and also import other style files */
-html, body { height: 100%; }
+html, body { height: 100%; width: 100% }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+app-root { display: flex; height: 100%; width: 100% }
 
 /* Base SCSS Classes */
-.full-screen {
-  width: 100%;
-  height: 100%;
-}
+.full-screen { height: 100%; width: 100%; }
 
 .flex {
   display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  justify-content: stretch;
+  > * {
+    flex: 0 0 auto;
+  }
 }
 
-.flex-col {
-  @extend .flex;
-  flex-direction: column;
-}
-
-.flex-row {
-  @extend .flex;
-  flex-direction: row;
-}
-/* END BASE CLASSES */
+.flex-col { @extend .flex; flex-direction: column; }
+.flex-row { @extend .flex; flex-direction: row; }
+.flex-col-simple { display: flex; flex-direction: column; }
+.flex-row-simple { display: flex; flex-direction: row; }
 
 .page-wrapper {
-  @extend .flex-row;
-  height: 100vh;
-  width: 100%;
+  @extend .flex;
+  @extend .full-screen;
+  flex: 1;
+}
+
+.app-content-wrapper {
+  @extend .flex-col;
+  @extend .full-screen;
+  flex: 1;
+}
+
+.app-content-header-wrapper {
+  flex: 0;
+}
+
+.component-wrapper {
+  @extend .flex-col;
+  flex: 1;
+}
+
+.app-content-body-wrapper {
+  @extend .flex-col;
+  flex: 1;
+  > * {
+    @extend .component-wrapper;
+  }
+  > .app-patient-summary-header, router-outlet {
+    flex: 0 0 auto;
+  }
+  > router-outlet {
+    margin: 0;
+  }
 }
 
 .flex-wrapper {
   @extend .flex-col;
-  @extend .full-screen;
-  justify-content: stretch;
-  align-items: stretch;
+  flex: 1;
 }
+.scrollable { overflow-y: scroll; }
+.pointer { cursor: pointer; }
 
-.content-wrapper {
-  margin: 20px;
-}
+/* Margin Wrappers */
+.margin-sm { margin: 8px; }
+.margin-md { margin: 16px; }
+.margin-lg { margin: 24px; }
+.padding-sm { padding: 8px; }
+.padding-md { padding: 16px; }
+.padding-lg { padding: 24px; }
 
+.margin-bottom-md { margin-bottom: 16px; }
+
+.top-padding { padding-top: 16px; }
+.top-margin { margin-top: 16px; }
+
+/* END BASE CLASSES */
 
 /*This is bootstrap-like container, and we can change the media queries as needed one day*/
 .container {
@@ -62,13 +99,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 }
 
-.top-padding {
-  padding-top: 16px;
-}
-
-.top-margin {
-  margin-top: 16px;
-}
 
 /*Adding some green buttons. We may have to change the color if we don't like it*/
 .mat-button.mat-success {
@@ -102,10 +132,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .md-accent-color{
   color: #FF4081
-}
-
-.pointer {
-  cursor: pointer;
 }
 
 .content-spacer{
@@ -154,8 +180,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   margin-left: auto;
 }
 
-
-
 /**
 MOVED FROM CASE SUMMARY TO USE WITH TOX AS WELL
 TODO: Refactor to generalize class names and move to a common shared .css file.
@@ -180,10 +204,6 @@ button {
 
 .summary-section-body {
   padding: 5px;
-}
-
-.case-summary-content-wrapper {
-  padding: 20px;
 }
 
 .summary-section-grid .grid-row {
@@ -218,6 +238,7 @@ button {
 .full-width {
   width: 100%;
 }
+
 .box {
   display: flex;
 }
@@ -262,88 +283,64 @@ button {
   cursor: pointer;
 }
 
-/** User Profile **/
-.user-profile-header {
-  height: 64px;
-  background-color: #5F6368;
-  color: white;
-  display: flex;
-  flex-direction: row;
-  > * {
-    justify-self: center;
-    align-self: center;
-    padding: 8px;
-  }
-}
-.profile-image {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  justify-self: center;
-  align-self: center;
-  border: 0 solid black;
-}
-.profile-image-lg {
-  @extend .profile-image;
-  width: 64px;
-  height: 64px;
-}
-.login-button {
-  margin-right: 8px;
-}
-.user-card {
-  display: flex;
-  flex-direction: row;
-  overflow: hidden;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  margin-bottom: 4px;
-  border-radius: 5px;
-  > .details {
-    margin-left: 8px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    > * {
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
-      line-height: 20px;
-    }
-    > .name {
-      font-weight: bold;
-      font-size: small;
-    }
-    > .email {
-      font-size: x-small;
-      font-style: italic;
-    }
-  }
-}
+
 
 /** Workflow Simulator Test Container **/
-.test-container-wrapper {
-  @extend .flex-col;
-  @extend .full-screen;
-}
-
 .test-container-bar {
+  @extend .flex-row;
   height: 50px;
+  min-height: 50px;
+  max-height: 50px;
+  margin: 0;
+  padding: 0;
+  > * {
+    flex: 1;
+  }
 }
 
-.test-container-header {
-  @extend .content-wrapper;
-  @extend .test-container-bar;
-  border-bottom: 5px solid rgb(100, 96, 100);
+.center-contents {
+  justify-items: center;
+  text-align: center;
+  align-self: center;
 }
-
-.test-container-footer {
-  @extend .content-wrapper;
-  @extend .test-container-bar;
-  border-top: 5px solid rgb(100, 96, 100);
-}
-
-.test-container-body {
-  @extend .content-wrapper;
+.test-container-wrapper {
+  @extend .margin-bottom-md;
+  @extend .full-screen;
+  @extend .flex-col-simple;
+  flex: 1;
+  align-content: stretch;
+  align-items: stretch;
+  overflow-y: hidden;
+  > .test-container-body {
+    @extend .padding-md;
+    scroll-behavior: smooth;
+    overflow-y: scroll;
+    border-left: 1px solid rgb(100, 96, 100);
+    border-right: 1px solid rgb(100, 96, 100);
+  }
+  > .test-container-header {
+    @extend .padding-md;
+    @extend .test-container-bar;
+    border-bottom: 2px solid rgb(100, 96, 100);
+    > * {
+      @extend .center-contents;
+    }
+    > .test-container-header-event-name {
+      font-size: larger;
+    }
+    > .test-container-header-test-name {
+      font-size: x-large;
+    }
+  }
+  > .test-container-footer {
+    @extend .padding-md;
+    @extend .test-container-bar;
+    border-top: 2px solid rgb(100, 96, 100);
+    > * {
+      @extend .center-contents;
+    }
+    > .test-container-footer-status {
+      font-size: larger;
+    }
+  }
 }

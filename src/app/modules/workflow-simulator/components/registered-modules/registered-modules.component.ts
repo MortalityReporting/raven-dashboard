@@ -36,7 +36,8 @@ export class RegisteredModulesComponent implements OnInit{
   }
 
   loadTestContainer(eventItem: any, eventRegistration: any) {
-    this.router.navigate(['/workflow-simulator/test'], {state: {
+    this.router.navigate(['/workflow-simulator/test'], {
+      state: {
         eventItem: eventItem,
         eventRegistration: eventRegistration
       } }).then(r => console.log(r));

@@ -92,7 +92,7 @@ const routes: Routes = [
       {
         path: 'test',
         component: TestContainerComponent,
-        data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: undefined}
+        data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Test"}
       },
     ]
   },
