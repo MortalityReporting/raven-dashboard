@@ -1,20 +1,33 @@
-<div style="margin: 0 20px">
-  <div *ngFor="let componentCounter of componentCounterArray,  let i = index">
-    <app-http-connection [renderRemoveButton]="i!=0" (removeConnection)="removeComponent(i)"></app-http-connection>
+<!-- TODO Clean all CSS code and remove style tags-->
+<div class="temporary-wrapper">
+  <div>
+
+    <div *ngFor="let componentCounter of componentCounterArray,  let i = index" class="row">
+      <div class="content-col">
+        <app-http-connection></app-http-connection>
+      </div>
+      <div class="action-col">
+        <button mat-mini-fab color="warn" aria-label="Remove Stage" matTooltip="Remove stage"
+                (click)="removeComponent(i)" [disabled]="componentCounterArray?.length == 1">
+          <mat-icon>remove</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="row" style="align-items: flex-end; justify-content: flex-end">
+      <button mat-raised-button color="primary" type="button" (click)="addStage()" >
+        <mat-icon>add</mat-icon>
+        Add Stage
+      </button>
+    </div>
+    <mat-card class="top-margin">
+      <mat-card-content>
+        <mat-card-title>
+          Console Output
+        </mat-card-title>
+        <lib-console [logs]="loggerData"></lib-console>
+        <button mat-raised-button (click)="clearLog()">Clear Log</button>
+      </mat-card-content>
+    </mat-card>
   </div>
-  <div style="margin-top: -8px">
-    <button mat-raised-button color="primary" type="button" (click)="addComponent()">
-      <mat-icon>add</mat-icon>
-      Add Connection
-    </button>
-  </div>
-  <mat-card class="top-margin">
-    <mat-card-content>
-      <mat-card-title>
-        Console Output
-      </mat-card-title>
-      <lib-console [logs]="loggerData"></lib-console>
-      <button mat-raised-button (click)="clearLog()">Clear Log</button>
-    </mat-card-content>
-  </mat-card>
 </div>
