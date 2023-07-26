@@ -1,0 +1,16 @@
+.scrollable-tab-container {
+  overflow: scroll;
+  max-width: 100%;
+  min-height: 30vh;
+  border: 1px solid darkgray;
+  border-radius: 4px;
+  margin-top: 8px;
+  padding: 8px;
+}
+
+.scrollable-error-tab-container {
+  @extend .scrollable-tab-container;
+  border-color: red;
+}
+
+

@@ -23,7 +23,7 @@ export class OnboardingComponent implements OnInit{
     this.log.logStream$.subscribe(value=> this.loggerData = value);
   }
 
-  addComponent() {
+  addStage() {
     this.componentCounterArray.push(this.componentCounterArray.length -1);
   }
 

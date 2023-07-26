@@ -4,7 +4,7 @@
       Configure Server Connection
     </mat-card-title>
     <div class="row">
-      <div class="col" style="padding: 16px 16px">
+      <div class="col" style="padding: 16px 16px; max-width: 50%">
         <form [formGroup]="onboardingForm" #form=ngForm (ngSubmit)="onSubmit()">
 
           <!-- Connection Type -->
@@ -96,13 +96,6 @@
                   <input matInput type="text" formControlName="value"/>
                 </mat-form-field>
 
-                <button mat-icon-button style="margin-left: 1em" aria-label="Remove Key Value" color="warn"
-                        type="button"
-                        matTooltip="Remove Parameter"
-                        (click)="onDeleteHeaderParam(index)">
-                  <mat-icon>close</mat-icon>
-                </button>
-
               </div>
             </ng-container>
             <button *ngIf="onboardingForm.controls['customizeHeaders']?.value === true" type="button"
@@ -173,32 +166,33 @@
             </mat-form-field>
           </div>
           <!-- End Request Body -->
-          <div>
-            <button mat-raised-button aria-label="Test Connection" color="primary" type="submit"
-                    (click)="onTestConnection()">
-              <mat-icon>lan</mat-icon>
-              Test Connection
-            </button>
-            <span *ngIf="renderRemoveButton">
-              <button mat-raised-button type="button" color="warn" (click)="removeConnection.emit()">
-                <mat-icon>remove</mat-icon>
-                Remove Connection
-              </button>
-            </span>
-          </div>
         </form>
 
       </div>
-      <div class="col" style="padding: 0 16px">
+      <div class="col" style="padding: 0 16px; max-width: 50%">
         <mat-tab-group class="top-margin">
           <mat-tab label="HTTP Response">
-            <pre> {{ onboardingForm.value | json }} </pre>
+            <div [ngClass]="!!loginErrorResponse ? 'scrollable-error-tab-container' : 'scrollable-tab-container'" >
+              <div *ngIf="loginSuccessResponse">
+                <pre> {{ loginSuccessResponse| json }} </pre>
+              </div>
+              <div *ngIf="loginErrorResponse">
+                <pre> {{ loginErrorResponse| json }} </pre>
+              </div>
+            </div>
           </mat-tab>
           <mat-tab label="Second"> Content 2</mat-tab>
           <mat-tab label="Third"> Content 3</mat-tab>
         </mat-tab-group>
       </div>
       <!-- End Query Params -->
+    </div>
+    <div>
+      <button mat-raised-button aria-label="Test Connection" color="primary" type="submit"
+              (click)="onTestConnection()">
+        <mat-icon>lan</mat-icon>
+        Test Connection
+      </button>
     </div>
   </mat-card-content>
 </mat-card>

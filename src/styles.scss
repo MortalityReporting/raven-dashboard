@@ -347,3 +347,16 @@ TODO: Refactor to generalize class names and move to a common shared .css file.
     }
   }
 }
+
+.temporary-wrapper {
+  @extend .full-screen;
+  @extend .flex-col-simple;
+  flex: 1;
+  align-content: stretch;
+  align-items: stretch;
+  overflow-y: hidden;
+  > * {
+    @extend .scrollable;
+    @extend .margin-md;
+  }
+}

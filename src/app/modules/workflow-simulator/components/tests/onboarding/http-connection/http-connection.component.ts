@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {LoggerService} from "../../../../../../../../projects/ngx-hisb-logger/src/lib/services/logger.service";
 import {
   FormControl,
@@ -37,13 +37,11 @@ export const ConnectionTypeOptions: Record<ConnectionType, { value: ConnectionTy
 @Component({
   selector: 'app-http-connection',
   templateUrl: './http-connection.component.html',
-  styleUrls: ['./http-connection.component.css']
+  styleUrls: ['./http-connection.component.scss']
 })
 export class HttpConnectionComponent implements OnInit {
 
   @ViewChild('form') form: NgForm;
-  @Output() removeConnection: EventEmitter<void> = new EventEmitter<void>();
-  @Input() renderRemoveButton = true;
   protected readonly ConnectionTypeOptionsArray = Object.values(ConnectionTypeOptions);
   protected readonly RequestTypeOptions = RequestTypeOptions;
 
@@ -58,6 +56,8 @@ export class HttpConnectionComponent implements OnInit {
 
   selectedConnectionType: BasicNameValueType;
   componentName = this.constructor.name;
+  loginSuccessResponse: any;
+  loginErrorResponse: any;
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -84,7 +84,6 @@ export class HttpConnectionComponent implements OnInit {
 
   ngOnInit(): void {
     this.onboardingForm.controls['requestType'].patchValue(RequestType.GET);
-    // this.onboardingForm.controls['connectionType'].patchValue(this.connectionTypes[0]);
     this.onboardingForm.controls['connectionType'].patchValue(ConnectionTypeOptions[ConnectionType.basicAuth]);
     this.onboardingForm.controls['addRequestBody'].disable();
     this.onboardingForm.controls['addQueryParams'].disable();
@@ -131,19 +130,21 @@ export class HttpConnectionComponent implements OnInit {
 
   protected readonly undefined = undefined;
 
-  private validateAllFormFields(formGroup: FormGroup) {         //{1}
-    Object.keys(formGroup.controls).forEach(field => {  //{2}
-      const control = formGroup.get(field);             //{3}
-      if (control instanceof FormControl) {             //{4}
+  private validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
         control.markAsTouched({ onlySelf: true });
-      } else if (control instanceof FormGroup) {        //{5}
-        this.validateAllFormFields(control);            //{6}
+      } else if (control instanceof FormGroup) {
+        this.validateAllFormFields(control);
       }
     });
   }
 
   onSubmit() {
     console.log(this.onboardingForm);
+    this.loginSuccessResponse = null;
+    this.loginErrorResponse = null;
     //https://raven.heat.icl.gtri.org/mdi-fhir-server
     this.validateAllFormFields(this.onboardingForm);
     if (!this.onboardingForm.valid) {
@@ -155,11 +156,14 @@ export class HttpConnectionComponent implements OnInit {
     this.onboardingService.onLogin(request).subscribe({
       next: value => {
         console.log(value);
-        this.log.info("Successful login to " + request.url, this.componentName)
+        this.log.info("Successful login to " + request.url, this.componentName);
+        this.loginSuccessResponse = value;
+
       },
       error: err => {
         console.error(err);
-        this.log.error(JSON.stringify(err), this.componentName)
+        this.loginErrorResponse = err;
+        this.log.error(JSON.stringify(err), this.componentName);
       }
     });
 
