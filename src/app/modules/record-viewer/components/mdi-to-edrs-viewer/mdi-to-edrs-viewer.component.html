@@ -12,7 +12,7 @@
       [mdiToEdrsRecord]="mdiToEdrsRecord$ | async"
     ></app-mdi-to-edrs-viewer-content>
 
-    <div class="viewer-container-body-fhir-explorer">
+    <div class="viewer-container-body-fhir-explorer" [hidden]="drawerCollapsed">
       <div class="fhir-explorer-header"
         [style.background-color]="config.backgroundColor"
         [style.color]="appConfig.contrastColor"
@@ -30,6 +30,13 @@
       </div>
       <app-fhir-explorer></app-fhir-explorer>
 
+    </div>
+    <div class="viewer-container-body-tabs">
+      <div (click)="drawerCollapsed=!drawerCollapsed;"
+        [style.background-color]="config.backgroundColor">
+        FHIR Explorer
+      </div>
+      <div (click)="drawerCollapsed=!drawerCollapsed;">Related Toxicology Reports</div>
     </div>
   </div>
 </div>

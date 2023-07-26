@@ -285,6 +285,20 @@ TODO: Refactor to generalize class names and move to a common shared .css file.
         }
       }
     }
+    > .viewer-container-body-tabs {
+      overflow-y: hidden;
+      > * {
+        @extend .pointer;
+        @extend .padding-sm;
+        writing-mode: vertical-rl;
+        margin: 0 0 4px;
+        color: white;
+        font-weight: bold;
+        font-variant-caps: all-petite-caps;
+        background-color: $primary-color;
+        border-radius: 5px 0 0 5px;
+      }
+    }
   }
 }
 
