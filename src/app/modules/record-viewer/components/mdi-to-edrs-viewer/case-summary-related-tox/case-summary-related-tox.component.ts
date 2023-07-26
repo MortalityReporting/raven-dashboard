@@ -8,7 +8,7 @@ import {AppConfiguration} from "../../../../../providers/app-configuration";
 @Component({
   selector: 'record-viewer-case-summary-related-tox',
   templateUrl: './case-summary-related-tox.component.html',
-  styleUrls: ['../case-summary.component.scss']
+  styleUrls: ['../../mdi-to-edrs/case-summary.component.scss']
 })
 export class CaseSummaryRelatedToxComponent implements OnInit, AfterViewInit {
   @Input() toxicologyRecordList: any[];

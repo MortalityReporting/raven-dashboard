@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {map, Observable, Subject} from "rxjs";
+import {combineLatest, forkJoin, map, mergeMap, Observable, skipWhile, Subject, switchMap, tap, toArray} from "rxjs";
 import {DecedentService} from "./decedent.service";
 import {
   Autopsy,
@@ -25,6 +25,7 @@ import {ToxRecordStub} from "../models/tox-record-stub";
 import {FHIRProfileConstants} from "../../../providers/fhir-profile-constants";
 import {FhirExplorerService} from "../../fhir-explorer/services/fhir-explorer.service";
 import {TrackingNumberExtension, TrackingNumberType} from "../../fhir-mdi-library";
+import {MdiToEdrsRecord} from "../models/mdiToEdrsRecord";
 
 @Injectable({
   providedIn: 'root'
@@ -94,6 +95,52 @@ export class MdiToEdrsDocumentHandlerService {
     this.setCaseSummary(null);
     this.setDocumentBundle(null);
     this.setRelatedToxicology(null);
+  }
+
+  getRecord(subjectId: string): Observable<any> {
+    const composition$ = this.fetchComposition(subjectId);
+    const documentBundle$ = composition$.pipe(
+      mergeMap((composition: any) => {
+        console.log(composition['id']);
+        return this.fetchDocumentBundle(composition?.['id']);
+      })
+    );
+    const relatedToxicology$ = composition$.pipe(
+      mergeMap(composition => {
+        const mdiCaseNumber = this.fhirHelper.getTrackingNumber(composition);
+        return this.getRelatedToxicologyReports(mdiCaseNumber);
+      }));
+    return combineLatest([composition$, documentBundle$, relatedToxicology$]).pipe(
+      skipWhile(combinedResults => combinedResults.some(result => result === undefined)),
+      map(combinedResults => {
+        const composition = combinedResults[0];
+        const mdiCaseNumber = this.fhirHelper.getTrackingNumber(composition);
+        const documentBundle = combinedResults[1];
+        const relatedToxicology = combinedResults[2];
+        const patient = this.bundleHelper.findSubjectInBundle(composition, documentBundle);
+        const caseHeader = this.createCaseHeader(documentBundle, patient, composition);
+        const caseSummary = this.createCaseSummary(documentBundle, patient, composition);
+        this.caseHeader.next(caseHeader);
+        this.caseSummary.next(caseSummary);
+        const record = new MdiToEdrsRecord(
+          caseHeader,
+          caseSummary,
+          composition['id'],
+          mdiCaseNumber,
+          documentBundle,
+          relatedToxicology);
+        console.log(record);
+        return record;
+      }))
+  }
+
+  private fetchComposition(subjectId: string): Observable<any> {
+    return this.fhirClient.search(`Composition`,`?subject=${subjectId}`, true)
+      .pipe(map(
+        searchList => searchList[0]));
+  }
+  private fetchDocumentBundle(compositionId: string): Observable<any> {
+    return this.fhirClient.read("Composition", `${compositionId}/$document`);
   }
 
   getDocumentBundle(compositionId: string) {

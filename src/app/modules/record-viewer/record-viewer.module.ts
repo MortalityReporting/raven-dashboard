@@ -8,17 +8,13 @@ import { ToxicologyReportComponent } from "./components/tox-to-mdi/toxicology-re
 import { ToxicologyReportContentComponent } from "./components/tox-to-mdi/toxicology-report-content/toxicology-report-content.component";
 import { ToxicologyReportGridSectionComponent } from "./components/tox-to-mdi/toxicology-report-grid-section/toxicology-report-grid-section.component";
 import { ToxicologyReportMdiCaseComponent } from "./components/tox-to-mdi/toxicology-report-mdi-case/toxicology-report-mdi-case.component";
-import { CaseSummaryComponent } from "./components/mdi-to-edrs/case-summary.component";
 import { CaseContainerComponent } from "./components/viewer-container/case-container.component";
 import {
-  CaseSummaryContentComponent
-} from "./components/mdi-to-edrs/case-summary-content/case-summary-content.component";
-import {
   CaseSummaryContentFieldComponent
-} from "./components/mdi-to-edrs/case-summary-content-field/case-summary-content-field.component";
+} from "./components/mdi-to-edrs-viewer/case-summary-content-field/case-summary-content-field.component";
 import {
   CaseSummaryRelatedToxComponent
-} from "./components/mdi-to-edrs/case-summary-related-tox/case-summary-related-tox.component";
+} from "./components/mdi-to-edrs-viewer/case-summary-related-tox/case-summary-related-tox.component";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatIconModule, MatIconRegistry} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
@@ -49,7 +45,7 @@ import {
 import {FhirMdiLibraryModule} from "../fhir-mdi-library/fhir-mdi-library.module";
 import { MdiToEdrsViewerComponent } from './components/mdi-to-edrs-viewer/mdi-to-edrs-viewer.component';
 import { MdiToEdrsViewerNavMenuComponent } from './components/mdi-to-edrs-viewer/mdi-to-edrs-viewer-nav-menu/mdi-to-edrs-viewer-nav-menu.component';
-import { MdiToEdrsViewerBodyComponent } from './components/mdi-to-edrs-viewer/mdi-to-edrs-viewer-body/mdi-to-edrs-viewer-body.component';
+import { MdiToEdrsViewerContentComponent } from './components/mdi-to-edrs-viewer/mdi-to-edrs-viewer-content/mdi-to-edrs-viewer-content.component';
 
 @NgModule({
   declarations: [
@@ -62,15 +58,13 @@ import { MdiToEdrsViewerBodyComponent } from './components/mdi-to-edrs-viewer/md
     ToxicologyReportCertifierComponent,
     ToxicologyReportGridSectionComponent,
     ToxicologyReportMdiCaseComponent,
-    CaseSummaryComponent,
-    CaseSummaryContentComponent,
     CaseSummaryContentFieldComponent,
     CaseSummaryRelatedToxComponent,
     DecedentDisplayComponent,
     NoteComponent,
     MdiToEdrsViewerComponent,
     MdiToEdrsViewerNavMenuComponent,
-    MdiToEdrsViewerBodyComponent,
+    MdiToEdrsViewerContentComponent,
   ],
   imports: [
     CommonModule,

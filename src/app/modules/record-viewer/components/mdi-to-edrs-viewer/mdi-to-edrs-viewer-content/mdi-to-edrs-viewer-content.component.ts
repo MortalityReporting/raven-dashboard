@@ -1,24 +1,28 @@
 import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {Observable} from "rxjs";
-import {CaseSummary} from "../../../models/case.summary";
 import {CaseHeader} from "../../../models/case.header";
+import {CaseSummary} from "../../../models/case.summary";
+import {FhirResource} from "../../../../fhir-util";
 import {MatAccordion} from "@angular/material/expansion";
 import {MdiToEdrsDocumentHandlerService} from "../../../services/mdi-to-edrs-document-handler.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
 import {AppConfiguration} from "../../../../../providers/app-configuration";
-import {FhirResource} from "../../../../fhir-util/models/base/fhir.resource";
+import {MdiToEdrsRecord} from "../../../models/mdiToEdrsRecord";
 
 @Component({
-  selector: 'record-viewer-case-summary-content',
-  templateUrl: './case-summary-content.component.html',
-  styleUrls: ['./case-summary-content.component.scss', '../../../record-viewer-styles.scss'],
+  selector: 'app-mdi-to-edrs-viewer-content',
+  templateUrl: './mdi-to-edrs-viewer-content.component.html',
+  styleUrls: ['./mdi-to-edrs-viewer-content.component.css']
 })
-export class CaseSummaryContentComponent implements OnInit {
-  @Input() caseHeader$: Observable<CaseHeader>;
-  @Input() caseSummary$: Observable<CaseSummary>;
-  @Input() compositionId: string;
-  @Input() documentBundle: FhirResource;
+export class MdiToEdrsViewerContentComponent implements OnInit {
+  //@Input() mdiToEdrsRecord$: Observable<any>;
+  @Input() mdiToEdrsRecord: MdiToEdrsRecord;
+  //@Input() caseHeader$: Observable<CaseHeader>;
+  //@Input() caseSummary$: Observable<CaseSummary>;
+  //@Input() compositionId: string;
+  //@Input() documentBundle: FhirResource;
+  //@Input() toxicologyRecordList: any;
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
   name: string;
@@ -52,24 +56,24 @@ export class CaseSummaryContentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    this.caseHeader$.subscribe( caseHeader => {
-      if (caseHeader?.authors != null)
-      {
-        let author = caseHeader.authors[0];
-        this.author = caseHeader.authors[0];
-        this.name = `${this.author.givenName[0] ?? ''} ${this.author.familyName ?? ''}`;
-        if(!this.name?.length){
-          this.name = this.documentHandlerService.defaultString
-        }
-        this.license = this.author.license ?? this.documentHandlerService.defaultString;
-        this.phone = this.author.phoneNumber ?? this.documentHandlerService.defaultString;
-        this.addressLine = `${author.line? author.line + '\n': ''}${this.author.city ? this.author.city + ', ' : ''} ${this.author.state ?? ''} ${this.author.postalCode ?? ''}`
-        if(!this.addressLine?.trim()?.length){
-          this.addressLine = this.documentHandlerService.defaultString;
-        }
-      }
-    });
+    //this.mdiToEdrsRecord$.subscribe();
+    // this.caseHeader$.subscribe( caseHeader => {
+    //   if (caseHeader?.authors != null)
+    //   {
+    //     let author = caseHeader.authors[0];
+    //     this.author = caseHeader.authors[0];
+    //     this.name = `${this.author.givenName[0] ?? ''} ${this.author.familyName ?? ''}`;
+    //     if(!this.name?.length){
+    //       this.name = this.documentHandlerService.defaultString
+    //     }
+    //     this.license = this.author.license ?? this.documentHandlerService.defaultString;
+    //     this.phone = this.author.phoneNumber ?? this.documentHandlerService.defaultString;
+    //     this.addressLine = `${author.line? author.line + '\n': ''}${this.author.city ? this.author.city + ', ' : ''} ${this.author.state ?? ''} ${this.author.postalCode ?? ''}`
+    //     if(!this.addressLine?.trim()?.length){
+    //       this.addressLine = this.documentHandlerService.defaultString;
+    //     }
+    //   }
+    // });
   }
 
   onToggleState(id: any ) {
@@ -92,11 +96,10 @@ export class CaseSummaryContentComponent implements OnInit {
   }
 
   onOpenInComparisonTool() {
-    this.router.navigate([this.appConfig.modules['recordComparison'].route, this.compositionId]);
+    this.router.navigate([this.appConfig.modules['recordComparison'].route, this.mdiToEdrsRecord.compositionId]);
   }
 
   isExpanded(elementId: string) {
     return this.idStateList.find(element => element.id == elementId)?.expanded;
   }
-
 }
