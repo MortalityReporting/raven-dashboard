@@ -3,9 +3,9 @@ import {AppConfiguration} from "../../../../../providers/app-configuration";
 import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
 
 @Component({
-  selector: 'app-mdi-to-edrs-viewer-nav-menu',
+  selector: 'record-viewer-mdi-to-edrs-viewer-nav-menu',
   templateUrl: './mdi-to-edrs-viewer-nav-menu.component.html',
-  styleUrls: ['./mdi-to-edrs-viewer-nav-menu.component.css']
+  styleUrls: ['../mdi-to-edrs-viewer.component.css', '../../../record-viewer-styles.scss']
 })
 export class MdiToEdrsViewerNavMenuComponent {
 

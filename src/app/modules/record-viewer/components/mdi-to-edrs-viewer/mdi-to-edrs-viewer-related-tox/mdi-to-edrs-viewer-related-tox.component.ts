@@ -1,18 +1,20 @@
 import {AfterViewInit, Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {MatTableDataSource} from "@angular/material/table";
 import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
 import {AppConfiguration} from "../../../../../providers/app-configuration";
 
 @Component({
-  selector: 'record-viewer-case-summary-related-tox',
-  templateUrl: './case-summary-related-tox.component.html',
-  styleUrls: ['../../mdi-to-edrs/case-summary.component.scss']
+  selector: 'record-viewer-mdi-to-edrs-viewer-related-tox',
+  templateUrl: './mdi-to-edrs-viewer-related-tox.component.html',
+  styleUrls: ['../mdi-to-edrs-viewer.component.css', '../../../record-viewer-styles.scss']
 })
-export class CaseSummaryRelatedToxComponent implements OnInit, AfterViewInit {
+export class MdiToEdrsViewerRelatedToxComponent implements OnInit {
   @Input() toxicologyRecordList: any[];
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort) set matSort(sort: MatSort) {
+    this.dataSource.sort = sort;
+  };
 
   dataSource: MatTableDataSource<any>;
   displayedColumns = ["date", "toxCaseNumber", "toxCaseSystem"];
@@ -24,15 +26,12 @@ export class CaseSummaryRelatedToxComponent implements OnInit, AfterViewInit {
     ) { }
 
   ngOnInit(): void {
+    console.log(this.toxicologyRecordList);
     this.dataSource = new MatTableDataSource<any>(this.toxicologyRecordList);
   }
 
   onRowClicked(row: any) {
     //console.log("/" + this.appConfig.modules['recordViewer'].route + "/tox/" + row.toxCaseSystem + "|" + row.toxCaseNumber);
     this.router.navigateByUrl("/" + this.appConfig.modules['recordViewer'].route + "/tox/" + encodeURIComponent(row.toxCaseSystem + "|" + row.toxCaseNumber));
-  }
-
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
   }
 }

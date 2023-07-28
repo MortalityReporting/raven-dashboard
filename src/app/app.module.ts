@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -40,6 +40,12 @@ import { FHIRProfileConstants } from "./providers/fhir-profile-constants";
 import {UserManagementModule} from "./modules/user-management/user-management.module";
 import {AuthModule} from "@auth0/auth0-angular";
 import { DocRefBase64TransformPipe } from './modules/fhir-util/pipes/doc-ref-base64-transform.pipe';
+import {ConfigService} from "./service/config.service";
+import {RegisteredEndpointsInterceptor} from "./interceptors/registered-endpoints.interceptor";
+
+export const configFactory = (configService: ConfigService) => {
+  return () => configService.loadConfig();
+};
 
 @NgModule({
   declarations: [
@@ -82,10 +88,22 @@ import { DocRefBase64TransformPipe } from './modules/fhir-util/pipes/doc-ref-bas
   ],
 
   providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: configFactory,
+      deps: [ConfigService],
+      multi: true
+    },
     UiStringConstants,
     {
       provide: 'fhirProfiles',
       useValue: FHIRProfileConstants.Profiles
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RegisteredEndpointsInterceptor,
+      deps: [ConfigService],
+      multi: true
     },
     {
       provide: HTTP_INTERCEPTORS,

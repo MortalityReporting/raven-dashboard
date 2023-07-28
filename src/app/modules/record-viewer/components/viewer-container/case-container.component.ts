@@ -8,7 +8,7 @@ import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 @Component({
   selector: 'record-viewer-case-container',
   templateUrl: './case-container.component.html',
-  styleUrls: ['./case-container.component.scss', '../../record-viewer-styles.scss']
+  styleUrls: ['../../record-viewer-styles.scss']
 })
 export class CaseContainerComponent implements OnInit, AfterViewInit, OnDestroy {
 

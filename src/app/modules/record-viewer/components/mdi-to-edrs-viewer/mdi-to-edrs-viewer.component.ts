@@ -10,7 +10,7 @@ import {MdiToEdrsViewerContentComponent} from "./mdi-to-edrs-viewer-content/mdi-
 import {MdiToEdrsRecord} from "../../models/mdiToEdrsRecord";
 
 @Component({
-  selector: 'app-mdi-to-edrs-viewer',
+  selector: 'record-viewer-mdi-to-edrs-viewer',
   templateUrl: './mdi-to-edrs-viewer.component.html',
   styleUrls: ['./mdi-to-edrs-viewer.component.css']
 })
@@ -19,16 +19,12 @@ export class MdiToEdrsViewerComponent implements OnInit, OnDestroy {
 
   /** Inputs to children **/
   mdiToEdrsRecord: MdiToEdrsRecord;
-  mdiToEdrsRecord$: Observable<any>;
-  caseHeader$: Observable<CaseHeader>;
-  caseSummary$: Observable<CaseSummary>;
+
   composition$: Observable<any>;
   documentBundle: any = {};
   compositionId: string = "";
   toxicologyRecordList: any[] = [];
 
-  relatedToxicology$: Observable<any>;
-  documentBundle$: Observable<any>;
   sidenavExpanded = false;
   autosize: boolean = false;
   selectedAuthor = "VALUE NOT FOUND";
@@ -48,9 +44,11 @@ export class MdiToEdrsViewerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     let subjectId = this.route.snapshot.params['id'];
     // TODO: Move these to appropriate children or make not observables passed as input.
-    this.mdiToEdrsRecord$ = this.documentHandler.getRecord(subjectId);
-    this.caseHeader$ = this.documentHandler.caseHeader$;
-    this.caseSummary$ = this.documentHandler.caseSummary$;
+    this.documentHandler.getRecord(subjectId).subscribe({
+      next: record => {
+        this.mdiToEdrsRecord = record;
+      }
+    });
   }
 
   onSidenavResize(expanded: boolean) {

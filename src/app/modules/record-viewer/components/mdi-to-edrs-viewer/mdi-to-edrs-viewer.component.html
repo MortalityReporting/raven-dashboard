@@ -1,24 +1,25 @@
-<div class="viewer-container-wrapper">
+<div class="viewer-container-wrapper" *ngIf="mdiToEdrsRecord; else loading;">
   <div class="viewer-container-header">
-    <app-decedent-display appSetFhirExplorer [resource]="documentBundle$ | async"
-                          [decedentInformation]="caseHeader$ | async" [type]="'mdi'">
+    <app-decedent-display appSetFhirExplorer [resource]="mdiToEdrsRecord?.documentBundle"
+                          [decedentInformation]="mdiToEdrsRecord?.caseHeader" [type]="'mdi'">
     </app-decedent-display>
   </div>
   <div class="viewer-container-body">
-    <app-mdi-to-edrs-viewer-nav-menu>
-    </app-mdi-to-edrs-viewer-nav-menu>
-    <app-mdi-to-edrs-viewer-content
+    <record-viewer-mdi-to-edrs-viewer-nav-menu>
+    </record-viewer-mdi-to-edrs-viewer-nav-menu>
+    <record-viewer-mdi-to-edrs-viewer-content
       class="viewer-container-body-content"
-      [mdiToEdrsRecord]="mdiToEdrsRecord$ | async"
-    ></app-mdi-to-edrs-viewer-content>
+      [mdiToEdrsRecord]="mdiToEdrsRecord"
+    ></record-viewer-mdi-to-edrs-viewer-content>
 
     <div class="viewer-container-body-fhir-explorer" [hidden]="drawerCollapsed">
-      <div class="fhir-explorer-header"
-        [style.background-color]="config.backgroundColor"
-        [style.color]="appConfig.contrastColor"
-      >
-        <span class="explorer-header-instructions">
-                  FHIR Explorer
+<!--      <div class="fhir-explorer-header"-->
+<!--           [style.background-color]="config.backgroundColor"-->
+<!--           [style.color]="appConfig.contrastColor"-->
+<!--      >-->
+      <div class="fhir-explorer-header">
+        <span class="explorer-header-title">
+          FHIR Explorer
         </span>
         <span class="content-spacer"></span>
         <mat-icon (click)="setDrawerWidth('30%'); drawerCollapsed=true;"
@@ -28,15 +29,28 @@
           close
         </mat-icon>
       </div>
-      <app-fhir-explorer></app-fhir-explorer>
-
+      <div class="fhir-explorer-body">
+        <app-fhir-explorer></app-fhir-explorer>
+      </div>
     </div>
     <div class="viewer-container-body-tabs">
       <div (click)="drawerCollapsed=!drawerCollapsed;"
-        [style.background-color]="config.backgroundColor">
-        FHIR Explorer
+           class="hl7-fhir-logo-tab">
+        <img src="assets/icon-fhir-32.png" class="fhir-explorer-icon">
+        <span class="fhir-explorer-label">FHIR Explorer</span>
       </div>
-      <div (click)="drawerCollapsed=!drawerCollapsed;">Related Toxicology Reports</div>
+      <div (click)="drawerCollapsed=!drawerCollapsed;"
+           [style.background-color]="config.backgroundColor"
+          class="tab">
+        <div class="tab-label">Related Toxicology Reports</div>
+      </div>
     </div>
   </div>
 </div>
+
+<ng-template #loading>
+  <div class="margin-md center-contents">
+  <!-- TODO: Add error handling. -->
+    <mat-spinner color="accent"></mat-spinner>
+  </div>
+</ng-template>

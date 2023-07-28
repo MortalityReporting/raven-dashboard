@@ -5,16 +5,17 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {OptionConfig, HeaderConfig} from "common-ui";
 import {AppConfiguration} from "./providers/app-configuration";
 import {ThemeService} from "./service/theme.service";
+import {ConfigService} from "./service/config.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: []
 })
 export class AppComponent implements OnInit {
-  title = AppConfiguration.config.title;
+  title: string;
   subTitle = AppConfiguration.config.subTitle;
-  version = environment.VERSION;
+  version: string;
   color = AppConfiguration.config.color;
   contrastColor = AppConfiguration.config.contrastColor;
   optionConfig: OptionConfig;
@@ -22,16 +23,24 @@ export class AppComponent implements OnInit {
 
   // TODO: remove extra code once confirmed working on live.
   constructor(
+    private configService: ConfigService,
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private themeService: ThemeService
     ) {
   }
   ngOnInit(): void {
+    this.title = this.configService.config.title;
+    this.version = this.configService.config.version;
+    document.title = this.title;
+
     this.themeService.setColor(this.color);
     this.themeService.setContrastColor(this.contrastColor);
 
     const path = "assets"
+    this.matIconRegistry.addSvgIcon("fhir_logo", this.domSanitizer
+      .bypassSecurityTrustResourceUrl(`${path}/LOGO_FHIR_2.svg`));
+
     this.matIconRegistry.addSvgIcon("home", this.domSanitizer
       .bypassSecurityTrustResourceUrl(`${path}/home.svg`));
     this.matIconRegistry.addSvgIcon("record_comparison", this.domSanitizer

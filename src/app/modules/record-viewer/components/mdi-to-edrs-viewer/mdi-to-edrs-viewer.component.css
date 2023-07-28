@@ -1,0 +1,20 @@
+.content-field {
+  display: flex;
+  flex-direction: row;
+}
+
+.content-field-label {
+  padding: 5px;
+  display: flex;
+  flex: 1;
+}
+
+.content-field-value {
+  padding: 5px;
+  display: flex;
+  flex: 1;
+}
+
+.content-field-value input {
+  width: 100%;
+}

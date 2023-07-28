@@ -13,15 +13,15 @@
         <table mat-table [dataSource]="dataSource" matSort matSortDisableClear class="mat-elevation-z8">
           <ng-container matColumnDef="date">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Issued Date </th>
-            <td mat-cell *matCellDef="let report"> {{report.date}} </td>
+            <td mat-cell *matCellDef="let report"> {{report?.['date']}} </td>
           </ng-container>
           <ng-container matColumnDef="toxCaseNumber">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Toxicology Report Case Number </th>
-            <td mat-cell *matCellDef="let report"> {{report.toxCaseNumber}}</td>
+            <td mat-cell *matCellDef="let report"> {{report?.['toxCaseNumber']}}</td>
           </ng-container>
           <ng-container matColumnDef="toxCaseSystem">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Toxicology Report Case System </th>
-            <td mat-cell *matCellDef="let report"> {{report.toxCaseSystem}} </td>
+            <td mat-cell *matCellDef="let report"> {{report?.["toxCaseSystem"]}} </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

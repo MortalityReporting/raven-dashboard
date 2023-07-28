@@ -9,12 +9,6 @@ import { ToxicologyReportContentComponent } from "./components/tox-to-mdi/toxico
 import { ToxicologyReportGridSectionComponent } from "./components/tox-to-mdi/toxicology-report-grid-section/toxicology-report-grid-section.component";
 import { ToxicologyReportMdiCaseComponent } from "./components/tox-to-mdi/toxicology-report-mdi-case/toxicology-report-mdi-case.component";
 import { CaseContainerComponent } from "./components/viewer-container/case-container.component";
-import {
-  CaseSummaryContentFieldComponent
-} from "./components/mdi-to-edrs-viewer/case-summary-content-field/case-summary-content-field.component";
-import {
-  CaseSummaryRelatedToxComponent
-} from "./components/mdi-to-edrs-viewer/case-summary-related-tox/case-summary-related-tox.component";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatIconModule, MatIconRegistry} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
@@ -38,7 +32,6 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatButtonModule} from "@angular/material/button";
 import { DecedentDisplayComponent } from './components/decedent-display/decedent-display.component';
 import {ScrollingModule} from "@angular/cdk/scrolling";
-import {NoteComponent} from "./components/note/note.component";
 import {
   ToxicologyReportCertifierComponent
 } from "./components/tox-to-mdi/toxicology-report-certifier/toxicology-report-certifier.component";
@@ -46,6 +39,12 @@ import {FhirMdiLibraryModule} from "../fhir-mdi-library/fhir-mdi-library.module"
 import { MdiToEdrsViewerComponent } from './components/mdi-to-edrs-viewer/mdi-to-edrs-viewer.component';
 import { MdiToEdrsViewerNavMenuComponent } from './components/mdi-to-edrs-viewer/mdi-to-edrs-viewer-nav-menu/mdi-to-edrs-viewer-nav-menu.component';
 import { MdiToEdrsViewerContentComponent } from './components/mdi-to-edrs-viewer/mdi-to-edrs-viewer-content/mdi-to-edrs-viewer-content.component';
+import {
+  MdiToEdrsViewerContentFieldComponent
+} from "./components/mdi-to-edrs-viewer/mdi-to-edrs-viewer-content-field/mdi-to-edrs-viewer-content-field.component";
+import {
+  MdiToEdrsViewerRelatedToxComponent
+} from "./components/mdi-to-edrs-viewer/mdi-to-edrs-viewer-related-tox/mdi-to-edrs-viewer-related-tox.component";
 
 @NgModule({
   declarations: [
@@ -58,39 +57,38 @@ import { MdiToEdrsViewerContentComponent } from './components/mdi-to-edrs-viewer
     ToxicologyReportCertifierComponent,
     ToxicologyReportGridSectionComponent,
     ToxicologyReportMdiCaseComponent,
-    CaseSummaryContentFieldComponent,
-    CaseSummaryRelatedToxComponent,
+    MdiToEdrsViewerRelatedToxComponent,
     DecedentDisplayComponent,
-    NoteComponent,
     MdiToEdrsViewerComponent,
     MdiToEdrsViewerNavMenuComponent,
     MdiToEdrsViewerContentComponent,
+    MdiToEdrsViewerContentFieldComponent,
   ],
-  imports: [
-    CommonModule,
-    FhirUtilModule, // Dependency
-    FhirMdiLibraryModule, // Dependency
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    MatTooltipModule,
-    MatToolbarModule,
-    MatButtonModule,
-    RouterModule,
-    FhirExplorerModule,
-    MatTableModule,
-    MatExpansionModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
-    MatTabsModule,
-    FormsModule,
-    MatCardModule,
-    MatSelectModule,
-    MatCheckboxModule,
-    MatSortModule,
-    CommonUiModule,
-    ScrollingModule
-  ]
+    imports: [
+        CommonModule,
+        FhirUtilModule, // Dependency
+        FhirMdiLibraryModule, // Dependency
+        MatSidenavModule,
+        MatIconModule,
+        MatListModule,
+        MatTooltipModule,
+        MatToolbarModule,
+        MatButtonModule,
+        RouterModule,
+        FhirExplorerModule,
+        MatTableModule,
+        MatExpansionModule,
+        MatInputModule,
+        MatProgressSpinnerModule,
+        MatTabsModule,
+        FormsModule,
+        MatCardModule,
+        MatSelectModule,
+        MatCheckboxModule,
+        MatSortModule,
+        CommonUiModule,
+        ScrollingModule
+    ]
 })
 export class RecordViewerModule {
   constructor(private matIconRegistry: MatIconRegistry,

@@ -11,18 +11,12 @@ import {AppConfiguration} from "../../../../../providers/app-configuration";
 import {MdiToEdrsRecord} from "../../../models/mdiToEdrsRecord";
 
 @Component({
-  selector: 'app-mdi-to-edrs-viewer-content',
+  selector: 'record-viewer-mdi-to-edrs-viewer-content',
   templateUrl: './mdi-to-edrs-viewer-content.component.html',
-  styleUrls: ['./mdi-to-edrs-viewer-content.component.css']
+  styleUrls: ['../mdi-to-edrs-viewer.component.css', '../../../record-viewer-styles.scss']
 })
 export class MdiToEdrsViewerContentComponent implements OnInit {
-  //@Input() mdiToEdrsRecord$: Observable<any>;
   @Input() mdiToEdrsRecord: MdiToEdrsRecord;
-  //@Input() caseHeader$: Observable<CaseHeader>;
-  //@Input() caseSummary$: Observable<CaseSummary>;
-  //@Input() compositionId: string;
-  //@Input() documentBundle: FhirResource;
-  //@Input() toxicologyRecordList: any;
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
   name: string;
@@ -56,6 +50,8 @@ export class MdiToEdrsViewerContentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("HERE");
+    console.log(this.mdiToEdrsRecord);
     //this.mdiToEdrsRecord$.subscribe();
     // this.caseHeader$.subscribe( caseHeader => {
     //   if (caseHeader?.authors != null)

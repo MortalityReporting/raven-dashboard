@@ -33,7 +33,6 @@
     <div #anchorTop id="anchorTop"></div>
 
     <ng-container [ngSwitch]="currentRoute">
-      <app-mdi-to-edrs-viewer *ngSwitchCase="'mdi'"></app-mdi-to-edrs-viewer>
       <record-viewer-toxicology-report *ngSwitchCase="'tox'"></record-viewer-toxicology-report>
     </ng-container>
   </mat-drawer-content>
