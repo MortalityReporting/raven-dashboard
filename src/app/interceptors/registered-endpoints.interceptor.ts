@@ -20,7 +20,8 @@ export class RegisteredEndpointsInterceptor implements HttpInterceptor {
       {
         "baseUrl": this.config.fhirValidator,
         "allowedEndpoints": [
-          "/$validate"
+          "/$validate",
+          "/$translate"
         ]
       },
       {
@@ -28,12 +29,22 @@ export class RegisteredEndpointsInterceptor implements HttpInterceptor {
         "allowedEndpoints": [
           "*"
         ]
+      },
+      {
+        "baseUrl": this.config.ravenImportApi,
+        "allowedEndpoints": [
+        ]
       }
     ]
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    let service = this.registeredEndpoints.find(service => request.url.startsWith(service.baseUrl));
     if (this.ignoreList.some(item => request.url.startsWith(item))) {
+      return next.handle(request);
+    }
+    else if (!service) {
+      console.info(`${request.url} is not registered with the application (nor on the ignore list).`)
       return next.handle(request);
     }
     else {
@@ -49,6 +60,4 @@ export class RegisteredEndpointsInterceptor implements HttpInterceptor {
   }
 
   ignoreList = ["assets/", "../assets/", "../../assets/"]
-
-
 }

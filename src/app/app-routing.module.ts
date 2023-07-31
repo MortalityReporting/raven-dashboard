@@ -22,6 +22,9 @@ import {TestContainerComponent} from "./modules/workflow-simulator/components/te
 import {
   MdiToEdrsViewerComponent
 } from "./modules/record-viewer/components/mdi-to-edrs-viewer/mdi-to-edrs-viewer.component";
+import {
+  ToxToMdiViewerComponent
+} from "./modules/record-viewer/components/tox-to-mdi-viewer/tox-to-mdi-viewer.component";
 
 
 const routes: Routes = [
@@ -46,7 +49,7 @@ const routes: Routes = [
       },
       {
         path: 'tox/:id',
-        component: CaseContainerComponent,
+        component: ToxToMdiViewerComponent,
         data: { moduleConfig: ModuleHeaderConfig.RecordViewer, componentTitle: AppConfiguration.config.workflowTitles['toxToMdi'] + " Viewer"}
       }
     ],

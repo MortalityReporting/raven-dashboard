@@ -45,6 +45,7 @@ import {
 import {
   MdiToEdrsViewerRelatedToxComponent
 } from "./components/mdi-to-edrs-viewer/mdi-to-edrs-viewer-related-tox/mdi-to-edrs-viewer-related-tox.component";
+import { ToxToMdiViewerComponent } from './components/tox-to-mdi-viewer/tox-to-mdi-viewer.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import {
     MdiToEdrsViewerNavMenuComponent,
     MdiToEdrsViewerContentComponent,
     MdiToEdrsViewerContentFieldComponent,
+    ToxToMdiViewerComponent,
   ],
     imports: [
         CommonModule,

@@ -34,13 +34,18 @@ export class ToxicologyReportComponent implements OnInit {
 
   ngOnInit(): void {
     let toxLabId = this.route.snapshot.params['id'];
-    this.messageBundle$ = this.toxicologyHandler.getMessageBundle(toxLabId);
+    this.toxicologyHandler.getRecord(toxLabId).subscribe(record => {
+
+    });
     this.messageBundle$.subscribe(bundle => {
       this.fhirExplorerService.setSelectedFhirResource(bundle);
-      this.toxHeader = this.toxicologyHandler.constructToxHeaderHeader(bundle);
+      this.toxHeader = this.toxicologyHandler.constructToxHeader(bundle);
       this.toxSummary = this.toxicologyHandler.constructToxSummary(bundle);
       }
     );
+    this.fhirExplorerService.fhirResource$.subscribe(resource => {
+      console.log(resource)
+    })
   }
 
   onSidenavResize(expanded: boolean) {

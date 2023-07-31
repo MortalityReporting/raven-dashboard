@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {combineLatest, forkJoin, map, mergeMap, Observable, skipWhile, Subject, switchMap, tap, toArray} from "rxjs";
+import {combineLatest, map, mergeMap, Observable, skipWhile, Subject} from "rxjs";
 import {DecedentService} from "./decedent.service";
 import {
   Autopsy,
@@ -39,14 +39,10 @@ export class MdiToEdrsDocumentHandlerService {
   private currentDocumentBundle: any;
   private currentCompositionResource: any;
 
-  private caseHeader = new Subject<CaseHeader>();
-  caseHeader$ = this.caseHeader.asObservable();
-  private caseSummary = new Subject<CaseSummary>();
-  caseSummary$ = this.caseSummary.asObservable();
-  private patientResource = new Subject<any>();
-  patientResource$ = this.patientResource.asObservable();
-  private relatedToxicology = new Subject<any>();
-  relatedToxicology$ = this.relatedToxicology.asObservable();
+  // private caseHeader = new Subject<CaseHeader>();
+  // private caseSummary = new Subject<CaseSummary>();
+  // private patientResource = new Subject<any>();
+  // private relatedToxicology = new Subject<any>();
 
   constructor(
     private fhirExplorerService: FhirExplorerService,
@@ -63,17 +59,17 @@ export class MdiToEdrsDocumentHandlerService {
     this.currentDocumentBundle = documentBundle;
   }
 
-  setCaseSummary(caseSummary){
-    this.caseSummary.next(caseSummary);
-  }
-
-  setPatientResource(patientResource){
-    this.patientResource.next(patientResource);
-  }
-
-  setCaseHeader(caseHeader){
-    this.caseHeader.next(caseHeader);
-  }
+  // setCaseSummary(caseSummary){
+  //   this.caseSummary.next(caseSummary);
+  // }
+  //
+  // setPatientResource(patientResource){
+  //   this.patientResource.next(patientResource);
+  // }
+  //
+  // setCaseHeader(caseHeader){
+  //   this.caseHeader.next(caseHeader);
+  // }
 
   setCurrentDocumentBundle(documentBundle){
     this.currentDocumentBundle = documentBundle;
@@ -83,18 +79,18 @@ export class MdiToEdrsDocumentHandlerService {
     this.currentCompositionResource = compositionResource;
   }
 
-  setRelatedToxicology(searchResultBundle){
-    this.relatedToxicology.next(searchResultBundle);
-  }
+  // setRelatedToxicology(searchResultBundle){
+  //   this.relatedToxicology.next(searchResultBundle);
+  // }
 
   clearObservablesAndCashedData(){
     this.setCurrentCompositionResource(null);
     this.setCurrentDocumentBundle(null);
-    this.setCaseHeader(null);
-    this.setPatientResource(null);
-    this.setCaseSummary(null);
+    // this.setCaseHeader(null);
+    // this.setPatientResource(null);
+    // this.setCaseSummary(null);
     this.setDocumentBundle(null);
-    this.setRelatedToxicology(null);
+    // this.setRelatedToxicology(null);
   }
 
   getRecord(subjectId: string): Observable<any> {
@@ -120,8 +116,8 @@ export class MdiToEdrsDocumentHandlerService {
         const patient = this.bundleHelper.findSubjectInBundle(composition, documentBundle);
         const caseHeader = this.createCaseHeader(documentBundle, patient, composition);
         const caseSummary = this.createCaseSummary(documentBundle, patient, composition);
-        this.caseHeader.next(caseHeader);
-        this.caseSummary.next(caseSummary);
+        // this.caseHeader.next(caseHeader);
+        // this.caseSummary.next(caseSummary);
         const record = new MdiToEdrsRecord(
           caseHeader,
           caseSummary,
@@ -151,9 +147,9 @@ export class MdiToEdrsDocumentHandlerService {
         this.currentCompositionResource = compositionResource;
         this.subjectId = compositionResource.subject.reference
         let patientResource = this.bundleHelper.findResourceByFullUrl(documentBundle, this.subjectId);
-        this.patientResource.next(patientResource);
-        this.caseHeader.next(this.createCaseHeader(documentBundle, patientResource, compositionResource));
-        this.caseSummary.next(this.createCaseSummary(documentBundle, patientResource, compositionResource));
+        // this.patientResource.next(patientResource);
+        // this.caseHeader.next(this.createCaseHeader(documentBundle, patientResource, compositionResource));
+        // this.caseSummary.next(this.createCaseSummary(documentBundle, patientResource, compositionResource));
 
         // TODO: This should happen in component not service.
         this.fhirExplorerService.setSelectedFhirResource(documentBundle);
@@ -500,17 +496,17 @@ export class MdiToEdrsDocumentHandlerService {
     return extensions?.find((extension: any) => extension?.url === url);
   }
 
-  getCurrentDocumentBundle(): any {
-    return this.currentDocumentBundle;
-  }
-
-  getCurrentSubjectResource(): any {
-    return this.bundleHelper.findResourceByFullUrl(this.currentDocumentBundle, this.subjectId);
-  }
+  // getCurrentDocumentBundle(): any {
+  //   return this.currentDocumentBundle;
+  // }
+  //
+  // getCurrentSubjectResource(): any {
+  //   return this.bundleHelper.findResourceByFullUrl(this.currentDocumentBundle, this.subjectId);
+  // }
 
   // TODO: REFACTOR DIRECTIVE AND REMOVE THIS FUNCTION
-  findResourceByProfileNamePassThrough(profile) {
-    return this.bundleHelper.findResourceByProfileName(this.currentDocumentBundle, profile);
-  }
+  // findResourceByProfileNamePassThrough(profile) {
+  //   return this.bundleHelper.findResourceByProfileName(this.currentDocumentBundle, profile);
+  // }
 
 }

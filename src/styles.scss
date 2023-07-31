@@ -26,6 +26,8 @@ app-root { display: flex; height: 100%; width: 100% }
 .scrollable { overflow-y: scroll; scroll-behavior: smooth; }
 .pointer { cursor: pointer; }
 
+.center-contents { justify-items: center; text-align: center; align-self: center; }
+
 /* Margins and Paddings */
 $xs: 4px;
 $sm: 8px;
@@ -247,12 +249,6 @@ $lg: 24px;
   > * {
     flex: 1;
   }
-}
-
-.center-contents {
-  justify-items: center;
-  text-align: center;
-  align-self: center;
 }
 
 .test-container-wrapper {

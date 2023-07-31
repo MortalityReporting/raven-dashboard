@@ -23,7 +23,6 @@ export class ConfigService {
       map(config => {
         config.version = "v" + this.packageInfo.version;
         this.config = config;
-        console.log(config)
         return true;
       }),
       catchError(error => {
