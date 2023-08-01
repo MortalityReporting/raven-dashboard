@@ -103,20 +103,6 @@ app-root { display: flex; height: 100%; width: 100% }
 
 .content-spacer{flex: 1 1 auto;}
 
-/*Adding some green buttons. We may have to change the color if we don't like it*/
-.mat-button.mat-success {
-  color: #28a745;
-}
-
-.mat-raised-button.mat-success, .mat-flat-button.mat-success{
-  background-color: #28a745;
-  color: white;
-}
-
-.mat-form-field-appearance-outline.mat-success .mat-form-field-outline.mat-success{
-  color: #28a745;
-}
-
 .success-color{ color: #28a745; }
 .danger-color{ color: #dc3549; }
 .warning-color{ color: #ffc107; }
@@ -130,6 +116,24 @@ app-root { display: flex; height: 100%; width: 100% }
 .diff-added-color{ background: #fff59d; }
 .diff-removed-color{ background: #ffcdd2; }
 /* Color Shades */
+
+/**
+Adding some green buttons. We may have to change the color if we don't like it
+This mimics the Bootstrap success color, which we don't have in Angular.
+We may want to remove this in the future.
+**/
+.mat-button.mat-success {
+  @extend .success-color
+}
+
+.mat-raised-button.mat-success, .mat-flat-button.mat-success{
+  @extend .success-color;
+  color: white;
+}
+
+.mat-form-field-appearance-outline.mat-success .mat-form-field-outline.mat-success{
+  @extend .success-color;
+}
 
 /** SnackBar Overrides **/
 .mat-snack-bar-container { margin-top: 10em !important; }
