@@ -1,6 +1,7 @@
 import {BasicNameValueType} from "../../../model/basic-name-value-type";
-import {ConnectionType, RequestType} from "../components/tests/onboarding/http-connection/http-connection.component";
 import {HttpHeaders, HttpParams} from "@angular/common/http";
+import {RequestType} from "./request-type";
+import {ConnectionType} from "./connection-type";
 
 interface FormValue {
   endpointUrl: string;

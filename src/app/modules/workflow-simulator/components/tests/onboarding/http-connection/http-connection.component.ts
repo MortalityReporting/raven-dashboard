@@ -12,27 +12,9 @@ import {
 import {BasicNameValueType} from "../../../../../../model/basic-name-value-type";
 import {OnboardingService} from "../../../../service/onboarding.service";
 import {OnboardingHttpRequest} from "../../../../model/onboarding-http-request";
-
-export enum RequestType {
-  "GET"= "GET",
-  "PUT" = "PUT",
-  "POST" = "POST"
-}
-
-export const RequestTypeOptions = [RequestType.GET, RequestType.PUT, RequestType.POST];
-
-
-export enum ConnectionType {
-  basicAuth = 'basicAuth',
-  token = 'token',
-  custom = 'custom'
-}
-
-export const ConnectionTypeOptions: Record<ConnectionType, { value: ConnectionType; name: string }> = {
-  [ConnectionType.basicAuth]: { value: ConnectionType.basicAuth, name: 'Basic Auth' },
-  [ConnectionType.token]: { value: ConnectionType.token, name: 'Bearer Token' },
-  [ConnectionType.custom]: { value: ConnectionType.custom, name: 'Custom' }
-};
+import {RequestType} from "../../../../model/request-type";
+import { RequestTypeOptions, ConnectionTypeOptions} from "../../../../providers/module-constants";
+import {ConnectionType} from "../../../../model/connection-type";
 
 @Component({
   selector: 'app-http-connection',
@@ -59,32 +41,22 @@ export class HttpConnectionComponent implements OnInit {
   loginSuccessResponse: any;
   loginErrorResponse: any;
 
-
-
   constructor(
     private fb: UntypedFormBuilder,
     private log: LoggerService,
     private onboardingService: OnboardingService
   ) {
   }
-  logMessage(level: string) {
-    console.log(this.constructor.name)
-    if(level === 'info'){
-      this.log.info("I am an Info Message", this.componentName);
-    }
-    else if (level === 'warn') {
-      this.log.warn("I am a Warning Message", this.componentName);
-    }
-    else if (level === 'error') {
-      this.log.error("I am an Error Message", this.componentName);
-    }
-  }
 
   clearLog(){
     this.log.clear()
   }
 
-  ngOnInit(): void {
+  /**
+   * Initialize the form int it's most for basic auth which is the simples from of authentication.
+   * We may consider changing the initial form to JWT or custom, based on user feedback.
+   */
+  initOnboardingForm(){
     this.onboardingForm.controls['requestType'].patchValue(RequestType.GET);
     this.onboardingForm.controls['connectionType'].patchValue(ConnectionTypeOptions[ConnectionType.basicAuth]);
     this.onboardingForm.controls['addRequestBody'].disable();
@@ -93,6 +65,14 @@ export class HttpConnectionComponent implements OnInit {
     this.onboardingForm.addControl('password', new FormControl('', Validators.required));
   }
 
+  ngOnInit(): void {
+    this.initOnboardingForm();
+  }
+
+  /**
+   * The user can select from a multiple connection types such as basic auth aor jwt.
+   * This function manipulates the form because each connection type requires different form fields.
+   */
   onConnectionTypeSelected() {
     // if(this.selectedConnectionType.value == this.connectionTypes[0].value){
     if(this.selectedConnectionType.value == ConnectionType.basicAuth){
@@ -132,8 +112,37 @@ export class HttpConnectionComponent implements OnInit {
     }
   }
 
-  protected readonly undefined = undefined;
+  /**
+   * The user can select from a GET, PUT, and POST request (for now those are the only options we allow).
+   * This function manipulates the form because each request type requires different form fields.
+   */
+  onRequestTypeSelected() {
+    if(this.onboardingForm.value.requestType === RequestType.GET){
+      this.onboardingForm.controls['addRequestBody'].disable();
+      this.onboardingForm.controls['addQueryParams'].enable();
+      this.onboardingForm.removeControl('requestBody');
+    }
+    else if(this.onboardingForm.value.requestType == RequestType.PUT){
+      this.onboardingForm.controls['addRequestBody'].enable();
+      this.onboardingForm.controls['addQueryParams'].enable();
+      if(!this.onboardingForm.controls['requestBody']){
+        this.onboardingForm.addControl('requestBody', new FormControl(''));
+      }
+    }
+    else if(this.onboardingForm.value.requestType == RequestType.POST){
+      this.onboardingForm.controls['addRequestBody'].enable();
+      this.onboardingForm.controls['addQueryParams'].enable();
+      if(!this.onboardingForm.controls['requestBody']){
+        this.onboardingForm.addControl('requestBody', new FormControl(''));
+      }
+    }
+  }
 
+  /**
+   * Basic form validator
+   * @param formGroup
+   * @private
+   */
   private validateAllFormFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
@@ -143,20 +152,15 @@ export class HttpConnectionComponent implements OnInit {
         this.validateAllFormFields(control);
       }
     });
-  }
+  };
 
-  onSubmit() {
-    console.log(this.onboardingForm);
+  /**
+   * Calls the API to execute login.
+   * @param request
+   */
+  login(request: OnboardingHttpRequest){
     this.loginSuccessResponse = null;
     this.loginErrorResponse = null;
-    //https://raven.heat.icl.gtri.org/mdi-fhir-server
-    this.validateAllFormFields(this.onboardingForm);
-    if (!this.onboardingForm.valid) {
-      console.error("Invalid Connection Registration Form.")
-      return;
-    }
-    const request: OnboardingHttpRequest = new OnboardingHttpRequest(this.onboardingForm.value);
-    console.log(request);
     this.onboardingService.onLogin(request).subscribe({
       next: value => {
         console.log(value);
@@ -173,38 +177,23 @@ export class HttpConnectionComponent implements OnInit {
 
   }
 
+  onSubmit() {
+    //https://raven.heat.icl.gtri.org/mdi-fhir-server
+    this.validateAllFormFields(this.onboardingForm);
+    if (!this.onboardingForm.valid) {
+      console.error("Invalid Connection Registration Form.")
+      return;
+    }
+    const request: OnboardingHttpRequest = new OnboardingHttpRequest(this.onboardingForm.value);
+    this.login(request);
+  }
+
   get queryParams() {
     return this.onboardingForm.controls["queryParameters"] as UntypedFormArray;
   }
 
   get headerParams() {
     return this.onboardingForm.controls["headerParameters"] as UntypedFormArray;
-  }
-
-  onCustomizeHeadersSelectionChange() {
-    if(this.onboardingForm.controls['customizeHeaders'].value){
-      this.onboardingForm.addControl('headerParameters', this.fb.array([]));
-      this.addHeaderParam();
-    }
-    else {
-      this.onboardingForm.removeControl('headerParameters')
-    }
-  }
-
-  onAddQueryParamsSelectionChange() {
-    if(this.onboardingForm.controls['addQueryParams'].value){
-      this.onboardingForm.addControl('queryParameters', this.fb.array([]));
-      this.addQueryParam();
-    }
-    else {
-      this.onboardingForm.removeControl('queryParameters');
-    }
-  }
-  onDeleteHeaderParam(index){
-    this.headerParams.removeAt(index);
-    if(index == 0 ){ // all header params have been remover, and we need to deselect the Customize Headers checkbox
-      this.onboardingForm.controls['customizeHeaders'].patchValue(false);
-    }
   }
 
   onDeleteQueryParam(index: number) {
@@ -229,29 +218,23 @@ export class HttpConnectionComponent implements OnInit {
     this.onboardingForm.addControl('queryParameters', queryParamsFG);
   }
 
-  onTestConnection() {
-    this.form.ngSubmit.emit();
+  onCustomizeHeadersSelectionChange() {
+    if(this.onboardingForm.controls['customizeHeaders'].value){
+      this.onboardingForm.addControl('headerParameters', this.fb.array([]));
+      this.addHeaderParam();
+    }
+    else {
+      this.onboardingForm.removeControl('headerParameters')
+    }
   }
 
-  onRequestTypeSelected() {
-    if(this.onboardingForm.value.requestType === RequestType.GET){
-      this.onboardingForm.controls['addRequestBody'].disable();
-      this.onboardingForm.controls['addQueryParams'].enable();
-      this.onboardingForm.removeControl('requestBody');
+  onAddQueryParamsSelectionChange() {
+    if(this.onboardingForm.controls['addQueryParams'].value){
+      this.onboardingForm.addControl('queryParameters', this.fb.array([]));
+      this.addQueryParam();
     }
-    else if(this.onboardingForm.value.requestType == RequestType.PUT){
-      this.onboardingForm.controls['addRequestBody'].enable();
-      this.onboardingForm.controls['addQueryParams'].enable();
-      if(!this.onboardingForm.controls['requestBody']){
-        this.onboardingForm.addControl('requestBody', new FormControl(''));
-      }
-    }
-    else if(this.onboardingForm.value.requestType == RequestType.POST){
-      this.onboardingForm.controls['addRequestBody'].enable();
-      this.onboardingForm.controls['addQueryParams'].enable();
-      if(!this.onboardingForm.controls['requestBody']){
-        this.onboardingForm.addControl('requestBody', new FormControl(''));
-      }
+    else {
+      this.onboardingForm.removeControl('queryParameters');
     }
   }
   onAddRequestBody() {
@@ -261,6 +244,21 @@ export class HttpConnectionComponent implements OnInit {
     else {
       this.onboardingForm.removeControl('requestBody')
     }
+  }
+
+  onDeleteHeaderParam(index){
+    this.headerParams.removeAt(index);
+    if(index == 0 ){ // all header params have been remover, and we need to deselect the Customize Headers checkbox
+      this.onboardingForm.controls['customizeHeaders'].patchValue(false);
+    }
+  }
+
+  /**
+   * Trigger the form submission with a submit button places outside the html scope of the form
+   * (outside the <form></form> tags).
+   */
+  onTestConnection() {
+    this.form.ngSubmit.emit();
   }
 
 }
