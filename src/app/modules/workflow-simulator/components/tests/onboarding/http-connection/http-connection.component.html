@@ -1,15 +1,15 @@
 <mat-card style="margin-bottom: 16px">
   <mat-card-content>
-    <mat-card-title style="padding: 0px 16px">
+    <mat-card-title class="margin-left-right">
       Configure Server Connection
     </mat-card-title>
-    <div class="row">
-      <div class="col" style="padding: 16px 16px; max-width: 50%">
+    <div class="box">
+      <div class="config-col">
         <form [formGroup]="onboardingForm" #form=ngForm (ngSubmit)="onSubmit()">
 
           <!-- Connection Type -->
           <div>
-            <mat-form-field appearance="outline" class="full-width mat-form-field-no-padding">
+            <mat-form-field appearance="outline" class="full-width top-margin">
               <mat-label>Connection Type</mat-label>
               <mat-select formControlName="connectionType" (selectionChange)="onConnectionTypeSelected()"
                           [(value)]="selectedConnectionType" required>
@@ -22,7 +22,7 @@
 
           <!-- Request Type -->
           <div class="box">
-            <mat-form-field appearance="outline" style="max-width: 20%">
+            <mat-form-field appearance="outline">
               <mat-label>Request</mat-label>
               <mat-select formControlName="requestType" (selectionChange)="onRequestTypeSelected()" required>
                 <mat-option *ngFor="let requestType of RequestTypeOptions" [value]="requestType">
@@ -30,7 +30,7 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <mat-form-field appearance="outline" class="push-right" style="max-width: 100%; min-width: 75%">
+            <mat-form-field appearance="outline" class="push-right end-point-url-form-field">
               <mat-label>Endpoint URL</mat-label>
               <input type="text" matInput formControlName="endpointUrl">
               <mat-error *ngIf="onboardingForm?.controls?.['endpointUrl']?.errors?.['required']">
@@ -53,53 +53,61 @@
 
           <!-- Username -->
           <div class="box">
-            <mat-form-field appearance="outline" *ngIf="onboardingForm.controls['user']" style="width: 45%">
+            <div class="col" style="margin-right: 8px;">
+            <mat-form-field appearance="outline" *ngIf="onboardingForm.controls['user']" style="width: 100%;">
               <mat-label>User</mat-label>
               <input type="text" matInput formControlName="user">
               <mat-error *ngIf="onboardingForm?.controls?.['user']?.errors?.['required']">
                 Username is required
               </mat-error>
             </mat-form-field>
+            </div>
 
             <!-- Password -->
-            <mat-form-field appearance="outline" *ngIf="onboardingForm.controls['password']" class="push-right"
-                            style="width: 45%">
+            <div class="col" style="margin-left: 8px;">
+            <mat-form-field appearance="outline" *ngIf="onboardingForm.controls['password']" style="width: 100%;">
               <mat-label>Password</mat-label>
               <input type="password" matInput formControlName="password">
               <mat-error *ngIf="onboardingForm?.controls?.['password']?.errors?.['required']">
                 Password is required
               </mat-error>
             </mat-form-field>
+            </div>
           </div>
 
-          <!-- Header Params -->
-          <div>
-            <div>
-              <mat-checkbox formControlName="customizeHeaders" (change)="onCustomizeHeadersSelectionChange()">
-                Customize Headers
-              </mat-checkbox>
-            </div>
+          <!-- Header Params  -->
+          <div style="margin: 8px 0">
+            <mat-checkbox formControlName="customizeHeaders" (change)="onCustomizeHeadersSelectionChange()">
+              Customize Headers
+            </mat-checkbox>
           </div>
           <ng-container *ngIf="onboardingForm.controls['headerParameters']" formArrayName="headerParameters">
 
-            <ng-container *ngFor="let headerParam of headerParams.controls; let index = index">
+            <ng-container *ngFor="let headerPram of headerParams.controls; let index = index">
 
               <div [formGroupName]="index" class="box">
 
-                <mat-form-field appearance="outline" style="width: 40%">
+                <mat-form-field appearance="outline" class="key-value-form-field">
                   <mat-label>Key</mat-label>
                   <input matInput type="text" formControlName="key"/>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" class="push-right" style="width: 40%">
+                <mat-form-field appearance="outline" class="push-right key-value-form-field">
                   <mat-label>Value</mat-label>
                   <input matInput type="text" formControlName="value"/>
                 </mat-form-field>
 
+                <button mat-icon-button style="margin-left: 1em" aria-label="Remove Key Value" color="warn"
+                        type="button"
+                        matTooltip="Remove Parameter"
+                        (click)="onDeleteHeaderParam(index)">
+                  <mat-icon>close</mat-icon>
+                </button>
               </div>
             </ng-container>
-            <button *ngIf="onboardingForm.controls['customizeHeaders']?.value === true" type="button"
-                    mat-flat-button aria-label="Add Header Params" color="primary" (click)="addHeaderParam()">
+
+            <button *ngIf="onboardingForm.controls['customizeHeaders']?.value === true" type="button" class="margin-bottom-md"
+                    mat-stroked-button aria-label="Add Headers Params" color="primary" (click)="addHeaderParam()">
               <mat-icon>add</mat-icon>
               Add Header Params
             </button>
@@ -109,12 +117,10 @@
           <mat-divider class="top-margin"></mat-divider>
 
           <!-- Query Params -->
-          <div>
-            <div>
+          <div style="margin: 8px 0">
               <mat-checkbox formControlName="addQueryParams" (change)="onAddQueryParamsSelectionChange()">Add Query
                 Params
               </mat-checkbox>
-            </div>
           </div>
           <ng-container *ngIf="onboardingForm.controls['queryParameters']" formArrayName="queryParameters">
 
@@ -122,12 +128,12 @@
 
               <div [formGroupName]="index" class="box">
 
-                <mat-form-field appearance="outline" style="width: 40%">
+                <mat-form-field appearance="outline" class="key-value-form-field">
                   <mat-label>Key</mat-label>
                   <input matInput type="text" formControlName="key"/>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" class="push-right" style="width: 40%">
+                <mat-form-field appearance="outline" class="push-right key-value-form-field">
                   <mat-label>Value</mat-label>
                   <input matInput type="text" formControlName="value"/>
                 </mat-form-field>
@@ -141,8 +147,8 @@
               </div>
             </ng-container>
 
-            <button *ngIf="onboardingForm.controls['addQueryParams']?.value === true" type="button"
-                    mat-flat-button aria-label="Add Query Params" color="primary" (click)="addQueryParam()">
+            <button *ngIf="onboardingForm.controls['addQueryParams']?.value === true" type="button" class="margin-bottom-md"
+                    mat-stroked-button aria-label="Add Query Params" color="primary" (click)="addQueryParam()">
               <mat-icon>add</mat-icon>
               Add Query Params
             </button>
@@ -152,12 +158,10 @@
           <mat-divider class="top-margin"></mat-divider>
 
           <!-- Request Body -->
-          <div>
-            <div>
+          <div style="margin: 8px 0">
               <mat-checkbox formControlName="addRequestBody" (change)="onAddRequestBody()">
                 Add Request/Modify Body
               </mat-checkbox>
-            </div>
           </div>
           <div *ngIf="onboardingForm.controls['requestBody']">
             <mat-form-field appearance="outline" class="full-width">
@@ -166,11 +170,14 @@
             </mat-form-field>
           </div>
           <!-- End Request Body -->
+
         </form>
 
       </div>
-      <div class="col" style="padding: 0 16px; max-width: 50%">
-        <mat-tab-group class="top-margin">
+
+      <!-- Second column with mat-tab -->
+      <div class="config-col">
+        <mat-tab-group class="top-margin" mat-stretch-tabs="false">
           <mat-tab label="HTTP Response">
             <div [ngClass]="!!loginErrorResponse ? 'scrollable-error-tab-container' : 'scrollable-tab-container'" >
               <div *ngIf="loginSuccessResponse">
@@ -185,8 +192,9 @@
           <mat-tab label="Third"> Content 3</mat-tab>
         </mat-tab-group>
       </div>
-      <!-- End Query Params -->
     </div>
+
+
     <div>
       <button mat-raised-button aria-label="Test Connection" color="primary" type="submit"
               (click)="onTestConnection()">

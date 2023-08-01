@@ -59,6 +59,8 @@ export class HttpConnectionComponent implements OnInit {
   loginSuccessResponse: any;
   loginErrorResponse: any;
 
+
+
   constructor(
     private fb: UntypedFormBuilder,
     private log: LoggerService,
@@ -93,7 +95,7 @@ export class HttpConnectionComponent implements OnInit {
 
   onConnectionTypeSelected() {
     // if(this.selectedConnectionType.value == this.connectionTypes[0].value){
-      if(this.selectedConnectionType.value == ConnectionType.basicAuth){
+    if(this.selectedConnectionType.value == ConnectionType.basicAuth){
       this.onboardingForm.addControl('user', new FormControl('', Validators.required));
       this.onboardingForm.addControl('password', new FormControl('', Validators.required));
       this.onboardingForm.removeControl('token');
@@ -114,6 +116,8 @@ export class HttpConnectionComponent implements OnInit {
     else if(this.selectedConnectionType.value == ConnectionType.token){
       this.onboardingForm.controls['addRequestBody'].patchValue(false);
       this.onboardingForm.controls['addRequestBody'].disable();
+      this.onboardingForm.removeControl('user');
+      this.onboardingForm.removeControl('password');
       if(!this.onboardingForm.controls['token']){
         this.onboardingForm.addControl('token', new FormControl('', Validators.required));
       }
@@ -198,6 +202,9 @@ export class HttpConnectionComponent implements OnInit {
   }
   onDeleteHeaderParam(index){
     this.headerParams.removeAt(index);
+    if(index == 0 ){ // all header params have been remover, and we need to deselect the Customize Headers checkbox
+      this.onboardingForm.controls['customizeHeaders'].patchValue(false);
+    }
   }
 
   onDeleteQueryParam(index: number) {
