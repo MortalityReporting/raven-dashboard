@@ -103,10 +103,10 @@ export class HttpConnectionComponent implements OnInit {
       }
       this.onboardingForm.removeControl("requestBody");
     }
-    else {
+    else { //assuming the connection type here is token
       this.onboardingForm.removeControl('user');
       this.onboardingForm.removeControl('password');
-      this.onboardingForm.addControl('token', new FormControl('', Validators.required));
+      this.onboardingForm.addControl('token', new FormControl(''));
       this.onboardingForm.controls['addQueryParams'].enable();
       this.onboardingForm.controls['addRequestBody'].enable();
     }

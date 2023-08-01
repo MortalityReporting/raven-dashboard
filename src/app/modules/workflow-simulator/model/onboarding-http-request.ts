@@ -11,44 +11,62 @@ interface FormValue {
   password?: string;
   requestBody?: any;
   requestParams?: any;
-  queryParams?: any;
-  headerParams?: any;
+  queryParameters?: any;
+  headerParameters?: any;
+  token?: any;
 }
 
 export class OnboardingHttpRequest {
   url: string;
   requestType: RequestType;
   connectionType: string;
-  body?: any;
-  requestParams?: any;
-  queryParams?: any;
-  headerParams?: any;
-  httpOptions: any
+  requestBody?: any;
+  httpOptions: any;
 
-  //Basic Auth Constructor
   constructor(formValue: FormValue){
-    if (formValue.requestType == RequestType.GET && formValue.connectionType.value == ConnectionType.basicAuth) {
-      const auth = (`${formValue.user}:${formValue.password}`);
-      const authorizationData: string = 'Basic ' + btoa(auth);
-      const headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': authorizationData
-      });
 
-      const queryParams = new HttpParams(formValue.queryParams)
-      this.httpOptions = {params: queryParams, headers}
-        this.httpOptions = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Authorization': authorizationData
-        }),
+    let queryParams = new HttpParams();
+    formValue.queryParameters?.forEach(
+      // HttpParams.append returns a clone of the params with the value appended, it does not update the params object
+      param => queryParams = queryParams.append(param.key, param.value)
+    )
 
-      }
-      // TODO add code for additional header params if needed
+    let headers = new HttpHeaders();
+    if(formValue.headerParameters){
+      formValue.headerParameters?.forEach(
+        // HttpHeaders.append returns a clone of the headers with the value appended, it does not update the headers object
+        param => headers = headers.append(param.key, param.value)
+      )
     }
+
     this.url = formValue.endpointUrl;
     this.requestType = formValue.requestType;
     this.connectionType = formValue.connectionType.value;
-    this.headerParams = formValue.headerParams ?? null;
+    this.requestBody = formValue.requestBody;
+
+    if (formValue.connectionType.value == ConnectionType.basicAuth) {
+      /**
+       * The Basic Auth can only handle encoded username and password and
+       * any query params passed by the user.
+       * If the user wishes to modify the request body, this is handled in the common section
+       */
+      const auth = (`${formValue.user}:${formValue.password}`);
+      const authorizationData: string = 'Basic ' + btoa(auth);
+
+      headers = headers.append('Content-Type', 'application/json');
+      headers = headers.append('Authorization', authorizationData);
+    }
+    else if (formValue.connectionType.value == ConnectionType.token){
+      /**
+       * The token (Bearer) Auth can only handle a token
+       * any query params passed by the user.
+       * If the user wishes to modify the request body, this is handled in the common section
+       */
+      headers = headers.append('Content-Type', 'application/json');
+      headers = headers.append('Authorization', `Bearer ${formValue.token}`);
+    }
+
+    this.httpOptions = { params: queryParams, headers };
+
   }
 }
