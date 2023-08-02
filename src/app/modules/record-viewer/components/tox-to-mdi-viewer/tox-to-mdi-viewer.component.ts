@@ -5,9 +5,7 @@ import {AppConfiguration} from "../../../../providers/app-configuration";
 import {ToxToMdiMessageHandlerService} from "../../services/tox-to-mdi-message-handler.service";
 import {FhirExplorerService} from "../../../fhir-explorer/services/fhir-explorer.service";
 import {ToxToMdiRecord} from "../../models/toxToMdiRecord";
-import {
-  MdiToEdrsViewerContentComponent
-} from "../mdi-to-edrs-viewer/mdi-to-edrs-viewer-content/mdi-to-edrs-viewer-content.component";
+import {ToxToMdiViewerContentComponent} from "./tox-to-mdi-viewer-content/tox-to-mdi-viewer-content.component";
 
 @Component({
   selector: 'record-viewer-tox-to-mdi-viewer',
@@ -15,7 +13,7 @@ import {
   styleUrls: ['./tox-to-mdi-viewer.component.css']
 })
 export class ToxToMdiViewerComponent implements OnInit {
-  // @ViewChild(MdiToEdrsViewerContentComponent) contentComponent: MdiToEdrsViewerContentComponent;
+  @ViewChild(ToxToMdiViewerContentComponent) contentComponent: ToxToMdiViewerContentComponent;
   showFhirExplorerDrawer = false;
   showDrawer = [this.showFhirExplorerDrawer];
 
@@ -39,7 +37,7 @@ export class ToxToMdiViewerComponent implements OnInit {
   }
 
   onItemClick(id: string) {
-    //this.contentComponent.onSetState(id, true);
+    this.contentComponent.onSetState(id);
   }
 
 

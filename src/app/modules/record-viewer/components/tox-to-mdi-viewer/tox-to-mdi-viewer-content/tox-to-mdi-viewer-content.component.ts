@@ -28,6 +28,12 @@ export class ToxToMdiViewerContentComponent {
   ) {
   }
 
+  onSetState(resourceId){
+    this.idStateList = this.idStateList.map(
+      (element) => element.id === resourceId ? {id: element.id, expanded: true} : element);
+    document.getElementById(resourceId).scrollIntoView({behavior: "smooth"});
+  }
+
   onOpenAll() {
     this.idStateList.forEach(element => element.expanded = true);
     this.accordion.openAll()

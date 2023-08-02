@@ -26,12 +26,10 @@ export class MdiToEdrsViewerRelatedToxComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    console.log(this.toxicologyRecordList);
     this.dataSource = new MatTableDataSource<any>(this.toxicologyRecordList);
   }
 
   onRowClicked(row: any) {
-    //console.log("/" + this.appConfig.modules['recordViewer'].route + "/tox/" + row.toxCaseSystem + "|" + row.toxCaseNumber);
     this.router.navigateByUrl("/" + this.appConfig.modules['recordViewer'].route + "/tox/" + encodeURIComponent(row.toxCaseSystem + "|" + row.toxCaseNumber));
   }
 }

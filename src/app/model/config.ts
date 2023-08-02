@@ -11,4 +11,6 @@ export class Config {
   blueJayServerBase: string = "";
   adminRedirectUrl: string = "";
   adminLogoutUrl: string = "";
+
+  logFhirRequests?: boolean = true;
 }

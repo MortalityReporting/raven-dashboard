@@ -32,17 +32,11 @@ import {MdiToEdrsRecord} from "../models/mdiToEdrsRecord";
 })
 export class MdiToEdrsDocumentHandlerService {
 
-  private subjectId: string;
   public defaultString: string = "VALUE NOT FOUND";
 
   // TODO: Refactor this in conjunction with directives.
   private currentDocumentBundle: any;
   private currentCompositionResource: any;
-
-  // private caseHeader = new Subject<CaseHeader>();
-  // private caseSummary = new Subject<CaseSummary>();
-  // private patientResource = new Subject<any>();
-  // private relatedToxicology = new Subject<any>();
 
   constructor(
     private fhirExplorerService: FhirExplorerService,
@@ -59,18 +53,6 @@ export class MdiToEdrsDocumentHandlerService {
     this.currentDocumentBundle = documentBundle;
   }
 
-  // setCaseSummary(caseSummary){
-  //   this.caseSummary.next(caseSummary);
-  // }
-  //
-  // setPatientResource(patientResource){
-  //   this.patientResource.next(patientResource);
-  // }
-  //
-  // setCaseHeader(caseHeader){
-  //   this.caseHeader.next(caseHeader);
-  // }
-
   setCurrentDocumentBundle(documentBundle){
     this.currentDocumentBundle = documentBundle;
   }
@@ -79,25 +61,16 @@ export class MdiToEdrsDocumentHandlerService {
     this.currentCompositionResource = compositionResource;
   }
 
-  // setRelatedToxicology(searchResultBundle){
-  //   this.relatedToxicology.next(searchResultBundle);
-  // }
-
   clearObservablesAndCashedData(){
     this.setCurrentCompositionResource(null);
     this.setCurrentDocumentBundle(null);
-    // this.setCaseHeader(null);
-    // this.setPatientResource(null);
-    // this.setCaseSummary(null);
     this.setDocumentBundle(null);
-    // this.setRelatedToxicology(null);
   }
 
   getRecord(subjectId: string): Observable<any> {
     const composition$ = this.fetchComposition(subjectId);
     const documentBundle$ = composition$.pipe(
       mergeMap((composition: any) => {
-        console.log(composition['id']);
         return this.fetchDocumentBundle(composition?.['id']);
       })
     );
@@ -116,8 +89,6 @@ export class MdiToEdrsDocumentHandlerService {
         const patient = this.bundleHelper.findSubjectInBundle(composition, documentBundle);
         const caseHeader = this.createCaseHeader(documentBundle, patient, composition);
         const caseSummary = this.createCaseSummary(documentBundle, patient, composition);
-        // this.caseHeader.next(caseHeader);
-        // this.caseSummary.next(caseSummary);
         const record = new MdiToEdrsRecord(
           caseHeader,
           caseSummary,
@@ -125,7 +96,6 @@ export class MdiToEdrsDocumentHandlerService {
           mdiCaseNumber,
           documentBundle,
           relatedToxicology);
-        console.log(record);
         return record;
       }))
   }
@@ -138,26 +108,6 @@ export class MdiToEdrsDocumentHandlerService {
   private fetchDocumentBundle(compositionId: string): Observable<any> {
     return this.fhirClient.read("Composition", `${compositionId}/$document`);
   }
-
-  // getDocumentBundle(compositionId: string) {
-  //   return this.fhirClient.read("Composition", `${compositionId}/$document`).pipe(
-  //     map((documentBundle: any) => {
-  //       this.currentDocumentBundle = documentBundle;
-  //       let compositionResource = this.bundleHelper.findResourceByFullUrl(documentBundle, "Composition/" + compositionId);
-  //       this.currentCompositionResource = compositionResource;
-  //       this.subjectId = compositionResource.subject.reference
-  //       let patientResource = this.bundleHelper.findResourceByFullUrl(documentBundle, this.subjectId);
-  //       // this.patientResource.next(patientResource);
-  //       // this.caseHeader.next(this.createCaseHeader(documentBundle, patientResource, compositionResource));
-  //       // this.caseSummary.next(this.createCaseSummary(documentBundle, patientResource, compositionResource));
-  //
-  //       // TODO: This should happen in component not service.
-  //       this.fhirExplorerService.setSelectedFhirResource(documentBundle);
-  //
-  //       return documentBundle;
-  //     })
-  //   );
-  // }
 
   /**
    * Get a summarized list of tox-to-mdi records (Toxicology Reports) related to a particular mdi-to-edrs document.

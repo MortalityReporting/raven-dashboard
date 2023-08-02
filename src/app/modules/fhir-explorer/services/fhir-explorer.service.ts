@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {FhirResource} from "../../fhir-util/models/base/fhir.resource";
 import {ConfigService} from "../../../service/config.service";
 import {Config} from "../../../model/config";
@@ -11,7 +11,7 @@ import {Config} from "../../../model/config";
 export class FhirExplorerService {
   config: Config;
 
-  private fhirResource = new Subject<FhirResource>();
+  private fhirResource = new BehaviorSubject<FhirResource>(undefined);
   fhirResource$ = this.fhirResource.asObservable();
 
   apiUrl: string;

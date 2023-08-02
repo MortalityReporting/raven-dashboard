@@ -3,9 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FhirUtilModule } from "../fhir-util/fhir-util.module";
 import { SearchRecordsComponent } from "./components/search-records/search-records.component";
 import { DecedentRecordsGridComponent } from "./components/search-records/decedent-records-grid/decedent-records-grid.component";
-import { ToxicologyGridComponent } from "./components/search-records/toxicology-grid/toxicology-grid.component";
-import { ToxicologyReportGridSectionComponent } from "./components/tox-to-mdi-viewer/toxicology-report-grid-section/toxicology-report-grid-section.component";
-import { ToxicologyReportMdiCaseComponent } from "./components/tox-to-mdi-viewer/toxicology-report-mdi-case/toxicology-report-mdi-case.component";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatIconModule, MatIconRegistry} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
@@ -46,14 +43,20 @@ import { ToxToMdiViewerContentComponent } from './components/tox-to-mdi-viewer/t
 import {
   ToxToMdiViewerCertifierComponent
 } from "./components/tox-to-mdi-viewer/tox-to-mdi-viewer-certifier/tox-to-mdi-viewer-certifier.component";
+import {
+  ToxToMdiViewerGridSectionComponent
+} from "./components/tox-to-mdi-viewer/tox-to-mdi-viewer-grid-section/tox-to-mdi-viewer-grid-section.component";
+import {ToxicologyGridComponent} from "./components/search-records/toxicology-grid/toxicology-grid.component";
+import {
+  ToxToMdiViewerMdiCaseComponent
+} from "./components/tox-to-mdi-viewer/tox-to-mdi-viewer-mdi-case/tox-to-mdi-viewer-mdi-case.component";
 
 @NgModule({
   declarations: [
     SearchRecordsComponent,
     DecedentRecordsGridComponent,
     ToxicologyGridComponent,
-    ToxicologyReportGridSectionComponent,
-    ToxicologyReportMdiCaseComponent,
+    ToxToMdiViewerMdiCaseComponent,
     MdiToEdrsViewerRelatedToxComponent,
     DecedentDisplayComponent,
     MdiToEdrsViewerComponent,
@@ -65,6 +68,7 @@ import {
     ToxToMdiViewerNavMenuComponent,
     ToxToMdiViewerContentComponent,
     ToxToMdiViewerCertifierComponent,
+    ToxToMdiViewerGridSectionComponent
   ],
     imports: [
         CommonModule,

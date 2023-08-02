@@ -4,11 +4,11 @@ import {MatTableDataSource} from "@angular/material/table";
 import {FhirExplorerService} from "../../../../fhir-explorer/services/fhir-explorer.service";
 
 @Component({
-  selector: 'record-viewer-toxicology-report-grid-section',
-  templateUrl: './toxicology-report-grid-section.component.html',
-  styleUrls: ['../../tox-to-mdi/toxicology-report.component.scss']
+  selector: 'record-viewer-tox-to-mdi-viewer-grid-section',
+  templateUrl: './tox-to-mdi-viewer-grid-section.component.html',
+  styleUrls: ['../tox-to-mdi-viewer.component.css']
 })
-export class ToxicologyReportGridSectionComponent implements OnInit, AfterViewInit {
+export class ToxToMdiViewerGridSectionComponent implements OnInit, AfterViewInit {
   @Input() data: any[];
   @Input() columns: string[] = [];
   @ViewChild(MatSort) sort: MatSort;

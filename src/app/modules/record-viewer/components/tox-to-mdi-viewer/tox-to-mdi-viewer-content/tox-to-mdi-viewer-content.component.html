@@ -17,7 +17,7 @@
       <div class="summary-section-grid">
         <div class="grid-row">
           <div class="grid-col-1">
-            <record-viewer-toxicology-report-mdi-case [toxSummary]="toxToMdiRecord?.toxSummary" *ngIf="toxToMdiRecord"></record-viewer-toxicology-report-mdi-case>
+            <record-viewer-tox-to-mdi-viewer-mdi-case [toxSummary]="toxToMdiRecord?.toxSummary" *ngIf="toxToMdiRecord"></record-viewer-tox-to-mdi-viewer-mdi-case>
           </div>
         </div>
       </div>
@@ -43,10 +43,10 @@
         <mat-panel-title>Specimens</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="summary-section-body">
-        <record-viewer-toxicology-report-grid-section
+        <record-viewer-tox-to-mdi-viewer-grid-section
           *ngIf="toxToMdiRecord?.toxSummary?.specimens" [data]="toxToMdiRecord?.toxSummary?.specimens"
           [columns]="['type', 'site', 'identifier', 'collected', 'received', 'condition', 'container']">
-        </record-viewer-toxicology-report-grid-section>
+        </record-viewer-tox-to-mdi-viewer-grid-section>
       </div>
     </mat-expansion-panel>
 
@@ -56,10 +56,10 @@
         <mat-panel-title>Test Results</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="summary-section-body">
-        <record-viewer-toxicology-report-grid-section *ngIf="toxToMdiRecord?.toxSummary?.results"
+        <record-viewer-tox-to-mdi-viewer-grid-section *ngIf="toxToMdiRecord?.toxSummary?.results"
                                                       [data]="toxToMdiRecord?.toxSummary?.results"
                                                       [columns]="['test', 'value', 'date', 'specimen']">
-        </record-viewer-toxicology-report-grid-section>
+        </record-viewer-tox-to-mdi-viewer-grid-section>
       </div>
     </mat-expansion-panel>
 

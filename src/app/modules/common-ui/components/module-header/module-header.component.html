@@ -7,9 +7,4 @@
     {{moduleTitle}} <span *ngIf="componentTitle">- {{componentTitle}}</span>
     <mat-divider class="module-header-underline"></mat-divider>
   </div>
-  <div class="module-header-fhir-explorer-wrapper" *ngIf="fhirExplorerDrawerService.isInstantiated();">
-    <a *ngIf="fhirExplorerDrawerService.isInstantiated();" mat-raised-button color="accent" (click)="onToggle()">
-      Toggle FHIR Explorer
-    </a>
-  </div>
 </div>

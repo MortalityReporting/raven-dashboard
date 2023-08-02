@@ -10,7 +10,6 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FhirValidatorModule} from "./modules/fhir-validator/fhir-validator.module";
 import {FhirAuthInterceptor} from "./interceptors/fhir-auth.interceptor";
 import {LandingComponent} from './components/landing/landing.component';
-import {FhirExplorerDrawerService} from "./modules/fhir-explorer/services/fhir-explorer-drawer.service";
 import {ClipboardModule} from "@angular/cdk/clipboard";
 import {ModalComponent} from './components/widgets/modal/modal.component';
 import {WorkflowSimulatorModule} from "./modules/workflow-simulator/workflow-simulator.module";
@@ -34,12 +33,10 @@ import {MatButtonModule} from "@angular/material/button";
 import {HeaderComponent, NavMenuComponent} from "common-ui";
 import {AppConfiguration} from "./providers/app-configuration";
 import { CardHoverDirective } from './directives/card-hover.directive';
-
 import { UiStringConstants } from "./providers/ui-string-constants";
 import { FHIRProfileConstants } from "./providers/fhir-profile-constants";
 import {UserManagementModule} from "./modules/user-management/user-management.module";
-import {AuthModule} from "@auth0/auth0-angular";
-import { DocRefBase64TransformPipe } from './modules/fhir-util/pipes/doc-ref-base64-transform.pipe';
+import { DocRefBase64TransformPipe } from './modules/fhir-util';
 import {ConfigService} from "./service/config.service";
 import {RegisteredEndpointsInterceptor} from "./interceptors/registered-endpoints.interceptor";
 
@@ -108,8 +105,7 @@ export const configFactory = (configService: ConfigService) => {
       provide: HTTP_INTERCEPTORS,
       useClass: FhirAuthInterceptor,
       multi: true
-    },
-    FhirExplorerDrawerService,
+    }
   ],
   bootstrap: [AppComponent],
   exports: [
