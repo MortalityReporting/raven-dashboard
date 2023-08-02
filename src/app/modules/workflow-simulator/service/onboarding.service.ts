@@ -13,6 +13,7 @@ export class OnboardingService {
 
   // Example url for basic auth testing
   // https://raven.dev.heat.icl.gtri.org/mdi-fhir-server/fhir/Patient
+  // https://bluejay.heat.icl.gtri.org/mdi-fhir-server/fhir/Patient
   onLogin(request: OnboardingHttpRequest): Observable<any> {
     if (request.requestType == RequestType.GET) {
       return this.http.get(request.url, request.httpOptions)
