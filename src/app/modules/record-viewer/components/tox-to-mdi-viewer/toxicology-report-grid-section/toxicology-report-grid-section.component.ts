@@ -6,7 +6,7 @@ import {FhirExplorerService} from "../../../../fhir-explorer/services/fhir-explo
 @Component({
   selector: 'record-viewer-toxicology-report-grid-section',
   templateUrl: './toxicology-report-grid-section.component.html',
-  styleUrls: ['../toxicology-report.component.scss']
+  styleUrls: ['../../tox-to-mdi/toxicology-report.component.scss']
 })
 export class ToxicologyReportGridSectionComponent implements OnInit, AfterViewInit {
   @Input() data: any[];

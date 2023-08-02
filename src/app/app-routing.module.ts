@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LandingComponent} from "./components/landing/landing.component";
-import {CaseContainerComponent} from "./modules/record-viewer/components/viewer-container/case-container.component";
 import {ImportCaseComponent} from "./modules/import-case/components/import-case.component";
 import {FhirValidatorComponent} from "./modules/fhir-validator/components/fhir-validator/fhir-validator.component";
 import {SearchRecordsComponent} from "./modules/record-viewer/components/search-records/search-records.component";
@@ -15,9 +14,6 @@ import {
 import {AdminPanelComponent} from "./modules/user-management/components/admin-panel/admin-panel.component";
 import {AuthGuard} from "@auth0/auth0-angular";
 import {LoggedInComponent} from "./modules/user-management/components/logged-in/logged-in.component";
-import {
-  RegisteredModulesComponent
-} from "./modules/workflow-simulator/components/registered-modules/registered-modules.component";
 import {TestContainerComponent} from "./modules/workflow-simulator/components/test-container/test-container.component";
 import {
   MdiToEdrsViewerComponent

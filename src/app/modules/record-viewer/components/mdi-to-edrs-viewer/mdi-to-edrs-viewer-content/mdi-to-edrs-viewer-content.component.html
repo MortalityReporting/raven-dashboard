@@ -1,11 +1,11 @@
 
 <div class="section-button-wrapper">
-  <button mat-raised-button (click)="onOpenAll()" [style.background-color]="config.backgroundColor"
+  <button class="margin-right-md" mat-raised-button (click)="onOpenAll()" [style.background-color]="config.backgroundColor"
           [style.color]="appConfig.contrastColor">
     <mat-icon>expand_more</mat-icon>
     Expand All Sections
   </button>
-  <button mat-raised-button (click)="onCloseAll()" [style.background-color]="config.backgroundColor"
+  <button class="margin-right-md" mat-raised-button (click)="onCloseAll()" [style.background-color]="config.backgroundColor"
           [style.color]="appConfig.contrastColor">
     <mat-icon>expand_less</mat-icon>
     Collapse All Sections
@@ -15,10 +15,6 @@
           [style.color]="appConfig.contrastColor">Open in Comparison Tool
   </button>
 </div>
-
-  <record-viewer-mdi-to-edrs-viewer-related-tox
-    [toxicologyRecordList]="mdiToEdrsRecord?.relatedToxicology">
-  </record-viewer-mdi-to-edrs-viewer-related-tox>
 
 <mat-accordion multi>
   <mat-expansion-panel class="summary-section" id="caseAdminInfo" [expanded]="isExpanded('caseAdminInfo')">
@@ -32,7 +28,7 @@
             <div class="content-field-label">
               <p><u>Tracking Numbers</u></p>
             </div>
-            <div *ngFor="let trackingNumber of mdiToEdrsRecord?.caseHeader?.trackingNumbers">
+            <div class="content-field-value" *ngFor="let trackingNumber of mdiToEdrsRecord?.caseHeader?.trackingNumbers">
               <record-viewer-mdi-to-edrs-viewer-content-field [label]="trackingNumber.type" [value]="trackingNumber.value"
                                                         appSetFhirExplorer
                                                         [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Composition-mdi-to-edrs'"
@@ -42,29 +38,12 @@
           </div>
           <div class="grid-col-1">
             <div class="content-field-label">
-              <p><u>Chief ME/C</u></p>
+              <p><u>Chief Medical Examiner/Coroner</u></p>
             </div>
-            <div *ngIf="author">
-              <div style="padding: 5px; width: 100%">
-                  <span><label style="margin-right: 5px">Name: </label>
-                    <input type="text" value="{{name}}" appSetFhirExplorer [resource]="mdiToEdrsRecord?.caseSummary?.certifierResource" readonly
-                           style="width: 40%"></span>
-                <span style="float: right">
-                    <label style="margin-right: 5px">LIC: </label>
-                    <input type="text" value="{{license}}" appSetFhirExplorer [resource]="mdiToEdrsRecord?.caseSummary?.certifierResource" readonly
-                           style="width: 70%; float: right">
-                  </span>
-              </div>
-              <div style="padding: 5px; width: 100%">
-                <span style="margin-right: 5px"><label>Phone #: </label></span>
-                <input type="text" value="{{phone}}" appSetFhirExplorer [resource]="mdiToEdrsRecord?.caseSummary?.certifierResource" readonly
-                       style="width: 75%; float: right;">
-              </div>
-              <div style="padding: 5px; width: 100%">
-                <span style="margin-right: 5px"><label>Address: </label></span>
-                <textarea type="text" value="{{addressLine}}" appSetFhirExplorer [resource]="mdiToEdrsRecord?.caseSummary?.certifierResource" readonly
-                          rows="3" style="width: 100%; margin-right: 5px" [style.resize]="'none'"></textarea>
-              </div>
+            <div>
+              <record-viewer-mdi-to-edrs-viewer-practitioner-card [practitioner]="mdiToEdrsRecord.caseHeader.authors[0]">
+
+              </record-viewer-mdi-to-edrs-viewer-practitioner-card>
             </div>
           </div>
         </div>

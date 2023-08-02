@@ -23,4 +23,13 @@ export class Author {
   city: string;
   state: string;
   postalCode: string;
+  resource: any;
+
+  getFullName(): string {
+    return (`${this.givenName[0] ?? ''} ${this.familyName ?? ''}`).trim();
+  }
+
+  getFullAddress(): string {
+    return (`${this.line? this.line + '\n': ''}${this.city ? this.city + ', ' : ''} ${this.state ?? ''} ${this.postalCode ?? ''}`).trim();
+  }
 }

@@ -10,6 +10,8 @@
         </button>
       </div>
       <div class="grid-col-1">
+      </div>
+      <div class="grid-col-1">
         <mat-form-field>
           <mat-select [(value)]="selectedTestCase">
             <mat-option (onSelectionChange)="onReferenceDocumentChanged($event)" class="mat-option"
@@ -47,6 +49,9 @@
 
         </div>
       </div>
+      <div class="grid-col-1 compareToText" [style.color]="config.backgroundColor">
+        Compare to
+      </div>
       <div class="grid-col-1">
         <div *ngIf="referenceDocumentWrapper">
           <mat-card>
@@ -62,6 +67,7 @@
       <div class="grid-col-1">
 
       </div>
+
     </div>
   </div>
 

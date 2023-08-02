@@ -1,10 +1,5 @@
 import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
-import {Observable} from "rxjs";
-import {CaseHeader} from "../../../models/case.header";
-import {CaseSummary} from "../../../models/case.summary";
-import {FhirResource} from "../../../../fhir-util";
 import {MatAccordion} from "@angular/material/expansion";
-import {MdiToEdrsDocumentHandlerService} from "../../../services/mdi-to-edrs-document-handler.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
 import {AppConfiguration} from "../../../../../providers/app-configuration";
@@ -13,16 +8,11 @@ import {MdiToEdrsRecord} from "../../../models/mdiToEdrsRecord";
 @Component({
   selector: 'record-viewer-mdi-to-edrs-viewer-content',
   templateUrl: './mdi-to-edrs-viewer-content.component.html',
-  styleUrls: ['../mdi-to-edrs-viewer.component.css', '../../../record-viewer-styles.scss']
+  styleUrls: ['../mdi-to-edrs-viewer.component.scss', '../../../record-viewer-styles.scss']
 })
 export class MdiToEdrsViewerContentComponent implements OnInit {
   @Input() mdiToEdrsRecord: MdiToEdrsRecord;
   @ViewChild(MatAccordion) accordion: MatAccordion;
-
-  name: string;
-  license: string;
-  phone:string;
-  addressLine: string;
 
   idStateList = [
     { expanded: true,     id: 'caseAdminInfo' },
@@ -41,7 +31,6 @@ export class MdiToEdrsViewerContentComponent implements OnInit {
   author: any;
 
   constructor(
-    private documentHandlerService: MdiToEdrsDocumentHandlerService,
     private route: ActivatedRoute,
     private router: Router,
     @Inject('config') public config: ModuleHeaderConfig,
@@ -49,35 +38,15 @@ export class MdiToEdrsViewerContentComponent implements OnInit {
   ) {
   }
 
-  ngOnInit(): void {
-    console.log("HERE");
-    console.log(this.mdiToEdrsRecord);
-    //this.mdiToEdrsRecord$.subscribe();
-    // this.caseHeader$.subscribe( caseHeader => {
-    //   if (caseHeader?.authors != null)
-    //   {
-    //     let author = caseHeader.authors[0];
-    //     this.author = caseHeader.authors[0];
-    //     this.name = `${this.author.givenName[0] ?? ''} ${this.author.familyName ?? ''}`;
-    //     if(!this.name?.length){
-    //       this.name = this.documentHandlerService.defaultString
-    //     }
-    //     this.license = this.author.license ?? this.documentHandlerService.defaultString;
-    //     this.phone = this.author.phoneNumber ?? this.documentHandlerService.defaultString;
-    //     this.addressLine = `${author.line? author.line + '\n': ''}${this.author.city ? this.author.city + ', ' : ''} ${this.author.state ?? ''} ${this.author.postalCode ?? ''}`
-    //     if(!this.addressLine?.trim()?.length){
-    //       this.addressLine = this.documentHandlerService.defaultString;
-    //     }
-    //   }
-    // });
-  }
+  ngOnInit(): void {}
 
   onToggleState(id: any ) {
     this.idStateList = this.idStateList.map(element => element.id == id ? {id: element.id, expanded: !element.expanded}: element);
   }
 
-  onSetState(resourceId, state){
-    this.idStateList = this.idStateList.map((element) => element.id === resourceId ? {id: element.id, expanded: true} : element);
+  onSetState(resourceId){
+    this.idStateList = this.idStateList.map(
+      (element) => element.id === resourceId ? {id: element.id, expanded: true} : element);
     document.getElementById(resourceId).scrollIntoView({behavior: "smooth"});
   }
 

@@ -7,7 +7,7 @@ import { ToxToMdiMessageHandlerService } from "../../../services/tox-to-mdi-mess
 @Component({
   selector: 'record-viewer-toxicology-report-mdi-case',
   templateUrl: './toxicology-report-mdi-case.component.html',
-  styleUrls: ['../toxicology-report.component.scss']
+  styleUrls: ['../../tox-to-mdi/toxicology-report.component.scss']
 })
 export class ToxicologyReportMdiCaseComponent implements OnInit {
   @Input() toxSummary: ToxSummary;

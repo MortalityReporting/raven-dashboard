@@ -5,20 +5,23 @@
     </app-decedent-display>
   </div>
   <div class="viewer-container-body">
-<!--    <record-viewer-mdi-to-edrs-viewer-nav-menu>-->
-<!--    </record-viewer-mdi-to-edrs-viewer-nav-menu>-->
-<!--    <record-viewer-mdi-to-edrs-viewer-content-->
-<!--      class="viewer-container-body-content"-->
-<!--      [mdiToEdrsRecord]="mdiToEdrsRecord"-->
-<!--    ></record-viewer-mdi-to-edrs-viewer-content>-->
+    <record-viewer-tox-to-mdi-viewer-nav-menu
+      (menuClickEvent)="onItemClick($event)"
+    >
+    </record-viewer-tox-to-mdi-viewer-nav-menu>
+    <record-viewer-tox-to-mdi-viewer-content
+      class="viewer-container-body-content"
+      [toxToMdiRecord]="toxToMdiRecord">
+    </record-viewer-tox-to-mdi-viewer-content>
 
-    <div class="viewer-container-body-fhir-explorer" [hidden]="drawerCollapsed">
+    <div class="viewer-container-body-side-content viewer-container-body-side-fhir-explorer"
+         [hidden]="!showDrawer[0]">
       <div class="fhir-explorer-header">
         <span class="explorer-header-title">
           FHIR Explorer
         </span>
         <span class="content-spacer"></span>
-        <mat-icon (click)="setDrawerWidth('30%'); drawerCollapsed=true;"
+        <mat-icon (click)="closeAllDrawers();"
                   aria-label="Close FHIR explorer"
                   matTooltip="Close FHIR Explorer"
                   class="pointer">
@@ -29,8 +32,10 @@
         <app-fhir-explorer></app-fhir-explorer>
       </div>
     </div>
+
+
     <div class="viewer-container-body-tabs">
-      <div (click)="drawerCollapsed=!drawerCollapsed;"
+      <div (click)="openDrawer(0);"
            class="hl7-fhir-logo-tab">
         <img src="assets/icon-fhir-32.png" class="fhir-explorer-icon">
         <span class="fhir-explorer-label">FHIR Explorer</span>

@@ -139,25 +139,25 @@ export class MdiToEdrsDocumentHandlerService {
     return this.fhirClient.read("Composition", `${compositionId}/$document`);
   }
 
-  getDocumentBundle(compositionId: string) {
-    return this.fhirClient.read("Composition", `${compositionId}/$document`).pipe(
-      map((documentBundle: any) => {
-        this.currentDocumentBundle = documentBundle;
-        let compositionResource = this.bundleHelper.findResourceByFullUrl(documentBundle, "Composition/" + compositionId);
-        this.currentCompositionResource = compositionResource;
-        this.subjectId = compositionResource.subject.reference
-        let patientResource = this.bundleHelper.findResourceByFullUrl(documentBundle, this.subjectId);
-        // this.patientResource.next(patientResource);
-        // this.caseHeader.next(this.createCaseHeader(documentBundle, patientResource, compositionResource));
-        // this.caseSummary.next(this.createCaseSummary(documentBundle, patientResource, compositionResource));
-
-        // TODO: This should happen in component not service.
-        this.fhirExplorerService.setSelectedFhirResource(documentBundle);
-
-        return documentBundle;
-      })
-    );
-  }
+  // getDocumentBundle(compositionId: string) {
+  //   return this.fhirClient.read("Composition", `${compositionId}/$document`).pipe(
+  //     map((documentBundle: any) => {
+  //       this.currentDocumentBundle = documentBundle;
+  //       let compositionResource = this.bundleHelper.findResourceByFullUrl(documentBundle, "Composition/" + compositionId);
+  //       this.currentCompositionResource = compositionResource;
+  //       this.subjectId = compositionResource.subject.reference
+  //       let patientResource = this.bundleHelper.findResourceByFullUrl(documentBundle, this.subjectId);
+  //       // this.patientResource.next(patientResource);
+  //       // this.caseHeader.next(this.createCaseHeader(documentBundle, patientResource, compositionResource));
+  //       // this.caseSummary.next(this.createCaseSummary(documentBundle, patientResource, compositionResource));
+  //
+  //       // TODO: This should happen in component not service.
+  //       this.fhirExplorerService.setSelectedFhirResource(documentBundle);
+  //
+  //       return documentBundle;
+  //     })
+  //   );
+  // }
 
   /**
    * Get a summarized list of tox-to-mdi records (Toxicology Reports) related to a particular mdi-to-edrs document.
@@ -214,6 +214,7 @@ export class MdiToEdrsDocumentHandlerService {
       author.city = practitioner?.address != null ? practitioner.address[0].city : undefined;
       author.state = practitioner?.address != null ? practitioner.address[0].state : undefined;
       author.postalCode = practitioner?.address != null ? practitioner.address[0].postalCode : undefined;
+      author.resource = practitioner;
 
       caseHeader.authors.push( author );
     });

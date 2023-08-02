@@ -4,11 +4,8 @@ import { FhirUtilModule } from "../fhir-util/fhir-util.module";
 import { SearchRecordsComponent } from "./components/search-records/search-records.component";
 import { DecedentRecordsGridComponent } from "./components/search-records/decedent-records-grid/decedent-records-grid.component";
 import { ToxicologyGridComponent } from "./components/search-records/toxicology-grid/toxicology-grid.component";
-import { ToxicologyReportComponent } from "./components/tox-to-mdi/toxicology-report.component";
-import { ToxicologyReportContentComponent } from "./components/tox-to-mdi/toxicology-report-content/toxicology-report-content.component";
-import { ToxicologyReportGridSectionComponent } from "./components/tox-to-mdi/toxicology-report-grid-section/toxicology-report-grid-section.component";
-import { ToxicologyReportMdiCaseComponent } from "./components/tox-to-mdi/toxicology-report-mdi-case/toxicology-report-mdi-case.component";
-import { CaseContainerComponent } from "./components/viewer-container/case-container.component";
+import { ToxicologyReportGridSectionComponent } from "./components/tox-to-mdi-viewer/toxicology-report-grid-section/toxicology-report-grid-section.component";
+import { ToxicologyReportMdiCaseComponent } from "./components/tox-to-mdi-viewer/toxicology-report-mdi-case/toxicology-report-mdi-case.component";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatIconModule, MatIconRegistry} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
@@ -32,9 +29,6 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatButtonModule} from "@angular/material/button";
 import { DecedentDisplayComponent } from './components/decedent-display/decedent-display.component';
 import {ScrollingModule} from "@angular/cdk/scrolling";
-import {
-  ToxicologyReportCertifierComponent
-} from "./components/tox-to-mdi/toxicology-report-certifier/toxicology-report-certifier.component";
 import {FhirMdiLibraryModule} from "../fhir-mdi-library/fhir-mdi-library.module";
 import { MdiToEdrsViewerComponent } from './components/mdi-to-edrs-viewer/mdi-to-edrs-viewer.component';
 import { MdiToEdrsViewerNavMenuComponent } from './components/mdi-to-edrs-viewer/mdi-to-edrs-viewer-nav-menu/mdi-to-edrs-viewer-nav-menu.component';
@@ -46,16 +40,18 @@ import {
   MdiToEdrsViewerRelatedToxComponent
 } from "./components/mdi-to-edrs-viewer/mdi-to-edrs-viewer-related-tox/mdi-to-edrs-viewer-related-tox.component";
 import { ToxToMdiViewerComponent } from './components/tox-to-mdi-viewer/tox-to-mdi-viewer.component';
+import { MdiToEdrsViewerPractitionerCardComponent } from './components/mdi-to-edrs-viewer/mdi-to-edrs-viewer-practitioner-card/mdi-to-edrs-viewer-practitioner-card.component';
+import { ToxToMdiViewerNavMenuComponent } from './components/tox-to-mdi-viewer/tox-to-mdi-viewer-nav-menu/tox-to-mdi-viewer-nav-menu.component';
+import { ToxToMdiViewerContentComponent } from './components/tox-to-mdi-viewer/tox-to-mdi-viewer-content/tox-to-mdi-viewer-content.component';
+import {
+  ToxToMdiViewerCertifierComponent
+} from "./components/tox-to-mdi-viewer/tox-to-mdi-viewer-certifier/tox-to-mdi-viewer-certifier.component";
 
 @NgModule({
   declarations: [
     SearchRecordsComponent,
     DecedentRecordsGridComponent,
     ToxicologyGridComponent,
-    CaseContainerComponent,
-    ToxicologyReportComponent,
-    ToxicologyReportContentComponent,
-    ToxicologyReportCertifierComponent,
     ToxicologyReportGridSectionComponent,
     ToxicologyReportMdiCaseComponent,
     MdiToEdrsViewerRelatedToxComponent,
@@ -65,6 +61,10 @@ import { ToxToMdiViewerComponent } from './components/tox-to-mdi-viewer/tox-to-m
     MdiToEdrsViewerContentComponent,
     MdiToEdrsViewerContentFieldComponent,
     ToxToMdiViewerComponent,
+    MdiToEdrsViewerPractitionerCardComponent,
+    ToxToMdiViewerNavMenuComponent,
+    ToxToMdiViewerContentComponent,
+    ToxToMdiViewerCertifierComponent,
   ],
     imports: [
         CommonModule,

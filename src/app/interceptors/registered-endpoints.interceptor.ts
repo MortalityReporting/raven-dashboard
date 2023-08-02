@@ -13,6 +13,8 @@ import {Config} from "../model/config";
 export class RegisteredEndpointsInterceptor implements HttpInterceptor {
   config: Config;
   registeredEndpoints: any[];
+  ignoreList = ["assets/", "../assets/", "../../assets/"];
+  skipInterceptor = false;
 
   constructor(private configService: ConfigService) {
     this.config = configService.config;
@@ -39,6 +41,9 @@ export class RegisteredEndpointsInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    if (this.skipInterceptor) {
+      return next.handle(request);
+    }
     let service = this.registeredEndpoints.find(service => request.url.startsWith(service.baseUrl));
     if (this.ignoreList.some(item => request.url.startsWith(item))) {
       return next.handle(request);
@@ -59,5 +64,4 @@ export class RegisteredEndpointsInterceptor implements HttpInterceptor {
     }
   }
 
-  ignoreList = ["assets/", "../assets/", "../../assets/"]
 }

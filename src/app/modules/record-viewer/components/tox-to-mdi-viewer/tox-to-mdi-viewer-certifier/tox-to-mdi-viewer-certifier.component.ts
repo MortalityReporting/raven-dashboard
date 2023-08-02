@@ -1,13 +1,12 @@
 import {Component, Input} from '@angular/core';
 import {CertifierAndOrganization, ToxSummary} from "../../../models/tox.summary";
 
-
 @Component({
-  selector: 'record-viewer-toxicology-report-certifier',
-  templateUrl: './toxicology-report-certifier.component.html',
-  styleUrls: ['../toxicology-report.component.scss']
+  selector: 'record-viewer-tox-to-mdi-viewer-certifier',
+  templateUrl: './tox-to-mdi-viewer-certifier.component.html',
+  styleUrls: ['../tox-to-mdi-viewer.component.css']
 })
-export class ToxicologyReportCertifierComponent {
+export class ToxToMdiViewerCertifierComponent {
   @Input() certifier: CertifierAndOrganization;
   @Input() toxSummary: ToxSummary;
 

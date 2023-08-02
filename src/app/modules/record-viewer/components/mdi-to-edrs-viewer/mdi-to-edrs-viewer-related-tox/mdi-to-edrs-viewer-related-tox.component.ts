@@ -8,7 +8,7 @@ import {AppConfiguration} from "../../../../../providers/app-configuration";
 @Component({
   selector: 'record-viewer-mdi-to-edrs-viewer-related-tox',
   templateUrl: './mdi-to-edrs-viewer-related-tox.component.html',
-  styleUrls: ['../mdi-to-edrs-viewer.component.css', '../../../record-viewer-styles.scss']
+  styleUrls: ['../mdi-to-edrs-viewer.component.scss', '../../../record-viewer-styles.scss']
 })
 export class MdiToEdrsViewerRelatedToxComponent implements OnInit {
   @Input() toxicologyRecordList: any[];

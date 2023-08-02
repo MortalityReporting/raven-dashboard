@@ -1,5 +1,4 @@
 
-<div class="margin-md">
   <div class="section-button-wrapper">
     <button mat-raised-button (click)="onOpenAll()" [style.background-color]="config.backgroundColor" [style.color]="appConfig.contrastColor">
       <mat-icon>expand_more</mat-icon>
@@ -18,7 +17,7 @@
       <div class="summary-section-grid">
         <div class="grid-row">
           <div class="grid-col-1">
-            <record-viewer-toxicology-report-mdi-case [toxSummary]="toxSummary" *ngIf="toxSummary"></record-viewer-toxicology-report-mdi-case>
+            <record-viewer-toxicology-report-mdi-case [toxSummary]="toxToMdiRecord?.toxSummary" *ngIf="toxToMdiRecord"></record-viewer-toxicology-report-mdi-case>
           </div>
         </div>
       </div>
@@ -32,7 +31,9 @@
         <mat-panel-title>Performer(s)</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="summary-section-body">
-        <record-viewer-toxicology-report-certifier *ngIf="toxSummary?.certifier" [certifier]="toxSummary?.certifier" [toxSummary]="toxSummary"></record-viewer-toxicology-report-certifier>
+        <record-viewer-tox-to-mdi-viewer-certifier *ngIf="toxToMdiRecord?.toxSummary?.certifier"
+                                                   [certifier]="toxToMdiRecord?.toxSummary?.certifier"
+                                                   [toxSummary]="toxToMdiRecord?.toxSummary"></record-viewer-tox-to-mdi-viewer-certifier>
       </div>
     </mat-expansion-panel>
 
@@ -43,7 +44,7 @@
       </mat-expansion-panel-header>
       <div class="summary-section-body">
         <record-viewer-toxicology-report-grid-section
-          *ngIf="toxSummary?.specimens" [data]="toxSummary?.specimens"
+          *ngIf="toxToMdiRecord?.toxSummary?.specimens" [data]="toxToMdiRecord?.toxSummary?.specimens"
           [columns]="['type', 'site', 'identifier', 'collected', 'received', 'condition', 'container']">
         </record-viewer-toxicology-report-grid-section>
       </div>
@@ -55,7 +56,10 @@
         <mat-panel-title>Test Results</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="summary-section-body">
-        <record-viewer-toxicology-report-grid-section *ngIf="toxSummary?.results" [data]="toxSummary?.results" [columns]="['test', 'value', 'date', 'specimen']"></record-viewer-toxicology-report-grid-section>
+        <record-viewer-toxicology-report-grid-section *ngIf="toxToMdiRecord?.toxSummary?.results"
+                                                      [data]="toxToMdiRecord?.toxSummary?.results"
+                                                      [columns]="['test', 'value', 'date', 'specimen']">
+        </record-viewer-toxicology-report-grid-section>
       </div>
     </mat-expansion-panel>
 
@@ -67,10 +71,9 @@
       <div class="summary-section-body"
            appSetFhirExplorer
            [profile]="fhirProfiles.ToxToMdi.Tox_Diagnostic_Report"
-           [bundle]="messageBundle">
-        <textarea class="conclusion-text-area" readonly [ngModel]="toxSummary.conclusion" (ngModelChange)="toxSummary?.conclusion ? toxSummary.conclusion=$event : 'No Conclusion Found'" *ngIf="toxSummary"></textarea>
+           [bundle]="toxToMdiRecord?.messageBundle">
+        <textarea class="conclusion-text-area" readonly [ngModel]="toxToMdiRecord?.toxSummary?.conclusion" (ngModelChange)="toxToMdiRecord?.toxSummary?.conclusion ? toxToMdiRecord.toxSummary.conclusion=$event : 'No Conclusion Found'" *ngIf="toxToMdiRecord?.toxSummary"></textarea>
       </div>
     </mat-expansion-panel>
 
   </mat-accordion>
-</div>

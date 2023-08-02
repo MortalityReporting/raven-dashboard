@@ -5,6 +5,9 @@ import {AppConfiguration} from "../../../../providers/app-configuration";
 import {ToxToMdiMessageHandlerService} from "../../services/tox-to-mdi-message-handler.service";
 import {FhirExplorerService} from "../../../fhir-explorer/services/fhir-explorer.service";
 import {ToxToMdiRecord} from "../../models/toxToMdiRecord";
+import {
+  MdiToEdrsViewerContentComponent
+} from "../mdi-to-edrs-viewer/mdi-to-edrs-viewer-content/mdi-to-edrs-viewer-content.component";
 
 @Component({
   selector: 'record-viewer-tox-to-mdi-viewer',
@@ -12,13 +15,12 @@ import {ToxToMdiRecord} from "../../models/toxToMdiRecord";
   styleUrls: ['./tox-to-mdi-viewer.component.css']
 })
 export class ToxToMdiViewerComponent implements OnInit {
-  //@ViewChild(MdiToEdrsViewerContentComponent) contentComponent: MdiToEdrsViewerContentComponent;
+  // @ViewChild(MdiToEdrsViewerContentComponent) contentComponent: MdiToEdrsViewerContentComponent;
+  showFhirExplorerDrawer = false;
+  showDrawer = [this.showFhirExplorerDrawer];
 
   /** Inputs to children **/
   toxToMdiRecord: ToxToMdiRecord;
-
-  drawerWidth = "30%"
-  drawerCollapsed = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,28 +33,22 @@ export class ToxToMdiViewerComponent implements OnInit {
   ngOnInit(): void {
     let toxLabId = this.route.snapshot.params['id'];
     this.toxicologyHandler.getRecord(toxLabId).subscribe(record => {
-      console.log(record);
       this.fhirExplorerService.setSelectedFhirResource(record.messageBundle);
       this.toxToMdiRecord = record;
     });
   }
 
-  onSidenavResize(expanded: boolean) {
-    //this.sidenavExpanded = expanded;
-    //this.autosize = true;
-    //setTimeout(() => this.autosize = false, 1);
-  }
-
   onItemClick(id: string) {
-    // this.caseSummaryContentComponent.onSetState(id, true);
+    //this.contentComponent.onSetState(id, true);
   }
 
-  // ngOnDestroy(): void {
-  //   this.documentHandler.clearObservablesAndCashedData();
-  // }
 
-  setDrawerWidth(drawerWidth: string): void {
-    this.drawerCollapsed = !this.drawerCollapsed;
-    this.drawerWidth = drawerWidth;
+  closeAllDrawers() {
+    this.showDrawer = new Array(this.showDrawer.length).fill(false);
+  }
+
+  openDrawer(index: number) {
+    this.showDrawer = new Array(this.showDrawer.length).fill(false);
+    this.showDrawer[index] = true;
   }
 }

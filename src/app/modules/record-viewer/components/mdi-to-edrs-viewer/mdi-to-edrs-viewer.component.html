@@ -5,20 +5,23 @@
     </app-decedent-display>
   </div>
   <div class="viewer-container-body">
-    <record-viewer-mdi-to-edrs-viewer-nav-menu>
+    <record-viewer-mdi-to-edrs-viewer-nav-menu
+      (menuClickEvent)="onItemClick($event)"
+    >
     </record-viewer-mdi-to-edrs-viewer-nav-menu>
     <record-viewer-mdi-to-edrs-viewer-content
       class="viewer-container-body-content"
       [mdiToEdrsRecord]="mdiToEdrsRecord"
     ></record-viewer-mdi-to-edrs-viewer-content>
 
-    <div class="viewer-container-body-fhir-explorer" [hidden]="drawerCollapsed">
+    <div class="viewer-container-body-side-content viewer-container-body-side-fhir-explorer"
+         [hidden]="!showDrawer[0]">
       <div class="fhir-explorer-header">
         <span class="explorer-header-title">
-          FHIR Explorer
+          FHIR Explorer (Click decedent header to show Bundle)
         </span>
         <span class="content-spacer"></span>
-        <mat-icon (click)="setDrawerWidth('30%'); drawerCollapsed=true;"
+        <mat-icon (click)="closeAllDrawers();"
                   aria-label="Close FHIR explorer"
                   matTooltip="Close FHIR Explorer"
                   class="pointer">
@@ -29,13 +32,37 @@
         <app-fhir-explorer></app-fhir-explorer>
       </div>
     </div>
+
+    <div class="viewer-container-body-side-content" [hidden]="!showDrawer[1]">
+      <div class="side-content-header">
+        <span class="side-content-title">
+          Related Toxicology Reports
+        </span>
+        <span class="content-spacer"></span>
+        <mat-icon (click)="closeAllDrawers();"
+                  aria-label="Close Side Content"
+                  matTooltip="Close Side Content"
+                  class="pointer">
+          close
+        </mat-icon>
+      </div>
+      <div class="side-content-body">
+        <record-viewer-mdi-to-edrs-viewer-related-tox [toxicologyRecordList]="mdiToEdrsRecord.relatedToxicology">
+
+        </record-viewer-mdi-to-edrs-viewer-related-tox>
+      </div>
+    </div>
+
+
+
+
     <div class="viewer-container-body-tabs">
-      <div (click)="drawerCollapsed=!drawerCollapsed;"
+      <div (click)="openDrawer(0);"
            class="hl7-fhir-logo-tab">
         <img src="assets/icon-fhir-32.png" class="fhir-explorer-icon">
         <span class="fhir-explorer-label">FHIR Explorer</span>
       </div>
-      <div (click)="drawerCollapsed=!drawerCollapsed;"
+      <div (click)="openDrawer(1);"
            [style.background-color]="config.backgroundColor"
           class="tab">
         <div class="tab-label">Related Toxicology Reports</div>

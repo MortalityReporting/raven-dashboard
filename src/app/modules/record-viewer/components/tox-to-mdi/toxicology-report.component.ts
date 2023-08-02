@@ -3,7 +3,6 @@ import {ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs";
 import {ToxHeader} from "../../models/tox.header";
 import {ToxSummary} from "../../models/tox.summary";
-import {ToxicologyReportContentComponent} from "./toxicology-report-content/toxicology-report-content.component";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {AppConfiguration} from "../../../../providers/app-configuration";
 import {FhirExplorerService} from "../../../fhir-explorer/services/fhir-explorer.service";
@@ -15,7 +14,7 @@ import {ToxToMdiMessageHandlerService} from "../../services/tox-to-mdi-message-h
   styleUrls: ['../../record-viewer-styles.scss', './toxicology-report.component.scss']
 })
 export class ToxicologyReportComponent implements OnInit {
-  @ViewChild(ToxicologyReportContentComponent) toxReportContentComponent: ToxicologyReportContentComponent;
+  //@ViewChild(ToxicologyReportContentComponent) toxReportContentComponent: ToxicologyReportContentComponent;
 
   messageBundle$: Observable<any>;
   toxHeader: ToxHeader;
@@ -55,6 +54,6 @@ export class ToxicologyReportComponent implements OnInit {
   }
 
   onItemClick(id: string) {
-    this.toxReportContentComponent.onSetState(id, true);
+    //this.toxReportContentComponent.onSetState(id, true);
   }
 }

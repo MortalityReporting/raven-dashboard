@@ -55,7 +55,6 @@ export const configFactory = (configService: ConfigService) => {
     CardHoverDirective
   ],
   imports: [
-
     // TODO: Clean up imports after refactor.
     HeaderComponent, // Confirmed
     NavMenuComponent, // Confirmed

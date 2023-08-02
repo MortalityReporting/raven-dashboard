@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {environment} from "../environments/environment";
 import {MatIconRegistry} from "@angular/material/icon";
 import {DomSanitizer} from "@angular/platform-browser";
 import {OptionConfig, HeaderConfig} from "common-ui";

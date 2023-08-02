@@ -1,14 +1,3 @@
-<div class="margin-md">
-  <div class="mat-expansion-panel summary-section" >
-    <div class="mat-expansion-panel-header">
-      <span class="mat-content">
-        <span class="mat-expansion-panel-header-title">
-          {{appConfig?.workflowTitles?.['toxToMdi']}}s Related to Current {{appConfig?.workflowTitles?.['mdiToEdrs']}}
-        </span>
-      </span>
-    </div>
-    <div class="mat-expansion-panel-content">
-      <div class="mat-expansion-panel-body">
 
         <table mat-table [dataSource]="dataSource" matSort matSortDisableClear class="mat-elevation-z8">
           <ng-container matColumnDef="date">
@@ -36,10 +25,4 @@
           </tr>
         </table>
 
-      </div>
-    </div>
-  </div>
 
-
-
-</div>

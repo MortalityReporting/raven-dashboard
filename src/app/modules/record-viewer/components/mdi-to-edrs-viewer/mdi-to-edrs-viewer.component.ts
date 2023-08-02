@@ -11,7 +11,7 @@ import {FhirExplorerService} from "../../../fhir-explorer/services/fhir-explorer
 @Component({
   selector: 'record-viewer-mdi-to-edrs-viewer',
   templateUrl: './mdi-to-edrs-viewer.component.html',
-  styleUrls: ['./mdi-to-edrs-viewer.component.css']
+  styleUrls: ['./mdi-to-edrs-viewer.component.scss']
 })
 export class MdiToEdrsViewerComponent implements OnInit, OnDestroy {
   @ViewChild(MdiToEdrsViewerContentComponent) contentComponent: MdiToEdrsViewerContentComponent;
@@ -22,11 +22,10 @@ export class MdiToEdrsViewerComponent implements OnInit, OnDestroy {
   documentBundle: any = {};
   compositionId: string = "";
 
-  sidenavExpanded = false;
-  autosize: boolean = false;
+  showFhirExplorerDrawer = false;
+  showRelatedToxViewerDrawer = false;
+  showDrawer = [this.showFhirExplorerDrawer, this.showRelatedToxViewerDrawer];
 
-  drawerWidth = "30%"
-  drawerCollapsed = true;
   currentRoute: string;
 
 
@@ -48,23 +47,20 @@ export class MdiToEdrsViewerComponent implements OnInit, OnDestroy {
     });
   }
 
-  onSidenavResize(expanded: boolean) {
-    this.sidenavExpanded = expanded;
-    this.autosize = true;
-    setTimeout(() => this.autosize = false, 1);
-  }
-
   onItemClick(id: string) {
-    // this.caseSummaryContentComponent.onSetState(id, true);
+    this.contentComponent.onSetState(id);
   }
 
   ngOnDestroy(): void {
     this.documentHandler.clearObservablesAndCashedData();
   }
 
-  setDrawerWidth(drawerWidth: string): void {
-    this.drawerCollapsed = !this.drawerCollapsed;
-    this.drawerWidth = drawerWidth;
+  closeAllDrawers() {
+    this.showDrawer = new Array(this.showDrawer.length).fill(false);
   }
 
+  openDrawer(index: number) {
+    this.showDrawer = new Array(this.showDrawer.length).fill(false);
+    this.showDrawer[index] = true;
+  }
 }
