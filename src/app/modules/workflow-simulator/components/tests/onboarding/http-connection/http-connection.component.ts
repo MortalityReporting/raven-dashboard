@@ -26,20 +26,19 @@ export class HttpConnectionComponent implements OnInit {
   @ViewChild('form') form: NgForm;
   protected readonly ConnectionTypeOptionsArray = Object.values(ConnectionTypeOptions);
   protected readonly RequestTypeOptions = RequestTypeOptions;
+  protected readonly RequestType = RequestType;
 
   onboardingForm: FormGroup = new FormGroup({
     connectionType: new FormControl('', Validators.required),
     requestType: new FormControl('', Validators.required),
     endpointUrl: new FormControl('', Validators.required),
-    customizeHeaders: new FormControl(false),
-    addQueryParams: new FormControl(false),
-    addRequestBody: new FormControl(false),
   });
 
   selectedConnectionType: BasicNameValueType;
   componentName = this.constructor.name;
   loginSuccessResponse: any;
   loginErrorResponse: any;
+  isAdvancedSettingsVisible: boolean = false;
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -48,21 +47,34 @@ export class HttpConnectionComponent implements OnInit {
   ) {
   }
 
-  clearLog(){
-    this.log.clear()
-  }
-
   /**
    * Initialize the form int it's most for basic auth which is the simples from of authentication.
    * We may consider changing the initial form to JWT or custom, based on user feedback.
    */
   initOnboardingForm(){
+    this.isAdvancedSettingsVisible = false;
     this.onboardingForm.controls['requestType'].patchValue(RequestType.GET);
     this.onboardingForm.controls['connectionType'].patchValue(ConnectionTypeOptions[ConnectionType.basicAuth]);
-    this.onboardingForm.controls['addRequestBody'].disable();
-    this.onboardingForm.controls['addQueryParams'].disable();
+    //this.onboardingForm.controls['addRequestBody'].disable();
     this.onboardingForm.addControl('user', new FormControl('', Validators.required));
     this.onboardingForm.addControl('password', new FormControl('', Validators.required));
+  }
+
+  onShowHideAdvancedSettings(advancedSettingsVisible: boolean) {
+    this.isAdvancedSettingsVisible = advancedSettingsVisible;
+    if(advancedSettingsVisible){
+      this.onboardingForm.addControl('customizeHeaders', new FormControl(false));
+      this.onboardingForm.addControl('addQueryParams', new FormControl(false));
+      this.onboardingForm.addControl('addRequestBody', new FormControl(false));
+    }
+    else {
+      this.onboardingForm.removeControl("customizeHeaders");
+      this.onboardingForm.removeControl("addQueryParams");
+      this.onboardingForm.removeControl('queryParameters');
+      if(this.onboardingForm.controls['requestType'].value != RequestType.GET){
+        this.onboardingForm.removeControl('addRequestBody');
+      }
+    }
   }
 
   ngOnInit(): void {
@@ -74,7 +86,6 @@ export class HttpConnectionComponent implements OnInit {
    * This function manipulates the form because each connection type requires different form fields.
    */
   onConnectionTypeSelected() {
-    // if(this.selectedConnectionType.value == this.connectionTypes[0].value){
     if(this.selectedConnectionType.value == ConnectionType.basicAuth){
       this.onboardingForm.addControl('user', new FormControl('', Validators.required));
       this.onboardingForm.addControl('password', new FormControl('', Validators.required));
@@ -84,31 +95,26 @@ export class HttpConnectionComponent implements OnInit {
         this.onboardingForm.removeControl("queryParameters");
         this.onboardingForm.controls['addQueryParams'].patchValue(false);
       }
-      this.onboardingForm.controls['addQueryParams'].disable();
 
       if(this.onboardingForm.controls['addRequestBody'].value){
         this.onboardingForm.removeControl("requestBody");
         this.onboardingForm.controls['addRequestBody'].patchValue(false);
       }
-      this.onboardingForm.controls['addRequestBody'].disable();
-
     }
     else if(this.selectedConnectionType.value == ConnectionType.token){
-      this.onboardingForm.controls['addRequestBody'].patchValue(false);
-      this.onboardingForm.controls['addRequestBody'].disable();
+      this.onboardingForm.addControl('addRequestBody', new FormControl(false));
       this.onboardingForm.removeControl('user');
       this.onboardingForm.removeControl('password');
       if(!this.onboardingForm.controls['token']){
         this.onboardingForm.addControl('token', new FormControl('', Validators.required));
       }
-      this.onboardingForm.removeControl("requestBody");
+      //this.onboardingForm.removeControl("requestBody");
     }
-    else { //assuming the connection type here is token
+    else {
       this.onboardingForm.removeControl('user');
       this.onboardingForm.removeControl('password');
       this.onboardingForm.addControl('token', new FormControl(''));
-      this.onboardingForm.controls['addQueryParams'].enable();
-      this.onboardingForm.controls['addRequestBody'].enable();
+      this.onboardingForm.addControl('addRequestBody', false);
     }
   }
 
@@ -118,23 +124,13 @@ export class HttpConnectionComponent implements OnInit {
    */
   onRequestTypeSelected() {
     if(this.onboardingForm.value.requestType === RequestType.GET){
-      this.onboardingForm.controls['addRequestBody'].disable();
-      this.onboardingForm.controls['addQueryParams'].enable();
       this.onboardingForm.removeControl('requestBody');
     }
     else if(this.onboardingForm.value.requestType == RequestType.PUT){
-      this.onboardingForm.controls['addRequestBody'].enable();
-      this.onboardingForm.controls['addQueryParams'].enable();
-      if(!this.onboardingForm.controls['requestBody']){
-        this.onboardingForm.addControl('requestBody', new FormControl(''));
-      }
+      this.onboardingForm.addControl('addRequestBody', new FormControl(false));
     }
     else if(this.onboardingForm.value.requestType == RequestType.POST){
-      this.onboardingForm.controls['addRequestBody'].enable();
-      this.onboardingForm.controls['addQueryParams'].enable();
-      if(!this.onboardingForm.controls['requestBody']){
-        this.onboardingForm.addControl('requestBody', new FormControl(''));
-      }
+      this.onboardingForm.addControl('addRequestBody', new FormControl(false));
     }
   }
 
@@ -178,7 +174,6 @@ export class HttpConnectionComponent implements OnInit {
   }
 
   onSubmit() {
-    //https://raven.heat.icl.gtri.org/mdi-fhir-server
     this.validateAllFormFields(this.onboardingForm);
     if (!this.onboardingForm.valid) {
       console.error("Invalid Connection Registration Form.")

@@ -44,7 +44,7 @@
           <div *ngIf="onboardingForm.controls['token']">
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>Token</mat-label>
-              <textarea type="text" matInput formControlName="token" rows="10"></textarea>
+              <textarea type="text" matInput formControlName="token" rows="5"></textarea>
               <mat-error *ngIf="onboardingForm?.controls?.['token']?.errors?.['required']">
                 Token is required
               </mat-error>
@@ -74,102 +74,123 @@
             </mat-form-field>
             </div>
           </div>
-
-          <!-- Header Params  -->
-          <div style="margin: 8px 0">
-            <mat-checkbox formControlName="customizeHeaders" (change)="onCustomizeHeadersSelectionChange()">
-              Customize Headers
-            </mat-checkbox>
-          </div>
-          <ng-container *ngIf="onboardingForm.controls['headerParameters']" formArrayName="headerParameters">
-
-            <ng-container *ngFor="let headerPram of headerParams.controls; let index = index">
-
-              <div [formGroupName]="index" class="box">
-
-                <mat-form-field appearance="outline" class="key-value-form-field">
-                  <mat-label>Key</mat-label>
-                  <input matInput type="text" formControlName="key"/>
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" class="push-right key-value-form-field">
-                  <mat-label>Value</mat-label>
-                  <input matInput type="text" formControlName="value"/>
-                </mat-form-field>
-
-                <button mat-icon-button style="margin-left: 1em" aria-label="Remove Parameter" color="warn"
-                        type="button"
-                        matTooltip="Remove Parameter"
-                        (click)="onDeleteHeaderParam(index)">
-                  <mat-icon>remove</mat-icon>
-                </button>
-              </div>
-            </ng-container>
-
-            <button *ngIf="onboardingForm.controls['customizeHeaders']?.value === true" type="button" class="margin-bottom-md"
-                    mat-stroked-button aria-label="Add Headers Params" color="primary" (click)="addHeaderParam()">
-              <mat-icon>add</mat-icon>
-              Add Header Params
+          <div class="row margin-top">
+            <button mat-stroked-button type="button" color="primary" *ngIf="!isAdvancedSettingsVisible"
+                    (click)="onShowHideAdvancedSettings(true)">
+              <mat-icon>expand_more</mat-icon>
+              Show Advanced Setting
             </button>
-          </ng-container>
-          <!-- End Header Params -->
+            <button mat-stroked-button type="button" color="primary" *ngIf="isAdvancedSettingsVisible"
+                    (click)="onShowHideAdvancedSettings(false)">
+              <mat-icon>expand_less</mat-icon>
+              Hide Advanced Setting
+            </button>
+          </div>
+
+          <ng-container *ngIf="isAdvancedSettingsVisible">
+
+            <!-- Header Params  -->
+            <div style="margin: 8px 0">
+              <mat-checkbox formControlName="customizeHeaders" (change)="onCustomizeHeadersSelectionChange()">
+                Customize Headers
+              </mat-checkbox>
+            </div>
+
+            <ng-container *ngIf="onboardingForm.controls['headerParameters']" formArrayName="headerParameters">
+
+              <ng-container *ngFor="let headerPram of headerParams.controls; let index = index">
+
+                <div [formGroupName]="index" class="box">
+
+                  <mat-form-field appearance="outline" class="key-value-form-field">
+                    <mat-label>Key</mat-label>
+                    <input matInput type="text" formControlName="key"/>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" class="push-right key-value-form-field">
+                    <mat-label>Value</mat-label>
+                    <input matInput type="text" formControlName="value"/>
+                  </mat-form-field>
+
+                  <button mat-icon-button style="margin-left: 1em" aria-label="Remove Parameter" color="warn"
+                          type="button"
+                          matTooltip="Remove Parameter"
+                          (click)="onDeleteHeaderParam(index)">
+                    <mat-icon>remove</mat-icon>
+                  </button>
+                </div>
+              </ng-container>
+
+              <button *ngIf="onboardingForm.controls['customizeHeaders']?.value === true" type="button"
+                      class="margin-bottom-md"
+                      mat-stroked-button aria-label="Add Headers Params" color="primary" (click)="addHeaderParam()">
+                <mat-icon>add</mat-icon>
+                Add Header Params
+              </button>
+              <!-- End Header Params -->
+            </ng-container>
 
           <mat-divider class="top-margin"></mat-divider>
 
           <!-- Query Params -->
           <div style="margin: 8px 0">
-              <mat-checkbox formControlName="addQueryParams" (change)="onAddQueryParamsSelectionChange()">Add Query
-                Params
+              <mat-checkbox formControlName="addQueryParams" (change)="onAddQueryParamsSelectionChange()">
+                Add Query Params
               </mat-checkbox>
           </div>
-          <ng-container *ngIf="onboardingForm.controls['queryParameters']" formArrayName="queryParameters">
+            <ng-container *ngIf="onboardingForm.controls['queryParameters']" formArrayName="queryParameters">
 
-            <ng-container *ngFor="let queryParams of queryParams.controls; let index = index">
+              <ng-container *ngFor="let queryParams of queryParams.controls; let index = index">
 
-              <div [formGroupName]="index" class="box">
+                <div [formGroupName]="index" class="box">
 
-                <mat-form-field appearance="outline" class="key-value-form-field">
-                  <mat-label>Key</mat-label>
-                  <input matInput type="text" formControlName="key"/>
-                </mat-form-field>
+                  <mat-form-field appearance="outline" class="key-value-form-field">
+                    <mat-label>Key</mat-label>
+                    <input matInput type="text" formControlName="key"/>
+                  </mat-form-field>
 
-                <mat-form-field appearance="outline" class="push-right key-value-form-field">
-                  <mat-label>Value</mat-label>
-                  <input matInput type="text" formControlName="value"/>
-                </mat-form-field>
+                  <mat-form-field appearance="outline" class="push-right key-value-form-field">
+                    <mat-label>Value</mat-label>
+                    <input matInput type="text" formControlName="value"/>
+                  </mat-form-field>
 
-                <button mat-icon-button style="margin-left: 1em" aria-label="Remove Key Value" color="warn"
-                        type="button"
-                        matTooltip="Remove Parameter"
-                        (click)="onDeleteQueryParam(index)">
-                  <mat-icon>remove</mat-icon>
-                </button>
-              </div>
+                  <button mat-icon-button style="margin-left: 1em" aria-label="Remove Key Value" color="warn"
+                          type="button"
+                          matTooltip="Remove Parameter"
+                          (click)="onDeleteQueryParam(index)">
+                    <mat-icon>remove</mat-icon>
+                  </button>
+                </div>
+              </ng-container>
+
+              <button *ngIf="onboardingForm.controls['addQueryParams']?.value === true" type="button"
+                      class="margin-bottom-md"
+                      mat-stroked-button aria-label="Add Query Params" color="primary" (click)="addQueryParam()">
+                <mat-icon>add</mat-icon>
+                Add Query Params
+              </button>
             </ng-container>
+            <!-- End Query Params -->
 
-            <button *ngIf="onboardingForm.controls['addQueryParams']?.value === true" type="button" class="margin-bottom-md"
-                    mat-stroked-button aria-label="Add Query Params" color="primary" (click)="addQueryParam()">
-              <mat-icon>add</mat-icon>
-              Add Query Params
-            </button>
+            <mat-divider class="top-margin"></mat-divider>
           </ng-container>
-          <!-- End Query Params -->
 
-          <mat-divider class="top-margin"></mat-divider>
 
-          <!-- Request Body -->
-          <div style="margin: 8px 0">
+          <ng-container *ngIf="onboardingForm.controls['requestType']?.value != RequestType.GET">
+            <!-- Request Body -->
+            <div style="margin: 8px 0">
               <mat-checkbox formControlName="addRequestBody" (change)="onAddRequestBody()">
-                Add Request/Modify Body
+                Add/Modify Request Body
               </mat-checkbox>
-          </div>
-          <div *ngIf="onboardingForm.controls['requestBody']">
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Request Body</mat-label>
-              <textarea type="text" matInput formControlName="requestBody" rows="10"></textarea>
-            </mat-form-field>
-          </div>
-          <!-- End Request Body -->
+            </div>
+            <div *ngIf="onboardingForm.controls['requestBody']">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Request Body</mat-label>
+                <textarea type="text" matInput formControlName="requestBody" rows="5"></textarea>
+              </mat-form-field>
+            </div>
+            <!-- End Request Body -->
+          </ng-container>
 
         </form>
 
@@ -194,8 +215,7 @@
       </div>
     </div>
 
-
-    <div>
+    <div class="top-margin">
       <button mat-raised-button aria-label="Test Connection" color="primary" type="submit"
               (click)="onTestConnection()">
         <mat-icon>lan</mat-icon>
