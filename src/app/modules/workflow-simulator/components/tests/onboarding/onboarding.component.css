@@ -9,3 +9,7 @@
   flex: 1;
 }
 
+.mat-expansion-panel-header {
+  height: auto;
+  padding: 12px 24px; /* replacing with 1em looks fine to me */
+}
