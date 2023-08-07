@@ -35,6 +35,8 @@ export class OnboardingComponent implements OnInit, AfterViewInit{
   }
 
   ngAfterViewInit(): void {
-    this.accordion.openAll();
+    setTimeout(()=> {
+      this.accordion.openAll();
+    });
   }
 }

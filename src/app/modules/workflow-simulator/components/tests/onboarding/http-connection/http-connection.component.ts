@@ -43,7 +43,7 @@ export class HttpConnectionComponent implements OnInit {
   constructor(
     private fb: UntypedFormBuilder,
     private log: LoggerService,
-    private onboardingService: OnboardingService
+    protected onboardingService: OnboardingService
   ) {
   }
 
@@ -55,7 +55,6 @@ export class HttpConnectionComponent implements OnInit {
     this.isAdvancedSettingsVisible = false;
     this.onboardingForm.controls['requestType'].patchValue(RequestType.GET);
     this.onboardingForm.controls['connectionType'].patchValue(ConnectionTypeOptions[ConnectionType.basicAuth]);
-    //this.onboardingForm.controls['addRequestBody'].disable();
     this.onboardingForm.addControl('user', new FormControl('', Validators.required));
     this.onboardingForm.addControl('password', new FormControl('', Validators.required));
   }
@@ -108,7 +107,7 @@ export class HttpConnectionComponent implements OnInit {
       if(!this.onboardingForm.controls['token']){
         this.onboardingForm.addControl('token', new FormControl('', Validators.required));
       }
-      //this.onboardingForm.removeControl("requestBody");
+
     }
     else {
       this.onboardingForm.removeControl('user');

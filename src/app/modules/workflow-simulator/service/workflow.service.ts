@@ -7,7 +7,7 @@ import {Test} from "../model/test";
 // TODO I theory one day this could be data driven and not a constant. Presently we just use the constant from the UI
 export const CURRENT_TESTS: Test[] = [
   new Test('onboarding', 'Onboarding', 1, "Onboarding module description", TestStatus.inProgress),
-  new Test('searchEdrs', 'Search EDRS', 0,'The "EDRS Search" workflow simulates ' +
+  new Test('search-edrs', 'Search EDRS', 0,'The "EDRS Search" workflow simulates ' +
     'searching cases in an Electronic Death Registration System (EDRS). Testers representing Medical Examiners/Coroners (ME/Cs) ' +
     'can provide search parameters executed against the BlueJay EDRS test server, which implements the MDI Documents FHIR ' +
     'Operation for search. Supported parameters include primary case identification fields, as well as additional data ' +

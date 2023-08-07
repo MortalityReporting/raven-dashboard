@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {Test} from "../../model/test";
 import {CURRENT_TESTS, WorkflowService} from "../../service/workflow.service";
 import {Router} from "@angular/router";

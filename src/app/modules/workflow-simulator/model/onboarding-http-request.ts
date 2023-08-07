@@ -66,7 +66,7 @@ export class OnboardingHttpRequest {
       headers = headers.append('Authorization', `Bearer ${formValue.token}`);
     }
 
-    this.httpOptions = { params: queryParams, headers };
+    this.httpOptions = { params: queryParams, headers, observe: 'response' };
 
   }
 }

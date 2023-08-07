@@ -57,6 +57,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatDividerModule} from "@angular/material/divider";
 import { OnboardingComponent } from './components/tests/onboarding/onboarding.component';
 import { TestContainerComponent } from './components/test-container/test-container.component';
+import { HttpResponseResultsComponent } from './components/tests/onboarding/http-connection/http-response-results/http-response-results.component';
+import {ClipboardModule} from "@angular/cdk/clipboard";
 
 @NgModule({
   declarations: [
@@ -78,6 +80,7 @@ import { TestContainerComponent } from './components/test-container/test-contain
     StandaloneTestsComponent,
     OnboardingComponent,
     TestContainerComponent,
+    HttpResponseResultsComponent,
   ],
   exports: [
   ],
@@ -103,7 +106,8 @@ import { TestContainerComponent } from './components/test-container/test-contain
     MatSortModule,
     NgxHisbLoggerModule,
     MatCheckboxModule,
-    MatDividerModule
+    MatDividerModule,
+    ClipboardModule
   ],
 })
 export class WorkflowSimulatorModule {

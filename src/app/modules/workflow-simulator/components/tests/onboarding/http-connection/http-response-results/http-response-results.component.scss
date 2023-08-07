@@ -1,0 +1,44 @@
+.response-container {
+  margin-top: 1em;
+  padding: 1em;
+  min-height: 300px;
+  max-height: 300px;
+  max-width: 50vh;
+  border: #cdcdcd 1px solid;
+  border-radius: 4px;
+  overflow: auto;
+}
+
+.response-container-error  {
+  @extend .response-container;
+  border-color: red;
+}
+
+.operation-outcome-html {
+  border: red 1px solid;
+  border-radius: 4px;
+  padding: 1em;
+  margin: 1em
+}
+.result-label{
+  font-weight: bold;
+}
+
+.result-line-item{
+  margin: 1em 0;
+  display: flex;
+}
+.table-line{
+  font-size: small;
+}
+
+
+.label-line {
+  flex: 0 0 20%;
+  font-weight: bold;
+}
+
+.result-line {
+  flex: 1;
+  display: flex;
+}

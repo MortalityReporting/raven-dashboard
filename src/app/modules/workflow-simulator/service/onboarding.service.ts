@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable, throwError} from "rxjs";
+import {HttpClient, HttpRequest} from "@angular/common/http";
+import {BehaviorSubject, Observable, Subject, throwError} from "rxjs";
 import {map} from "rxjs/operators";
 import {OnboardingHttpRequest} from "../model/onboarding-http-request";
 import {RequestType} from "../model/request-type";
@@ -9,12 +9,23 @@ import {RequestType} from "../model/request-type";
   providedIn: 'root'
 })
 export class OnboardingService {
-  constructor( private http:HttpClient) { }
+
+  private _httpReq$ = new BehaviorSubject<any>(null);
+  httpReq$ = this._httpReq$.asObservable();
+
+  private setHttpReq(httpReq: any){
+    this._httpReq$.next(httpReq);
+  }
+  constructor(private http:HttpClient) { }
+
 
   // Example url for basic auth testing
   // https://raven.dev.heat.icl.gtri.org/mdi-fhir-server/fhir/Patient
   // https://bluejay.heat.icl.gtri.org/mdi-fhir-server/fhir/Patient
   onLogin(request: OnboardingHttpRequest): Observable<any> {
+
+    this.setHttpReq({url: request.url, requestBody: request.requestBody, requestOptions: request.httpOptions});
+
     if (request.requestType == RequestType.GET) {
       return this.http.get(request.url, request.httpOptions)
         .pipe(map(response => {
