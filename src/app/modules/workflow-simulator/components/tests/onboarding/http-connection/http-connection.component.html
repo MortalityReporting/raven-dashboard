@@ -198,20 +198,25 @@
 
       <!-- Second column with mat-tab -->
       <div class="config-col">
-        <mat-tab-group class="top-margin" mat-stretch-tabs="false">
-          <mat-tab label="HTTP Response">
-            <div [ngClass]="!!loginErrorResponse ? 'scrollable-error-tab-container' : 'scrollable-tab-container'" >
-              <div *ngIf="loginSuccessResponse">
-                <pre> {{ loginSuccessResponse| json }} </pre>
-              </div>
-              <div *ngIf="loginErrorResponse">
-                <pre> {{ loginErrorResponse| json }} </pre>
-              </div>
-            </div>
-          </mat-tab>
-          <mat-tab label="Second"> Content 2</mat-tab>
-          <mat-tab label="Third"> Content 3</mat-tab>
-        </mat-tab-group>
+        <app-http-response-results
+          [errorResponse]="loginErrorResponse"
+          [successResponse]="loginSuccessResponse"
+          [request]="onboardingService.httpReq$ | async">
+        </app-http-response-results>
+<!--        <mat-tab-group class="top-margin" mat-stretch-tabs="false">-->
+<!--          <mat-tab label="HTTP Response">-->
+<!--            <div [ngClass]="!!loginErrorResponse ? 'scrollable-error-tab-container' : 'scrollable-tab-container'" >-->
+<!--              <div *ngIf="loginSuccessResponse">-->
+<!--                <pre> {{ loginSuccessResponse| json }} </pre>-->
+<!--              </div>-->
+<!--              <div *ngIf="loginErrorResponse">-->
+<!--                <pre> {{ loginErrorResponse| json }} </pre>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </mat-tab>-->
+<!--          <mat-tab label="Second"> Content 2</mat-tab>-->
+<!--          <mat-tab label="Third"> Content 3</mat-tab>-->
+<!--        </mat-tab-group>-->
       </div>
     </div>
 
