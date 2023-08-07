@@ -1,12 +1,10 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LandingComponent} from "./components/landing/landing.component";
-import {CaseContainerComponent} from "./modules/record-viewer/components/viewer-container/case-container.component";
 import {ImportCaseComponent} from "./modules/import-case/components/import-case.component";
 import {FhirValidatorComponent} from "./modules/fhir-validator/components/fhir-validator/fhir-validator.component";
 import {SearchRecordsComponent} from "./modules/record-viewer/components/search-records/search-records.component";
 import {WorkflowSimulatorComponent} from "./modules/workflow-simulator/components/workflow-simulator.component";
-import {SearchEdrsComponent} from "./modules/workflow-simulator/components/search-edrs/search-edrs.component";
 import {ModuleHeaderConfig} from "./providers/module-header-config";
 import {AppConfiguration} from "./providers/app-configuration";
 import {
@@ -15,13 +13,15 @@ import {
 import {AdminPanelComponent} from "./modules/user-management/components/admin-panel/admin-panel.component";
 import {AuthGuard} from "@auth0/auth0-angular";
 import {LoggedInComponent} from "./modules/user-management/components/logged-in/logged-in.component";
-import {
-  RegisteredModulesComponent
-} from "./modules/workflow-simulator/components/registered-modules/registered-modules.component";
 import {TestContainerComponent} from "./modules/workflow-simulator/components/test-container/test-container.component";
 import {
   MdiToEdrsViewerComponent
 } from "./modules/record-viewer/components/mdi-to-edrs-viewer/mdi-to-edrs-viewer.component";
+import {OnboardingComponent} from "./modules/workflow-simulator/components/tests/onboarding/onboarding.component";
+import {SearchEdrsComponent} from "./modules/workflow-simulator/components/tests/search-edrs/search-edrs.component";
+import {
+  ToxToMdiViewerComponent
+} from "./modules/record-viewer/components/tox-to-mdi-viewer/tox-to-mdi-viewer.component";
 
 
 const routes: Routes = [
@@ -41,12 +41,12 @@ const routes: Routes = [
       },
       {
         path: 'mdi/:id',
-        component: CaseContainerComponent,
+        component: MdiToEdrsViewerComponent,
         data: { moduleConfig: ModuleHeaderConfig.RecordViewer, componentTitle: AppConfiguration.config.workflowTitles['mdiToEdrs'] + " Viewer"}
       },
       {
         path: 'tox/:id',
-        component: CaseContainerComponent,
+        component: ToxToMdiViewerComponent,
         data: { moduleConfig: ModuleHeaderConfig.RecordViewer, componentTitle: AppConfiguration.config.workflowTitles['toxToMdi'] + " Viewer"}
       }
     ],
