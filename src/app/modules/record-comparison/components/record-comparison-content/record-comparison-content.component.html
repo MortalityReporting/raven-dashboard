@@ -1,4 +1,5 @@
-<div class="margin-md">
+<div class="generic-component-wrapper">
+<div class="generic-component-content">
   <div class="summary-section-grid">
     <div class="grid-row">
       <div class="grid-col-1">
@@ -7,6 +8,8 @@
                 [style.color]="'white'"
                 (click)="onInputBundleClick()">Input MDI to EDRS Document Bundle
         </button>
+      </div>
+      <div class="grid-col-1">
       </div>
       <div class="grid-col-1">
         <mat-form-field>
@@ -46,6 +49,9 @@
 
         </div>
       </div>
+      <div class="grid-col-1 compareToText" [style.color]="config.backgroundColor">
+        Compare to
+      </div>
       <div class="grid-col-1">
         <div *ngIf="referenceDocumentWrapper">
           <mat-card>
@@ -61,6 +67,7 @@
       <div class="grid-col-1">
 
       </div>
+
     </div>
   </div>
 
@@ -472,6 +479,7 @@
 
   </div>
 
+</div>
 </div>
 
 <!--<div class="spinner-container" *ngIf="isLoading">-->

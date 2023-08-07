@@ -1,7 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ActivationEnd, Router} from "@angular/router";
-import {filter} from "rxjs/operators";
-import {FhirExplorerDrawerService} from "../../../fhir-explorer/services/fhir-explorer-drawer.service";
+import {Router} from "@angular/router";
 import {ModuleHeaderService} from "../../../../service/module-header.service";
 
 @Component({
@@ -19,7 +17,6 @@ export class ModuleHeaderComponent implements OnInit {
   icon = undefined;
 
   constructor(private router: Router,
-              public fhirExplorerDrawerService: FhirExplorerDrawerService,
               private moduleHeaderService: ModuleHeaderService
   ) { }
 
@@ -32,7 +29,5 @@ export class ModuleHeaderComponent implements OnInit {
       this.icon = value.icon;
     });
   }
-  onToggle() {
-    this.fhirExplorerDrawerService.toggle();
-  }
+
 }

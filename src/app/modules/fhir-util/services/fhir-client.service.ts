@@ -4,6 +4,7 @@ import {HttpClient, HttpEvent, HttpEventType, HttpParams, HttpParamsOptions, Htt
 import {EMPTY, expand, map, mergeMap, Observable, of, reduce, takeWhile, tap} from "rxjs";
 import {FhirResource} from "../models/base/fhir.resource";
 import {Bundle, BundleEntryComponent, BundleType} from "../models/resources/bundle";
+import {ConfigService} from "../../../service/config.service";
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +12,12 @@ import {Bundle, BundleEntryComponent, BundleType} from "../models/resources/bund
 export class FhirClientService {
 
   private readonly serverBaseUrl: string;
+  private readonly logFhirRequests: boolean;
 
   constructor(private http: HttpClient,
-              private environmentHandler: EnvironmentHandlerService) {
+              private environmentHandler: EnvironmentHandlerService,
+              private configService: ConfigService) {
+    this.logFhirRequests = this.configService?.config?.logFhirRequests ?? true;
     this.serverBaseUrl = this.environmentHandler.getFhirServerBaseURL();
   }
 
@@ -33,11 +37,10 @@ export class FhirClientService {
     // TODO: Add parameter parsing. For now, parameters required in complete http string form.
     let requestString = this.serverBaseUrl + resourceType + "/" + id;
     if (parameters) requestString += parameters;
-    console.log("Making Read Request: " + requestString);
+    if (this.logFhirRequests) console.log("Making Read Request: " + requestString);
     return this.http.get(requestString).pipe(
       map((response: any) =>
         {
-          //console.log(response)
           return response;
         }
       )
@@ -61,7 +64,7 @@ export class FhirClientService {
       searchString = fullUrl ? fullUrl : this.createSearchRequestUrl(resourceType, "", baseUrl)
       pagination$ = this.http.post<Bundle>(searchString, parameters, {params: httpParams});
     }
-    console.log("Making Search Request: " + searchString);
+    if (this.logFhirRequests) console.log("Making Search Request: " + searchString);
 
     pagination$.pipe(
       // TODO: Is there a way to type the following operator projections?

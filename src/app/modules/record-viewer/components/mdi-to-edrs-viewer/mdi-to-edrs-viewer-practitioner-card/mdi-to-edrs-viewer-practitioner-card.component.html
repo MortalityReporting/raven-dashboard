@@ -1,0 +1,24 @@
+<div>
+  <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Name'" [value]="practitioner.getFullName()"
+                                                  appSetFhirExplorer [resource]="practitioner.resource">
+  </record-viewer-mdi-to-edrs-viewer-content-field>
+  <record-viewer-mdi-to-edrs-viewer-content-field [label]="'License'" [value]="practitioner.license"
+                                                  appSetFhirExplorer [resource]="practitioner.resource">
+  </record-viewer-mdi-to-edrs-viewer-content-field>
+  <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Phone #'" [value]="practitioner.phoneNumber"
+                                                  appSetFhirExplorer [resource]="practitioner.resource">
+  </record-viewer-mdi-to-edrs-viewer-content-field>
+  <div class="content-field">
+    <div class="content-field-label">
+      <label>Address:</label>
+    </div>
+    <div class="content-field-value">
+    <textarea class="address-text-box" type="text"
+              value="{{practitioner.getFullAddress()}}" appSetFhirExplorer [resource]="practitioner.resource" readonly
+              rows="3" [style.resize]="'none'">
+
+    </textarea>
+    </div>
+  </div>
+</div>
+

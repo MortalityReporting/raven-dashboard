@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -10,7 +10,6 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FhirValidatorModule} from "./modules/fhir-validator/fhir-validator.module";
 import {FhirAuthInterceptor} from "./interceptors/fhir-auth.interceptor";
 import {LandingComponent} from './components/landing/landing.component';
-import {FhirExplorerDrawerService} from "./modules/fhir-explorer/services/fhir-explorer-drawer.service";
 import {ClipboardModule} from "@angular/cdk/clipboard";
 import {ModalComponent} from './components/widgets/modal/modal.component';
 import {WorkflowSimulatorModule} from "./modules/workflow-simulator/workflow-simulator.module";
@@ -34,12 +33,16 @@ import {MatButtonModule} from "@angular/material/button";
 import {HeaderComponent, NavMenuComponent} from "common-ui";
 import {AppConfiguration} from "./providers/app-configuration";
 import { CardHoverDirective } from './directives/card-hover.directive';
-
 import { UiStringConstants } from "./providers/ui-string-constants";
 import { FHIRProfileConstants } from "./providers/fhir-profile-constants";
 import {UserManagementModule} from "./modules/user-management/user-management.module";
-import {AuthModule} from "@auth0/auth0-angular";
-import { DocRefBase64TransformPipe } from './modules/fhir-util/pipes/doc-ref-base64-transform.pipe';
+import { DocRefBase64TransformPipe } from './modules/fhir-util';
+import {ConfigService} from "./service/config.service";
+import {RegisteredEndpointsInterceptor} from "./interceptors/registered-endpoints.interceptor";
+
+export const configFactory = (configService: ConfigService) => {
+  return () => configService.loadConfig();
+};
 
 @NgModule({
   declarations: [
@@ -49,7 +52,6 @@ import { DocRefBase64TransformPipe } from './modules/fhir-util/pipes/doc-ref-bas
     CardHoverDirective
   ],
   imports: [
-
     // TODO: Clean up imports after refactor.
     HeaderComponent, // Confirmed
     NavMenuComponent, // Confirmed
@@ -82,6 +84,12 @@ import { DocRefBase64TransformPipe } from './modules/fhir-util/pipes/doc-ref-bas
   ],
 
   providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: configFactory,
+      deps: [ConfigService],
+      multi: true
+    },
     UiStringConstants,
     {
       provide: 'fhirProfiles',
@@ -89,10 +97,15 @@ import { DocRefBase64TransformPipe } from './modules/fhir-util/pipes/doc-ref-bas
     },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: FhirAuthInterceptor,
+      useClass: RegisteredEndpointsInterceptor,
+      deps: [ConfigService],
       multi: true
     },
-    FhirExplorerDrawerService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: FhirAuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
   exports: [

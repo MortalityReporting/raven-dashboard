@@ -5,9 +5,9 @@ html, body { height: 100%; width: 100% }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 app-root { display: flex; height: 100%; width: 100% }
 
-/* Base SCSS Classes */
+/**** Base SCSS Classes ****/
+/** DO NOT EDIT WITHOUT REVIEW **/
 .full-screen { height: 100%; width: 100%; }
-
 .flex {
   display: flex;
   align-items: stretch;
@@ -17,70 +17,314 @@ app-root { display: flex; height: 100%; width: 100% }
     flex: 0 0 auto;
   }
 }
-
 .flex-col { @extend .flex; flex-direction: column; }
 .flex-row { @extend .flex; flex-direction: row; }
 .flex-col-simple { display: flex; flex-direction: column; }
 .flex-row-simple { display: flex; flex-direction: row; }
 
-.page-wrapper {
-  @extend .flex;
-  @extend .full-screen;
-  flex: 1;
+/* Scrolling and Pointers */
+.scrollable { overflow-y: scroll; scroll-behavior: smooth; }
+.pointer { cursor: pointer; }
+
+.center-contents { justify-items: center; text-align: center; align-self: center; }
+
+/* Margins and Paddings */
+$xs: 4px;
+$sm: 8px;
+$md: 16px;
+$lg: 24px;
+.margin-sm { margin: $sm; }
+.margin-md { margin: $md; }
+.margin-lg { margin: $lg; }
+.padding-xs { padding: $xs; }
+.padding-sm { padding: $sm; }
+.padding-md { padding: $md; }
+.padding-lg { padding: $lg; }
+// Add more of the following as needed.
+.margin-bottom-md { margin-bottom: $md; }
+.margin-top-md { margin-top: $md; }
+.margin-left-md { margin-left: $md; }
+.margin-right-md { margin-right: $md; }
+.padding-bottom-md { padding-bottom: $md; }
+.padding-top-md { padding-top: $md; }
+.padding-bottom-md { padding-bottom: $md; }
+.padding-left-md { padding-left: $md; }
+.padding-right-md { padding-right: $md; }
+.border-radius-xs { border-radius: $xs; }
+/**** END BASE CLASSES ****/
+
+/**** FHIR Logo ****/
+.hl7-fhir-logo-sm { height: 16px; }
+.hl7-fhir-logo-md { height: 32px; }
+.hl7-fhir-logo-lg { height: 48px; }
+.hl7-fhir-logo-disclaimer {
+  @extend .center-contents;
+  @extend .padding-md;
+  font-variant-caps: all-small-caps;
+}
+.hl7-fhir-logo-landing-page {
+  @extend .margin-right-md;
+  border-radius: $xs;
+  //border: 1px solid black;
+  background-color: white;
+  //filter: drop-shadow(1px 1px 3px $primary-color);
 }
 
-.app-content-wrapper {
-  @extend .flex-col;
-  @extend .full-screen;
-  flex: 1;
-}
 
-.app-content-header-wrapper {
+// DO NOT USE OUTSIDE OF app.component.html!!
+.app-wrapper { @extend .flex; @extend .full-screen; flex: 1; }
+.app-flex-wrapper { @extend .full-screen; @extend .flex-col; flex: 1; justify-content: stretch; align-items: stretch; }
+.app-header-wrapper {
+  width: 100%;
   flex: 0;
+  display: flex;
+  flex-direction: row;
+  > common-header {
+    flex: 1
+  }
 }
-
-.component-wrapper {
-  @extend .flex-col;
-  flex: 1;
-}
-
-.app-content-body-wrapper {
+.app-body-wrapper {
   @extend .flex-col;
   flex: 1;
   > * {
-    @extend .component-wrapper;
-  }
-  > .app-patient-summary-header, router-outlet {
-    flex: 0 0 auto;
+    @extend .flex-col;
+    flex: 1;
   }
   > router-outlet {
+    flex: 0 0 auto;
     margin: 0;
   }
 }
 
-.flex-wrapper {
-  @extend .flex-col;
-  flex: 1;
+/** Generic Component Single Page Scrolling **/
+/** Body of the HTML Template for the *routed* component:
+ <div class="generic-component-wrapper">
+  <div class="generic-component-content">
+   <!-- Your content here. -->
+  </div>
+ </div>
+ */
+.generic-component-wrapper {
+  @extend .flex-col-simple; // Sets a basic flex display so child will fill it.
+  flex: 1;                  // Stretches to fill app component.
+  align-content: stretch;   // More stretching.
+  align-items: stretch;     // More stretching to fill!
+  overflow-y: hidden;       // Sets up overflow so that the inner content can be scrollable.
+  > .generic-component-content {
+    @extend .padding-md; // Sets default component padding.
+    @extend .scrollable; // Makes the content scrollable.
+    flex: 1;             // Stretches to fill wrapper.
+  }
 }
-.scrollable { overflow-y: scroll; scroll-behavior: smooth; }
-.pointer { cursor: pointer; }
 
-/* Margin Wrappers */
-.margin-sm { margin: 8px; }
-.margin-md { margin: 16px; }
-.margin-lg { margin: 24px; }
-.padding-sm { padding: 8px; }
-.padding-md { padding: 16px; }
-.padding-lg { padding: 24px; }
+/** Landing Page **/
+.landing-page-wrapper {
+  @extend .flex-col-simple;
+  flex: 1;
+  align-content: stretch;
+  align-items: stretch;
+  overflow-y: hidden;
+  > * {
+    @extend .flex-row-simple;
+    @extend .scrollable;
+    @extend .padding-md;
+    flex: 1;
+    > * {
+    }
+    > .landing-page-content {
+    }
+    > .option-tile-container {
+      @extend .flex-col-simple;
+      width: 85%;
+      margin-left: auto;
+      margin-right: auto;
+      > .flex-cell {
+        padding: 5px;
+        display: flex;
+      }
+    }
+  }
+}
 
-.margin-bottom-md { margin-bottom: 16px; }
+/** Record Viewer Container **/
+.viewer-container-wrapper {
+  @extend .full-screen;
+  @extend .flex-col-simple;
+  flex: 1;
+  align-content: stretch;
+  align-items: stretch;
+  overflow-y: hidden;
+  > .viewer-container-header {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+  > .viewer-container-body {
+    @extend .padding-md;
+    @extend .flex-row-simple;
+    flex: 1;
+    scroll-behavior: smooth;
+    overflow-y: hidden;
+    align-content: stretch;
+    align-items: stretch;
+    > * {
+      @extend .scrollable;
+      scroll-behavior: smooth;
+      overflow-y: scroll;
+    }
+    > .viewer-container-body-content {
+      flex: 1;
+    }
+    > .viewer-container-body-side-content {
+      width: 30%;
+      border: 3px solid $primary-color;
+      > .side-content-header {
+        @extend .center-contents;
+        @extend .flex-row-simple;
+        @extend .padding-sm;
+        font-weight: bold;
+        font-size: larger;
+        background-color: $primary-color;
+        > * {
+          @extend .center-contents;
+        }
+        > .side-content-title {
+          font-size: small;
+          color: white;
+          background-color: $primary-color;
+        }
+      }
+    }
+    > .viewer-container-body-side-fhir-explorer {
+      width: 30%;
+      border: 3px solid darkorange;
+      > .fhir-explorer-header {
+        @extend .center-contents;
+        @extend .flex-row-simple;
+        @extend .padding-sm;
+        font-weight: bold;
+        font-size: larger;
+        background-color: darkorange;
+        > * {
+          @extend .center-contents;
+        }
+        > .explorer-header-title {
+          font-size: small;
+          color: black;
+          background-color: darkorange;
+        }
+      }
+    }
+    > .viewer-container-body-tabs {
+      overflow-y: hidden;
+      width: 32px;
+      > * {
+        @extend .pointer;
+        @extend .center-contents;
+        writing-mode: vertical-rl;
+        margin: 0 0 4px;
+        color: white;
+        font-weight: bold;
+        font-variant-caps: all-small-caps;
+        background-color: $primary-color;
+        border-radius: 5px 0 0 5px;
+      }
+      > .tab {
+        > .tab-label {
+          @extend .padding-xs;
+          width: 24px;
+          padding-top: $sm;
+          padding-bottom: $sm;
+          user-select: none;
+        }
+      }
+      > .hl7-fhir-logo-tab {
+        @extend .center-contents;
+        padding: 0;
+        background-color: darkorange;
+        > .fhir-explorer-icon {
+          @extend .padding-xs;
+          transform: rotate(90deg);
+          filter: drop-shadow(0px 0px 1px black);
+          width: 24px;
+          height: 24px;
+        }
+        > .fhir-explorer-label {
+          @extend .padding-xs;
+          width: 24px;
+          padding-top: 0;
+          padding-bottom: $sm;
+          color: black;
+          user-select: none;
+        }
+      }
+    }
 
-.top-padding { padding-top: 16px; }
-.top-margin { margin-top: 16px; }
+  }
+}
 
-/* END BASE CLASSES */
+/** Workflow Simulator Test Container **/
+.test-container-bar {
+  @extend .flex-row;
+  height: 50px;
+  min-height: 50px;
+  max-height: 50px;
+  margin: 0;
+  padding: 0;
+  > * {
+    flex: 1;
+  }
+}
+
+.test-container-wrapper {
+  @extend .margin-bottom-md;
+  @extend .full-screen;
+  @extend .flex-col-simple;
+  flex: 1;
+  align-content: stretch;
+  align-items: stretch;
+  overflow-y: hidden;
+  > .test-container-body {
+    @extend .padding-md;
+    @extend .scrollable;
+    border-left: 1px solid rgb(100, 96, 100);
+    border-right: 1px solid rgb(100, 96, 100);
+  }
+  > .test-container-header {
+    @extend .padding-md;
+    @extend .test-container-bar;
+    border-bottom: 2px solid rgb(100, 96, 100);
+    > * {
+      @extend .center-contents;
+    }
+    > .test-container-header-event-name {
+      font-size: larger;
+    }
+    > .test-container-header-test-name {
+      font-size: x-large;
+    }
+  }
+  > .test-container-footer {
+    @extend .padding-md;
+    @extend .test-container-bar;
+    border-top: 2px solid rgb(100, 96, 100);
+    > * {
+      @extend .center-contents;
+    }
+    > .test-container-footer-status {
+      font-size: larger;
+    }
+  }
+}
+
+/**********************************************************************
+  TODO: ALL CLASSES BELOW SHOULD BE REFACTORED/STANDARDIZED
+ **********************************************************************/
+
+
 
 /*This is bootstrap-like container, and we can change the media queries as needed one day*/
+/* TODO: Remove/standardize -- need to incorporate media query into base classes */
+
 .container {
   margin: auto;
   width: 100%;
@@ -103,6 +347,20 @@ app-root { display: flex; height: 100%; width: 100% }
 
 .content-spacer{flex: 1 1 auto;}
 
+/*Adding some green buttons. We may have to change the color if we don't like it*/
+/* TODO: Remove/standardize */
+.mat-button.mat-success {
+  color: #28a745;
+}
+
+.mat-raised-button.mat-success, .mat-flat-button.mat-success{
+  background-color: #28a745;
+  color: white;
+}
+/* Color Shades */
+/* TODO: Remove/standardize */
+
+.mat-form-field-appearance-outline.mat-success .mat-form-field-outline.mat-success{ color: #28a745; }
 .success-color{ color: #28a745; }
 .danger-color{ color: #dc3549; }
 .warning-color{ color: #ffc107; }
@@ -112,38 +370,17 @@ app-root { display: flex; height: 100%; width: 100% }
 .error-mark { background-color: #ffcccc; }
 .info-mark { background-color: #dcedc8; }
 .note-mark { background-color: #e3f2fd; }
-
 .diff-added-color{ background: #fff59d; }
 .diff-removed-color{ background: #ffcdd2; }
-/* Color Shades */
-
-/**
-Adding some green buttons. We may have to change the color if we don't like it
-This mimics the Bootstrap success color, which we don't have in Angular.
-We may want to remove this in the future.
-**/
-.mat-button.mat-success {
-  @extend .success-color
-}
-
-.mat-raised-button.mat-success, .mat-flat-button.mat-success{
-  @extend .success-color;
-  color: white;
-}
-
-.mat-form-field-appearance-outline.mat-success .mat-form-field-outline.mat-success{
-  @extend .success-color;
-}
 
 /** SnackBar Overrides **/
 .mat-snack-bar-container { margin-top: 10em !important; }
 .mat-simple-snackbar { color: whitesmoke !important; }
 
-.file-input { display: none; }
 
-.push-right {
-  margin-left: auto;
-}
+/* TODO: Remove/standardize */
+.file-input { display: none; }
+.push-right { margin-left: auto; }
 
 /**
 MOVED FROM CASE SUMMARY TO USE WITH TOX AS WELL
@@ -156,11 +393,14 @@ TODO: Refactor to generalize class names and move to a common shared .css file.
   margin-bottom: 16px;
 }
 
+/* TODO: Add styling in individual component sheets as needed, don't override all buttons */
 //button {
 //  margin: 5px;
 //}
 
 /** Summary Section Styling **/
+/* TODO: Remove/standardize */
+
 
 .summary-section {
   border: black 1px solid;
@@ -210,6 +450,7 @@ TODO: Refactor to generalize class names and move to a common shared .css file.
 
 
 /** Alias Table Styling **/
+/* TODO: Remove/standardize */
 .alias-table {
   width: 100%;
   border: 1px black solid;
@@ -236,6 +477,7 @@ TODO: Refactor to generalize class names and move to a common shared .css file.
 }
 
 /* Basic row and col classes*/
+/* TODO: Remove/standardize */
 .row {
   @extend .flex;  /* aligns all child elements (flex items) in a row */
 }
@@ -248,119 +490,3 @@ TODO: Refactor to generalize class names and move to a common shared .css file.
   cursor: pointer;
 }
 
-/** Record Viewer Container **/
-.viewer-container-wrapper {
-  @extend .full-screen;
-  @extend .flex-col-simple;
-  flex: 1;
-  align-content: stretch;
-  align-items: stretch;
-  overflow-y: hidden;
-  > .viewer-container-header {
-    margin-left: 16px;
-    margin-right: 16px;
-  }
-  > .viewer-container-body {
-    @extend .padding-md;
-    @extend .flex-row-simple;
-    flex: 1;
-    scroll-behavior: smooth;
-    overflow-y: hidden;
-    align-content: stretch;
-    align-items: stretch;
-    > * {
-      @extend .scrollable;
-      scroll-behavior: smooth;
-      overflow-y: scroll;
-    }
-    > .viewer-container-body-content {
-      flex: 1;
-    }
-    > .viewer-container-body-fhir-explorer {
-      width: 30%;
-      > .fhir-explorer-header {
-        @extend .center-contents;
-        @extend .flex-row-simple;
-        @extend .padding-sm;
-        font-weight: bold;
-        font-size: larger;
-        > * {
-          @extend .center-contents;
-        }
-      }
-    }
-  }
-}
-
-/** Workflow Simulator Test Container **/
-.test-container-bar {
-  @extend .flex-row;
-  height: 50px;
-  min-height: 50px;
-  max-height: 50px;
-  margin: 0;
-  padding: 0;
-  > * {
-    flex: 1;
-  }
-}
-
-.center-contents {
-  justify-items: center;
-  text-align: center;
-  align-self: center;
-}
-
-.test-container-wrapper {
-  @extend .margin-bottom-md;
-  @extend .full-screen;
-  @extend .flex-col-simple;
-  flex: 1;
-  align-content: stretch;
-  align-items: stretch;
-  overflow-y: hidden;
-  > .test-container-body {
-    @extend .padding-md;
-    @extend .scrollable;
-    border-left: 1px solid rgb(100, 96, 100);
-    border-right: 1px solid rgb(100, 96, 100);
-  }
-  > .test-container-header {
-    @extend .padding-md;
-    @extend .test-container-bar;
-    border-bottom: 2px solid rgb(100, 96, 100);
-    > * {
-      @extend .center-contents;
-    }
-    > .test-container-header-event-name {
-      font-size: larger;
-    }
-    > .test-container-header-test-name {
-      font-size: x-large;
-    }
-  }
-  > .test-container-footer {
-    @extend .padding-md;
-    @extend .test-container-bar;
-    border-top: 2px solid rgb(100, 96, 100);
-    > * {
-      @extend .center-contents;
-    }
-    > .test-container-footer-status {
-      font-size: larger;
-    }
-  }
-}
-
-.temporary-wrapper {
-  @extend .full-screen;
-  @extend .flex-col-simple;
-  flex: 1;
-  align-content: stretch;
-  align-items: stretch;
-  overflow-y: hidden;
-  > * {
-    @extend .scrollable;
-    @extend .margin-md;
-  }
-}

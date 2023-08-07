@@ -17,13 +17,11 @@ export class FhirExplorerComponent implements OnInit {
 
   constructor(
     private httpClient: HttpClient,
-    //private documentHandler: MdiToEdrsDocumentHandlerService,
     private fhirExplorerService: FhirExplorerService,
     private utilsService: UtilsService,
     private elRef: ElementRef
   ) {
       this.fhirExplorerService.fhirResource$.subscribe( resource => {
-
       this.fhirResource = resource;
 
       if(!this.fhirResource){

@@ -1,0 +1,79 @@
+
+  <div class="section-button-wrapper">
+    <button mat-raised-button (click)="onOpenAll()" [style.background-color]="config.backgroundColor" [style.color]="appConfig.contrastColor">
+      <mat-icon>expand_more</mat-icon>
+      Expand All Sections
+    </button>
+    <button mat-raised-button (click)="onCloseAll()" [style.background-color]="config.backgroundColor" [style.color]="appConfig.contrastColor">
+      <mat-icon>expand_less</mat-icon>
+      Collapse All Sections
+    </button>
+    <span class="content-spacer"></span>
+
+  </div>
+
+  <div class="summary-section mdi-case-number-body-padding" #mdiCaseNumber id="mdiCaseNumber" [style.border-color]="appConfig.color">
+    <div class="summary-section-body">
+      <div class="summary-section-grid">
+        <div class="grid-row">
+          <div class="grid-col-1">
+            <record-viewer-tox-to-mdi-viewer-mdi-case [toxSummary]="toxToMdiRecord?.toxSummary" *ngIf="toxToMdiRecord"></record-viewer-tox-to-mdi-viewer-mdi-case>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <mat-accordion multi>
+    <!-- Performer(s) -->
+    <mat-expansion-panel class="summary-section" #performers id="performers" [expanded]="isExpanded('performers')" [style.border-color]="appConfig.color">
+      <mat-expansion-panel-header (click)="onToggleState( 'performers' )">
+        <mat-panel-title>Performer(s)</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="summary-section-body">
+        <record-viewer-tox-to-mdi-viewer-certifier *ngIf="toxToMdiRecord?.toxSummary?.certifier"
+                                                   [certifier]="toxToMdiRecord?.toxSummary?.certifier"
+                                                   [toxSummary]="toxToMdiRecord?.toxSummary"></record-viewer-tox-to-mdi-viewer-certifier>
+      </div>
+    </mat-expansion-panel>
+
+    <!-- Specimens -->
+    <mat-expansion-panel class="summary-section" id="specimens" [expanded]="isExpanded('specimens')" [style.border-color]="appConfig.color">
+      <mat-expansion-panel-header (click)="onToggleState( 'specimens' )">
+        <mat-panel-title>Specimens</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="summary-section-body">
+        <record-viewer-tox-to-mdi-viewer-grid-section
+          *ngIf="toxToMdiRecord?.toxSummary?.specimens" [data]="toxToMdiRecord?.toxSummary?.specimens"
+          [columns]="['type', 'site', 'identifier', 'collected', 'received', 'condition', 'container']">
+        </record-viewer-tox-to-mdi-viewer-grid-section>
+      </div>
+    </mat-expansion-panel>
+
+    <!-- Test Results -->
+    <mat-expansion-panel class="summary-section" id="results" [expanded]="isExpanded('results')" [style.border-color]="appConfig.color">
+      <mat-expansion-panel-header (click)="onToggleState( 'results' )">
+        <mat-panel-title>Test Results</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="summary-section-body">
+        <record-viewer-tox-to-mdi-viewer-grid-section *ngIf="toxToMdiRecord?.toxSummary?.results"
+                                                      [data]="toxToMdiRecord?.toxSummary?.results"
+                                                      [columns]="['test', 'value', 'date', 'specimen']">
+        </record-viewer-tox-to-mdi-viewer-grid-section>
+      </div>
+    </mat-expansion-panel>
+
+    <!-- Conclusion -->
+    <mat-expansion-panel class="summary-section" id="conclusion" [expanded]="isExpanded('conclusion')" [style.border-color]="appConfig.color">
+      <mat-expansion-panel-header (click)="onToggleState( 'conclusion' )">
+        <mat-panel-title>Conclusion</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="summary-section-body"
+           appSetFhirExplorer
+           [profile]="fhirProfiles.ToxToMdi.Tox_Diagnostic_Report"
+           [bundle]="toxToMdiRecord?.messageBundle">
+        <textarea class="conclusion-text-area" readonly [ngModel]="toxToMdiRecord?.toxSummary?.conclusion" (ngModelChange)="toxToMdiRecord?.toxSummary?.conclusion ? toxToMdiRecord.toxSummary.conclusion=$event : 'No Conclusion Found'" *ngIf="toxToMdiRecord?.toxSummary"></textarea>
+      </div>
+    </mat-expansion-panel>
+
+  </mat-accordion>

@@ -1,16 +1,16 @@
-<div class="top-padding">
+<div class="padding-top-md">
   {{ uiConstantsStep1.UPLOAD_JSON_CONTENT_MSG}}
 </div>
 
-<div class="top-padding">
+<div class="padding-top-md">
   {{ uiConstantsStep1.UPLOAD_FILE_CONTENT_MSG }}
 </div>
 
-<div class="top-padding">
+<div class="padding-top-md">
   <mat-error>{{errorMessage}}</mat-error>
 </div>
 
-<div class="top-padding">
+<div class="padding-top-md">
 
   <button mat-raised-button
           [style.background-color]="config.backgroundColor"
@@ -31,6 +31,6 @@
   <span id="filename">{{file?.name}}</span>
 
 </div>
-<div class="top-padding">
+<div class="padding-top-md">
   <app-decedent-basic-info [decedentInfo] = "decedentData"></app-decedent-basic-info>
 </div>

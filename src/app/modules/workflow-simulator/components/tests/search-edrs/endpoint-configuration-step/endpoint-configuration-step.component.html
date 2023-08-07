@@ -1,4 +1,4 @@
-<div class="top-margin">
+<div class="margin-top-md">
   <app-decedent-basic-info [decedentInfo]="decedentInfo"></app-decedent-basic-info>
 </div>
 
@@ -18,7 +18,7 @@
   </div>
 
   <!-- Registered Endpoint -->
-  <div class="top-margin" formGroupName="registeredEndpoint"
+  <div class="margin-top-md" formGroupName="registeredEndpoint"
        *ngIf="endpointConfigurationFormGroup.controls['inputType'].value == 'Registered Endpoint'">
 
     <mat-form-field appearance="outline" class="server-select">
@@ -46,7 +46,7 @@
         {{ uiConstantsStep2.VIEW_CAPABILITY_STMT_BTN }}
       </button>
     </div>
-    <div class="top-margin">
+    <div class="margin-top-md">
       <button type="button" color="accent" class="view-item-button"
               (click)="onViewServerMdiDocs()"
               mat-raised-button>
@@ -102,7 +102,7 @@
 
   </div>
 
-  <div class="top-padding row">
+  <div class="padding-top-md row">
     <button mat-raised-button matStepperPrevious>Back</button>
     <div class="push-right">
       <button type="submit" mat mat-raised-button

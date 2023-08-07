@@ -1,10 +1,10 @@
-<div class="top-margin">
+<div class="padding-top-md">
   <h3>1. Create Test Cases</h3>
   Users may use one of the provided XLSX files on the right as a template to create a set of test cases for a given workflow.
   This XLSX file can be submitted to Raven and mapped to FHIR MDI IG resources, and then posted to the Raven FHIR Server.
   To prevent the creation of duplicate records, existing records are overwritten.
   <div>
-    <div class="top-padding">
+    <div class="padding-top-md">
       <input type="file" class="file-input" (click)="fileUpload.value=null"
              accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
              (change)="onFileSelected($event)" #fileUpload>
@@ -12,12 +12,12 @@
     </div>
   </div>
 
-  <div class="top-padding">
+  <div class="padding-top-md">
     <h3>2. Submit Test Cases to Raven</h3>
     <div class="row">
       Select your completed spreadsheet, the type of the template used, and submit to raven.
     </div>
-    <div class="row top-margin">
+    <div class="row margin-top-md">
       <button mat-raised-button color="success" class="upload-btn"
               (click)="clearUI(); fileUpload.click();" [disabled]=isLoading
               [style.background-color]="config.backgroundColor" [style.color]="'white'"
@@ -32,7 +32,7 @@
       </span>
     </div>
   </div>
-    <div class="top-margin">
+    <div class="margin-top-md">
       <form [formGroup]="importCaseForm" (ngSubmit)="onSubmit()" class="row" #form="ngForm" >
         <mat-form-field appearance="outline" style="min-width: 50%">
           <mat-label>Select Template Type</mat-label>
@@ -61,7 +61,7 @@
     <div> Error Message: {{ error?.error?.message }} </div>
   </div>
 
-  <div class="top-padding">
+  <div class="padding-top-md">
     <h3>3. Review Test Case Mapping</h3>
     <div *ngIf="!isExportSuccessful || errorsGenerated">Review available once spreadsheet is submitted.</div>
     <div class="wrapper" *ngIf="isExportSuccessful">
