@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Config} from "../model/config";
 import packageInfo from '../../../package.json';
 import {HttpBackend, HttpClient, HttpRequest} from "@angular/common/http";
@@ -11,28 +11,34 @@ import {environment} from "../../environments/environment";
 })
 export class ConfigService {
 
-  defaultConfigPath: string = "https://raven.heat.icl.gtri.org/raven-dashboard-api/config"
+  defaultConfigPath: string;
   defaultLocalConfigPath = '../../assets/config/config.json'
   config: Config = new Config();
+
   packageInfo = packageInfo;
+
   private http: HttpClient
 
   constructor(handler: HttpBackend) {
     this.http = new HttpClient(handler);
+    this.defaultConfigPath = this.getDashboardApiUrl() + "config"
+  }
+
+  getDashboardApiUrl(): string {
+    let dashboardApi = environment.dashboardApi;
+    if (!dashboardApi.endsWith("/")) {
+      dashboardApi = dashboardApi.concat("/");
+    }
+    return dashboardApi;
   }
 
   loadConfig() {
-    let useLocalConfig = false;
     let configPath = this.defaultConfigPath;
     if (environment) {
-      if (environment?.useLocalConfig) {
-        useLocalConfig = true;
-      }
       if (environment?.overrideConfigLocation?.trim()) {
-        configPath = environment?.overrideConfigLocation?.trim()
-      }
-      else if (useLocalConfig) {
-        configPath = this.defaultLocalConfigPath;
+        configPath = environment?.overrideConfigLocation?.trim() // If override path is given, always use it.
+      } else if (environment?.useLocalConfig) {
+        configPath = this.defaultLocalConfigPath; // If no override is given but use local is true, use default local.
       }
     }
     return this.http.get<Config>(configPath).pipe(
@@ -47,4 +53,5 @@ export class ConfigService {
         return of(false);
       })
     )
-  }}
+  }
+}

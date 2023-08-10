@@ -10,4 +10,11 @@
   <pre>
     {{ currentUser | json}}
   </pre>
+
+  <div *ngIf="events">
+    <div *ngFor="let event of events">
+      <app-event-table [event]="event" [columns]="event['columns']" [data]="[]"></app-event-table>
+    </div>
+
+  </div>
 </div>

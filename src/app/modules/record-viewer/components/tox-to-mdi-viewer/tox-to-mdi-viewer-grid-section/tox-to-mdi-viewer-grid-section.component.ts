@@ -8,11 +8,12 @@ import {FhirExplorerService} from "../../../../fhir-explorer/services/fhir-explo
   templateUrl: './tox-to-mdi-viewer-grid-section.component.html',
   styleUrls: ['../tox-to-mdi-viewer.component.css']
 })
-export class ToxToMdiViewerGridSectionComponent implements OnInit, AfterViewInit {
+export class ToxToMdiViewerGridSectionComponent implements OnInit {
   @Input() data: any[];
   @Input() columns: string[] = [];
-  @ViewChild(MatSort) sort: MatSort;
-  dataSource: MatTableDataSource<any>;
+  @ViewChild(MatSort) set matSort(sort: MatSort) {
+    this.dataSource.sort = sort;
+  };  dataSource: MatTableDataSource<any>;
   displayedColumns;
 
   constructor(private fhirExplorerService: FhirExplorerService) { }
@@ -29,9 +30,5 @@ export class ToxToMdiViewerGridSectionComponent implements OnInit, AfterViewInit
   onRowClicked(row: any) {
     // TODO: This should happen in the component
     this.fhirExplorerService.setSelectedFhirResource(row.resource);
-  }
-
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
   }
 }

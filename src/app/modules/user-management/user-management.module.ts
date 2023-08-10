@@ -10,13 +10,17 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatDividerModule} from "@angular/material/divider";
+import { EventTableComponent } from './components/event-table/event-table.component';
+import {MatTableModule} from "@angular/material/table";
+import {MatSortModule} from "@angular/material/sort";
 
 
 @NgModule({
   declarations: [
     AdminPanelComponent,
     LoggedInComponent,
-    UserHeaderComponent
+    UserHeaderComponent,
+    EventTableComponent
   ],
   exports: [
     UserHeaderComponent
@@ -27,7 +31,21 @@ import {MatDividerModule} from "@angular/material/divider";
       domain: 'dev-dk7cyfpkwowbtdbt.us.auth0.com',
       clientId: 'M7knIi1ioWMc6Lufbt5lbyTrnxpKmL4q',
       authorizationParams: {
-        redirect_uri: environment.adminRedirectUrl
+        redirect_uri: environment.adminRedirectUrl,
+        audience: "https://raven.dev.heat.icl.gtri.org/raven-dashboard-api/",
+        scope: "admin profile email openid"
+      },
+      httpInterceptor: {
+        allowedList: [
+          {
+            uri: "http://127.0.0.1:8000/admin-panel",
+            // tokenOptions: {
+            //   audience: '',
+            //   scope: ""
+            //
+            // }
+          }
+        ]
       }
     }),
     CommonModule,
@@ -36,6 +54,8 @@ import {MatDividerModule} from "@angular/material/divider";
     MatButtonModule,
     MatMenuModule,
     MatDividerModule,
+    MatTableModule,
+    MatSortModule,
   ]
 })
 export class UserManagementModule { }

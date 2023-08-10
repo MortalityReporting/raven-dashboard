@@ -39,6 +39,7 @@ import {UserManagementModule} from "./modules/user-management/user-management.mo
 import { DocRefBase64TransformPipe } from './modules/fhir-util';
 import {ConfigService} from "./service/config.service";
 import {RegisteredEndpointsInterceptor} from "./interceptors/registered-endpoints.interceptor";
+import {AuthHttpInterceptor} from "@auth0/auth0-angular";
 
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
@@ -104,6 +105,11 @@ export const configFactory = (configService: ConfigService) => {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: FhirAuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthHttpInterceptor,
       multi: true
     }
   ],

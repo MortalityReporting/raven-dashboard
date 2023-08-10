@@ -1,10 +1,12 @@
 import packageInfo from '../../package.json';
 
 export const environment = {
-  // VERSION: packageInfo.version + "-dev",
-  production: false,
-  useLocalConfig: false,
-  overrideConfigLocation: "https://raven.dev.heat.icl.gtri.org/raven-dashboard-api/config",
+
+  dashboardApi: "http://127.0.0.1:8000",
+  useLocalConfig: true,
+  overrideConfigLocation: "",
+
+
   ravenFhirServer: "https://raven.dev.heat.icl.gtri.org/mdi-fhir-server/fhir",
   ravenFhirServerBasicAuth: "client:secret",
   ravenImportApi: "https://raven.dev.heat.icl.gtri.org/raven-import-api/upload-xlsx-file",

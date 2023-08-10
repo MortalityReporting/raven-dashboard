@@ -1,0 +1,23 @@
+
+<div style="color: white; background-color: black; font-weight: bold; font-size: larger" class="padding-sm">
+  {{event.title}}
+</div>
+
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+  <ng-container matColumnDef="user">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> User </th>
+    <td mat-cell *matCellDef="let element"> {{element["name"]}} </td>
+  </ng-container>
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> E-Mail </th>
+    <td mat-cell *matCellDef="let element"> {{element["email"]}} </td>
+  </ng-container>
+  <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns.slice(2, displayedColumns.length)">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{capitalizeColumnHeader(columnDictionary[column])}} </th>
+    <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>

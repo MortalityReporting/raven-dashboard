@@ -1,0 +1,55 @@
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {MatSort} from "@angular/material/sort";
+import {MatTableDataSource} from "@angular/material/table";
+
+@Component({
+  selector: 'app-event-table',
+  templateUrl: './event-table.component.html',
+  styleUrls: ['./event-table.component.css']
+})
+export class EventTableComponent implements OnInit {
+  @Input() event;
+  @Input() data: any[];
+  @Input() columns: string[] = [];
+
+  dataSource: MatTableDataSource<any>;
+  displayedColumns: string[];
+  columnDictionary: {};
+
+  @ViewChild(MatSort) set matSort(sort: MatSort) {
+    this.dataSource.sort = sort;
+  };
+
+  constructor() {}
+
+  ngOnInit(): void {
+    //this.dataSource = new MatTableDataSource<any>(this.data);
+    this.columnDictionary = this.event['cols'];
+    this.displayedColumns = this.parseColKeys(this.event);
+    this.dataSource = new MatTableDataSource<any>(this.event.rows)
+  }
+
+  capitalizeColumnHeader(column: string): string {
+    return column.charAt(0).toUpperCase() + column.slice(1);
+  }
+
+  parseColKeys(event): string[] {
+    const headers = event['cols'];
+    let headerDisplays = ["user", "email"];
+    for (const key in headers) {
+      headerDisplays.push(key);
+    }
+    return headerDisplays;
+  }
+
+  // parseRows(event): any[] {
+  //   let data: any[] = [];
+  //   event?.['users']?.forEach(user => {
+  //     let row = {"name": user["name"], "email": user["email"]};
+  //     //row
+  //     data.push(row);
+  //     }
+  //   )
+  //   return data
+  // }
+}

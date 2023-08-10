@@ -16,6 +16,7 @@ export class UserProfileManagerService {
   }
 
   setCurrentUser(user: any) {
+    console.log(user.email)
     this.getUserProfile(user.email).subscribe({
       next: (userProfile: UserProfile) => {
         if (userProfile) {
