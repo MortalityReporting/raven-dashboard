@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpRequest} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpRequest} from "@angular/common/http";
 import {BehaviorSubject, Observable, Subject, throwError} from "rxjs";
 import {map} from "rxjs/operators";
 import {OnboardingHttpRequest} from "../model/onboarding-http-request";
@@ -22,31 +22,22 @@ export class OnboardingService {
   // Example url for basic auth testing
   // https://raven.dev.heat.icl.gtri.org/mdi-fhir-server/fhir/Patient
   // https://bluejay.heat.icl.gtri.org/mdi-fhir-server/fhir/Patient
-  onLogin(request: OnboardingHttpRequest): Observable<any> {
+    onLogin(request: OnboardingHttpRequest): Observable<any> {
 
-    this.setHttpReq({url: request.url, requestBody: request.requestBody, requestOptions: request.httpOptions});
 
-    if (request.requestType == RequestType.GET) {
-      return this.http.get(request.url, request.httpOptions)
-        .pipe(map(response => {
-            return response;
-          }),
-        )
+      let req: any;
+      if (request.requestType == RequestType.GET) {
+          req = new HttpRequest(RequestType.GET, request.url, request.httpOptions);
+      }
+      else if (request.requestType == RequestType.PUT) {
+          req = new HttpRequest(RequestType.PUT, request.url, request.requestBody, request.httpOptions);
+      }
+      else if (request.requestType == RequestType.POST) {
+          req = new HttpRequest(RequestType.POST, request.url, request.requestBody, request.httpOptions);
+      }
+      //We cann
+      this.setHttpReq(JSON.parse(JSON.stringify(req)));
 
-    } else if (request.requestType == RequestType.PUT) {
-      return this.http.put(request.url, request.requestBody, request.httpOptions)
-        .pipe(map(response => {
-            return response;
-          }),
-        )
-    } else if (request.requestType == RequestType.POST) {
-      return this.http.post(request.url, request.requestBody, request.httpOptions)
-        .pipe(map(response => {
-            return response;
-          }),
-        )
-    } else {
-      return throwError(() => new Error("Invalid Request Detected"));
+      return this.http.request(req);
     }
-  }
 }

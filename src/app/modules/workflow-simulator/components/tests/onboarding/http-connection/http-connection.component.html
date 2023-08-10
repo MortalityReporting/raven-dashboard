@@ -1,7 +1,7 @@
-<mat-card style="margin-bottom: 16px">
+<mat-card class="margin-bottom-md">
   <mat-card-content>
-    <mat-card-title class="margin-left-right">
-      Configure Server Connection
+    <mat-card-title class="margin-left-md margin-left-md">
+      <div class="margin-md">Configure Server Connection</div>
     </mat-card-title>
     <div class="box">
       <div class="config-col">
@@ -53,8 +53,8 @@
 
           <!-- Username -->
           <div class="box">
-            <div class="col" style="margin-right: 8px;">
-            <mat-form-field appearance="outline" *ngIf="onboardingForm.controls['user']" style="width: 100%;">
+            <div class="col margin-right-md">
+            <mat-form-field appearance="outline" *ngIf="onboardingForm.controls['user']" class="full-width">
               <mat-label>User</mat-label>
               <input type="text" matInput formControlName="user">
               <mat-error *ngIf="onboardingForm?.controls?.['user']?.errors?.['required']">
@@ -64,8 +64,8 @@
             </div>
 
             <!-- Password -->
-            <div class="col" style="margin-left: 8px;">
-            <mat-form-field appearance="outline" *ngIf="onboardingForm.controls['password']" style="width: 100%;">
+            <div class="col margin-left-md">
+            <mat-form-field appearance="outline" *ngIf="onboardingForm.controls['password']" class="full-width">
               <mat-label>Password</mat-label>
               <input type="password" matInput formControlName="password">
               <mat-error *ngIf="onboardingForm?.controls?.['password']?.errors?.['required']">
@@ -74,6 +74,69 @@
             </mat-form-field>
             </div>
           </div>
+
+          <ng-container *ngIf="onboardingForm.controls['requestType']?.value != RequestType.GET">
+
+            <!-- URL Encoded Params -->
+            <div class="margin-top-md margin-bottom-md">
+              <mat-label class="margin-right-md">Body Type:</mat-label>
+              <mat-radio-group aria-label="Select an option"  formControlName="requestBodyOptions" >
+                <mat-radio-button  class="margin-right-md" value="rawBody" (change)="onRequestBodySelectionChange('rawBody')">
+                  Raw
+                </mat-radio-button>
+                <mat-radio-button value="urlEncoded" (change)="onRequestBodySelectionChange('urlEncoded')">
+                  x-www-form-urlencoded
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+
+            <ng-container *ngIf="onboardingForm.controls['requestBodyOptions'].value == 'urlEncoded'" formArrayName="urlEncodedParameters">
+
+              <ng-container *ngFor="let urlEncodedParam of urlEncodedParams.controls; let index = index">
+
+                <div [formGroupName]="index" class="box">
+
+                  <mat-form-field appearance="outline" class="key-value-form-field">
+                    <mat-label>Key</mat-label>
+                    <input matInput type="text" formControlName="key"/>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" class="push-right key-value-form-field">
+                    <mat-label>Value</mat-label>
+                    <input matInput type="text" formControlName="value"/>
+                  </mat-form-field>
+
+                  <button mat-icon-button class="margin-left-md" aria-label="Remove Key Value" color="warn"
+                          type="button"
+                          matTooltip="Remove Parameter"
+                          [disabled]="urlEncodedParams?.length == 1"
+                          (click)="onDeleteUrlEncodedParam(index)">
+                    <mat-icon>remove</mat-icon>
+                  </button>
+                </div>
+              </ng-container>
+
+              <button type="button"
+                      class="margin-bottom-md"
+                      mat-stroked-button aria-label="Add Search Params" color="primary" (click)="addUrlEncodedParam()">
+                <mat-icon>add</mat-icon>
+                Add Params
+              </button>
+            </ng-container>
+            <mat-divider class="top-margin"></mat-divider>
+
+            <!-- End URL Encoded Params -->
+
+            <!-- Request Body -->
+            <div *ngIf="onboardingForm.controls['requestBody']">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Request Body</mat-label>
+                <textarea type="text" matInput formControlName="requestBody" rows="5"></textarea>
+              </mat-form-field>
+            </div>
+            <!-- End Request Body -->
+          </ng-container>
+
           <div class="row margin-top">
             <button mat-stroked-button type="button" color="primary" *ngIf="!isAdvancedSettingsVisible"
                     (click)="onShowHideAdvancedSettings(true)">
@@ -90,7 +153,7 @@
           <ng-container *ngIf="isAdvancedSettingsVisible">
 
             <!-- Header Params  -->
-            <div style="margin: 8px 0">
+            <div class="margin-top-md margin-bottom-md">
               <mat-checkbox formControlName="customizeHeaders" (change)="onCustomizeHeadersSelectionChange()">
                 Customize Headers
               </mat-checkbox>
@@ -112,9 +175,10 @@
                     <input matInput type="text" formControlName="value"/>
                   </mat-form-field>
 
-                  <button mat-icon-button style="margin-left: 1em" aria-label="Remove Parameter" color="warn"
+                  <button mat-icon-button class="margin-left-md" aria-label="Remove Parameter" color="warn"
                           type="button"
                           matTooltip="Remove Parameter"
+                          [disabled]="headerParams?.length == 1"
                           (click)="onDeleteHeaderParam(index)">
                     <mat-icon>remove</mat-icon>
                   </button>
@@ -133,14 +197,14 @@
           <mat-divider class="top-margin"></mat-divider>
 
           <!-- Query Params -->
-          <div style="margin: 8px 0">
+          <div class="margin-top-md margin-bottom-md">
               <mat-checkbox formControlName="addQueryParams" (change)="onAddQueryParamsSelectionChange()">
                 Add Query Params
               </mat-checkbox>
           </div>
             <ng-container *ngIf="onboardingForm.controls['queryParameters']" formArrayName="queryParameters">
 
-              <ng-container *ngFor="let queryParams of queryParams.controls; let index = index">
+              <ng-container *ngFor="let queryParam of queryParams.controls; let index = index">
 
                 <div [formGroupName]="index" class="box">
 
@@ -154,9 +218,10 @@
                     <input matInput type="text" formControlName="value"/>
                   </mat-form-field>
 
-                  <button mat-icon-button style="margin-left: 1em" aria-label="Remove Key Value" color="warn"
+                  <button mat-icon-button class="margin-left-md" aria-label="Remove Key Value" color="warn"
                           type="button"
                           matTooltip="Remove Parameter"
+                          [disabled]="queryParams?.length == 1"
                           (click)="onDeleteQueryParam(index)">
                     <mat-icon>remove</mat-icon>
                   </button>
@@ -173,23 +238,7 @@
             <!-- End Query Params -->
 
             <mat-divider class="top-margin"></mat-divider>
-          </ng-container>
 
-
-          <ng-container *ngIf="onboardingForm.controls['requestType']?.value != RequestType.GET">
-            <!-- Request Body -->
-            <div style="margin: 8px 0">
-              <mat-checkbox formControlName="addRequestBody" (change)="onAddRequestBody()">
-                Add/Modify Request Body
-              </mat-checkbox>
-            </div>
-            <div *ngIf="onboardingForm.controls['requestBody']">
-              <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Request Body</mat-label>
-                <textarea type="text" matInput formControlName="requestBody" rows="5"></textarea>
-              </mat-form-field>
-            </div>
-            <!-- End Request Body -->
           </ng-container>
 
         </form>
@@ -203,24 +252,10 @@
           [successResponse]="loginSuccessResponse"
           [request]="onboardingService.httpReq$ | async">
         </app-http-response-results>
-<!--        <mat-tab-group class="top-margin" mat-stretch-tabs="false">-->
-<!--          <mat-tab label="HTTP Response">-->
-<!--            <div [ngClass]="!!loginErrorResponse ? 'scrollable-error-tab-container' : 'scrollable-tab-container'" >-->
-<!--              <div *ngIf="loginSuccessResponse">-->
-<!--                <pre> {{ loginSuccessResponse| json }} </pre>-->
-<!--              </div>-->
-<!--              <div *ngIf="loginErrorResponse">-->
-<!--                <pre> {{ loginErrorResponse| json }} </pre>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </mat-tab>-->
-<!--          <mat-tab label="Second"> Content 2</mat-tab>-->
-<!--          <mat-tab label="Third"> Content 3</mat-tab>-->
-<!--        </mat-tab-group>-->
       </div>
     </div>
 
-    <div class="top-margin">
+    <div class="margin-md">
       <button mat-raised-button aria-label="Test Connection" color="primary" type="submit"
               (click)="onTestConnection()">
         <mat-icon>lan</mat-icon>

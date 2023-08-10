@@ -15,22 +15,23 @@
         <span class="result-line"  *ngIf="successResponse">{{ successResponse?.url }}</span>
       </div>
 
+      <div class="result-line-item" *ngFor="let token of successResponseTokens">
+        <span class="label-line">
+                    {{ token.name }}:
+          <button mat-icon-button color="primary" (click)="copyToClipboard(token?.value)"
+                  matTooltip="Copy to Clipboard">
+            <mat-icon>content_copy</mat-icon>
+         </button>
+        </span>
+        <span class="result-line"><pre>{{ token?.value | json}}</pre></span>
+      </div>
+
       <div class="result-line-item" *ngIf="errorResponse">
         <span class="label-line">Message:</span>&nbsp;
         <span class="result-line" *ngIf="errorResponse">{{ errorResponse?.message }}</span>
       </div>
 
-      <div class="result-line-item" *ngIf="successResponse?.body">
-        <div class="label-line">Body:
-          <button mat-icon-button color="primary" (click)="copyToClipboard(successResponse?.body)" matTooltip="Copy to Clipboard">
-            <mat-icon>content_copy</mat-icon>
-          </button>
-        </div>&nbsp;
-        <div class="result-line" *ngIf="successResponse">
 
-          <pre>{{ successResponse?.body | json }}</pre>
-        </div>
-      </div>
 
     </div>
   </mat-tab>

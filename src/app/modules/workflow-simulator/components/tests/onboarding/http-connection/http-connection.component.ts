@@ -64,7 +64,7 @@ export class HttpConnectionComponent implements OnInit {
     if(advancedSettingsVisible){
       this.onboardingForm.addControl('customizeHeaders', new FormControl(false));
       this.onboardingForm.addControl('addQueryParams', new FormControl(false));
-      this.onboardingForm.addControl('addRequestBody', new FormControl(false));
+
     }
     else {
       this.onboardingForm.removeControl("customizeHeaders");
@@ -72,6 +72,7 @@ export class HttpConnectionComponent implements OnInit {
       this.onboardingForm.removeControl('queryParameters');
       if(this.onboardingForm.controls['requestType'].value != RequestType.GET){
         this.onboardingForm.removeControl('addRequestBody');
+        this.onboardingForm.removeControl('urlEncodedParams');
       }
     }
   }
@@ -89,31 +90,19 @@ export class HttpConnectionComponent implements OnInit {
       this.onboardingForm.addControl('user', new FormControl('', Validators.required));
       this.onboardingForm.addControl('password', new FormControl('', Validators.required));
       this.onboardingForm.removeControl('token');
-
-      if(this.onboardingForm.controls['addQueryParams'].value){
-        this.onboardingForm.removeControl("queryParameters");
-        this.onboardingForm.controls['addQueryParams'].patchValue(false);
-      }
-
-      if(this.onboardingForm.controls['addRequestBody'].value){
-        this.onboardingForm.removeControl("requestBody");
-        this.onboardingForm.controls['addRequestBody'].patchValue(false);
-      }
     }
     else if(this.selectedConnectionType.value == ConnectionType.token){
-      this.onboardingForm.addControl('addRequestBody', new FormControl(false));
       this.onboardingForm.removeControl('user');
       this.onboardingForm.removeControl('password');
       if(!this.onboardingForm.controls['token']){
-        this.onboardingForm.addControl('token', new FormControl('', Validators.required));
+        this.onboardingForm.addControl('token', new FormControl(''));
       }
 
     }
     else {
       this.onboardingForm.removeControl('user');
       this.onboardingForm.removeControl('password');
-      this.onboardingForm.addControl('token', new FormControl(''));
-      this.onboardingForm.addControl('addRequestBody', false);
+      this.onboardingForm.removeControl('token');
     }
   }
 
@@ -124,12 +113,15 @@ export class HttpConnectionComponent implements OnInit {
   onRequestTypeSelected() {
     if(this.onboardingForm.value.requestType === RequestType.GET){
       this.onboardingForm.removeControl('requestBody');
+      this.onboardingForm.removeControl('requestBodyOptions');
     }
-    else if(this.onboardingForm.value.requestType == RequestType.PUT){
-      this.onboardingForm.addControl('addRequestBody', new FormControl(false));
-    }
-    else if(this.onboardingForm.value.requestType == RequestType.POST){
-      this.onboardingForm.addControl('addRequestBody', new FormControl(false));
+    else if(
+        this.onboardingForm.value.requestType == RequestType.PUT
+        ||
+        this.onboardingForm.value.requestType == RequestType.POST
+    ){
+      this.onboardingForm.addControl('requestBodyOptions', new FormControl('rawBody'));
+      this.onboardingForm.addControl('requestBody', new FormControl(''));
     }
   }
 
@@ -161,7 +153,6 @@ export class HttpConnectionComponent implements OnInit {
         console.log(value);
         this.log.info("Successful login to " + request.url, this.componentName);
         this.loginSuccessResponse = value;
-
       },
       error: err => {
         console.error(err);
@@ -190,8 +181,8 @@ export class HttpConnectionComponent implements OnInit {
     return this.onboardingForm.controls["headerParameters"] as UntypedFormArray;
   }
 
-  onDeleteQueryParam(index: number) {
-    this.queryParams.removeAt(index);
+  get urlEncodedParams() {
+    return this.onboardingForm.controls["urlEncodedParameters"] as UntypedFormArray;
   }
 
   addHeaderParam() {
@@ -210,6 +201,15 @@ export class HttpConnectionComponent implements OnInit {
     });
     this.queryParams.push(queryParamsFG);
     this.onboardingForm.addControl('queryParameters', queryParamsFG);
+  }
+
+  addUrlEncodedParam() {
+    const urlEncodedParamsFG = this.fb.group({
+      key: new UntypedFormControl(''),
+      value: new UntypedFormControl(''),
+    });
+    this.urlEncodedParams.push(urlEncodedParamsFG);
+    this.onboardingForm.addControl('urlEncodedParameters', urlEncodedParamsFG);
   }
 
   onCustomizeHeadersSelectionChange() {
@@ -231,20 +231,17 @@ export class HttpConnectionComponent implements OnInit {
       this.onboardingForm.removeControl('queryParameters');
     }
   }
-  onAddRequestBody() {
-    if(this.onboardingForm.value.addRequestBody) {
-      this.onboardingForm.addControl('requestBody', new FormControl(''));
-    }
-    else {
-      this.onboardingForm.removeControl('requestBody')
-    }
+
+  onDeleteHeaderParam(index: number){
+    this.headerParams.removeAt(index);
   }
 
-  onDeleteHeaderParam(index){
-    this.headerParams.removeAt(index);
-    if(index == 0 ){ // all header params have been remover, and we need to deselect the Customize Headers checkbox
-      this.onboardingForm.controls['customizeHeaders'].patchValue(false);
-    }
+  onDeleteUrlEncodedParam(index: number) {
+    this.urlEncodedParams.removeAt(index);
+  }
+
+  onDeleteQueryParam(index: number) {
+    this.queryParams.removeAt(index);
   }
 
   /**
@@ -255,4 +252,16 @@ export class HttpConnectionComponent implements OnInit {
     this.form.ngSubmit.emit();
   }
 
+  onRequestBodySelectionChange(selection: string) {
+
+    if(selection == 'urlEncoded'){
+      this.onboardingForm.addControl('urlEncodedParameters', this.fb.array([]));
+      this.onboardingForm.removeControl('requestBody');
+      this.addUrlEncodedParam();
+    }
+    else if (selection == 'rawBody'){
+      this.onboardingForm.removeControl('urlEncodedParameters');
+      this.onboardingForm.addControl('requestBody', new FormControl(''));
+    }
+  }
 }

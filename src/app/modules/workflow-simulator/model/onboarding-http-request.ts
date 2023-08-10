@@ -13,6 +13,7 @@ interface FormValue {
   requestParams?: any;
   queryParameters?: any;
   headerParameters?: any;
+  urlEncodedParameters?: any;
   token?: any;
 }
 
@@ -42,7 +43,20 @@ export class OnboardingHttpRequest {
     this.url = formValue.endpointUrl;
     this.requestType = formValue.requestType;
     this.connectionType = formValue.connectionType.value;
-    this.requestBody = formValue.requestBody;
+
+
+    if(formValue.requestBody){
+      this.requestBody = formValue.requestBody;
+    }
+
+    if(formValue.urlEncodedParameters){
+      let body = new URLSearchParams();
+      formValue.urlEncodedParameters?.forEach(
+          // HttpHeaders.append returns a clone of the headers with the value appended, it does not update the headers object
+          param => body.set(param.key, param.value)
+      )
+      this.requestBody = body;
+    }
 
     if (formValue.connectionType.value == ConnectionType.basicAuth) {
       /**
