@@ -19,9 +19,6 @@ export class UserHeaderComponent {
     private userProfileManager: UserProfileManagerService,
     public auth: AuthService,
   ) {
-    this.currentUser$ = this.userProfileManager.currentUser$;
-    this.currentUser$.subscribe();
-
     this.auth.user$.pipe(
       skipWhile(value => !value)
     ).subscribe({
@@ -31,5 +28,7 @@ export class UserHeaderComponent {
         }
       }
     )
+    this.currentUser$ = this.userProfileManager.currentUser$;
+    this.currentUser$.subscribe();
   }
 }

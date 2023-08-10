@@ -24,10 +24,10 @@ export class UserProfile {
     return userProfile;
   }
 
-  fhirId?: string;
-  id?: string;
-  name?: string;
-  email?: string;
+  fhirId: string;
+  id: string;
+  name: string;
+  email: string;
 
   generateId(overwrite: boolean = false) {
     if (!this.id) this.id = uuid();

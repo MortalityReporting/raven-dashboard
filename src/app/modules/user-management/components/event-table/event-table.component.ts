@@ -8,9 +8,7 @@ import {MatTableDataSource} from "@angular/material/table";
   styleUrls: ['./event-table.component.css']
 })
 export class EventTableComponent implements OnInit {
-  @Input() event;
-  @Input() data: any[];
-  @Input() columns: string[] = [];
+  @Input() event: any;
 
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[];
@@ -23,7 +21,6 @@ export class EventTableComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    //this.dataSource = new MatTableDataSource<any>(this.data);
     this.columnDictionary = this.event['cols'];
     this.displayedColumns = this.parseColKeys(this.event);
     this.dataSource = new MatTableDataSource<any>(this.event.rows)
@@ -41,15 +38,4 @@ export class EventTableComponent implements OnInit {
     }
     return headerDisplays;
   }
-
-  // parseRows(event): any[] {
-  //   let data: any[] = [];
-  //   event?.['users']?.forEach(user => {
-  //     let row = {"name": user["name"], "email": user["email"]};
-  //     //row
-  //     data.push(row);
-  //     }
-  //   )
-  //   return data
-  // }
 }
