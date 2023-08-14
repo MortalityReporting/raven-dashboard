@@ -1,7 +1,20 @@
 <mat-card class="margin-bottom-md">
   <mat-card-content>
     <mat-card-title class="margin-left-md margin-left-md">
+      <div class="flex">
       <div class="margin-md">Configure Server Connection</div>
+      <div class="content-spacer"></div>
+        <div>
+          <button mat-stroked-button (click)="onImportStage()">
+            <mat-icon>download</mat-icon>
+            Import Stage
+          </button>
+          <button mat-stroked-button class="margin-left-md" (click)="onExportStage(form)">
+            <mat-icon>publish</mat-icon>
+            Export Stage
+          </button>
+        </div>
+      </div>
     </mat-card-title>
     <div class="box">
       <div class="config-col">

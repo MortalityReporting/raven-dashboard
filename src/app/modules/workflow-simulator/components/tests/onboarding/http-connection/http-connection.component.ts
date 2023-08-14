@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {LoggerService} from "../../../../../../../../projects/ngx-hisb-logger/src/lib/services/logger.service";
 import {
   FormControl,
-  FormGroup,
+  FormGroup, FormGroupDirective,
   NgForm,
   UntypedFormArray,
   UntypedFormBuilder,
@@ -263,5 +263,19 @@ export class HttpConnectionComponent implements OnInit {
       this.onboardingForm.removeControl('urlEncodedParameters');
       this.onboardingForm.addControl('requestBody', new FormControl(''));
     }
+  }
+
+  onImportStage() {
+
+  }
+
+  onExportStage(form: FormGroupDirective) {
+    const filename = 'saved_connection.json';
+    const file = new Blob([form.value], {type: "application/json"});
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(file);
+    link.download = filename;
+    link.click();
+    link.remove();
   }
 }
