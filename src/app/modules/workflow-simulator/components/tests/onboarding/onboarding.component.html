@@ -2,13 +2,13 @@
   <div class="generic-component-content">
 
     <mat-accordion multi>
-      <mat-expansion-panel *ngFor="let componentCounter of componentCounterArray,  let i = index;">
+      <mat-expansion-panel *ngFor="let stage of stageList,  let i = index;" [expanded]="stage.expanded">
         <mat-expansion-panel-header>
           <mat-panel-title>
             <button
               mat-mini-fab color="warn" aria-label="Remove Stage" matTooltip="Remove stage"
               (click)="removeComponent(i, $event); $event.stopPropagation() "
-              [disabled]="componentCounterArray?.length == 1">
+              [disabled]="stageList?.length == 1">
               <mat-icon>remove</mat-icon>
             </button>
             <span class="margin-left-md">Stage {{ getStageIndex(i) }}</span>
