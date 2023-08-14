@@ -27,7 +27,6 @@ export class OnboardingComponent implements OnInit, AfterViewInit{
 
   addStage() {
     this.componentCounterArray.push(this.componentCounterArray.length -1);
-    console.log(this.accordion);
   }
 
   removeComponent(index: number, event?: any) {
@@ -38,5 +37,9 @@ export class OnboardingComponent implements OnInit, AfterViewInit{
     setTimeout(()=> {
       this.accordion.openAll();
     });
+  }
+
+  getStageIndex(i: number) {
+    return i+1;
   }
 }
