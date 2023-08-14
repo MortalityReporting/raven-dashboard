@@ -1,95 +1,43 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable, throwError} from "rxjs";
-import {catchError, map} from "rxjs/operators";
 import {OnboardingHttpRequest} from "../models/onboarding-http-request";
-import {RequestType} from "../components/onboarding/http-connection/http-connection.component";
+import {HttpClient, HttpRequest} from "@angular/common/http";
+import {BehaviorSubject, Observable} from "rxjs";
+import {RequestType} from "../models/request-type";
 
 @Injectable({
   providedIn: 'root'
 })
 export class OnboardingService {
-  firebaseUrl = "https://ng-auth-50216-default-rtdb.firebaseio.com/";
-  authRestApi = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDELBqABNIo3AxFgot22haFfC6CP-iIr20";
-  constructor( private http:HttpClient) { }
 
-  onPostData(postData: any): Observable<any>{return this.http.post(this.firebaseUrl + 'posts.json', postData)};
+  private _httpReq$ = new BehaviorSubject<any>(null);
+  httpReq$ = this._httpReq$.asObservable();
 
-  onGetData(): Observable<any> {
-    return this.http.get(this.firebaseUrl + 'posts.json', {observe: 'response'})
-      .pipe(map(response => {
-          const postArray = [];
-          for (const key in response.body) {
-            if (response.body.hasOwnProperty(key)) {
-              postArray.push({...response.body[key], id: key});
-            }
-          }
-          return postArray;
-        }),
-        catchError(error => {
-          //log to console
-          return throwError(error);
-        })
-      )
-  };
+  private setHttpReq(httpReq: any){
+    this._httpReq$.next(httpReq);
+  }
+  constructor(private http:HttpClient) { }
 
-  onLogin(request: OnboardingHttpRequest): Observable<any> {
-      const auth = ("client:secret");
-      let authorizationData: string = 'Basic ' + btoa(auth);
 
-      const httpOptions = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Authorization': authorizationData
-        })
-      };
+  // Example url for basic auth testing
+  // https://raven.dev.heat.icl.gtri.org/mdi-fhir-server/fhir/Patient
+  // https://bluejay.heat.icl.gtri.org/mdi-fhir-server/fhir/Patient
+    onLogin(request: OnboardingHttpRequest): Observable<any> {
 
-    const credentials = btoa("client:secret");
 
-    return this.http.get("https://raven.dev.heat.icl.gtri.org/mdi-fhir-server/fhir/Patient", httpOptions)
+      let req: any;
+      if (request.requestType == RequestType.GET) {
+          req = new HttpRequest(RequestType.GET, request.url, request.httpOptions);
+      }
+      else if (request.requestType == RequestType.PUT) {
+          req = new HttpRequest(RequestType.PUT, request.url, request.requestBody, request.httpOptions);
+      }
+      else if (request.requestType == RequestType.POST) {
+          req = new HttpRequest(RequestType.POST, request.url, request.requestBody, request.httpOptions);
+      }
+      //We cannot get the properties out of the request object unless we convert it to string and back to object
+      // (in effect we are forcing an object copy)
+      this.setHttpReq(JSON.parse(JSON.stringify(req)));
 
-    // return this.http.get("https://raven.dev.heat.icl.gtri.org/mdi-fhir-server/fhir/Patient", {
-    //   headers: new HttpHeaders({Authorization: `Basic ${credentials}`})})
-      // }
-      // if (request.requestType == RequestType.GET) {
-      //   return this.http.get(request.url, httpOptions)
-      //     .pipe(map(response => {
-      //         return response;
-      //       }),
-      //     )
-      //
-      // } else if (request.requestType == RequestType.PUT) {
-      //   return this.http.get(request.url, httpOptions)
-      //     .pipe(map(response => {
-      //         return response;
-      //       }),
-      //     )
-      // } else if (request.requestType == RequestType.POST) {
-      //   return this.http.get(request.url, httpOptions)
-      //     .pipe(map(response => {
-      //         return response;
-      //       }),
-      //     )
-      // }
-      // else {
-      //   return throwError("Invalid Request");
-      // }
-      // const requestBody = {
-      //   email: 'ptassev3@gatech.edu',
-      //   password: "Start111",
-      //   returnSecureToken: true
-      // };
-      //
-      //
-      //
-      // return this.http.post(this.authRestApi, requestBody)
-      //   .pipe(map(response => {
-      //       return response;
-      //     }),
-      //   )
-      // }
-      // else {
-      //   return throwError("Invalid Request");
-
+      return this.http.request(req);
     }
 }

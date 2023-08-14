@@ -53,7 +53,6 @@ export class RegisteredEndpointsInterceptor implements HttpInterceptor {
       return next.handle(request);
     }
     else {
-      //console.log(request.url);
       let service = this.registeredEndpoints.find(service => request.url.startsWith(service.baseUrl));
       if (service?.allowedEndpoints?.some(endpoint => request.url === service.baseUrl + endpoint || endpoint === "*")) {
         return next.handle(request);

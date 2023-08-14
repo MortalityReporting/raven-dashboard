@@ -5,7 +5,6 @@ import {ImportCaseComponent} from "./modules/import-case/components/import-case.
 import {FhirValidatorComponent} from "./modules/fhir-validator/components/fhir-validator/fhir-validator.component";
 import {SearchRecordsComponent} from "./modules/record-viewer/components/search-records/search-records.component";
 import {WorkflowSimulatorComponent} from "./modules/workflow-simulator/components/workflow-simulator.component";
-import {SearchEdrsComponent} from "./modules/workflow-simulator/components/search-edrs/search-edrs.component";
 import {ModuleHeaderConfig} from "./providers/module-header-config";
 import {AppConfiguration} from "./providers/app-configuration";
 import {
@@ -18,6 +17,8 @@ import {TestContainerComponent} from "./modules/testing-events/components/test-c
 import {
   MdiToEdrsViewerComponent
 } from "./modules/record-viewer/components/mdi-to-edrs-viewer/mdi-to-edrs-viewer.component";
+import {OnboardingComponent} from "./modules/workflow-simulator/components/tests/onboarding/onboarding.component";
+import {SearchEdrsComponent} from "./modules/workflow-simulator/components/tests/search-edrs/search-edrs.component";
 import {
   ToxToMdiViewerComponent
 } from "./modules/record-viewer/components/tox-to-mdi-viewer/tox-to-mdi-viewer.component";
@@ -90,6 +91,11 @@ const routes: Routes = [
         path: 'search-edrs',
         component: SearchEdrsComponent,
         data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Search EDRS"}
+      },
+      {
+        path: 'onboarding',
+        component: OnboardingComponent,
+        data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Onboarding"}
       },
       {
         path: 'test',

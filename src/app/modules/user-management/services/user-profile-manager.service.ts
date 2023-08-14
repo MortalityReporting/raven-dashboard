@@ -16,14 +16,13 @@ export class UserProfileManagerService {
   }
 
   setCurrentUser(user: any) {
-    console.log(user.email)
     //TODO: Don't subscribe inside a service
     this.getUserProfile(user.email).subscribe({
       next: (userProfile: UserProfile) => {
         if (userProfile) {
           this.currentUser.next(userProfile);
         } else {
-          console.log("User Profile not found on FHIR Server, creating new Resource.")
+          console.warn("User Profile not found on FHIR Server, creating new Resource.")
           this.createUserProfile(user.name, user.email).subscribe({
             next: (user: UserProfile) => {this.currentUser.next(user)}
           })
@@ -56,10 +55,8 @@ export class UserProfileManagerService {
   createUserProfile(name: string, email: string) {//: Observable<UserProfile> {
     let userProfile = UserProfile.constructFromStrings(name, email);
     const fhirResource = userProfile.toFhirJSON();
-    console.log(fhirResource);
     let request$ = this.fhirClient.create("Practitioner", fhirResource).pipe(
       map((result: FhirResource) => {
-        console.log(result);
         if (result.resourceType === "OperationOutcome") return null; // TODO: Add error handling
         else {
           return UserProfile.constructFromFHIR(result)

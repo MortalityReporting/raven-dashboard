@@ -28,7 +28,6 @@ export class ObservationCauseOfDeathPart1Diff extends ObservationDiff {
     override doDiff()
     {
         super.doDiff();
-        //console.log("Running diff cod1")
 
         try {
             let expectedComponent = this.fhirHelper.findObservationComponentByCode(this.expected, "69440-6");
@@ -36,7 +35,7 @@ export class ObservationCauseOfDeathPart1Diff extends ObservationDiff {
             let actualComponent = this.fhirHelper.findObservationComponentByCode(this.actual, "69440-6");
             this.valueString.actual = JSON.stringify( actualComponent?.valueString, null, 4 );
             [this.valueString.style,this.valueString.difference] = DiffType.doDiff( Diff.diffChars( this.valueString.expected || "", this.valueString.actual || "" ));
-        } catch(e) { console.log(e)}
+        } catch(e) { console.error(e)}
 
         try {
             this.performer.expected = JSON.stringify( this.expected.performer, null, 4 );

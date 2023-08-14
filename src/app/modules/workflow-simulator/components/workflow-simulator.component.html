@@ -1,12 +1,18 @@
 <div class="full-screen">
 
-  <!-- Header with instructions  -->
-  <!-- Tabs w/ Registered Modules | Individual Standalone Tests -->
+  <mat-tab-group mat-stretch-tabs="false">
 
-  <!-- Tab 1 -->
-  <testing-event-root></testing-event-root>
+    <!-- Tab 1: Testing Events -->
+    <mat-tab label="Testing Events">
+      <testing-event-root></testing-event-root>
+    </mat-tab>
 
-  <!-- Tab 2 -->
-  <!-- <app-standalone-tests></app-standalone-tests> -->
+    <!-- Tab 2: Individual Standalone Tests-->
+    <mat-tab label="Standalone Test Cases">
+      <app-standalone-tests></app-standalone-tests>
+    </mat-tab>
+
+  </mat-tab-group>
+
 </div>
 

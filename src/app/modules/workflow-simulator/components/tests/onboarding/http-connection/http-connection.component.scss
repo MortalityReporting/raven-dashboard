@@ -1,0 +1,82 @@
+.scrollable-tab-container {
+  overflow: scroll;
+  max-width: 35vw;
+  min-height: 15vh;
+  max-height: 40vh;
+  border: 1px solid darkgray;
+  border-radius: 4px;
+  margin-top: 8px;
+  padding: 8px;
+  display: flex;
+}
+
+.scrollable-error-tab-container {
+  @extend .scrollable-tab-container;
+  border-color: red;
+}
+
+.config-col {
+  padding: 0 16px; flex: 50%
+}
+
+.request-type-form-field {
+  max-width: 20%
+}
+
+.end-point-url-form-field {
+  max-width: 100%; min-width: 75%; padding-left: 16px;
+}
+
+.user-password-form-field{
+  width: 45%;
+}
+
+.key-value-form-field{
+  width: 40%;
+}
+
+.margin-left-right{
+  margin: 0 16px;
+}
+.mat-tab-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.mat-tab-header {
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.mat-tab-body-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-grow: 1;
+}
+
+.mat-tab-body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: block;
+  overflow: hidden;
+}
+
+.mat-tab-body-active {
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+  z-index: 1;
+  flex-grow: 1;
+}
+
+.mat-tab-body-content {
+  height: 100%;
+  overflow: auto;
+}
+

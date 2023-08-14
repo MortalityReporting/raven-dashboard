@@ -1,7 +1,7 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
-import {TestStatusDictionary} from "../../../workflow-simulator";
+import {TestStatusDictionary} from "../../../testing-events"
 
 @Component({
   selector: 'app-event-table',

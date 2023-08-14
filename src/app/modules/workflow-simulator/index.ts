@@ -1,1 +1,2 @@
-export * from "../testing-events/models/test-status";
+export * from "./models/request-type";
+export * from "./models/connection-type";

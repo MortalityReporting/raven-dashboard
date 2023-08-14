@@ -21,12 +21,11 @@ export class AdminPanelComponent {
     public auth: AuthService,
     private dashboardApiInterface: DashboardApiInterfaceService) {
 
-    this.userProfileManager.currentUser$.pipe(tap(console.log)).subscribe({next: value => {this.currentUser = value;}});
-    this.userProfileManager.getAllUsers().pipe(tap(console.log)).subscribe();
+    this.userProfileManager.currentUser$.subscribe({next: value => {this.currentUser = value;}});
+    this.userProfileManager.getAllUsers().subscribe();
 
     this.dashboardApiInterface.getAdminPanelData().subscribe({
       next: value => {
-        console.log(value)
         this.error = undefined;
         this.events = value['events'];
       },

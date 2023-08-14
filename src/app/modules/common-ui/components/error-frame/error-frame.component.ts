@@ -11,7 +11,6 @@ export class ErrorFrameComponent {
   Object = Object;
 
   getTypeOf(errorBody) {
-    console.log(typeof errorBody)
     return typeof errorBody;
   }
 }

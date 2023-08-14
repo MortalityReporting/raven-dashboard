@@ -23,7 +23,6 @@ export class UserHeaderComponent {
       skipWhile(value => !value)
     ).subscribe({
         next: user => {
-          console.log(user);
           this.userProfileManager.setCurrentUser(user);
         }
       }

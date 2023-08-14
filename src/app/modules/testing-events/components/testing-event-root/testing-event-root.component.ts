@@ -23,7 +23,6 @@ export class TestingEventRootComponent implements OnInit {
               private userProfileManager: UserProfileManagerService) {}
 
   ngOnInit(): void {
-    console.log(this.config);
     let events$ = this.eventModuleManager.getAllEvents();
     let user$ = this.userProfileManager.currentUser$;
     combineLatest([events$, user$]).pipe(

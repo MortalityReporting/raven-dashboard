@@ -1,0 +1,24 @@
+<div class="description">
+  Select a testing workflow from the list below. You will walk through a series of steps to guide in testing of
+  that workflow using the Raven platform, with demonstrations of relevant FHIR Resources and API interactions.
+</div>
+<div  *ngFor="let test of testList">
+
+<div class="top-margin">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title><span class="title">{{test.displayName}}</span></mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="card-container">
+        {{test.description}}
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button (click)="onStartTest(test)">Start Workflow</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+</div>
