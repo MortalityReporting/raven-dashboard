@@ -15,6 +15,10 @@
     <div *ngFor="let event of events">
       <app-event-table [event]="event"></app-event-table>
     </div>
-
   </div>
+
+  <div *ngIf="error">
+    <common-error-frame [error]="error"></common-error-frame>
+  </div>
+
 </div>

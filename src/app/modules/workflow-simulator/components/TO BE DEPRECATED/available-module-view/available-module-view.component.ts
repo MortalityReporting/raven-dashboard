@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {WorkflowModule} from "../../model/workflow-module";
+import {WorkflowModule} from "../../../models/workflow-module";
 
 @Component({
   selector: 'app-available-module-view',

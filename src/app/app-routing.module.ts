@@ -14,7 +14,7 @@ import {
 import {AdminPanelComponent} from "./modules/user-management/components/admin-panel/admin-panel.component";
 import {AuthGuard} from "@auth0/auth0-angular";
 import {LoggedInComponent} from "./modules/user-management/components/logged-in/logged-in.component";
-import {TestContainerComponent} from "./modules/workflow-simulator/components/test-container/test-container.component";
+import {TestContainerComponent} from "./modules/testing-events/components/test-container/test-container.component";
 import {
   MdiToEdrsViewerComponent
 } from "./modules/record-viewer/components/mdi-to-edrs-viewer/mdi-to-edrs-viewer.component";

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {WorkflowModule} from "../../model/workflow-module";
+import {WorkflowModule} from "../../../models/workflow-module";
 import {Router} from "@angular/router";
-import {CurrentTest} from "../../model/current-test";
+import {CurrentTest} from "../../../models/current-test";
 @Component({
   selector: 'app-connectathon-module-view',
   templateUrl: './connectathon-module-view.component.html',

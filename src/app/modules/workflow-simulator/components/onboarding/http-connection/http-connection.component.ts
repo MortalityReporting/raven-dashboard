@@ -11,7 +11,7 @@ import {
 } from "@angular/forms";
 import {BasicNameValueType} from "../../../../../model/basic-name-value-type";
 import {OnboardingService} from "../../../service/onboarding.service";
-import {OnboardingHttpRequest} from "../../../model/onboarding-http-request";
+import {OnboardingHttpRequest} from "../../../models/onboarding-http-request";
 
 export enum RequestType {
   "GET"= "GET",

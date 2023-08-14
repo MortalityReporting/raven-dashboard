@@ -49,16 +49,19 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatButtonModule} from "@angular/material/button";
 import {ModuleHeaderConfig} from "../../providers/module-header-config";
-import { RegisteredModulesComponent } from './components/registered-modules/registered-modules.component';
+import { RegisteredModulesComponent } from '../testing-events/components/registered-modules/registered-modules.component';
 import {NgxHisbLoggerModule} from "ngx-hisb-logger";
 import { HttpConnectionComponent } from './components/onboarding/http-connection/http-connection.component';
-import { AvailableModuleComponent } from './components/available-module-view/available-module/available-module.component';
-import { ConnectathonModuleViewComponent } from './components/connectathon-module-view/connectathon-module-view.component';
-import { AvailableModuleViewComponent } from './components/available-module-view/available-module-view.component';
+import { AvailableModuleComponent } from './components/TO BE DEPRECATED/available-module-view/available-module/available-module.component';
+import { ConnectathonModuleViewComponent } from './components/TO BE DEPRECATED/connectathon-module-view/connectathon-module-view.component';
+import { AvailableModuleViewComponent } from './components/TO BE DEPRECATED/available-module-view/available-module-view.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatDividerModule} from "@angular/material/divider";
 import { OnboardingComponent } from './components/onboarding/onboarding.component';
-import { TestContainerComponent } from './components/test-container/test-container.component';
+import { TestContainerComponent } from '../testing-events/components/test-container/test-container.component';
+import { TestingEventRootComponent } from '../testing-events/components/testing-event-root/testing-event-root.component';
+import {EventRegistrationCardComponent} from "../testing-events/components/event-registration-card/event-registration-card.component";
+import {TestingEventsModule} from "../testing-events/testing-events.module";
 
 @NgModule({
   declarations: [
@@ -75,13 +78,12 @@ import { TestContainerComponent } from './components/test-container/test-contain
     HttpResponseInfoComponent,
     WorkflowSimulatorComponent,
     MdiToEdrsDocumentSelectStepComponent,
-    RegisteredModulesComponent,
     HttpConnectionComponent,
     AvailableModuleComponent,
     ConnectathonModuleViewComponent,
     AvailableModuleViewComponent,
-    OnboardingComponent,
-    TestContainerComponent,
+    OnboardingComponent
+
   ],
   exports: [
   ],
@@ -107,7 +109,8 @@ import { TestContainerComponent } from './components/test-container/test-contain
     MatSortModule,
     NgxHisbLoggerModule,
     MatCheckboxModule,
-    MatDividerModule
+    MatDividerModule,
+    TestingEventsModule
   ],
 })
 export class WorkflowSimulatorModule {

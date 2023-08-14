@@ -1,8 +1,9 @@
+@import "src/styles.scss";
 .module-header {
+  @extend .margin-md;
   color: white;
   font-size: x-large;
   font-weight: bold;
-  margin: 20px;
   display: flex;
   flex-direction: row;
 }

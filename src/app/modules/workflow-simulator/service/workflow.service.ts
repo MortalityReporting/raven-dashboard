@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from "rxjs";
-import {WorkflowModule} from "../model/workflow-module";
-import {ModuleStatus} from "../model/module-status";
+import {WorkflowModule} from "../models/workflow-module";
+import {ModuleStatus} from "../models/module-status";
 
 const WORKFLOW_MODULES: WorkflowModule[] = [
   new WorkflowModule('onboarding', 'Onboarding', 1, "Onboarding module description", ModuleStatus.inProgress),

@@ -1,0 +1,56 @@
+@import "../../../../styles";
+
+/** Testing Event Container **/
+.testing-event-wrapper {
+  @extend .full-screen;
+  @extend .flex-col-simple;
+  flex: 1;
+  align-content: stretch;
+  align-items: stretch;
+  overflow-y: hidden;
+  > .testing-event-body {
+    @extend .padding-md;
+    @extend .flex-row-simple;
+    flex: 1;
+    scroll-behavior: smooth;
+    overflow-y: hidden;
+    align-content: stretch;
+    align-items: stretch;
+    > * {
+      @extend .scrollable;
+      scroll-behavior: smooth;
+      overflow-y: scroll;
+    }
+    > .testing-event-body-menu {
+      border-radius: 5px;
+      max-width: 25em;
+      min-width: 10em;
+    }
+    > .testing-event-body-content {
+      flex: 1;
+      @extend .padding-sm;
+    }
+  }
+}
+
+.menu-header-top {
+  font-weight: bold;
+  font-size: large;
+  @extend .margin-bottom-sm;
+  @extend .margin-top-sm;
+}
+.menu-header {
+  font-weight: bold;
+  font-size: medium;
+  @extend .margin-sm;
+}
+.menu-divider {
+  @extend .margin-md;
+}
+.register-header {
+  @extend .padding-sm;
+  @extend .margin-bottom-md;
+  font-size: larger;
+  font-weight: bold;
+  color: white;
+}

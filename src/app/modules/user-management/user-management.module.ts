@@ -13,7 +13,7 @@ import {MatDividerModule} from "@angular/material/divider";
 import { EventTableComponent } from './components/event-table/event-table.component';
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
-
+import {CommonUiModule} from "../common-ui/common-ui.module";
 
 @NgModule({
   declarations: [
@@ -56,6 +56,7 @@ import {MatSortModule} from "@angular/material/sort";
     MatDividerModule,
     MatTableModule,
     MatSortModule,
+    CommonUiModule
   ]
 })
 export class UserManagementModule { }

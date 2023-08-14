@@ -14,6 +14,7 @@ export class AdminPanelComponent {
   currentUser: any;
   env = env;
   events: any = undefined;
+  error: any = undefined;
 
   constructor(
     private userProfileManager: UserProfileManagerService,
@@ -23,9 +24,17 @@ export class AdminPanelComponent {
     this.userProfileManager.currentUser$.pipe(tap(console.log)).subscribe({next: value => {this.currentUser = value;}});
     this.userProfileManager.getAllUsers().pipe(tap(console.log)).subscribe();
 
-    this.dashboardApiInterface.getAdminPanelData().subscribe({next: value => {
-      console.log(value)
+    this.dashboardApiInterface.getAdminPanelData().subscribe({
+      next: value => {
+        console.log(value)
+        this.error = undefined;
         this.events = value['events'];
-      }})
+      },
+      error: (e) => {
+        this.events = undefined;
+        console.error(e)
+        this.error = e;
+      }
+    })
   }
 }

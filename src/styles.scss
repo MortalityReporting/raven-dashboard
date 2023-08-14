@@ -41,7 +41,11 @@ $lg: 24px;
 .padding-md { padding: $md; }
 .padding-lg { padding: $lg; }
 // Add more of the following as needed.
+.margin-bottom-xs { margin-bottom: $xs; }
+.margin-bottom-sm { margin-bottom: $sm; }
 .margin-bottom-md { margin-bottom: $md; }
+.margin-top-xs { margin-top: $xs; }
+.margin-top-sm { margin-top: $sm; }
 .margin-top-md { margin-top: $md; }
 .margin-left-md { margin-left: $md; }
 .margin-right-md { margin-right: $md; }
@@ -319,8 +323,6 @@ $lg: 24px;
 /**********************************************************************
   TODO: ALL CLASSES BELOW SHOULD BE REFACTORED/STANDARDIZED
  **********************************************************************/
-
-
 
 /*This is bootstrap-like container, and we can change the media queries as needed one day*/
 /* TODO: Remove/standardize -- need to incorporate media query into base classes */

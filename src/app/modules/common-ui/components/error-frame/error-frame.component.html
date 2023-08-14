@@ -1,0 +1,15 @@
+<div class="error-header">
+  <div><mat-icon class="error-icon">error</mat-icon></div>
+  <div>{{error.status}} - {{error.statusText}}</div>
+</div>
+
+<div *ngIf="getTypeOf(error.error) === 'string'">
+  {{error.error}}
+</div>
+
+<div *ngIf="getTypeOf(error.error) === 'object'">
+  <div *ngFor="let key of Object.keys(error.error)">
+    <span class="key">{{key}}:</span> <span class="value">{{error.error[key]}}</span>
+  </div>
+
+</div>

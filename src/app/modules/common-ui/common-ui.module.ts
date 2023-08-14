@@ -10,6 +10,7 @@ import {CustomSpinnerDirective} from "./directives/custom-spinner.directive";
 import {ModuleThemedButtonDirective} from "./directives/moduleThemedButton.directive";
 import {MatButtonModule} from "@angular/material/button";
 import {RouterLink} from "@angular/router";
+import {ErrorFrameComponent} from "./components/error-frame/error-frame.component";
 
 
 
@@ -18,13 +19,15 @@ import {RouterLink} from "@angular/router";
     ModuleHeaderComponent,
     BreadcrumbComponent,
     CustomSpinnerDirective,
-    ModuleThemedButtonDirective
+    ModuleThemedButtonDirective,
+    ErrorFrameComponent
   ],
   exports: [
     ModuleHeaderComponent,
     BreadcrumbComponent,
     CustomSpinnerDirective,
-    ModuleThemedButtonDirective
+    ModuleThemedButtonDirective,
+    ErrorFrameComponent
   ],
     imports: [
         CommonModule,

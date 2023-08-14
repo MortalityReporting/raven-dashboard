@@ -1,11 +1,12 @@
 import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
+import {TestStatusDictionary} from "../../../workflow-simulator";
 
 @Component({
   selector: 'app-event-table',
   templateUrl: './event-table.component.html',
-  styleUrls: ['./event-table.component.css']
+  styleUrls: ['./event-table.component.scss']
 })
 export class EventTableComponent implements OnInit {
   @Input() event: any;
@@ -13,6 +14,8 @@ export class EventTableComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[];
   columnDictionary: {};
+
+  TestStatusDictionary = TestStatusDictionary;
 
   @ViewChild(MatSort) set matSort(sort: MatSort) {
     this.dataSource.sort = sort;

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import {Router} from "@angular/router";
-import {EventRegistration} from "../../../user-management/models/event-registration";
-import {EventItem} from "../../../user-management/models/event-item";
+import {EventRegistration} from "../../models/event-registration";
+import {EventItem} from "../../models/event-item";
 
 @Component({
-  selector: 'app-test-container',
+  selector: 'testing-event-test-container',
   templateUrl: './test-container.component.html',
   styleUrls: ['./test-container.component.scss']
 })

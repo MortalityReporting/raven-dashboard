@@ -5,7 +5,7 @@ import {ModuleHeaderService} from "../../../../service/module-header.service";
 @Component({
   selector: 'app-module-header',
   templateUrl: './module-header.component.html',
-  styleUrls: ['./module-header.component.css']
+  styleUrls: ['./module-header.component.scss']
 })
 export class ModuleHeaderComponent implements OnInit {
 

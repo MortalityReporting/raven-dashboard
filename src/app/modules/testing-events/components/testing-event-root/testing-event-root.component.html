@@ -1,0 +1,42 @@
+<div class="testing-event-wrapper"  *ngIf="auth.isAuthenticated$ | async; else loggedOut">
+
+  <div class="testing-event-body">
+    <!-- Menu -->
+    <div class="testing-event-body-menu" [style.background-color]="config.backgroundColor + '66'">
+      <div class="menu-header-top">Event Registration</div>
+      <mat-divider class="menu-divider" [style.border-color]="config.backgroundColor"></mat-divider>
+      <div class="menu-header">Active Registrations</div>
+      <button mat-flat-button *ngFor="let reg of registrations; let index = index" (click)="selectEvent(index)"
+        class="pointer"
+        [style.background-color]="'#00000000'">
+        {{reg.eventModule.title}}
+      </button>
+      <mat-divider class="menu-divider" [style.border-color]="config.backgroundColor"></mat-divider>
+      <div class="menu-header pointer" (click)="selectEvent(-1)">
+        Register for Events
+      </div>
+    </div>
+    <!-- Content -->
+
+    <testing-event-registered-modules *ngIf="currentlySelectedRegistration"
+      [registration]="currentlySelectedRegistration"
+      class="testing-event-body-content">
+    </testing-event-registered-modules>
+
+    <div *ngIf="!currentlySelectedRegistration" class="testing-event-body-content">
+      <div class="register-header" [style.background-color]="config.backgroundColor">
+        Register for Events
+      </div>
+      <ul>
+        <li  *ngFor="let event of eventList">
+          <!-- TODO: Check if user is already registered -->
+          {{event.title}}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<ng-template #loggedOut>
+  Please log in to manage testing event modules.
+</ng-template>
