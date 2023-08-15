@@ -15,6 +15,7 @@ import { RequestTypeOptions, ConnectionTypeOptions} from "../../../../providers/
 import {ConnectionType} from "../../../../models/connection-type";
 import {RequestType} from "../../../../models/request-type";
 import {OnboardingHttpRequest} from "../../../../models/onboarding-http-request";
+import {UtilsService} from "../../../../../../service/utils.service";
 
 @Component({
   selector: 'app-http-connection',
@@ -39,11 +40,13 @@ export class HttpConnectionComponent implements OnInit {
   loginSuccessResponse: any;
   loginErrorResponse: any;
   isAdvancedSettingsVisible: boolean = false;
+  MAX_FILE_SIZE = 100000; // Max allowed file size is 100KB
 
   constructor(
     private fb: UntypedFormBuilder,
     private log: LoggerService,
-    public onboardingService: OnboardingService
+    public onboardingService: OnboardingService,
+    private utilsService: UtilsService
   ) {
   }
 
@@ -265,17 +268,57 @@ export class HttpConnectionComponent implements OnInit {
     }
   }
 
-  onImportStage() {
-
-  }
-
-  onExportStage(form: FormGroupDirective) {
+  onExportStage() {
     const filename = 'saved_connection.json';
-    const file = new Blob([form.value], {type: "application/json"});
+
+    let formValue = this.onboardingForm.value;
+    //For security reason we always want to remove the password (we should never save user passwords)
+    if(formValue?.password){
+      formValue.password = '';
+    }
+
+    const file = new Blob([JSON.stringify(formValue)], {type: "application/json"});
     const link = document.createElement("a");
     link.href = URL.createObjectURL(file);
     link.download = filename;
     link.click();
     link.remove();
+  }
+
+  onFileSelected(event: any) {
+    this.utilsService.closeNotification();
+
+    const file: File = event.target.files[0];
+
+    if(!file){
+      this.utilsService.showErrorMessage("Unable to open the file.");
+    }
+    else if (file.size > this.MAX_FILE_SIZE){
+      console.error("File too big")
+      this.utilsService.showErrorMessage("This file exceeds " + this.MAX_FILE_SIZE /  1000 + "kb and cannot be processed");
+    }
+    else {
+      const fileReader = new FileReader();
+      fileReader.readAsText(file, "UTF-8");
+
+      fileReader.onload = () => {
+        this.fillFormFromJsonData(JSON.parse(fileReader.result as string))
+      }
+      fileReader.onerror = (error) => {
+        this.utilsService.showSuccessMessage("Error reading the file.")
+      }
+    }
+
+  }
+
+
+  fillFormFromJsonData(jsonData) {
+    this.initOnboardingForm();
+    if(jsonData?.connectionType?.value === ConnectionType?.basicAuth){
+      const requestType = this.RequestTypeOptions.find(requestType=> requestType == jsonData.requestType);
+      console.log(requestType);
+      console.log( this.onboardingForm);
+      this.onboardingForm.controls['requestType'].patchValue(RequestType.POST);
+    }
   }
 }

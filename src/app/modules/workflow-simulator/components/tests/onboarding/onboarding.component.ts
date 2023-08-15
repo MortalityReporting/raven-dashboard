@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {LogLine} from "../../../../../../../projects/ngx-hisb-logger/src/lib/modal/log-line";
 import {MatAccordion} from "@angular/material/expansion";
 import {LoggerService} from "ngx-hisb-logger";
