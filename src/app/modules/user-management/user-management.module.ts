@@ -28,17 +28,18 @@ import {CommonUiModule} from "../common-ui/common-ui.module";
   imports: [
     // Auth0 Testing
     AuthModule.forRoot({
-      domain: 'dev-dk7cyfpkwowbtdbt.us.auth0.com',
-      clientId: 'M7knIi1ioWMc6Lufbt5lbyTrnxpKmL4q',
+      domain: environment.domain,
+      clientId: environment.clientId,
       authorizationParams: {
         redirect_uri: environment.adminRedirectUrl,
-        audience: "https://raven.dev.heat.icl.gtri.org/raven-dashboard-api/",
+        audience: environment.dashboardApi,
         scope: "admin profile email openid"
       },
       httpInterceptor: {
         allowedList: [
           {
-            uri: "http://127.0.0.1:8000/admin-panel",
+            uri: `${environment.dashboardApi}admin-panel`,
+            // TODO: Setup Scope here.
             // tokenOptions: {
             //   audience: '',
             //   scope: ""
@@ -59,4 +60,6 @@ import {CommonUiModule} from "../common-ui/common-ui.module";
     CommonUiModule
   ]
 })
-export class UserManagementModule { }
+export class UserManagementModule {
+
+}

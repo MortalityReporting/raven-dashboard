@@ -1,12 +1,14 @@
 import packageInfo from '../../package.json';
 
 export const environment = {
-
-  dashboardApi: "http://127.0.0.1:8000",
-  useLocalConfig: true,
+  // API and Configuration Happens at build time as core dependency.
+  dashboardApi: "https://raven.dev.heat.icl.gtri.org/raven-dashboard-api/",
+  domain: "dev-dk7cyfpkwowbtdbt.us.auth0.com",
+  clientId: "M7knIi1ioWMc6Lufbt5lbyTrnxpKmL4q",
+  useLocalConfig: false,
   overrideConfigLocation: "",
 
-
+  // TODO: Move to runtime config service.
   ravenFhirServer: "https://raven.dev.heat.icl.gtri.org/mdi-fhir-server/fhir",
   ravenFhirServerBasicAuth: "client:secret",
   ravenImportApi: "https://raven.dev.heat.icl.gtri.org/raven-import-api/upload-xlsx-file",
