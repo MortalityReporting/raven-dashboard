@@ -1,116 +1,30 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {SearchEdrsComponent} from "./components/tests/search-edrs/search-edrs.component";
-import {
-  MdiToEdrsGridComponent
-} from "./components/tests/search-edrs/mdi-to-edrs-document-select-step/mdi-to-edrs-grid/mdi-to-edrs-grid.component";
-import {
-  ImportMdiToEdrsDocumentComponent
-} from "./components/tests/search-edrs/mdi-to-edrs-document-select-step/import-mdi-to-edrs-document/import-mdi-to-edrs-document.component";
-import {
-  EndpointConfigurationStepComponent
-} from "./components/tests/search-edrs/endpoint-configuration-step/endpoint-configuration-step.component";
-import {EdrsResultsStepComponent} from "./components/tests/search-edrs/edrs-results-step/edrs-results-step.component";
-import {
-  DecedentBasicInfoComponent
-} from "./components/tests/search-edrs/decedent-basic-info/decedent-basic-info.component";
-import {
-  SearchParametersComponent
-} from "./components/tests/search-edrs/edrs-results-step/search-parameters/search-parameters.component";
-import {
-  EdrsSearchResultsGridComponent
-} from "./components/tests/search-edrs/edrs-results-step/edrs-search-results-grid/edrs-search-results-grid.component";
-import {
-  EdrsRecordSummaryComponent
-} from "./components/tests/search-edrs/edrs-results-step/edrs-record-summary/edrs-record-summary.component";
-import {
-  HttpRequestInfoComponent
-} from "./components/tests/search-edrs/edrs-results-step/http-request-info/http-request-info.component";
-import {
-  HttpResponseInfoComponent
-} from "./components/tests/search-edrs/edrs-results-step/http-response-info/http-response-info.component";
-import {WorkflowSimulatorComponent} from "./components/workflow-simulator.component";
-import {
-  MdiToEdrsDocumentSelectStepComponent
-} from "./components/tests/search-edrs/mdi-to-edrs-document-select-step/mdi-to-edrs-document-select-step.component";
-import {MatToolbarModule} from "@angular/material/toolbar";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {MatExpansionModule} from "@angular/material/expansion";
-import {MatIconModule} from "@angular/material/icon";
-import {MatStepperModule} from "@angular/material/stepper";
-import {MatSortModule} from "@angular/material/sort";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatSelectModule} from "@angular/material/select";
-import {MatTableModule} from "@angular/material/table";
-import {MatPaginatorModule} from "@angular/material/paginator";
-import {MatCardModule} from "@angular/material/card";
-import {MatTabsModule} from "@angular/material/tabs";
-import {MatTooltipModule} from "@angular/material/tooltip";
-import {MatInputModule} from "@angular/material/input";
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {MatRadioModule} from "@angular/material/radio";
-import {MatButtonModule} from "@angular/material/button";
-import {ModuleHeaderConfig} from "../../providers/module-header-config";
-import {NgxHisbLoggerModule} from "ngx-hisb-logger";
+import { CommonModule } from '@angular/common';
 import {TestingEventsModule} from "../testing-events/testing-events.module";
-import {HttpConnectionComponent} from './components/tests/onboarding/http-connection/http-connection.component';
-import {StandaloneTestsComponent} from './components/standlone-tests/standalone-tests.component';
-import {MatCheckboxModule} from "@angular/material/checkbox";
-import {MatDividerModule} from "@angular/material/divider";
-import {OnboardingComponent} from './components/tests/onboarding/onboarding.component';
-import { HttpResponseResultsComponent } from './components/tests/onboarding/http-connection/http-response-results/http-response-results.component';
-import {ClipboardModule} from "@angular/cdk/clipboard";
+import {ModuleHeaderConfig} from "../../providers/module-header-config";
+import {StandaloneTestsComponent} from "./components/standalone-tests/standalone-tests.component";
+import {MatCardModule} from "@angular/material/card";
+import {MatButtonModule} from "@angular/material/button";
+import {TestsModule} from "../tests/tests.module";
+import { WorkflowSimulatorComponent } from './components/workflow-simulator/workflow-simulator.component';
+import {MatTabsModule} from "@angular/material/tabs";
 
 @NgModule({
   declarations: [
-    SearchEdrsComponent,
-    MdiToEdrsGridComponent,
-    ImportMdiToEdrsDocumentComponent,
-    EndpointConfigurationStepComponent,
-    EdrsResultsStepComponent,
-    DecedentBasicInfoComponent,
-    SearchParametersComponent,
-    EdrsSearchResultsGridComponent,
-    EdrsRecordSummaryComponent,
-    HttpRequestInfoComponent,
-    HttpResponseInfoComponent,
-    WorkflowSimulatorComponent,
-    MdiToEdrsDocumentSelectStepComponent,
-    HttpConnectionComponent,
-    OnboardingComponent,
     StandaloneTestsComponent,
-    OnboardingComponent,
-    HttpResponseResultsComponent,
+    WorkflowSimulatorComponent,
   ],
-  exports: [],
   imports: [
     CommonModule,
-    MatToolbarModule,
-    MatCardModule,
-    MatTabsModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatProgressSpinnerModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatTooltipModule,
-    MatRadioModule,
-    ReactiveFormsModule,
-    MatExpansionModule,
-    MatIconModule,
-    MatStepperModule,
-    MatButtonModule,
-    FormsModule,
-    MatInputModule,
-    MatSortModule,
-    NgxHisbLoggerModule,
-    MatCheckboxModule,
-    MatDividerModule,
     TestingEventsModule,
-    ClipboardModule
-  ],
+    TestsModule,
+    MatCardModule,
+    MatButtonModule,
+    MatTabsModule,
+  ]
 })
 export class WorkflowSimulatorModule {
+
   public static forRoot(environment: any, config: ModuleHeaderConfig, appConfig: any): ModuleWithProviders<any> {
     return {
       ngModule: WorkflowSimulatorModule,
@@ -130,4 +44,5 @@ export class WorkflowSimulatorModule {
       ]
     }
   }
+
 }

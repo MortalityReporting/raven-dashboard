@@ -12,7 +12,6 @@ import {FhirAuthInterceptor} from "./interceptors/fhir-auth.interceptor";
 import {LandingComponent} from './components/landing/landing.component';
 import {ClipboardModule} from "@angular/cdk/clipboard";
 import {ModalComponent} from './components/widgets/modal/modal.component';
-import {WorkflowSimulatorModule} from "./modules/workflow-simulator/workflow-simulator.module";
 import {ImportCaseModule} from "./modules/import-case/import-case.module";
 import {RecordViewerModule} from "./modules/record-viewer/record-viewer.module";
 import {FhirUtilModule} from "./modules/fhir-util/fhir-util.module";
@@ -40,6 +39,8 @@ import { DocRefBase64TransformPipe } from './modules/fhir-util';
 import {ConfigService} from "./service/config.service";
 import {RegisteredEndpointsInterceptor} from "./interceptors/registered-endpoints.interceptor";
 import {AuthHttpInterceptor} from "@auth0/auth0-angular";
+import {WorkflowSimulatorModule} from "./modules/workflow-simulator/workflow-simulator.module";
+import {TestsModule} from "./modules/tests/tests.module";
 
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
@@ -72,18 +73,18 @@ export const configFactory = (configService: ConfigService) => {
     HttpClientModule,
     FhirValidatorModule.forRoot(environment, ModuleHeaderConfig.FhirValidator, AppConfiguration.config),
     ClipboardModule,
-    WorkflowSimulatorModule.forRoot(environment, ModuleHeaderConfig.WorkflowSimulator, AppConfiguration.config),
     ImportCaseModule.forRoot(environment, ModuleHeaderConfig.RecordImport, AppConfiguration.config),
     RecordViewerModule.forRoot(environment, ModuleHeaderConfig.RecordViewer, AppConfiguration.config, FHIRProfileConstants.Profiles),
     FhirUtilModule,
     FhirExplorerModule,
     RecordComparisonModule.forRoot(ModuleHeaderConfig.RecordComparison, FHIRProfileConstants.Profiles),
+    WorkflowSimulatorModule.forRoot(environment, ModuleHeaderConfig.WorkflowSimulator, AppConfiguration.config),
+    TestsModule.forRoot(environment, ModuleHeaderConfig.WorkflowSimulator, AppConfiguration.config),
     CommonUiModule,
     MatSidenavModule,
     CommonUiModule,
     UserManagementModule
   ],
-
   providers: [
     {
       provide: APP_INITIALIZER,
@@ -91,7 +92,9 @@ export const configFactory = (configService: ConfigService) => {
       deps: [ConfigService],
       multi: true
     },
-    UiStringConstants,
+    {
+      provide: UiStringConstants,
+    },
     {
       provide: 'fhirProfiles',
       useValue: FHIRProfileConstants.Profiles

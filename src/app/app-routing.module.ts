@@ -4,7 +4,6 @@ import {LandingComponent} from "./components/landing/landing.component";
 import {ImportCaseComponent} from "./modules/import-case/components/import-case.component";
 import {FhirValidatorComponent} from "./modules/fhir-validator/components/fhir-validator/fhir-validator.component";
 import {SearchRecordsComponent} from "./modules/record-viewer/components/search-records/search-records.component";
-import {WorkflowSimulatorComponent} from "./modules/workflow-simulator/components/workflow-simulator.component";
 import {ModuleHeaderConfig} from "./providers/module-header-config";
 import {AppConfiguration} from "./providers/app-configuration";
 import {
@@ -17,11 +16,14 @@ import {TestContainerComponent} from "./modules/testing-events/components/test-c
 import {
   MdiToEdrsViewerComponent
 } from "./modules/record-viewer/components/mdi-to-edrs-viewer/mdi-to-edrs-viewer.component";
-import {OnboardingComponent} from "./modules/workflow-simulator/components/tests/onboarding/onboarding.component";
-import {SearchEdrsComponent} from "./modules/workflow-simulator/components/tests/search-edrs/search-edrs.component";
+import {OnboardingComponent} from "./modules/tests/components/onboarding/onboarding.component";
 import {
   ToxToMdiViewerComponent
 } from "./modules/record-viewer/components/tox-to-mdi-viewer/tox-to-mdi-viewer.component";
+import {
+  WorkflowSimulatorComponent
+} from "./modules/workflow-simulator/components/workflow-simulator/workflow-simulator.component";
+import {SearchEdrsComponent} from "./modules/tests/components/search-edrs/search-edrs.component";
 
 
 const routes: Routes = [

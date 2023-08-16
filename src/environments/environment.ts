@@ -1,5 +1,3 @@
-import packageInfo from '../../package.json';
-
 export const environment = {
   // API and Configuration Happens at build time as core dependency.
   dashboardApi: "https://raven.dev.heat.icl.gtri.org/raven-dashboard-api/",
@@ -8,7 +6,7 @@ export const environment = {
   useLocalConfig: false,
   overrideConfigLocation: "",
 
-  // TODO: Move to runtime config service.
+  // TODO: Move to runtime config services.
   ravenFhirServer: "https://raven.dev.heat.icl.gtri.org/mdi-fhir-server/fhir",
   ravenFhirServerBasicAuth: "client:secret",
   ravenImportApi: "https://raven.dev.heat.icl.gtri.org/raven-import-api/upload-xlsx-file",
