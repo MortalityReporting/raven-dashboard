@@ -1,8 +1,15 @@
-import {FhirResource} from "../../fhir-util";
+import {Coding, FhirResource} from "../../fhir-util";
 import {EventModule} from "./event-module";
 import {EventItem} from "./event-item";
+import {QuestionnaireResponse, QuestionnaireResponseItem} from "../../fhir-util/models/resources/questionnaireResponse";
+import {QuestionnaireResponseStatus} from "../../fhir-util/models/value-sets/questionnaire-response-status";
+import {Reference} from "../../fhir-util/models/types/reference";
 
 export class EventRegistration {
+  constructor() {
+    this.fhirId = "";
+  }
+
   static constructFromFHIR(questionnaireResponse: FhirResource, eventModules: EventModule[]):
       EventRegistration {
     let registration = new EventRegistration();
@@ -28,4 +35,24 @@ export class EventRegistration {
   questionnaireReference: string;
   items: EventItem[];
   eventModule?: EventModule;
+
+
+  static createFhirResource(event: EventModule, subjectReference: string): any {
+    const notStartedCoding = new Coding()
+    notStartedCoding.system = "https://raven.dev.heat.icl.gtri.org/mdi-fhir-server/fhir/CodeSystem/624454";
+    notStartedCoding.code = "not-started";
+    // TODO: Add error handling if not all fields exist.
+    let questionnaireResponse = new QuestionnaireResponse();
+    questionnaireResponse.questionnaire = `Questionnaire/${event.fhirId}`;
+    questionnaireResponse.status = QuestionnaireResponseStatus.inProgress;
+    questionnaireResponse.subject = new Reference(subjectReference);
+    questionnaireResponse.item = [];
+    event.items.forEach((eventItem: EventItem) => {
+      let item = new QuestionnaireResponseItem();
+      item.linkId = eventItem.linkId;
+      item.answer = [{"valueCoding": notStartedCoding}];
+      questionnaireResponse.item.push(item);
+    })
+    return questionnaireResponse;
+  }
 }

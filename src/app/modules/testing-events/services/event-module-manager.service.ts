@@ -3,6 +3,7 @@ import {map, Observable, single} from "rxjs";
 import {Bundle, FhirClientService, FhirResource} from "../../fhir-util";
 import {EventModule} from "../models/event-module";
 import {EventRegistration} from "../models/event-registration";
+import {QuestionnaireResponse} from "../../fhir-util/models/resources/questionnaireResponse";
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +36,9 @@ export class EventModuleManagerService {
       }),
       single()
     );
+  }
+
+  createNewRegistration(questionnaireResponse: QuestionnaireResponse): Observable<any> {
+    return this.fhirClient.create("QuestionnaireResponse", questionnaireResponse);
   }
 }

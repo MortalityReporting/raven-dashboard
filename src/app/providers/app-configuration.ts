@@ -40,7 +40,7 @@ export class AppConfiguration {
         icon: "workflow-simulator"
       },
       adminPanel: {
-        title: "Admin Panel",
+        title: "Event Admin Panel",
         route: "admin-panel",
         color: "#B65454",
         icon: "admin_panel"

@@ -27,12 +27,14 @@
       <div class="register-header" [style.background-color]="config.backgroundColor">
         Register for Events
       </div>
-      <ul>
-        <li  *ngFor="let event of eventList">
-          <!-- TODO: Check if user is already registered -->
-          {{event.title}}
-        </li>
-      </ul>
+      <div *ngIf="registrations && eventList">
+        <div *ngFor="let event of eventList">
+          <testing-event-registration-card [event]="event"
+                                           [registered]="isRegistered(event)"
+                                            (registerClickEvent)="registerForEvent($event)">
+          </testing-event-registration-card>
+        </div>
+      </div>
     </div>
   </div>
 </div>

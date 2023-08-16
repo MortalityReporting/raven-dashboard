@@ -6,6 +6,7 @@ export class EventModule {
     let event = new EventModule();
     event.fhirId = questionnaire?.['id'];
     event.title = questionnaire?.['title'];
+    event.description = questionnaire?.['description'] || "No description found.";
     let tests: EventItem[] = [];
     questionnaire["item"].forEach(item => {
       tests.push(new EventItem(item));
@@ -17,5 +18,6 @@ export class EventModule {
   fhirId: string;
   title: string;
   items: EventItem[];
+  description: string;
 }
 

@@ -6,6 +6,9 @@ import {EventRegistrationCardComponent} from "./components/event-registration-ca
 import {RegisteredModulesComponent} from "./components/registered-modules/registered-modules.component";
 import {MatDividerModule} from "@angular/material/divider";
 import {MatIconModule} from "@angular/material/icon";
+import {MatCardModule} from "@angular/material/card";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatButtonModule} from "@angular/material/button";
 
 
 
@@ -22,7 +25,10 @@ import {MatIconModule} from "@angular/material/icon";
   imports: [
     CommonModule,
     MatDividerModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatButtonModule
   ]
 })
 export class TestingEventsModule { }

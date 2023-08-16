@@ -1,1 +1,30 @@
-<p>event-registration-card works!</p>
+<div class="event-card">
+  <div class="card-header">
+    {{event.title}}
+    <span class="content-spacer"></span>
+    <div *ngIf="!registered">
+      <button mat-raised-button class="register-button" (click)="onClickRegister(event)">
+        <mat-icon>check_box_outline_blank</mat-icon>
+        Register
+      </button>
+    </div>
+    <div *ngIf="registered">
+      <button mat-raised-button class="register-button">
+        <mat-icon>check_box</mat-icon>
+        Registered
+      </button>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="card-tests">
+      <ul>
+        <li>Onboarding</li>
+        <li>Search EDRS</li>
+        <li>Update EDRS</li>
+      </ul>
+    </div>
+    <div class="card-desc">
+      {{event.description}}
+    </div>
+  </div>
+</div>

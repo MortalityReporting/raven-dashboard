@@ -1,11 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
 import {EventRegistration} from "../../models/event-registration";
-import {combineLatest, mergeMap, skipWhile} from "rxjs";
+import {combineLatest, mergeMap, repeat, skipWhile, Subject} from "rxjs";
 import {UserProfileManagerService} from "../../../user-management";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {EventModule} from "../../models/event-module";
 import {EventModuleManagerService} from "../../services/event-module-manager.service";
+import {QuestionnaireResponse} from "../../../fhir-util/models/resources/questionnaireResponse";
 
 @Component({
   selector: 'testing-event-root',
@@ -16,6 +17,9 @@ export class TestingEventRootComponent implements OnInit {
   registrations: EventRegistration[];
   currentlySelectedRegistration: EventRegistration;
   eventList: EventModule[];
+  userFhirId: string;
+
+  refreshTrigger$ = new Subject<any>();
 
   constructor(@Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
               public auth: AuthService,
@@ -31,9 +35,11 @@ export class TestingEventRootComponent implements OnInit {
         const events = combinedResults[0];
         const user = combinedResults[1];
         this.eventList = events as EventModule[];
+        this.userFhirId = user.fhirId;
         return this.eventModuleManager.getAllRegistrations(user.fhirId, events);}
-      )).subscribe({
-      next: registrations => this.registrations = registrations
+      ))
+      .subscribe({
+        next: registrations => {this.registrations = registrations;},
     });
   }
 
@@ -44,5 +50,24 @@ export class TestingEventRootComponent implements OnInit {
     else {
       this.currentlySelectedRegistration = this.registrations[index];
     }
+  }
+
+  isRegistered(event: EventModule): boolean {
+    return this.registrations.some((registration: EventRegistration) => registration.questionnaireReference.endsWith(event.fhirId));
+  }
+
+  registerForEvent(event: any) {
+    console.log(event)
+    const eventRegistrationFhir = EventRegistration.createFhirResource(event, `Practitioner/${this.userFhirId}`);
+    this.eventModuleManager.createNewRegistration(eventRegistrationFhir).subscribe({
+      next: value => {
+        console.log(value);
+      },
+      error: err => {
+        console.error(err);
+      },
+    })
+    console.log(JSON.stringify(eventRegistrationFhir, null, 4));
+
   }
 }

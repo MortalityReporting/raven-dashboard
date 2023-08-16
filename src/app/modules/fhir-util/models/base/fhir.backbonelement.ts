@@ -1,5 +1,6 @@
-import {FhirType} from "./fhir.type";
+import {FhirElement} from "./fhir.element";
+import {Extension} from "./fhir.extension";
 
-export class BackboneElement implements FhirType {
-
+export class BackboneElement extends FhirElement {
+  modifierExtension?: Extension[];
 }
