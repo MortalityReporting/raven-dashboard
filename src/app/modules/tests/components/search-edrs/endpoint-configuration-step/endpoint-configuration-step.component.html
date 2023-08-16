@@ -76,7 +76,7 @@
     </div>
 
     <!-- Basic Authentication -->
-    <div formGroupName="userNamePassword" *ngIf="endpointConfigurationFormGroup.value.customEndpoint.authenticationType == 'Basic'">
+    <div formGroupName="userNamePassword" *ngIf="endpointConfigurationFormGroup.value?.['customEndpoint']?.['authenticationType'] == 'Basic'">
 
         <mat-form-field appearance="outline">
           <mat-label>Username</mat-label>
@@ -91,7 +91,7 @@
     </div>
 
     <!-- Bearer Token Authentication -->
-    <div formGroupName="bearerToken" *ngIf="endpointConfigurationFormGroup.value.customEndpoint.authenticationType == 'Bearer Token'">
+    <div formGroupName="bearerToken" *ngIf="endpointConfigurationFormGroup.value?.['customEndpoint']?.['authenticationType'] == 'Bearer Token'">
 
       <mat-form-field appearance="outline">
         <mat-label>Bearer Token</mat-label>
@@ -105,7 +105,7 @@
   <div class="padding-top-md row">
     <button mat-raised-button matStepperPrevious>Back</button>
     <div class="push-right">
-      <button type="submit" mat mat-raised-button
+      <button type="submit" mat-raised-button
               [style.background-color]="config.backgroundColor"
               [style.color]="'white'" matStepperNext>
         {{ uiConstantsStep2.PROCEED_TO_NEXT_STEP_BTN }}
