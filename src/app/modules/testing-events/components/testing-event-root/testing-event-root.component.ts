@@ -1,12 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
 import {EventRegistration} from "../../models/event-registration";
-import {combineLatest, mergeMap, repeat, skipWhile, Subject} from "rxjs";
+import {combineLatest, mergeMap, retry, skipWhile, Subject} from "rxjs";
 import {UserProfileManagerService} from "../../../user-management";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {EventModule} from "../../models/event-module";
 import {EventModuleManagerService} from "../../services/event-module-manager.service";
-import {QuestionnaireResponse} from "../../../fhir-util/models/resources/questionnaireResponse";
 
 @Component({
   selector: 'testing-event-root',
@@ -24,30 +23,34 @@ export class TestingEventRootComponent implements OnInit {
   constructor(@Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
               public auth: AuthService,
               protected eventModuleManager: EventModuleManagerService,
-              private userProfileManager: UserProfileManagerService) {}
+              private userProfileManager: UserProfileManagerService) {
+  }
 
   ngOnInit(): void {
     let events$ = this.eventModuleManager.getAllEvents();
     let user$ = this.userProfileManager.currentUser$;
-    combineLatest([events$, user$]).pipe(
+    let whatever = combineLatest([events$, user$]).pipe(
       skipWhile(combinedResults => combinedResults.some(result => result === undefined)),
       mergeMap(combinedResults => {
-        const events = combinedResults[0];
-        const user = combinedResults[1];
-        this.eventList = events as EventModule[];
-        this.userFhirId = user.fhirId;
-        return this.eventModuleManager.getAllRegistrations(user.fhirId, events);}
-      ))
-      .subscribe({
-        next: registrations => {this.registrations = registrations;},
+          const events = combinedResults[0];
+          const user = combinedResults[1];
+          this.eventList = events as EventModule[];
+          this.userFhirId = user.fhirId;
+          return this.eventModuleManager.getAllRegistrations(user.fhirId, events);
+        }
+      ));
+
+    whatever.pipe(retry({delay: () => this.refreshTrigger$})).subscribe({
+      next: registrations => {
+        this.registrations = registrations;
+      }
     });
   }
 
   selectEvent(index: number) {
     if (index === -1) {
       this.currentlySelectedRegistration = undefined;
-    }
-    else {
+    } else {
       this.currentlySelectedRegistration = this.registrations[index];
     }
   }
@@ -66,6 +69,10 @@ export class TestingEventRootComponent implements OnInit {
       error: err => {
         console.error(err);
       },
+      complete: () => {
+        // TODO: Figure out where this needs to go to refresh the call and get the new registrations!
+        this.refreshTrigger$.next("complete");
+      }
     })
     console.log(JSON.stringify(eventRegistrationFhir, null, 4));
 
