@@ -1,5 +1,19 @@
 <div class="generic-component-wrapper">
   <div class="generic-component-content">
+    <div class="margin-bottom-md">
+      <input
+        type="file" class="file-input" (click)="fileUpload.value=null"
+        accept="application/json"
+        (change)="onFileSelected($event)" #fileUpload>
+      <button mat-stroked-button (click)="fileUpload.click();">
+        <mat-icon>download</mat-icon>
+        Import Stage
+      </button>
+      <button mat-stroked-button class="margin-left-md" (click)="onExportStage(formValueAcc)">
+        <mat-icon>publish</mat-icon>
+        Export Stage
+      </button>
+    </div>
 
     <mat-accordion multi>
       <mat-expansion-panel *ngFor="let stage of stageList,  let i = index;" [expanded]="stage.expanded">
@@ -14,7 +28,7 @@
             <span class="margin-left-md">Stage {{ getStageIndex(i) }}</span>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <app-http-connection></app-http-connection>
+        <app-http-connection [stage]=stage (formValueChangeEvent)="onFormValueChange($event ,i);"></app-http-connection>
       </mat-expansion-panel>
     </mat-accordion>
     <div class="box margin-bottom-md" style="align-items: flex-end; justify-content: flex-end; margin-top: 16px">

@@ -1,24 +1,7 @@
 <mat-card class="margin-bottom-md">
   <mat-card-content>
     <mat-card-title class="margin-left-md margin-left-md">
-      <div class="flex">
       <div class="margin-md">Configure Server Connection</div>
-
-      <div class="content-spacer"></div>
-        <div>
-          <input type="file" class="file-input" (click)="fileUpload.value=null"
-                 accept="application/json"
-                 (change)="onFileSelected($event)" #fileUpload>
-          <button mat-stroked-button (click)="fileUpload.click();">
-            <mat-icon>download</mat-icon>
-            Import Stage
-          </button>
-          <button mat-stroked-button class="margin-left-md" (click)="onExportStage()">
-            <mat-icon>publish</mat-icon>
-            Export Stage
-          </button>
-        </div>
-      </div>
     </mat-card-title>
     <div class="box">
       <div class="config-col">
@@ -273,8 +256,9 @@
     </div>
 
     <div class="margin-md">
-      <button mat-raised-button aria-label="Test Connection" color="primary" type="submit"
-              (click)="onTestConnection()">
+      <button
+        mat-raised-button aria-label="Test Connection" color="primary" type="submit"
+        (click)="onTestConnection()">
         <mat-icon>lan</mat-icon>
         Test Connection
       </button>

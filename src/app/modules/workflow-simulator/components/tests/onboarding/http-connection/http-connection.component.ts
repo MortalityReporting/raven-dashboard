@@ -1,5 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {LoggerService} from "../../../../../../../../projects/ngx-hisb-logger/src/lib/services/logger.service";
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {
   FormControl,
   FormGroup, FormGroupDirective,
@@ -16,13 +15,18 @@ import {ConnectionType} from "../../../../models/connection-type";
 import {RequestType} from "../../../../models/request-type";
 import {OnboardingHttpRequest} from "../../../../models/onboarding-http-request";
 import {UtilsService} from "../../../../../../service/utils.service";
+import {LoggerService} from "ngx-hisb-logger";
+
 
 @Component({
   selector: 'app-http-connection',
   templateUrl: './http-connection.component.html',
   styleUrls: ['./http-connection.component.scss']
 })
-export class HttpConnectionComponent implements OnInit {
+export class HttpConnectionComponent implements OnInit, OnChanges{
+
+  @Input() stage: any;
+  @Output() formValueChangeEvent = new EventEmitter<any>()
 
   @ViewChild('form') form: NgForm;
   readonly ConnectionTypeOptionsArray = Object.values(ConnectionTypeOptions);
@@ -82,6 +86,9 @@ export class HttpConnectionComponent implements OnInit {
 
   ngOnInit(): void {
     this.initOnboardingForm();
+    this.onboardingForm.valueChanges
+      .subscribe(formValue=>
+        this.formValueChangeEvent.emit({formValue: formValue}));
   }
 
   /**
@@ -311,7 +318,6 @@ export class HttpConnectionComponent implements OnInit {
 
   }
 
-
   fillFormFromJsonData(jsonData) {
     this.initOnboardingForm();
     if(jsonData?.connectionType?.value === ConnectionType?.basicAuth){
@@ -320,5 +326,9 @@ export class HttpConnectionComponent implements OnInit {
       console.log( this.onboardingForm);
       this.onboardingForm.controls['requestType'].patchValue(RequestType.POST);
     }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes)
   }
 }
