@@ -1,10 +1,10 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {DecedentSimpleInfo} from "../../../../../../model/decedent-simple-info";
-import {SearchEdrsService} from "../../../../service/search-edrs.service";
+import {Component, Inject, OnInit} from "@angular/core";
 import {UntypedFormBuilder, UntypedFormGroup} from "@angular/forms";
-import {UiStringConstants} from "../../../../../../providers/ui-string-constants";
-import {ModuleHeaderConfig} from "../../../../../../providers/module-header-config";
-import {EnvironmentHandlerService} from "../../../../../fhir-util";
+import {DecedentSimpleInfo} from "../../../../../model/decedent-simple-info";
+import {ModuleHeaderConfig} from "../../../../../model/model-header-config";
+import {SearchEdrsService} from "../../../services/search-edrs.service";
+import {UiStringConstants} from "../../../../../providers/ui-string-constants";
+import {EnvironmentHandlerService} from "../../../../fhir-util";
 
 @Component({
   selector: 'app-endpoint-configuration-step',
