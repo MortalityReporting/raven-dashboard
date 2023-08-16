@@ -16,7 +16,7 @@ export class UserProfileManagerService {
   }
 
   setCurrentUser(user: any) {
-    //TODO: Don't subscribe inside a service
+    //TODO: Don't subscribe inside a services
     this.getUserProfile(user.email).subscribe({
       next: (userProfile: UserProfile) => {
         if (userProfile) {

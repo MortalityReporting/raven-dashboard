@@ -1,10 +1,7 @@
 import {Injectable} from '@angular/core';
-import {EnvironmentHandlerService} from "../../fhir-util/services/environment-handler.service";
+import {of, forkJoin, map, mergeMap} from "rxjs";
+import {BundleHelperService, EnvironmentHandlerService, FhirHelperService} from "../../fhir-util";
 import {HttpClient} from "@angular/common/http";
-import {FhirHelperService} from "../../fhir-util/services/fhir-helper.service";
-import {BundleHelperService} from "../../fhir-util/services/bundle-helper.service";
-import {of, forkJoin, map, mergeMap, Observable} from "rxjs";
-import {MdiToEDRSDocumentWrapper} from "../models/mdiToEdrsDocumentWrapper";
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +21,7 @@ export class ReferenceDocumentService {
       .pipe(
         map((referenceBundleSearch: any) =>{
           // By convention the API should return an empty array. However, the FHIR server we use does not.
-          // We are adding an empty array to prevent NPE errors in the components using this service.
+          // We are adding an empty array to prevent NPE errors in the components using this services.
           if (!referenceBundleSearch?.entry) {
             return [];
           }

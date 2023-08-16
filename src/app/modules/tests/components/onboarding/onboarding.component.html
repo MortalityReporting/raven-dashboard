@@ -1,0 +1,51 @@
+<div class="generic-component-wrapper">
+  <div class="generic-component-content">
+    <div class="margin-bottom-md">
+      <input
+        type="file" class="file-input" (click)="fileUpload.value=null"
+        accept="application/json"
+        (change)="onFileSelected($event)" #fileUpload>
+      <button mat-stroked-button (click)="fileUpload.click();">
+        <mat-icon>download</mat-icon>
+        Import Stage
+      </button>
+      <button mat-stroked-button class="margin-left-md" (click)="onExportStage(formValueAcc)">
+        <mat-icon>publish</mat-icon>
+        Export Stage
+      </button>
+    </div>
+
+    <mat-accordion multi>
+      <mat-expansion-panel *ngFor="let stage of stageList,  let i = index;" [expanded]="stage.expanded">
+        <mat-expansion-panel-header>
+          <mat-panel-title class="margin-top-md margin-bottom-md">
+            <button
+              mat-mini-fab color="warn" aria-label="Remove Stage" matTooltip="Remove stage"
+              (click)="removeComponent(i, $event); $event.stopPropagation() "
+              [disabled]="stageList?.length == 1">
+              <mat-icon>remove</mat-icon>
+            </button>
+            <span class="margin-left-md">Stage {{ getStageIndex(i) }}</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-http-connection [stage]=stage (formValueChangeEvent)="onFormValueChange($event ,i);"></app-http-connection>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <div class="box margin-bottom-md" style="align-items: flex-end; justify-content: flex-end; margin-top: 16px">
+      <button mat-raised-button color="primary" type="button" (click)="addStage()">
+        <mat-icon>add</mat-icon>
+        Add Stage
+      </button>
+    </div>
+    <mat-card class="top-margin">
+      <mat-card-content>
+        <mat-card-title>
+          Console Output
+        </mat-card-title>
+        <lib-console [logs]="loggerData"></lib-console>
+        <button mat-raised-button (click)="clearLog()">Clear Log</button>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>
