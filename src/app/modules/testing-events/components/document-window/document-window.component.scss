@@ -1,0 +1,6 @@
+@import "src/styles";
+
+.document-window-container {
+  @extend .padding-md;
+  width: 50em;
+}

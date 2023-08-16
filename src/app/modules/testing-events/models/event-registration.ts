@@ -37,7 +37,7 @@ export class EventRegistration {
   eventModule?: EventModule;
 
 
-  static createFhirResource(event: EventModule, subjectReference: string): any {
+  static createFhirResource(event: EventModule, subjectReference: string): QuestionnaireResponse {
     const notStartedCoding = new Coding()
     notStartedCoding.system = "https://raven.dev.heat.icl.gtri.org/mdi-fhir-server/fhir/CodeSystem/624454";
     notStartedCoding.code = "not-started";

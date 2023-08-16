@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpEvent, HttpRequest} from "@angular/common/http";
 import {ConfigService} from "./config.service";
 import {Observable} from "rxjs";
 
@@ -20,6 +20,15 @@ export class DashboardApiInterfaceService {
   // GET /admin-panel
   getAdminPanelData(): Observable<any> {
     return this.http.get(`${this.dashboardApiUrl}admin-panel`);
+  }
+
+  uploadFile(file: File): Observable<HttpEvent<any>> {
+    const data = new FormData();
+    data.append('file', file);
+    const request = new HttpRequest('POST', `${this.dashboardApiUrl}upload`, data,
+      {reportProgress: true, responseType: 'json'}
+    )
+    return this.http.request(request);
   }
 
 }

@@ -56,7 +56,9 @@ import {HttpConnectionComponent} from './components/onboarding/http-connection/h
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatDividerModule} from "@angular/material/divider";
 import {OnboardingComponent} from './components/onboarding/onboarding.component';
-import { HttpResponseResultsComponent } from './components/onboarding/http-connection/http-response-results/http-response-results.component';
+import {
+  HttpResponseResultsComponent
+} from './components/onboarding/http-connection/http-response-results/http-response-results.component';
 import {ClipboardModule} from "@angular/cdk/clipboard";
 
 @NgModule({

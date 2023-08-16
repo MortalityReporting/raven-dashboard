@@ -9,6 +9,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatCardModule} from "@angular/material/card";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatButtonModule} from "@angular/material/button";
+import { DocumentWindowComponent } from './components/document-window/document-window.component';
 
 
 
@@ -17,7 +18,8 @@ import {MatButtonModule} from "@angular/material/button";
     TestContainerComponent,
     TestingEventRootComponent,
     EventRegistrationCardComponent,
-    RegisteredModulesComponent
+    RegisteredModulesComponent,
+    DocumentWindowComponent
   ],
   exports: [
     TestingEventRootComponent

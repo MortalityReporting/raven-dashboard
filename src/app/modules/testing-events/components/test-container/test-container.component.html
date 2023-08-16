@@ -12,6 +12,8 @@
   <div class="test-container-body">
 
     <!--TODO: Add dynamic handling of component -->
+    <!-- Add switch statement in template here based on the TS file, see TS File for more info -->
+
   </div>
   <div class="test-container-footer">
     <div class="test-container-footer-return">
@@ -21,11 +23,10 @@
       </button>
     </div>
     <div class="test-container-footer-upload">
-      <button color="primary" mat-flat-button>
+      <button color="primary" mat-flat-button (click)="openDocumentWidow()">
         <mat-icon>upload</mat-icon>
-        Upload Documentation
+        Submit/View Documentation
       </button>
-      No Documents Currently Submitted
     </div>
     <div class="test-container-footer-status">
       Current Status: {{ eventItem.status }}
