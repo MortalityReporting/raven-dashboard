@@ -56,7 +56,6 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
     } else {
       this.currentlySelectedRegistration = this.registrations[index];
     }
-    sessionStorage.setItem('currentlySelectedRegistration', JSON.stringify(this.currentlySelectedRegistration));
   }
 
   isRegistered(event: EventModule): boolean {
