@@ -47,7 +47,9 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
     });
 
     const currentlySelectedRegistrationStr = sessionStorage.getItem('currentlySelectedRegistration');
-    this.currentlySelectedRegistration = JSON.parse(currentlySelectedRegistrationStr);
+    if(currentlySelectedRegistrationStr){
+      this.currentlySelectedRegistration = JSON.parse(currentlySelectedRegistrationStr);
+    }
   }
 
   selectEvent(index: number) {
