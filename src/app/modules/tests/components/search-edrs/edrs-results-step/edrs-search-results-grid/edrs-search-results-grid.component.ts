@@ -141,7 +141,6 @@ export class EdrsSearchResultsGridComponent implements OnInit, OnChanges {
     });
   }
 
-
   setSelectedCase(row) {
     if(!!row){
       this.selectedCase = row;
