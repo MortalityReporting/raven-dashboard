@@ -10,6 +10,8 @@ import {MatCardModule} from "@angular/material/card";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatButtonModule} from "@angular/material/button";
 import { DocumentWindowComponent } from './components/document-window/document-window.component';
+import {TestsModule} from "../tests/tests.module";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 
 
@@ -30,7 +32,9 @@ import { DocumentWindowComponent } from './components/document-window/document-w
     MatIconModule,
     MatCardModule,
     MatCheckboxModule,
-    MatButtonModule
+    MatButtonModule,
+    TestsModule,
+    MatTooltipModule,
   ]
 })
 export class TestingEventsModule { }

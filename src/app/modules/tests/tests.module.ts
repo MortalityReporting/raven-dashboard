@@ -51,7 +51,6 @@ import {MatRadioModule} from "@angular/material/radio";
 import {MatButtonModule} from "@angular/material/button";
 import {ModuleHeaderConfig} from "../../providers/module-header-config";
 import {NgxHisbLoggerModule} from "ngx-hisb-logger";
-import {TestingEventsModule} from "../testing-events/testing-events.module";
 import {HttpConnectionComponent} from './components/onboarding/http-connection/http-connection.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatDividerModule} from "@angular/material/divider";
@@ -60,6 +59,7 @@ import {
   HttpResponseResultsComponent
 } from './components/onboarding/http-connection/http-response-results/http-response-results.component';
 import {ClipboardModule} from "@angular/cdk/clipboard";
+import { UpdateEdrsComponent } from './components/update-edrs/update-edrs.component';
 
 @NgModule({
   declarations: [
@@ -79,9 +79,13 @@ import {ClipboardModule} from "@angular/cdk/clipboard";
     OnboardingComponent,
     OnboardingComponent,
     HttpResponseResultsComponent,
+    UpdateEdrsComponent,
   ],
   exports: [
-    EdrsResultsStepComponent
+    EdrsResultsStepComponent,
+    OnboardingComponent,
+    SearchEdrsComponent,
+    UpdateEdrsComponent
   ],
   imports: [
     CommonModule,
@@ -106,7 +110,6 @@ import {ClipboardModule} from "@angular/cdk/clipboard";
     NgxHisbLoggerModule,
     MatCheckboxModule,
     MatDividerModule,
-    TestingEventsModule,
     ClipboardModule
   ],
 })
