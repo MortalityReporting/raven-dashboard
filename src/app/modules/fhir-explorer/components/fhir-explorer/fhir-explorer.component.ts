@@ -28,8 +28,6 @@ export class FhirExplorerComponent implements OnInit {
         this.formattedText = '';
       }
       else if(this.selectedStructure == "narrative"){
-        // TODO, not sure where this comes from
-        //this.formattedText = this.documentHandler.getCurrentSubjectResource()?.text?.div;
         this.formattedText = this.fhirResource?.text?.div;
       }
       else if (this.selectedStructure === "xml") {
@@ -48,9 +46,7 @@ export class FhirExplorerComponent implements OnInit {
     })
   };
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
 
   isNarrative() : boolean {

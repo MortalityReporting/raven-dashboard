@@ -118,15 +118,6 @@ export class SearchParametersComponent implements OnInit {
     const currentParams = this.parameters.value.map(value => value.name);
     const result = this.edrsSearchFormParams
       .filter(param => (currentParams.indexOf(param.value) == -1) || param.value == paramsFormControl.value.name)
-    // TODO do we need those params to be sorted in any way?
-    // Below is a simple alphabetical sort
-    //   .sort(function(a,b) {
-    //     let c = a.display.toLowerCase();
-    //     let d = b.display.toLowerCase();
-    //     if (c == d) return 0;
-    //     if (c > d) return 1;
-    //     return -1;
-    //   });
     return result;
   }
 
@@ -292,6 +283,9 @@ export class SearchParametersComponent implements OnInit {
   };
 
   private getPatientResource(documentBundle) {
+    // TODO: Refactor code to use bundle-helper service
+    // composition = documentBundle.entry[0]
+    // call bundle helper service getSubjectInBundle(composition, documentBundle)
     if(!documentBundle
       || !documentBundle.resourceType || documentBundle.resourceType != "Bundle"
       || !documentBundle.type || documentBundle.type != "document"

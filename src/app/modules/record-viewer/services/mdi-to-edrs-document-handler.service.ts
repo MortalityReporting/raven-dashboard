@@ -239,7 +239,7 @@ export class MdiToEdrsDocumentHandlerService {
     circumstances.injuryLocation = injuryLocationResource?.name ?? this.defaultString;
 
     const pregnancyResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Obs_DecedentPregnancy);
-    circumstances.pregnancy = pregnancyResource?.valueCodeableConcept?.coding[0]?.display || this.defaultString; // TODO: Missing data, once available fix.
+    circumstances.pregnancy = pregnancyResource?.valueCodeableConcept?.coding[0]?.display || this.defaultString;
 
     const tobaccoUseResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Obs_TobaccoUseContributedToDeath);
     const tobaccoUseCc: CodeableConcept = new CodeableConcept(tobaccoUseResource?.valueCodeableConcept);
@@ -446,18 +446,5 @@ export class MdiToEdrsDocumentHandlerService {
   private findExtensionByUrl(extensions: any[], url: string): any {
     return extensions?.find((extension: any) => extension?.url === url);
   }
-
-  // getCurrentDocumentBundle(): any {
-  //   return this.currentDocumentBundle;
-  // }
-  //
-  // getCurrentSubjectResource(): any {
-  //   return this.bundleHelper.findResourceByFullUrl(this.currentDocumentBundle, this.subjectId);
-  // }
-
-  // TODO: REFACTOR DIRECTIVE AND REMOVE THIS FUNCTION
-  // findResourceByProfileNamePassThrough(profile) {
-  //   return this.bundleHelper.findResourceByProfileName(this.currentDocumentBundle, profile);
-  // }
 
 }

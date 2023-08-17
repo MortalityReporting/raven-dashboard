@@ -151,7 +151,7 @@ export class ToxToMdiMessageHandlerService {
     return toxSummary
   }
 
-  // TODO: Add support for non references.
+  // TODO: Add support for non references. (Setup in FHIR UTIL based on type.)
   createPerformersList(diagnosticReport: any, messageBundle: any): Performer[] {
     let performers = [];
     if (diagnosticReport.performer) {

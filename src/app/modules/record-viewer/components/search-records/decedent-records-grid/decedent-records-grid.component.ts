@@ -117,7 +117,6 @@ export class DecedentRecordsGridComponent implements OnInit {
         },
         complete:  () => {
           this.isLoading = false;
-          //TODO render error message to the user
         },
     });
   }

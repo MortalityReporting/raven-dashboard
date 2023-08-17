@@ -23,8 +23,8 @@ export class Demographics {
   birthDate: string;
   ssn: string;
   identifiers: Identifier[]; // Other non-SSN Identifiers present
-  race: string; // TODO: Setup FHIR Type
-  ethnicity: string; // TODO: Setup FHIR Type
+  race: string;
+  ethnicity: string;
   maritalStatus: string;
   address: Address;
   patientResource: FhirResource;
@@ -71,7 +71,7 @@ export class CauseAndManner {
   causeOfDeathPart1: CauseOfDeathPart1[];
   causeOfDeathPart2: CauseOfDeathPart2[];
   causeOfDeathConditions: CauseOfDeathCondition[];
-  contributingConditions: string[]; // TODO: Does this need a model?
+  contributingConditions: string[];
   mannerOfDeath: string;
   howDeathInjuryOccurred: string;
   injuryDateTime: string;

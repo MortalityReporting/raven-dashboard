@@ -5,6 +5,7 @@ import {MatTabGroup} from "@angular/material/tabs";
 import {MatTableDataSource} from "@angular/material/table";
 import {MdiToEdrsDocumentHandlerService} from "../../../../../record-viewer";
 import {TrackingNumberType} from "../../../../../fhir-mdi-library";
+import {CodeableConcept} from "../../../../../fhir-util";
 
 @Component({
   selector: 'app-edrs-search-results-grid',
@@ -104,8 +105,10 @@ export class EdrsSearchResultsGridComponent implements OnInit, OnChanges {
       console.error("Empty or incorrect function parameter.");
       return null;
     }
-    const result = observationResource?.valueCodeableConcept?.coding?.[0]?.display;
-    return result;
+    const codeableConcept: CodeableConcept = observationResource?.valueCodeableConcept;
+    return codeableConcept.toString();
+    //const result = observationResource?.valueCodeableConcept?.coding?.[0]?.display;
+    // return result;
   };
 
   private findResourceByType(documentBundle, resourceType) {
