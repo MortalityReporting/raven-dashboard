@@ -1,10 +1,23 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {Obs_DeathDate, Obs_MannerOfDeath} from "../../../../../../providers/fhir-profile-constants";
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
+import {
+  FHIRProfileConstants,
+} from "../../../../../../providers/fhir-profile-constants";
 import {FhirHelperService, PatientNameReturn} from "../../../../../fhir-util/services/fhir-helper.service";
 import {MatTabGroup} from "@angular/material/tabs";
 import {MatTableDataSource} from "@angular/material/table";
 import {MdiToEdrsDocumentHandlerService} from "../../../../../record-viewer";
 import {TrackingNumberType} from "../../../../../fhir-mdi-library";
+import {BundleHelperService, CodeableConcept} from "../../../../../fhir-util";
 
 @Component({
   selector: 'app-edrs-search-results-grid',
@@ -25,8 +38,11 @@ export class EdrsSearchResultsGridComponent implements OnInit, OnChanges {
   selectedCase: any;
 
   constructor(
+    private bundleHelper: BundleHelperService,
     private fhirHelperService: FhirHelperService,
-    private documentHandlerService: MdiToEdrsDocumentHandlerService) { }
+    private documentHandlerService: MdiToEdrsDocumentHandlerService,
+    @Inject('fhirProfiles') public fhirProfiles: FHIRProfileConstants
+    ) { }
 
   ngOnInit(): void {
   }
@@ -74,11 +90,12 @@ export class EdrsSearchResultsGridComponent implements OnInit, OnChanges {
         const raceStr = this.documentHandlerService.getDecedentRaceText(patientResource.extension);
         decedent.race = raceStr;
 
-        const mannerOfDeathObservation = this.getObservationByProfile(bundle.resource, Obs_MannerOfDeath);
-        const mannerOfDeathStr = this.getMannerOfDeathObservationStr(mannerOfDeathObservation);
-        decedent.mannerOfDeath = mannerOfDeathStr;
 
-        const deathDateObservation = this.getObservationByProfile(bundle.resource, Obs_DeathDate);
+        const mannerOfDeathObservation = this.bundleHelper.findResourceByProfileName(bundle.resource, this.fhirProfiles.MdiToEdrs.Obs_MannerOfDeath)
+        const mannerOfDeathCc: CodeableConcept = new CodeableConcept(mannerOfDeathObservation?.valueCodeableConcept);
+        decedent.mannerOfDeath = mannerOfDeathCc?.toString();
+
+        const deathDateObservation = this.bundleHelper.findResourceByProfileName(bundle.resource, this.fhirProfiles.MdiToEdrs.Obs_DeathDate)
         decedent.deathDate = deathDateObservation?.effectiveDateTime;
 
         const compositionResource = this.findResourceByType(bundle.resource, "Composition");
@@ -97,17 +114,6 @@ export class EdrsSearchResultsGridComponent implements OnInit, OnChanges {
     }
   }
 
-  // TODO extract this to mdi services
-  private getMannerOfDeathObservationStr(observationResource){
-    if(!observationResource?.resourceType
-      || observationResource.resourceType != 'Observation'){
-      console.error("Empty or incorrect function parameter.");
-      return null;
-    }
-    const result = observationResource?.valueCodeableConcept?.coding?.[0]?.display;
-    return result;
-  };
-
   private findResourceByType(documentBundle, resourceType) {
     if(!documentBundle
       || !documentBundle.resourceType || documentBundle.resourceType != "Bundle"
@@ -121,24 +127,6 @@ export class EdrsSearchResultsGridComponent implements OnInit, OnChanges {
       ?.resource;
     return result;
   }
-
-  private getObservationByProfile(documentBundle, profileStr) {
-    if(!documentBundle
-      || !documentBundle.resourceType || documentBundle.resourceType != "Bundle"
-      || !documentBundle.type || documentBundle.type != "document"
-      || !documentBundle.entry?.length){
-      console.error("Empty or incorrect function parameter.");
-      return null;
-    }
-    const result = documentBundle?.entry
-      ?.filter(entry => entry?.resource?.resourceType === "Observation")
-      ?.find(entry => entry?.resource?.meta?.profile?.[0] === profileStr)
-      ?.resource;
-
-    return result;
-  }
-
-  //TODO this code simply does not work and needs to be refactored or extended properly
 
   getTrackingNumber(resource: any, type: TrackingNumberType): string {
     const extensions = resource.extension;

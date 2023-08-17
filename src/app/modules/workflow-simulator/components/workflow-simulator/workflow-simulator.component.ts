@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, ElementRef, Inject, ViewChild} from '@angular/core';
 import {ModuleHeaderConfig} from "../../../../model/model-header-config";
 
 @Component({
