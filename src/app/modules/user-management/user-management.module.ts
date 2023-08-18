@@ -32,7 +32,7 @@ import {CommonUiModule} from "../common-ui/common-ui.module";
       clientId: environment.clientId,
       authorizationParams: {
         redirect_uri: environment.adminRedirectUrl,
-        audience: environment.dashboardApi,
+        audience: environment.audience,
         scope: "admin profile email openid"
       },
       httpInterceptor: {

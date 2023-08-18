@@ -1,6 +1,8 @@
 export const environment = {
   // API and Configuration Happens at build time as core dependency.
-  dashboardApi: "https://raven.dev.heat.icl.gtri.org/raven-dashboard-api/",
+  //dashboardApi: "https://raven.dev.heat.icl.gtri.org/raven-dashboard-api/",
+  dashboardApi: "http://127.0.0.1:8000/",
+  audience: "https://raven.dev.heat.icl.gtri.org/raven-dashboard-api/",
   domain: "dev-dk7cyfpkwowbtdbt.us.auth0.com",
   clientId: "M7knIi1ioWMc6Lufbt5lbyTrnxpKmL4q",
   useLocalConfig: false,

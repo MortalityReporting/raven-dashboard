@@ -10,6 +10,9 @@ import {MatCardModule} from "@angular/material/card";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatButtonModule} from "@angular/material/button";
 import { DocumentWindowComponent } from './components/document-window/document-window.component';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {SanitizedUrlPipe} from "./pipes/sanitized-url.pipe";
 
 
 
@@ -19,7 +22,8 @@ import { DocumentWindowComponent } from './components/document-window/document-w
     TestingEventRootComponent,
     EventRegistrationCardComponent,
     RegisteredModulesComponent,
-    DocumentWindowComponent
+    DocumentWindowComponent,
+    SanitizedUrlPipe
   ],
   exports: [
     TestingEventRootComponent
@@ -30,7 +34,9 @@ import { DocumentWindowComponent } from './components/document-window/document-w
     MatIconModule,
     MatCardModule,
     MatCheckboxModule,
-    MatButtonModule
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule
   ]
 })
 export class TestingEventsModule { }
