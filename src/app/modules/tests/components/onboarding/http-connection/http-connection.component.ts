@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {
   FormControl,
-  FormGroup, FormGroupDirective,
+  FormGroup,
   NgForm,
   UntypedFormArray,
   UntypedFormBuilder,
@@ -44,7 +44,6 @@ export class HttpConnectionComponent implements OnInit, OnChanges{
   loginSuccessResponse: any;
   loginErrorResponse: any;
   isAdvancedSettingsVisible: boolean = false;
-  MAX_FILE_SIZE = 100000; // Max allowed file size is 100KB
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -195,28 +194,28 @@ export class HttpConnectionComponent implements OnInit, OnChanges{
     return this.onboardingForm.controls["urlEncodedParameters"] as UntypedFormArray;
   }
 
-  addHeaderParam() {
+  addHeaderParam(key?: string, value?: string) {
     const headerParamsFG = this.fb.group({
-      key: new UntypedFormControl(''),
-      value: new UntypedFormControl(''),
+      key: new UntypedFormControl(key),
+      value: new UntypedFormControl(value),
     });
     this.headerParams.push(headerParamsFG);
     this.onboardingForm.addControl('headerParameters', headerParamsFG);
   }
 
-  addQueryParam() {
+  addQueryParam(key?: string, value?: string) {
     const queryParamsFG = this.fb.group({
-      key: new UntypedFormControl(''),
-      value: new UntypedFormControl(''),
+      key: new UntypedFormControl(key),
+      value: new UntypedFormControl(value),
     });
     this.queryParams.push(queryParamsFG);
     this.onboardingForm.addControl('queryParameters', queryParamsFG);
   }
 
-  addUrlEncodedParam() {
+  addUrlEncodedParam(key?: string, value?: string) {
     const urlEncodedParamsFG = this.fb.group({
-      key: new UntypedFormControl(''),
-      value: new UntypedFormControl(''),
+      key: new UntypedFormControl(key),
+      value: new UntypedFormControl(value),
     });
     this.urlEncodedParams.push(urlEncodedParamsFG);
     this.onboardingForm.addControl('urlEncodedParameters', urlEncodedParamsFG);
@@ -275,60 +274,83 @@ export class HttpConnectionComponent implements OnInit, OnChanges{
     }
   }
 
-  onExportStage() {
-    const filename = 'saved_connection.json';
-
-    let formValue = this.onboardingForm.value;
-    //For security reason we always want to remove the password (we should never save user passwords)
-    if(formValue?.password){
-      formValue.password = '';
-    }
-
-    const file = new Blob([JSON.stringify(formValue)], {type: "application/json"});
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(file);
-    link.download = filename;
-    link.click();
-    link.remove();
-  }
-
-  onFileSelected(event: any) {
-    this.utilsService.closeNotification();
-
-    const file: File = event.target.files[0];
-
-    if(!file){
-      this.utilsService.showErrorMessage("Unable to open the file.");
-    }
-    else if (file.size > this.MAX_FILE_SIZE){
-      console.error("File too big")
-      this.utilsService.showErrorMessage("This file exceeds " + this.MAX_FILE_SIZE /  1000 + "kb and cannot be processed");
-    }
-    else {
-      const fileReader = new FileReader();
-      fileReader.readAsText(file, "UTF-8");
-
-      fileReader.onload = () => {
-        this.fillFormFromJsonData(JSON.parse(fileReader.result as string))
-      }
-      fileReader.onerror = (error) => {
-        this.utilsService.showSuccessMessage("Error reading the file.")
-      }
-    }
-
-  }
-
+  /**
+   * This is a best effort method designed to generate new from(s) with the network connection data, and fill those forms.
+   * This way the user does not have to fill in the data for their network connection(s) every time they fill they try to
+   * complete the onboarding test.
+   *
+   * @param jsonData - contains the connection form fields and form data.
+   */
   fillFormFromJsonData(jsonData) {
-    this.initOnboardingForm();
-    if(jsonData?.connectionType?.value === ConnectionType?.basicAuth){
-      const requestType = this.RequestTypeOptions.find(requestType=> requestType == jsonData.requestType);
-      console.log(requestType);
-      console.log( this.onboardingForm);
-      this.onboardingForm.controls['requestType'].patchValue(RequestType.POST);
+    try {
+      this.onboardingForm = new FormGroup({});
+
+      this.onboardingForm.addControl('connectionType', new FormControl(
+        ConnectionTypeOptions[ConnectionType?.[jsonData?.connectionType?.value]], Validators.required));
+      this.onboardingForm.addControl('endpointUrl', new FormControl(jsonData.endpointUrl, Validators.required));
+      this.onboardingForm.addControl('requestType', new FormControl(jsonData.requestType, Validators.required));
+
+      if ('user' in jsonData) {
+        this.onboardingForm.addControl('user', new FormControl(jsonData.user, Validators.required));
+      }
+
+      if ('password' in jsonData) {
+        this.onboardingForm.addControl('password', new FormControl(jsonData.user, Validators.required));
+      }
+
+      if ('requestBodyOptions' in jsonData) {
+        this.onboardingForm.addControl('requestBodyOptions', new FormControl(jsonData.requestBodyOptions));
+      }
+
+      if ('requestBody' in jsonData) {
+        this.onboardingForm.addControl('requestBody', new FormControl(jsonData.requestBody));
+      }
+
+      if ('token' in jsonData) {
+        this.onboardingForm.addControl('token', new FormControl(jsonData.token));
+      }
+
+      if ("customizeHeaders" in jsonData) {
+        this.isAdvancedSettingsVisible = true;
+
+        this.onboardingForm.addControl('customizeHeaders', new FormControl(jsonData.customizeHeaders));
+        this.onboardingForm.addControl('addQueryParams', new FormControl(jsonData.addQueryParams));
+
+        if (jsonData.headerParameters) {
+          this.onboardingForm.addControl('headerParameters', this.fb.array([]));
+          jsonData.headerParameters.forEach(param => {
+            this.addHeaderParam(param.key, param.value);
+          });
+        }
+
+        if (jsonData.queryParameters) {
+          this.onboardingForm.addControl('queryParameters', this.fb.array([]));
+          jsonData.queryParameters.forEach(param => {
+            this.addQueryParam(param.key, param.value);
+          });
+        }
+      }
+
+      if ("urlEncodedParameters" in jsonData) {
+        this.onboardingForm.addControl('urlEncodedParameters', this.fb.array([]));
+        jsonData.urlEncodedParameters.forEach(param => {
+          this.addUrlEncodedParam(param.key, param.value);
+        });
+      }
     }
+    catch(e){
+      console.log(e);
+      this.utilsService.showErrorMessage("Error parsing form data.")
+      this.log.error("Error parsing form data.", this.componentName);
+    }
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes)
+    if(changes['stage']?.currentValue?.formData) {
+      setTimeout(() => {  // without setTimeout angular fails to rerender the form on the DOM.
+        this.fillFormFromJsonData(changes['stage']?.currentValue?.formData)
+      });
+    }
   }
 }

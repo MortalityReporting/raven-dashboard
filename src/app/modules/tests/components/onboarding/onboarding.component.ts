@@ -41,7 +41,7 @@ export class OnboardingComponent implements OnInit {
     this.stageList.push({expanded: true})
   }
 
-  removeComponent(index: number, event?: any) {
+  removeComponent(index: number) {
     this.stageList.splice(index, 1);
   }
 
@@ -60,7 +60,7 @@ export class OnboardingComponent implements OnInit {
         element.password = '';
       }
     });
-
+    console.log(formValueAcc);
     const file = new Blob([JSON.stringify(formValueAcc)], {type: "application/json"});
     const link = document.createElement("a");
     link.href = URL.createObjectURL(file);
@@ -88,22 +88,26 @@ export class OnboardingComponent implements OnInit {
         this.parseFormData(JSON.parse(fileReader.result as string))
       }
       fileReader.onerror = (error) => {
-        this.utilsService.showSuccessMessage("Error reading the file.")
+        this.utilsService.showErrorMessage("Error reading the file.")
       }
     }
   }
 
+  /**
+   * This parser converts the network connection settings data (stored in JSON format) to appropriate Stage data,
+   * which we pass to the children http-connection components.
+   *
+   * @param formDataList json representation of the network configuration stage data
+   * @private
+   */
   private parseFormData(formDataList: any[]) {
     //clear the current stage list
     this.stageList = [];
-
     //populate the stage list with blank elements
     formDataList.forEach(formElement => this.addStage());
 
     //add the form data to each of the elements (fill each stage with data)
-    formDataList.forEach((formElement, index) => {
-      this.stageList[index].formData = formElement;
-    });
+    formDataList.forEach((formElement, index) => this.stageList[index].formData = formElement);
   }
 
   onFormValueChange(event: any, index: number) {
