@@ -3,6 +3,8 @@ import {LogLine} from "../../../../../../projects/ngx-hisb-logger/src/lib/modal/
 import {MatAccordion} from "@angular/material/expansion";
 import {LoggerService} from "ngx-hisb-logger";
 import {UtilsService} from "../../../../service/utils.service";
+import {openConfirmationDialog} from "common-ui";
+import {MatDialog} from "@angular/material/dialog";
 
 export interface Stage {
   expanded: boolean;
@@ -19,7 +21,8 @@ export class OnboardingComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
   constructor(
     private log: LoggerService,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private dialog: MatDialog,
   ){}
 
   loggerData: LogLine[];
@@ -49,8 +52,7 @@ export class OnboardingComponent implements OnInit {
     return i+1;
   }
 
-
-  onExportStage(formValueAcc) {
+  exportToJson(formValueAcc){
     const filename = 'saved_connection.json';
     // let formValue = this.onboardingForm.value;
     //For security reason we always want to remove the password (we should never save user passwords)
@@ -60,13 +62,37 @@ export class OnboardingComponent implements OnInit {
         element.password = '';
       }
     });
-    console.log(formValueAcc);
+
     const file = new Blob([JSON.stringify(formValueAcc)], {type: "application/json"});
     const link = document.createElement("a");
     link.href = URL.createObjectURL(file);
     link.download = filename;
     link.click();
     link.remove();
+  }
+
+
+  onExportStage(formValueAcc) {
+    openConfirmationDialog(
+      this.dialog,
+      {
+        title: "Export Network Connection Config",
+        content: `Your network connection may contain sensitive data such as username or Bearer token.<br/>
+                  Proceed with the data export?`,
+        primaryActionBtnTitle: "Export Connection Config",
+        secondaryActionBtnTitle: "Cancel",
+        width: "512px",
+        isPrimaryButtonLeft: true
+      })
+      .subscribe(
+        action => {
+          if (action == 'primaryAction') {
+            this.exportToJson(formValueAcc);
+          } else if (action == 'secondaryAction') {
+            //console.log('secondary selected');
+          }
+        }
+      );
   }
 
   onFileSelected(event: any) {
