@@ -21,7 +21,7 @@
           <mat-panel-title class="margin-top-md margin-bottom-md">
             <button
               mat-mini-fab color="warn" aria-label="Remove Stage" matTooltip="Remove stage"
-              (click)="removeComponent(i, $event); $event.stopPropagation() "
+              (click)="removeComponent(i); $event.stopPropagation() "
               [disabled]="stageList?.length == 1">
               <mat-icon>remove</mat-icon>
             </button>
