@@ -1,22 +1,5 @@
-.scrollable-tab-container {
-  overflow: scroll;
-  max-width: 35vw;
-  min-height: 15vh;
-  max-height: 40vh;
-  border: 1px solid darkgray;
-  border-radius: 4px;
-  margin-top: 8px;
-  padding: 8px;
-  display: flex;
-}
-
-.scrollable-error-tab-container {
-  @extend .scrollable-tab-container;
-  border-color: red;
-}
-
 .config-col {
-  padding: 0 16px; flex: 50%
+  padding: 0 16px; width: 50%
 }
 
 .request-type-form-field {
