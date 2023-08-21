@@ -12,7 +12,7 @@ export interface Stage {
 @Component({
   selector: 'app-onboarding',
   templateUrl: './onboarding.component.html',
-  styleUrls: ['./onboarding.component.css']
+  styleUrls: ['./onboarding.component.scss']
 })
 
 export class OnboardingComponent implements OnInit {

@@ -1,4 +1,4 @@
-<mat-tab-group #resultsTabGroup style='min-height:300px' mat-stretch-tabs="false">
+<mat-tab-group mat-stretch-tabs="false">
 
   <mat-tab label="Result">
     <div [ngClass]="errorResponse ? 'response-container-error': 'response-container'">
@@ -30,8 +30,6 @@
         <span class="label-line">Message:</span>&nbsp;
         <span class="result-line" *ngIf="errorResponse">{{ errorResponse?.message }}</span>
       </div>
-
-
 
     </div>
   </mat-tab>

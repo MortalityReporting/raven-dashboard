@@ -31,8 +31,8 @@
         <app-http-connection [stage]=stage (formValueChangeEvent)="onFormValueChange($event ,i);"></app-http-connection>
       </mat-expansion-panel>
     </mat-accordion>
-    <div class="box margin-bottom-md" style="align-items: flex-end; justify-content: flex-end; margin-top: 16px">
-      <button mat-raised-button color="primary" type="button" (click)="addStage()">
+    <div class="flex margin-bottom-md margin-top-md">
+      <button class="push-right" mat-raised-button color="primary" type="button" (click)="addStage()">
         <mat-icon>add</mat-icon>
         Add Stage
       </button>
