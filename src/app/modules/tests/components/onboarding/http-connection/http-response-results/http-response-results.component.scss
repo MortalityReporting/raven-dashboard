@@ -1,8 +1,7 @@
 .response-container {
   margin-top: 1em;
   padding: 1em;
-  min-height: 200px;
-  height: 80%;
+  height: 256px;
   width: 90%;
   border: #cdcdcd 1px solid;
   border-radius: 4px;
@@ -20,25 +19,29 @@
   padding: 1em;
   margin: 1em
 }
-.result-label{
+.result-label {
   font-weight: bold;
 }
 
-.result-line-item{
-  margin: 1em 0;
-  display: flex;
-}
-.table-line{
-  font-size: small;
+.column {
+  padding: 4px;
+  box-sizing: border-box;
 }
 
-.label-line {
-  flex: 0 0 30%;
-  font-weight: bold;
+.column-20 {
+  flex: 0 0 20%;
 }
 
-.result-line {
-  flex: 1;
+.column-10 {
+  flex: 0 0 10%;
+}
+
+.column-70 {
+  flex: 0 0 70%;
+  font-family: monospace;
+}
+
+.result-row {
   display: flex;
-  margin-top: 0;
+  align-items: center;
 }

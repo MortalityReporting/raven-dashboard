@@ -46,6 +46,7 @@ export class OnboardingComponent implements OnInit {
 
   removeComponent(index: number) {
     this.stageList.splice(index, 1);
+    this.formValueAcc.splice(index, 1);
   }
 
   getStageIndex(i: number) {
@@ -111,8 +112,10 @@ export class OnboardingComponent implements OnInit {
       fileReader.readAsText(file, "UTF-8");
 
       fileReader.onload = () => {
-        this.parseFormData(JSON.parse(fileReader.result as string))
+        this.formValueAcc = JSON.parse(fileReader.result as string)
+        this.parseFormData(this.formValueAcc);
       }
+
       fileReader.onerror = (error) => {
         this.utilsService.showErrorMessage("Error reading the file.")
       }
@@ -134,6 +137,7 @@ export class OnboardingComponent implements OnInit {
 
     //add the form data to each of the elements (fill each stage with data)
     formDataList.forEach((formElement, index) => this.stageList[index].formData = formElement);
+
   }
 
   onFormValueChange(event: any, index: number) {

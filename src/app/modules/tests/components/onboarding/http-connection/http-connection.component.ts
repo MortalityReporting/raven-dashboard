@@ -63,6 +63,9 @@ export class HttpConnectionComponent implements OnInit, OnChanges{
     this.onboardingForm.controls['connectionType'].patchValue(ConnectionTypeOptions[ConnectionType.basicAuth]);
     this.onboardingForm.addControl('user', new FormControl('', Validators.required));
     this.onboardingForm.addControl('password', new FormControl('', Validators.required));
+
+    // Update the parent with the new form values
+    this.formValueChangeEvent.emit({formValue: this.onboardingForm.value});
   }
 
   onShowHideAdvancedSettings(advancedSettingsVisible: boolean) {
@@ -73,6 +76,8 @@ export class HttpConnectionComponent implements OnInit, OnChanges{
 
     }
     else {
+      this.onboardingForm.removeControl('headerParameters');
+      this.onboardingForm.removeControl('queryParameters');
       this.onboardingForm.removeControl("customizeHeaders");
       this.onboardingForm.removeControl("addQueryParams");
       this.onboardingForm.removeControl('queryParameters');
@@ -337,13 +342,16 @@ export class HttpConnectionComponent implements OnInit, OnChanges{
           this.addUrlEncodedParam(param.key, param.value);
         });
       }
+      this.formValueChangeEvent.emit({formValue: this.onboardingForm.value});
+      this.onboardingForm.valueChanges
+        .subscribe(formValue =>
+          this.formValueChangeEvent.emit({formValue: formValue}));
     }
     catch(e){
-      console.log(e);
+      console.error(e);
       this.utilsService.showErrorMessage("Error parsing form data.")
       this.log.error("Error parsing form data.", this.componentName);
     }
-
   }
 
   ngOnChanges(changes: SimpleChanges): void {
