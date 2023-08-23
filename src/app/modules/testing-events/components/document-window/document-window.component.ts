@@ -1,6 +1,7 @@
 import {Component, Inject, SecurityContext} from '@angular/core';
 import {DashboardApiInterfaceService} from "../../../../service/dashboard-api-interface.service";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {EventModuleManagerService} from "../../services/event-module-manager.service";
 
 @Component({
   selector: 'app-document-window',
@@ -14,7 +15,8 @@ export class DocumentWindowComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: {registrationId: string, userId: string},
-    private dashboardApi: DashboardApiInterfaceService
+    private dashboardApi: DashboardApiInterfaceService,
+    private eventManager: EventModuleManagerService
   ) {
   }
 
@@ -30,10 +32,10 @@ export class DocumentWindowComponent {
   }
 
   onClickUpload() {
-    const upload$ = this.dashboardApi.uploadFile(this.file, this.data.userId, this.data.registrationId);
-    upload$.subscribe({
-      next: value => {console.log(value)}
+    this.eventManager.uploadDocument(this.file, this.data.userId, this.data.registrationId).subscribe({
+      next: value => {
+        console.log(value);
+      }
     })
   }
-
 }

@@ -30,7 +30,8 @@ export class TestContainerComponent {
   }
 
   onTestCompleted(){
-    this.eventItem.status = TestStatus.testSuccess;
+    // TODO: Switch to status hadnler
+    //this.eventItem.status = TestStatus.testSuccess;
   }
 
   openDocumentWidow() {

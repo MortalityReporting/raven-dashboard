@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpEvent, HttpRequest} from "@angular/common/http";
+import {HttpClient, HttpEvent, HttpRequest, HttpResponse} from "@angular/common/http";
 import {ConfigService} from "./config.service";
-import {Observable} from "rxjs";
+import {Observable, single, tap} from "rxjs";
 
 @Injectable({
   providedIn: 'root'

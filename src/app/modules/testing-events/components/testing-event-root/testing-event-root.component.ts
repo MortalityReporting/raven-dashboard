@@ -27,9 +27,15 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.eventModuleManager.currentRegistration.subscribe({
+      next: value => {
+        this.currentlySelectedRegistration = value;
+      }
+    })
     let events$ = this.eventModuleManager.getAllEvents();
     let user$ = this.userProfileManager.currentUser$;
-    let whatever = combineLatest([events$, user$]).pipe(
+
+    let registrations$ = combineLatest([events$, user$]).pipe(
       skipWhile(combinedResults => combinedResults.some(result => result === undefined)),
       mergeMap(combinedResults => {
           const events = combinedResults[0];
@@ -40,11 +46,18 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
         }
       ));
 
-    whatever.pipe(retry({delay: () => this.refreshTrigger$})).subscribe({
-      next: registrations => {
-        this.registrations = registrations;
-      }
-    });
+    registrations$.subscribe({
+        next: registrations => {
+          this.registrations = registrations;
+        }
+      });
+
+    // // TODO: refresh
+    // whatever.pipe(retry({delay: () => this.refreshTrigger$})).subscribe({
+    //   next: registrations => {
+    //     this.registrations = registrations;
+    //   }
+    // });
 
     const currentlySelectedRegistrationStr = sessionStorage.getItem('currentlySelectedRegistration');
     if(currentlySelectedRegistrationStr){
@@ -54,9 +67,9 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
 
   selectEvent(index: number) {
     if (index === -1) {
-      this.currentlySelectedRegistration = undefined;
+      this.eventModuleManager.setCurrentlySelectedRegistration(undefined);
     } else {
-      this.currentlySelectedRegistration = this.registrations[index];
+      this.eventModuleManager.setCurrentlySelectedRegistration(this.registrations[index]);
     }
   }
 

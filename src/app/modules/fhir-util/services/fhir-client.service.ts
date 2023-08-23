@@ -29,7 +29,8 @@ export class FhirClientService {
   }
 
   update(resourceType: string, resource: FhirResource): Observable<FhirResource> {
-    let requestString = this.serverBaseUrl + resourceType + "/";
+    const id = resource["id"];
+    let requestString = this.serverBaseUrl + resourceType + "/" + id;
     return this.http.put<FhirResource>(requestString, resource);
   }
 
