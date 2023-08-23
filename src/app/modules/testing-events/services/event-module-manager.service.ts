@@ -41,4 +41,5 @@ export class EventModuleManagerService {
   createNewRegistration(questionnaireResponse: QuestionnaireResponse): Observable<any> {
     return this.fhirClient.create("QuestionnaireResponse", questionnaireResponse);
   }
+
 }

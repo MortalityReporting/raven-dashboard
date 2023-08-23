@@ -22,10 +22,12 @@ export class DashboardApiInterfaceService {
     return this.http.get(`${this.dashboardApiUrl}admin-panel`);
   }
 
-  uploadFile(file: File): Observable<HttpEvent<any>> {
+  uploadFile(file: File, userId: string, registrationId: string): Observable<HttpEvent<any>> {
     const data = new FormData();
     data.append('file', file);
-    const request = new HttpRequest('POST', `${this.dashboardApiUrl}upload`, data,
+    data.append('userId', userId);
+    data.append('registrationId', registrationId)
+    const request = new HttpRequest('POST', `${this.dashboardApiUrl}document`, data,
       {reportProgress: true, responseType: 'json'}
     )
     return this.http.request(request);

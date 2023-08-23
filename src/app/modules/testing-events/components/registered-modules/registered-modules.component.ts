@@ -10,6 +10,7 @@ import {Router} from "@angular/router";
 export class RegisteredModulesComponent implements OnInit{
   //registrations: EventRegistration[];
   @Input() registration: EventRegistration;
+  @Input() userId: string;
 
   constructor(
       //public auth: AuthService,
@@ -20,24 +21,14 @@ export class RegisteredModulesComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    // let events$ = this.eventModuleManager.getAllEvents();
-    // let user$ = this.userProfileManager.currentUser$;
-    // combineLatest([events$, user$]).pipe(
-    //     skipWhile(combinedResults => combinedResults.some(result => result === undefined)),
-    //     mergeMap(combinedResults => {
-    //       const events = combinedResults[0];
-    //       const user = combinedResults[1];
-    //       return this.eventModuleManager.getAllRegistrations(user.fhirId, events);}
-    // )).subscribe({
-    //   next: registrations => this.registrations = registrations
-    // });
   }
 
   loadTestContainer(eventItem: any, eventRegistration: any) {
     this.router.navigate(['/workflow-simulator/test'], {
       state: {
         eventItem: eventItem,
-        eventRegistration: eventRegistration
+        eventRegistration: eventRegistration,
+        userId: this.userId
       } }).then(r => console.log(r));
   }
 }
