@@ -13,6 +13,9 @@ export class SearchEdrsService {
   private documentBundle = new Subject<any>();
   documentBundle$ = this.documentBundle.asObservable();
 
+  private testStatus = new Subject<any>();
+  testStatus$ = this.testStatus.asObservable();
+
   private edrsHttpRequestInfo = new Subject<any>();
   edrsHttpRequestInfo$ = this.edrsHttpRequestInfo.asObservable();
 
@@ -33,6 +36,10 @@ export class SearchEdrsService {
 
   setEdrsHttpRequestInfo(data): void {
     this.edrsHttpRequestInfo.next(data);
+  }
+
+  setTestStatus(status): void {
+    this.testStatus.next(status);
   }
 
   setEndpoint(endpoint: string, basic: {username: string, password: string}) {
@@ -79,7 +86,11 @@ export class SearchEdrsService {
       url : operationDefinitionLocation
     });
 
-    return this.http.post(operationDefinitionLocation, params, httpOptions);
+    return this.http.post(operationDefinitionLocation, params, httpOptions).pipe(map(result => {
+        this.setTestStatus("completed");
+        return result;
+      }
+    ));
   }
 
 }

@@ -3,6 +3,8 @@ import {LogLine} from "../../../../../../projects/ngx-hisb-logger/src/lib/modal/
 import {MatAccordion} from "@angular/material/expansion";
 import {LoggerService} from "ngx-hisb-logger";
 import {UtilsService} from "../../../../service/utils.service";
+import {openConfirmationDialog} from "common-ui";
+import {MatDialog} from "@angular/material/dialog";
 
 export interface Stage {
   expanded: boolean;
@@ -12,14 +14,15 @@ export interface Stage {
 @Component({
   selector: 'app-onboarding',
   templateUrl: './onboarding.component.html',
-  styleUrls: ['./onboarding.component.css']
+  styleUrls: ['./onboarding.component.scss']
 })
 
 export class OnboardingComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
   constructor(
     private log: LoggerService,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private dialog: MatDialog,
   ){}
 
   loggerData: LogLine[];
@@ -41,16 +44,16 @@ export class OnboardingComponent implements OnInit {
     this.stageList.push({expanded: true})
   }
 
-  removeComponent(index: number, event?: any) {
+  removeComponent(index: number) {
     this.stageList.splice(index, 1);
+    this.formValueAcc.splice(index, 1);
   }
 
   getStageIndex(i: number) {
     return i+1;
   }
 
-
-  onExportStage(formValueAcc) {
+  exportToJson(formValueAcc){
     const filename = 'saved_connection.json';
     // let formValue = this.onboardingForm.value;
     //For security reason we always want to remove the password (we should never save user passwords)
@@ -69,6 +72,30 @@ export class OnboardingComponent implements OnInit {
     link.remove();
   }
 
+
+  onExportStage(formValueAcc) {
+    openConfirmationDialog(
+      this.dialog,
+      {
+        title: "Export Network Connection Config",
+        content: `Your network connection may contain sensitive data such as username or Bearer token.<br/>
+                  Proceed with the data export?`,
+        primaryActionBtnTitle: "Export Connection Config",
+        secondaryActionBtnTitle: "Cancel",
+        width: "512px",
+        isPrimaryButtonLeft: true
+      })
+      .subscribe(
+        action => {
+          if (action == 'primaryAction') {
+            this.exportToJson(formValueAcc);
+          } else if (action == 'secondaryAction') {
+            //console.log('secondary selected');
+          }
+        }
+      );
+  }
+
   onFileSelected(event: any) {
 
     const file: File = event.target.files[0];
@@ -85,25 +112,32 @@ export class OnboardingComponent implements OnInit {
       fileReader.readAsText(file, "UTF-8");
 
       fileReader.onload = () => {
-        this.parseFormData(JSON.parse(fileReader.result as string))
+        this.formValueAcc = JSON.parse(fileReader.result as string)
+        this.parseFormData(this.formValueAcc);
       }
+
       fileReader.onerror = (error) => {
-        this.utilsService.showSuccessMessage("Error reading the file.")
+        this.utilsService.showErrorMessage("Error reading the file.")
       }
     }
   }
 
+  /**
+   * This parser converts the network connection settings data (stored in JSON format) to appropriate Stage data,
+   * which we pass to the children http-connection components.
+   *
+   * @param formDataList json representation of the network configuration stage data
+   * @private
+   */
   private parseFormData(formDataList: any[]) {
     //clear the current stage list
     this.stageList = [];
-
     //populate the stage list with blank elements
     formDataList.forEach(formElement => this.addStage());
 
     //add the form data to each of the elements (fill each stage with data)
-    formDataList.forEach((formElement, index) => {
-      this.stageList[index].formData = formElement;
-    });
+    formDataList.forEach((formElement, index) => this.stageList[index].formData = formElement);
+
   }
 
   onFormValueChange(event: any, index: number) {

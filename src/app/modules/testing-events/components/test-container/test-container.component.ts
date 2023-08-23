@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {EventRegistration} from "../../models/event-registration";
 import {EventItem} from "../../models/event-item";
 import {MatDialog} from "@angular/material/dialog";
 import {DocumentWindowComponent} from "../document-window/document-window.component";
+import {TestStatus} from "../../models/test-status";
 
 @Component({
   selector: 'testing-event-test-container',
@@ -26,6 +27,10 @@ export class TestContainerComponent {
     // TODO: when handling the emitter from the child (e.g., search edrs) for a status change, catch it in this
     // component so that we can update the status. For now just worry about catching and logging since still need
     // to code the fhir resource update.
+  }
+
+  onTestCompleted(){
+    this.eventItem.status = TestStatus.testSuccess;
   }
 
   openDocumentWidow() {

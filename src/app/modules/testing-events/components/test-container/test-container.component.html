@@ -10,10 +10,11 @@
     </div>
   </div>
   <div class="test-container-body">
-
-    <!--TODO: Add dynamic handling of component -->
-    <!-- Add switch statement in template here based on the TS file, see TS File for more info -->
-
+    <ng-container [ngSwitch]="eventItem?.code">
+      <app-onboarding *ngSwitchCase="'onboarding'"/>
+      <app-search-edrs *ngSwitchCase="'search-edrs'" (onTestCompletedEvent)="onTestCompleted()"/>
+      <app-update-edrs *ngSwitchCase="'update-edrs'"/>
+    </ng-container>
   </div>
   <div class="test-container-footer">
     <div class="test-container-footer-return">

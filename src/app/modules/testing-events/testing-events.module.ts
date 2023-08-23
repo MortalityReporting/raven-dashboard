@@ -13,6 +13,8 @@ import { DocumentWindowComponent } from './components/document-window/document-w
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {SanitizedUrlPipe} from "./pipes/sanitized-url.pipe";
+import {TestsModule} from "../tests/tests.module";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 
 
@@ -36,7 +38,9 @@ import {SanitizedUrlPipe} from "./pipes/sanitized-url.pipe";
     MatCheckboxModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    TestsModule,
+    MatTooltipModule,
   ]
 })
 export class TestingEventsModule { }

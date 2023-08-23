@@ -34,7 +34,7 @@ export class OnboardingService {
       else if (request.requestType == RequestType.POST) {
           req = new HttpRequest(RequestType.POST, request.url, request.requestBody, request.httpOptions);
       }
-      //We cannot get the properties out of the request object unless we convert it to string and back to object
+      // We cannot get the properties out of the request object unless we convert it to string and back to object
       // (in effect we are forcing an object copy)
       this.setHttpReq(JSON.parse(JSON.stringify(req)));
 

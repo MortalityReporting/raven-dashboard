@@ -16,7 +16,7 @@ export class HttpResponseResultsComponent  implements OnChanges {
   constructor(private clipboard: Clipboard){}
 
   copyToClipboard(object: any) {
-    this.clipboard.copy(JSON.stringify(object))
+    this.clipboard.copy(object)
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -34,10 +34,10 @@ export class HttpResponseResultsComponent  implements OnChanges {
   private getTokens(response: any): any {
     let result;
     const responseBody = response?.body;
-    if(result){
-    result = Object.keys(responseBody)
-      .map(key => key.indexOf('token') != -1 ? { name: key, value : responseBody[key] } : null)
-      .filter(item=> !!item);
+    if (responseBody) {
+      result = Object.keys(responseBody)
+        .map(key => key.indexOf('token') != -1 ? {name: key, value: responseBody[key]} : null)
+        .filter(item => !!item);
     }
     return result;
   }
