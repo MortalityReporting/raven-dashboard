@@ -21,3 +21,9 @@ export const TestStatusDictionary = {
   "review-pending": TestStatus.reviewPending,
   "action-required": TestStatus.actionRequired
 }
+
+export function TestStatusReverseLookUp(display): string {
+  return Object.keys(TestStatusDictionary).find(key => TestStatusDictionary[key] === display);
+}
+
+export const TestStatusSystem = "https://raven.dev.heat.icl.gtri.org/mdi-fhir-server/fhir/CodeSystem/624454";

@@ -1,7 +1,9 @@
-import {Component, Inject, SecurityContext} from '@angular/core';
-import {DashboardApiInterfaceService} from "../../../../service/dashboard-api-interface.service";
+import {Component, Inject} from '@angular/core';
+import {DashboardApiInterfaceService} from "../../../dashboard-api";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
-import {EventModuleManagerService} from "../../services/event-module-manager.service";
+import {EventManagerService} from "../../services/event-manager.service";
+import {mergeMap, of} from "rxjs";
+import {TestStatus} from "../../models/test-status";
 
 @Component({
   selector: 'app-document-window',
@@ -9,14 +11,16 @@ import {EventModuleManagerService} from "../../services/event-module-manager.ser
   styleUrls: ['./document-window.component.scss']
 })
 export class DocumentWindowComponent {
-  fileName: string = "";
+  fileName: string = "No File Selected";
   file: File = undefined;
   preview: any = undefined;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: {registrationId: string, userId: string},
+    @Inject(MAT_DIALOG_DATA) public data: {
+      registrationId: string, userId: string, eventItemLinkId: string
+    },
     private dashboardApi: DashboardApiInterfaceService,
-    private eventManager: EventModuleManagerService
+    private eventManager: EventManagerService
   ) {
   }
 
@@ -32,10 +36,18 @@ export class DocumentWindowComponent {
   }
 
   onClickUpload() {
-    this.eventManager.uploadDocument(this.file, this.data.userId, this.data.registrationId).subscribe({
-      next: value => {
-        console.log(value);
-      }
-    })
+    // this.eventManager.uploadDocument(this.file, this.data.userId, this.data.registrationId).pipe(
+    //   mergeMap( (documentReference: any) => {
+    //     console.log(documentReference)
+    //     //const update$ = this.eventManager.updateTestStatus(this.data.eventItemLinkId, TestStatus.reviewPending, documentReference)
+    //     //return update$;
+    //     return of("")
+    //     }
+    //   )
+    // ).subscribe({
+    //   next: value => {
+    //     console.log(value);
+    //   }
+    // })
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {FhirResource} from "../models/base/fhir.resource";
-import {Bundle} from "../models/resources/bundle";
+import {FhirResource} from "../models/fhir/r4/base/fhir.resource";
+import {Bundle} from "../models/fhir/r4/resources/bundle";
 
 @Injectable({
   providedIn: 'root'

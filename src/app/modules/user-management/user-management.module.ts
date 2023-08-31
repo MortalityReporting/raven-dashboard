@@ -45,6 +45,9 @@ import {CommonUiModule} from "../common-ui/common-ui.module";
             //   scope: ""
             //
             // }
+          },
+          {
+            uri: `${environment.dashboardApi}document`
           }
         ]
       }

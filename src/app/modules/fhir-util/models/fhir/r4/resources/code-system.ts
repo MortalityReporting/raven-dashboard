@@ -1,5 +1,5 @@
-import {BackboneElement} from "../base/fhir.backbonelement";
-import {DomainResource} from "../base/fhir.domainresource";
+import {BackboneElement} from "../base/fhir.backbone-element";
+import {DomainResource} from "../base/fhir.domain-resource";
 
 export class CodeSystem implements DomainResource {
   resourceType: string = "CodeSystem";
@@ -7,7 +7,8 @@ export class CodeSystem implements DomainResource {
   uri: string;
   concept: Concept[];
 }
-export class Concept implements BackboneElement {
+
+export class Concept extends BackboneElement {
   code: string;
   display: string;
   definition: string;

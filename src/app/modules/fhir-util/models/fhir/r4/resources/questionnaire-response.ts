@@ -1,12 +1,13 @@
-import {DomainResource} from "../base/fhir.domainresource";
+import {DomainResource} from "../base/fhir.domain-resource";
 import {QuestionnaireResponseStatus} from "../value-sets/questionnaire-response-status";
 import {Identifier} from "../types/identifier";
 import {Reference} from "../types/reference";
-import {BackboneElement} from "../base/fhir.backbonelement";
+import {BackboneElement} from "../base/fhir.backbone-element";
 import {Coding} from "../types/coding";
 
 export class QuestionnaireResponse implements DomainResource {
   resourceType: string = "QuestionnaireResponse";
+  id?: string;
   identifier?: Identifier; // 0..1
   basedOn?: Reference[]; // 0..*
   partOf?: Reference[]; // 0..*
@@ -31,5 +32,8 @@ export class QuestionnaireResponseItem extends BackboneElement {
 export class QuestionnaireResponseItemAnswer extends BackboneElement {
   // value[x] 0..1 - Choice of Data Type
   valueCoding?: Coding;
+  valueReference?: Reference;
+
+  // Recursive item.
   item?: QuestionnaireResponseItem[];
 }

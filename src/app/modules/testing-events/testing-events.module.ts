@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import {TestContainerComponent} from "./components/test-container/test-container.component";
 import {TestingEventRootComponent} from "./components/testing-event-root/testing-event-root.component";
 import {EventRegistrationCardComponent} from "./components/event-registration-card/event-registration-card.component";
-import {RegisteredModulesComponent} from "./components/registered-modules/registered-modules.component";
+import {RegisteredModuleComponent} from "./components/registered-module/registered-module.component";
 import {MatDividerModule} from "@angular/material/divider";
 import {MatIconModule} from "@angular/material/icon";
 import {MatCardModule} from "@angular/material/card";
@@ -15,6 +15,7 @@ import {MatInputModule} from "@angular/material/input";
 import {SanitizedUrlPipe} from "./pipes/sanitized-url.pipe";
 import {TestsModule} from "../tests/tests.module";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 
@@ -23,24 +24,25 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     TestContainerComponent,
     TestingEventRootComponent,
     EventRegistrationCardComponent,
-    RegisteredModulesComponent,
+    RegisteredModuleComponent,
     DocumentWindowComponent,
     SanitizedUrlPipe
   ],
   exports: [
     TestingEventRootComponent
   ],
-  imports: [
-    CommonModule,
-    MatDividerModule,
-    MatIconModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    TestsModule,
-    MatTooltipModule,
-  ]
+    imports: [
+        CommonModule,
+        MatDividerModule,
+        MatIconModule,
+        MatCardModule,
+        MatCheckboxModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        TestsModule,
+        MatTooltipModule,
+        MatDialogModule,
+    ]
 })
 export class TestingEventsModule { }

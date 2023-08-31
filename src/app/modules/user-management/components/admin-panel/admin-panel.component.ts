@@ -3,7 +3,7 @@ import {UserProfileManagerService} from "../../services/user-profile-manager.ser
 import {tap} from "rxjs";
 import {AuthService, User} from '@auth0/auth0-angular';
 import {environment as env} from "../../../../../environments/environment";
-import {DashboardApiInterfaceService} from "../../../../service/dashboard-api-interface.service";
+import {DashboardApiInterfaceService} from "../../../dashboard-api";
 
 @Component({
   selector: 'app-admin-panel',

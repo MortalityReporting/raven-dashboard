@@ -1,19 +1,32 @@
-export * from "./models/base/fhir.base";
-export * from "./models/base/fhir.element";
-export * from "./models/base/fhir.extension";
-export * from "./models/base/fhir.primitives";
-export * from "./models/base/fhir.resource";
-export * from "./models/base/fhir.type";
+/** FHIR Base Models **/
+export * from "./models/fhir/r4/base/fhir.backbone-element";
+export * from "./models/fhir/r4/base/fhir.base";
+export * from "./models/fhir/r4/base/fhir.domain-resource";
+export * from "./models/fhir/r4/base/fhir.element";
+export * from "./models/fhir/r4/base/fhir.extension";
+export * from "./models/fhir/r4/base/fhir.primitive";
+export * from "./models/fhir/r4/base/fhir.resource";
+export * from "./models/fhir/r4/base/fhir.type";
 
 /** FHIR Resource Models **/
-export * from "./models/resources/bundle";
+export const SUPPORTED_RESOURCE_TYPES = [
+  "Bundle",
+  "Patient"
+]
+export * from "./models/fhir/r4/resources/bundle";
+export * from "./models/fhir/r4/resources/code-system";
+export * from "./models/fhir/r4/resources/condition";
+export * from "./models/fhir/r4/resources/document-reference";
+export * from "./models/fhir/r4/resources/patient";
+export * from "./models/fhir/r4/resources/practitioner";
+export * from "./models/fhir/r4/resources/questionnaire-response";
 
 /** FHIR Type Models **/
-export * from "./models/types/address";
-export * from "./models/types/codeable.concept";
-export * from "./models/types/coding";
-export * from "./models/types/human.name";
-export * from "./models/types/identifier";
+export * from "./models/fhir/r4/types/address";
+export * from "./models/fhir/r4/types/codeable-concept";
+export * from "./models/fhir/r4/types/coding";
+export * from "./models/fhir/r4/types/human-name";
+export * from "./models/fhir/r4/types/identifier";
 
 /** Services **/
 export { BundleHelperService } from "./services/bundle-helper.service";

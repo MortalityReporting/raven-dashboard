@@ -1,9 +1,9 @@
 import {Coding, FhirResource} from "../../fhir-util";
 import {EventModule} from "./event-module";
 import {EventItem} from "./event-item";
-import {QuestionnaireResponse, QuestionnaireResponseItem} from "../../fhir-util/models/resources/questionnaireResponse";
-import {QuestionnaireResponseStatus} from "../../fhir-util/models/value-sets/questionnaire-response-status";
-import {Reference} from "../../fhir-util/models/types/reference";
+import {QuestionnaireResponse, QuestionnaireResponseItem} from "../../fhir-util/models/fhir/r4/resources/questionnaire-response";
+import {QuestionnaireResponseStatus} from "../../fhir-util/models/fhir/r4/value-sets/questionnaire-response-status";
+import {Reference} from "../../fhir-util/models/fhir/r4/types/reference";
 
 export class EventRegistration {
   constructor() {
@@ -53,6 +53,18 @@ export class EventRegistration {
       item.answer = [{"valueCoding": notStartedCoding}];
       questionnaireResponse.item.push(item);
     })
+    return questionnaireResponse;
+  }
+
+  toFhir(): QuestionnaireResponse {
+    let questionnaireResponse = new QuestionnaireResponse();
+    questionnaireResponse.id = this.fhirId;
+    questionnaireResponse.questionnaire = this.questionnaireReference;
+    questionnaireResponse.item = [];
+    this.items.forEach((item: EventItem) => {
+      questionnaireResponse.item.push(item.toFhir())
+    });
+    console.log(questionnaireResponse)
     return questionnaireResponse;
   }
 }

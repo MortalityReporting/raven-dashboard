@@ -1,5 +1,5 @@
 import {Period} from "./period";
-import {CodeableConcept} from "./codeable.concept";
+import {CodeableConcept} from "./codeable-concept";
 import {FhirType} from "../base/fhir.type";
 
 export class Identifier extends FhirType {

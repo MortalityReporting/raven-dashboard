@@ -1,11 +1,12 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
-import {EventRegistration} from "../../models/event-registration";
 import {combineLatest, mergeMap, retry, skipWhile, Subject} from "rxjs";
 import {UserProfileManagerService} from "../../../user-management";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {EventModule} from "../../models/event-module";
-import {EventModuleManagerService} from "../../services/event-module-manager.service";
+import {EventManagerService} from "../../services/event-manager.service";
+import {Registration} from "../../models/registration";
+import {QuestionnaireResponse} from "../../../fhir-util";
 
 @Component({
   selector: 'testing-event-root',
@@ -13,28 +14,39 @@ import {EventModuleManagerService} from "../../services/event-module-manager.ser
   styleUrls: ['../testing-event.scss']
 })
 export class TestingEventRootComponent implements OnInit, OnDestroy {
-  registrations: EventRegistration[];
-  currentlySelectedRegistration: EventRegistration;
+  // Registrations/QuestionnaireResponses
+  registrations: Registration[] = [];
+  currentRegistration: Registration = undefined;
+  currentIndex: number = -1;
+
+  // Event Modules/Questionnaires
   eventList: EventModule[];
+
+  // User's ID for subject reference.
   userFhirId: string;
 
+  // Component Controllers
   refreshTrigger$ = new Subject<any>();
 
   constructor(@Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
               public auth: AuthService,
-              protected eventModuleManager: EventModuleManagerService,
+              protected eventManager: EventManagerService,
               private userProfileManager: UserProfileManagerService) {
   }
 
   ngOnInit(): void {
-    this.eventModuleManager.currentRegistration.subscribe({
-      next: value => {
-        this.currentlySelectedRegistration = value;
+    // Subscribe to the currently selected registration. (Not set initially, updated on user selection.)
+    this.eventManager.currentRegistration$.subscribe({
+      next: (value: Registration) => {
+        this.currentRegistration = value;
       }
-    })
-    let events$ = this.eventModuleManager.getAllEvents();
+    });
+
+    // Get all events and user observables.
+    let events$ = this.eventManager.getAllEvents();
     let user$ = this.userProfileManager.currentUser$;
 
+    // Get all registrations for the current user after Events$ and Users$ return data.
     let registrations$ = combineLatest([events$, user$]).pipe(
       skipWhile(combinedResults => combinedResults.some(result => result === undefined)),
       mergeMap(combinedResults => {
@@ -42,12 +54,13 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
           const user = combinedResults[1];
           this.eventList = events as EventModule[];
           this.userFhirId = user.fhirId;
-          return this.eventModuleManager.getAllRegistrations(user.fhirId, events);
+          return this.eventManager.getAllRegistrations(user.fhirId, events);
         }
       ));
 
+    // Subscription for registrations separated to handle refresh. Subscribe and set the list of registrations.
     registrations$.subscribe({
-        next: registrations => {
+        next: (registrations: Registration[]) => {
           this.registrations = registrations;
         }
       });
@@ -59,28 +72,44 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
     //   }
     // });
 
-    const currentlySelectedRegistrationStr = sessionStorage.getItem('currentlySelectedRegistration');
-    if(currentlySelectedRegistrationStr){
-      this.currentlySelectedRegistration = JSON.parse(currentlySelectedRegistrationStr);
-    }
+    // TODO: Session Storage needs to be refactored to align with observable
+    // const currentIndex = sessionStorage.getItem('index');
+    // if(currentIndex){
+    //   const index = parseInt(currentIndex);
+    //   console.log(index)
+    //   this.selectEvent(index);
+    // }
   }
 
   selectEvent(index: number) {
+    this.currentIndex = index;
     if (index === -1) {
-      this.eventModuleManager.setCurrentlySelectedRegistration(undefined);
+      // If no item is selected, return current registration to undefined.
+      this.eventManager.setCurrentRegistration(undefined);
+      this.eventManager.setCurrentEvent(undefined);
     } else {
-      this.eventModuleManager.setCurrentlySelectedRegistration(this.registrations[index]);
+      // If item is selected, set current registration as it.
+      const registration: Registration = this.registrations[index];
+      this.eventManager.setCurrentRegistration(registration);
+      const matchedEvent: EventModule = this.eventManager.matchRegistrationToEvent(registration, this.eventList)
+      this.eventManager.setCurrentEvent(matchedEvent);
     }
   }
 
   isRegistered(event: EventModule): boolean {
-    return this.registrations.some((registration: EventRegistration) => registration.questionnaireReference.endsWith(event.fhirId));
+    return this.registrations.some((registration: Registration) => registration.questionnaire.endsWith(event.fhirId));
   }
+
+  getTitle(registration: Registration): string {
+    const matchedEvent: EventModule = this.eventManager.matchRegistrationToEvent(registration, this.eventList);
+    return matchedEvent.title;
+  }
+
 
   registerForEvent(event: any) {
     console.log(event)
-    const eventRegistrationFhir = EventRegistration.createFhirResource(event, `Practitioner/${this.userFhirId}`);
-    this.eventModuleManager.createNewRegistration(eventRegistrationFhir).subscribe({
+    const registrationAsFhir: QuestionnaireResponse = new Registration(event, `Practitioner/${this.userFhirId}`);
+    this.eventManager.createNewRegistration(registrationAsFhir).subscribe({
       next: value => {
         console.log(value);
       },
@@ -92,11 +121,11 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
         this.refreshTrigger$.next("complete");
       }
     })
-    console.log(JSON.stringify(eventRegistrationFhir, null, 4));
+    console.log(JSON.stringify(registrationAsFhir, null, 4));
 
   }
 
   ngOnDestroy(): void {
-    sessionStorage.setItem('currentlySelectedRegistration', JSON.stringify(this.currentlySelectedRegistration));
+    // sessionStorage.setItem('index', String(this.currentIndex));
   }
 }

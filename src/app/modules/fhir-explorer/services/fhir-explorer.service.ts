@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
-import {FhirResource} from "../../fhir-util/models/base/fhir.resource";
+import {FhirResource} from "../../fhir-util/models/fhir/r4/base/fhir.resource";
 import {ConfigService} from "../../../service/config.service";
 import {Config} from "../../../model/config";
 

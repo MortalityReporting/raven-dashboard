@@ -13,7 +13,7 @@ import {
 } from "../../fhir-util";
 import {CertifierAndOrganization, LabResult, Performer, Specimen, ToxSummary} from "../models/tox.summary";
 import {TrackingNumberType, trackingNumberUrl} from "../../fhir-mdi-library";
-import {Extension} from "../../fhir-util/models/base/fhir.extension";
+import {Extension} from "../../fhir-util/models/fhir/r4/base/fhir.extension";
 import {MdiToEdrsRecord} from "../models/mdiToEdrsRecord";
 import {ToxToMdiRecord} from "../models/toxToMdiRecord";
 

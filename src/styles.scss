@@ -55,6 +55,11 @@ $lg: 24px;
 .padding-left-md { padding-left: $md; }
 .padding-right-md { padding-right: $md; }
 .border-radius-xs { border-radius: $xs; }
+// Standardized Border
+.border {
+  @extend .border-radius-xs;
+  border: 1px solid #cdcdcd;
+}
 /**** END BASE CLASSES ****/
 
 /**** FHIR Logo ****/

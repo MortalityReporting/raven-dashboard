@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpEvent, HttpRequest, HttpResponse} from "@angular/common/http";
-import {ConfigService} from "./config.service";
-import {Observable, single, tap} from "rxjs";
+import {ConfigService} from "../../../service/config.service";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +22,7 @@ export class DashboardApiInterfaceService {
     return this.http.get(`${this.dashboardApiUrl}admin-panel`);
   }
 
+  // POST /document
   uploadFile(file: File, userId: string, registrationId: string): Observable<HttpEvent<any>> {
     const data = new FormData();
     data.append('file', file);
@@ -31,6 +32,15 @@ export class DashboardApiInterfaceService {
       {reportProgress: true, responseType: 'json'}
     )
     return this.http.request(request);
+  }
+
+  // GET /document
+  getDocument(fileName: string) {
+    return this.http.get(`${this.dashboardApiUrl}document`, {
+      params: {
+        file_name: fileName
+      }
+    })
   }
 
 }

@@ -4,7 +4,6 @@ import { FhirHelperService } from "./services/fhir-helper.service";
 import { BundleHelperService } from "./services/bundle-helper.service";
 import { TerminologyHandlerService } from "./services/terminology-handler.service";
 import {DocRefBase64TransformPipe} from "./pipes/doc-ref-base64-transform.pipe";
-import {ConfigService} from "../../service/config.service";
 
 @NgModule({
   declarations: [

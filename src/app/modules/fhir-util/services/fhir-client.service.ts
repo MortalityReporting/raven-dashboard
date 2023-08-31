@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {EnvironmentHandlerService} from "./environment-handler.service";
 import {HttpClient, HttpEvent, HttpEventType, HttpParams, HttpParamsOptions, HttpRequest} from "@angular/common/http";
 import {EMPTY, expand, map, mergeMap, Observable, of, reduce, takeWhile, tap} from "rxjs";
-import {FhirResource} from "../models/base/fhir.resource";
-import {Bundle, BundleEntryComponent, BundleType} from "../models/resources/bundle";
+import {FhirResource} from "../models/fhir/r4/base/fhir.resource";
+import {Bundle, BundleEntryComponent, BundleType} from "../models/fhir/r4/resources/bundle";
 import {ConfigService} from "../../../service/config.service";
 
 @Injectable({

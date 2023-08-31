@@ -6,10 +6,10 @@
       <div class="menu-header-top">Event Registration</div>
       <mat-divider class="menu-divider" [style.border-color]="config.backgroundColor"></mat-divider>
       <div class="menu-header">Active Registrations</div>
-      <button mat-flat-button *ngFor="let reg of registrations; let index = index" (click)="selectEvent(index)"
+      <button mat-flat-button *ngFor="let registration of registrations; let index = index" (click)="selectEvent(index)"
         class="pointer"
         [style.background-color]="'#00000000'">
-        {{reg.eventModule.title}}
+        {{getTitle(registration)}}
       </button>
       <mat-divider class="menu-divider" [style.border-color]="config.backgroundColor"></mat-divider>
       <div class="menu-header pointer" (click)="selectEvent(-1)">
@@ -18,13 +18,12 @@
     </div>
     <!-- Content -->
 
-    <testing-event-registered-modules *ngIf="currentlySelectedRegistration"
-      [registration]="currentlySelectedRegistration"
+    <testing-event-registered-module *ngIf="currentRegistration"
       [userId]="userFhirId"
       class="testing-event-body-content">
-    </testing-event-registered-modules>
+    </testing-event-registered-module>
 
-    <div *ngIf="!currentlySelectedRegistration" class="testing-event-body-content">
+    <div *ngIf="!currentRegistration" class="testing-event-body-content">
       <div class="register-header" [style.background-color]="config.backgroundColor">
         Register for Events
       </div>
