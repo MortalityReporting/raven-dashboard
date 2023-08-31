@@ -1,6 +1,7 @@
 import {FhirResource} from "../../fhir-util";
 import {EventItem} from "./event-item";
 
+// TODO: Switch to follow the Registration model where it extends the FHIR Resource.
 export class EventModule {
   static constructFromFHIR(questionnaire: FhirResource): EventModule {
     let event = new EventModule();

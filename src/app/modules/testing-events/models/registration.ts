@@ -11,6 +11,8 @@ import {QuestionnaireResponseStatus} from "../../fhir-util/models/fhir/r4/value-
 import {EventItem} from "./event-item";
 
 
+// This is the extension of the FHIR Resource with helper classes. For the data model used for template binding, see RegistrationDisplay.
+
 export class Registration extends QuestionnaireResponse {
 
   constructor(event: EventModule, subjectReference: string) {
@@ -46,4 +48,10 @@ export class Registration extends QuestionnaireResponse {
       item.answer.push(attachmentAnswer);
     }
   }
+
+  getItemDisplay(linkId: string, eventModule: EventModule): string {
+    const item = eventModule.items.find((item: EventItem) => item.linkId === linkId);
+    return item.name;
+  }
+
 }

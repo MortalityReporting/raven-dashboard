@@ -1,7 +1,7 @@
 
-  <div *ngIf="currentRegistration" class="event-module-status-table">
+  <div *ngIf="registrationDisplay" class="event-module-status-table">
     <div class="event-header">
-      {{currentEvent.title}}
+      {{registrationDisplay.title}}
     </div>
 
     <div class="event-row-header">
@@ -17,15 +17,15 @@
       <div class="event-row-header-cell">
       </div>
     </div>
-    <div class="event-row" *ngFor="let item of currentRegistration.item">
+    <div class="event-row" *ngFor="let item of registrationDisplay.items">
       <div class="event-row-cell">
-        {{item}}
+        {{item.name}}
       </div>
       <div class="event-row-cell">
         Description Pending
       </div>
       <div class="event-row-cell">
-        {{item}}
+        {{item.status}}
       </div>
       <div class="event-row-cell-button">
         <button mat-flat-button (click)="loadTestContainer(item)">
@@ -34,7 +34,7 @@
       </div>
     </div>
     <div class="event-footer">
-      (Placeholder) 1 of {{currentRegistration.item.length}} Complete
+      0 of {{registrationDisplay.items.length}} Complete
     </div>
   </div>
 

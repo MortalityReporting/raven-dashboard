@@ -1,6 +1,6 @@
 import {
   QuestionnaireResponseItem,
-} from "../../fhir-util/models/fhir/r4/resources/questionnaire-response";
+} from "../../fhir-util";
 import {TestStatus, TestStatusDictionary, TestStatusReverseLookUp, TestStatusSystem} from "./test-status";
 
 export class EventItem {

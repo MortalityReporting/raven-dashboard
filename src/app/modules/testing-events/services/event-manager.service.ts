@@ -1,10 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, combineLatest, map, Observable, single} from "rxjs";
-import {Bundle, FhirClientService, FhirResource} from "../../fhir-util";
+import {Bundle, FhirClientService, FhirResource, QuestionnaireResponse} from "../../fhir-util";
 import {EventModule} from "../models/event-module";
-import {
-  QuestionnaireResponse,
-} from "../../fhir-util";
 import {DashboardApiInterfaceService} from "../../dashboard-api";
 import {Registration} from "../models/registration";
 
@@ -52,14 +49,8 @@ export class EventManagerService {
     return eventModules.find((eventModule: EventModule) => registration.questionnaire.endsWith(eventModule.fhirId));
   }
 
-
-  setCurrentEvent(eventModule: EventModule) {
-    this.currentEvent.next(eventModule);
-  }
-
-  setCurrentRegistration(eventRegistration: Registration) {;
-    this.currentRegistration.next(eventRegistration);
-  }
+  setCurrentEvent(eventModule: EventModule) { this.currentEvent.next(eventModule); }
+  setCurrentRegistration(eventRegistration: Registration) { this.currentRegistration.next(eventRegistration); }
 
   createNewRegistration(questionnaireResponse: QuestionnaireResponse): Observable<any> {
     //TODO: Move to Dashboard API
@@ -68,13 +59,12 @@ export class EventManagerService {
 
   uploadDocument(file: File, userId: string, registrationId: string): Observable<any> {
     const upload$ = this.dashboardApi.uploadFile(file, userId, registrationId).pipe();
-    const combined$ = combineLatest([upload$, this.currentRegistration$]).pipe(
+    return combineLatest([upload$, this.currentRegistration$]).pipe(
       map(value => {
         console.log(value)
         return value[0]
       })
-    )
-    return combined$;
+    );
   }
 
   // updateTestStatus(resource: QuestionnaireResponse, linkId: string, newStatus: TestStatus, attachment?: FhirResource, attachmentComment?: string): Observable<any> {
