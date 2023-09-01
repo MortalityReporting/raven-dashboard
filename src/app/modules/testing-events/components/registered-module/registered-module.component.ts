@@ -35,26 +35,22 @@ export class RegisteredModuleComponent implements OnInit{
     });
     const currentRegistration$ = this.eventModuleManager.currentRegistration$;
     const currentEvent$ = this.eventModuleManager.currentEvent$;
-    // .subscribe({
-    //   next: (value: EventModule) => {
-    //     this.currentEvent = value;
-    //   }
-    // });
     combineLatest([currentRegistration$, currentEvent$]).pipe(
       skipWhile(combinedResults => combinedResults.some(result => result === undefined)),
       map(combinedResults => {
-        const currentRegistration: Registration = combinedResults[0];
-        this.currentRegistration = currentRegistration;
-        const currentEvent: EventModule = combinedResults[1];
-        this.currentEvent = currentEvent;
+        this.currentRegistration = combinedResults[0];
+        this.currentEvent = combinedResults[1];
 
         let registrationDisplay: RegistrationDisplay = new RegistrationDisplay();
-        registrationDisplay.title = currentEvent.title;
+        registrationDisplay.title = this.currentEvent.title;
         this.currentEvent.items.forEach((eventItem: EventItem) => {
           let displayItem: RegistrationDisplayItem = new RegistrationDisplayItem();
-          displayItem.name = eventItem.name;
-          const qrItem = currentRegistration.item.find((qrItem: QuestionnaireResponseItem) => qrItem.linkId === eventItem.linkId);
-          displayItem.status = qrItem.answer[0].valueCoding.code;
+          displayItem.eventTitle = this.currentEvent.title; // Set title of entire event for passing to test container.
+          displayItem.testName = eventItem.name; // Test Name
+          displayItem.linkId = eventItem.linkId; // Test LinkId
+          displayItem.testCode = eventItem.code; // Code used to determine test loaded
+          const qrItem = this.currentRegistration.item.find((qrItem: QuestionnaireResponseItem) => qrItem.linkId === eventItem.linkId);
+          displayItem.testStatus = qrItem.answer[0].valueCoding.code; // Test Status
           registrationDisplay.items.push(displayItem);
         });
         return registrationDisplay;
@@ -65,11 +61,10 @@ export class RegisteredModuleComponent implements OnInit{
     })
   }
 
-  loadTestContainer(eventItem: any) {
+  loadTestContainer(displayItem: RegistrationDisplayItem) {
     this.router.navigate(['/workflow-simulator/test'], {
       state: {
-        eventItem: eventItem,
-        eventRegistration: this.currentRegistration,
+        displayItem: displayItem,
         userId: this.userId
       } }).then(r => console.log(r));
   }

@@ -19,13 +19,13 @@
     </div>
     <div class="event-row" *ngFor="let item of registrationDisplay.items">
       <div class="event-row-cell">
-        {{item.name}}
+        {{item.testName}}
       </div>
       <div class="event-row-cell">
         Description Pending
       </div>
       <div class="event-row-cell">
-        {{item.status}}
+        {{item.testStatus}}
       </div>
       <div class="event-row-cell-button">
         <button mat-flat-button (click)="loadTestContainer(item)">

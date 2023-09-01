@@ -5,7 +5,9 @@ export class RegistrationDisplay {
 
 export class RegistrationDisplayItem {
   linkId: string;
-  name: string;
+  eventTitle: string;
   description: string;
-  status: string;
+  testName: string;
+  testCode: string;
+  testStatus: string;
 }

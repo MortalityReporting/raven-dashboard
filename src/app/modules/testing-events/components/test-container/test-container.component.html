@@ -1,16 +1,16 @@
-<div class="test-container-wrapper">
+<div class="test-container-wrapper" *ngIf="registrationDisplayItem; else loading">
   <div class="test-container-header">
     <div class="test-container-header-event-name">
-<!--      Event: {{ eventRegistration.eventModule.title }}-->
+      Event: {{ registrationDisplayItem.eventTitle }}
     </div>
     <div class="test-container-header-test-name">
-      {{ eventItem.name }}
+      {{ registrationDisplayItem.testName }}
     </div>
     <div>
     </div>
   </div>
   <div class="test-container-body">
-    <ng-container [ngSwitch]="eventItem?.code">
+    <ng-container [ngSwitch]="registrationDisplayItem?.testCode">
       <app-onboarding *ngSwitchCase="'onboarding'"/>
       <app-search-edrs *ngSwitchCase="'search-edrs'" (onTestCompletedEvent)="onTestCompleted()"/>
       <app-update-edrs *ngSwitchCase="'update-edrs'"/>
@@ -30,7 +30,13 @@
       </button>
     </div>
     <div class="test-container-footer-status">
-      Current Status: {{ eventItem.status }}
+      Current Status: {{ registrationDisplayItem.testStatus }}
     </div>
   </div>
 </div>
+<ng-template #loading>
+  <div class="margin-md center-contents">
+    <!-- TODO: Add error handling. -->
+    <mat-spinner color="accent"></mat-spinner>
+  </div>
+</ng-template>

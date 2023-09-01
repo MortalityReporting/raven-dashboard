@@ -16,6 +16,7 @@ import {SanitizedUrlPipe} from "./pipes/sanitized-url.pipe";
 import {TestsModule} from "../tests/tests.module";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 
 
@@ -43,6 +44,7 @@ import {MatDialogModule} from "@angular/material/dialog";
         TestsModule,
         MatTooltipModule,
         MatDialogModule,
+        MatProgressSpinnerModule,
     ]
 })
 export class TestingEventsModule { }
