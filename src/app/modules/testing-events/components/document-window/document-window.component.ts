@@ -2,8 +2,7 @@ import {Component, Inject} from '@angular/core';
 import {DashboardApiInterfaceService} from "../../../dashboard-api";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {EventManagerService} from "../../services/event-manager.service";
-import {mergeMap, of} from "rxjs";
-import {TestStatus} from "../../models/test-status";
+import {mergeMap} from "rxjs";
 
 @Component({
   selector: 'app-document-window',
@@ -36,18 +35,18 @@ export class DocumentWindowComponent {
   }
 
   onClickUpload() {
-    // this.eventManager.uploadDocument(this.file, this.data.userId, this.data.registrationId).pipe(
-    //   mergeMap( (documentReference: any) => {
-    //     console.log(documentReference)
-    //     //const update$ = this.eventManager.updateTestStatus(this.data.eventItemLinkId, TestStatus.reviewPending, documentReference)
-    //     //return update$;
-    //     return of("")
-    //     }
-    //   )
-    // ).subscribe({
-    //   next: value => {
-    //     console.log(value);
-    //   }
-    // })
+    this.eventManager.uploadDocument(this.file, this.data.userId, this.data.registrationId).pipe(
+      mergeMap( (documentReference: any) => {
+        console.log(documentReference)
+        //const update$ = this.eventManager.updateTestStatus(this.data.eventItemLinkId, TestStatus.reviewPending, documentReference)
+        //return update$;
+        return documentReference;
+        }
+      )
+    ).subscribe({
+      next: value => {
+        console.log(value);
+      }
+    })
   }
 }
