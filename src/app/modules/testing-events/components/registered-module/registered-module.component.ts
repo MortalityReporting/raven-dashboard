@@ -1,11 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Router} from "@angular/router";
 import {Registration} from "../../models/registration";
 import {EventManagerService} from "../../services/event-manager.service";
 import {EventModule} from "../../models/event-module";
 import {QuestionnaireResponseItem} from "../../../fhir-util";
 import {combineLatest, map, skipWhile} from "rxjs";
-import {MdiToEdrsRecord} from "../../../record-viewer/models/mdiToEdrsRecord";
 import {RegistrationDisplay, RegistrationDisplayItem} from "../../models/registration-display";
 import {EventItem} from "../../models/event-item";
 
@@ -16,6 +15,7 @@ import {EventItem} from "../../models/event-item";
 })
 //TODO: Rename to RegistrationStatus
 export class RegisteredModuleComponent implements OnInit{
+  @Output() itemSelected = new EventEmitter()
   @Input() userId: string;
   currentRegistration: Registration;
   currentEvent: EventModule;
@@ -62,10 +62,6 @@ export class RegisteredModuleComponent implements OnInit{
   }
 
   loadTestContainer(displayItem: RegistrationDisplayItem) {
-    this.router.navigate(['/workflow-simulator/test'], {
-      state: {
-        displayItem: displayItem,
-        userId: this.userId
-      } }).then(r => console.log(r));
+    this.itemSelected.emit(displayItem);
   }
 }

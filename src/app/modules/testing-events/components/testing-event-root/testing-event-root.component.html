@@ -1,6 +1,6 @@
 <div class="testing-event-wrapper"  *ngIf="auth.isAuthenticated$ | async; else loggedOut">
 
-  <div class="testing-event-body">
+  <div class="testing-event-body" *ngIf="showRoot; else testContainer">
     <!-- Menu -->
     <div class="testing-event-body-menu" [style.background-color]="config.backgroundColor + '66'">
       <div class="menu-header-top">Event Registration</div>
@@ -19,7 +19,8 @@
     <!-- Content -->
 
     <testing-event-registered-module *ngIf="currentRegistration"
-      [userId]="userFhirId"
+                                     [userId]="userFhirId"
+                                     (itemSelected)="loadTestContainer($event)"
       class="testing-event-body-content">
     </testing-event-registered-module>
 
@@ -37,7 +38,16 @@
       </div>
     </div>
   </div>
+  <ng-template #testContainer>
+    <testing-event-test-container [userId]="userFhirId"
+                                  [registrationDisplayItem]="currentItem"
+
+    >
+    </testing-event-test-container>
+  </ng-template>
 </div>
+
+
 
 <ng-template #loggedOut>
   Please log in to manage testing event modules.

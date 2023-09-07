@@ -1,12 +1,14 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
-import {combineLatest, mergeMap, retry, skipWhile, Subject} from "rxjs";
+import {combineLatest, mergeMap, Observable, ReplaySubject, retry, share, skipWhile, Subject, switchMap} from "rxjs";
 import {UserProfileManagerService} from "../../../user-management";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {EventModule} from "../../models/event-module";
 import {EventManagerService} from "../../services/event-manager.service";
 import {Registration} from "../../models/registration";
 import {QuestionnaireResponse} from "../../../fhir-util";
+import {UserProfile} from "../../../user-management/models/user-profile";
+import {RegistrationDisplayItem} from "../../models/registration-display";
 
 @Component({
   selector: 'testing-event-root',
@@ -18,6 +20,7 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
   registrations: Registration[] = [];
   currentRegistration: Registration = undefined;
   currentIndex: number = -1;
+  currentItem: RegistrationDisplayItem;
 
   // Event Modules/Questionnaires
   eventList: EventModule[];
@@ -26,13 +29,15 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
   userFhirId: string;
 
   // Component Controllers
-  refreshTrigger$ = new Subject<any>();
+  refreshTrigger$ = new ReplaySubject(1);
+  events$: Observable<EventModule[]>;
+  user$: Observable<UserProfile>;
+  showRoot: boolean = true;
 
   constructor(@Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
               public auth: AuthService,
               protected eventManager: EventManagerService,
-              private userProfileManager: UserProfileManagerService) {
-  }
+              private userProfileManager: UserProfileManagerService) {}
 
   ngOnInit(): void {
     // Subscribe to the currently selected registration. (Not set initially, updated on user selection.)
@@ -43,11 +48,36 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
     });
 
     // Get all events and user observables.
-    let events$ = this.eventManager.getAllEvents();
-    let user$ = this.userProfileManager.currentUser$;
+    this.events$ = this.eventManager.getAllEvents();
+    this.user$ = this.userProfileManager.currentUser$;
 
     // Get all registrations for the current user after Events$ and Users$ return data.
-    let registrations$ = combineLatest([events$, user$]).pipe(
+    let registrations$ = this.refreshTrigger$.pipe(
+      switchMap(() => this.fetchData()),
+      share()
+    );
+
+    // Initial call to "refresh".
+    this.refreshTrigger$.next(1);
+
+    registrations$.subscribe({
+        next: (registrations: Registration[]) => {
+          this.registrations = registrations;
+        }
+      });
+
+
+    // TODO: Session Storage needs to be refactored to align with observable
+    // const currentIndex = sessionStorage.getItem('index');
+    // if(currentIndex){
+    //   const index = parseInt(currentIndex);
+    //   console.log(index)
+    //   this.selectEvent(index);
+    // }
+  }
+
+  fetchData(): Observable<any> {
+    return combineLatest([this.events$, this.user$]).pipe(
       skipWhile(combinedResults => combinedResults.some(result => result === undefined)),
       mergeMap(combinedResults => {
           const events = combinedResults[0];
@@ -57,28 +87,6 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
           return this.eventManager.getAllRegistrations(user.fhirId, events);
         }
       ));
-
-    // Subscription for registrations separated to handle refresh. Subscribe and set the list of registrations.
-    registrations$.subscribe({
-        next: (registrations: Registration[]) => {
-          this.registrations = registrations;
-        }
-      });
-
-    // // TODO: refresh
-    // whatever.pipe(retry({delay: () => this.refreshTrigger$})).subscribe({
-    //   next: registrations => {
-    //     this.registrations = registrations;
-    //   }
-    // });
-
-    // TODO: Session Storage needs to be refactored to align with observable
-    // const currentIndex = sessionStorage.getItem('index');
-    // if(currentIndex){
-    //   const index = parseInt(currentIndex);
-    //   console.log(index)
-    //   this.selectEvent(index);
-    // }
   }
 
   selectEvent(index: number) {
@@ -118,7 +126,7 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
       },
       complete: () => {
         // TODO: Figure out where this needs to go to refresh the call and get the new registrations!
-        this.refreshTrigger$.next("complete");
+        this.refreshTrigger$.next(1);
       }
     })
     console.log(JSON.stringify(registrationAsFhir, null, 4));
@@ -127,5 +135,11 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     // sessionStorage.setItem('index', String(this.currentIndex));
+  }
+
+  loadTestContainer(registrationDisplayItem: RegistrationDisplayItem) {
+    this.showRoot = false;
+    this.currentItem = registrationDisplayItem;
+    console.log(registrationDisplayItem);
   }
 }
