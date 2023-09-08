@@ -6,7 +6,7 @@
   <div>
     <div class="padding-top-md">
       <input type="file" class="file-input" (click)="fileUpload.value=null"
-             accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+             accept=".csv, text/csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
              (change)="onFileSelected($event)" #fileUpload>
       <div>
     </div>
@@ -18,14 +18,14 @@
       Select your completed spreadsheet, the type of the template used, and submit to raven.
     </div>
     <div class="row margin-top-md">
-      <button mat-raised-button color="success" class="upload-btn"
+      <button mat-raised-button class="upload-btn"
               (click)="clearUI(); fileUpload.click();" [disabled]=isLoading
               [style.background-color]="config.backgroundColor" [style.color]="'white'"
       >
         <mat-icon>upload_file</mat-icon>
         Browse for Import Spreadsheet
       </button>
-      <span class="file-name">{{file?.name}}
+      <span class="file-name margin-left-md">{{file?.name}}
         <mat-error
           *ngIf="form.submitted &&!file">No File Selected.
         </mat-error>
@@ -34,7 +34,7 @@
   </div>
     <div class="margin-top-md">
       <form [formGroup]="importCaseForm" (ngSubmit)="onSubmit()" class="row" #form="ngForm" >
-        <mat-form-field appearance="outline" style="min-width: 50%">
+        <mat-form-field appearance="outline" style="min-width: 50%" class="margin-top-sm">
           <mat-label>Select Template Type</mat-label>
           <mat-select formControlName="fileTemplate">
             <mat-option *ngFor="let template of fileTemplates" [value]="template">

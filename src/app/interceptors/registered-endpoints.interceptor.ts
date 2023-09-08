@@ -35,6 +35,7 @@ export class RegisteredEndpointsInterceptor implements HttpInterceptor {
       {
         "baseUrl": this.config.ravenImportApi,
         "allowedEndpoints": [
+          "*"
         ]
       }
     ]
