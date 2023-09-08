@@ -7,7 +7,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatDialog} from "@angular/material/dialog";
 import {FileTemplate} from "../../models/file-template";
 import {FileTemplateService} from "../../services/file-template.service";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 
 
@@ -34,7 +34,6 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
   importCaseForm = new FormGroup({
     fileTemplate: new FormControl<FileTemplate| null>(null,[Validators.required])
   });
-  // selectedFileTemplate: any;
 
   constructor(
     @Inject('importConfig') public config: ModuleHeaderConfig,
@@ -42,7 +41,6 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
     private fileTemplateService: FileTemplateService,
     private utilsService: UtilsService,
     private dialog: MatDialog,
-    private formBuilder: FormBuilder
  ) { }
 
   ngOnInit(): void {
@@ -56,22 +54,22 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
 
   onFileSelected(event: any) {
     this.utilsService.closeNotification();
+    this.importCaseForm.controls['fileTemplate'].enable();
 
     this.file = event.target.files[0];
 
-    if(!this.file){
+    if (!this.file) {
       this.utilsService.showErrorMessage("Unable to open the file.");
+      return;
     }
-    else if (this.file.size > this.MAX_FILE_SIZE){
+    if (this.file.size > this.MAX_FILE_SIZE) {
       console.error("File too big")
-      this.utilsService.showErrorMessage("This file exceeds " + this.MAX_FILE_SIZE /  1000 + "kb and cannot be processed");
+      this.utilsService.showErrorMessage("This file exceeds " + this.MAX_FILE_SIZE / 1000 + "kb and cannot be processed");
+      return;
     }
-    else {
-      this.selectedCase = null;
-      this.isExportSuccessful = false;
-      this.errorsGenerated = false;
-    }
-
+    this.selectedCase = null;
+    this.isExportSuccessful = false;
+    this.errorsGenerated = false;
   }
 
   clearUI() {

@@ -1,4 +1,7 @@
-<a mat-flat-button [href]="fileTemplate.uri" target="_blank" class="buttons-class" (click)="onTemplateSelected(fileTemplate)">
-  <mat-icon [style.background-color]="config.backgroundColor" [style.color]="'white'"> download </mat-icon>
-  {{ fileTemplate.description }}
-</a>
+{{fileTemplate.description}}
+<div *ngFor="let templateContent of fileTemplate.templateContent">
+  <a mat-flat-button [href]="templateContent.uri" target="_blank" class="buttons-class" (click)="onTemplateSelected(fileTemplate)">
+    <mat-icon [style.background-color]="config.backgroundColor" [style.color]="'white'"> download </mat-icon>
+      Download as {{ templateContent.fileExtension | uppercase}}
+  </a>
+</div>
