@@ -25,6 +25,7 @@ import {MatButtonModule} from "@angular/material/button";
 import { FileTemplateComponent } from './components/file-template/file-template.component';
 import {ModuleHeaderConfig} from "../../providers/module-header-config";
 import {NgxFhirValidatorModule} from "ngx-fhir-validator";
+import {MatDividerModule} from "@angular/material/divider";
 
 
 @NgModule({
@@ -36,27 +37,28 @@ import {NgxFhirValidatorModule} from "ngx-fhir-validator";
     MappingsComponent,
     FileTemplateComponent
   ],
-  imports: [
-    CommonModule,
-    MatToolbarModule,
-    MatCardModule,
-    MatTabsModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatProgressSpinnerModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatTooltipModule,
-    MatRadioModule,
-    ReactiveFormsModule,
-    MatExpansionModule,
-    MatIconModule,
-    MatStepperModule,
-    FormsModule,
-    FhirValidatorModule,
-    MatButtonModule,
-    NgxFhirValidatorModule,
-  ]
+    imports: [
+        CommonModule,
+        MatToolbarModule,
+        MatCardModule,
+        MatTabsModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatProgressSpinnerModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatTooltipModule,
+        MatRadioModule,
+        ReactiveFormsModule,
+        MatExpansionModule,
+        MatIconModule,
+        MatStepperModule,
+        FormsModule,
+        FhirValidatorModule,
+        MatButtonModule,
+        NgxFhirValidatorModule,
+        MatDividerModule,
+    ]
 })
 
 export class ImportCaseModule {
