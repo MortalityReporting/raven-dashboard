@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {EnvironmentHandlerService} from "./environment-handler.service";
 import {HttpClient, HttpEvent, HttpEventType, HttpParams, HttpParamsOptions, HttpRequest} from "@angular/common/http";
 import {EMPTY, expand, map, mergeMap, Observable, of, reduce, takeWhile, tap} from "rxjs";
 import {FhirResource} from "../models/fhir/r4/base/fhir.resource";
@@ -15,7 +14,6 @@ export class FhirClientService {
   private readonly logFhirRequests: boolean;
 
   constructor(private http: HttpClient,
-              //private environmentHandler: EnvironmentHandlerService,
               private configService: ConfigService) {
     this.logFhirRequests = this.configService?.config?.logFhirRequests ?? true;
     this.serverBaseUrl = this.configService?.config?.ravenFhirServerBaseUrl;

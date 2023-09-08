@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
-import {UntypedFormArray, UntypedFormBuilder, UntypedFormControl } from "@angular/forms";
+import {UntypedFormArray, UntypedFormBuilder, UntypedFormControl} from "@angular/forms";
 import {SearchEdrsService} from "../../../../services/search-edrs.service";
 import {UtilsService} from "../../../../../../service/utils.service";
 import {Obs_DeathDate, Obs_MannerOfDeath} from "../../../../../../providers/fhir-profile-constants";
@@ -8,7 +8,8 @@ import {DecedentSimpleInfo} from "../../../../../../model/decedent-simple-info";
 import {MatTableDataSource} from "@angular/material/table";
 import {TrackingNumberType} from "../../../../../fhir-mdi-library";
 import {ModuleHeaderConfig} from "../../../../../../providers/module-header-config";
-import {EnvironmentHandlerService} from "../../../../../fhir-util";
+import {ConfigService} from "../../../../../../service/config.service";
+import {Config} from "../../../../../../model/config";
 
 @Component({
   selector: 'app-search-parameters',
@@ -35,14 +36,17 @@ export class SearchParametersComponent implements OnInit {
 
   customEndpoint: any;
 
+  config: Config;
+
   constructor(
     private fb: UntypedFormBuilder,
     private searchEdrsService: SearchEdrsService,
     private utilsService: UtilsService,
     private fhirHelperService: FhirHelperService,
-    private environmentHandler: EnvironmentHandlerService,
-    @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
+    @Inject('workflowSimulatorConfig') public moduleConfig: ModuleHeaderConfig,
+    private configService: ConfigService
   ) {
+    this.config = this.configService.config;
   }
 
   ngOnInit(): void {
@@ -110,15 +114,13 @@ export class SearchParametersComponent implements OnInit {
   }
 
   atLestOneParamSelected(){
-    const result = !!this.searchEdrsForm?.value?.parameters?.find(parameter => !!parameter?.valueString);
-    return result;
+    return !!this.searchEdrsForm?.value?.parameters?.find(parameter => !!parameter?.valueString);
   }
 
   getFormControlParamTypes(index, paramsFormControl) {
     const currentParams = this.parameters.value.map(value => value.name);
-    const result = this.edrsSearchFormParams
-      .filter(param => (currentParams.indexOf(param.value) == -1) || param.value == paramsFormControl.value.name)
-    return result;
+    return this.edrsSearchFormParams
+      .filter(param => (currentParams.indexOf(param.value) == -1) || param.value == paramsFormControl.value.name);
   }
 
   onDeleteFormParam(filterIndex){
@@ -136,20 +138,11 @@ export class SearchParametersComponent implements OnInit {
   getSearchParametersResourcePreview() {
     const formParams = this.searchEdrsForm.value.parameters.filter(param => !!param.valueString);
 
-    const result = {
+    return {
       resourceType: "Parameters",
       parameter: this.getParameters(formParams)
-    }
-    return result;
+    };
   }
-
-// {
-//   "endpoint": "grsgrsgrsg",
-//   "auth": {
-//     "username": "rsgrsgrs",
-//     "password": "rsgrsg"
-//   }
-// }
 
   private executeEdrsSearch() {
     this.clearSearchResultEmitter.emit();
@@ -167,7 +160,7 @@ export class SearchParametersComponent implements OnInit {
       });
     }
     else {
-      this.searchEdrsService.searchEdrs(this.environmentHandler.getFhirServerBaseURL(), this.getSearchParametersResourcePreview(), this.BLUE_JAY_AUTH).subscribe({
+      this.searchEdrsService.searchEdrs(this.config.ravenFhirServerBaseUrl, this.getSearchParametersResourcePreview(), this.BLUE_JAY_AUTH).subscribe({
         next: value => {
           this.searchResultsEmitter.emit({ response: value, success: true });
         },
@@ -328,7 +321,7 @@ export class SearchParametersComponent implements OnInit {
   }
 
   onClearSearch() {
-    // This here is a bit extreme, since it effectively recreates the form and we should refactor it whe we obtain ALL
+    // TODO: This here is a bit extreme, since it effectively recreates the form. We should refactor it whe we obtain ALL
     // parameters in the order we want from the API.
     this.searchEdrsForm = this.fb.group({
       parameters: this.fb.array([])

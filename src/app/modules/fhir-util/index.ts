@@ -30,7 +30,6 @@ export * from "./models/fhir/r4/types/identifier";
 
 /** Services **/
 export { BundleHelperService } from "./services/bundle-helper.service";
-export { EnvironmentHandlerService } from "./services/environment-handler.service";
 export { FhirClientService } from "./services/fhir-client.service";
 export { FhirHelperService } from "./services/fhir-helper.service";
 export { TerminologyHandlerService } from "./services/terminology-handler.service"

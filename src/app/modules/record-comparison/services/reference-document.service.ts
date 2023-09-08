@@ -1,23 +1,29 @@
 import {Injectable} from '@angular/core';
 import {of, forkJoin, map, mergeMap} from "rxjs";
-import {BundleHelperService, EnvironmentHandlerService, FhirHelperService} from "../../fhir-util";
+import {BundleHelperService, FhirHelperService} from "../../fhir-util";
 import {HttpClient} from "@angular/common/http";
+import {ConfigService} from "../../../service/config.service";
+import {Config} from "../../../model/config";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReferenceDocumentService {
 
+  config: Config;
+
   constructor(
-    private environmentHandler: EnvironmentHandlerService,
     private http: HttpClient,
     private fhirHelper: FhirHelperService,
-    private bundleHelper: BundleHelperService)
-  {}
+    private bundleHelper: BundleHelperService,
+    private configService: ConfigService
+  ) {
+    this.config = this.configService.config;
+  }
 
 
   getReferenceDocuments() {
-    return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "Bundle?type=http%3A%2F%2Fconfig.raven.app%2Fcode%7Creference")
+    return this.http.get(this.config.ravenFhirServerBaseUrl + "Bundle?type=http%3A%2F%2Fconfig.raven.app%2Fcode%7Creference")
       .pipe(
         map((referenceBundleSearch: any) =>{
           // By convention the API should return an empty array. However, the FHIR server we use does not.
@@ -50,6 +56,6 @@ export class ReferenceDocumentService {
   }
 
   getReferenceDocumentBundle(compositionId: string) {
-    return this.http.get(this.environmentHandler.getFhirServerBaseURL() + "Composition/" + compositionId + "/$document");
+    return this.http.get(this.config.ravenFhirServerBaseUrl + "Composition/" + compositionId + "/$document");
   }
 }

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Bundle, EnvironmentHandlerService, FhirClientService, FhirResource} from "../../fhir-util";
+import {Bundle, FhirClientService, FhirResource} from "../../fhir-util";
 import {BehaviorSubject, map, Observable, single, tap} from "rxjs";
 import {UserProfile} from "../models/user-profile";
 
@@ -11,7 +11,6 @@ export class UserProfileManagerService {
   currentUser$ = this.currentUser.asObservable();
 
   constructor(
-    private environmentHandler: EnvironmentHandlerService,
     private fhirClient: FhirClientService) {
   }
 

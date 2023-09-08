@@ -3,7 +3,8 @@ import {Observable, Subject} from "rxjs";
 import {DecedentSimpleInfo} from "../../../model/decedent-simple-info";
 import {map} from "rxjs/operators";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {EnvironmentHandlerService} from "../../fhir-util";
+import {ConfigService} from "../../../service/config.service";
+import {Config} from "../../../model/config";
 
 @Injectable({
   providedIn: 'root'
@@ -25,10 +26,14 @@ export class SearchEdrsService {
   private endpoint = new Subject<any>();
   endpoint$ = this.endpoint.asObservable();
 
+  config: Config;
+
   constructor(
     private http:HttpClient,
-    private environmentHandler: EnvironmentHandlerService,
-  ) { }
+    private configService: ConfigService
+  ) {
+    this.config = this.configService.config;
+  }
 
   setDocumentBundle(data): void {
     this.documentBundle.next(data);
@@ -59,7 +64,7 @@ export class SearchEdrsService {
 
   getOperationDefinitionList(): Observable<any> {
     const operationDefinitionLocation = "OperationDefinition/Composition-it-mdi-documents";
-    return this.http.get(this.environmentHandler.getFhirServerBaseURL() + operationDefinitionLocation).pipe(map((result: any) => (
+    return this.http.get(this.config.ravenFhirServerBaseUrl + operationDefinitionLocation).pipe(map((result: any) => (
       result as Object
     )));
   }

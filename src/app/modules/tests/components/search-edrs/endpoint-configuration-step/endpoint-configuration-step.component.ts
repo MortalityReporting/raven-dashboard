@@ -4,7 +4,8 @@ import {DecedentSimpleInfo} from "../../../../../model/decedent-simple-info";
 import {ModuleHeaderConfig} from "../../../../../model/model-header-config";
 import {SearchEdrsService} from "../../../services/search-edrs.service";
 import {UiStringConstants} from "../../../../../providers/ui-string-constants";
-import {EnvironmentHandlerService} from "../../../../fhir-util";
+import {ConfigService} from "../../../../../service/config.service";
+import {Config} from "../../../../../model/config";
 
 @Component({
   selector: 'app-endpoint-configuration-step',
@@ -20,14 +21,18 @@ export class EndpointConfigurationStepComponent implements OnInit {
 
   uiConstantsStep2: any;
   commonUIConstants: any;
+
+  config: Config;
+
   constructor(
-    @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
+    @Inject('workflowSimulatorConfig') public moduleConfig: ModuleHeaderConfig,
     private searchEdrsService: SearchEdrsService,
     private formBuilder: UntypedFormBuilder,
     uiStringConstants: UiStringConstants,
-    private environmentHandler: EnvironmentHandlerService,
+    private configService: ConfigService
   ) {
-    this.blueJayUri = this.environmentHandler.getBlueJayServerBase();
+    this.config = this.configService.config;
+    this.blueJayUri = this.config.blueJayServerBaseUrl;
 
     this.uiConstantsStep2 = uiStringConstants.WorkflowSimulator.searchEdrs.step2;
     this.commonUIConstants = uiStringConstants.Common;
@@ -91,11 +96,11 @@ export class EndpointConfigurationStepComponent implements OnInit {
   }
 
   onViewServerMdiDocs() {
-    window.open(this.environmentHandler.getBlueJayServerBase() + "/OperationDefinition/Composition-it-mdi-documents", "_blank");
+    window.open(this.config.blueJayServerBaseUrl + "OperationDefinition/Composition-it-mdi-documents", "_blank");
   }
 
   onViewServerCapabilityStmt() {
-    window.open(this.environmentHandler.getBlueJayServerBase()  + "/metadata", "_blank");
+    window.open(this.config.blueJayServerBaseUrl + "metadata", "_blank");
   }
 
   onSelected(endpointConfigurationFormGroup: UntypedFormGroup) {

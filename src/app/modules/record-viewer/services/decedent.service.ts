@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpParams} from "@angular/common/http";
 import {Observable, skipWhile} from "rxjs";
-import {EnvironmentHandlerService} from "../../fhir-util";
 import {FhirClientService} from "../../fhir-util";
 
 @Injectable({
@@ -9,10 +8,7 @@ import {FhirClientService} from "../../fhir-util";
 })
 export class DecedentService {
 
-  constructor(
-              private environmentHandler: EnvironmentHandlerService,
-              private fhirClient: FhirClientService
-  ) { }
+  constructor(private fhirClient: FhirClientService) { }
 
   getDecedentObservationsByCode(decedent: any, codeList: string[]):  Observable<any> {
     // Headers are added in the FHIR Auth Interceptor

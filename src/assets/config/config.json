@@ -11,4 +11,3 @@
   "adminLogoutUrl": "https://localhost:4200/",
   "logFhirRequests": false
 }
-

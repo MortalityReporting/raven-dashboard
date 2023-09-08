@@ -1,20 +1,16 @@
 import {Injectable} from '@angular/core';
-import {combineLatest, mergeMap, Observable, skipWhile, tap} from "rxjs";
+import {Observable, skipWhile} from "rxjs";
 import {map} from "rxjs/operators";
 import {ToxHeader} from "../models/tox.header";
 import {
   Address,
   BundleHelperService,
-  CodeType,
-  EnvironmentHandlerService,
   FhirClientService,
   FhirHelperService,
-  FhirResource, StringType
+  FhirResource,
 } from "../../fhir-util";
 import {CertifierAndOrganization, LabResult, Performer, Specimen, ToxSummary} from "../models/tox.summary";
 import {TrackingNumberType, trackingNumberUrl} from "../../fhir-mdi-library";
-import {Extension} from "../../fhir-util/models/fhir/r4/base/fhir.extension";
-import {MdiToEdrsRecord} from "../models/mdiToEdrsRecord";
 import {ToxToMdiRecord} from "../models/toxToMdiRecord";
 
 
@@ -25,7 +21,6 @@ export class ToxToMdiMessageHandlerService {
 
   constructor(
     private fhirClient: FhirClientService,
-    private environmentHandler: EnvironmentHandlerService,
     private fhirHelper: FhirHelperService,
     private bundleHelper: BundleHelperService
   ) { }

@@ -16,7 +16,6 @@ import {
   Address,
   BundleHelperService,
   CodeableConcept,
-  EnvironmentHandlerService,
   FhirClientService,
   FhirHelperService,
   TerminologyHandlerService
@@ -42,7 +41,6 @@ export class MdiToEdrsDocumentHandlerService {
     private fhirExplorerService: FhirExplorerService,
     private decedentService: DecedentService,
     private terminologyService: TerminologyHandlerService,
-    private environmentHandler: EnvironmentHandlerService,
     private fhirHelper: FhirHelperService,
     private bundleHelper: BundleHelperService,
     private fhirClient: FhirClientService,
