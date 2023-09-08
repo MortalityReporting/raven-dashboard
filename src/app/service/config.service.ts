@@ -5,7 +5,6 @@ import {HttpBackend, HttpClient, HttpRequest} from "@angular/common/http";
 import {map, of} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {environment} from "../../environments/environment";
-import {ConfigUrlType} from "../providers/configUrlType";
 
 @Injectable({
   providedIn: 'root'
