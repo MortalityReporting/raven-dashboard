@@ -6,5 +6,3 @@ export * from "./models/test";
 export { SearchEdrsService } from "./services/search-edrs.service";
 export { OnboardingService } from "./services/onboarding.service";
 
-
-/** Pipes **/

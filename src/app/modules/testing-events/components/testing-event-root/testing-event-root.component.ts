@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
 import {EventRegistration} from "../../models/event-registration";
 import {combineLatest, mergeMap, retry, skipWhile, Subject} from "rxjs";
@@ -12,7 +12,7 @@ import {EventModuleManagerService} from "../../services/event-module-manager.ser
   templateUrl: './testing-event-root.component.html',
   styleUrls: ['../testing-event.scss']
 })
-export class TestingEventRootComponent implements OnInit {
+export class TestingEventRootComponent implements OnInit, OnDestroy {
   registrations: EventRegistration[];
   currentlySelectedRegistration: EventRegistration;
   eventList: EventModule[];
@@ -45,6 +45,11 @@ export class TestingEventRootComponent implements OnInit {
         this.registrations = registrations;
       }
     });
+
+    const currentlySelectedRegistrationStr = sessionStorage.getItem('currentlySelectedRegistration');
+    if(currentlySelectedRegistrationStr){
+      this.currentlySelectedRegistration = JSON.parse(currentlySelectedRegistrationStr);
+    }
   }
 
   selectEvent(index: number) {
@@ -76,5 +81,9 @@ export class TestingEventRootComponent implements OnInit {
     })
     console.log(JSON.stringify(eventRegistrationFhir, null, 4));
 
+  }
+
+  ngOnDestroy(): void {
+    sessionStorage.setItem('currentlySelectedRegistration', JSON.stringify(this.currentlySelectedRegistration));
   }
 }
