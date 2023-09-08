@@ -17,6 +17,8 @@ import {TestsModule} from "../tests/tests.module";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {RouterLink} from "@angular/router";
+import {MatExpansionModule} from "@angular/material/expansion";
 
 
 
@@ -32,19 +34,21 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
   exports: [
     TestingEventRootComponent
   ],
-    imports: [
-        CommonModule,
-        MatDividerModule,
-        MatIconModule,
-        MatCardModule,
-        MatCheckboxModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatInputModule,
-        TestsModule,
-        MatTooltipModule,
-        MatDialogModule,
-        MatProgressSpinnerModule,
-    ]
+  imports: [
+    CommonModule,
+    MatDividerModule,
+    MatIconModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    TestsModule,
+    MatTooltipModule,
+    MatDialogModule,
+    MatProgressSpinnerModule,
+    RouterLink,
+    MatExpansionModule,
+  ]
 })
 export class TestingEventsModule { }

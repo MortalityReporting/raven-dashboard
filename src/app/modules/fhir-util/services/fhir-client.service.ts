@@ -15,16 +15,14 @@ export class FhirClientService {
   private readonly logFhirRequests: boolean;
 
   constructor(private http: HttpClient,
-              private environmentHandler: EnvironmentHandlerService,
+              //private environmentHandler: EnvironmentHandlerService,
               private configService: ConfigService) {
     this.logFhirRequests = this.configService?.config?.logFhirRequests ?? true;
-    this.serverBaseUrl = this.environmentHandler.getFhirServerBaseURL();
+    this.serverBaseUrl = this.configService?.config?.ravenFhirServerBaseUrl;
   }
 
   create(resourceType: string, resource: any): Observable<FhirResource> {
     let requestString = this.serverBaseUrl + resourceType + "/";
-    //const req = new HttpRequest('POST', requestString, resource)
-    //return this.http.request(req);
     return this.http.post<FhirResource>(requestString, resource);
   }
 

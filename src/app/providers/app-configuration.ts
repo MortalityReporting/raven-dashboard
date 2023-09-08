@@ -24,7 +24,7 @@ export class AppConfiguration {
       recordComparison: {
         title: "Record Comparison",
         route: "record-comparison",
-        color: "#335963",
+        color: "#B65454",
         icon: "record-comparison"
       },
       fhirValidator: {
@@ -36,7 +36,7 @@ export class AppConfiguration {
       workflowSimulator: {
         title: "Workflow Simulator",
         route: "workflow-simulator",
-        color: "#B65454",
+        color: "#335963",
         icon: "workflow-simulator"
       },
       adminPanel: {

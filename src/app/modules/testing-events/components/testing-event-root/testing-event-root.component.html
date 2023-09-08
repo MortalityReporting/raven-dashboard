@@ -2,19 +2,32 @@
 
   <div class="testing-event-body" *ngIf="showRoot; else testContainer">
     <!-- Menu -->
-    <div class="testing-event-body-menu" [style.background-color]="config.backgroundColor + '66'">
-      <div class="menu-header-top">Event Registration</div>
-      <mat-divider class="menu-divider" [style.border-color]="config.backgroundColor"></mat-divider>
-      <div class="menu-header">Active Registrations</div>
-      <button mat-flat-button *ngFor="let registration of registrations; let index = index" (click)="selectEvent(index)"
-        class="pointer"
-        [style.background-color]="'#00000000'">
-        {{getTitle(registration)}}
-      </button>
-      <mat-divider class="menu-divider" [style.border-color]="config.backgroundColor"></mat-divider>
-      <div class="menu-header pointer" (click)="selectEvent(-1)">
-        Register for Events
-      </div>
+    <div class="testing-event-body-menu" [style.background-color]="config.backgroundColor">
+      <mat-accordion>
+        <mat-expansion-panel [style.background-color]="config.backgroundColor">
+          <mat-expansion-panel-header [style.color]="'white'">
+<!--            <button mat-flat-button [routerLink]="'/workflow-simulator/standalone-tests'" class="pointer"-->
+<!--                    [style.background-color]="'#00000000'">-->
+            <mat-panel-title>Standalone Tests</mat-panel-title>
+<!--            </button>-->
+          </mat-expansion-panel-header>
+        </mat-expansion-panel>
+        <mat-expansion-panel [style.background-color]="config.backgroundColor">
+          <mat-expansion-panel-header [style.color]="'white'">
+            <mat-panel-title>Testing Events</mat-panel-title>
+          </mat-expansion-panel-header>
+          <button mat-flat-button *ngFor="let registration of registrations; let index = index" (click)="selectEvent(index)"
+                  class="panel-button"
+                  [style.background-color]="'#00000000'">
+            {{getTitle(registration)}}
+          </button>
+          <button mat-flat-button class="panel-button"
+                  [style.background-color]="'#00000000'"
+                  (click)="selectEvent(-1)">
+            Register for Events
+          </button>
+        </mat-expansion-panel>
+      </mat-accordion>
     </div>
     <!-- Content -->
 

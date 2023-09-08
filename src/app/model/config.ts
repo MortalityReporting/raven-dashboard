@@ -4,11 +4,12 @@ export class Config {
 
   version: string = "";
   title: string = "";
-  ravenFhirServer: string = "";
+  dashboardApiUrl: string = "";
+  ravenFhirServerBaseUrl: string = "";
   ravenFhirServerBasicAuth: string = "";
-  ravenImportApi: string = "";
-  fhirValidator: string = "";
-  blueJayServerBase: string = "";
+  ravenImportApiUrl: string = "";
+  fhirValidatorUrl: string = "";
+  blueJayServerBaseUrl: string = "";
   adminRedirectUrl: string = "";
   adminLogoutUrl: string = "";
 

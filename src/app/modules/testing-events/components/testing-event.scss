@@ -25,12 +25,44 @@
       border-radius: 5px;
       max-width: 25em;
       min-width: 10em;
+      display: flex;
+      flex-direction: column;
+      > button {
+        justify-content: left;
+        color: white;
+      }
     }
     > .testing-event-body-content {
       flex: 1;
       @extend .padding-sm;
     }
   }
+}
+
+mat-panel-title {
+  color: white;
+}
+
+mat-expansion-panel-body {
+
+}
+
+.mat-expansion-panel-header {
+  margin: 0;
+}
+
+// TODO: Refactor to not use ::ng-deep.
+:host ::ng-deep .mat-expansion-indicator:after {
+  border-color: white;
+}
+
+.panel-button {
+  @extend .pointer;
+  justify-content: left;
+  color: white;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .menu-header-top {
@@ -54,3 +86,4 @@
   font-weight: bold;
   color: white;
 }
+

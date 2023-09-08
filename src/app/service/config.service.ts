@@ -5,6 +5,7 @@ import {HttpBackend, HttpClient, HttpRequest} from "@angular/common/http";
 import {map, of} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {environment} from "../../environments/environment";
+import {ConfigUrlType} from "../providers/configUrlType";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,9 @@ export class ConfigService {
     this.defaultConfigPath = this.getDashboardApiUrl() + "config"
   }
 
+
+
+  // TODO: Deprecate.
   getDashboardApiUrl(): string {
     let dashboardApi = environment.dashboardApi;
     if (!dashboardApi.endsWith("/")) {
@@ -42,8 +46,14 @@ export class ConfigService {
       }
     }
     return this.http.get<Config>(configPath).pipe(
-      map(config => {
+      map((config: Config) => {
+        console.log(config)
         config.version = "v" + this.packageInfo.version;
+        config.dashboardApiUrl = this.getDashboardApiUrl();
+        config.ravenFhirServerBaseUrl = this.standardizeUrl(config.ravenFhirServerBaseUrl);
+        config.ravenImportApiUrl = this.standardizeUrl(config.ravenImportApiUrl);
+        config.blueJayServerBaseUrl = this.standardizeUrl(config.blueJayServerBaseUrl);
+        config.fhirValidatorUrl = this.standardizeUrl(config.fhirValidatorUrl);
         this.config = config;
         return true;
       }),
@@ -53,5 +63,11 @@ export class ConfigService {
         return of(false);
       })
     )
+  }
+  standardizeUrl(url: string): string {
+    if (!url.endsWith("/")) {
+      url = url.concat("/");
+    }
+    return url;
   }
 }

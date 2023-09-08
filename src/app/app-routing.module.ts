@@ -24,6 +24,12 @@ import {
   WorkflowSimulatorComponent
 } from "./modules/workflow-simulator/components/workflow-simulator/workflow-simulator.component";
 import {SearchEdrsComponent} from "./modules/tests/components/search-edrs/search-edrs.component";
+import {
+  TestingEventRootComponent
+} from "./modules/testing-events/components/testing-event-root/testing-event-root.component";
+import {
+  StandaloneTestsComponent
+} from "./modules/workflow-simulator/components/standalone-tests/standalone-tests.component";
 
 
 const routes: Routes = [
@@ -86,8 +92,13 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: WorkflowSimulatorComponent,
+        component: TestingEventRootComponent,
         data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: undefined}
+      },
+      {
+        path: 'standalone-tests',
+        component: StandaloneTestsComponent,
+        data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Standalone Tests"}
       },
       {
         path: 'search-edrs',
@@ -98,12 +109,7 @@ const routes: Routes = [
         path: 'onboarding',
         component: OnboardingComponent,
         data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Onboarding"}
-      },
-      {
-        path: 'test',
-        component: TestContainerComponent,
-        data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Test"}
-      },
+      }
     ]
   },
   {

@@ -20,21 +20,22 @@ export class RegisteredEndpointsInterceptor implements HttpInterceptor {
     this.config = configService.config;
     this.registeredEndpoints = [
       {
-        "baseUrl": this.config.fhirValidator,
+        "baseUrl": this.config.fhirValidatorUrl,
         "allowedEndpoints": [
-          "/$validate",
-          "/$translate"
+          "$validate",
+          "$translate"
         ]
       },
       {
-        "baseUrl": this.config.ravenFhirServer,
+        "baseUrl": this.config.ravenFhirServerBaseUrl,
         "allowedEndpoints": [
           "*"
         ]
       },
       {
-        "baseUrl": this.config.ravenImportApi,
+        "baseUrl": this.config.ravenImportApiUrl,
         "allowedEndpoints": [
+          "*"
         ]
       }
     ]

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 
 @Component({
   selector: 'app-update-edrs',
@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./update-edrs.component.css']
 })
 export class UpdateEdrsComponent {
+  @Output() onTestCompletedEvent = new EventEmitter<any>()
 
+  updateStatus() {
+    this.onTestCompletedEvent.emit()
+  }
 }

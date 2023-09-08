@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
-import {FhirResource} from "../../fhir-util/models/fhir/r4/base/fhir.resource";
+import {FhirResource} from "../../fhir-util";
 import {ConfigService} from "../../../service/config.service";
 import {Config} from "../../../model/config";
 
@@ -18,7 +18,7 @@ export class FhirExplorerService {
 
   constructor(private configService: ConfigService, private http:HttpClient) {
     this.config = configService.config;
-    this.apiUrl =`${this.config.fhirValidator}/$translate`
+    this.apiUrl =`${this.config.fhirValidatorUrl}/$translate`
   }
 
   setSelectedFhirResource(fhirResource: any) {
