@@ -9,6 +9,8 @@
           [formatResourceBtnShown]="true"
           [buttonTxtColor]="'white'"
           [buttonBackgroundColor]="config.backgroundColor"
+          [exportToPdfButtonShown]="true"
+          (onExportToPdfEvent)="onExportToPdf($event)"
         ></lib-ngx-fhir-validator>
       </mat-card-content>
     </mat-card>

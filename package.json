@@ -23,6 +23,8 @@
     "@auth0/auth0-angular": "^2.1.0",
     "common-ui": "github:SmartChartSuite/common-ui",
     "diff": "^5.1.0",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.6.0",
     "ngx-fhir-validator": "github:SmartChartSuite/ngx-fhir-validator",
     "rxjs": "~7.4.0",
     "rxjs-compat": "^6.6.7",
