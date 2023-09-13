@@ -2,7 +2,7 @@ import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
 import {UntypedFormArray, UntypedFormBuilder, UntypedFormControl} from "@angular/forms";
 import {SearchEdrsService} from "../../../../services/search-edrs.service";
 import {UtilsService} from "../../../../../../service/utils.service";
-import {Obs_DeathDate, Obs_MannerOfDeath} from "../../../../../../providers/fhir-profile-constants";
+import {FHIRProfileConstants} from "../../../../../../providers/fhir-profile-constants";
 import {FhirHelperService, PatientNameReturn} from "../../../../../fhir-util/services/fhir-helper.service";
 import {DecedentSimpleInfo} from "../../../../../../model/decedent-simple-info";
 import {MatTableDataSource} from "@angular/material/table";
@@ -44,6 +44,7 @@ export class SearchParametersComponent implements OnInit {
     private utilsService: UtilsService,
     private fhirHelperService: FhirHelperService,
     @Inject('workflowSimulatorConfig') public moduleConfig: ModuleHeaderConfig,
+    @Inject('fhirProfiles') public fhirProfiles: FHIRProfileConstants,
     private configService: ConfigService
   ) {
     this.config = this.configService.config;
@@ -246,11 +247,11 @@ export class SearchParametersComponent implements OnInit {
       const officialName = this.fhirHelperService.getOfficialName(patientResource);
       decedent.officialName = officialName;
 
-      const mannerOfDeathObservation = this.getObservationByProfile(bundle.resource, Obs_MannerOfDeath);
+      const mannerOfDeathObservation = this.getObservationByProfile(bundle.resource, this.fhirProfiles.MdiToEdrs.Obs_MannerOfDeath);
       const mannerOfDeathStr = this.getMannerOfDeathObservationStr(mannerOfDeathObservation);
       decedent.mannerOfDeath = mannerOfDeathStr;
 
-      const deathDateObservation = this.getObservationByProfile(bundle.resource, Obs_DeathDate);
+      const deathDateObservation = this.getObservationByProfile(bundle.resource, this.fhirProfiles.MdiToEdrs.Obs_DeathDate);
       decedent.deathDate= deathDateObservation.effectiveDateTime;
 
       const mdiCaseNumber = this.getTrackingNumber(bundle.resource, TrackingNumberType.Mdi);
