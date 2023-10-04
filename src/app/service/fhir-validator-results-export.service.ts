@@ -33,7 +33,6 @@ export class FhirValidatorResultsExportService {
       // Create a download link
       const downloadLink = document.createElement('a');
       downloadLink.href = window.URL.createObjectURL(blob);
-      let date = new Date().toUTCString();
       downloadLink.download = `validator_results_${this.toInYyyyMmDdHhMmSs(new Date())}.zip`;
 
       // Trigger the download
