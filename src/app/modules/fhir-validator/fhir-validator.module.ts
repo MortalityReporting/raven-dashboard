@@ -28,6 +28,7 @@ import {MatRadioModule} from "@angular/material/radio";
 import {NgxFhirValidatorModule} from "ngx-fhir-validator";
 import {environment} from "../../../environments/environment";
 import {ModuleHeaderConfig} from "../../providers/module-header-config";
+import {ConfigService} from "../../service/config.service";
 
 @NgModule({
     declarations: [
@@ -70,6 +71,7 @@ export class FhirValidatorModule {
     return {
       ngModule: FhirValidatorModule,
       providers: [
+        ConfigService,
         {
           provide: 'env',
           useValue: environment

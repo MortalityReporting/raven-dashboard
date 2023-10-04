@@ -6,23 +6,24 @@ import {
   HttpInterceptor, HttpHeaders
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {environment} from "../../environments/environment";
+import {ConfigService} from "../service/config.service";
+import {Config} from "../model/config";
 
 @Injectable()
 export class FhirAuthInterceptor implements HttpInterceptor {
 
-  constructor() {}
+  config: Config;
+  constructor(private configService: ConfigService) {
+    this.config = configService.config;
+  }
 
   // TODO: Fix so headers are added regardless of trailing slash.
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     // Remove Trailing Slash if Exists.
-    let cleanRavenFhirServerUrl = environment.ravenFhirServer;
-    if (environment.ravenFhirServer.endsWith("/")) {
-      cleanRavenFhirServerUrl = environment.ravenFhirServer.substring(0, environment.ravenFhirServer.length - 1)
-    }
+    //let cleanRavenFhirServerUrl = this.config.ravenFhirServerBaseUrl;
 
-    if (request.url.startsWith(cleanRavenFhirServerUrl)) {
-      let basicAuthCredentials = environment.ravenFhirServerBasicAuth; // Format presumes user:pass
+    if (request.url.startsWith(this.config.ravenFhirServerBaseUrl)) {
+      let basicAuthCredentials = this.config.ravenFhirServerBasicAuth; // Format presumes user:pass
       let basicAuthHeader = 'Basic ' + btoa(basicAuthCredentials);
       request = request.clone({
         setHeaders: {
