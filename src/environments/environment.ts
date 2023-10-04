@@ -5,7 +5,7 @@ export const environment = {
   audience: "https://raven.dev.heat.icl.gtri.org/raven-dashboard-api/",
   domain: "dev-dk7cyfpkwowbtdbt.us.auth0.com",
   clientId: "M7knIi1ioWMc6Lufbt5lbyTrnxpKmL4q",
-  useLocalConfig: true,
+  useLocalConfig: false,
   overrideConfigLocation: "",
 
   // TODO: Move to runtime config services.
