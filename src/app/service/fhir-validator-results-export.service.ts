@@ -12,18 +12,23 @@ import autoTable from "jspdf-autotable";
 export class FhirValidatorResultsExportService {
   constructor() { }
 
-  exportToPdf(jsonResource, pdfReportData: any) {
+  async exportToPdf(jsonResource, pdfReportData: any) {
     let zip = new JSZip();
 
     zip.file(`resource.json`, jsonResource);
+
+    //Add the contents of fhir-validator README.md
+    const response = await fetch('assets/files/fhir-validator/README.md');
+    const fileContent = await response.text();
+    zip.file('README.md', fileContent);
 
     const pdfBlob = this.generateAutoTablePDF(pdfReportData);
     zip.file('fhir_validator_report.pdf', pdfBlob);
 
     // Create the zip and trigger download
-    zip.generateAsync({ type: 'blob' }).then((content) => {
+    zip.generateAsync({type: 'blob'}).then((content) => {
       // Create a blob for the zip content
-      const blob = new Blob([content], { type: 'application/zip' });
+      const blob = new Blob([content], {type: 'application/zip'});
 
       // Create a download link
       const downloadLink = document.createElement('a');
