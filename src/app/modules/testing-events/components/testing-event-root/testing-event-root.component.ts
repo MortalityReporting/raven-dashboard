@@ -142,4 +142,27 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
     this.currentItem = registrationDisplayItem;
     console.log(registrationDisplayItem);
   }
+
+  exitTest() {
+    this.showRoot = true;
+    this.currentItem = undefined;
+  }
+
+  updateStatus(event) {
+    // TODO: Add a "saving" display for the http call for user responsiveness
+    console.log(event)
+    console.log(this.currentRegistration)
+    console.log(this.currentItem.linkId)
+    this.eventManager.updateTestStatus(this.currentRegistration, this.currentItem.linkId, event).subscribe({
+      next: value => {
+        console.log("Resource Updated");
+        console.log(value);
+        this.refreshTrigger$.next(1);
+      },
+      error: err => {
+        console.log(err);
+      }
+    })
+
+  }
 }

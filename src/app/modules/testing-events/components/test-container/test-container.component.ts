@@ -6,6 +6,7 @@ import {EventManagerService} from "../../services/event-manager.service";
 import {Registration} from "../../models/registration";
 import {EventModule} from "../../models/event-module";
 import {RegistrationDisplayItem} from "../../models/registration-display";
+import {TestStatus} from "../../models/test-status";
 
 @Component({
   selector: 'testing-event-test-container',
@@ -14,7 +15,8 @@ import {RegistrationDisplayItem} from "../../models/registration-display";
 })
 export class TestContainerComponent {
 
-  @Output() updateStatus = new EventEmitter<EventModule>()
+  @Output() updateStatus = new EventEmitter<TestStatus>()
+  @Output() exitTest = new EventEmitter()
   @Input() userId: string;
   currentRegistration: Registration;
   currentEvent: EventModule;
@@ -40,7 +42,7 @@ export class TestContainerComponent {
 
   onTestCompleted(){
     // TODO: Switch to status handler
-    //this.eventItem.status = TestStatus.testSuccess;
+    this.onUpdateStatus(TestStatus.complete);
   }
 
   openDocumentWidow() {
@@ -60,6 +62,11 @@ export class TestContainerComponent {
   }
 
   onUpdateStatus(data: any) {
+    console.log(data)
     this.updateStatus.emit(data);
+  }
+
+  onExitTest() {
+    this.exitTest.emit();
   }
 }

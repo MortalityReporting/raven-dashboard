@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, combineLatest, map, Observable, single} from "rxjs";
+import {BehaviorSubject, combineLatest, map, Observable, of, single} from "rxjs";
 import {Bundle, FhirClientService, FhirResource, QuestionnaireResponse} from "../../fhir-util";
 import {EventModule} from "../models/event-module";
 import {DashboardApiInterfaceService} from "../../dashboard-api";
 import {Registration} from "../models/registration";
+import {EventRegistration} from "../models/event-registration";
 
 @Injectable({
   providedIn: 'root'
@@ -65,6 +66,13 @@ export class EventManagerService {
         return value[0]
       })
     );
+  }
+
+  updateTestStatus(registration: Registration, linkId, newStatus: string): Observable<FhirResource> {
+    let itemToUpdate = registration.item.find(item => item.linkId === linkId);
+    itemToUpdate.answer[0].valueCoding.code = newStatus;
+    console.log(registration);
+    return this.fhirClient.update("QuestionnaireResponse", registration);
   }
 
   // updateTestStatus(resource: QuestionnaireResponse, linkId: string, newStatus: TestStatus, attachment?: FhirResource, attachmentComment?: string): Observable<any> {

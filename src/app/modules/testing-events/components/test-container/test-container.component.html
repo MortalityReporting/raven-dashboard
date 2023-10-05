@@ -12,13 +12,13 @@
   <div class="test-container-body">
     <ng-container [ngSwitch]="registrationDisplayItem?.testCode">
       <app-onboarding *ngSwitchCase="'onboarding'"/>
-      <app-search-edrs *ngSwitchCase="'search-edrs'" (onTestCompletedEvent)="onTestCompleted()"/>
-      <app-update-edrs *ngSwitchCase="'update-edrs'"/>
+      <app-search-edrs *ngSwitchCase="'search-edrs'" (onTestCompletedEvent)="onUpdateStatus($event)"/>
+      <app-update-edrs *ngSwitchCase="'update-edrs'" (onTestCompletedEvent)="onUpdateStatus($event)"/>
     </ng-container>
   </div>
   <div class="test-container-footer">
     <div class="test-container-footer-return">
-      <button color="primary" mat-flat-button>
+      <button color="primary" mat-flat-button (click)="onExitTest()">
         <mat-icon>arrow_back</mat-icon>
         Return to Event Modules
       </button>

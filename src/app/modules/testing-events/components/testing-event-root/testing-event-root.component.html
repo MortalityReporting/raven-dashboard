@@ -54,7 +54,8 @@
   <ng-template #testContainer>
     <testing-event-test-container [userId]="userFhirId"
                                   [registrationDisplayItem]="currentItem"
-
+                                  (updateStatus)="updateStatus($event)"
+                                  (exitTest)="exitTest()"
     >
     </testing-event-test-container>
   </ng-template>
