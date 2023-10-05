@@ -66,3 +66,8 @@
 <ng-template #loggedOut>
   Please log in to manage testing event modules.
 </ng-template>
+
+
+<div class="spinner-container" *ngIf="isLoading">
+  <mat-spinner [diameter]="70"></mat-spinner>
+</div>
