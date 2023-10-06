@@ -9,6 +9,7 @@ import {Registration} from "../../models/registration";
 import {QuestionnaireResponse} from "../../../fhir-util";
 import {UserProfile} from "../../../user-management/models/user-profile";
 import {RegistrationDisplayItem} from "../../models/registration-display";
+import {UtilsService} from "../../../../service/utils.service";
 
 @Component({
   selector: 'testing-event-root',
@@ -21,6 +22,7 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
   currentRegistration: Registration = undefined;
   currentIndex: number = -1;
   currentItem: RegistrationDisplayItem;
+  isLoading: boolean = false;
 
   // Event Modules/Questionnaires
   eventList: EventModule[];
@@ -37,7 +39,8 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
   constructor(@Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
               public auth: AuthService,
               protected eventManager: EventManagerService,
-              private userProfileManager: UserProfileManagerService) {}
+              private userProfileManager: UserProfileManagerService,
+              private utilsService: UtilsService) {}
 
   ngOnInit(): void {
     // Subscribe to the currently selected registration. (Not set initially, updated on user selection.)
@@ -149,18 +152,20 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
   }
 
   updateStatus(event) {
-    // TODO: Add a "saving" display for the http call for user responsiveness
-    console.log(event)
-    console.log(this.currentRegistration)
-    console.log(this.currentItem.linkId)
+    if (this.currentItem.testStatus == event){
+      // if there is no change in the status, we don't need to do an update
+      return;
+    }
+    this.isLoading = true;
     this.eventManager.updateTestStatus(this.currentRegistration, this.currentItem.linkId, event).subscribe({
       next: value => {
-        console.log("Resource Updated");
-        console.log(value);
         this.refreshTrigger$.next(1);
+        this.isLoading = false;
       },
       error: err => {
         console.log(err);
+        this.isLoading = false;
+        this.utilsService.showErrorMessage("Server error updating the test event status");
       }
     })
 
