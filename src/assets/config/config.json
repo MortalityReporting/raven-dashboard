@@ -4,7 +4,7 @@
   "dashboardApiUrl": "",
   "ravenFhirServerBaseUrl": "https://raven.dev.heat.icl.gtri.org/mdi-fhir-server/fhir",
   "ravenFhirServerBasicAuth": "client:secret",
-  "ravenImportApiUrl": "https://raven.dev.heat.icl.gtri.org/raven-import-api/upload-xlsx-file",
+  "ravenImportApiUrl": "https://raven.dev.heat.icl.gtri.org/raven-import-api/",
   "fhirValidatorUrl": "https://dev.heat.icl.gtri.org/fhir-validator-service/fhir",
   "blueJayServerBaseUrl": "https://bluejay.heat.icl.gtri.org/mdi-fhir-server",
   "adminRedirectUrl": "https://localhost:4200/admin-panel",
