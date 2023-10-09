@@ -14,7 +14,7 @@ export class RegisteredEndpointsInterceptor implements HttpInterceptor {
   config: Config;
   registeredEndpoints: any[];
   ignoreList = ["assets/", "../assets/", "../../assets/"];
-  skipInterceptor = true;
+  skipInterceptor = false;
 
   constructor(private configService: ConfigService) {
     this.config = configService.config;
