@@ -87,3 +87,7 @@ mat-expansion-panel-body {
   color: white;
 }
 
+.scrollable-container-wrapper{
+  overflow-y:scroll;
+  @extend .margin-md;
+}

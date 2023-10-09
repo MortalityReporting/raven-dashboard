@@ -51,10 +51,11 @@
       </div>
     </div>
   </div>
-  <ng-template #testContainer>
-    <testing-event-test-container [userId]="userFhirId"
-                                  [registrationDisplayItem]="currentItem"
-
+  <ng-template #testContainer >
+    <testing-event-test-container
+      class="scrollable-container-wrapper"
+      [userId]="userFhirId"
+      [registrationDisplayItem]="currentItem"
     >
     </testing-event-test-container>
   </ng-template>
