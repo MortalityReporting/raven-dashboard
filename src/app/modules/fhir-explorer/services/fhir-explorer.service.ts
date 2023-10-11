@@ -26,8 +26,6 @@ export class FhirExplorerService {
   }
 
   translateToXml( resource: any ): Observable<any> {
-    console.log(this.apiUrl)
-    console.log("in translate")
     const body = {"resourceType": "Parameters", "parameter": [
       {
         "name": "resource",
