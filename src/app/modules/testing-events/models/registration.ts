@@ -38,6 +38,7 @@ export class Registration extends QuestionnaireResponse {
     return event.title;
   }
 
+  // TODO: This method is not working for some reason. (Called from EventManager Service update function).
   updateStatus(linkId: string, newStatus: TestStatus, attachmentId?: string) {
     let item: QuestionnaireResponseItem = this.item.find( item => item.linkId === linkId);
     item.answer[0].valueCoding.code = newStatus;

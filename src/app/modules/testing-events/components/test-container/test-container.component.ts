@@ -6,6 +6,8 @@ import {EventManagerService} from "../../services/event-manager.service";
 import {Registration} from "../../models/registration";
 import {EventModule} from "../../models/event-module";
 import {RegistrationDisplayItem} from "../../models/registration-display";
+import {TestStatus} from "../../models/test-status";
+import {mergeMap} from "rxjs";
 
 @Component({
   selector: 'testing-event-test-container',
@@ -14,7 +16,8 @@ import {RegistrationDisplayItem} from "../../models/registration-display";
 })
 export class TestContainerComponent {
 
-  @Output() updateStatus = new EventEmitter<EventModule>()
+  @Output() updateStatus = new EventEmitter<TestStatus>()
+  @Output() exitTest = new EventEmitter()
   @Input() userId: string;
   currentRegistration: Registration;
   currentEvent: EventModule;
@@ -40,7 +43,7 @@ export class TestContainerComponent {
 
   onTestCompleted(){
     // TODO: Switch to status handler
-    //this.eventItem.status = TestStatus.testSuccess;
+    this.onUpdateStatus(TestStatus.complete);
   }
 
   openDocumentWidow() {
@@ -55,11 +58,41 @@ export class TestContainerComponent {
       });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      this.startUpload(result);
     });
   }
 
+  startUpload(file) {
+    console.log("Starting Upload");
+    console.log(file);
+    let upload$ = this.eventManager.uploadDocument(file, this.userId, this.currentRegistration.id);
+    upload$.subscribe({
+      next: value => {
+        console.log(value);
+      }
+    })
+    // this.eventManager.uploadDocument(file, this.userId, this.currentRegistration.id).pipe(
+    //   mergeMap( (documentReference: any) => {
+    //       console.log(documentReference)
+    //       //const update$ = this.eventManager.updateTestStatus(this.data.eventItemLinkId, TestStatus.reviewPending, documentReference)
+    //       //return update$;
+    //       return documentReference;
+    //     }
+    //   )
+    // ).subscribe({
+    //   next: value => {
+    //     console.log(value);
+    //   }
+    // })
+  }
+
   onUpdateStatus(data: any) {
-    this.updateStatus.emit(data);
+    console.log(data)
+    this.updateStatus.emit(data); //TODO: If the test status up date is before the emit, emit doesn't fire?
+    this.registrationDisplayItem.testStatus = data;
+  }
+
+  onExitTest() {
+    this.exitTest.emit();
   }
 }

@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, combineLatest, map, Observable, single} from "rxjs";
+import {BehaviorSubject, combineLatest, map, Observable, of, single} from "rxjs";
 import {Bundle, FhirClientService, FhirResource, QuestionnaireResponse} from "../../fhir-util";
 import {EventModule} from "../models/event-module";
 import {DashboardApiInterfaceService} from "../../dashboard-api";
 import {Registration} from "../models/registration";
+import {TestStatus} from "../models/test-status";
 
 @Injectable({
   providedIn: 'root'
@@ -58,13 +59,22 @@ export class EventManagerService {
   }
 
   uploadDocument(file: File, userId: string, registrationId: string): Observable<any> {
-    const upload$ = this.dashboardApi.uploadFile(file, userId, registrationId).pipe();
-    return combineLatest([upload$, this.currentRegistration$]).pipe(
-      map(value => {
-        console.log(value)
-        return value[0]
-      })
-    );
+    const upload$ = this.dashboardApi.uploadFile(file, userId, registrationId);
+    return upload$;
+    // return combineLatest([upload$, this.currentRegistration$]).pipe(
+    //   map(value => {
+    //     console.log(value)
+    //     return value[1]
+    //   })
+    // );
+  }
+
+  updateTestStatus(registration: Registration, linkId, newStatus: TestStatus): Observable<FhirResource> {
+    let itemToUpdate = registration.item.find(item => item.linkId === linkId);
+    itemToUpdate.answer[0].valueCoding.code = newStatus;
+    //registration.updateStatus(linkId, newStatus); // TODO: Figure out why this method doesn't work.
+    console.log(registration);
+    return this.fhirClient.update("QuestionnaireResponse", registration);
   }
 
   // updateTestStatus(resource: QuestionnaireResponse, linkId: string, newStatus: TestStatus, attachment?: FhirResource, attachmentComment?: string): Observable<any> {

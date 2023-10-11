@@ -9,11 +9,11 @@ export const environment = {
   overrideConfigLocation: "",
 
   // TODO: Move to runtime config services.
-  ravenFhirServer: "https://raven.dev.heat.icl.gtri.org/mdi-fhir-server/fhir",
-  ravenFhirServerBasicAuth: "client:secret",
-  ravenImportApi: "https://raven.dev.heat.icl.gtri.org/raven-import-api",
-  fhirValidator: "https://dev.heat.icl.gtri.org/fhir-validator-service/fhir",
-  blueJayServerBase: "https://bluejay.heat.icl.gtri.org/mdi-fhir-server",
+  // ravenFhirServer: "https://raven.dev.heat.icl.gtri.org/mdi-fhir-server/fhir",
+  // ravenFhirServerBasicAuth: "client:secret",
+  // ravenImportApi: "https://raven.dev.heat.icl.gtri.org/raven-import-api",
+  fhirValidator: "https://dev.heat.icl.gtri.org/fhir-validator-service/fhir", // TODO: Refactor modules to not rely on this.
+  // blueJayServerBase: "https://bluejay.heat.icl.gtri.org/mdi-fhir-server",
   adminRedirectUrl: "https://localhost:4200/admin-panel",
   adminLogoutUrl: "https://localhost:4200/"
 };
