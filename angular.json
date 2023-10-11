@@ -20,6 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [ "raf", "core-js", "dompurify", "html2canvas", "rgbcolor", "jspdf-autotable", "jszip"],
             "outputPath": "dist/raven",
             "index": "src/index.html",
             "main": "src/main.ts",

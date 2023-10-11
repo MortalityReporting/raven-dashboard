@@ -101,6 +101,10 @@ export class AppComponent implements OnInit {
           link: "https://hl7.org/fhir/us/mdi/STU1/"
         },
         {
+          label: "CI build",
+          link: "https://build.fhir.org/ig/HL7/fhir-mdi-ig/"
+        },
+        {
           divider: true
         },
         {
