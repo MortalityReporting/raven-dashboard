@@ -2,6 +2,21 @@
 <div class="landing-page-wrapper">
   <div>
     <div class="landing-page-content">
+
+      <mat-card class="margin-bottom-md margin-top-sm">
+        <mat-card-content onclick="window.open('https://build.fhir.org/ig/HL7/fhir-mdi-ig/', '_blank')">
+        <div class="row">
+          <div class="card-bold-text">
+            The Raven Platform is a testing tool built on the current CI Build version of the MDI FHIR IG, which may change periodically.
+            It currently supports the version 1.1.0 - STU 1.1 release as of October 2023.
+          </div>
+          <div class="card-open-new-window-icon">
+            <mat-icon>open_in_new</mat-icon>
+          </div>
+        </div>
+        </mat-card-content>
+      </mat-card>
+
       <h1 class="title-decoration" [style.border-left-color]="appConfiguration.color">
         Welcome to the Raven Testing Platform!</h1>
       <p>
@@ -28,7 +43,14 @@
           <li>
             <button mat-flat-button onclick="window.open('https://build.fhir.org/ig/HL7/fhir-mdi-ig/', '_blank')"
                     class="align-left">
-              Medicolegal Death Investigation FHIR Implementation Guide
+              Medicolegal Death Investigation FHIR IG - CI Build
+              <mat-icon iconPositionEnd>open_in_new</mat-icon>
+            </button>
+          </li>
+          <li>
+            <button mat-flat-button onclick="window.open('https://hl7.org/fhir/us/mdi/STU1/', '_blank')"
+                    class="align-left">
+              Medicolegal Death Investigation FHIR IG - 1.0.0 - STU1
               <mat-icon iconPositionEnd>open_in_new</mat-icon>
             </button>
           </li>
@@ -48,6 +70,7 @@
           </li>
         </ul>
       </div>
+      <mat-divider class="larger-divider"></mat-divider>
       <div class="flex-cell zulip-cell">
         <mat-card>
           <mat-card-content onclick="window.open('https://chat.fhir.org','_blank')">
@@ -57,11 +80,11 @@
                   <img src="assets/LOGO_FHIR_2.svg" class="hl7-fhir-logo-lg"/>
                 </div>
               </div>
-              <div class="zulip-text">
+              <div class="card-bold-text">
                 For Information on the MDI IG, join the conversation in the FHIR Zulip chat!
                 <em>https://chat.fhir.org in the #Medicolegal Death Investigation Stream</em>
               </div>
-              <div class="zulip-icon">
+              <div class="card-open-new-window-icon">
                 <mat-icon>open_in_new</mat-icon>
               </div>
             </div>
