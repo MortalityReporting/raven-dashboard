@@ -1,4 +1,4 @@
-<div class="viewer-container-wrapper" *ngIf="mdiToEdrsRecord; else loading;">
+<div class="viewer-container-wrapper" *ngIf="mdiToEdrsRecord;">
   <div class="viewer-container-header">
     <app-decedent-display appSetFhirExplorer [resource]="mdiToEdrsRecord?.documentBundle"
                           [decedentInformation]="mdiToEdrsRecord?.caseHeader" [type]="'mdi'">
@@ -71,9 +71,8 @@
   </div>
 </div>
 
-<ng-template #loading>
+<ng-template *ngIf="isLoading">
   <div class="margin-md center-contents">
-  <!-- TODO: Add error handling. -->
     <mat-spinner color="accent"></mat-spinner>
   </div>
 </ng-template>
