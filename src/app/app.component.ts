@@ -101,14 +101,14 @@ export class AppComponent implements OnInit {
           link: "https://hl7.org/fhir/us/mdi/STU1/"
         },
         {
-          label: "CI build",
+          label: "MDI FHIR IG CI Build",
           link: "https://build.fhir.org/ig/HL7/fhir-mdi-ig/"
         },
         {
           divider: true
         },
         {
-          label: "Documentation",
+          label: "Raven Documentation",
           link: "https://ravendocs.readthedocs.io/en/latest/"
         },
         {
