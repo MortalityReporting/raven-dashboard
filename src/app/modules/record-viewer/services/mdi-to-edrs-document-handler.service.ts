@@ -114,7 +114,7 @@ export class MdiToEdrsDocumentHandlerService {
    * @returns {Observable<ToxRecordStub[]>} an Observable of an array of ToxRecordStub objects.
    **/
   getRelatedToxicologyReports(mdiCaseNumber: string): Observable<ToxRecordStub[]> {
-    return this.fhirClient.search("DiagnosticReport", `?mdi-case-number=${mdiCaseNumber}`).pipe(
+    return this.fhirClient.search("DiagnosticReport", `?tracking-number=${mdiCaseNumber}`).pipe(
         map((resultBundle: any) => {
           let toxRecordList = [];
           resultBundle?.entry?.forEach((bec:any) => {
