@@ -12,7 +12,7 @@ export class UtilsService {
     this._snackBar.open(messageStr, 'x' ,{
       horizontalPosition: 'center',
       verticalPosition: 'top',
-      panelClass: ['error-color'],
+      panelClass: ['snackbar-offset', 'app-notification-error'],
       duration: 5000
     });
   }
@@ -21,7 +21,7 @@ export class UtilsService {
     this._snackBar.open(messageStr, 'x' ,{
       horizontalPosition: 'center',
       verticalPosition: 'top',
-      panelClass: ['mat-toolbar', 'mat-primary'],
+      panelClass: ['snackbar-offset', 'app-notification-success'],
       duration: 3000
     });
   }
