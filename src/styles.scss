@@ -497,3 +497,18 @@ TODO: Refactor to generalize class names and move to a common shared .css file.
   cursor: pointer;
 }
 
+.snackbar-offset{
+  transform: translateY(24vh) !important;
+}
+
+//TODO figure out how to replace those colors with variables
+.mat-mdc-snack-bar-container {
+  --mat-mdc-snack-bar-button-color: white;
+  &.app-notification-error {
+    --mdc-snackbar-container-color: #DD2C00;
+  }
+  &.app-notification-success {
+    --mdc-snackbar-container-color: #2E7D32;
+  }
+}
+

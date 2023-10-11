@@ -3,19 +3,21 @@
   <div>
     <div class="landing-page-content">
 
-      <mat-card class="margin-bottom-md margin-top-sm">
-        <mat-card-content onclick="window.open('https://build.fhir.org/ig/HL7/fhir-mdi-ig/', '_blank')">
-        <div class="row">
-          <div class="card-bold-text">
-            The Raven Platform is a testing tool built on the current CI Build version of the MDI FHIR IG, which may change periodically.
-            It currently supports the version 1.1.0 - STU 1.1 release as of October 2023.
-          </div>
-          <div class="card-open-new-window-icon">
-            <mat-icon>open_in_new</mat-icon>
-          </div>
-        </div>
-        </mat-card-content>
-      </mat-card>
+      <div class="flex-cell zulip-cell margin-bottom-md margin-top-sm">
+        <mat-card>
+          <mat-card-content onclick="window.open('https://build.fhir.org/ig/HL7/fhir-mdi-ig/', '_blank')">
+            <div class="zulip-row">
+              <div class="card-bold-text">
+                The Raven Platform is a testing tool built on the current CI Build version of the MDI FHIR IG, which may change periodically.
+                It currently supports the version 1.1.0 - STU 1.1 release as of October 2023.
+              </div>
+              <div class="card-open-new-window-icon">
+                <mat-icon>open_in_new</mat-icon>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
 
       <h1 class="title-decoration" [style.border-left-color]="appConfiguration.color">
         Welcome to the Raven Testing Platform!</h1>
@@ -55,16 +57,16 @@
             </button>
           </li>
           <li>
-            <button mat-flat-button onclick="window.open('https://hl7.org/fhir/', '_blank')"
+            <button mat-flat-button onclick="window.open('https://hl7.org/fhir/R4/index.html', '_blank')"
                     class="align-left">
-              HL7 FHIR Standard
+              HL7 FHIR R4 Standard
               <mat-icon iconPositionEnd>open_in_new</mat-icon>
             </button>
           </li>
           <li>
-            <button mat-flat-button onclick="window.open('https://build.fhir.org/ig/HL7/US-Core/', '_blank')"
+            <button mat-flat-button onclick="window.open('https://hl7.org/fhir/us/core/STU5.0.1/', '_blank')"
                     class="align-left">
-              US Core FHIR Implementation Guide
+              US Core FHIR IG - 5.0.1 - STU5
               <mat-icon iconPositionEnd>open_in_new</mat-icon>
             </button>
           </li>
