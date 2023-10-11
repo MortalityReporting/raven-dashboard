@@ -20,6 +20,12 @@ export class RegisteredEndpointsInterceptor implements HttpInterceptor {
     this.config = configService.config;
     this.registeredEndpoints = [
       {
+        "baseUrl": this.config.dashboardApiUrl,
+        "allowedEndpoints": [
+          "*"
+        ]
+      },
+      {
         "baseUrl": this.config.fhirValidatorUrl,
         "allowedEndpoints": [
           "$validate",

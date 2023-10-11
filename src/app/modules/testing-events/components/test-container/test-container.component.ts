@@ -7,6 +7,7 @@ import {Registration} from "../../models/registration";
 import {EventModule} from "../../models/event-module";
 import {RegistrationDisplayItem} from "../../models/registration-display";
 import {TestStatus} from "../../models/test-status";
+import {mergeMap} from "rxjs";
 
 @Component({
   selector: 'testing-event-test-container',
@@ -57,13 +58,38 @@ export class TestContainerComponent {
       });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      this.startUpload(result);
     });
+  }
+
+  startUpload(file) {
+    console.log("Starting Upload");
+    console.log(file);
+    let upload$ = this.eventManager.uploadDocument(file, this.userId, this.currentRegistration.id);
+    upload$.subscribe({
+      next: value => {
+        console.log(value);
+      }
+    })
+    // this.eventManager.uploadDocument(file, this.userId, this.currentRegistration.id).pipe(
+    //   mergeMap( (documentReference: any) => {
+    //       console.log(documentReference)
+    //       //const update$ = this.eventManager.updateTestStatus(this.data.eventItemLinkId, TestStatus.reviewPending, documentReference)
+    //       //return update$;
+    //       return documentReference;
+    //     }
+    //   )
+    // ).subscribe({
+    //   next: value => {
+    //     console.log(value);
+    //   }
+    // })
   }
 
   onUpdateStatus(data: any) {
     console.log(data)
-    this.updateStatus.emit(data);
+    this.updateStatus.emit(data); //TODO: If the test status up date is before the emit, emit doesn't fire?
+    this.registrationDisplayItem.testStatus = data;
   }
 
   onExitTest() {
