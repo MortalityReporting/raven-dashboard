@@ -9,6 +9,7 @@ import {Registration} from "../../models/registration";
 import {QuestionnaireResponse} from "../../../fhir-util";
 import {UserProfile} from "../../../user-management/models/user-profile";
 import {RegistrationDisplayItem} from "../../models/registration-display";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'testing-event-root',
@@ -21,6 +22,12 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
   currentRegistration: Registration = undefined;
   currentIndex: number = -1;
   currentItem: RegistrationDisplayItem;
+
+  readonly standaloneTests : {name: string, route: string}[] = [
+    {name: "Onboarding", route: 'onboarding'},
+    {name: "Search EDRS", route: 'search-edrs'},
+    {name: "Update EDRS", route: 'update-edrs'},
+  ]
 
   // Event Modules/Questionnaires
   eventList: EventModule[];
@@ -37,7 +44,8 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
   constructor(@Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
               public auth: AuthService,
               protected eventManager: EventManagerService,
-              private userProfileManager: UserProfileManagerService) {}
+              private userProfileManager: UserProfileManagerService,
+              private router: Router) {}
 
   ngOnInit(): void {
     // Subscribe to the currently selected registration. (Not set initially, updated on user selection.)
@@ -141,5 +149,9 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
     this.showRoot = false;
     this.currentItem = registrationDisplayItem;
     console.log(registrationDisplayItem);
+  }
+
+  onStandaloneTestSelected(standaloneTest){
+    this.router.navigate([`/workflow-simulator/${standaloneTest.route}`]);
   }
 }
