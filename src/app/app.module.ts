@@ -46,6 +46,11 @@ export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
 };
 
+// TODO: Setup configGetter here to be able to load the config data into the forRoot methods
+// export function configGetter(configService: ConfigService) {
+//   return new TranslateHttpLoader(httpClient);
+// }
+
 @NgModule({
   declarations: [
     AppComponent,

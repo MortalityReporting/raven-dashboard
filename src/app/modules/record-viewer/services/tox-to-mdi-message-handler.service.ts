@@ -108,7 +108,7 @@ export class ToxToMdiMessageHandlerService {
       "resourceType": "Parameters",
       "parameter": [
         {
-          "name": "tox-lab-case-number",
+          "name": "tracking-number",
           "valueString": toxLabId
         }
       ]
@@ -226,7 +226,7 @@ export class ToxToMdiMessageHandlerService {
   }
 
   isRelatedMdiDocumentAvailable(mdiCaseNumber: any) {
-    return this.fhirClient.search("Composition", `?mdi-case-number=${mdiCaseNumber}`).pipe(
+    return this.fhirClient.search("Composition", `?tracking-number=${mdiCaseNumber}`).pipe(
       map((searchBundle:any) => {
         return searchBundle?.entry?.[0]?.resource?.subject?.reference
       })

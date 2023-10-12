@@ -1,7 +1,7 @@
 {
   "version": "",
   "title": "Raven",
-  "dashboardApiUrl": "",
+  "dashboardApiUrl": "https://raven.dev.heat.icl.gtri.org/raven-dashboard-api/",
   "ravenFhirServerBaseUrl": "https://raven.dev.heat.icl.gtri.org/mdi-fhir-server/fhir",
   "ravenFhirServerBasicAuth": "client:secret",
   "ravenImportApiUrl": "https://raven.dev.heat.icl.gtri.org/raven-import-api/",

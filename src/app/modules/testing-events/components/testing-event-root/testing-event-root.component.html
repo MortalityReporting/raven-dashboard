@@ -61,7 +61,8 @@
   <ng-template #testContainer>
     <testing-event-test-container [userId]="userFhirId"
                                   [registrationDisplayItem]="currentItem"
-
+                                  (updateStatus)="updateStatus($event)"
+                                  (exitTest)="exitTest()"
     >
     </testing-event-test-container>
   </ng-template>
@@ -70,5 +71,27 @@
 
 
 <ng-template #loggedOut>
-  Please log in to manage testing event modules.
+  <div class="testing-event-wrapper">
+    <div class="testing-event-body">
+      <div class="testing-event-body-content">
+
+      <button mat-raised-button
+              [style.background-color]="config.backgroundColor"
+              (click)="auth.loginWithRedirect({appState: {target: '/workflow-simulator'}})"
+              class="login-button"
+              [style.color]="'white'"><mat-icon>login</mat-icon>Sign In</button> Sign in to manage testing event modules.<br>
+      <br><strong>OR</strong><br><br>
+        <!-- TODO: Build this dom better, this is just a placeholder -->
+      <button mat-flat-button
+              [style.background-color]="config.backgroundColor"
+              [style.color]="'white'"
+              [routerLink]="'standalone-tests'">Load Standalone Tests</button> View all standalone tests.
+      </div>
+    </div>
+  </div>
 </ng-template>
+
+
+<div class="spinner-container" *ngIf="isLoading">
+  <mat-spinner [diameter]="70"></mat-spinner>
+</div>

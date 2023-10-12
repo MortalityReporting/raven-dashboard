@@ -18,7 +18,7 @@ export class FhirExplorerService {
 
   constructor(private configService: ConfigService, private http:HttpClient) {
     this.config = configService.config;
-    this.apiUrl =`${this.config.fhirValidatorUrl}/$translate`
+    this.apiUrl =`${this.config.fhirValidatorUrl}$translate`
   }
 
   setSelectedFhirResource(fhirResource: any) {
@@ -26,7 +26,6 @@ export class FhirExplorerService {
   }
 
   translateToXml( resource: any ): Observable<any> {
-
     const body = {"resourceType": "Parameters", "parameter": [
       {
         "name": "resource",

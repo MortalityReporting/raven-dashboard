@@ -24,8 +24,6 @@ export class ConfigService {
     this.defaultConfigPath = this.getDashboardApiUrl() + "config"
   }
 
-
-
   // TODO: Deprecate.
   getDashboardApiUrl(): string {
     let dashboardApi = environment.dashboardApi;
@@ -33,6 +31,10 @@ export class ConfigService {
       dashboardApi = dashboardApi.concat("/");
     }
     return dashboardApi;
+  }
+
+  getConfig(): Config {
+    return this.config;
   }
 
   loadConfig() {

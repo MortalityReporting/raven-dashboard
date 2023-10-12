@@ -9,6 +9,7 @@ import {Registration} from "../../models/registration";
 import {QuestionnaireResponse} from "../../../fhir-util";
 import {UserProfile} from "../../../user-management/models/user-profile";
 import {RegistrationDisplayItem} from "../../models/registration-display";
+import {UtilsService} from "../../../../service/utils.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -22,6 +23,7 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
   currentRegistration: Registration = undefined;
   currentIndex: number = -1;
   currentItem: RegistrationDisplayItem;
+  isLoading: boolean = false;
 
   readonly standaloneTests : {name: string, route: string}[] = [
     {name: "Onboarding", route: 'onboarding'},
@@ -45,6 +47,7 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
               public auth: AuthService,
               protected eventManager: EventManagerService,
               private userProfileManager: UserProfileManagerService,
+              private utilsService: UtilsService,
               private router: Router) {}
 
   ngOnInit(): void {
@@ -149,6 +152,31 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
     this.showRoot = false;
     this.currentItem = registrationDisplayItem;
     console.log(registrationDisplayItem);
+  }
+
+  exitTest() {
+    this.showRoot = true;
+    this.currentItem = undefined;
+  }
+
+  updateStatus(event) {
+    if (this.currentItem.testStatus == event){
+      // if there is no change in the status, we don't need to do an update
+      return;
+    }
+    this.isLoading = true;
+    this.eventManager.updateTestStatus(this.currentRegistration, this.currentItem.linkId, event).subscribe({
+      next: value => {
+        this.refreshTrigger$.next(1);
+        this.isLoading = false;
+      },
+      error: err => {
+        console.log(err);
+        this.isLoading = false;
+        this.utilsService.showErrorMessage("Server error updating the test event status");
+      }
+    })
+
   }
 
   onStandaloneTestSelected(standaloneTest){
