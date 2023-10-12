@@ -27,6 +27,7 @@
     "jszip": "^3.10.1",
     "ngx-fhir-validator": "github:HISB-Libraries/ngx-fhir-validator",
     "ngx-hisb-common-ui": "github:HISB-Libraries/ngx-hisb-common-ui",
+    "ngx-hisb-logger": "github:HISB-Libraries/ngx-hisb-logger",
     "rxjs": "~7.4.0",
     "rxjs-compat": "^6.6.7",
     "sass": "^1.58.3",

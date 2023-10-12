@@ -110,7 +110,8 @@ import { UpdateEdrsComponent } from './components/update-edrs/update-edrs.compon
     NgxHisbLoggerModule,
     MatCheckboxModule,
     MatDividerModule,
-    ClipboardModule
+    ClipboardModule,
+    NgxHisbLoggerModule,
   ],
 })
 export class TestsModule {
