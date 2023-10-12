@@ -50,7 +50,6 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatButtonModule} from "@angular/material/button";
 import {ModuleHeaderConfig} from "../../providers/module-header-config";
-import {NgxHisbLoggerModule} from "ngx-hisb-logger";
 import {HttpConnectionComponent} from './components/onboarding/http-connection/http-connection.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatDividerModule} from "@angular/material/divider";
@@ -60,6 +59,7 @@ import {
 } from './components/onboarding/http-connection/http-response-results/http-response-results.component';
 import {ClipboardModule} from "@angular/cdk/clipboard";
 import { UpdateEdrsComponent } from './components/update-edrs/update-edrs.component';
+import {NgxHisbLoggerModule} from "ngx-hisb-logger";
 
 @NgModule({
   declarations: [
@@ -76,7 +76,6 @@ import { UpdateEdrsComponent } from './components/update-edrs/update-edrs.compon
     HttpResponseInfoComponent,
     MdiToEdrsDocumentSelectStepComponent,
     HttpConnectionComponent,
-    OnboardingComponent,
     OnboardingComponent,
     HttpResponseResultsComponent,
     UpdateEdrsComponent,
@@ -107,10 +106,10 @@ import { UpdateEdrsComponent } from './components/update-edrs/update-edrs.compon
     FormsModule,
     MatInputModule,
     MatSortModule,
-    NgxHisbLoggerModule,
     MatCheckboxModule,
     MatDividerModule,
     ClipboardModule,
+    NgxHisbLoggerModule,
     NgxHisbLoggerModule,
   ],
 })

@@ -1,10 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {LogLine} from "../../../../../../projects/ngx-hisb-logger/src/lib/modal/log-line";
 import {MatAccordion} from "@angular/material/expansion";
-import {LoggerService} from "ngx-hisb-logger";
+import {LoggerService, LogLine} from "ngx-hisb-logger";
 import {UtilsService} from "../../../../service/utils.service";
 import {openConfirmationDialog} from "ngx-hisb-common-ui";
 import {MatDialog} from "@angular/material/dialog";
+
 
 export interface Stage {
   expanded: boolean;
@@ -36,7 +36,7 @@ export class OnboardingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.log.logStream$.subscribe(value=> this.loggerData = value);
+    this.log.logStream$.subscribe((value: LogLine[])=> this.loggerData = value);
     this.addStage();
   }
 
