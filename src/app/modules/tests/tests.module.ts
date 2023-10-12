@@ -110,7 +110,6 @@ import {NgxHisbLoggerModule} from "ngx-hisb-logger";
     MatDividerModule,
     ClipboardModule,
     NgxHisbLoggerModule,
-    NgxHisbLoggerModule,
   ],
 })
 export class TestsModule {
