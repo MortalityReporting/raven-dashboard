@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MatIconRegistry} from "@angular/material/icon";
 import {DomSanitizer} from "@angular/platform-browser";
-import {OptionConfig, HeaderConfig} from "common-ui";
+import {OptionConfig, HeaderConfig} from "ngx-hisb-common-ui";
 import {AppConfiguration} from "./providers/app-configuration";
 import {ThemeService} from "./service/theme.service";
 import {ConfigService} from "./service/config.service";

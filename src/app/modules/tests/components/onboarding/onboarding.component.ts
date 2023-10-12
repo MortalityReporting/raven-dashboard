@@ -3,7 +3,7 @@ import {LogLine} from "../../../../../../projects/ngx-hisb-logger/src/lib/modal/
 import {MatAccordion} from "@angular/material/expansion";
 import {LoggerService} from "ngx-hisb-logger";
 import {UtilsService} from "../../../../service/utils.service";
-import {openConfirmationDialog} from "common-ui";
+import {openConfirmationDialog} from "ngx-hisb-common-ui";
 import {MatDialog} from "@angular/material/dialog";
 
 export interface Stage {

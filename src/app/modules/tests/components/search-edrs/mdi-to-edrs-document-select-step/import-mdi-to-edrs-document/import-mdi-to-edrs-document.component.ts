@@ -8,7 +8,7 @@ import {DecedentSimpleInfo} from "../../../../../../model/decedent-simple-info";
 import {UiStringConstants} from "../../../../../../providers/ui-string-constants";
 import {FhirHelperService, PatientNameReturn} from "../../../../../fhir-util/services/fhir-helper.service";
 import {MatDialog} from "@angular/material/dialog";
-import {openTextInputDialog} from "common-ui";
+import {openTextInputDialog} from "ngx-hisb-common-ui";
 import {ModuleHeaderConfig} from "../../../../../../providers/module-header-config";
 
 @Component({
