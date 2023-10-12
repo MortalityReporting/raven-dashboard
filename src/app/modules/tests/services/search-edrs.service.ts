@@ -63,7 +63,7 @@ export class SearchEdrsService {
   }
 
   getOperationDefinitionList(): Observable<any> {
-    const operationDefinitionLocation = "OperationDefinition/Composition-it-mdi-documents";
+    const operationDefinitionLocation = "OperationDefinition/Composition-it-document";
     return this.http.get(this.config.ravenFhirServerBaseUrl + operationDefinitionLocation).pipe(map((result: any) => (
       result as Object
     )));
