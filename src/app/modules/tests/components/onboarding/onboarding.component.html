@@ -32,7 +32,10 @@
       </mat-expansion-panel>
     </mat-accordion>
     <div class="flex margin-bottom-md margin-top-md">
-      <button class="push-right" mat-raised-button color="primary" type="button" (click)="addStage()">
+      <button class="push-right" type="button" mat-raised-button
+              [style.background-color]="config.backgroundColor"
+              [style.color]="'white'"
+              (click)="addStage()">
         <mat-icon>add</mat-icon>
         Add Stage
       </button>

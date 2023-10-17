@@ -257,6 +257,8 @@
     <div class="margin-md">
       <button
         mat-raised-button aria-label="Test Connection" color="primary" type="submit"
+        [style.background-color]="config.backgroundColor"
+        [style.color]="'white'"
         (click)="onTestConnection()">
         <mat-icon>lan</mat-icon>
         Test Connection
