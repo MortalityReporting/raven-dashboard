@@ -1,7 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {Router} from "@angular/router";
 import {TestStatus} from "../../../testing-events";
 import {Test} from "../../../tests";
+import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 
 @Component({
   selector: 'app-standalone-tests',
@@ -36,7 +37,10 @@ export class StandaloneTestsComponent {
     },
   ];
 
-  constructor(private router: Router) {
+  constructor(
+    @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
+    private router: Router
+  ) {
   }
 
   onStartTest(test: Test) {
