@@ -29,7 +29,7 @@ import {MatCardModule} from "@angular/material/card";
 import {MatListModule} from "@angular/material/list";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
-import {HeaderComponent, NavMenuComponent} from "common-ui";
+import {HeaderComponent, NavMenuComponent} from "ngx-hisb-common-ui";
 import {AppConfiguration} from "./providers/app-configuration";
 import { CardHoverDirective } from './directives/card-hover.directive';
 import { UiStringConstants } from "./providers/ui-string-constants";
