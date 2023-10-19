@@ -20,7 +20,8 @@
       </mat-card-content>
 
       <mat-card-actions>
-        <button mat-raised-button (click)="onStartTest(test)">Start Workflow</button>
+        <button mat-raised-button (click)="onStartTest(test)" [style.background-color]="config.backgroundColor"
+                [style.color]="'white'">Start Workflow</button>
       </mat-card-actions>
     </mat-card>
   </div>

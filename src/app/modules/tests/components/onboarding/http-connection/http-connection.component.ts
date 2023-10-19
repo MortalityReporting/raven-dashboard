@@ -1,4 +1,14 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -16,6 +26,7 @@ import {RequestType} from "../../../models/request-type";
 import {OnboardingHttpRequest} from "../../../models/onboarding-http-request";
 import {UtilsService} from "../../../../../service/utils.service";
 import {LoggerService} from "ngx-hisb-logger";
+import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
 
 
 @Component({
@@ -46,6 +57,7 @@ export class HttpConnectionComponent implements OnInit, OnChanges{
   isAdvancedSettingsVisible: boolean = false;
 
   constructor(
+    @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
     private fb: UntypedFormBuilder,
     private log: LoggerService,
     public onboardingService: OnboardingService,
