@@ -20,7 +20,6 @@ export class SearchParametersComponent implements OnInit {
 
   @Output() searchResultsEmitter : EventEmitter<any> = new EventEmitter();
   @Output() clearSearchResultEmitter : EventEmitter<any> = new EventEmitter();
-  private readonly BLUE_JAY_AUTH = "client:secret"
 
   operationsDatsStructure: any;
   resultTableDataSource = new MatTableDataSource<any>();
@@ -161,7 +160,10 @@ export class SearchParametersComponent implements OnInit {
       });
     }
     else {
-      this.searchEdrsService.searchEdrs(this.config.ravenFhirServerBaseUrl, this.getSearchParametersResourcePreview(), this.BLUE_JAY_AUTH).subscribe({
+      let authStringSplit = this.config.ravenFhirServerBasicAuth.split(":");
+      console.log(authStringSplit)
+      let authObject = {"username": authStringSplit[0], "password": authStringSplit[1]};
+      this.searchEdrsService.searchEdrs(this.config.blueJayServerBaseUrl, this.getSearchParametersResourcePreview(), authObject).subscribe({
         next: value => {
           this.searchResultsEmitter.emit({ response: value, success: true });
         },
