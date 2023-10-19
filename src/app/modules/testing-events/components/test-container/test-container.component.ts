@@ -12,7 +12,7 @@ import {mergeMap} from "rxjs";
 @Component({
   selector: 'testing-event-test-container',
   templateUrl: './test-container.component.html',
-  styleUrls: ['./test-container.component.scss']
+  styleUrls: ['../testing-event.scss']
 })
 export class TestContainerComponent {
 
