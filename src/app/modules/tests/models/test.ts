@@ -5,4 +5,5 @@ export interface Test {
   display: string;
   description: string;
   status: TestStatus;
+  route?: string
 }
