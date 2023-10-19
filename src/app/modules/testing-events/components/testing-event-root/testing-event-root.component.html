@@ -11,6 +11,13 @@
             <mat-panel-title>Standalone Tests</mat-panel-title>
 <!--            </button>-->
           </mat-expansion-panel-header>
+
+          <button *ngFor="let standaloneTest of standaloneTests"
+                  mat-flat-button class="panel-button"
+                  [style.background-color]="'#00000000'"
+                  (click)="onStandaloneTestSelected(standaloneTest)">
+            {{ standaloneTest.name}}
+          </button>
         </mat-expansion-panel>
         <mat-expansion-panel [style.background-color]="config.backgroundColor">
           <mat-expansion-panel-header [style.color]="'white'">

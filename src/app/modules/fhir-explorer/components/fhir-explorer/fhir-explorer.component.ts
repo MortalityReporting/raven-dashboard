@@ -40,13 +40,21 @@ export class FhirExplorerComponent implements OnInit {
       else {
         this.formattedText = JSON.stringify( resource, null, 2 );
       }
-
       this.elRef.nativeElement.parentElement.parentElement.scrollTo(0, 0);
-
     })
   };
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    //If no narrative is found, render the JSON when the resource is first open
+    if(this.fhirResource?.text?.div){
+      this.formattedText = this.fhirResource?.text?.div;
+    }
+    else {
+      this.selectedStructure = "json";
+      this.formattedText = JSON.stringify( this.fhirResource, null, 2 );
+      this.elRef.nativeElement.parentElement.parentElement.scrollTo(0, 0);
+    }
+  }
 
 
   isNarrative() : boolean {

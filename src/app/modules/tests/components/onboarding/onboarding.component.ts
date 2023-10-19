@@ -1,9 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatAccordion} from "@angular/material/expansion";
 import {LoggerService, LogLine} from "ngx-hisb-logger";
 import {UtilsService} from "../../../../service/utils.service";
 import {openConfirmationDialog} from "ngx-hisb-common-ui";
 import {MatDialog} from "@angular/material/dialog";
+import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 
 
 export interface Stage {
@@ -20,6 +21,7 @@ export interface Stage {
 export class OnboardingComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
   constructor(
+    @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
     private log: LoggerService,
     private utilsService: UtilsService,
     private dialog: MatDialog,
