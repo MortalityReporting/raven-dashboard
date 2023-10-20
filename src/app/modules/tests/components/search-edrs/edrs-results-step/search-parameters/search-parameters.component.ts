@@ -161,7 +161,6 @@ export class SearchParametersComponent implements OnInit {
     }
     else {
       let authStringSplit = this.config.ravenFhirServerBasicAuth.split(":");
-      console.log(authStringSplit)
       let authObject = {"username": authStringSplit[0], "password": authStringSplit[1]};
       this.searchEdrsService.searchEdrs(this.config.blueJayServerBaseUrl, this.getSearchParametersResourcePreview(), authObject).subscribe({
         next: value => {

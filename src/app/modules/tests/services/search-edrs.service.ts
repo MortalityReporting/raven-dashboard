@@ -74,7 +74,7 @@ export class SearchEdrsService {
   searchEdrs(uri, params, auth: {username: string, password: string}): Observable<any> {
     let httpHeaders = new HttpHeaders().set('Content-Type', 'application/fhir+json');
     if (auth) {
-      let basicAuthString = 'Basic ' + btoa(`${auth.username}:${auth.password}`);
+      const basicAuthString = 'Basic ' + btoa(`${auth.username}:${auth.password}`);
       httpHeaders = httpHeaders.set('Authorization', basicAuthString);
     }
     let httpOptions = { headers: httpHeaders }
