@@ -21,14 +21,23 @@ export class FhirExplorerComponent implements OnInit {
     private utilsService: UtilsService,
     private elRef: ElementRef
   ) {
-      this.fhirExplorerService.fhirResource$.subscribe( resource => {
+  };
+
+  ngOnInit(): void {
+    this.fhirExplorerService.fhirResource$.subscribe( resource => {
       this.fhirResource = resource;
 
       if(!this.fhirResource){
         this.formattedText = '';
       }
       else if(this.selectedStructure == "narrative"){
-        this.formattedText = this.fhirResource?.text?.div;
+        if(this.fhirResource?.text?.div){
+          this.formattedText = this.fhirResource?.text?.div;
+        }
+        else {
+          this.selectedStructure = "json";
+          this.formattedText = JSON.stringify( resource, null, 2 );
+        }
       }
       else if (this.selectedStructure === "xml") {
         this.isLoadingXMLData = true;
@@ -42,18 +51,6 @@ export class FhirExplorerComponent implements OnInit {
       }
       this.elRef.nativeElement.parentElement.parentElement.scrollTo(0, 0);
     })
-  };
-
-  ngOnInit(): void {
-    //If no narrative is found, render the JSON when the resource is first open
-    if(this.fhirResource?.text?.div){
-      this.formattedText = this.fhirResource?.text?.div;
-    }
-    else {
-      this.selectedStructure = "json";
-      this.formattedText = JSON.stringify( this.fhirResource, null, 2 );
-      this.elRef.nativeElement.parentElement.parentElement.scrollTo(0, 0);
-    }
   }
 
 
@@ -64,11 +61,8 @@ export class FhirExplorerComponent implements OnInit {
   onToggleClick() {
     if (this.selectedStructure === "narrative") {
       this.formattedText = this.fhirResource?.text?.div;
-      //this.formattedText = this.documentHandler.getCurrentSubjectResource().text.div;
     }
     else {
-      // TODO not sure why this is a good idea and we need to fix this code ASAP !!!
-      // This should do the translation we are doing in the constructor
       this.fhirExplorerService.setSelectedFhirResource(this.fhirResource);
     }
   }
