@@ -1,6 +1,6 @@
 <div class="testing-event-wrapper"  *ngIf="auth.isAuthenticated$ | async; else loggedOut">
 
-  <div class="testing-event-body" *ngIf="showRoot; else testContainer">
+  <div class="testing-event-body padding-md" *ngIf="showRoot; else testContainer">
     <!-- Menu -->
     <div class="testing-event-body-menu" [style.background-color]="config.backgroundColor">
       <mat-accordion>
@@ -58,17 +58,22 @@
       </div>
     </div>
   </div>
-  <ng-template #testContainer>
-    <testing-event-test-container [userId]="userFhirId"
-                                  [registrationDisplayItem]="currentItem"
-                                  (updateStatus)="updateStatus($event)"
-                                  (exitTest)="exitTest()"
-    >
-    </testing-event-test-container>
-  </ng-template>
+
 </div>
 
-
+<ng-template #testContainer>
+  <div class="testing-event-wrapper">
+    <div class="testing-event-body flush">
+      <testing-event-test-container class="full-screen"
+                                    [userId]="userFhirId"
+                                    [registrationDisplayItem]="currentItem"
+                                    (updateStatus)="updateStatus($event)"
+                                    (exitTest)="exitTest()"
+      >
+      </testing-event-test-container>
+    </div>
+  </div>
+</ng-template>
 
 <ng-template #loggedOut>
   <div class="testing-event-wrapper">

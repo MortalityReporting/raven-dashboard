@@ -33,9 +33,11 @@ $xs: 4px;
 $sm: 8px;
 $md: 16px;
 $lg: 24px;
+.margin-none { margin: 0; }
 .margin-sm { margin: $sm; }
 .margin-md { margin: $md; }
 .margin-lg { margin: $lg; }
+.padding-none { padding: 0; }
 .padding-xs { padding: $xs; }
 .padding-sm { padding: $sm; }
 .padding-md { padding: $md; }
@@ -271,59 +273,6 @@ $lg: 24px;
   }
 }
 
-/** Workflow Simulator Test Container **/
-.test-container-bar {
-  @extend .flex-row;
-  height: 50px;
-  min-height: 50px;
-  max-height: 50px;
-  margin: 0;
-  padding: 0;
-  > * {
-    flex: 1;
-  }
-}
-
-.test-container-wrapper {
-  @extend .margin-bottom-md;
-  @extend .full-screen;
-  @extend .flex-col-simple;
-  flex: 1;
-  align-content: stretch;
-  align-items: stretch;
-  overflow-y: hidden;
-  > .test-container-body {
-    @extend .padding-md;
-    @extend .scrollable;
-    border-left: 1px solid rgb(100, 96, 100);
-    border-right: 1px solid rgb(100, 96, 100);
-  }
-  > .test-container-header {
-    @extend .padding-md;
-    @extend .test-container-bar;
-    border-bottom: 2px solid rgb(100, 96, 100);
-    > * {
-      @extend .center-contents;
-    }
-    > .test-container-header-event-name {
-      font-size: larger;
-    }
-    > .test-container-header-test-name {
-      font-size: x-large;
-    }
-  }
-  > .test-container-footer {
-    @extend .padding-md;
-    @extend .test-container-bar;
-    border-top: 2px solid rgb(100, 96, 100);
-    > * {
-      @extend .center-contents;
-    }
-    > .test-container-footer-status {
-      font-size: larger;
-    }
-  }
-}
 
 /**********************************************************************
   TODO: ALL CLASSES BELOW SHOULD BE REFACTORED/STANDARDIZED
