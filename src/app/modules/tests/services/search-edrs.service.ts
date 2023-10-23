@@ -84,8 +84,11 @@ export class SearchEdrsService {
       url : operationDefinitionLocation
     });
 
-    return this.http.post(operationDefinitionLocation, params, httpOptions).pipe(map(result => {
-        this.setTestStatus(TestStatus.complete); // TODO: Confirm this doesn't fire if results empty.
+    return this.http.post(operationDefinitionLocation, params, httpOptions).pipe(map((result: any) => {
+      console.log(result);
+      if(result?.total > 0){
+          this.setTestStatus(TestStatus.complete); // The compete status is set ONLY when at least one record is returned
+        }
         return result;
       }
     ));
