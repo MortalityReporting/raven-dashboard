@@ -5,6 +5,7 @@ import {map} from "rxjs/operators";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ConfigService} from "../../../service/config.service";
 import {Config} from "../../../model/config";
+import {TestStatus} from "../../testing-events";
 
 @Injectable({
   providedIn: 'root'
@@ -70,29 +71,21 @@ export class SearchEdrsService {
   }
 
 
-  searchEdrs(uri, params, auth?): Observable<any> {
-
-    let authorizationData: string = 'Basic ' + btoa(auth);
+  searchEdrs(uri, params, auth: {username: string, password: string}): Observable<any> {
+    let httpHeaders = new HttpHeaders().set('Content-Type', 'application/fhir+json');
     if (auth) {
-      const basicAuthString = `${auth.username}:${auth.password}`;
-      authorizationData = 'Basic ' + btoa(basicAuthString);
+      const basicAuthString = 'Basic ' + btoa(`${auth.username}:${auth.password}`);
+      httpHeaders = httpHeaders.set('Authorization', basicAuthString);
     }
-
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': authorizationData
-      })
-    };
-
-    const operationDefinitionLocation = uri+ "/Composition/$mdi-documents";
+    let httpOptions = { headers: httpHeaders }
+    const operationDefinitionLocation = uri + "Composition/$document"; // TODO: Move to constants.
 
     this.setEdrsHttpRequestInfo({
       url : operationDefinitionLocation
     });
 
     return this.http.post(operationDefinitionLocation, params, httpOptions).pipe(map(result => {
-        this.setTestStatus("completed");
+        this.setTestStatus(TestStatus.complete); // TODO: Confirm this doesn't fire if results empty.
         return result;
       }
     ));

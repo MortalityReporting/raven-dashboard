@@ -13,6 +13,7 @@ import {UtilsService} from "../../../../service/utils.service";
 import {Router} from "@angular/router";
 import {Test} from "../../../tests";
 import {UiStringConstants} from "../../../../providers/ui-string-constants";
+import {TestStatus} from "../../models/test-status";
 
 @Component({
   selector: 'testing-event-root',
@@ -39,6 +40,10 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
   events$: Observable<EventModule[]>;
   user$: Observable<UserProfile>;
   showRoot: boolean = true;
+  show: {home: boolean, registration: boolean} = {
+    home: true,
+    registration: false
+  }
 
   constructor(@Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
               public auth: AuthService,
@@ -102,12 +107,23 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
   }
 
   selectEvent(index: number) {
+    // TODO: Refactor to not use the booleans to handle dynamic loading.
     this.currentIndex = index;
-    if (index === -1) {
+    if (index < 0) {
       // If no item is selected, return current registration to undefined.
       this.eventManager.setCurrentRegistration(undefined);
       this.eventManager.setCurrentEvent(undefined);
+      if (index === -1) {
+        this.show.home = false;
+        this.show.registration = true;
+      }
+      else if (index === -2) {
+        this.show.home = true;
+        this.show.registration = false;
+      }
     } else {
+      this.show.home = false;
+      this.show.registration = false;
       // If item is selected, set current registration as it.
       const registration: Registration = this.registrations[index];
       this.eventManager.setCurrentRegistration(registration);
@@ -127,7 +143,6 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
 
 
   registerForEvent(event: any) {
-    console.log(event)
     const registrationAsFhir: QuestionnaireResponse = new Registration(event, `Practitioner/${this.userFhirId}`);
     this.eventManager.createNewRegistration(registrationAsFhir).subscribe({
       next: value => {
@@ -141,8 +156,6 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
         this.refreshTrigger$.next(1);
       }
     })
-    console.log(JSON.stringify(registrationAsFhir, null, 4));
-
   }
 
   ngOnDestroy(): void {
@@ -152,7 +165,6 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
   loadTestContainer(registrationDisplayItem: RegistrationDisplayItem) {
     this.showRoot = false;
     this.currentItem = registrationDisplayItem;
-    console.log(registrationDisplayItem);
   }
 
   exitTest() {
@@ -160,19 +172,19 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
     this.currentItem = undefined;
   }
 
-  updateStatus(event) {
-    if (this.currentItem.testStatus == event){
+  updateStatus(newStatus: TestStatus) {
+    if (this.currentItem.testStatus == newStatus){
       // if there is no change in the status, we don't need to do an update
       return;
     }
     this.isLoading = true;
-    this.eventManager.updateTestStatus(this.currentRegistration, this.currentItem.linkId, event).subscribe({
+    this.eventManager.updateTestStatus(this.currentRegistration, this.currentItem.linkId, newStatus).subscribe({
       next: value => {
         this.refreshTrigger$.next(1);
         this.isLoading = false;
       },
       error: err => {
-        console.log(err);
+        console.error(err);
         this.isLoading = false;
         this.utilsService.showErrorMessage("Server error updating the test event status");
       }
@@ -180,7 +192,7 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
 
   }
 
-  onStandaloneTestSelected(standaloneTest){
+  onStandaloneTestSelected(standaloneTest: any){
     this.router.navigate([`/workflow-simulator/${standaloneTest.route}`]);
   }
 }
