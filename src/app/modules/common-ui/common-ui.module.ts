@@ -6,8 +6,8 @@ import {BreadcrumbComponent} from "./components/breadcrumb/breadcrumb.component"
 import {MatDividerModule} from "@angular/material/divider";
 import {MatIconModule, MatIconRegistry} from "@angular/material/icon";
 import {DomSanitizer} from "@angular/platform-browser";
-import {CustomSpinnerDirective} from "./directives/custom-spinner.directive";
-import {ModuleThemedButtonDirective} from "./directives/moduleThemedButton.directive";
+import {CustomSpinnerDirective} from "../../directives/custom-spinner.directive";
+import {ModuleThemedButtonDirective} from "../../directives/moduleThemedButton.directive";
 import {MatButtonModule} from "@angular/material/button";
 import {RouterLink} from "@angular/router";
 import {ErrorFrameComponent} from "./components/error-frame/error-frame.component";
