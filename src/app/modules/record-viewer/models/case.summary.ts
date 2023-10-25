@@ -51,6 +51,7 @@ export class Jurisdiction {
 export class Autopsy {
   performed: string;
   resultsAvailable: string;
+  autopsyLocation: string;
 }
 
 // Individual Resources and Parts
