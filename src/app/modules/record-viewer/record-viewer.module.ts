@@ -50,6 +50,7 @@ import {ToxicologyGridComponent} from "./components/search-records/toxicology-gr
 import {
   ToxToMdiViewerMdiCaseComponent
 } from "./components/tox-to-mdi-viewer/tox-to-mdi-viewer-mdi-case/tox-to-mdi-viewer-mdi-case.component";
+import {CommonErrorComponent} from "ngx-hisb-common-ui";
 
 @NgModule({
   declarations: [
@@ -93,7 +94,8 @@ import {
         MatCheckboxModule,
         MatSortModule,
         CommonUiModule,
-        ScrollingModule
+        ScrollingModule,
+      CommonErrorComponent
     ]
 })
 export class RecordViewerModule {

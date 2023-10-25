@@ -10,6 +10,7 @@ export class SearchRecordsComponent implements OnInit, OnDestroy {
 
   sessionStorageLastTabKey = "searchTab";
   selectedTabIndex = 0;
+  serverErrorDetected: boolean = false;
 
   constructor(
     @Inject('appConfig') public appConfig: AppConfiguration
@@ -17,9 +18,19 @@ export class SearchRecordsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.selectedTabIndex = parseInt(sessionStorage.getItem(this.sessionStorageLastTabKey));
+    this.serverErrorDetected = false;
   }
 
   ngOnDestroy(): void {
     sessionStorage.setItem(this.sessionStorageLastTabKey, `${this.selectedTabIndex}`);
   }
+
+  onPageReload() {
+    window.location.reload();
+  }
+
+  onServerErrorDetected() {
+    this.serverErrorDetected = true;
+  }
+
 }

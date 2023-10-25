@@ -19,6 +19,7 @@ export class ToxToMdiViewerComponent implements OnInit {
 
   /** Inputs to children **/
   toxToMdiRecord: ToxToMdiRecord;
+  serverErrorDetected: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,10 +30,17 @@ export class ToxToMdiViewerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.serverErrorDetected = false;
     let toxLabId = this.route.snapshot.params['id'];
-    this.toxicologyHandler.getRecord(toxLabId).subscribe(record => {
-      this.fhirExplorerService.setSelectedFhirResource(record.messageBundle);
-      this.toxToMdiRecord = record;
+    this.toxicologyHandler.getRecord(toxLabId).subscribe({
+      next: record => {
+        this.fhirExplorerService.setSelectedFhirResource(record.messageBundle);
+        this.toxToMdiRecord = record;
+      },
+      error: err => {
+        console.error(err);
+        this.serverErrorDetected = true;
+      }
     });
   }
 

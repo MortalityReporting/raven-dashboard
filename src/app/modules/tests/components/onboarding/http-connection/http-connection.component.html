@@ -137,12 +137,12 @@
           </ng-container>
 
           <div class="row margin-top">
-            <button mat-stroked-button type="button" color="primary" *ngIf="!isAdvancedSettingsVisible"
+            <button mat-stroked-button type="button" [style.color]="config.backgroundColor" *ngIf="!isAdvancedSettingsVisible"
                     (click)="onShowHideAdvancedSettings(true)">
               <mat-icon>expand_more</mat-icon>
               Show Advanced Setting
             </button>
-            <button mat-stroked-button type="button" color="primary" *ngIf="isAdvancedSettingsVisible"
+            <button mat-stroked-button type="button" [style.color]="config.backgroundColor" *ngIf="isAdvancedSettingsVisible"
                     (click)="onShowHideAdvancedSettings(false)">
               <mat-icon>expand_less</mat-icon>
               Hide Advanced Setting
@@ -186,7 +186,7 @@
 
               <button *ngIf="onboardingForm.controls['customizeHeaders']?.value === true" type="button"
                       class="margin-bottom-md"
-                      mat-stroked-button aria-label="Add Headers Params" color="primary" (click)="addHeaderParam()">
+                      mat-stroked-button aria-label="Add Headers Params" [style.color]="config.backgroundColor" (click)="addHeaderParam()">
                 <mat-icon>add</mat-icon>
                 Add Header Params
               </button>
@@ -229,7 +229,7 @@
 
               <button *ngIf="onboardingForm.controls['addQueryParams']?.value === true" type="button"
                       class="margin-bottom-md"
-                      mat-stroked-button aria-label="Add Query Params" color="primary" (click)="addQueryParam()">
+                      mat-stroked-button aria-label="Add Query Params" [style.color]="config.backgroundColor" (click)="addQueryParam()">
                 <mat-icon>add</mat-icon>
                 Add Query Params
               </button>
