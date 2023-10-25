@@ -91,9 +91,15 @@ export class EdrsSearchResultsGridComponent implements OnInit, OnChanges {
         decedent.race = raceStr;
 
 
-        const mannerOfDeathObservation = this.bundleHelper.findResourceByProfileName(bundle.resource, this.fhirProfiles.MdiToEdrs.Obs_MannerOfDeath)
-        const mannerOfDeathCc: CodeableConcept = new CodeableConcept(mannerOfDeathObservation?.valueCodeableConcept);
-        decedent.mannerOfDeath = mannerOfDeathCc?.toString();
+        const mannerOfDeathObservation = this.bundleHelper.findResourceByProfileName(bundle.resource, this.fhirProfiles.MdiToEdrs.Obs_MannerOfDeath);
+        if(!mannerOfDeathObservation){
+          decedent.mannerOfDeath = '';
+        }
+        else {
+          const mannerOfDeathCc: CodeableConcept = new CodeableConcept(mannerOfDeathObservation?.valueCodeableConcept);
+          decedent.mannerOfDeath = mannerOfDeathCc?.toString();
+        }
+
 
         const deathDateObservation = this.bundleHelper.findResourceByProfileName(bundle.resource, this.fhirProfiles.MdiToEdrs.Obs_DeathDate)
         decedent.deathDate = deathDateObservation?.effectiveDateTime;
@@ -136,6 +142,9 @@ export class EdrsSearchResultsGridComponent implements OnInit, OnChanges {
   }
 
   private toTitleCase(str: string): string{
+    if(!str){
+      return "";
+    }
     return str.replace(/\w\S*/g, function(txt){
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ElementRef, Inject} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, Inject, Output, EventEmitter} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
 import {DecedentGridDTO} from "../../../../../model/decedent.grid.dto";
 import {DecedentService} from "../../../services/decedent.service";
@@ -29,6 +29,7 @@ export class DecedentRecordsGridComponent implements OnInit {
   isLoading = true;
   mannerOfDeathList: string [] = [];
   pipe: DatePipe;
+  @Output() serverErrorEventEmitter = new EventEmitter();
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -113,7 +114,7 @@ export class DecedentRecordsGridComponent implements OnInit {
         error: (e) => {
           this.isLoading = false;
           console.error(e);
-          this.utilsService.showErrorMessage();
+          this.serverErrorEventEmitter.emit();
         },
         complete:  () => {
           this.isLoading = false;

@@ -23,7 +23,7 @@ export class UiStringConstants {
     searchEdrs: {
       // Step 1
       step1: {
-        STEP_LABEL: `Select MDI to EDRS document`,
+        STEP_LABEL: `Select MDI to EDRS Document`,
         DESCRIPTION: `Step 1 - Select or Import an MDI to EDRS Document (Optional) If provided, the Document Bundle is used to populate the Search Parameters. Otherwise, the Search Parameters may be manually specified.`,
         TAB_LABEL_1: `Select MDI to EDRS Document`,
         TAB_LABEL_2: `Import MDI to EDRS FHIR Document Bundle`,

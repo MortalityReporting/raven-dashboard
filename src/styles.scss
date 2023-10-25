@@ -1,4 +1,10 @@
+@use "@angular/material" as mat;
+$app-primary: mat.define-palette(mat.$indigo-palette, 500);
+$app-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$app-warn: mat.define-palette(mat.$red-palette);
+
 $primary-color: rgb(100, 96, 100);
+
 
 /* You can add global styles to this file, and also import other style files */
 html, body { height: 100%; width: 100% }
@@ -459,5 +465,15 @@ TODO: Refactor to generalize class names and move to a common shared .css file.
   &.app-notification-success {
     --mdc-snackbar-container-color: #2E7D32;
   }
+  &.app-notification-warn {
+    --mdc-snackbar-container-color: #D32F2F;
+    --mat-snack-bar-button-color: white;
+    --mdc-snackbar-supporting-text-color: white;
+    --mdc-snackbar-supporting-text-weight: bold;
+  }
+}
+
+.browser-support-message-offset{
+  transform: translateY(4vh) !important;
 }
 

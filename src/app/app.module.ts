@@ -41,6 +41,7 @@ import {RegisteredEndpointsInterceptor} from "./interceptors/registered-endpoint
 import {AuthHttpInterceptor} from "@auth0/auth0-angular";
 import {WorkflowSimulatorModule} from "./modules/workflow-simulator/workflow-simulator.module";
 import {TestsModule} from "./modules/tests/tests.module";
+import {AppConstants} from "./providers/app-constants";
 
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
@@ -99,6 +100,9 @@ export const configFactory = (configService: ConfigService) => {
     },
     {
       provide: UiStringConstants,
+    },
+    {
+      provide: AppConstants,
     },
     {
       provide: 'fhirProfiles',
