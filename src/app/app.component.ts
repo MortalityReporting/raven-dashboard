@@ -1,10 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {MatIconRegistry} from "@angular/material/icon";
-import {DomSanitizer} from "@angular/platform-browser";
+import {DomSanitizer, platformBrowser} from "@angular/platform-browser";
 import {OptionConfig, HeaderConfig} from "ngx-hisb-common-ui";
 import {AppConfiguration} from "./providers/app-configuration";
 import {ThemeService} from "./service/theme.service";
 import {ConfigService} from "./service/config.service";
+import {Platform} from "@angular/cdk/platform";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-root',
@@ -25,7 +27,9 @@ export class AppComponent implements OnInit {
     private configService: ConfigService,
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    public platform: Platform,
+    private _snackBar: MatSnackBar
     ) {
   }
   ngOnInit(): void {
@@ -124,5 +128,20 @@ export class AppComponent implements OnInit {
         }
       ]
     }
+    if(!(this.platform.BLINK || this.platform.FIREFOX) || !this.platform.isBrowser){
+      this.showBrowserSupportWarningMessage("Raven is not fully supported by the browser you are currently using, and may not render content properly. For best results please use Google Chrome, Mozilla FireFox, or Microsoft Edge browsers.");
+    }
+
   }
+
+  showBrowserSupportWarningMessage(messageStr: string){
+    this._snackBar.open(messageStr, 'X' ,{
+      horizontalPosition: 'center',
+      verticalPosition: 'top', //we offset the vertical position
+      panelClass: ['browser-support-message-offset', 'app-notification-warn'],
+      duration: 5000 //five seconds warning.
+    });
+  }
+
+  protected readonly platformBrowser = platformBrowser;
 }
