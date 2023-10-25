@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, Output} from '@angular/core';
 import {Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {DocumentWindowComponent} from "../document-window/document-window.component";
@@ -8,6 +8,7 @@ import {EventModule} from "../../models/event-module";
 import {RegistrationDisplayItem} from "../../models/registration-display";
 import {TestStatus} from "../../models/test-status";
 import {mergeMap} from "rxjs";
+import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 
 @Component({
   selector: 'testing-event-test-container',
@@ -23,8 +24,10 @@ export class TestContainerComponent {
   currentEvent: EventModule;
   @Input() registrationDisplayItem: RegistrationDisplayItem;
 
+
   constructor(private router: Router, public dialog: MatDialog,
-              private eventManager: EventManagerService
+              private eventManager: EventManagerService,
+              @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
               ) {
     // const state = this.router.getCurrentNavigation().extras.state
     // this.registrationDisplayItem = state['displayItem'];
