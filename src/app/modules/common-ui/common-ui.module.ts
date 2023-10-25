@@ -39,19 +39,19 @@ import {ErrorFrameComponent} from "./components/error-frame/error-frame.componen
     ]
 })
 export class CommonUiModule {
-  constructor(private matIconRegistry: MatIconRegistry,
-              private domSanitizer: DomSanitizer) {
-    const path = "assets"
-    this.matIconRegistry.addSvgIcon("record-viewer", this.domSanitizer
-      .bypassSecurityTrustResourceUrl(`${path}/record-viewer.svg`));
-    this.matIconRegistry.addSvgIcon("record-import", this.domSanitizer
-      .bypassSecurityTrustResourceUrl(`${path}/record-import.svg`));
-    this.matIconRegistry.addSvgIcon("record-comparison", this.domSanitizer
-      .bypassSecurityTrustResourceUrl(`${path}/record-comparison.svg`));
-    this.matIconRegistry.addSvgIcon("fhir-validator", this.domSanitizer
-      .bypassSecurityTrustResourceUrl(`${path}/fhir-validator.svg`));
-    this.matIconRegistry.addSvgIcon("workflow-simulator", this.domSanitizer
-      .bypassSecurityTrustResourceUrl(`${path}/workflow-simulator.svg`));
-  }
+  // constructor(private matIconRegistry: MatIconRegistry,
+  //             private domSanitizer: DomSanitizer) {
+  //   const path = "assets"
+  //   this.matIconRegistry.addSvgIcon("record-viewer", this.domSanitizer
+  //     .bypassSecurityTrustResourceUrl(`${path}/record-viewer.svg`));
+  //   this.matIconRegistry.addSvgIcon("record-import", this.domSanitizer
+  //     .bypassSecurityTrustResourceUrl(`${path}/record-import.svg`));
+  //   this.matIconRegistry.addSvgIcon("record-comparison", this.domSanitizer
+  //     .bypassSecurityTrustResourceUrl(`${path}/record-comparison.svg`));
+  //   this.matIconRegistry.addSvgIcon("fhir-validator", this.domSanitizer
+  //     .bypassSecurityTrustResourceUrl(`${path}/fhir-validator.svg`));
+  //   this.matIconRegistry.addSvgIcon("workflow-simulator", this.domSanitizer
+  //     .bypassSecurityTrustResourceUrl(`${path}/workflow-simulator.svg`));
+  // }
 
 }

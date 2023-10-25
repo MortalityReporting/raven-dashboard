@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Breadcrumb } from '../../models/breadcrumb';
+import { Breadcrumb } from '../../../../model/breadcrumb';
 import { BreadcrumbService } from '../../../../service/breadcrumb.service';
 
 @Component({
