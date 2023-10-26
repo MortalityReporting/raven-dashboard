@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, Router} from '@angular/router';
 import {BehaviorSubject} from 'rxjs';
-import { Breadcrumb } from '../models/breadcrumb';
-import {ModuleHeaderService} from "../../../service/module-header.service";
+import {ModuleHeaderService} from "./module-header.service";
+import {Breadcrumb} from "../model/breadcrumb";
 
 export interface RouterNaviEndValue{
   header?: boolean | null,

@@ -1,10 +1,10 @@
 import {APP_INITIALIZER, NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import {BrowserModule, DomSanitizer} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ReactiveFormsModule} from "@angular/forms";
-import {MatIconModule} from "@angular/material/icon";
+import {MatIconModule, MatIconRegistry} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FhirValidatorModule} from "./modules/fhir-validator/fhir-validator.module";
@@ -18,10 +18,9 @@ import {FhirUtilModule} from "./modules/fhir-util/fhir-util.module";
 import {environment} from "../environments/environment";
 import {FhirExplorerModule} from "./modules/fhir-explorer/fhir-explorer.module";
 import {RecordComparisonModule} from "./modules/record-comparison/record-comparison.module";
-import {BreadcrumbComponent} from './modules/common-ui/components/breadcrumb/breadcrumb.component';
+import {BreadcrumbComponent} from './components/breadcrumb/breadcrumb.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {ModuleHeaderConfig} from "./providers/module-header-config";
-import {CommonUiModule} from "./modules/common-ui/common-ui.module";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatDialogModule} from "@angular/material/dialog";
@@ -42,6 +41,7 @@ import {AuthHttpInterceptor} from "@auth0/auth0-angular";
 import {WorkflowSimulatorModule} from "./modules/workflow-simulator/workflow-simulator.module";
 import {TestsModule} from "./modules/tests/tests.module";
 import {AppConstants} from "./providers/app-constants";
+import {ModuleHeaderComponent} from "./components/module-header/module-header.component";
 
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
@@ -57,7 +57,9 @@ export const configFactory = (configService: ConfigService) => {
     AppComponent,
     LandingComponent,
     ModalComponent,
-    CardHoverDirective
+    CardHoverDirective,
+    ModuleHeaderComponent,
+    BreadcrumbComponent
   ],
   imports: [
     // TODO: Clean up imports after refactor.
@@ -86,9 +88,7 @@ export const configFactory = (configService: ConfigService) => {
     RecordComparisonModule.forRoot(ModuleHeaderConfig.RecordComparison, FHIRProfileConstants.Profiles),
     WorkflowSimulatorModule.forRoot(environment, ModuleHeaderConfig.WorkflowSimulator, AppConfiguration.config),
     TestsModule.forRoot(environment, ModuleHeaderConfig.WorkflowSimulator, AppConfiguration.config),
-    CommonUiModule,
     MatSidenavModule,
-    CommonUiModule,
     UserManagementModule
   ],
   providers: [
@@ -132,4 +132,18 @@ export const configFactory = (configService: ConfigService) => {
   ]
 })
 export class AppModule {
+  constructor(private matIconRegistry: MatIconRegistry,
+              private domSanitizer: DomSanitizer) {
+    const path = "assets"
+    this.matIconRegistry.addSvgIcon("record-viewer", this.domSanitizer
+      .bypassSecurityTrustResourceUrl(`${path}/record-viewer.svg`));
+    this.matIconRegistry.addSvgIcon("record-import", this.domSanitizer
+      .bypassSecurityTrustResourceUrl(`${path}/record-import.svg`));
+    this.matIconRegistry.addSvgIcon("record-comparison", this.domSanitizer
+      .bypassSecurityTrustResourceUrl(`${path}/record-comparison.svg`));
+    this.matIconRegistry.addSvgIcon("fhir-validator", this.domSanitizer
+      .bypassSecurityTrustResourceUrl(`${path}/fhir-validator.svg`));
+    this.matIconRegistry.addSvgIcon("workflow-simulator", this.domSanitizer
+      .bypassSecurityTrustResourceUrl(`${path}/workflow-simulator.svg`));
+  }
 }

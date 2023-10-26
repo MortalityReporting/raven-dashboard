@@ -18,13 +18,19 @@
   </div>
   <div class="test-container-footer">
     <div class="test-container-footer-return">
-      <button color="primary" mat-flat-button (click)="onExitTest()">
+      <button
+        [style.background-color]="config.backgroundColor"
+        [style.color]="'white'"
+        mat-flat-button (click)="onExitTest()">
         <mat-icon>arrow_back</mat-icon>
         Return to Event Modules
       </button>
     </div>
     <div class="test-container-footer-upload">
-      <button color="primary" mat-flat-button (click)="openDocumentWidow()">
+      <button
+        [style.background-color]="config.backgroundColor"
+        [style.color]="'white'"
+        mat-flat-button (click)="openDocumentWidow()">
         <mat-icon>upload</mat-icon>
         Submit/View Documentation
       </button>

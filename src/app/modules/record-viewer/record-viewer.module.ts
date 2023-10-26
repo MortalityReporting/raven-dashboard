@@ -13,7 +13,6 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {FormsModule} from "@angular/forms";
 import {MatSortModule} from "@angular/material/sort";
 import {ModuleHeaderConfig} from "../../providers/module-header-config";
-import {CommonUiModule} from "../common-ui/common-ui.module";
 import {MatTableModule} from "@angular/material/table";
 import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
@@ -51,6 +50,7 @@ import {
   ToxToMdiViewerMdiCaseComponent
 } from "./components/tox-to-mdi-viewer/tox-to-mdi-viewer-mdi-case/tox-to-mdi-viewer-mdi-case.component";
 import {CommonErrorComponent} from "ngx-hisb-common-ui";
+import {CustomSpinnerDirective} from "./directives/custom-spinner.directive";
 
 @NgModule({
   declarations: [
@@ -69,7 +69,8 @@ import {CommonErrorComponent} from "ngx-hisb-common-ui";
     ToxToMdiViewerNavMenuComponent,
     ToxToMdiViewerContentComponent,
     ToxToMdiViewerCertifierComponent,
-    ToxToMdiViewerGridSectionComponent
+    ToxToMdiViewerGridSectionComponent,
+    CustomSpinnerDirective
   ],
     imports: [
         CommonModule,
@@ -93,7 +94,6 @@ import {CommonErrorComponent} from "ngx-hisb-common-ui";
         MatSelectModule,
         MatCheckboxModule,
         MatSortModule,
-        CommonUiModule,
         ScrollingModule,
       CommonErrorComponent
     ]

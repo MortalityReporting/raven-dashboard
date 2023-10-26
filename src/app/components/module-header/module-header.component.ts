@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {ModuleHeaderService} from "../../../../service/module-header.service";
+import {ModuleHeaderService} from "../../service/module-header.service";
 
 @Component({
   selector: 'app-module-header',
