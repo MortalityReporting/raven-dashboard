@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
 import {AppConfiguration} from "../../../../../providers/app-configuration";
 import {MdiToEdrsRecord} from "../../../models/mdiToEdrsRecord";
+import {FHIRProfileConstants} from "../../../../../providers/fhir-profile-constants";
 
 @Component({
   selector: 'record-viewer-mdi-to-edrs-viewer-content',
@@ -33,8 +34,10 @@ export class MdiToEdrsViewerContentComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+
     @Inject('config') public config: ModuleHeaderConfig,
-    @Inject('appConfig') public appConfig: AppConfiguration
+    @Inject('appConfig') public appConfig: AppConfiguration,
+    @Inject('fhirProfiles') public fhirProfiles: FHIRProfileConstants
   ) {
   }
 
