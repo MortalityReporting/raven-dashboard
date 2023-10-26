@@ -95,7 +95,7 @@ import {CustomSpinnerDirective} from "./directives/custom-spinner.directive";
         MatCheckboxModule,
         MatSortModule,
         ScrollingModule,
-      CommonErrorComponent
+        CommonErrorComponent
     ]
 })
 export class RecordViewerModule {

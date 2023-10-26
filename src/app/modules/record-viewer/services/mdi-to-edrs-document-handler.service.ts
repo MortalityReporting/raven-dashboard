@@ -367,7 +367,7 @@ export class MdiToEdrsDocumentHandlerService {
     let autopsyLocationReference = examAutopsySection.entry.find(entry => entry.reference.startsWith("Location")) // TODO: This is bad handling.
     autopsyLocationReference = autopsyLocationReference?.reference;
     let autopsyLocationResource = this.bundleHelper.findResourceByFullUrl(documentBundle, autopsyLocationReference);
-    autopsy.autopsyLocation = autopsyLocationResource.name || this.defaultString;
+    autopsy.autopsyLocation = autopsyLocationResource?.name || this.defaultString;
 
     return autopsy;
   }
