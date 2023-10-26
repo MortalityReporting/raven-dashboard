@@ -21,7 +21,6 @@ import {RecordComparisonModule} from "./modules/record-comparison/record-compari
 import {BreadcrumbComponent} from './components/breadcrumb/breadcrumb.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {ModuleHeaderConfig} from "./providers/module-header-config";
-import {CommonUiModule} from "./modules/common-ui/common-ui.module";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatDialogModule} from "@angular/material/dialog";
@@ -89,9 +88,7 @@ export const configFactory = (configService: ConfigService) => {
     RecordComparisonModule.forRoot(ModuleHeaderConfig.RecordComparison, FHIRProfileConstants.Profiles),
     WorkflowSimulatorModule.forRoot(environment, ModuleHeaderConfig.WorkflowSimulator, AppConfiguration.config),
     TestsModule.forRoot(environment, ModuleHeaderConfig.WorkflowSimulator, AppConfiguration.config),
-    CommonUiModule,
     MatSidenavModule,
-    CommonUiModule,
     UserManagementModule
   ],
   providers: [

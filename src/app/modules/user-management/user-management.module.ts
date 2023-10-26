@@ -13,7 +13,6 @@ import {MatDividerModule} from "@angular/material/divider";
 import { EventTableComponent } from './components/event-table/event-table.component';
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
-import {CommonUiModule} from "../common-ui/common-ui.module";
 import {ErrorFrameComponent} from "./components/error-frame/error-frame.component";
 
 @NgModule({
@@ -62,7 +61,6 @@ import {ErrorFrameComponent} from "./components/error-frame/error-frame.componen
     MatDividerModule,
     MatTableModule,
     MatSortModule,
-    CommonUiModule
   ]
 })
 export class UserManagementModule {

@@ -13,7 +13,6 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {FormsModule} from "@angular/forms";
 import {MatSortModule} from "@angular/material/sort";
 import {ModuleHeaderConfig} from "../../providers/module-header-config";
-import {CommonUiModule} from "../common-ui/common-ui.module";
 import {MatTableModule} from "@angular/material/table";
 import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
@@ -95,7 +94,6 @@ import {CustomSpinnerDirective} from "./directives/custom-spinner.directive";
         MatSelectModule,
         MatCheckboxModule,
         MatSortModule,
-        CommonUiModule,
         ScrollingModule,
       CommonErrorComponent
     ]
