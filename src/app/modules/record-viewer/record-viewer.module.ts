@@ -51,6 +51,7 @@ import {
   ToxToMdiViewerMdiCaseComponent
 } from "./components/tox-to-mdi-viewer/tox-to-mdi-viewer-mdi-case/tox-to-mdi-viewer-mdi-case.component";
 import {CommonErrorComponent} from "ngx-hisb-common-ui";
+import {CustomSpinnerDirective} from "./directives/custom-spinner.directive";
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import {CommonErrorComponent} from "ngx-hisb-common-ui";
     ToxToMdiViewerNavMenuComponent,
     ToxToMdiViewerContentComponent,
     ToxToMdiViewerCertifierComponent,
-    ToxToMdiViewerGridSectionComponent
+    ToxToMdiViewerGridSectionComponent,
+    CustomSpinnerDirective
   ],
     imports: [
         CommonModule,

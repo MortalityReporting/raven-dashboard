@@ -1,4 +1,4 @@
-import { CustomSpinnerDirective } from './custom-spinner.directive';
+import { CustomSpinnerDirective } from '../modules/record-viewer/directives/custom-spinner.directive';
 import {ElementRef} from "@angular/core";
 
 describe('CustomSpinnerDirective', () => {

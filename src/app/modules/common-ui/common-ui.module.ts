@@ -1,33 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {ModuleHeaderComponent} from "./components/module-header/module-header.component";
+import {ModuleHeaderComponent} from "../../components/module-header/module-header.component";
 import {MatToolbarModule} from "@angular/material/toolbar";
-import {BreadcrumbComponent} from "./components/breadcrumb/breadcrumb.component";
+import {BreadcrumbComponent} from "../../components/breadcrumb/breadcrumb.component";
 import {MatDividerModule} from "@angular/material/divider";
 import {MatIconModule, MatIconRegistry} from "@angular/material/icon";
 import {DomSanitizer} from "@angular/platform-browser";
-import {CustomSpinnerDirective} from "../../directives/custom-spinner.directive";
+import {CustomSpinnerDirective} from "../record-viewer/directives/custom-spinner.directive";
 import {ModuleThemedButtonDirective} from "../../directives/moduleThemedButton.directive";
 import {MatButtonModule} from "@angular/material/button";
 import {RouterLink} from "@angular/router";
-import {ErrorFrameComponent} from "./components/error-frame/error-frame.component";
+import {ErrorFrameComponent} from "../user-management/components/error-frame/error-frame.component";
 
 
 
 @NgModule({
   declarations: [
-    ModuleHeaderComponent,
-    BreadcrumbComponent,
-    CustomSpinnerDirective,
+    // CustomSpinnerDirective,
     ModuleThemedButtonDirective,
-    ErrorFrameComponent
   ],
   exports: [
-    ModuleHeaderComponent,
-    BreadcrumbComponent,
-    CustomSpinnerDirective,
+    // CustomSpinnerDirective,
     ModuleThemedButtonDirective,
-    ErrorFrameComponent
   ],
     imports: [
         CommonModule,

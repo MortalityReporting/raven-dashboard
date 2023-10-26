@@ -18,7 +18,7 @@ import {FhirUtilModule} from "./modules/fhir-util/fhir-util.module";
 import {environment} from "../environments/environment";
 import {FhirExplorerModule} from "./modules/fhir-explorer/fhir-explorer.module";
 import {RecordComparisonModule} from "./modules/record-comparison/record-comparison.module";
-import {BreadcrumbComponent} from './modules/common-ui/components/breadcrumb/breadcrumb.component';
+import {BreadcrumbComponent} from './components/breadcrumb/breadcrumb.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {ModuleHeaderConfig} from "./providers/module-header-config";
 import {CommonUiModule} from "./modules/common-ui/common-ui.module";
@@ -42,6 +42,7 @@ import {AuthHttpInterceptor} from "@auth0/auth0-angular";
 import {WorkflowSimulatorModule} from "./modules/workflow-simulator/workflow-simulator.module";
 import {TestsModule} from "./modules/tests/tests.module";
 import {AppConstants} from "./providers/app-constants";
+import {ModuleHeaderComponent} from "./components/module-header/module-header.component";
 
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
@@ -57,7 +58,9 @@ export const configFactory = (configService: ConfigService) => {
     AppComponent,
     LandingComponent,
     ModalComponent,
-    CardHoverDirective
+    CardHoverDirective,
+    ModuleHeaderComponent,
+    BreadcrumbComponent
   ],
   imports: [
     // TODO: Clean up imports after refactor.
