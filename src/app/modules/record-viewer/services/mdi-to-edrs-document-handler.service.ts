@@ -180,7 +180,7 @@ export class MdiToEdrsDocumentHandlerService {
     summary.circumstances = this.generateCircumstances(documentBundle);
     summary.jurisdiction = this.generateJurisdiction(documentBundle, compositionResource);
     summary.causeAndManner = this.generateCauseAndManner(documentBundle, compositionResource);
-    summary.examAndAutopsy = this.generateExamAndAutopsy(documentBundle);
+    summary.examAndAutopsy = this.generateExamAndAutopsy(documentBundle, compositionResource);
     summary.compositionId = compositionResource?.id || '';
 
     summary.documentBundleResource = documentBundle;
@@ -205,7 +205,7 @@ export class MdiToEdrsDocumentHandlerService {
     demographics.address = new Address();
     demographics.address.line1 = patientResource.address?.[0]?.line?.[0] || this.defaultString;
     demographics.address.line2 = patientResource.address?.[0]?.line?.[1] || this.defaultString;
-    // In a lot of cases an address can have a line 1 only and not hav a line 2
+    // In a lot of cases an address can have a line 1 only and not have a line 2
     // In such cases we should not render the default string.
     if(demographics.address.line1 !== this.defaultString && demographics.address.line2 === this.defaultString){
       demographics.address.line2 = '';
@@ -351,16 +351,23 @@ export class MdiToEdrsDocumentHandlerService {
     return causeAndManner;
   }
 
-  generateExamAndAutopsy(documentBundle: any): Autopsy {
+  generateExamAndAutopsy(documentBundle: any, compositionResource: any): Autopsy {
     let autopsy: Autopsy = new Autopsy();
     // let autopsySection = this.getSection(compositionResource, "exam-autopsy");
     let observation = this.bundleHelper.findResourcesByProfileName(documentBundle, "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-autopsy-performed-indicator")[0];
     let performedValue = observation?.valueCodeableConcept;
     autopsy.performed = performedValue?.text || performedValue?.coding?.[0]?.display || performedValue?.coding?.[0]?.code || this.defaultString;
 
-    let availableComponent = this.fhirHelper.findObservationComponentByCode(observation, "69436-4");
+    let availableComponent = this.fhirHelper.findObservationComponentByCode(observation, "69436-4"); // TODO: Add to constants.
     let availableValue = availableComponent?.valueCodeableConcept;
     autopsy.resultsAvailable = availableValue?.text || availableValue?.coding?.[0]?.display || availableValue?.coding?.[0]?.code || this.defaultString;
+
+    let examAutopsySection = compositionResource.section.find(section => section.code.coding[0].code === "exam-autopsy"); // TODO: Add to constants.
+    console.log(examAutopsySection);
+    let autopsyLocationReference = examAutopsySection.entry.find(entry => entry.reference.startsWith("Location")) // TODO: This is bad handling.
+    autopsyLocationReference = autopsyLocationReference?.reference;
+    let autopsyLocationResource = this.bundleHelper.findResourceByFullUrl(documentBundle, autopsyLocationReference);
+    autopsy.autopsyLocation = autopsyLocationResource.name || this.defaultString;
 
     return autopsy;
   }

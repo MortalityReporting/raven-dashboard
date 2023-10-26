@@ -31,7 +31,7 @@
             <div class="content-field-value" *ngFor="let trackingNumber of mdiToEdrsRecord?.caseHeader?.trackingNumbers">
               <record-viewer-mdi-to-edrs-viewer-content-field [label]="trackingNumber.type" [value]="trackingNumber.value"
                                                         appSetFhirExplorer
-                                                        [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Composition-mdi-to-edrs'"
+                                                        [profile]="fhirProfiles.MdiToEdrs.Comp_MDItoEDRS"
                                                         [bundle]="mdiToEdrsRecord.documentBundle">
               </record-viewer-mdi-to-edrs-viewer-content-field>
             </div>
@@ -157,7 +157,7 @@
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Death Location'"
                                                       [value]="mdiToEdrsRecord?.caseSummary?.circumstances.deathLocation"
                                                       appSetFhirExplorer
-                                                      [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Location-death'"
+                                                      [profile]="fhirProfiles.MdiToEdrs.Loc_death"
                                                       [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
@@ -165,7 +165,7 @@
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Injury Location'"
                                                       [value]="mdiToEdrsRecord?.caseSummary?.circumstances.injuryLocation"
                                                       appSetFhirExplorer
-                                                      [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Location-injury'"
+                                                      [profile]="fhirProfiles.MdiToEdrs.Loc_injury"
                                                       [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
@@ -175,7 +175,7 @@
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Tobacco Use Contributed to Death'"
                                                       [value]="mdiToEdrsRecord?.caseSummary?.circumstances.tobaccoUseContributed"
                                                       appSetFhirExplorer
-                                                      [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-tobacco-use-contributed-to-death'"
+                                                      [profile]="fhirProfiles.MdiToEdrs.Obs_TobaccoUseContributedToDeath"
                                                       [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
@@ -183,7 +183,7 @@
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Decedent Pregnancy Status'"
                                                       [value]="mdiToEdrsRecord?.caseSummary?.circumstances.pregnancy"
                                                       appSetFhirExplorer
-                                                      [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-decedent-pregnancy'"
+                                                      [profile]="fhirProfiles.MdiToEdrs.Obs_DecedentPregnancy"
                                                       [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
@@ -203,7 +203,7 @@
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Death Date/Time'"
                                                       [value]="mdiToEdrsRecord?.caseSummary?.jurisdiction.deathDateTime"
                                                       appSetFhirExplorer
-                                                      [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date'"
+                                                      [profile]="fhirProfiles.MdiToEdrs.Obs_DeathDate"
                                                       [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
@@ -211,7 +211,7 @@
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Pronounced Date/Time'"
                                                       [value]="mdiToEdrsRecord?.caseSummary?.jurisdiction.pronouncedDateTime"
                                                       appSetFhirExplorer
-                                                      [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date'"
+                                                      [profile]="fhirProfiles.MdiToEdrs.Obs_DeathDate"
                                                       [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
@@ -221,7 +221,7 @@
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Establishment Approach'"
                                                       [value]="mdiToEdrsRecord?.caseSummary?.jurisdiction.establishmentApproach"
                                                       appSetFhirExplorer
-                                                      [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date'"
+                                                      [profile]="fhirProfiles.MdiToEdrs.Obs_DeathDate"
                                                       [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
@@ -229,7 +229,7 @@
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Type of Death Location'"
                                                       [value]="mdiToEdrsRecord?.caseSummary?.jurisdiction.typeOfDeathLocation"
                                                       appSetFhirExplorer
-                                                      [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-date'"
+                                                      [profile]="fhirProfiles.MdiToEdrs.Obs_DeathDate"
                                                       [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
@@ -301,7 +301,7 @@
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Manner of Death'"
                                                       [value]="mdiToEdrsRecord?.caseSummary?.causeAndManner.mannerOfDeath"
                                                       appSetFhirExplorer
-                                                      [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-manner-of-death'"
+                                                      [profile]="fhirProfiles.MdiToEdrs.Obs_MannerOfDeath"
                                                       [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
@@ -309,7 +309,7 @@
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Place of Injury'"
                                                       [value]="mdiToEdrsRecord?.caseSummary?.causeAndManner.placeOfInjury"
                                                       appSetFhirExplorer
-                                                      [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"
+                                                      [profile]="fhirProfiles.MdiToEdrs.Obs_HowDeathInjuryOccurred"
                                                       [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
@@ -319,7 +319,7 @@
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'How Injury Occurred'"
                                                       [value]="mdiToEdrsRecord?.caseSummary?.causeAndManner.howDeathInjuryOccurred"
                                                       appSetFhirExplorer
-                                                      [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"
+                                                      [profile]="fhirProfiles.MdiToEdrs.Obs_HowDeathInjuryOccurred"
                                                       [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
@@ -327,7 +327,7 @@
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Injury Date/Time'"
                                                       [value]="mdiToEdrsRecord?.caseSummary?.causeAndManner.injuryDateTime"
                                                       appSetFhirExplorer
-                                                      [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"
+                                                      [profile]="fhirProfiles.MdiToEdrs.Obs_HowDeathInjuryOccurred"
                                                       [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
@@ -337,7 +337,7 @@
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Injury/Event Occurred at Work'"
                                                       [value]="mdiToEdrsRecord?.caseSummary?.causeAndManner.workInjuryIndicator"
                                                       appSetFhirExplorer
-                                                      [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"
+                                                      [profile]="fhirProfiles.MdiToEdrs.Obs_HowDeathInjuryOccurred"
                                                       [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
@@ -345,7 +345,7 @@
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Transportation Role'"
                                                       [value]="mdiToEdrsRecord?.caseSummary?.causeAndManner.transportationRole"
                                                       appSetFhirExplorer
-                                                      [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-how-death-injury-occurred'"
+                                                      [profile]="fhirProfiles.MdiToEdrs.Obs_HowDeathInjuryOccurred"
                                                       [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
@@ -376,7 +376,7 @@
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Autopsy Performed?'"
                                                       [value]="mdiToEdrsRecord?.caseSummary?.examAndAutopsy.performed"
                                                       appSetFhirExplorer
-                                                      [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-autopsy-performed-indicator'"
+                                                      [profile]="fhirProfiles.MdiToEdrs.Obs_AutopsyPerformed"
                                                       [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
@@ -384,9 +384,22 @@
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Results Available?'"
                                                       [value]="mdiToEdrsRecord?.caseSummary?.examAndAutopsy.resultsAvailable"
                                                       appSetFhirExplorer
-                                                      [profile]="'http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-autopsy-performed-indicator'"
+                                                      [profile]="fhirProfiles.MdiToEdrs.Obs_AutopsyPerformed"
                                                       [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Autopsy Location'"
+                                                            [value]="mdiToEdrsRecord?.caseSummary?.examAndAutopsy.autopsyLocation"
+                                                            appSetFhirExplorer
+                                                            [profile]="fhirProfiles.MdiToEdrs.Obs_AutopsyPerformed"
+                                                            [bundle]="mdiToEdrsRecord?.documentBundle">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+          <div class="grid-col-1">
+            <!-- Empty Cell -->
           </div>
         </div>
       </div>
