@@ -138,8 +138,7 @@ export class AppComponent implements OnInit {
     this._snackBar.open(messageStr, 'X' ,{
       horizontalPosition: 'center',
       verticalPosition: 'top', //we offset the vertical position
-      panelClass: ['browser-support-message-offset', 'app-notification-warn'],
-      duration: 5000 //five seconds warning.
+      panelClass: ['browser-support-message-offset', 'app-notification-warn']
     });
   }
 

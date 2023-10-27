@@ -94,7 +94,7 @@ export class FhirValidatorResultsExportService {
       body: data,
       columns: [
         {header: 'Severity', dataKey: 'severity'},
-        {header: 'Fhir Path', dataKey: 'fhirPath'},
+        {header: 'FHIR Path', dataKey: 'fhirPath'},
         {header: 'Diagnostics', dataKey: 'diagnostics'},
         {header: 'Location', dataKey: 'location'},
       ],
