@@ -92,7 +92,6 @@ export class RecordComparisonContentComponent implements OnInit {
   ngOnInit(): void {
     // If an "id" parameter is passed in the URL, load that case immediately.
     let compositionId = this.route.snapshot.params['id'];
-    //console.log(compositionId);
     if (compositionId) {
       this.isLoading = true;
       this.userDocumentService.getUserDocumentBundle(compositionId).subscribe(
@@ -107,7 +106,6 @@ export class RecordComparisonContentComponent implements OnInit {
     // Get Reference Document List
     this.referenceDocumentService.getReferenceDocuments().subscribe(
       {next: value => {
-        //console.log(value);
           this.testCases = value;
           this.testCases.splice(0,0, {"display": "Select a reference record..."})
           this.selectedTestCase = this.testCases[0];

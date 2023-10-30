@@ -9,19 +9,28 @@ export class UtilsService {
   constructor(private _snackBar: MatSnackBar) { }
 
   showErrorMessage(messageStr: string = 'Server Error.'){
-    this._snackBar.open(messageStr, 'x' ,{
+    this._snackBar.open(messageStr, 'X' ,{
       horizontalPosition: 'center',
       verticalPosition: 'top',
-      panelClass: ['error-color'],
+      panelClass: ['snackbar-offset', 'app-notification-error'],
+      duration: 5000
+    });
+  }
+
+  showWarningMessage(messageStr: string){
+    this._snackBar.open(messageStr, 'X' ,{
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ['snackbar-offset', 'app-notification-warn'],
       duration: 5000
     });
   }
 
   showSuccessMessage(messageStr: string){
-    this._snackBar.open(messageStr, 'x' ,{
+    this._snackBar.open(messageStr, 'X' ,{
       horizontalPosition: 'center',
       verticalPosition: 'top',
-      panelClass: ['mat-toolbar', 'mat-primary'],
+      panelClass: ['snackbar-offset', 'app-notification-success'],
       duration: 3000
     });
   }

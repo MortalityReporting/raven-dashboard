@@ -8,7 +8,12 @@
   <div class="col-left">
     <section>
       <mat-button-toggle-group [(ngModel)]="selectedStructure" (click)="onToggleClick();" style="width: 100%">
-        <mat-button-toggle value="narrative" style="width: 33%">Narrative</mat-button-toggle>
+        <mat-button-toggle
+          value="narrative" style="width: 33%" [disabled]="!fhirResource?.text?.div"
+          [matTooltip]="!fhirResource?.text?.div ? 'No Narrative Found' : ''"
+        >
+          Narrative
+        </mat-button-toggle>
         <mat-button-toggle value="json" style="width: 33%">JSON</mat-button-toggle>
         <mat-button-toggle value="xml" style="width: 34%">XML</mat-button-toggle>
       </mat-button-toggle-group>
@@ -30,7 +35,7 @@
   <span *ngIf="!formattedText && !isLoadingXMLData" style="text-align: center"><pre> No Resource Found </pre></span>
 </div>
 
-<div *ngIf="isNarrative()">
+<div *ngIf="selectedStructure === 'narrative'">
   <br>
   <div *ngIf="formattedText" [innerHTML]="formattedText"></div>
   <div *ngIf="!formattedText" style="text-align: center">

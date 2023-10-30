@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {map} from "rxjs/operators";
-import {EnvironmentHandlerService} from "../../fhir-util";
+import {ConfigService} from "../../../service/config.service";
+import {Config} from "../../../model/config";
 
 
 @Injectable({
@@ -10,13 +10,18 @@ import {EnvironmentHandlerService} from "../../fhir-util";
 })
 export class ImportCaseService {
 
+  config: Config;
   constructor(
-    private environmentHandler: EnvironmentHandlerService,
-    private http:HttpClient
-  ) { }
+    private http:HttpClient,
+    private configService: ConfigService
+  ) {
+    this.config = this.configService.config;
+  }
 
   uploadFile(file, apiImportParameter: string): Observable<any> {
 
+    const fileExtension = file.name.substring(file.name.length, (file.name.lastIndexOf('.')) + 1);
+    let uriFileTypeSubstring = `upload-${fileExtension}-file`;
     let params = new HttpParams()
       .set('type', apiImportParameter)
 
@@ -24,36 +29,10 @@ export class ImportCaseService {
 
     formData.append("file", file, file.name);
 
-    return this.http.post(this.environmentHandler.getFhirImportServerURL(), formData, {params:params})
-  }
-
-  uploadFileContent(content, contentFormat): Observable<any>{
-
-    let headers = null;
-
-    if (contentFormat === 'json') {
-      headers = new HttpHeaders()
-        .set('Content-Type', 'application/fhir+json');
-    }
-    else if (contentFormat === 'xml'){
-      headers = new HttpHeaders()
-        .set('Content-Type', 'application/fhir+xml');
-    }
-    else {
-      console.error("Only json and xml are acceptable file formats!")
-    }
-
-    let data = null;
-    return this.http.post(this.environmentHandler.getFhirImportServerURL(),  content, {headers: headers});
-  }
-
-  getMockResponse(): Observable<any> {
-    return this.http.get('../../assets/data/export_to_excel_response.json')
+    return this.http.post(this.config.ravenImportApiUrl + uriFileTypeSubstring, formData, { params:params })
   }
 
   importResource(fhirResource): Observable<any> {
-    return this.http.post(this.environmentHandler.getFhirServerBaseURL(), fhirResource).pipe(map((result: any) => (
-      result as Object
-    )));
+    return this.http.post(this.config.ravenFhirServerBaseUrl, fhirResource)
   }
 }

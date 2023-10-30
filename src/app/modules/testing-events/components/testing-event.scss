@@ -1,0 +1,160 @@
+@import "../../../../styles";
+
+/** Testing Event Container **/
+.testing-event-wrapper {
+  @extend .full-screen;
+  @extend .flex-col-simple;
+  flex: 1;
+  align-content: stretch;
+  align-items: stretch;
+  overflow-y: hidden;
+  > .testing-event-body {
+    @extend .flex-row-simple;
+    flex: 1;
+    scroll-behavior: smooth;
+    overflow-y: hidden;
+    align-content: stretch;
+    align-items: stretch;
+    > .testing-event-body-menu {
+      @extend .scrollable;
+      scroll-behavior: smooth;
+      overflow-y: scroll;
+      border-radius: 5px;
+      max-width: 25em;
+      min-width: 10em;
+      display: flex;
+      flex-direction: column;
+      > button {
+        justify-content: left;
+        color: white;
+      }
+    }
+    > .testing-event-body-content {
+      @extend .scrollable;
+      scroll-behavior: smooth;
+      overflow-y: scroll;
+      flex: 1;
+      @extend .padding-sm;
+    }
+  }
+}
+
+/** Test Container **/
+.test-container-bar {
+  @extend .flex-row;
+  height: 50px;
+  min-height: 50px;
+  max-height: 50px;
+  margin: 0;
+  padding: 0;
+  > * {
+    flex: 1;
+  }
+}
+
+.test-container-wrapper {
+  @extend .full-screen;
+  @extend .flex-col-simple;
+  align-content: stretch;
+  align-items: stretch;
+  overflow-y: hidden;
+  > * {
+    flex: 1;
+  }
+  > .test-container-body {
+    @extend .padding-md;
+    @extend .scrollable;
+    flex: 1;
+    border-left: 1px solid rgb(100, 96, 100);
+    border-right: 1px solid rgb(100, 96, 100);
+  }
+  > .test-container-header {
+    @extend .padding-md;
+    @extend .test-container-bar;
+    border-bottom: 2px solid rgb(100, 96, 100);
+    > * {
+      @extend .center-contents;
+    }
+    > .test-container-header-event-name {
+      font-size: larger;
+    }
+    > .test-container-header-test-name {
+      font-size: x-large;
+    }
+  }
+  > .test-container-footer {
+    @extend .padding-md;
+    @extend .test-container-bar;
+    border-top: 2px solid rgb(100, 96, 100);
+    > * {
+      @extend .center-contents;
+    }
+    > .test-container-footer-status {
+      font-size: larger;
+    }
+  }
+}
+
+/** Other **/
+.flush {
+  @extend .margin-none;
+  @extend .padding-none;
+}
+
+mat-panel-title {
+  color: white;
+}
+
+mat-expansion-panel-body {
+
+}
+
+.mat-expansion-panel-header {
+  margin: 0;
+}
+
+// TODO: Refactor to not use ::ng-deep.
+:host ::ng-deep .mat-expansion-indicator:after {
+  border-color: white;
+}
+
+.panel-button {
+  @extend .pointer;
+  justify-content: left;
+  color: white;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-header-top {
+  font-weight: bold;
+  font-size: large;
+  @extend .margin-bottom-sm;
+  @extend .margin-top-sm;
+}
+.menu-header {
+  font-weight: bold;
+  font-size: medium;
+  @extend .margin-sm;
+}
+.menu-divider {
+  @extend .margin-md;
+}
+.register-header {
+  @extend .padding-sm;
+  @extend .margin-bottom-md;
+  font-size: larger;
+  font-weight: bold;
+  color: white;
+}
+
+.spinner-container {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  top: 40%;
+  left: 50%;
+  margin-left: -50px;
+  margin-top: -50px;
+}

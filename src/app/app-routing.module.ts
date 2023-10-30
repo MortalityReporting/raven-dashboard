@@ -1,17 +1,36 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LandingComponent} from "./components/landing/landing.component";
-import {CaseContainerComponent} from "./modules/record-viewer/components/viewer-container/case-container.component";
 import {ImportCaseComponent} from "./modules/import-case/components/import-case.component";
 import {FhirValidatorComponent} from "./modules/fhir-validator/components/fhir-validator/fhir-validator.component";
 import {SearchRecordsComponent} from "./modules/record-viewer/components/search-records/search-records.component";
-import {WorkflowSimulatorComponent} from "./modules/workflow-simulator/components/workflow-simulator.component";
-import {SearchEdrsComponent} from "./modules/workflow-simulator/components/search-edrs/search-edrs.component";
 import {ModuleHeaderConfig} from "./providers/module-header-config";
 import {AppConfiguration} from "./providers/app-configuration";
 import {
   RecordComparisonContentComponent
 } from "./modules/record-comparison/components/record-comparison-content/record-comparison-content.component";
+import {AdminPanelComponent} from "./modules/user-management/components/admin-panel/admin-panel.component";
+import {AuthGuard} from "@auth0/auth0-angular";
+import {LoggedInComponent} from "./modules/user-management/components/logged-in/logged-in.component";
+import {TestContainerComponent} from "./modules/testing-events/components/test-container/test-container.component";
+import {
+  MdiToEdrsViewerComponent
+} from "./modules/record-viewer/components/mdi-to-edrs-viewer/mdi-to-edrs-viewer.component";
+import {OnboardingComponent} from "./modules/tests/components/onboarding/onboarding.component";
+import {
+  ToxToMdiViewerComponent
+} from "./modules/record-viewer/components/tox-to-mdi-viewer/tox-to-mdi-viewer.component";
+import {
+  WorkflowSimulatorComponent
+} from "./modules/workflow-simulator/components/workflow-simulator/workflow-simulator.component";
+import {SearchEdrsComponent} from "./modules/tests/components/search-edrs/search-edrs.component";
+import {
+  TestingEventRootComponent
+} from "./modules/testing-events/components/testing-event-root/testing-event-root.component";
+import {
+  StandaloneTestsComponent
+} from "./modules/workflow-simulator/components/standalone-tests/standalone-tests.component";
+
 
 const routes: Routes = [
   {
@@ -30,12 +49,12 @@ const routes: Routes = [
       },
       {
         path: 'mdi/:id',
-        component: CaseContainerComponent,
+        component: MdiToEdrsViewerComponent,
         data: { moduleConfig: ModuleHeaderConfig.RecordViewer, componentTitle: AppConfiguration.config.workflowTitles['mdiToEdrs'] + " Viewer"}
       },
       {
         path: 'tox/:id',
-        component: CaseContainerComponent,
+        component: ToxToMdiViewerComponent,
         data: { moduleConfig: ModuleHeaderConfig.RecordViewer, componentTitle: AppConfiguration.config.workflowTitles['toxToMdi'] + " Viewer"}
       }
     ],
@@ -73,15 +92,37 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: WorkflowSimulatorComponent,
+        component: TestingEventRootComponent,
         data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: undefined}
+      },
+      {
+        path: 'standalone-tests',
+        component: StandaloneTestsComponent,
+        data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Standalone Tests"}
       },
       {
         path: 'search-edrs',
         component: SearchEdrsComponent,
         data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Search EDRS"}
+      },
+      {
+        path: 'onboarding',
+        component: OnboardingComponent,
+        data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Onboarding"}
       }
     ]
+  },
+  {
+    path: AppConfiguration.config.modules['adminPanel'].route,
+    component: AdminPanelComponent,
+    data: { moduleConfig: ModuleHeaderConfig.AdminPanel, componentTitle: undefined},
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'logged-in',
+    component: LoggedInComponent,
+    data: { moduleConfig: undefined, componentTitle: undefined},
+    canActivate: [AuthGuard]
   },
   { // Do not add any paths below this point, this path MUST ALWAYS be the last path!
     path: '**', redirectTo: ''

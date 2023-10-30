@@ -1,0 +1,31 @@
+.error-header {
+  display: flex;
+  justify-items: center;
+  text-align: center;
+  justify-content: stretch;
+  align-self: center;
+  font-size: xx-large;
+  margin-bottom: 8px;
+  > * {
+    text-align: center;
+    justify-content: stretch;
+    align-self: center;
+    margin-right: 16px;
+    > .error-icon {
+      color: red;
+      font-size: 48px;
+      width: 48px;
+      height: 48px;
+    }
+  }
+}
+
+.key {
+  font-weight: bold;
+  font-size: large;
+  margin-right: 8px;
+  text-transform: capitalize;
+}
+.value {
+  font-size: large;
+}

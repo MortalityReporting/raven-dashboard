@@ -1,6 +1,6 @@
 {
   "name": "raven",
-  "version": "1.1.1-hotfix-c",
+  "version": "1.2.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -10,29 +10,34 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^15.2.2",
-    "@angular/cdk": "^15.2.2",
-    "@angular/common": "^15.2.2",
-    "@angular/compiler": "^15.2.2",
-    "@angular/core": "^15.2.2",
-    "@angular/forms": "^15.2.2",
-    "@angular/material": "^15.2.2",
-    "@angular/platform-browser": "^15.2.2",
-    "@angular/platform-browser-dynamic": "^15.2.2",
-    "@angular/router": "^15.2.2",
-    "common-ui": "github:SmartChartSuite/common-ui",
+    "@angular/animations": "^16.2.9",
+    "@angular/cdk": "^16.2.7",
+    "@angular/common": "^16.2.9",
+    "@angular/compiler": "^16.2.9",
+    "@angular/core": "^16.2.9",
+    "@angular/forms": "^16.2.9",
+    "@angular/material": "^16.2.7",
+    "@angular/platform-browser": "^16.2.9",
+    "@angular/platform-browser-dynamic": "^16.2.9",
+    "@angular/router": "^16.2.9",
+    "@auth0/auth0-angular": "^2.1.0",
     "diff": "^5.1.0",
-    "ngx-fhir-validator": "github:SmartChartSuite/ngx-fhir-validator",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.6.0",
+    "jszip": "^3.10.1",
+    "ngx-fhir-validator": "github:HISB-Libraries/ngx-fhir-validator",
+    "ngx-hisb-common-ui": "github:HISB-Libraries/ngx-hisb-common-ui",
+    "ngx-hisb-logger": "github:HISB-Libraries/ngx-hisb-logger",
     "rxjs": "~7.4.0",
     "rxjs-compat": "^6.6.7",
     "sass": "^1.58.3",
     "tslib": "^2.3.0",
-    "zone.js": "~0.11.4"
+    "zone.js": "~0.13.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^15.2.2",
-    "@angular/cli": "^15.2.2",
-    "@angular/compiler-cli": "^15.2.2",
+    "@angular-devkit/build-angular": "^16.2.6",
+    "@angular/cli": "^16.2.6",
+    "@angular/compiler-cli": "^16.2.9",
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
     "jasmine-core": "~3.10.0",
@@ -41,6 +46,7 @@
     "karma-coverage": "~2.1.0",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
-    "typescript": "~4.8.4"
+    "ng-packagr": "^16.2.3",
+    "typescript": "~5.1.6"
   }
 }

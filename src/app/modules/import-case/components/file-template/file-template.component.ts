@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, Inject, Input} from '@angular/core';
 import {FileTemplate} from "../../models/file-template";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {FileTemplateService} from "../../services/file-template.service";
@@ -19,4 +19,5 @@ export class FileTemplateComponent {
   onTemplateSelected(fileTemplate: FileTemplate) {
     this.fileTemplateService.setSelectedFileTemplate(fileTemplate);
   }
+
 }

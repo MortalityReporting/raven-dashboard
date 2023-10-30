@@ -1,0 +1,64 @@
+<div #menu
+     [style.background-color]="config.backgroundColor"
+     class="border-radius-xs">
+  <mat-nav-list aria-label="MDI to EDRS Document Navigation">
+    <div>
+      <button mat-flat-button (click)="onItemClick('caseAdminInfo')"
+              [style.color]="appConfig.contrastColor"
+              [style.background-color]="config.backgroundColor">
+        <mat-icon aria-hidden="true"> info</mat-icon>
+        Case Administration
+      </button>
+    </div>
+    <div>
+      <button mat-flat-button (click)="onItemClick('demographics')" [style.color]="appConfig.contrastColor"
+              [style.background-color]="config.backgroundColor">
+        <mat-icon aria-hidden="true"> person</mat-icon>
+        Demographics
+      </button>
+    </div>
+    <div>
+      <button mat-flat-button (click)="onItemClick('circumstances')" [style.color]="appConfig.contrastColor"
+              [style.background-color]="config.backgroundColor">
+        <mat-icon aria-hidden="true"> travel_explore</mat-icon>
+        Circumstances
+      </button>
+    </div>
+    <div>
+      <button mat-flat-button (click)="onItemClick('jurisdiction')" [style.color]="appConfig.contrastColor"
+              [style.background-color]="config.backgroundColor">
+        <mat-icon aria-hidden="true"> gavel</mat-icon>
+        Jurisdiction
+      </button>
+    </div>
+    <div>
+      <button mat-flat-button (click)="onItemClick('causeAndManner')" [style.color]="appConfig.contrastColor"
+              [style.background-color]="config.backgroundColor">
+        <mat-icon aria-hidden="true"> question_mark</mat-icon>
+        Cause/Manner
+      </button>
+    </div>
+    <div>
+      <button mat-flat-button (click)="onItemClick('medicalHistory')" [style.color]="appConfig.contrastColor"
+              [style.background-color]="config.backgroundColor">
+        <mat-icon aria-hidden="true"> medical_services</mat-icon>
+        Medical History
+      </button>
+    </div>
+    <div>
+      <button mat-flat-button (click)="onItemClick('examAndAutopsy')" [style.color]="appConfig.contrastColor"
+              [style.background-color]="config.backgroundColor">
+        <mat-icon aria-hidden="true"> description</mat-icon>
+        Exam and Autopsy
+      </button>
+    </div>
+    <div>
+      <button mat-flat-button (click)="onItemClick('narratives')" [style.color]="appConfig.contrastColor"
+              [style.background-color]="config.backgroundColor">
+        <mat-icon aria-hidden="true"> speaker_notes</mat-icon>
+        Narratives
+      </button>
+    </div>
+
+  </mat-nav-list>
+</div>

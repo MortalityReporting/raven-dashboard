@@ -1,20 +1,22 @@
 import {Component, OnInit} from '@angular/core';
-import {environment} from "../environments/environment";
 import {MatIconRegistry} from "@angular/material/icon";
-import {DomSanitizer} from "@angular/platform-browser";
-import {OptionConfig, HeaderConfig} from "common-ui";
+import {DomSanitizer, platformBrowser} from "@angular/platform-browser";
+import {OptionConfig, HeaderConfig} from "ngx-hisb-common-ui";
 import {AppConfiguration} from "./providers/app-configuration";
 import {ThemeService} from "./service/theme.service";
+import {ConfigService} from "./service/config.service";
+import {Platform} from "@angular/cdk/platform";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: []
 })
 export class AppComponent implements OnInit {
-  title = AppConfiguration.config.title;
+  title: string;
   subTitle = AppConfiguration.config.subTitle;
-  version = environment.VERSION;
+  version: string;
   color = AppConfiguration.config.color;
   contrastColor = AppConfiguration.config.contrastColor;
   optionConfig: OptionConfig;
@@ -22,16 +24,26 @@ export class AppComponent implements OnInit {
 
   // TODO: remove extra code once confirmed working on live.
   constructor(
+    private configService: ConfigService,
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    public platform: Platform,
+    private _snackBar: MatSnackBar
     ) {
   }
   ngOnInit(): void {
+    this.title = this.configService.config.title;
+    this.version = this.configService.config.version;
+    document.title = this.title;
+
     this.themeService.setColor(this.color);
     this.themeService.setContrastColor(this.contrastColor);
 
     const path = "assets"
+    this.matIconRegistry.addSvgIcon("fhir_logo", this.domSanitizer
+      .bypassSecurityTrustResourceUrl(`${path}/LOGO_FHIR_2.svg`));
+
     this.matIconRegistry.addSvgIcon("home", this.domSanitizer
       .bypassSecurityTrustResourceUrl(`${path}/home.svg`));
     this.matIconRegistry.addSvgIcon("record_comparison", this.domSanitizer
@@ -44,6 +56,8 @@ export class AppComponent implements OnInit {
       .bypassSecurityTrustResourceUrl(`${path}/workflow-simulator.svg`));
     this.matIconRegistry.addSvgIcon("fhir_validator", this.domSanitizer
       .bypassSecurityTrustResourceUrl(`${path}/fhir-validator.svg`));
+    this.matIconRegistry.addSvgIcon("admin_panel", this.domSanitizer
+      .bypassSecurityTrustResourceUrl(`${path}/admin-panel.svg`));
 
     this.optionConfig = {
       options: [
@@ -76,6 +90,11 @@ export class AppComponent implements OnInit {
           routerLink: AppConfiguration.config.modules['workflowSimulator'].route,
           label: AppConfiguration.config.modules['workflowSimulator'].title,
           iconName: "workflow_simulator"
+        },
+        {
+          routerLink: AppConfiguration.config.modules['adminPanel'].route,
+          label: AppConfiguration.config.modules['adminPanel'].title,
+          iconName: "admin_panel"
         }
       ]
     }
@@ -86,10 +105,14 @@ export class AppComponent implements OnInit {
           link: "https://hl7.org/fhir/us/mdi/STU1/"
         },
         {
+          label: "MDI FHIR IG CI Build",
+          link: "https://build.fhir.org/ig/HL7/fhir-mdi-ig/"
+        },
+        {
           divider: true
         },
         {
-          label: "Documentation",
+          label: "Raven Documentation",
           link: "https://ravendocs.readthedocs.io/en/latest/"
         },
         {
@@ -105,5 +128,19 @@ export class AppComponent implements OnInit {
         }
       ]
     }
+    if(!(this.platform.BLINK || this.platform.FIREFOX) || !this.platform.isBrowser){
+      this.showBrowserSupportWarningMessage("Raven is not fully supported by the browser you are currently using, and may not render content properly. For best results please use Google Chrome, Mozilla FireFox, or Microsoft Edge browsers.");
+    }
+
   }
+
+  showBrowserSupportWarningMessage(messageStr: string){
+    this._snackBar.open(messageStr, 'X' ,{
+      horizontalPosition: 'center',
+      verticalPosition: 'top', //we offset the vertical position
+      panelClass: ['browser-support-message-offset', 'app-notification-warn']
+    });
+  }
+
+  protected readonly platformBrowser = platformBrowser;
 }

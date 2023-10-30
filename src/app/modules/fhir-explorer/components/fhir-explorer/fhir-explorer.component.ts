@@ -17,22 +17,27 @@ export class FhirExplorerComponent implements OnInit {
 
   constructor(
     private httpClient: HttpClient,
-    //private documentHandler: MdiToEdrsDocumentHandlerService,
     private fhirExplorerService: FhirExplorerService,
     private utilsService: UtilsService,
     private elRef: ElementRef
   ) {
-      this.fhirExplorerService.fhirResource$.subscribe( resource => {
+  };
 
+  ngOnInit(): void {
+    this.fhirExplorerService.fhirResource$.subscribe( resource => {
       this.fhirResource = resource;
 
       if(!this.fhirResource){
         this.formattedText = '';
       }
       else if(this.selectedStructure == "narrative"){
-        // TODO, not sure where this comes from
-        //this.formattedText = this.documentHandler.getCurrentSubjectResource()?.text?.div;
-        this.formattedText = this.fhirResource?.text?.div;
+        if(this.fhirResource?.text?.div){
+          this.formattedText = this.fhirResource?.text?.div;
+        }
+        else {
+          this.selectedStructure = "json";
+          this.formattedText = JSON.stringify( resource, null, 2 );
+        }
       }
       else if (this.selectedStructure === "xml") {
         this.isLoadingXMLData = true;
@@ -44,14 +49,8 @@ export class FhirExplorerComponent implements OnInit {
       else {
         this.formattedText = JSON.stringify( resource, null, 2 );
       }
-
       this.elRef.nativeElement.parentElement.parentElement.scrollTo(0, 0);
-
     })
-  };
-
-  ngOnInit(): void {
-
   }
 
 
@@ -62,11 +61,8 @@ export class FhirExplorerComponent implements OnInit {
   onToggleClick() {
     if (this.selectedStructure === "narrative") {
       this.formattedText = this.fhirResource?.text?.div;
-      //this.formattedText = this.documentHandler.getCurrentSubjectResource().text.div;
     }
     else {
-      // TODO not sure why this is a good idea and we need to fix this code ASAP !!!
-      // This should do the translation we are doing in the constructor
       this.fhirExplorerService.setSelectedFhirResource(this.fhirResource);
     }
   }

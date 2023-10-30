@@ -1,102 +1,61 @@
-.landing-page-wrapper {
-  display: flex;
-  flex-direction: row;
-  margin: 24px;
+//** Left Column Headers **//
+
+.title-decoration {
+  border-left: 16px solid black;
+  padding-left: 8px;
 }
 
-.landing-page-content {
-  flex: 1;
-  width: 85%;
-  margin: auto;
+.title-decoration-sm {
+  border-left: 8px solid black;
+  padding-left: 8px;
 }
 
-.option-tile-container {
-  margin: auto;
-  width: 85%;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-
+.larger-divider {
+  border-width: 3px;
+  margin: 8px;
 }
 
-.flex-row {
-  display: flex;
-  flex-direction: row;
+.list-decoration {
+  list-style-type: none;
+  padding-left: 0;
 }
 
-.flex-cell {
-  flex: 1;
-  padding: 5px;
-  display: flex;
-}
+.align-left { text-align: left; }
 
+/** Mat Cards **/
 mat-card {
   flex: 1;
   padding: 0;
   cursor: pointer;
 }
 
-.card-image {
-  width: 100%;
+.mat-card-title-decoration {
+  display:flex;
+  align-self:center;
+  > mat-icon {
+    margin: auto 8px auto auto;
+  }
 }
-
-.row-spacer {
-  height: 2em;
-}
-
-//mat-card-header {
-//  border-radius: 4px 4px 0 0;
-//  padding: 0;
-//  margin: 0;
-//  background: #7986CB;
-//  color: white;
-//}
-//
-//mat-card-title {
-//  margin: 16px 0;
-//}
-//
-//mat-card-content {
-//  padding: 16px;
-//}
-
-.feature-in-progress {
-  cursor: not-allowed;
-}
-
-.feature-in-progress mat-card {
-  background: #c7c7c7;
-}
-.feature-in-progress mat-card-content {
-  background: transparent;
-}
-
-.feature-in-progress mat-card-header {
-  background: #5F6368;
-}
-
 
 mat-card {
   border-left: 8px solid transparent;
 }
+
 mat-card:hover {
   border-left: 8px solid black;
 }
 
-//.feature-in-progress:hover mat-card-header {
-//  background: #5F6368;
-//}
-
+//** Zulip Button **//
 .zulip-row {
   display: flex;
   justify-content: center;
 }
-.zulip-icon {
+.card-open-new-window-icon {
   flex: 0;
   vertical-align: middle;
   margin-right: 5px;
 }
-.zulip-text {
+.card-bold-text {
   flex: 1;
   margin: auto;
   vertical-align: middle;
@@ -108,6 +67,4 @@ mat-card:hover {
   background: orange;
 }
 
-.align-left {
-  text-align: left;
-}
+

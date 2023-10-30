@@ -12,6 +12,17 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "ngx-hisb-logger": [
+        "dist/ngx-hisb-logger"
+      ],
+      "ngx-sfm-mdi": [
+        "dist/ngx-sfm-mdi"
+      ],
+      "ngx-simple-fhir-models": [
+        "dist/ngx-simple-fhir-models"
+      ]
+    },
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,

@@ -1,23 +1,19 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
-import packageInfo from '../../package.json';
-
 export const environment = {
-  VERSION: packageInfo.version + "-dev",
-  production: false,
-  ravenFhirServer: "",
-  ravenFhirServerBasicAuth: "",
-  ravenImportApi: "",
-  fhirValidator: "",
-  blueJayServerBase: ""
-};
+  // API and Configuration Happens at build time as core dependency.
+  dashboardApi: "https://raven.dev.heat.icl.gtri.org/raven-dashboard-api/",
+  //dashboardApi: "http://127.0.0.1:8000/",
+  audience: "https://raven.dev.heat.icl.gtri.org/raven-dashboard-api/",
+  domain: "dev-dk7cyfpkwowbtdbt.us.auth0.com",
+  clientId: "M7knIi1ioWMc6Lufbt5lbyTrnxpKmL4q",
+  useLocalConfig: false,
+  overrideConfigLocation: "",
 
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
+  // TODO: Move to runtime config services.
+  // ravenFhirServer: "https://raven.dev.heat.icl.gtri.org/mdi-fhir-server/fhir",
+  // ravenFhirServerBasicAuth: "client:secret",
+  // ravenImportApi: "https://raven.dev.heat.icl.gtri.org/raven-import-api",
+  fhirValidator: "https://dev.heat.icl.gtri.org/fhir-validator-service/fhir", // TODO: Refactor modules to not rely on this.
+  // blueJayServerBase: "https://bluejay.heat.icl.gtri.org/mdi-fhir-server",
+  adminRedirectUrl: "https://localhost:4200/admin-panel",
+  adminLogoutUrl: "https://localhost:4200/"
+};

@@ -174,9 +174,8 @@ export class ComparisonService {
       }
 
     } catch(e) {
-      console.log(e);
+      console.error(e);
     }
-    //console.log(difference)
     return difference;
   }
 

@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core'
+import {TestStatus} from "../modules/testing-events";
+import {Test} from "../modules/tests";
 
 @Injectable()
 export class UiStringConstants {
@@ -21,7 +23,7 @@ export class UiStringConstants {
     searchEdrs: {
       // Step 1
       step1: {
-        STEP_LABEL: `Select MDI to EDRS document`,
+        STEP_LABEL: `Select MDI to EDRS Document`,
         DESCRIPTION: `Step 1 - Select or Import an MDI to EDRS Document (Optional) If provided, the Document Bundle is used to populate the Search Parameters. Otherwise, the Search Parameters may be manually specified.`,
         TAB_LABEL_1: `Select MDI to EDRS Document`,
         TAB_LABEL_2: `Import MDI to EDRS FHIR Document Bundle`,
@@ -54,4 +56,33 @@ export class UiStringConstants {
       },
     }
   }
+
+  WORKFLOW_STANDALONE_TESTS : Test []= [
+    {
+      name: 'onboarding',
+      display: 'Onboarding',
+      description: "Onboarding module description",
+      status: TestStatus.notStarted,
+      route: 'onboarding'
+    },
+    {
+      name: 'search-edrs',
+      display: 'Search EDRS',
+      description: "The \"EDRS Search\" workflow simulates '" +
+        "searching cases in an Electronic Death Registration System (EDRS). Testers representing Medical Examiners/Coroners (ME/Cs) " +
+        "can provide search parameters executed against the BlueJay EDRS test server, which implements the MDI Documents FHIR " +
+        "Operation for search. Supported parameters include primary case identification fields, as well as additional data " +
+        "(e.g., demographics information) if it exists in the test EDRS case records. Search parameters and all relevant " +
+        "HTTP requests and responses are provided in both human readable forms and as FHIR resources for demonstration.",
+      status: TestStatus.notStarted,
+      route: 'search-edrs'
+    },
+    {
+      name: 'updateEdrs',
+      display: 'Update EDRS',
+      description: "Onboarding module description",
+      status: TestStatus.notStarted,
+      route: 'update-edrs'
+    },
+  ]
 }

@@ -1,0 +1,10 @@
+<app-breadcrumb></app-breadcrumb>
+<div *ngIf="showHeader" class="module-header" [style.background-color]="backgroundColor">
+  <div class="module-header-icon-wrapper">
+    <mat-icon class="module-header-icon" [svgIcon]="icon"></mat-icon>
+  </div>
+  <div class="module-header-label-wrapper">
+    {{moduleTitle}} <span *ngIf="componentTitle">- {{componentTitle}}</span>
+    <mat-divider class="module-header-underline"></mat-divider>
+  </div>
+</div>

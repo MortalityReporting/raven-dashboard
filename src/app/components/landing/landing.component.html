@@ -1,7 +1,26 @@
 <!--<div class="container">-->
-  <div class="landing-page-wrapper">
+<div class="landing-page-wrapper">
+  <div>
     <div class="landing-page-content">
-      <h1 style="border-left: 16px solid black; padding-left: 8px;" [style.border-left-color]="appConfiguration.color">Welcome to the Raven Testing Platform!</h1>
+
+      <div class="flex-cell zulip-cell margin-bottom-md margin-top-sm">
+        <mat-card>
+          <mat-card-content onclick="window.open('https://build.fhir.org/ig/HL7/fhir-mdi-ig/', '_blank')">
+            <div class="zulip-row">
+              <div class="card-bold-text">
+                The Raven Platform is a testing tool built on the current CI Build version of the MDI FHIR IG, which may change periodically.
+                It currently supports the version 1.1.0 - STU 1.1 release as of October 2023.
+              </div>
+              <div class="card-open-new-window-icon">
+                <mat-icon>open_in_new</mat-icon>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <h1 class="title-decoration" [style.border-left-color]="appConfiguration.color">
+        Welcome to the Raven Testing Platform!</h1>
       <p>
         Raven is a proof of concept for the Medicolegal Death Investigation (MDI)
         FHIR Implementation Guide (IG). It provides a tool for testing conformance to the MDI
@@ -11,63 +30,89 @@
         Raven also serves as an educational tool, providing examples FHIR data format (JSON and XML) and the ability
         to browse records and see how information is mapped between major fields and the underlying FHIR resources.
       </p>
-      <mat-divider style="border-width: 3px; margin: 8px;"></mat-divider>
-      <div class="resources">
-        <h2 style="border-left: 8px solid black; padding-left: 8px;" [style.border-left-color]="appConfiguration.color">Resources</h2>
-        <ul style="list-style-type: none; padding-left: 0">
+      <mat-divider class="larger-divider"></mat-divider>
+      <div>
+        <h2 class="title-decoration-sm" [style.border-left-color]="appConfiguration.color">
+          Resources</h2>
+        <ul class="list-decoration">
           <li>
-            <button mat-flat-button onclick="window.open('https://github.com/MortalityReporting', '_blank')" class="align-left">
-              Raven Mortality Reporting GitHub Organization <mat-icon iconPositionEnd>open_in_new</mat-icon>
+            <button mat-flat-button onclick="window.open('https://github.com/MortalityReporting', '_blank')"
+                    class="align-left">
+              Raven Mortality Reporting GitHub Organization
+              <mat-icon iconPositionEnd>open_in_new</mat-icon>
             </button>
           </li>
           <li>
-            <button mat-flat-button onclick="window.open('https://build.fhir.org/ig/HL7/fhir-mdi-ig/', '_blank')" class="align-left">
-              Medicolegal Death Investigation FHIR Implementation Guide <mat-icon iconPositionEnd>open_in_new</mat-icon>
+            <button mat-flat-button onclick="window.open('https://build.fhir.org/ig/HL7/fhir-mdi-ig/', '_blank')"
+                    class="align-left">
+              Medicolegal Death Investigation FHIR IG - CI Build
+              <mat-icon iconPositionEnd>open_in_new</mat-icon>
             </button>
           </li>
           <li>
-            <button mat-flat-button onclick="window.open('https://hl7.org/fhir/', '_blank')" class="align-left">
-              HL7 FHIR Standard <mat-icon iconPositionEnd>open_in_new</mat-icon>
+            <button mat-flat-button onclick="window.open('https://hl7.org/fhir/us/mdi/STU1/', '_blank')"
+                    class="align-left">
+              Medicolegal Death Investigation FHIR IG - 1.0.0 - STU1
+              <mat-icon iconPositionEnd>open_in_new</mat-icon>
             </button>
           </li>
           <li>
-            <button mat-flat-button onclick="window.open('https://build.fhir.org/ig/HL7/US-Core/', '_blank')" class="align-left">
-              US Core FHIR Implementation Guide <mat-icon iconPositionEnd>open_in_new</mat-icon>
+            <button mat-flat-button onclick="window.open('https://hl7.org/fhir/R4/index.html', '_blank')"
+                    class="align-left">
+              HL7 FHIR R4 Standard
+              <mat-icon iconPositionEnd>open_in_new</mat-icon>
+            </button>
+          </li>
+          <li>
+            <button mat-flat-button onclick="window.open('https://hl7.org/fhir/us/core/STU5.0.1/', '_blank')"
+                    class="align-left">
+              US Core FHIR IG - 5.0.1 - STU5
+              <mat-icon iconPositionEnd>open_in_new</mat-icon>
             </button>
           </li>
         </ul>
       </div>
+      <mat-divider class="larger-divider"></mat-divider>
       <div class="flex-cell zulip-cell">
         <mat-card>
           <mat-card-content onclick="window.open('https://chat.fhir.org','_blank')">
             <div class="zulip-row">
-              <div class="zulip-text">
+              <div>
+                <div class="hl7-fhir-logo-landing-page">
+                  <img src="assets/LOGO_FHIR_2.svg" class="hl7-fhir-logo-lg"/>
+                </div>
+              </div>
+              <div class="card-bold-text">
                 For Information on the MDI IG, join the conversation in the FHIR Zulip chat!
                 <em>https://chat.fhir.org in the #Medicolegal Death Investigation Stream</em>
               </div>
-              <div class="zulip-icon">
+              <div class="card-open-new-window-icon">
                 <mat-icon>open_in_new</mat-icon>
               </div>
             </div>
           </mat-card-content>
         </mat-card>
       </div>
+      <div class="flex-cell hl7-fhir-logo-disclaimer">
+          The HL7 FHIR Logo is used in accordance with the policy for the FHIR Icon Pack laid out at https://hl7.org/fhir/downloads.html.
+      </div>
     </div>
-    <div class="landing-page-content">
     <div class="option-tile-container">
       <div class="flex-cell">
         <mat-card #recordViewer (click)="onBtnClick(appConfiguration?.modules?.['recordViewer']?.route);"
                   cardHover [color]="appConfiguration?.modules?.['recordViewer']?.color">
           <mat-card-header>
-            <mat-card-title style="display:flex; align-self:center;">
-              <mat-icon [style.color]="appConfiguration?.modules?.['recordViewer']?.color"
-                        style="margin: auto 8px auto auto;">circle</mat-icon>
+            <mat-card-title class="mat-card-title-decoration">
+              <mat-icon [style.color]="appConfiguration?.modules?.['recordViewer']?.color">
+                circle
+              </mat-icon>
               {{appConfiguration?.modules?.['recordViewer']?.title}}
             </mat-card-title>
           </mat-card-header>
           <mat-card-content>
             <p>
-              View different types of MDI records available on the Raven FHIR Server and explore the underlying FHIR Resource
+              View different types of MDI records available on the Raven FHIR Server and explore the underlying FHIR
+              Resource
               structures.
             </p>
           </mat-card-content>
@@ -77,9 +122,10 @@
         <mat-card (click)="onBtnClick(appConfiguration?.modules?.['recordImport']?.route);"
                   cardHover [color]="appConfiguration?.modules?.['recordImport']?.color">
           <mat-card-header>
-            <mat-card-title style="display:flex; align-self:center;">
-              <mat-icon [style.color]="appConfiguration?.modules?.['recordImport']?.color"
-                        style="margin: auto 8px auto auto;">circle</mat-icon>
+            <mat-card-title class="mat-card-title-decoration">
+              <mat-icon [style.color]="appConfiguration?.modules?.['recordImport']?.color">
+                circle
+              </mat-icon>
               {{appConfiguration?.modules?.['recordImport']?.title}}
             </mat-card-title>
           </mat-card-header>
@@ -94,9 +140,10 @@
         <mat-card (click)="onBtnClick(appConfiguration?.modules?.['recordComparison']?.route);"
                   cardHover [color]="appConfiguration?.modules?.['recordComparison']?.color">
           <mat-card-header>
-            <mat-card-title style="display:flex; align-self:center;">
-              <mat-icon [style.color]="appConfiguration?.modules?.['recordComparison']?.color"
-                        style="margin: auto 8px auto auto;">circle</mat-icon>
+            <mat-card-title class="mat-card-title-decoration">
+              <mat-icon [style.color]="appConfiguration?.modules?.['recordComparison']?.color">
+                circle
+              </mat-icon>
               {{appConfiguration?.modules?.['recordComparison']?.title}}
             </mat-card-title>
           </mat-card-header>
@@ -111,9 +158,9 @@
         <mat-card (click)="onBtnClick(appConfiguration?.modules?.['fhirValidator']?.route);"
                   cardHover [color]="appConfiguration?.modules?.['fhirValidator']?.color">
           <mat-card-header>
-            <mat-card-title style="display:flex; align-self:center;">
-              <mat-icon [style.color]="appConfiguration?.modules?.['fhirValidator']?.color"
-                        style="margin: auto 8px auto auto;">circle</mat-icon>
+            <mat-card-title class="mat-card-title-decoration">
+              <mat-icon [style.color]="appConfiguration?.modules?.['fhirValidator']?.color">circle
+              </mat-icon>
               {{appConfiguration?.modules?.['fhirValidator']?.title}}
             </mat-card-title>
           </mat-card-header>
@@ -125,14 +172,14 @@
           </mat-card-content>
         </mat-card>
       </div>
-
       <div class="flex-cell">
         <mat-card (click)="onBtnClick(appConfiguration?.modules?.['workflowSimulator']?.route);"
                   cardHover [color]="appConfiguration?.modules?.['workflowSimulator']?.color">
           <mat-card-header>
-            <mat-card-title style="display:flex; align-self:center;">
-              <mat-icon [style.color]="appConfiguration?.modules?.['workflowSimulator']?.color"
-                style="margin: auto 8px auto auto;">circle</mat-icon>
+            <mat-card-title class="mat-card-title-decoration">
+              <mat-icon [style.color]="appConfiguration?.modules?.['workflowSimulator']?.color">
+                circle
+              </mat-icon>
               {{appConfiguration?.modules?.['workflowSimulator']?.title}}
             </mat-card-title>
           </mat-card-header>
@@ -140,13 +187,14 @@
           <mat-card-content>
             <p>
               Move through steps of one of several test scenarios for various MDI related workflows, such as a Case
-              Management System (CMS) to Electronic Death Registration System (EDRS) using the {{appConfiguration?.workflowTitles?.['mdiToEdrs']}}.
+              Management System (CMS) to Electronic Death Registration System (EDRS) using
+              the {{appConfiguration?.workflowTitles?.['mdiToEdrs']}}.
               The workflow simulator integrates other features of Raven as needed to support workflow testing.
             </p>
           </mat-card-content>
 
         </mat-card>
       </div>
-
-    </div></div>
+    </div>
   </div>
+</div>

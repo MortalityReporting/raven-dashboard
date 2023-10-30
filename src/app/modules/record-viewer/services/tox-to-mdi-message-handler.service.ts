@@ -1,19 +1,17 @@
 import {Injectable} from '@angular/core';
-import {Observable, skipWhile, tap} from "rxjs";
+import {Observable, skipWhile} from "rxjs";
 import {map} from "rxjs/operators";
 import {ToxHeader} from "../models/tox.header";
 import {
   Address,
   BundleHelperService,
-  CodeType,
-  EnvironmentHandlerService,
   FhirClientService,
   FhirHelperService,
-  FhirResource, StringType
+  FhirResource,
 } from "../../fhir-util";
 import {CertifierAndOrganization, LabResult, Performer, Specimen, ToxSummary} from "../models/tox.summary";
 import {TrackingNumberType, trackingNumberUrl} from "../../fhir-mdi-library";
-import {Extension} from "../../fhir-util/models/base/fhir.extension";
+import {ToxToMdiRecord} from "../models/toxToMdiRecord";
 
 
 @Injectable({
@@ -23,18 +21,37 @@ export class ToxToMdiMessageHandlerService {
 
   constructor(
     private fhirClient: FhirClientService,
-    private environmentHandler: EnvironmentHandlerService,
     private fhirHelper: FhirHelperService,
     private bundleHelper: BundleHelperService
   ) { }
 
+  // Get All Records (For Search)
   getToxicologyRecords(): Observable<any>{
-
-    const code = new CodeType("jaodjsoij");
-    let test = new Extension("test", code);
-
     return this.fhirClient.search("DiagnosticReport", "", true).pipe(
       skipWhile((result: any) => !result)
+    );
+  }
+
+  // toxLabId is a fully qualified system|code value.
+  getRecord(toxLabId: string): Observable<any> {
+    const parametersResource: FhirResource = this.createToxSearchParametersResource(toxLabId);
+    return this.fhirClient.search(
+      "DiagnosticReport/$toxicology-message",
+      parametersResource,
+      true
+    ).pipe(
+      map((messageBundleList: any) => {
+        if (!messageBundleList) return undefined;
+        const messageBundle = messageBundleList?.[0];
+        const diagnosticReport = this.getDiagnosticReportFromMessageBundle(messageBundle);
+        return new ToxToMdiRecord(
+          this.constructToxHeader(messageBundle),
+          this.constructToxSummary(messageBundle),
+          toxLabId,
+          this.fhirHelper.getTrackingNumber(diagnosticReport),
+          messageBundle
+        );
+      })
     );
   }
 
@@ -73,23 +90,25 @@ export class ToxToMdiMessageHandlerService {
     }
   }
 
-  // toxLabId is a fully qualified system|code value.
-  getMessageBundle(toxLabId: string): Observable<any> {
-    const parametersResource: FhirResource = this.createToxSearchParametersResource(toxLabId);
-    return this.fhirClient.search(
-      "DiagnosticReport/$toxicology-message",
-      parametersResource
-    ).pipe(
-      map((searchBundle: any) => searchBundle?.entry?.[0]?.resource)
-    );
-  }
+
+
+
+  // getMessageBundle(toxLabId: string): Observable<any> {
+  //   const parametersResource: FhirResource = this.createToxSearchParametersResource(toxLabId);
+  //   return this.fhirClient.search(
+  //     "DiagnosticReport/$toxicology-message",
+  //     parametersResource
+  //   ).pipe(
+  //     map((searchBundle: any) => searchBundle?.entry?.[0]?.resource)
+  //   );
+  // }
 
   createToxSearchParametersResource(toxLabId: string): any {
     return {
       "resourceType": "Parameters",
       "parameter": [
         {
-          "name": "tox-lab-case-number",
+          "name": "tracking-number",
           "valueString": toxLabId
         }
       ]
@@ -100,7 +119,7 @@ export class ToxToMdiMessageHandlerService {
     return messageBundle?.entry?.find(bec => bec.resource.resourceType === "DiagnosticReport").resource;
   }
 
-  constructToxHeaderHeader(messageBundle: any): ToxHeader {
+  constructToxHeader(messageBundle: any): ToxHeader {
     const diagnosticReport = this.getDiagnosticReportFromMessageBundle(messageBundle);
     const subject = this.bundleHelper.findSubjectInBundle(diagnosticReport, messageBundle);
     const toxLabNumber = this.getTrackingNumber(diagnosticReport, TrackingNumberType.Tox);
@@ -127,7 +146,7 @@ export class ToxToMdiMessageHandlerService {
     return toxSummary
   }
 
-  // TODO: Add support for non references.
+  // TODO: Add support for non references. (Setup in FHIR UTIL based on type.)
   createPerformersList(diagnosticReport: any, messageBundle: any): Performer[] {
     let performers = [];
     if (diagnosticReport.performer) {
@@ -207,7 +226,7 @@ export class ToxToMdiMessageHandlerService {
   }
 
   isRelatedMdiDocumentAvailable(mdiCaseNumber: any) {
-    return this.fhirClient.search("Composition", `?mdi-case-number=${mdiCaseNumber}`).pipe(
+    return this.fhirClient.search("Composition", `?tracking-number=${mdiCaseNumber}`).pipe(
       map((searchBundle:any) => {
         return searchBundle?.entry?.[0]?.resource?.subject?.reference
       })

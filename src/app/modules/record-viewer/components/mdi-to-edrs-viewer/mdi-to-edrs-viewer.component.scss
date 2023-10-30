@@ -1,0 +1,32 @@
+.content-field {
+  display: flex;
+  flex-direction: row;
+}
+
+.content-field-label {
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  flex: 1;
+  > * {
+    cursor: pointer;
+  }
+}
+
+.content-field-value {
+  padding: 5px;
+  display: flex;
+  flex: 1;
+}
+
+.content-field-value input {
+  width: 100%;
+}
+
+.address-text-box {
+  width: 100%;
+}
+
+#tox-close-button {
+  color: whitesmoke;
+}

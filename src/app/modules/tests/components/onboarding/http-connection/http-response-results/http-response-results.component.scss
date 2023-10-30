@@ -1,0 +1,47 @@
+.response-container {
+  margin-top: 1em;
+  padding: 1em;
+  height: 256px;
+  width: 90%;
+  border: #cdcdcd 1px solid;
+  border-radius: 4px;
+  overflow: auto;
+}
+
+.response-container-error  {
+  @extend .response-container;
+  border-color: red;
+}
+
+.operation-outcome-html {
+  border: red 1px solid;
+  border-radius: 4px;
+  padding: 1em;
+  margin: 1em
+}
+.result-label {
+  font-weight: bold;
+}
+
+.column {
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+.column-20 {
+  flex: 0 0 20%;
+}
+
+.column-10 {
+  flex: 0 0 10%;
+}
+
+.column-70 {
+  flex: 0 0 70%;
+  font-family: monospace;
+}
+
+.result-row {
+  display: flex;
+  align-items: center;
+}

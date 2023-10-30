@@ -1,0 +1,70 @@
+<mat-tab-group mat-stretch-tabs="false">
+
+  <mat-tab label="Result">
+    <div [ngClass]="errorResponse ? 'response-container-error': 'response-container'">
+
+      <div class="row">
+        <div class="column column-20 result-label">Status:</div>
+        <div class="column column-10"></div>
+        <div class="column column-70">
+          <span *ngIf="errorResponse">{{ errorResponse?.status }} {{ errorResponse?.statusText }}</span>
+          <span *ngIf="successResponse">{{ successResponse?.status }} {{ successResponse?.statusText }}</span>
+        </div>
+      </div>
+
+      <div class="result-row">
+        <div class="column column-20 result-label">URL:</div>
+        <div class="column column-10"></div>
+        <div class="column column-70">
+          <span *ngIf="errorResponse">{{ errorResponse?.url }}</span>
+          <span *ngIf="successResponse">{{ successResponse?.url }}</span>
+        </div>
+      </div>
+
+      <div class="result-row" *ngFor="let token of successResponseTokens">
+        <div class="column column-20 result-label">{{ token.name }}</div>
+        <div class="column column-10">
+          <button mat-icon-button color="primary" (click)="copyToClipboard(token?.value)"
+                  matTooltip="Copy to Clipboard">
+            <mat-icon>content_copy</mat-icon>
+          </button>
+        </div>
+        <div class="column column-70">
+          {{ token?.value}}
+        </div>
+      </div>
+
+      <div class="result-row" *ngIf="errorResponse">
+        <div *ngIf="errorResponse">
+          <div class="column column-20 result-label">Message:</div>
+          <div class="column column-10"></div>
+          <div class="column column-70">
+            {{ errorResponse?.message }}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </mat-tab>
+
+  <mat-tab label="HTTP Request">
+    <div [ngClass]="errorResponse ? 'response-container-error': 'response-container'">
+      <pre *ngIf="request">{{ request | json}}</pre>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="HTTP Response">
+    <div [ngClass]="errorResponse ? 'response-container-error': 'response-container'">
+      <div *ngIf="successResponse">
+        <pre>{{ successResponse| json }}</pre>
+      </div>
+      <div *ngIf="errorResponse">
+        <pre>{{ errorResponse | json }}</pre>
+      </div>
+    </div>
+  </mat-tab>
+
+</mat-tab-group>
+
+

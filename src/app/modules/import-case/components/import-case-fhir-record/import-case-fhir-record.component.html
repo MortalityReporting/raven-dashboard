@@ -1,4 +1,4 @@
-<div class="top-margin">
+<div class="margin-top-md">
   <h3>1. Select an MDI FHIR Bundle (JSON)</h3>
 </div>
 <p>You may select a local JSON file or paste the JSON directly into the provided area below.</p>
@@ -16,13 +16,16 @@
     (onValidation)="onValidation($event)"
     (onApiError)="onValidationError($event)"
     (onResourceContentChanged)="onResourceContentChanged($event)"
+    [exportValidationResultsBtnName]="'Export Results (.zip)'"
+    [exportValidationResultsBtnVisible]="true"
+    (onExportValidationResults)="onExportValidationResults($event)"
   />
 
 </div>
 
-<div class="top-padding">
+<div class="padding-top-md">
   <h3>2. Submit MDI FHIR Bundle to Raven</h3>
-  <div class="content-offset top-padding">
+  <div class="content-offset padding-top-md">
     <button mat-raised-button [style.background-color]="config.backgroundColor" [style.color]="'white'"
             (click)="onSubmit()" *ngIf="!invalidResourceFound || preconditionError">
       <mat-icon>send</mat-icon>

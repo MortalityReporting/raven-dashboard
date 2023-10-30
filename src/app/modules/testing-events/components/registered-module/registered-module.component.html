@@ -1,0 +1,42 @@
+
+  <div *ngIf="registrationDisplay" class="event-module-status-table">
+    <div class="event-header">
+      {{registrationDisplay.title}}
+    </div>
+
+    <div class="event-row-header">
+      <div class="event-row-header-cell">
+        Test Name
+      </div>
+      <div class="event-row-header-cell">
+        Description
+      </div>
+      <div class="event-row-header-cell">
+        Status
+      </div>
+      <div class="event-row-header-cell">
+      </div>
+    </div>
+    <div class="event-row" *ngFor="let item of registrationDisplay.items">
+      <div class="event-row-cell">
+        {{item.testName}}
+      </div>
+      <div class="event-row-cell">
+        Description Pending
+      </div>
+      <div class="event-row-cell">
+        {{item.testStatus}}
+      </div>
+      <div class="event-row-cell-button">
+        <button mat-flat-button (click)="loadTestContainer(item)">
+          Launch
+        </button>
+      </div>
+    </div>
+    <div class="event-footer">
+      0 of {{registrationDisplay.items.length}} Complete
+    </div>
+  </div>
+
+
+

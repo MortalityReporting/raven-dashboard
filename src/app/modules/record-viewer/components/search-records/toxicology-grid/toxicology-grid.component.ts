@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Inject, OnInit, Output, ViewChild} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
 import {ActivatedRoute, Router} from "@angular/router";
 import {forkJoin, map, mergeMap} from "rxjs";
@@ -25,6 +25,8 @@ export class ToxicologyGridComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   @ViewChild('input') input: ElementRef;
+
+  @Output() serverErrorEventEmitter = new EventEmitter();
 
   constructor(
     private route: ActivatedRoute,
@@ -59,7 +61,7 @@ export class ToxicologyGridComponent implements OnInit {
       error: (e) => {
         console.error(e);
         this.isLoading = false;
-        //TODO render error message to the user
+        this.serverErrorEventEmitter.emit();
       },
       complete:  () => {
         this.isLoading = false

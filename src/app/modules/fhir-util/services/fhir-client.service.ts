@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {EnvironmentHandlerService} from "./environment-handler.service";
-import {HttpClient, HttpParams, HttpParamsOptions} from "@angular/common/http";
-import {EMPTY, expand, map, mergeMap, Observable, of, reduce, takeWhile} from "rxjs";
-import {FhirResource} from "../models/base/fhir.resource";
-import {Bundle, BundleEntryComponent, BundleType} from "../models/resources/bundle";
+import {HttpClient, HttpEvent, HttpEventType, HttpParams, HttpParamsOptions, HttpRequest} from "@angular/common/http";
+import {EMPTY, expand, map, mergeMap, Observable, of, reduce, takeWhile, tap} from "rxjs";
+import {FhirResource} from "../models/fhir/r4/base/fhir.resource";
+import {Bundle, BundleEntryComponent, BundleType} from "../models/fhir/r4/resources/bundle";
+import {ConfigService} from "../../../service/config.service";
 
 @Injectable({
   providedIn: 'root'
@@ -11,21 +11,33 @@ import {Bundle, BundleEntryComponent, BundleType} from "../models/resources/bund
 export class FhirClientService {
 
   private readonly serverBaseUrl: string;
+  private readonly logFhirRequests: boolean;
 
   constructor(private http: HttpClient,
-              private environmentHandler: EnvironmentHandlerService) {
-    this.serverBaseUrl = this.environmentHandler.getFhirServerBaseURL();
+              private configService: ConfigService) {
+    this.logFhirRequests = this.configService?.config?.logFhirRequests ?? true;
+    this.serverBaseUrl = this.configService?.config?.ravenFhirServerBaseUrl;
+  }
+
+  create(resourceType: string, resource: any): Observable<FhirResource> {
+    let requestString = this.serverBaseUrl + resourceType + "/";
+    return this.http.post<FhirResource>(requestString, resource);
+  }
+
+  update(resourceType: string, resource: FhirResource): Observable<FhirResource> {
+    const id = resource["id"];
+    let requestString = this.serverBaseUrl + resourceType + "/" + id;
+    return this.http.put<FhirResource>(requestString, resource);
   }
 
   read(resourceType: string, id: string, parameters?: string): Observable<FhirResource> {
     // TODO: Add parameter parsing. For now, parameters required in complete http string form.
     let requestString = this.serverBaseUrl + resourceType + "/" + id;
     if (parameters) requestString += parameters;
-    console.log("Making Read Request: " + requestString);
+    if (this.logFhirRequests) console.log("Making Read Request: " + requestString);
     return this.http.get(requestString).pipe(
       map((response: any) =>
         {
-          //console.log(response)
           return response;
         }
       )
@@ -49,7 +61,7 @@ export class FhirClientService {
       searchString = fullUrl ? fullUrl : this.createSearchRequestUrl(resourceType, "", baseUrl)
       pagination$ = this.http.post<Bundle>(searchString, parameters, {params: httpParams});
     }
-    console.log("Making Search Request: " + searchString);
+    if (this.logFhirRequests) console.log("Making Search Request: " + searchString);
 
     pagination$.pipe(
       // TODO: Is there a way to type the following operator projections?
@@ -83,9 +95,11 @@ export class FhirClientService {
       return pagination$.pipe(
         map((completeBundle: Bundle) => {
             let resourceList: FhirResource[] = [];
-            completeBundle['entry'].map((bundleEntry: BundleEntryComponent) => {
-              resourceList.push(bundleEntry.resource)
-            });
+            if (completeBundle['entry']) {
+              completeBundle['entry'].map((bundleEntry: BundleEntryComponent) => {
+                resourceList.push(bundleEntry.resource)
+              });
+            }
             return resourceList;
           }
         ))

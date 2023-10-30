@@ -1,0 +1,15 @@
+.action-col {
+  flex: 0 0 5%;
+  justify-content: center;
+  display: flex;
+  padding: 0 16px
+}
+
+.content-col{
+  flex: 1;
+}
+
+.mat-expansion-panel-header {
+  height: auto;
+  padding: 12px 24px;
+}

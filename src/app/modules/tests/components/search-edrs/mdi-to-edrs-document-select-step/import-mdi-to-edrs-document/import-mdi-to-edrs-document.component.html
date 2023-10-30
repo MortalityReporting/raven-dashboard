@@ -1,0 +1,36 @@
+<div class="padding-top-md">
+  {{ uiConstantsStep1.UPLOAD_JSON_CONTENT_MSG}}
+</div>
+
+<div class="padding-top-md">
+  {{ uiConstantsStep1.UPLOAD_FILE_CONTENT_MSG }}
+</div>
+
+<div class="padding-top-md">
+  <mat-error>{{errorMessage}}</mat-error>
+</div>
+
+<div class="padding-top-md">
+
+  <button mat-raised-button
+          [style.background-color]="config.backgroundColor"
+          [style.color]="'white'"
+          (click)="onInputMdiToEdrsBundle()">
+    Input MDI to EDRS Document Bundle
+  </button>
+
+  <input type="file" class="file-input" (click)="fileUpload.value=null"
+         accept=".json"
+         (change)="onFileSelected($event)" #fileUpload>
+
+  <button mat-raised-button color="success" class="left-spacer" (click)="fileUpload.click();">
+    <mat-icon>post_add</mat-icon>
+    Select File
+  </button>
+
+  <span id="filename">{{file?.name}}</span>
+
+</div>
+<div class="padding-top-md">
+  <app-decedent-basic-info [decedentInfo] = "decedentData"></app-decedent-basic-info>
+</div>

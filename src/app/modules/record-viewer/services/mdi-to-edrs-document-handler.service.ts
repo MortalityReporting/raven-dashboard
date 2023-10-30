@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {map, Observable, Subject} from "rxjs";
+import {combineLatest, map, mergeMap, Observable, skipWhile, Subject} from "rxjs";
 import {DecedentService} from "./decedent.service";
 import {
   Autopsy,
@@ -16,7 +16,6 @@ import {
   Address,
   BundleHelperService,
   CodeableConcept,
-  EnvironmentHandlerService,
   FhirClientService,
   FhirHelperService,
   TerminologyHandlerService
@@ -25,33 +24,23 @@ import {ToxRecordStub} from "../models/tox-record-stub";
 import {FHIRProfileConstants} from "../../../providers/fhir-profile-constants";
 import {FhirExplorerService} from "../../fhir-explorer/services/fhir-explorer.service";
 import {TrackingNumberExtension, TrackingNumberType} from "../../fhir-mdi-library";
+import {MdiToEdrsRecord} from "../models/mdiToEdrsRecord";
 
 @Injectable({
   providedIn: 'root'
 })
 export class MdiToEdrsDocumentHandlerService {
 
-  private subjectId: string;
   public defaultString: string = "VALUE NOT FOUND";
 
   // TODO: Refactor this in conjunction with directives.
   private currentDocumentBundle: any;
   private currentCompositionResource: any;
 
-  private caseHeader = new Subject<CaseHeader>();
-  caseHeader$ = this.caseHeader.asObservable();
-  private caseSummary = new Subject<CaseSummary>();
-  caseSummary$ = this.caseSummary.asObservable();
-  private patientResource = new Subject<any>();
-  patientResource$ = this.patientResource.asObservable();
-  private relatedToxicology = new Subject<any>();
-  relatedToxicology$ = this.relatedToxicology.asObservable();
-
   constructor(
     private fhirExplorerService: FhirExplorerService,
     private decedentService: DecedentService,
     private terminologyService: TerminologyHandlerService,
-    private environmentHandler: EnvironmentHandlerService,
     private fhirHelper: FhirHelperService,
     private bundleHelper: BundleHelperService,
     private fhirClient: FhirClientService,
@@ -62,18 +51,6 @@ export class MdiToEdrsDocumentHandlerService {
     this.currentDocumentBundle = documentBundle;
   }
 
-  setCaseSummary(caseSummary){
-    this.caseSummary.next(caseSummary);
-  }
-
-  setPatientResource(patientResource){
-    this.patientResource.next(patientResource);
-  }
-
-  setCaseHeader(caseHeader){
-    this.caseHeader.next(caseHeader);
-  }
-
   setCurrentDocumentBundle(documentBundle){
     this.currentDocumentBundle = documentBundle;
   }
@@ -82,38 +59,52 @@ export class MdiToEdrsDocumentHandlerService {
     this.currentCompositionResource = compositionResource;
   }
 
-  setRelatedToxicology(searchResultBundle){
-    this.relatedToxicology.next(searchResultBundle);
-  }
-
   clearObservablesAndCashedData(){
     this.setCurrentCompositionResource(null);
     this.setCurrentDocumentBundle(null);
-    this.setCaseHeader(null);
-    this.setPatientResource(null);
-    this.setCaseSummary(null);
     this.setDocumentBundle(null);
-    this.setRelatedToxicology(null);
   }
 
-  getDocumentBundle(compositionId: string) {
-    return this.fhirClient.read("Composition", `${compositionId}/$document`).pipe(
-      map((documentBundle: any) => {
-        this.currentDocumentBundle = documentBundle;
-        let compositionResource = this.bundleHelper.findResourceByFullUrl(documentBundle, "Composition/" + compositionId);
-        this.currentCompositionResource = compositionResource;
-        this.subjectId = compositionResource.subject.reference
-        let patientResource = this.bundleHelper.findResourceByFullUrl(documentBundle, this.subjectId);
-        this.patientResource.next(patientResource);
-        this.caseHeader.next(this.createCaseHeader(documentBundle, patientResource, compositionResource));
-        this.caseSummary.next(this.createCaseSummary(documentBundle, patientResource, compositionResource));
-
-        // TODO: This should happen in component not service.
-        this.fhirExplorerService.setSelectedFhirResource(documentBundle);
-
-        return documentBundle;
+  getRecord(subjectId: string): Observable<any> {
+    const composition$ = this.fetchComposition(subjectId);
+    const documentBundle$ = composition$.pipe(
+      mergeMap((composition: any) => {
+        return this.fetchDocumentBundle(composition?.['id']);
       })
     );
+    const relatedToxicology$ = composition$.pipe(
+      mergeMap(composition => {
+        const mdiCaseNumber = this.fhirHelper.getTrackingNumber(composition);
+        return this.getRelatedToxicologyReports(mdiCaseNumber);
+      }));
+    return combineLatest([composition$, documentBundle$, relatedToxicology$]).pipe(
+      skipWhile(combinedResults => combinedResults.some(result => result === undefined)),
+      map(combinedResults => {
+        const composition = combinedResults[0];
+        const mdiCaseNumber = this.fhirHelper.getTrackingNumber(composition);
+        const documentBundle = combinedResults[1];
+        const relatedToxicology = combinedResults[2];
+        const patient = this.bundleHelper.findSubjectInBundle(composition, documentBundle);
+        const caseHeader = this.createCaseHeader(documentBundle, patient, composition);
+        const caseSummary = this.createCaseSummary(documentBundle, patient, composition);
+        const record = new MdiToEdrsRecord(
+          caseHeader,
+          caseSummary,
+          composition['id'],
+          mdiCaseNumber,
+          documentBundle,
+          relatedToxicology);
+        return record;
+      }))
+  }
+
+  private fetchComposition(subjectId: string): Observable<any> {
+    return this.fhirClient.search(`Composition`,`?subject=${subjectId}`, true)
+      .pipe(map(
+        searchList => searchList[0]));
+  }
+  private fetchDocumentBundle(compositionId: string): Observable<any> {
+    return this.fhirClient.read("Composition", `${compositionId}/$document`);
   }
 
   /**
@@ -123,7 +114,7 @@ export class MdiToEdrsDocumentHandlerService {
    * @returns {Observable<ToxRecordStub[]>} an Observable of an array of ToxRecordStub objects.
    **/
   getRelatedToxicologyReports(mdiCaseNumber: string): Observable<ToxRecordStub[]> {
-    return this.fhirClient.search("DiagnosticReport", `?mdi-case-number=${mdiCaseNumber}`).pipe(
+    return this.fhirClient.search("DiagnosticReport", `?tracking-number=${mdiCaseNumber}`).pipe(
         map((resultBundle: any) => {
           let toxRecordList = [];
           resultBundle?.entry?.forEach((bec:any) => {
@@ -171,6 +162,7 @@ export class MdiToEdrsDocumentHandlerService {
       author.city = practitioner?.address != null ? practitioner.address[0].city : undefined;
       author.state = practitioner?.address != null ? practitioner.address[0].state : undefined;
       author.postalCode = practitioner?.address != null ? practitioner.address[0].postalCode : undefined;
+      author.resource = practitioner;
 
       caseHeader.authors.push( author );
     });
@@ -188,7 +180,7 @@ export class MdiToEdrsDocumentHandlerService {
     summary.circumstances = this.generateCircumstances(documentBundle);
     summary.jurisdiction = this.generateJurisdiction(documentBundle, compositionResource);
     summary.causeAndManner = this.generateCauseAndManner(documentBundle, compositionResource);
-    summary.examAndAutopsy = this.generateExamAndAutopsy(documentBundle);
+    summary.examAndAutopsy = this.generateExamAndAutopsy(documentBundle, compositionResource);
     summary.compositionId = compositionResource?.id || '';
 
     summary.documentBundleResource = documentBundle;
@@ -213,7 +205,7 @@ export class MdiToEdrsDocumentHandlerService {
     demographics.address = new Address();
     demographics.address.line1 = patientResource.address?.[0]?.line?.[0] || this.defaultString;
     demographics.address.line2 = patientResource.address?.[0]?.line?.[1] || this.defaultString;
-    // In a lot of cases an address can have a line 1 only and not hav a line 2
+    // In a lot of cases an address can have a line 1 only and not have a line 2
     // In such cases we should not render the default string.
     if(demographics.address.line1 !== this.defaultString && demographics.address.line2 === this.defaultString){
       demographics.address.line2 = '';
@@ -245,7 +237,7 @@ export class MdiToEdrsDocumentHandlerService {
     circumstances.injuryLocation = injuryLocationResource?.name ?? this.defaultString;
 
     const pregnancyResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Obs_DecedentPregnancy);
-    circumstances.pregnancy = pregnancyResource?.valueCodeableConcept?.coding[0]?.display || this.defaultString; // TODO: Missing data, once available fix.
+    circumstances.pregnancy = pregnancyResource?.valueCodeableConcept?.coding[0]?.display || this.defaultString;
 
     const tobaccoUseResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Obs_TobaccoUseContributedToDeath);
     const tobaccoUseCc: CodeableConcept = new CodeableConcept(tobaccoUseResource?.valueCodeableConcept);
@@ -359,16 +351,23 @@ export class MdiToEdrsDocumentHandlerService {
     return causeAndManner;
   }
 
-  generateExamAndAutopsy(documentBundle: any): Autopsy {
+  generateExamAndAutopsy(documentBundle: any, compositionResource: any): Autopsy {
     let autopsy: Autopsy = new Autopsy();
     // let autopsySection = this.getSection(compositionResource, "exam-autopsy");
     let observation = this.bundleHelper.findResourcesByProfileName(documentBundle, "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-autopsy-performed-indicator")[0];
     let performedValue = observation?.valueCodeableConcept;
     autopsy.performed = performedValue?.text || performedValue?.coding?.[0]?.display || performedValue?.coding?.[0]?.code || this.defaultString;
 
-    let availableComponent = this.fhirHelper.findObservationComponentByCode(observation, "69436-4");
+    let availableComponent = this.fhirHelper.findObservationComponentByCode(observation, "69436-4"); // TODO: Add to constants.
     let availableValue = availableComponent?.valueCodeableConcept;
     autopsy.resultsAvailable = availableValue?.text || availableValue?.coding?.[0]?.display || availableValue?.coding?.[0]?.code || this.defaultString;
+
+    let examAutopsySection = compositionResource.section.find(section => section.code.coding[0].code === "exam-autopsy"); // TODO: Add to constants.
+    console.log(examAutopsySection);
+    let autopsyLocationReference = examAutopsySection.entry.find(entry => entry.reference.startsWith("Location")) // TODO: This is bad handling.
+    autopsyLocationReference = autopsyLocationReference?.reference;
+    let autopsyLocationResource = this.bundleHelper.findResourceByFullUrl(documentBundle, autopsyLocationReference);
+    autopsy.autopsyLocation = autopsyLocationResource?.name || this.defaultString;
 
     return autopsy;
   }
@@ -451,19 +450,6 @@ export class MdiToEdrsDocumentHandlerService {
 
   private findExtensionByUrl(extensions: any[], url: string): any {
     return extensions?.find((extension: any) => extension?.url === url);
-  }
-
-  getCurrentDocumentBundle(): any {
-    return this.currentDocumentBundle;
-  }
-
-  getCurrentSubjectResource(): any {
-    return this.bundleHelper.findResourceByFullUrl(this.currentDocumentBundle, this.subjectId);
-  }
-
-  // TODO: REFACTOR DIRECTIVE AND REMOVE THIS FUNCTION
-  findResourceByProfileNamePassThrough(profile) {
-    return this.bundleHelper.findResourceByProfileName(this.currentDocumentBundle, profile);
   }
 
 }

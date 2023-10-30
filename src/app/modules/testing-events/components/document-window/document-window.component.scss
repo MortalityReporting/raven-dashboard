@@ -1,0 +1,23 @@
+@import "src/styles";
+
+.document-window-container {
+  @extend .padding-md;
+  //width: 50em;
+  width: 700px;
+  height: 600px;
+}
+
+mat-dialog-content {
+  @extend .margin-sm;
+  @extend .border;
+  width: 700px;
+  height: 400px;
+  background-color: #ececec;
+  display: flex;
+  align-content: center;
+}
+
+.file-name {
+  @extend .margin-left-md;
+  font-weight: bold;
+}

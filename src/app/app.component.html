@@ -1,8 +1,8 @@
-<div class="page-wrapper" [style.background-color]="contrastColor">
+<div class="app-wrapper" [style.background-color]="contrastColor">
   <common-nav-menu [options]="optionConfig" [backgroundColor]="color" [contrastColor]="contrastColor">
   </common-nav-menu>
-  <div #content class="flex-wrapper">
-    <div class="header-wrapper">
+  <div #content class="app-flex-wrapper">
+    <div class="app-header-wrapper">
       <common-header
         [title]="title"
         [subtitle]="subTitle"
@@ -11,11 +11,12 @@
         [backgroundColor]="color"
         [configuration]="headerConfig"
       ></common-header>
+      <app-user-header></app-user-header>
     </div>
     <div>
       <app-module-header></app-module-header>
     </div>
-    <div class="router-outlet-wrapper">
+    <div class="app-body-wrapper">
       <router-outlet></router-outlet>
     </div>
   </div>

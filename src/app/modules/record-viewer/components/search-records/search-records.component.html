@@ -1,15 +1,25 @@
-<div class="record-content">
-  <mat-card>
-    <mat-card-content>
-      <mat-tab-group mat-stretch-tabs="false"
-                     [(selectedIndex)]="selectedTabIndex">
-        <mat-tab [label]="appConfig.workflowTitles?.['mdiToEdrs'] + 's'">
-          <record-viewer-decedent-records-grid></record-viewer-decedent-records-grid>
-        </mat-tab>
-        <mat-tab [label]="appConfig.workflowTitles?.['toxToMdi'] + 's'">
-          <record-viewer-toxicology-grid></record-viewer-toxicology-grid>
-        </mat-tab>
-      </mat-tab-group>
-    </mat-card-content>
-  </mat-card>
+<div class="generic-component-wrapper" *ngIf="!serverErrorDetected">
+  <div class="generic-component-content">
+    <div class="record-content">
+      <mat-card>
+        <mat-card-content>
+          <mat-tab-group mat-stretch-tabs="false"
+                         [(selectedIndex)]="selectedTabIndex">
+            <mat-tab [label]="appConfig.workflowTitles?.['mdiToEdrs'] + 's'">
+              <record-viewer-decedent-records-grid
+                (serverErrorEventEmitter)="onServerErrorDetected()">
+              </record-viewer-decedent-records-grid>
+            </mat-tab>
+            <mat-tab [label]="appConfig.workflowTitles?.['toxToMdi'] + 's'">
+              <record-viewer-toxicology-grid
+                (serverErrorEventEmitter)="onServerErrorDetected()"
+              ></record-viewer-toxicology-grid>
+            </mat-tab>
+          </mat-tab-group>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
 </div>
+<lib-common-error *ngIf="serverErrorDetected" (buttonClickEvent)="onPageReload()">
+</lib-common-error>

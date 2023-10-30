@@ -1,0 +1,43 @@
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef [attr.colspan]="displayedColumns.length">
+      <div>{{event.title}}</div>
+    </th>
+  </ng-container>
+
+  <ng-container matColumnDef="userGroup">
+    <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"
+        class="user-group right-most-user-cell">
+    <div>Users</div>
+    </th>
+  </ng-container>
+  <ng-container matColumnDef="testGroup">
+    <th mat-header-cell *matHeaderCellDef [attr.colSpan]="displayedColumns.length - 2"
+      class="test-group">
+      <div>TestsModule</div>
+    </th>
+  </ng-container>
+
+  <ng-container matColumnDef="user">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="user-header"> Name </th>
+    <td mat-cell *matCellDef="let element" class="user-cell"> <div>{{element["name"]}}</div> </td>
+  </ng-container>
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="user-header right-most-user-cell"> E-Mail </th>
+    <td mat-cell *matCellDef="let element" class="user-cell right-most-user-cell"> <div>{{element["email"]}}</div> </td>
+  </ng-container>
+  <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns.slice(2, displayedColumns.length)">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="test-header">
+      <div>{{capitalizeColumnHeader(columnDictionary[column])}}</div>
+    </th>
+    <td mat-cell *matCellDef="let element" class="test-cell" [class]="['test-cell', element[column]]">
+      <span>{{TestStatusDictionary[element[column]]}}</span>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="['title']" class="title-row"></tr>
+  <tr mat-header-row *matHeaderRowDef="['userGroup', 'testGroup']" class="group-row"></tr>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns" class="header-row"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="body-row"></tr>
+
+</table>

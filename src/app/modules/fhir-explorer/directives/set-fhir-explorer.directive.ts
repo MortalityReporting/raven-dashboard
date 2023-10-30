@@ -1,5 +1,5 @@
 import {Directive, HostListener, Input} from '@angular/core';
-import {BundleHelperService} from "../../fhir-util/services/bundle-helper.service";
+import {BundleHelperService} from "../../fhir-util";
 import {FhirExplorerService} from "../services/fhir-explorer.service";
 
 @Directive({
