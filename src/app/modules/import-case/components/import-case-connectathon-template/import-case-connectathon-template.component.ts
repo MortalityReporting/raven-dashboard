@@ -120,7 +120,8 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
       {
         title: "MDI FHIR Bundle",
         content: this.selectedCase?.fhirBundle,
-        contentType: 'json'
+        contentType: 'json',
+        primaryColor: this.config.backgroundColor
       })
       .subscribe();
   }

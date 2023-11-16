@@ -17,6 +17,7 @@ export class ModalComponent implements OnInit {
 
   contentType: string; // Different types of content require different rendering. See the html code.
   protected readonly JSON = JSON;
+  primaryColor: string;
 
   constructor(
     private dialogRef: MatDialogRef<any>,
@@ -31,6 +32,7 @@ export class ModalComponent implements OnInit {
       this.content = this.sanitizer.bypassSecurityTrustHtml(this.content);
     }
     this.title = this.dialogData.title;
+    this.primaryColor = this.dialogData.primaryColor;
   }
 
   onCopyToClipboard() {

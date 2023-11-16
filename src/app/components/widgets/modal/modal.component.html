@@ -13,9 +13,9 @@
     <mat-icon>content_copy</mat-icon>
     Copy to Clipboard
   </button>
-<!--  TODO implement dynamic handling of the background-color for the Close button-->
   <button mat-raised-button mat-dialog-close cdkFocusInitial
-          [ngStyle]="{ 'color': 'white', 'background-color': '#428057'}">
+          [style.color]="'white'"
+          [style.background-color]="primaryColor">
     Close
   </button>
 </mat-dialog-actions>
