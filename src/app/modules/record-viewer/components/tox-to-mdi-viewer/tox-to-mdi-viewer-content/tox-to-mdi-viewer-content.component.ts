@@ -15,10 +15,11 @@ export class ToxToMdiViewerContentComponent {
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
   idStateList = [
-    { expanded: true,    id: 'performers' },
-    { expanded: true,    id: 'specimens' },
-    { expanded: true,    id: 'results' },
-    { expanded: true,    id: 'conclusion' }
+    { expanded: true, id: 'demographics' },
+    { expanded: true, id: 'performers' },
+    { expanded: true, id: 'specimens' },
+    { expanded: true, id: 'results' },
+    { expanded: true, id: 'conclusion' }
   ]
 
   constructor(
@@ -50,4 +51,6 @@ export class ToxToMdiViewerContentComponent {
   isExpanded(elementId: string) {
     return this.idStateList.find(element => element.id == elementId)?.expanded;
   }
+
+  protected readonly ToxToMdiRecord = ToxToMdiRecord;
 }

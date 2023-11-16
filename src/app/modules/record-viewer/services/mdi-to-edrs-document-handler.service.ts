@@ -368,6 +368,7 @@ export class MdiToEdrsDocumentHandlerService {
     autopsyLocationReference = autopsyLocationReference?.reference;
     let autopsyLocationResource = this.bundleHelper.findResourceByFullUrl(documentBundle, autopsyLocationReference);
     autopsy.autopsyLocation = autopsyLocationResource?.name || this.defaultString;
+    autopsy.autopsyLocationResource = autopsyLocationResource || undefined;
 
     return autopsy;
   }
