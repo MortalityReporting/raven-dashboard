@@ -1,0 +1,18 @@
+<div class="summary-section-body">
+  <div class="summary-section-grid">
+    <div class="grid-row">
+      <div class="grid-col-1">
+        <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Legal Sex at Death'"
+                                                        [value]="demographics?.gender"
+                                                        appSetFhirExplorer
+                                                        [resource]="demographics?.patientResource"></record-viewer-mdi-to-edrs-viewer-content-field>
+      </div>
+      <div class="grid-col-1">
+        <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Date of Birth'"
+                                                        [value]="demographics?.birthDate"
+                                                        appSetFhirExplorer
+                                                        [resource]="demographics?.patientResource"></record-viewer-mdi-to-edrs-viewer-content-field>
+      </div>
+    </div>
+  </div>
+</div>

@@ -5,7 +5,7 @@ export class AppConfiguration {
     color: "#646064",
     contrastColor: "#fafafa",
     workflowTitles: {
-      mdiToEdrs: "MDI to EDRS Document",
+      mdiToEdrs: "MDI and EDRS Document",
       toxToMdi: "Tox to MDI Message"
     },
     modules: {

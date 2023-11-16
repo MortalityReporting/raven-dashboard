@@ -52,6 +52,7 @@ export class Autopsy {
   performed: string;
   resultsAvailable: string;
   autopsyLocation: string;
+  autopsyLocationResource: {};
 }
 
 // Individual Resources and Parts
