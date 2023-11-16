@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {DomSanitizer} from "@angular/platform-browser";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material/dialog";
+import {UtilsService} from "../../../service/utils.service";
 
 @Component({
   selector: 'app-modal',
@@ -15,9 +16,11 @@ export class ModalComponent implements OnInit {
   title: string = null; // The title of the modal
 
   contentType: string; // Different types of content require different rendering. See the html code.
+  protected readonly JSON = JSON;
 
   constructor(
     private dialogRef: MatDialogRef<any>,
+    private utilsService: UtilsService,
     @Inject(MAT_DIALOG_DATA) private dialogData: any
   ) { }
 
@@ -29,6 +32,11 @@ export class ModalComponent implements OnInit {
     }
     this.title = this.dialogData.title;
   }
+
+  onCopyToClipboard() {
+    this.utilsService.showSuccessMessage("Content copied to clipboard.")
+  }
+
 }
 
 export function openModal(dialog: MatDialog, dialogData: any) {
