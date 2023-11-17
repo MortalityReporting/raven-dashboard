@@ -1,6 +1,6 @@
 export * from "./models/request-type";
 export * from "./models/connection-type";
-export * from "./models/test";
+export * from "./models/workflow-test";
 
 /** Services **/
 export { SearchEdrsService } from "./services/search-edrs.service";
