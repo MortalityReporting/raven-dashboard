@@ -102,7 +102,6 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
             this.error = err;
             this.isLoading = false;
             this.utilsService.showErrorMessage("Error uploading file " + this.file?.name);
-            this.file = null;
             this.errorsGenerated = true;
           }
         });
