@@ -84,7 +84,6 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
         this.errorsGenerated = false;
         this.isLoading = true;
         this.error = null;
-        //this.importCaseService.getMockResponse().subscribe({
         const apiParam = this.importCaseForm.controls['fileTemplate'].value.apiImportParameter;
         this.importCaseService.uploadFile(this.file, apiParam).subscribe({
           next: value => {
