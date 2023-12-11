@@ -13,7 +13,7 @@ import {UtilsService} from "../../../../service/utils.service";
 import {Router} from "@angular/router";
 import {Test} from "../../../tests";
 import {UiStringConstants} from "../../../../providers/ui-string-constants";
-import {TestStatus} from "../../models/test-status";
+import {TestStatusCodes} from "../../models/test-status";
 
 @Component({
   selector: 'testing-event-root',
@@ -172,7 +172,7 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
     this.currentItem = undefined;
   }
 
-  updateStatus(newStatus: TestStatus) {
+  updateStatus(newStatus: TestStatusCodes) {
     if (this.currentItem.testStatus == newStatus){
       // if there is no change in the status, we don't need to do an update
       return;

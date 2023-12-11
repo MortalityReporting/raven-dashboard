@@ -4,7 +4,7 @@ import {
   QuestionnaireResponseItem,
   QuestionnaireResponseItemAnswer
 } from "../../fhir-util";
-import {TestStatus} from "./test-status";
+import {TestStatusCodes} from "./test-status";
 import {Reference} from "../../fhir-util/models/fhir/r4/types/reference";
 import {EventModule} from "./event-module";
 import {QuestionnaireResponseStatus} from "../../fhir-util/models/fhir/r4/value-sets/questionnaire-response-status";
@@ -39,7 +39,7 @@ export class Registration extends QuestionnaireResponse {
   }
 
   // TODO: This method is not working for some reason. (Called from EventManager Service update function).
-  updateStatus(linkId: string, newStatus: TestStatus, attachmentId?: string) {
+  updateStatus(linkId: string, newStatus: TestStatusCodes, attachmentId?: string) {
     let item: QuestionnaireResponseItem = this.item.find( item => item.linkId === linkId);
     item.answer[0].valueCoding.code = newStatus;
     if (attachmentId) {

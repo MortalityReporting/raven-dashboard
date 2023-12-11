@@ -1,7 +1,7 @@
 import {
   QuestionnaireResponseItem,
 } from "../../fhir-util";
-import {TestStatus, TestStatusDictionary, TestStatusReverseLookUp, TestStatusSystem} from "./test-status";
+import {TestStatusCodes, TestStatusDictionary, TestStatusReverseLookUp, TestStatusSystem} from "./test-status";
 
 export class EventItem {
   constructor(item: any) {
@@ -11,7 +11,7 @@ export class EventItem {
     //if (item)
   }
 
-  setStatus(status: TestStatus) {
+  setStatus(status: TestStatusCodes) {
     this.status = status;
   }
 
@@ -23,7 +23,7 @@ export class EventItem {
   name: string;
   linkId: string;
   code: string;
-  status?: TestStatus;
+  status?: TestStatusCodes;
   attachment?: any;
 
   // Convert to QuestionnaireResponseItem. QuestionnaireItem is handled manually.

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import {TestStatus} from "../modules/testing-events";
+import {TestStatusCodes} from "../modules/testing-events";
 import {Test} from "../modules/tests";
 
 @Injectable()
@@ -62,7 +62,7 @@ export class UiStringConstants {
       name: 'onboarding',
       display: 'Onboarding',
       description: "Onboarding module description",
-      status: TestStatus.notStarted,
+      status: TestStatusCodes.notStarted,
       route: 'onboarding'
     },
     {
@@ -74,14 +74,14 @@ export class UiStringConstants {
         "Operation for search. Supported parameters include primary case identification fields, as well as additional data " +
         "(e.g., demographics information) if it exists in the test EDRS case records. Search parameters and all relevant " +
         "HTTP requests and responses are provided in both human readable forms and as FHIR resources for demonstration.",
-      status: TestStatus.notStarted,
+      status: TestStatusCodes.notStarted,
       route: 'search-edrs'
     },
     {
       name: 'updateEdrs',
       display: 'Update EDRS',
       description: "Onboarding module description",
-      status: TestStatus.notStarted,
+      status: TestStatusCodes.notStarted,
       route: 'update-edrs'
     },
   ]

@@ -5,7 +5,7 @@ import {map} from "rxjs/operators";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ConfigService} from "../../../service/config.service";
 import {Config} from "../../../model/config";
-import {TestStatus} from "../../testing-events";
+import {TestStatusCodes} from "../../testing-events";
 import {AppConstants} from "../../../providers/app-constants";
 
 @Injectable({
@@ -85,7 +85,7 @@ export class SearchEdrsService {
 
     return this.http.post(operationDefinitionLocation, params, httpOptions).pipe(map((result: any) => {
         if (result?.total > 0) {
-          this.setTestStatus(TestStatus.complete); // The compete status is set ONLY when at least one record is returned
+          this.setTestStatus(TestStatusCodes.complete); // The compete status is set ONLY when at least one record is returned
         }
         return result;
       }
