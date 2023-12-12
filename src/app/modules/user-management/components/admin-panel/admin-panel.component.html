@@ -7,14 +7,24 @@
     Please login to an account with appropriate permissions to access this component.
   </ng-template>
 
-  <pre>
-    {{ currentUser | json}}
-  </pre>
-
-  <div *ngIf="events">
-    <div *ngFor="let event of events">
-      <app-event-table [event]="event"></app-event-table>
+  <div *ngIf="testEvents">
+    <div class="row" style="padding-top: 4px">
+      <mat-form-field appearance="outline" style="min-width: 30%">
+        <mat-label>Select Test Event</mat-label>
+        <mat-select [(value)]="selectedEvent">
+          <mat-option (onSelectionChange)="onSelectionChanged(testEvent)" class="mat-option"
+                      *ngFor="let testEvent of testEvents" [value]="testEvent">
+            {{ testEvent.title }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="content-spacer"></div>
+      <button mat-raised-button (click)="exportToPdf(selectedEvent)">
+        <mat-icon>download</mat-icon>
+        Download s PDF
+      </button>
     </div>
+    <app-event-table [event]="selectedEvent"></app-event-table>
   </div>
 
   <div *ngIf="error">

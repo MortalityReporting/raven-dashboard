@@ -14,6 +14,9 @@ import { EventTableComponent } from './components/event-table/event-table.compon
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
 import {ErrorFrameComponent} from "./components/error-frame/error-frame.component";
+import {MatSelectModule} from "@angular/material/select";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   declarations: [
@@ -61,6 +64,10 @@ import {ErrorFrameComponent} from "./components/error-frame/error-frame.componen
     MatDividerModule,
     MatTableModule,
     MatSortModule,
+    MatSelectModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule
   ]
 })
 export class UserManagementModule {
