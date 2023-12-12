@@ -66,7 +66,7 @@ export class AdminPanelComponent {
     pdf.text(reportTitle, 14, 12);
     autoTable(pdf, {
       body: testEvent.rows.map(this.addKeySuffix),
-      columns: this.getAutotableColumns(testEvent)
+      columns: this.getAutoTableColumns(testEvent)
     });
     return new Blob([pdf.output('blob')]);
   }
@@ -76,7 +76,7 @@ export class AdminPanelComponent {
    * @param testEvent
    * @private
    */
-  private getAutotableColumns(testEvent) {
+  private getAutoTableColumns(testEvent) {
     return [
       {"header": "User", "dataKey": "name"},
       {"header": "Email", "dataKey": "email"},
@@ -88,7 +88,7 @@ export class AdminPanelComponent {
   }
 
   /**
-   * jspdf autotable does not recognize numeric keys, so we add suffix "str" by hand
+   * jspdf autoTable does not recognize numeric keys, so we add suffix "str" by hand
    * @param obj
    * @private
    */
