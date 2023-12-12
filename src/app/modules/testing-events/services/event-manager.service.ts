@@ -4,7 +4,7 @@ import {Bundle, FhirClientService, FhirResource, QuestionnaireResponse} from "..
 import {EventModule} from "../models/event-module";
 import {DashboardApiInterfaceService} from "../../dashboard-api";
 import {Registration} from "../models/registration";
-import {TestStatus} from "../models/test-status";
+import {TestStatusCodes} from "../models/test-status";
 
 @Injectable({
   providedIn: 'root'
@@ -69,7 +69,7 @@ export class EventManagerService {
     // );
   }
 
-  updateTestStatus(registration: Registration, linkId, newStatus: TestStatus): Observable<FhirResource> {
+  updateTestStatus(registration: Registration, linkId: string, newStatus: TestStatusCodes): Observable<FhirResource> {
     let itemToUpdate = registration.item.find(item => item.linkId === linkId);
     itemToUpdate.answer[0].valueCoding.code = newStatus;
     //registration.updateStatus(linkId, newStatus); // TODO: Figure out why this method doesn't work.

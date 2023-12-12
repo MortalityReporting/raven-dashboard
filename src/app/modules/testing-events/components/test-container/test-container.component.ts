@@ -6,8 +6,7 @@ import {EventManagerService} from "../../services/event-manager.service";
 import {Registration} from "../../models/registration";
 import {EventModule} from "../../models/event-module";
 import {RegistrationDisplayItem} from "../../models/registration-display";
-import {TestStatus} from "../../models/test-status";
-import {mergeMap} from "rxjs";
+import {TestStatusCodes} from "../../models/test-status";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 
 @Component({
@@ -17,7 +16,7 @@ import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 })
 export class TestContainerComponent {
 
-  @Output() updateStatus = new EventEmitter<TestStatus>()
+  @Output() updateStatus = new EventEmitter<TestStatusCodes>()
   @Output() exitTest = new EventEmitter()
   @Input() userId: string;
   currentRegistration: Registration;
@@ -46,7 +45,7 @@ export class TestContainerComponent {
 
   onTestCompleted(){
     // TODO: Switch to status handler
-    this.onUpdateStatus(TestStatus.complete);
+    this.onUpdateStatus(TestStatusCodes.complete);
   }
 
   openDocumentWidow() {

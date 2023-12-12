@@ -31,7 +31,7 @@
       <div>{{capitalizeColumnHeader(columnDictionary[column])}}</div>
     </th>
     <td mat-cell *matCellDef="let element" class="test-cell" [class]="['test-cell', element[column]]">
-      <span>{{TestStatusDictionary[element[column]]}}</span>
+      <span>{{TestStatusDictionary[element[column]].display}}</span>
     </td>
   </ng-container>
 

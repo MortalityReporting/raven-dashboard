@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
 import {TestStatusDictionary} from "../../../testing-events"
@@ -8,7 +8,7 @@ import {TestStatusDictionary} from "../../../testing-events"
   templateUrl: './event-table.component.html',
   styleUrls: ['./event-table.component.scss']
 })
-export class EventTableComponent implements OnInit {
+export class EventTableComponent implements OnChanges {
   @Input() event: any;
 
   dataSource: MatTableDataSource<any>;
@@ -23,10 +23,12 @@ export class EventTableComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {
-    this.columnDictionary = this.event['cols'];
-    this.displayedColumns = this.parseColKeys(this.event);
-    this.dataSource = new MatTableDataSource<any>(this.event.rows)
+  ngOnChanges(changes: SimpleChanges): void {
+    if(this.event){
+      this.columnDictionary = this.event['cols'];
+      this.displayedColumns = this.parseColKeys(this.event);
+      this.dataSource = new MatTableDataSource<any>(this.event.rows)
+    }
   }
 
   capitalizeColumnHeader(column: string): string {
@@ -41,4 +43,6 @@ export class EventTableComponent implements OnInit {
     }
     return headerDisplays;
   }
+
+
 }

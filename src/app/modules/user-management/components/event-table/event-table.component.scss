@@ -22,10 +22,12 @@
     text-align: center;
   }
   > .user-group {
-    background-color: #99c4ff;
+    background-color: #B65454;
+    color: whitesmoke;
   }
   > .test-group {
-    background-color: #ffeca9;
+    background-color: #335963;
+    color: whitesmoke;
   }
 }
 
@@ -37,10 +39,10 @@
     padding: $xs $sm;
   }
   > .user-header {
-    background-color: #e2f1ff;
+    background-color: #EED8D8;
   }
   > .test-header {
-    background-color: #fff7db;
+    background-color: #C9DEE3;
   }
 }
 .body-row {
@@ -49,12 +51,11 @@
     padding: $sm;
   }
   .user-cell {
-    background-color: #f2f9ff;
+    background-color: #FDFBFB;
     width: 15%;
-    //border-right: 2px solid #99c4ff;
   }
   .test-cell {
-    background-color: #fffbef;
+    background-color: #F8FCFC;
   }
 }
 
