@@ -73,7 +73,7 @@ export class AdminPanelComponent {
 
   /**
    * Flatten the event data and append "str" to the numeric keys (tests in this case)
-   * @param obj
+   * @param testEvent
    * @private
    */
   private getAutotableColumns(testEvent) {
