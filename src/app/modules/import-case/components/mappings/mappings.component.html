@@ -23,6 +23,13 @@
       <th mat-header-cell *matHeaderCellDef>Status</th>
       <td mat-cell *matCellDef="let row" [ngClass]="row.valueObject?.status == 'mapped' ? 'mapped': 'not-mapped' ">
         {{row?.valueObject?.status}}
+        <mat-icon
+          style="cursor: pointer"
+          *ngIf="row?.valueObject?.errors"
+          [ngClass]="row.valueObject?.status == 'mapped' ? 'mapped': 'not-mapped'"
+          [matTooltip]="row?.valueObject?.errors?.toString()">
+          info
+        </mat-icon>
       </td>
     </ng-container>
 
@@ -50,6 +57,13 @@
               <th mat-header-cell *matHeaderCellDef></th>
               <td mat-cell *matCellDef="let inner" [ngClass]="inner.valueObject?.status == 'mapped' ? 'mapped': 'not-mapped' ">
                 {{inner?.valueObject?.status}}
+                <mat-icon
+                  style="cursor: pointer"
+                  *ngIf="inner?.valueObject?.errors"
+                  [ngClass]="inner.valueObject?.status == 'mapped' ? 'mapped': 'not-mapped'"
+                  [matTooltip]="inner?.valueObject?.errors?.toString()">
+                  info
+                </mat-icon>
               </td>
             </ng-container>
             <ng-container matColumnDef="value">
@@ -78,6 +92,7 @@
       mat-row
       *matRowDef="let row; columns: ['expandedRow']"
       class="case-record-detail-row"
+      [matTooltip]="row?.errors?.toString()"
     ></tr>
     <tr class="mat-row" *matNoDataRow>
       <td class="mat-cell">No records loaded.</td>

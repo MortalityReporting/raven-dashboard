@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {FileTemplateService} from "../../services/file-template.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
@@ -28,7 +28,7 @@ export class MappingsComponent implements OnChanges {
   selectedRow: any;
   statusFilter: string | null = null;
 
-  constructor(private fileTemplateService: FileTemplateService) {
+  constructor() {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -39,8 +39,6 @@ export class MappingsComponent implements OnChanges {
   }
 
   setDataSource(value, statusFilter) {
-    // this.mockResponse = value;
-    // value = value[0];
     this.parsedResponse = Object.keys(value?.fields).map(key => {
       return {
         name: key,
