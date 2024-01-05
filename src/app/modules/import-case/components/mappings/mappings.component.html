@@ -92,7 +92,6 @@
       mat-row
       *matRowDef="let row; columns: ['expandedRow']"
       class="case-record-detail-row"
-      [matTooltip]="row?.errors?.toString()"
     ></tr>
     <tr class="mat-row" *matNoDataRow>
       <td class="mat-cell">No records loaded.</td>
