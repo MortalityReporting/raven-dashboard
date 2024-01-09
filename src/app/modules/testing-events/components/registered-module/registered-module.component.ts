@@ -20,6 +20,7 @@ export class RegisteredModuleComponent implements OnInit{
   currentRegistration: Registration;
   currentEvent: EventModule;
   registrationDisplay: RegistrationDisplay;
+  completedTestCounter: number = 0;
 
   constructor(
       public eventModuleManager: EventManagerService,
@@ -57,6 +58,7 @@ export class RegisteredModuleComponent implements OnInit{
       })).subscribe({
       next: (value: RegistrationDisplay) => {
         this.registrationDisplay = value;
+        this.completedTestCounter = value.items.filter(test=> test.testStatus == 'complete').length;
       }
     })
   }
