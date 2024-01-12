@@ -31,7 +31,14 @@
       <div>{{capitalizeColumnHeader(columnDictionary[column])}}</div>
     </th>
     <td mat-cell *matCellDef="let element" class="test-cell" [class]="['test-cell', element[column]]">
-      <span>{{TestStatusDictionary[element[column]].display}}</span>
+      <div class="flex-row">
+        <div class="flex-col" style="max-width:80%; min-width: 30%; justify-content: center;">{{TestStatusDictionary[element[column]].display}}</div>
+        <div class="flex-col">
+          <button mat-icon-button aria-label="Example icon button with a menu icon" class="complete-button">
+            <mat-icon>assignment_turned_in</mat-icon>
+          </button>
+        </div>
+      </div>
     </td>
   </ng-container>
 
