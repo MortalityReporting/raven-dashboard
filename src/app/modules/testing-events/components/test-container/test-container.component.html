@@ -14,7 +14,7 @@
       <app-onboarding *ngSwitchCase="'onboarding'"/>
       <app-search-edrs *ngSwitchCase="'search-edrs'" (onTestCompletedEvent)="onUpdateStatus($event)"/>
       <app-update-edrs *ngSwitchCase="'update-edrs'" (onTestCompletedEvent)="onUpdateStatus($event)"/>
-      <app-validate *ngSwitchCase="'validate'" (onTestCompletedEvent)="onUpdateStatus($event)"/>
+      <app-validation *ngSwitchCase="'validation'" (onTestCompletedEvent)="onUpdateStatus($event)"/>
     </ng-container>
   </div>
   <div class="test-container-footer">

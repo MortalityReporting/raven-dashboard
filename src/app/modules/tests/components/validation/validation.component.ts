@@ -2,11 +2,11 @@ import {Component, EventEmitter, Output} from '@angular/core';
 import {TestStatusCodes} from "../../../testing-events";
 
 @Component({
-  selector: 'app-validate',
-  templateUrl: './validate.component.html',
-  styleUrls: ['./validate.component.css']
+  selector: 'app-validation',
+  templateUrl: './validation.component.html',
+  styleUrls: ['./validation.component.css']
 })
-export class ValidateComponent {
+export class ValidationComponent {
   @Output() onTestCompletedEvent = new EventEmitter<TestStatusCodes>()
 
   updateStatus() {

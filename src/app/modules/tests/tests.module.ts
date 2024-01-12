@@ -60,7 +60,7 @@ import {
 import {ClipboardModule} from "@angular/cdk/clipboard";
 import { UpdateEdrsComponent } from './components/update-edrs/update-edrs.component';
 import {NgxHisbLoggerModule} from "ngx-hisb-logger";
-import { ValidateComponent } from './components/validate/validate.component';
+import { ValidationComponent } from './components/validation/validation.component';
 
 @NgModule({
   declarations: [
@@ -80,14 +80,14 @@ import { ValidateComponent } from './components/validate/validate.component';
     OnboardingComponent,
     HttpResponseResultsComponent,
     UpdateEdrsComponent,
-    ValidateComponent,
+    ValidationComponent,
   ],
   exports: [
     EdrsResultsStepComponent,
     OnboardingComponent,
     SearchEdrsComponent,
     UpdateEdrsComponent,
-    ValidateComponent
+    ValidationComponent
   ],
   imports: [
     CommonModule,
