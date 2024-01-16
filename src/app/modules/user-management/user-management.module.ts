@@ -17,6 +17,7 @@ import {ErrorFrameComponent} from "./components/error-frame/error-frame.componen
 import {MatSelectModule} from "@angular/material/select";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -29,46 +30,47 @@ import {MatInputModule} from "@angular/material/input";
   exports: [
     UserHeaderComponent
   ],
-  imports: [
-    // Auth0 Testing
-    AuthModule.forRoot({
-      domain: environment.domain,
-      clientId: environment.clientId,
-      authorizationParams: {
-        redirect_uri: environment.adminRedirectUrl,
-        audience: environment.audience,
-        scope: "admin profile email openid"
-      },
-      httpInterceptor: {
-        allowedList: [
-          {
-            uri: `${environment.dashboardApi}admin-panel`,
-            // TODO: Setup Scope here.
-            // tokenOptions: {
-            //   audience: '',
-            //   scope: ""
-            //
-            // }
-          },
-          {
-            uri: `${environment.dashboardApi}document`
-          }
-        ]
-      }
-    }),
-    CommonModule,
-    FhirUtilModule,
-    MatIconModule,
-    MatButtonModule,
-    MatMenuModule,
-    MatDividerModule,
-    MatTableModule,
-    MatSortModule,
-    MatSelectModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatInputModule
-  ]
+    imports: [
+        // Auth0 Testing
+        AuthModule.forRoot({
+            domain: environment.domain,
+            clientId: environment.clientId,
+            authorizationParams: {
+                redirect_uri: environment.adminRedirectUrl,
+                audience: environment.audience,
+                scope: "admin profile email openid"
+            },
+            httpInterceptor: {
+                allowedList: [
+                    {
+                        uri: `${environment.dashboardApi}admin-panel`,
+                        // TODO: Setup Scope here.
+                        // tokenOptions: {
+                        //   audience: '',
+                        //   scope: ""
+                        //
+                        // }
+                    },
+                    {
+                        uri: `${environment.dashboardApi}document`
+                    }
+                ]
+            }
+        }),
+        CommonModule,
+        FhirUtilModule,
+        MatIconModule,
+        MatButtonModule,
+        MatMenuModule,
+        MatDividerModule,
+        MatTableModule,
+        MatSortModule,
+        MatSelectModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatTooltipModule
+    ]
 })
 export class UserManagementModule {
 

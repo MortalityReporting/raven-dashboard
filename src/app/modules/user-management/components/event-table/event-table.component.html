@@ -14,7 +14,7 @@
   <ng-container matColumnDef="testGroup">
     <th mat-header-cell *matHeaderCellDef [attr.colSpan]="displayedColumns.length - 2"
       class="test-group">
-      <div>TestsModule</div>
+      <div>Event Tests</div>
     </th>
   </ng-container>
 
@@ -32,10 +32,17 @@
     </th>
     <td mat-cell *matCellDef="let element" class="test-cell" [class]="['test-cell', element[column]]">
       <div class="flex-row">
-        <div class="flex-col" style="max-width:80%; min-width: 30%; justify-content: center;">{{TestStatusDictionary[element[column]].display}}</div>
-        <div class="flex-col">
-          <button mat-icon-button aria-label="Example icon button with a menu icon" class="complete-button">
+        <div class="flex-col" style="max-width:80%; min-width: 50%; justify-content: center;">{{ TestStatusDictionary[element[column]].display }}</div>
+        <div style="flex: 1 1 auto !important;"></div>
+        <div class="flex-col" matTooltip="Mark Complete?">
+          <button *ngIf="TestStatusDictionary[element[column]].display != 'Complete'"
+                  mat-icon-button aria-label="Mark Complete?" class="complete-button" (click)="onMarkTestComplete(event)">
             <mat-icon>assignment_turned_in</mat-icon>
+          </button>
+        </div>
+        <div class="flex-col" matTooltip="Download File?">
+          <button mat-icon-button aria-label="Download File?" class="complete-button" (click)="onMarkTestComplete(event)">
+            <mat-icon>download</mat-icon>
           </button>
         </div>
       </div>

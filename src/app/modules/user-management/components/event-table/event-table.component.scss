@@ -1,4 +1,7 @@
 @import "src/styles";
+$dark-red-background: #B65454;
+$dark-green-background: #335963;
+
 
 .title-row {
   @extend .padding-md;
@@ -22,11 +25,11 @@
     text-align: center;
   }
   > .user-group {
-    background-color: #B65454;
+    background-color: $dark-red-background;
     color: whitesmoke;
   }
   > .test-group {
-    background-color: #335963;
+    background-color: $dark-green-background;
     color: whitesmoke;
   }
 }
@@ -69,5 +72,5 @@
 }
 
 .complete-button {
-  color: $primary-color;
+  color: $dark-green-background;
 }
