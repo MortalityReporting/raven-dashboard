@@ -5,15 +5,14 @@ import {environment as env} from "../../../../../environments/environment";
 import {DashboardApiInterfaceService} from "../../../dashboard-api";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import {mergeMap, ReplaySubject, share, skipWhile, switchMap} from "rxjs";
+import {mergeMap, ReplaySubject, share, switchMap} from "rxjs";
 import {EventManagerService, TestStatusCodes} from "../../../testing-events";
-import {Registration} from "../../../testing-events/models/registration";
 import {UtilsService} from "../../../../service/utils.service";
 
 @Component({
   selector: 'app-admin-panel',
   templateUrl: './admin-panel.component.html',
-  styleUrls: ['./admin-panel.component.css'],
+  styleUrls: ['./admin-panel.component.scss'],
 })
 export class AdminPanelComponent implements OnInit {
   currentUser: any;
@@ -23,6 +22,7 @@ export class AdminPanelComponent implements OnInit {
   selectedEvent: any;
   selected: any;
   refreshTrigger$ = new ReplaySubject(1);
+  isLoading = false;
 
   constructor(
       private userProfileManager: UserProfileManagerService,
@@ -61,13 +61,8 @@ export class AdminPanelComponent implements OnInit {
     this.selectedEvent = testEvent;
   }
 
-
-  // TODO: Remove this.
-  testUpdateButton() {
-    this.updateStatusToComplete("60b6166d-5855-4945-b6c5-a11539d58665", "2")
-  }
-
   updateStatusToComplete(userEventRegistrationId: string, currentItemLinkId: string) {
+    this.isLoading = true;
     let updateStatus$ = this.eventManager.getUserEventRegistrationById(userEventRegistrationId).pipe(
       mergeMap(response => {
         console.log(response)
@@ -77,10 +72,12 @@ export class AdminPanelComponent implements OnInit {
     updateStatus$.subscribe({
       next: value => {
         this.refreshTrigger$.next(1);
+        this.isLoading = false;
       },
       error: err => {
         console.error(err);
         this.utilsService.showErrorMessage("Server error updating the test status");
+        this.isLoading = false;
       }
     })
   }
@@ -144,4 +141,7 @@ export class AdminPanelComponent implements OnInit {
     return newObj;
   }
 
+  onTestingEventUpdated(event: any) {
+    this.updateStatusToComplete(event.userEventRegistrationId, event.currentItemLinkId);
+  }
 }

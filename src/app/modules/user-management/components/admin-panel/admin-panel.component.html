@@ -18,17 +18,20 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-
-      <!-- TODO: Remove this. -->
-      <button mat-button (click)="testUpdateButton()">TODO: REMOVE ME THIS IS JUST TO TEST UPDATE</button>
-
       <div class="content-spacer"></div>
       <button mat-raised-button (click)="exportToPdf(selectedEvent)">
         <mat-icon>download</mat-icon>
         Download as PDF
       </button>
     </div>
-    <app-event-table [event]="selectedEvent"></app-event-table>
+    <app-event-table
+      *ngIf="!isLoading"
+      (testingEventUpdated)="onTestingEventUpdated($event)"
+      [testingEvent]="selectedEvent">
+    </app-event-table>
+    <div class="spinner-container" *ngIf="isLoading">
+      <mat-spinner [diameter]="70"></mat-spinner>
+    </div>
   </div>
 
   <div *ngIf="error">
