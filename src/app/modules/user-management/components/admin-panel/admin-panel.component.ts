@@ -1,23 +1,25 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserProfileManagerService} from "../../services/user-profile-manager.service";
 import {AuthService} from '@auth0/auth0-angular';
 import {environment as env} from "../../../../../environments/environment";
 import {DashboardApiInterfaceService} from "../../../dashboard-api";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import {ReplaySubject, share, switchMap} from "rxjs";
 
 @Component({
   selector: 'app-admin-panel',
   templateUrl: './admin-panel.component.html',
   styleUrls: ['./admin-panel.component.css'],
 })
-export class AdminPanelComponent {
+export class AdminPanelComponent implements OnInit {
   currentUser: any;
   env = env;
   testEvents: any = undefined;
   error: any = undefined;
   selectedEvent: any;
   selected: any;
+  refreshTrigger$ = new ReplaySubject(1);
 
   constructor(
     private userProfileManager: UserProfileManagerService,
@@ -26,8 +28,17 @@ export class AdminPanelComponent {
 
     this.userProfileManager.currentUser$.subscribe({next: value => {this.currentUser = value;}});
     this.userProfileManager.getAllUsers().subscribe();
+  }
+  ngOnInit(): void {
+    let adminPanelData$ = this.refreshTrigger$.pipe(
+      switchMap(() => this.dashboardApiInterface.getAdminPanelData()),
+      share()
+    );
 
-    this.dashboardApiInterface.getAdminPanelData().subscribe({
+    // Initial call to "refresh".
+    this.refreshTrigger$.next(1);
+
+    adminPanelData$.subscribe({
       next: value => {
         this.error = undefined;
         this.testEvents = value['events'];
