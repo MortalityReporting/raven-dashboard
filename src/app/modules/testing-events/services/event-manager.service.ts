@@ -58,6 +58,10 @@ export class EventManagerService {
     return this.fhirClient.create("QuestionnaireResponse", questionnaireResponse);
   }
 
+  getUserEventRegistrationById(userEventRegistrationId: string): Observable<any> {
+    return this.fhirClient.read("QuestionnaireResponse", userEventRegistrationId);
+  }
+
   uploadDocument(file: File, userId: string, registrationId: string): Observable<any> {
     const upload$ = this.dashboardApi.uploadFile(file, userId, registrationId);
     return upload$;

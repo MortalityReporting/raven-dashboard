@@ -26,6 +26,7 @@ export class EventTableComponent implements OnChanges {
   constructor(private dialog: MatDialog) {}
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.event)
     if(this.event){
       this.columnDictionary = this.event['cols'];
       this.displayedColumns = this.parseColKeys(this.event);

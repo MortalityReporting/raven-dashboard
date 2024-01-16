@@ -5,7 +5,10 @@ import {environment as env} from "../../../../../environments/environment";
 import {DashboardApiInterfaceService} from "../../../dashboard-api";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import {ReplaySubject, share, switchMap} from "rxjs";
+import {mergeMap, ReplaySubject, share, skipWhile, switchMap} from "rxjs";
+import {EventManagerService, TestStatusCodes} from "../../../testing-events";
+import {Registration} from "../../../testing-events/models/registration";
+import {UtilsService} from "../../../../service/utils.service";
 
 @Component({
   selector: 'app-admin-panel',
@@ -22,9 +25,11 @@ export class AdminPanelComponent implements OnInit {
   refreshTrigger$ = new ReplaySubject(1);
 
   constructor(
-    private userProfileManager: UserProfileManagerService,
-    public auth: AuthService,
-    private dashboardApiInterface: DashboardApiInterfaceService) {
+      private userProfileManager: UserProfileManagerService,
+      public auth: AuthService,
+      private dashboardApiInterface: DashboardApiInterfaceService,
+      protected eventManager: EventManagerService,
+      private utilsService: UtilsService) {
 
     this.userProfileManager.currentUser$.subscribe({next: value => {this.currentUser = value;}});
     this.userProfileManager.getAllUsers().subscribe();
@@ -54,6 +59,30 @@ export class AdminPanelComponent implements OnInit {
 
   onSelectionChanged(testEvent: any) {
     this.selectedEvent = testEvent;
+  }
+
+
+  // TODO: Remove this.
+  testUpdateButton() {
+    this.updateStatusToComplete("60b6166d-5855-4945-b6c5-a11539d58665", "2")
+  }
+
+  updateStatusToComplete(userEventRegistrationId: string, currentItemLinkId: string) {
+    let updateStatus$ = this.eventManager.getUserEventRegistrationById(userEventRegistrationId).pipe(
+      mergeMap(response => {
+        console.log(response)
+        return this.eventManager.updateTestStatus(response, currentItemLinkId, TestStatusCodes.complete)
+      })
+    );
+    updateStatus$.subscribe({
+      next: value => {
+        this.refreshTrigger$.next(1);
+      },
+      error: err => {
+        console.error(err);
+        this.utilsService.showErrorMessage("Server error updating the test status");
+      }
+    })
   }
 
   exportToPdf(event){
