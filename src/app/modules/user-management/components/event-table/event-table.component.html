@@ -34,6 +34,11 @@
       <div class="flex-row">
         <div class="flex-col" style="max-width:80%; min-width: 50%; justify-content: center;">{{ TestStatusDictionary[element[column]].display }}</div>
         <div style="flex: 1 1 auto !important;"></div>
+<!--                       Mark Complete? | Download Attachment?                                                                                                -->
+<!--        not-started    Always show.   | Never show.                                                                                                         -->
+<!--        incomplete     Always show.   | Never show.                                                                                                         -->
+<!--        review-pending Always show.   | Always show. (review pending implies a file to review)                                                              -->
+<!--        complete      Never show.     | Only show if attachment exists (We won't remove it, so the file can be accessed for further review post event, etc) -->
         <div class="flex-col" matTooltip="Mark Complete?">
           <button *ngIf="TestStatusDictionary[element[column]].display != 'Complete'"
                   mat-icon-button aria-label="Mark Complete?" class="complete-button" (click)="onMarkTestComplete(event)">
