@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
 import {TestStatusDictionary} from "../../../testing-events"
@@ -11,7 +11,8 @@ import {MatDialog} from "@angular/material/dialog";
   styleUrls: ['./event-table.component.scss']
 })
 export class EventTableComponent implements OnChanges {
-  @Input() event: any;
+  @Input() testingEvent: any;
+  @Output() testingEventUpdated = new EventEmitter<any>()
 
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[];
@@ -26,10 +27,10 @@ export class EventTableComponent implements OnChanges {
   constructor(private dialog: MatDialog) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(this.event){
-      this.columnDictionary = this.event['cols'];
-      this.displayedColumns = this.parseColKeys(this.event);
-      this.dataSource = new MatTableDataSource<any>(this.event.rows)
+    if(this.testingEvent){
+      this.columnDictionary = this.testingEvent['cols'];
+      this.displayedColumns = this.parseColKeys(this.testingEvent);
+      this.dataSource = new MatTableDataSource<any>(this.testingEvent.rows)
     }
   }
 
@@ -47,7 +48,7 @@ export class EventTableComponent implements OnChanges {
   }
 
 
-  onMarkTestComplete(element) {
+  onMarkTestComplete(column, element) {
     openConfirmationDialog(
       this.dialog,
       {
@@ -61,9 +62,13 @@ export class EventTableComponent implements OnChanges {
       .subscribe(
         action => {
           if (action == 'primaryAction') {
-            //this.importCase();
+            this.testingEventUpdated.emit(this.testingEvent);
           }
         }
       );
+  }
+
+  onDownloadFile(testingEvent: any) {
+
   }
 }

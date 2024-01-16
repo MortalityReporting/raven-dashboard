@@ -24,7 +24,7 @@
         Download as PDF
       </button>
     </div>
-    <app-event-table [event]="selectedEvent"></app-event-table>
+    <app-event-table (testingEventUpdated)="onTestingEventUpdated($event)" [testingEvent]="selectedEvent"></app-event-table>
   </div>
 
   <div *ngIf="error">

@@ -104,4 +104,7 @@ export class AdminPanelComponent {
     return newObj;
   }
 
+  onTestingEventUpdated(testingEvent: any) {
+    console.log(testingEvent);
+  }
 }
