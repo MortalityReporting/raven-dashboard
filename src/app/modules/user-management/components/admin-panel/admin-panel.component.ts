@@ -8,6 +8,7 @@ import autoTable from "jspdf-autotable";
 import {mergeMap, ReplaySubject, share, switchMap} from "rxjs";
 import {EventManagerService, TestStatusCodes} from "../../../testing-events";
 import {UtilsService} from "../../../../service/utils.service";
+import {UpdateAction} from "../../../testing-events/models/update-action";
 
 @Component({
   selector: 'app-admin-panel',
@@ -66,7 +67,8 @@ export class AdminPanelComponent implements OnInit {
     let updateStatus$ = this.eventManager.getUserEventRegistrationById(userEventRegistrationId).pipe(
       mergeMap(response => {
         console.log(response)
-        return this.eventManager.updateTestStatus(response, currentItemLinkId, TestStatusCodes.complete)
+        const updateAction: UpdateAction = { status: TestStatusCodes.complete }
+        return this.eventManager.updateTestStatus(response, currentItemLinkId, updateAction)
       })
     );
     updateStatus$.subscribe({

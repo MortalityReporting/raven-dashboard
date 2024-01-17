@@ -8,6 +8,7 @@ import {EventModule} from "../../models/event-module";
 import {RegistrationDisplayItem} from "../../models/registration-display";
 import {TestStatusCodes} from "../../models/test-status";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
+import {UpdateAction} from "../../models/update-action";
 
 @Component({
   selector: 'testing-event-test-container',
@@ -16,7 +17,7 @@ import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 })
 export class TestContainerComponent {
 
-  @Output() updateStatus = new EventEmitter<TestStatusCodes>()
+  @Output() updateStatus = new EventEmitter<UpdateAction>()
   @Output() exitTest = new EventEmitter()
   @Input() userId: string;
   currentRegistration: Registration;
@@ -60,17 +61,21 @@ export class TestContainerComponent {
       });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.startUpload(result);
+      this.startUpload(result.file);
     });
   }
 
-  startUpload(file) {
-    console.log("Starting Upload");
-    console.log(file);
-    let upload$ = this.eventManager.uploadDocument(file, this.userId, this.currentRegistration.id);
+  startUpload(file: File) {
+    let upload$ = this.eventManager.uploadDocument(file, this.currentEvent.machineReadableName);
     upload$.subscribe({
       next: value => {
-        console.log(value);
+        if (value.type === 4) {
+          const attachment = `${value['body']['bucket']}/${value['body']['filename']}`
+          this.onUpdateStatus(TestStatusCodes.reviewPending, attachment)
+        }
+      },
+      error: err => {
+        console.error(err)
       }
     })
     // this.eventManager.uploadDocument(file, this.userId, this.currentRegistration.id).pipe(
@@ -88,10 +93,15 @@ export class TestContainerComponent {
     // })
   }
 
-  onUpdateStatus(data: any) {
-    console.log(data)
+  onUpdateStatus(status: any, attachment?: string) {
+    console.log(status)
+    console.log(attachment)
+    let data: UpdateAction = {status: status}
+    if (attachment) {
+      data.attachment = attachment
+    }
     this.updateStatus.emit(data); //TODO: If the test status up date is before the emit, emit doesn't fire?
-    this.registrationDisplayItem.testStatus = data;
+    this.registrationDisplayItem.testStatus = status;
   }
 
   onExitTest() {

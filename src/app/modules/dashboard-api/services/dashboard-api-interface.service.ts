@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpEvent, HttpRequest, HttpResponse} from "@angular/common/http";
+import {HttpClient, HttpEvent, HttpHeaders, HttpRequest, HttpResponse} from "@angular/common/http";
 import {ConfigService} from "../../../service/config.service";
 import {Observable} from "rxjs";
 
@@ -23,14 +23,15 @@ export class DashboardApiInterfaceService {
   }
 
   // POST /document
-  uploadFile(file: File, userId: string, registrationId: string): Observable<HttpEvent<any>> {
+  uploadFile(file: File, event: string): Observable<HttpEvent<any>> {
     const data = new FormData();
-    data.append('file', file);
-    data.append('userId', userId);
-    data.append('registrationId', registrationId)
-    const request = new HttpRequest('POST', `${this.dashboardApiUrl}document`, data,
-      {reportProgress: true, responseType: 'json'}
-    )
+    console.log(file);
+    console.log(event);
+    data.append('file', file, file.name);
+    data.append('event', event.toLowerCase());
+    //let httpHeaders: HttpHeaders = new HttpHeaders().set('Content-Type', 'multipart/form-data; boundary=');
+    //let httpOptions = {headers: httpHeaders}
+    const request = new HttpRequest('POST', `${this.dashboardApiUrl}document`, data)
     return this.http.request(request);
   }
 
