@@ -31,18 +31,16 @@ export class DashboardApiInterfaceService {
     data.append('event', event.toLowerCase());
     //let httpHeaders: HttpHeaders = new HttpHeaders().set('Content-Type', 'multipart/form-data; boundary=');
     //let httpOptions = {headers: httpHeaders}
-    const request = new HttpRequest('POST', `${this.dashboardApiUrl}document`, data)
+    const request = new HttpRequest('POST', `${this.dashboardApiUrl}attachment/upload`, data)
     return this.http.request(request);
   }
 
   // GET /document
-  getDocument(bucketName: string, fileName: string) {
-    return this.http.get(`${this.dashboardApiUrl}document`, {
-      params: {
-        bucket: bucketName,
-        filename: fileName
-      }
-    })
+  getDocument(bucketName: string, fileName: string): Observable<any> {
+    const data = new FormData()
+    data.append('bucket', bucketName);
+    data.append('filename', fileName);
+    return this.http.post(`${this.dashboardApiUrl}attachment/download`, data, {responseType: "blob"});
   }
 
 }

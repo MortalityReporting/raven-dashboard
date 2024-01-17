@@ -79,6 +79,7 @@ export class EventManagerService {
   // attachment is in the form of "{event_or_bucket_name}/{file_name}" as it appears in the valueAttachment field of a resource or in the admin panel return.
   getAttachment(attachment: string) {
     const split = attachment.split("/");
+    console.log(split)
     return this.dashboardApi.getDocument(split[0], split[1])
   }
 

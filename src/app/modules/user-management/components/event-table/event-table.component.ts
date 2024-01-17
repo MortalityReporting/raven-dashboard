@@ -70,6 +70,20 @@ export class EventTableComponent implements OnChanges {
   }
 
   onDownloadFile(currentItemLinkId: string, element) {
-    this.eventManagementService.getAttachment(element?.attachments[currentItemLinkId]);
+    console.log(element.attachments[currentItemLinkId])
+    const filepath = element?.attachments[currentItemLinkId]
+    this.eventManagementService.getAttachment(filepath).subscribe(
+      {
+        next: value => {
+          console.log(value);
+          const link = document.createElement('a');
+          link.href = window.URL.createObjectURL(new Blob([value]));
+          link.download = filepath;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+      }
+    );
   }
 }
