@@ -46,7 +46,7 @@
           </button>
         </div>
 
-        <div class="flex-col"[matTooltip]=" 'Click to download attached file.'" *ngIf=element?.attachments[column]>
+        <div class="flex-col"[matTooltip]=" 'Click to download ' + element?.attachments[column]?.split('/')[1] + 'file.'" *ngIf=element?.attachments[column]>
           <button mat-icon-button aria-label="Download File?" class="complete-button" (click)="onDownloadFile(column, element)">
             <mat-icon>download</mat-icon>
           </button>
