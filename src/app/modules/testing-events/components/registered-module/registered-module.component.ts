@@ -1,5 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Router} from "@angular/router";
+import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {Registration} from "../../models/registration";
 import {EventManagerService} from "../../services/event-manager.service";
 import {EventModule} from "../../models/event-module";
@@ -8,6 +7,7 @@ import {combineLatest, map, skipWhile} from "rxjs";
 import {RegistrationDisplay, RegistrationDisplayItem} from "../../models/registration-display";
 import {EventItem} from "../../models/event-item";
 import {TestStatusDictionary} from "../../models/test-status";
+import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 
 @Component({
   selector: 'testing-event-registered-module',
@@ -24,8 +24,8 @@ export class RegisteredModuleComponent implements OnInit{
   completedTestCounter: number = 0;
 
   constructor(
-      public eventModuleManager: EventManagerService,
-      private router: Router
+    @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
+    public eventModuleManager: EventManagerService
   ) {
   }
 

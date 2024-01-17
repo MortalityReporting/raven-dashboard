@@ -28,7 +28,10 @@
         {{TestStatusDictionary[item.testStatus].display}}
       </div>
       <div class="event-row-cell-button">
-        <button mat-flat-button (click)="loadTestContainer(item)" [style.background-color]="'#04AA6D'" [style.color]="'white'">
+        <button mat-flat-button (click)="loadTestContainer(item)"
+                [style.background-color]="config.backgroundColor"
+                [style.color]="'white'"
+                aria-label="Launch">
           <mat-icon>launch</mat-icon>
           Launch
         </button>
