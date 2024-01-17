@@ -40,7 +40,7 @@ export class DashboardApiInterfaceService {
     return this.http.get(`${this.dashboardApiUrl}document`, {
       params: {
         bucket: bucketName,
-        fileName: fileName
+        filename: fileName
       }
     })
   }
