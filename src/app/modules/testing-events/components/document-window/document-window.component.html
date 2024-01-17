@@ -5,7 +5,7 @@
 <mat-dialog-actions>
   <input type="file" (click)="fileUpload.value=null"
          (change)="onFileSelected($event)" #fileUpload [style.display]="'none'"
-         accept=".pdf, .zip, .png, .gif, .jpg">
+         accept=".pdf, .zip, .png, .gif, .jpg, .xlsx, .xls, .csv">
   <button mat-raised-button
           [style.background-color]="config.backgroundColor"
           [style.color]="'white'"
