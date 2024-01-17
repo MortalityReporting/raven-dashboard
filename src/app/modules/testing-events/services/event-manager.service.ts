@@ -6,6 +6,7 @@ import {DashboardApiInterfaceService} from "../../dashboard-api";
 import {Registration} from "../models/registration";
 import {TestStatusCodes} from "../models/test-status";
 import {HttpEvent} from "@angular/common/http";
+import {UpdateAction} from "../models/update-action";
 
 @Injectable({
   providedIn: 'root'
@@ -75,9 +76,10 @@ export class EventManagerService {
     // );
   }
 
-  updateTestStatus(registration: Registration, linkId: string, newStatus: TestStatusCodes): Observable<FhirResource> {
+  updateTestStatus(registration: Registration, linkId: string, data: UpdateAction): Observable<FhirResource> {
     let itemToUpdate = registration.item.find(item => item.linkId === linkId);
-    itemToUpdate.answer[0].valueCoding.code = newStatus;
+    itemToUpdate.answer[0].valueCoding.code = data.status;
+    // TODO: Add attachment extension here.
     //registration.updateStatus(linkId, newStatus); // TODO: Figure out why this method doesn't work.
     console.log(registration);
     return this.fhirClient.update("QuestionnaireResponse", registration);

@@ -5,10 +5,10 @@ import {environment as env} from "../../../../../environments/environment";
 import {DashboardApiInterfaceService} from "../../../dashboard-api";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import {mergeMap, ReplaySubject, share, skipWhile, switchMap} from "rxjs";
+import {mergeMap, ReplaySubject, share, switchMap} from "rxjs";
 import {EventManagerService, TestStatusCodes} from "../../../testing-events";
-import {Registration} from "../../../testing-events/models/registration";
 import {UtilsService} from "../../../../service/utils.service";
+import {UpdateAction} from "../../../testing-events/models/update-action";
 
 @Component({
   selector: 'app-admin-panel',
@@ -64,14 +64,15 @@ export class AdminPanelComponent implements OnInit {
 
   // TODO: Remove this.
   testUpdateButton() {
-    this.updateStatusToComplete("60b6166d-5855-4945-b6c5-a11539d58665", "2")
+    this.updateStatusToComplete("60b6166d-5855-4945-b6c5-a11539d58665", "3")
   }
 
   updateStatusToComplete(userEventRegistrationId: string, currentItemLinkId: string) {
     let updateStatus$ = this.eventManager.getUserEventRegistrationById(userEventRegistrationId).pipe(
       mergeMap(response => {
         console.log(response)
-        return this.eventManager.updateTestStatus(response, currentItemLinkId, TestStatusCodes.complete)
+        const updateAction: UpdateAction = { status: TestStatusCodes.complete }
+        return this.eventManager.updateTestStatus(response, currentItemLinkId, updateAction)
       })
     );
     updateStatus$.subscribe({

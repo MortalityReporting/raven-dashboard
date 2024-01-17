@@ -7,6 +7,7 @@ import {QuestionnaireResponseItem} from "../../../fhir-util";
 import {combineLatest, map, skipWhile} from "rxjs";
 import {RegistrationDisplay, RegistrationDisplayItem} from "../../models/registration-display";
 import {EventItem} from "../../models/event-item";
+import {TestStatusDictionary} from "../../models/test-status";
 
 @Component({
   selector: 'testing-event-registered-module',
@@ -66,4 +67,6 @@ export class RegisteredModuleComponent implements OnInit{
   loadTestContainer(displayItem: RegistrationDisplayItem) {
     this.itemSelected.emit(displayItem);
   }
+
+  protected readonly TestStatusDictionary = TestStatusDictionary;
 }

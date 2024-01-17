@@ -25,10 +25,11 @@
         Description Pending
       </div>
       <div class="event-row-cell">
-        {{item.testStatus}}
+        {{TestStatusDictionary[item.testStatus].display}}
       </div>
       <div class="event-row-cell-button">
-        <button mat-flat-button (click)="loadTestContainer(item)">
+        <button mat-flat-button (click)="loadTestContainer(item)" [style.background-color]="'#04AA6D'" [style.color]="'white'">
+          <mat-icon>launch</mat-icon>
           Launch
         </button>
       </div>
