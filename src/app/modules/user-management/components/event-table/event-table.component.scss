@@ -49,9 +49,10 @@ $dark-green-background: #335963;
   }
 }
 .body-row {
-  height: auto;
+  height: 64px;
+  border-width: 0;
   > * {
-    padding: $sm;
+    padding: 8px;
   }
   .user-cell {
     background-color: #FDFBFB;
@@ -59,6 +60,8 @@ $dark-green-background: #335963;
   }
   .test-cell {
     background-color: #F8FCFC;
+    border-right: 1px solid #edeeef;
+    margin: 4px;
   }
 }
 

@@ -1,6 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {combineLatest, map, mergeMap, Observable, skipWhile, Subject} from "rxjs";
-import {DecedentService} from "./decedent.service";
+import {combineLatest, map, mergeMap, Observable, skipWhile} from "rxjs";
 import {
   Autopsy,
   CaseSummary,
@@ -22,7 +21,6 @@ import {
 } from "../../fhir-util";
 import {ToxRecordStub} from "../models/tox-record-stub";
 import {FHIRProfileConstants} from "../../../providers/fhir-profile-constants";
-import {FhirExplorerService} from "../../fhir-explorer/services/fhir-explorer.service";
 import {TrackingNumberExtension, TrackingNumberType} from "../../fhir-mdi-library";
 import {MdiToEdrsRecord} from "../models/mdiToEdrsRecord";
 
@@ -38,8 +36,6 @@ export class MdiToEdrsDocumentHandlerService {
   private currentCompositionResource: any;
 
   constructor(
-    private fhirExplorerService: FhirExplorerService,
-    private decedentService: DecedentService,
     private terminologyService: TerminologyHandlerService,
     private fhirHelper: FhirHelperService,
     private bundleHelper: BundleHelperService,

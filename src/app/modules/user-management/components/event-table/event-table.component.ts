@@ -1,7 +1,7 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
-import {TestStatusDictionary} from "../../../testing-events"
+import {EventManagerService, TestStatusDictionary} from "../../../testing-events"
 import {openConfirmationDialog} from "ngx-hisb-common-ui";
 import {MatDialog} from "@angular/material/dialog";
 
@@ -12,7 +12,8 @@ import {MatDialog} from "@angular/material/dialog";
 })
 export class EventTableComponent implements OnChanges {
   @Input() testingEvent: any;
-  @Output() testingEventUpdated = new EventEmitter<any>()
+  @Output() testingEventUpdated =
+    new EventEmitter<{userEventRegistrationId: string, currentItemLinkId: string}>()
 
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[];
@@ -24,7 +25,7 @@ export class EventTableComponent implements OnChanges {
     this.dataSource.sort = sort;
   };
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private eventManagementService: EventManagerService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if(this.testingEvent){
@@ -48,7 +49,7 @@ export class EventTableComponent implements OnChanges {
   }
 
 
-  onMarkTestComplete(column, element) {
+  onMarkTestComplete(userEventRegistrationId: string, currentItemLinkId: string) {
     openConfirmationDialog(
       this.dialog,
       {
@@ -62,13 +63,26 @@ export class EventTableComponent implements OnChanges {
       .subscribe(
         action => {
           if (action == 'primaryAction') {
-            this.testingEventUpdated.emit(this.testingEvent);
+            this.testingEventUpdated.emit({userEventRegistrationId: userEventRegistrationId, currentItemLinkId: currentItemLinkId });
           }
         }
       );
   }
 
-  onDownloadFile(testingEvent: any) {
-
+  onDownloadFile(currentItemLinkId: string, element) {
+    console.log(element.attachments[currentItemLinkId])
+    const filepath = element?.attachments[currentItemLinkId]
+    this.eventManagementService.getAttachment(filepath).subscribe(
+      {
+        next: value => {
+          const link = document.createElement('a');
+          link.href = window.URL.createObjectURL(new Blob([value]));
+          link.download = filepath;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+      }
+    );
   }
 }

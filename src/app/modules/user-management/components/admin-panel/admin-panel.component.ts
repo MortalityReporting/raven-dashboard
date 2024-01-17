@@ -1,33 +1,50 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserProfileManagerService} from "../../services/user-profile-manager.service";
 import {AuthService} from '@auth0/auth0-angular';
 import {environment as env} from "../../../../../environments/environment";
 import {DashboardApiInterfaceService} from "../../../dashboard-api";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import {mergeMap, ReplaySubject, share, switchMap} from "rxjs";
+import {EventManagerService, TestStatusCodes} from "../../../testing-events";
+import {UtilsService} from "../../../../service/utils.service";
+import {UpdateAction} from "../../../testing-events/models/update-action";
 
 @Component({
   selector: 'app-admin-panel',
   templateUrl: './admin-panel.component.html',
-  styleUrls: ['./admin-panel.component.css'],
+  styleUrls: ['./admin-panel.component.scss'],
 })
-export class AdminPanelComponent {
+export class AdminPanelComponent implements OnInit {
   currentUser: any;
   env = env;
   testEvents: any = undefined;
   error: any = undefined;
   selectedEvent: any;
   selected: any;
+  refreshTrigger$ = new ReplaySubject(1);
+  isLoading = false;
 
   constructor(
-    private userProfileManager: UserProfileManagerService,
-    public auth: AuthService,
-    private dashboardApiInterface: DashboardApiInterfaceService) {
+      private userProfileManager: UserProfileManagerService,
+      public auth: AuthService,
+      private dashboardApiInterface: DashboardApiInterfaceService,
+      protected eventManager: EventManagerService,
+      private utilsService: UtilsService) {
 
     this.userProfileManager.currentUser$.subscribe({next: value => {this.currentUser = value;}});
     this.userProfileManager.getAllUsers().subscribe();
+  }
+  ngOnInit(): void {
+    let adminPanelData$ = this.refreshTrigger$.pipe(
+      switchMap(() => this.dashboardApiInterface.getAdminPanelData()),
+      share()
+    );
 
-    this.dashboardApiInterface.getAdminPanelData().subscribe({
+    // Initial call to "refresh".
+    this.refreshTrigger$.next(1);
+
+    adminPanelData$.subscribe({
       next: value => {
         this.error = undefined;
         this.testEvents = value['events'];
@@ -43,6 +60,28 @@ export class AdminPanelComponent {
 
   onSelectionChanged(testEvent: any) {
     this.selectedEvent = testEvent;
+  }
+
+  updateStatusToComplete(userEventRegistrationId: string, currentItemLinkId: string) {
+    this.isLoading = true;
+    let updateStatus$ = this.eventManager.getUserEventRegistrationById(userEventRegistrationId).pipe(
+      mergeMap(response => {
+        console.log(response)
+        const updateAction: UpdateAction = { status: TestStatusCodes.complete }
+        return this.eventManager.updateTestStatus(response, currentItemLinkId, updateAction)
+      })
+    );
+    updateStatus$.subscribe({
+      next: value => {
+        this.refreshTrigger$.next(1);
+        this.isLoading = false;
+      },
+      error: err => {
+        console.error(err);
+        this.utilsService.showErrorMessage("Server error updating the test status");
+        this.isLoading = false;
+      }
+    })
   }
 
   exportToPdf(event){
@@ -104,7 +143,7 @@ export class AdminPanelComponent {
     return newObj;
   }
 
-  onTestingEventUpdated(testingEvent: any) {
-    console.log(testingEvent);
+  onTestingEventUpdated(event: any) {
+    this.updateStatusToComplete(event.userEventRegistrationId, event.currentItemLinkId);
   }
 }

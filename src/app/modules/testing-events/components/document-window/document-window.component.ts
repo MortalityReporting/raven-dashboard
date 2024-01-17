@@ -3,6 +3,7 @@ import {DashboardApiInterfaceService} from "../../../dashboard-api";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {EventManagerService} from "../../services/event-manager.service";
 import {mergeMap} from "rxjs";
+import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 
 @Component({
   selector: 'app-document-window',
@@ -15,6 +16,7 @@ export class DocumentWindowComponent {
   preview: any = undefined;
 
   constructor(
+    @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
     public dialogRef: MatDialogRef<DocumentWindowComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {
       registrationId: string, userId: string, eventItemLinkId: string

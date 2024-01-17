@@ -41,15 +41,17 @@
 <!--        complete      Never show.     | Only show if attachment exists (We won't remove it, so the file can be accessed for further review post event, etc) -->
         <div class="flex-col" matTooltip="Mark Complete?">
           <button *ngIf="TestStatusDictionary[element[column]].display != 'Complete'"
-                  mat-icon-button aria-label="Mark Complete?" class="complete-button" (click)="onMarkTestComplete(column , element)">
+                  mat-icon-button aria-label="Mark Complete?" class="complete-button" (click)="onMarkTestComplete(element?.registrationId, column)">
             <mat-icon>assignment_turned_in</mat-icon>
           </button>
         </div>
-        <div class="flex-col" matTooltip="Download File?">
-          <button mat-icon-button aria-label="Download File?" class="complete-button" (click)="onDownloadFile(testingEvent)">
+
+        <div class="flex-col"[matTooltip]=" 'Click to download ' + element?.attachments[column]?.split('/')[1] + 'file.'" *ngIf=element?.attachments[column]>
+          <button mat-icon-button aria-label="Download File?" class="complete-button" (click)="onDownloadFile(column, element)">
             <mat-icon>download</mat-icon>
           </button>
         </div>
+
       </div>
     </td>
   </ng-container>
