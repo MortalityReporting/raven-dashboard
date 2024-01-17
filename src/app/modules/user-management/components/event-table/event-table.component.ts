@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
-import {TestStatusDictionary} from "../../../testing-events"
+import {EventManagerService, TestStatusDictionary} from "../../../testing-events"
 import {openConfirmationDialog} from "ngx-hisb-common-ui";
 import {MatDialog} from "@angular/material/dialog";
 
@@ -25,7 +25,7 @@ export class EventTableComponent implements OnChanges {
     this.dataSource.sort = sort;
   };
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private eventManagementService: EventManagerService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if(this.testingEvent){
@@ -69,7 +69,7 @@ export class EventTableComponent implements OnChanges {
       );
   }
 
-  onDownloadFile() {
-    console.log("On Download file");
+  onDownloadFile(currentItemLinkId: string, element) {
+    this.eventManagementService.getAttachment(element?.attachments[currentItemLinkId]);
   }
 }
