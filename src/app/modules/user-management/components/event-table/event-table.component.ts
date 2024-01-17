@@ -75,7 +75,6 @@ export class EventTableComponent implements OnChanges {
     this.eventManagementService.getAttachment(filepath).subscribe(
       {
         next: value => {
-          console.log(value);
           const link = document.createElement('a');
           link.href = window.URL.createObjectURL(new Blob([value]));
           link.download = filepath;
