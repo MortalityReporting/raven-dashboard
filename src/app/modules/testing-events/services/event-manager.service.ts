@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, combineLatest, map, Observable, of, single} from "rxjs";
-import {Bundle, FhirClientService, FhirResource, QuestionnaireResponse} from "../../fhir-util";
+import {Bundle, Extension, FhirClientService, FhirResource, QuestionnaireResponse} from "../../fhir-util";
 import {EventModule} from "../models/event-module";
 import {DashboardApiInterfaceService} from "../../dashboard-api";
 import {Registration} from "../models/registration";
@@ -80,6 +80,14 @@ export class EventManagerService {
     let itemToUpdate = registration.item.find(item => item.linkId === linkId);
     itemToUpdate.answer[0].valueCoding.code = data.status;
     // TODO: Add attachment extension here.
+    if (data.attachment !== undefined) {
+      itemToUpdate.extension = [{
+        "url": "attachment",
+          "valueAttachment": {
+            "url": data.attachment
+          }
+        }]
+    }
     //registration.updateStatus(linkId, newStatus); // TODO: Figure out why this method doesn't work.
     console.log(registration);
     return this.fhirClient.update("QuestionnaireResponse", registration);

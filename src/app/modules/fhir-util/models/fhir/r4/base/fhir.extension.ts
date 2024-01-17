@@ -1,9 +1,10 @@
 import {FhirElement} from "./fhir.element";
+import {Address} from "../types/address";
 import {CodeableConcept} from "../types/codeable-concept";
 import {Coding} from "../types/coding";
-import {CodeType, StringType} from "./fhir.primitive";
-import {Address} from "../types/address";
 import {Identifier} from "../types/identifier";
+import {Attachment} from "../types/attachment";
+
 
 const rule_1 = "An extension SHALL have either a value (i.e. a value[x] element) or sub-extensions, but not both. If" +
   "present, the value[x] element SHALL have content (value attribute or other elements)";
@@ -18,30 +19,7 @@ export class Extension extends FhirElement {
   valueCoding?: Coding;
   valueIdentifier?: Identifier;
   valueString?: string;
-
-  constructor(
-      url: string,
-      value: StringType | CodeType,
-      extensions?: Extension[]
-  ) {
-    if (extensions) super(extensions);
-    else super();
-    this.url = url;
-    if (value instanceof StringType) this.valueString = value.value;
-    else if (value instanceof CodeType) this.valueCode = value.value;
-  }
-
-  validate() {}
-
-  public getUrl(): string {
-    return this.url;
-  }
-  public getValue(): any {
-    return this[Object.keys(this).find(key => key.startsWith("value"))];
-  }
-  public getExtensions(): Extension[] {
-    return this.extension;
-  }
+  valueAttachment?: Attachment;
 }
 
 
