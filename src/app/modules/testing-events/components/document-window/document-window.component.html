@@ -2,7 +2,8 @@
 <mat-divider></mat-divider>
 <mat-dialog-actions>
   <input type="file" (click)="fileUpload.value=null"
-         (change)="onFileSelected($event)" #fileUpload [style.display]="'none'">
+         (change)="onFileSelected($event)" #fileUpload [style.display]="'none'"
+         accept=".pdf, .zip, .png, .gif, .jpg">
   <button mat-raised-button color=primary (click)="fileUpload.click();">
     <mat-icon>folder_open</mat-icon>
     Select File
