@@ -76,6 +76,12 @@ export class EventManagerService {
     // );
   }
 
+  // attachment is in the form of "{event_or_bucket_name}/{file_name}" as it appears in the valueAttachment field of a resource or in the admin panel return.
+  getAttachment(attachment: string) {
+    const split = attachment.split("/");
+    return this.dashboardApi.getDocument(split[0], split[1])
+  }
+
   updateTestStatus(registration: Registration, linkId: string, data: UpdateAction): Observable<FhirResource> {
     let itemToUpdate = registration.item.find(item => item.linkId === linkId);
     itemToUpdate.answer[0].valueCoding.code = data.status;
