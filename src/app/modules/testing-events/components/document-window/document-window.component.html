@@ -4,7 +4,8 @@
   <input type="file" (click)="fileUpload.value=null"
          (change)="onFileSelected($event)" #fileUpload [style.display]="'none'"
          accept=".pdf, .zip, .png, .gif, .jpg">
-  <button mat-raised-button color=primary (click)="fileUpload.click();">
+  <button mat-raised-button color=primary (click)="fileUpload.click();"
+          aria-label="Select File">
     <mat-icon>folder_open</mat-icon>
     Select File
   </button>
