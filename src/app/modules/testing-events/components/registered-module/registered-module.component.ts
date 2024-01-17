@@ -7,7 +7,6 @@ import {combineLatest, map, skipWhile} from "rxjs";
 import {RegistrationDisplay, RegistrationDisplayItem} from "../../models/registration-display";
 import {EventItem} from "../../models/event-item";
 import {TestStatusDictionary} from "../../models/test-status";
-import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 
 @Component({
   selector: 'testing-event-registered-module',
@@ -24,7 +23,6 @@ export class RegisteredModuleComponent implements OnInit{
   completedTestCounter: number = 0;
 
   constructor(
-    @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
     public eventModuleManager: EventManagerService
   ) {
   }
