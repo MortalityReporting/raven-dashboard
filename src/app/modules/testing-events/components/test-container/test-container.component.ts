@@ -60,17 +60,19 @@ export class TestContainerComponent {
       });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.startUpload(result);
+      this.startUpload(result.file);
     });
   }
 
-  startUpload(file) {
-    console.log("Starting Upload");
-    console.log(file);
-    let upload$ = this.eventManager.uploadDocument(file, this.userId, this.currentRegistration.id);
+  startUpload(file: File) {
+    let upload$ = this.eventManager.uploadDocument(file, this.currentEvent.machineReadableName);
     upload$.subscribe({
       next: value => {
         console.log(value);
+        this.onUpdateStatus(TestStatusCodes.reviewPending)
+      },
+      error: err => {
+        console.error(err)
       }
     })
     // this.eventManager.uploadDocument(file, this.userId, this.currentRegistration.id).pipe(

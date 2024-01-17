@@ -5,6 +5,7 @@ import {EventModule} from "../models/event-module";
 import {DashboardApiInterfaceService} from "../../dashboard-api";
 import {Registration} from "../models/registration";
 import {TestStatusCodes} from "../models/test-status";
+import {HttpEvent} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -62,8 +63,9 @@ export class EventManagerService {
     return this.fhirClient.read("QuestionnaireResponse", userEventRegistrationId);
   }
 
-  uploadDocument(file: File, userId: string, registrationId: string): Observable<any> {
-    const upload$ = this.dashboardApi.uploadFile(file, userId, registrationId);
+  uploadDocument(file: File, event: string): Observable<HttpEvent<any>> {
+    // Note: User is inferred from token.
+    const upload$ = this.dashboardApi.uploadFile(file, event);
     return upload$;
     // return combineLatest([upload$, this.currentRegistration$]).pipe(
     //   map(value => {
