@@ -36,10 +36,11 @@ export class DashboardApiInterfaceService {
   }
 
   // GET /document
-  getDocument(fileName: string) {
+  getDocument(bucketName: string, fileName: string) {
     return this.http.get(`${this.dashboardApiUrl}document`, {
       params: {
-        file_name: fileName
+        bucket: bucketName,
+        filename: fileName
       }
     })
   }

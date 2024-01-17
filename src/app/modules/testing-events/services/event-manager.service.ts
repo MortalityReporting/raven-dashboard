@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, combineLatest, map, Observable, of, single} from "rxjs";
-import {Bundle, FhirClientService, FhirResource, QuestionnaireResponse} from "../../fhir-util";
+import {Bundle, Extension, FhirClientService, FhirResource, QuestionnaireResponse} from "../../fhir-util";
 import {EventModule} from "../models/event-module";
 import {DashboardApiInterfaceService} from "../../dashboard-api";
 import {Registration} from "../models/registration";
@@ -76,10 +76,24 @@ export class EventManagerService {
     // );
   }
 
+  // attachment is in the form of "{event_or_bucket_name}/{file_name}" as it appears in the valueAttachment field of a resource or in the admin panel return.
+  getAttachment(attachment: string) {
+    const split = attachment.split("/");
+    return this.dashboardApi.getDocument(split[0], split[1])
+  }
+
   updateTestStatus(registration: Registration, linkId: string, data: UpdateAction): Observable<FhirResource> {
     let itemToUpdate = registration.item.find(item => item.linkId === linkId);
     itemToUpdate.answer[0].valueCoding.code = data.status;
     // TODO: Add attachment extension here.
+    if (data.attachment !== undefined) {
+      itemToUpdate.extension = [{
+        "url": "attachment",
+          "valueAttachment": {
+            "url": data.attachment
+          }
+        }]
+    }
     //registration.updateStatus(linkId, newStatus); // TODO: Figure out why this method doesn't work.
     console.log(registration);
     return this.fhirClient.update("QuestionnaireResponse", registration);
