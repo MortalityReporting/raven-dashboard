@@ -17,10 +17,8 @@
   </div>
   <div class="card-body">
     <div class="card-tests">
-      <ul>
-        <li>Onboarding</li>
-        <li>Search EDRS</li>
-        <li>Update EDRS</li>
+      <ul  *ngFor="let testItem of event.items">
+       <li>{{ testItem.name }}</li>
       </ul>
     </div>
     <div class="card-desc">
