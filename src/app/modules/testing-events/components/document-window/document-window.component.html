@@ -21,8 +21,9 @@
 
 <mat-dialog-content>
   <div class="preview-bounding-box">
-    <img [src]="preview" *ngIf="preview" class="image-preview"/>
-    <span *ngIf="!preview">Select a File to Preview</span>
+    <img [src]="preview" *ngIf="isPreviewAvailable" class="image-preview"/>
+    <span *ngIf="!file">Select a File to Preview</span>
+    <span *ngIf="file && !isPreviewAvailable">No File Preview Available</span>
   </div>
 </mat-dialog-content>
 
