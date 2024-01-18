@@ -121,6 +121,7 @@ mat-expansion-panel-body {
 .panel-button {
   @extend .pointer;
   justify-content: left;
+  text-align:left;
   color: white;
   width: 100%;
   margin: 0;
