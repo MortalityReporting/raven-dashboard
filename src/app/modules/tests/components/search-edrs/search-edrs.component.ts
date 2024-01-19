@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {SearchEdrsService} from "../../services/search-edrs.service";
 import {UiStringConstants} from "../../../../providers/ui-string-constants";
+import {TestStatusCodes} from "../../../testing-events";
 
 /*
 Parent component for the Search EDRS flow
@@ -31,7 +32,7 @@ export class SearchEdrsComponent implements OnInit {
         this.documentBundle = value
       }
     });
-    this.searchEdrsService.testStatus$.subscribe(() => this.onTestCompletedEvent.emit())
+    this.searchEdrsService.testStatus$.subscribe(() => this.onTestCompletedEvent.emit(TestStatusCodes.complete));
   }
 
 }
