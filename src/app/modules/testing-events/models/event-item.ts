@@ -8,6 +8,7 @@ export class EventItem {
     this.linkId = item.linkId;
     this.name = item.text;
     this.code = item.code[0].code;
+    this.description = item.extension?.find(element => element.url == 'description')?.valueString ?? 'Description not found.';
     //if (item)
   }
 
@@ -23,8 +24,10 @@ export class EventItem {
   name: string;
   linkId: string;
   code: string;
+  description: string;
   status?: TestStatusCodes;
   attachment?: any;
+
 
   // Convert to QuestionnaireResponseItem. QuestionnaireItem is handled manually.
   toFhir(): QuestionnaireResponseItem {
