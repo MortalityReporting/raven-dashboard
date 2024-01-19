@@ -149,6 +149,15 @@ $lg: 24px;
     > * {
     }
     > .landing-page-content {
+      .playlist-wrapper {
+        width: 100%;
+        @extend .padding-bottom-md;
+        iframe {
+          margin: auto;
+          text-align: center;
+          display: block;
+        }
+      }
     }
     > .option-tile-container {
       @extend .flex-col-simple;
@@ -158,6 +167,9 @@ $lg: 24px;
       > .flex-cell {
         padding: 5px;
         display: flex;
+      }
+      > .resources-wrapper {
+        @extend .padding-sm;
       }
     }
   }

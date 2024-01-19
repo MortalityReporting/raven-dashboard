@@ -37,16 +37,13 @@
       <div class="grid-col-1">
         <div *ngIf="userDocumentWrapper">
           <mat-card>
-            <mat-card-subtitle>
-              Current User MDI to EDRS Document
-            </mat-card-subtitle>
+            <mat-card-subtitle>Current User MDI to EDRS Document</mat-card-subtitle>
             <mat-card-content>
-              Decedent Name: {{ userDocumentWrapper?.decedentName }}<br>
+              <strong>Decedent Name:</strong> {{ userDocumentWrapper?.decedentName }}<br>
               <!-- TODO: Date/Time of Death: {{ userDocumentWrapper?.dateTimeOfDeath }}<br> -->
-              MDI Case Number | System: {{ userDocumentWrapper?.mdiCaseNumber }} | {{ userDocumentWrapper?.mdiCaseNumberSystem}}
+              <strong>MDI Case Number | System:</strong> {{ userDocumentWrapper?.mdiCaseNumber }} | {{ userDocumentWrapper?.mdiCaseNumberSystem}}
             </mat-card-content>
           </mat-card>
-
         </div>
       </div>
       <div class="grid-col-1 compareToText" [style.color]="config.backgroundColor">

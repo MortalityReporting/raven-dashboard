@@ -5,5 +5,17 @@
   <div *ngIf="!contentType || contentType === 'text'">{{ content }}</div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-raised-button mat-dialog-close cdkFocusInitial>Close</button>
+  <button *ngIf="contentType ==='json'"
+          mat-stroked-button matTooltip="Copy content to clipboard"
+          [disabled]="!content"
+          [cdkCopyToClipboard]="JSON.stringify(content, null, 2)"
+          (click)="onCopyToClipboard()">
+    <mat-icon>content_copy</mat-icon>
+    Copy to Clipboard
+  </button>
+  <button mat-raised-button mat-dialog-close cdkFocusInitial
+          [style.color]="'white'"
+          [style.background-color]="primaryColor">
+    Close
+  </button>
 </mat-dialog-actions>

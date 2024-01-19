@@ -392,9 +392,9 @@
         <div class="grid-row">
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Autopsy Location'"
-                                                            [value]="mdiToEdrsRecord?.caseSummary?.examAndAutopsy.autopsyLocation"
+                                                            [value]="mdiToEdrsRecord?.caseSummary?.examAndAutopsy?.autopsyLocation"
                                                             appSetFhirExplorer
-                                                            [profile]="fhirProfiles.MdiToEdrs.Obs_AutopsyPerformed"
+                                                            [resource]="mdiToEdrsRecord?.caseSummary?.examAndAutopsy?.autopsyLocationResource"
                                                             [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>

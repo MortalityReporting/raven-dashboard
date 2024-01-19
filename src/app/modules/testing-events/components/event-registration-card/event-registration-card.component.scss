@@ -6,7 +6,7 @@
   border-width: 0;
   border-style: solid;
   border-color: rgba(182, 84, 84, 0.4);
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, .2), 0px 1px 1px 0px rgba(0, 0, 0, .14), 0px 1px 3px 0px rgba(0, 0, 0, .12);
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0px 1px 1px 0px rgba(0, 0, 0, .14), 0px 1px 3px 0px rgba(0, 0, 0, .12);
 }
 
 .event-card {
@@ -26,9 +26,12 @@
     > .card-tests {
       @extend .padding-right-md;
       border-right: 1px solid rgba(182, 84, 84, 0.4);
+      width: 20%
     }
     > .card-desc {
       @extend .padding-left-md;
+      width: 60%;
+      @extend .margin-top-md
     }
   }
 }

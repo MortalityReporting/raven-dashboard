@@ -2,11 +2,14 @@ import {Component, EventEmitter, Output} from '@angular/core';
 import {TestStatusCodes} from "../../../testing-events";
 
 @Component({
-  selector: 'app-update-edrs',
-  templateUrl: './update-edrs.component.html',
-  styleUrls: ['./update-edrs.component.css']
+  selector: 'app-workflow-ig-development',
+  standalone: true,
+  imports: [],
+  templateUrl: './workflow-ig-development.component.html',
+  styleUrl: './workflow-ig-development.component.css'
 })
-export class UpdateEdrsComponent {
+export class WorkflowIgDevelopmentComponent {
+
   @Output() onTestCompletedEvent = new EventEmitter<TestStatusCodes>()
 
   updateStatus() {

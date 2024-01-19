@@ -9,7 +9,14 @@ import {
   FhirHelperService,
   FhirResource,
 } from "../../fhir-util";
-import {CertifierAndOrganization, LabResult, Performer, Specimen, ToxSummary} from "../models/tox.summary";
+import {
+  CertifierAndOrganization,
+  LabResult,
+  Performer,
+  Specimen,
+  ToxDemographics,
+  ToxSummary
+} from "../models/tox.summary";
 import {TrackingNumberType, trackingNumberUrl} from "../../fhir-mdi-library";
 import {ToxToMdiRecord} from "../models/toxToMdiRecord";
 
@@ -18,6 +25,7 @@ import {ToxToMdiRecord} from "../models/toxToMdiRecord";
   providedIn: 'root'
 })
 export class ToxToMdiMessageHandlerService {
+  public defaultString: string = "VALUE NOT FOUND";
 
   constructor(
     private fhirClient: FhirClientService,
@@ -137,6 +145,7 @@ export class ToxToMdiMessageHandlerService {
     let toxSummary = new ToxSummary()
     toxSummary.patientId = subject?.['id'];
     toxSummary.mdiCaseNumber = this.fhirHelper.getTrackingNumber(diagnosticReport, TrackingNumberType.Mdi);
+    toxSummary.demographics = this.createToxDemographics(subject);
     toxSummary.performers = this.createPerformersList(diagnosticReport, messageBundle);
     toxSummary.certifier = this.createCertifier(toxSummary.performers[0], diagnosticReport, messageBundle);
     toxSummary.specimens = this.createSpecimenList(diagnosticReport, messageBundle);
@@ -146,7 +155,14 @@ export class ToxToMdiMessageHandlerService {
     return toxSummary
   }
 
-  // TODO: Add support for non references. (Setup in FHIR UTIL based on type.)
+  createToxDemographics(patientResource: any): ToxDemographics {
+    let toxDemographics = new ToxDemographics();
+    toxDemographics.patientResource = patientResource;
+    toxDemographics.gender = patientResource.gender || this.defaultString;
+    toxDemographics.birthDate = patientResource.birthDate || this.defaultString;
+    return toxDemographics;
+  }
+    // TODO: Add support for non references. (Setup in FHIR UTIL based on type.)
   createPerformersList(diagnosticReport: any, messageBundle: any): Performer[] {
     let performers = [];
     if (diagnosticReport.performer) {

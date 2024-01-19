@@ -8,6 +8,7 @@
           <mat-card-content onclick="window.open('https://build.fhir.org/ig/HL7/fhir-mdi-ig/', '_blank')">
             <div class="zulip-row">
               <div class="card-bold-text">
+
                 The Raven Platform is a testing tool built on the current CI Build version of the MDI FHIR IG, which may change periodically.
                 It currently supports the version 1.1.0 - STU 1.1 release as of October 2023.
               </div>
@@ -21,6 +22,11 @@
 
       <h1 class="title-decoration" [style.border-left-color]="appConfiguration.color">
         Welcome to the Raven Testing Platform!</h1>
+      <div class="playlist-wrapper">
+        <iframe src="https://www.kaltura.com/p/2019031/sp/201903100/embedIframeJs/uiconf_id/40436601/partner_id/2019031/widget_id/1_la1g3oii?iframeembed=true&playerId=kaltura_player_&flashvars[playlistAPI.kpl0Id]=1_w9ob4is2&flashvars[ks]=&&flashvars[imageDefaultDuration]=30&flashvars[localizationCode]=en&flashvars[forceMobileHTML5]=true&flashvars[scrubber.sliderPreview]=false&flashvars[nextPrevBtn.plugin]=true&flashvars[sideBarContainer.plugin]=true&flashvars[sideBarContainer.position]=left&flashvars[sideBarContainer.clickToClose]=true&flashvars[chapters.plugin]=true&flashvars[chapters.layout]=vertical&flashvars[chapters.thumbnailRotator]=false&flashvars[streamSelector.plugin]=true&flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&flashvars[dualScreen.plugin]=true&flashvars[hotspots.plugin]=true&flashvars[kmsPlaylistHistory.plugin]=true&flashvars[kmsPlaylistHistory.iframeHTML5Js]=//kms-a.akamaihd.net/dc-1/latest/public/build0/playlisthistory/asset/mwembed-kms-playlist-history-v1.1.0.js?ver=522c33efdda0b8dc6ce90c991beb9666&flashvars[kmsPlaylistHistory.iframeHTML5Css]=//kms-a.akamaihd.net/dc-1/latest/public/build0/playlisthistory/asset/mwembed-kms-playlist-history-v1.1.0.css?ver=522c33efdda0b8dc6ce90c991beb9666&flashvars[kmsPlaylistHistory.progressBarColor]=%2300b4d1&flashvars[kmsPlaylistHistory.progressBarColorComplete]=%23bbbbbb&flashvars[kmsPlaylistHistory.completeOverlayIconColor]=&flashvars[playlistAPI.playlistUrl]=https://mediaspace.gatech.edu/playlist/details/{playlistAPI.kpl0Id}" width="740" height="330" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *"  frameborder="0" title="Raven Walkthrough"></iframe>
+      </div>
+      <mat-divider class="larger-divider"></mat-divider>
+
       <p>
         Raven is a proof of concept for the Medicolegal Death Investigation (MDI)
         FHIR Implementation Guide (IG). It provides a tool for testing conformance to the MDI
@@ -30,48 +36,7 @@
         Raven also serves as an educational tool, providing examples FHIR data format (JSON and XML) and the ability
         to browse records and see how information is mapped between major fields and the underlying FHIR resources.
       </p>
-      <mat-divider class="larger-divider"></mat-divider>
-      <div>
-        <h2 class="title-decoration-sm" [style.border-left-color]="appConfiguration.color">
-          Resources</h2>
-        <ul class="list-decoration">
-          <li>
-            <button mat-flat-button onclick="window.open('https://github.com/MortalityReporting', '_blank')"
-                    class="align-left">
-              Raven Mortality Reporting GitHub Organization
-              <mat-icon iconPositionEnd>open_in_new</mat-icon>
-            </button>
-          </li>
-          <li>
-            <button mat-flat-button onclick="window.open('https://build.fhir.org/ig/HL7/fhir-mdi-ig/', '_blank')"
-                    class="align-left">
-              Medicolegal Death Investigation FHIR IG - CI Build
-              <mat-icon iconPositionEnd>open_in_new</mat-icon>
-            </button>
-          </li>
-          <li>
-            <button mat-flat-button onclick="window.open('https://hl7.org/fhir/us/mdi/STU1/', '_blank')"
-                    class="align-left">
-              Medicolegal Death Investigation FHIR IG - 1.0.0 - STU1
-              <mat-icon iconPositionEnd>open_in_new</mat-icon>
-            </button>
-          </li>
-          <li>
-            <button mat-flat-button onclick="window.open('https://hl7.org/fhir/R4/index.html', '_blank')"
-                    class="align-left">
-              HL7 FHIR R4 Standard
-              <mat-icon iconPositionEnd>open_in_new</mat-icon>
-            </button>
-          </li>
-          <li>
-            <button mat-flat-button onclick="window.open('https://hl7.org/fhir/us/core/STU5.0.1/', '_blank')"
-                    class="align-left">
-              US Core FHIR IG - 5.0.1 - STU5
-              <mat-icon iconPositionEnd>open_in_new</mat-icon>
-            </button>
-          </li>
-        </ul>
-      </div>
+
       <mat-divider class="larger-divider"></mat-divider>
       <div class="flex-cell zulip-cell">
         <mat-card>
@@ -186,14 +151,57 @@
 
           <mat-card-content>
             <p>
-              Move through steps of one of several test scenarios for various MDI related workflows, such as a Case
+              Supports either testing events or standalone testing for various MDI related workflows, such as a Case
               Management System (CMS) to Electronic Death Registration System (EDRS) using
               the {{appConfiguration?.workflowTitles?.['mdiToEdrs']}}.
-              The workflow simulator integrates other features of Raven as needed to support workflow testing.
             </p>
           </mat-card-content>
 
         </mat-card>
+
+
+
+      </div>
+      <div class="resources-wrapper">
+        <h2 class="title-decoration-sm" [style.border-left-color]="appConfiguration.color">
+          Resources</h2>
+        <ul class="list-decoration">
+          <li>
+            <button mat-flat-button onclick="window.open('https://github.com/MortalityReporting', '_blank')"
+                    class="align-left">
+              Raven Mortality Reporting GitHub Organization
+              <mat-icon iconPositionEnd>open_in_new</mat-icon>
+            </button>
+          </li>
+          <li>
+            <button mat-flat-button onclick="window.open('https://build.fhir.org/ig/HL7/fhir-mdi-ig/', '_blank')"
+                    class="align-left">
+              Medicolegal Death Investigation FHIR IG - CI Build
+              <mat-icon iconPositionEnd>open_in_new</mat-icon>
+            </button>
+          </li>
+          <li>
+            <button mat-flat-button onclick="window.open('https://hl7.org/fhir/us/mdi/STU1.1/', '_blank')"
+                    class="align-left">
+              Medicolegal Death Investigation FHIR IG - 1.1.0 - STU1
+              <mat-icon iconPositionEnd>open_in_new</mat-icon>
+            </button>
+          </li>
+          <li>
+            <button mat-flat-button onclick="window.open('https://hl7.org/fhir/R4/index.html', '_blank')"
+                    class="align-left">
+              HL7 FHIR R4 Standard
+              <mat-icon iconPositionEnd>open_in_new</mat-icon>
+            </button>
+          </li>
+          <li>
+            <button mat-flat-button onclick="window.open('https://hl7.org/fhir/us/core/STU5.0.1/', '_blank')"
+                    class="align-left">
+              US Core FHIR IG - 5.0.1 - STU5
+              <mat-icon iconPositionEnd>open_in_new</mat-icon>
+            </button>
+          </li>
+        </ul>
       </div>
     </div>
   </div>

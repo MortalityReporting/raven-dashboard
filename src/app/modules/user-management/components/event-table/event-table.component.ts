@@ -1,15 +1,19 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
-import {TestStatusDictionary} from "../../../testing-events"
+import {EventManagerService, TestStatusDictionary} from "../../../testing-events"
+import {openConfirmationDialog} from "ngx-hisb-common-ui";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-event-table',
   templateUrl: './event-table.component.html',
   styleUrls: ['./event-table.component.scss']
 })
-export class EventTableComponent implements OnInit {
-  @Input() event: any;
+export class EventTableComponent implements OnChanges {
+  @Input() testingEvent: any;
+  @Output() testingEventUpdated =
+    new EventEmitter<{userEventRegistrationId: string, currentItemLinkId: string}>()
 
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[];
@@ -21,12 +25,14 @@ export class EventTableComponent implements OnInit {
     this.dataSource.sort = sort;
   };
 
-  constructor() {}
+  constructor(private dialog: MatDialog, private eventManagementService: EventManagerService) {}
 
-  ngOnInit(): void {
-    this.columnDictionary = this.event['cols'];
-    this.displayedColumns = this.parseColKeys(this.event);
-    this.dataSource = new MatTableDataSource<any>(this.event.rows)
+  ngOnChanges(changes: SimpleChanges): void {
+    if(this.testingEvent){
+      this.columnDictionary = this.testingEvent['cols'];
+      this.displayedColumns = this.parseColKeys(this.testingEvent);
+      this.dataSource = new MatTableDataSource<any>(this.testingEvent.rows)
+    }
   }
 
   capitalizeColumnHeader(column: string): string {
@@ -40,5 +46,43 @@ export class EventTableComponent implements OnInit {
       headerDisplays.push(key);
     }
     return headerDisplays;
+  }
+
+
+  onMarkTestComplete(userEventRegistrationId: string, currentItemLinkId: string) {
+    openConfirmationDialog(
+      this.dialog,
+      {
+        title: "Complete Test",
+        content: `This will update the status of the test to "Complete". Do you want to proceed?`,
+        primaryActionBtnTitle: "Yes",
+        secondaryActionBtnTitle: "No",
+        width: "25em",
+        isPrimaryButtonLeft: true
+      })
+      .subscribe(
+        action => {
+          if (action == 'primaryAction') {
+            this.testingEventUpdated.emit({userEventRegistrationId: userEventRegistrationId, currentItemLinkId: currentItemLinkId });
+          }
+        }
+      );
+  }
+
+  onDownloadFile(currentItemLinkId: string, element) {
+    console.log(element.attachments[currentItemLinkId])
+    const filepath = element?.attachments[currentItemLinkId]
+    this.eventManagementService.getAttachment(filepath).subscribe(
+      {
+        next: value => {
+          const link = document.createElement('a');
+          link.href = window.URL.createObjectURL(new Blob([value]));
+          link.download = filepath;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+      }
+    );
   }
 }

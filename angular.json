@@ -82,14 +82,14 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "raven:build"
+            "buildTarget": "raven:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "raven:build:production"
+              "buildTarget": "raven:build:production"
             },
             "development": {
-              "browserTarget": "raven:build:development"
+              "buildTarget": "raven:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -97,7 +97,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "raven:build"
+            "buildTarget": "raven:build"
           }
         },
         "test": {

@@ -1,0 +1,29 @@
+<div class="generic-component-wrapper">
+  <div class="generic-component-content">
+    <H1>Submitting your Validation Results</H1>
+    <ol>
+      <li>In your environment, generate either MDI or VRDR FHIR document bundle.</li>
+      <li>In the left navigation menu of Raven, select "FHIR Validator". (WARNING: Doing so will close this page, please read instructions first.)</li>
+      <li>Either paste your generated document bundle into the provided text area or select a local file containing it.</li>
+      <li>Execute the validator.</li>
+      <li>Review your validation results for any major errors that should be addressed.</li>
+      <li>
+        Once you have validated a version of your document bundle you wish to submit, select the "Export Results (.zip)" button,
+        which can be found just below the results header on the left. This will download your validation results as a Zip file
+        which contains your submitted resource and a PDF containing the errors found. Please be sure to have both "Error" and "Warning"
+        checked, as this will also control what is provided in the PDF version.
+      </li>
+      <li>
+        On this page, select the "Submit/View Documentation" button on the bottom. This will open up a pop-up window for your
+        file upload. Select your validator Zip file, and then press the "Upload" button.
+      </li>
+      <li>
+        This should change the status for the validation test to "review pending" in the bottom right corner of this screen. You may now return to the event listing.
+      </li>
+      <li>
+        If you need to submit a new validation result, you may do so by following the process again. This will overwrite your previous submission if the file names are the same,
+        so if you wish to keep a record of your submissions you must uniquely name your Zip files.
+      </li>
+    </ol>
+  </div>
+</div>

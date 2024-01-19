@@ -1,17 +1,18 @@
 import {
   QuestionnaireResponseItem,
 } from "../../fhir-util";
-import {TestStatus, TestStatusDictionary, TestStatusReverseLookUp, TestStatusSystem} from "./test-status";
+import {TestStatusCodes, TestStatusDictionary, TestStatusReverseLookUp, TestStatusSystem} from "./test-status";
 
 export class EventItem {
   constructor(item: any) {
     this.linkId = item.linkId;
     this.name = item.text;
     this.code = item.code[0].code;
+    this.description = item.extension?.find(element => element.url == 'description')?.valueString ?? 'Description not found.';
     //if (item)
   }
 
-  setStatus(status: TestStatus) {
+  setStatus(status: TestStatusCodes) {
     this.status = status;
   }
 
@@ -23,8 +24,10 @@ export class EventItem {
   name: string;
   linkId: string;
   code: string;
-  status?: TestStatus;
+  description: string;
+  status?: TestStatusCodes;
   attachment?: any;
+
 
   // Convert to QuestionnaireResponseItem. QuestionnaireItem is handled manually.
   toFhir(): QuestionnaireResponseItem {

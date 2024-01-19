@@ -1,4 +1,7 @@
 @import "src/styles";
+$dark-red-background: #B65454;
+$dark-green-background: #335963;
+
 
 .title-row {
   @extend .padding-md;
@@ -22,10 +25,12 @@
     text-align: center;
   }
   > .user-group {
-    background-color: #99c4ff;
+    background-color: $dark-red-background;
+    color: whitesmoke;
   }
   > .test-group {
-    background-color: #ffeca9;
+    background-color: $dark-green-background;
+    color: whitesmoke;
   }
 }
 
@@ -37,24 +42,26 @@
     padding: $xs $sm;
   }
   > .user-header {
-    background-color: #e2f1ff;
+    background-color: #EED8D8;
   }
   > .test-header {
-    background-color: #fff7db;
+    background-color: #C9DEE3;
   }
 }
 .body-row {
-  height: auto;
+  height: 64px;
+  border-width: 0;
   > * {
-    padding: $sm;
+    padding: 8px;
   }
   .user-cell {
-    background-color: #f2f9ff;
+    background-color: #FDFBFB;
     width: 15%;
-    //border-right: 2px solid #99c4ff;
   }
   .test-cell {
-    background-color: #fffbef;
+    background-color: #F8FCFC;
+    border-right: 1px solid #edeeef;
+    margin: 4px;
   }
 }
 
@@ -65,4 +72,8 @@
 .test-failed {
   font-weight: bold;
   background-color: rgba(255, 0, 0, .2) !important;
+}
+
+.complete-button {
+  color: $dark-green-background;
 }

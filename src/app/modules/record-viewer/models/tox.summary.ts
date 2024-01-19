@@ -8,12 +8,19 @@ import {FhirHelperService} from "../../fhir-util/services/fhir-helper.service";
 export class ToxSummary {
   patientId: string;
   mdiCaseNumber: string;
+  demographics: ToxDemographics;
   certifier?: CertifierAndOrganization;
   performers: Performer[];
   specimens: Specimen[];
   results: LabResult[];
   conclusion: string;
   diagnosticReportResource: string;
+}
+
+export class ToxDemographics {
+  birthDate: string;
+  gender: string;
+  patientResource: {};h
 }
 
 export class CertifierAndOrganization {

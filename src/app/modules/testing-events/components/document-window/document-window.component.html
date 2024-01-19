@@ -1,34 +1,39 @@
 <h2 mat-dialog-title>Upload Document</h2>
+
 <mat-divider></mat-divider>
+
 <mat-dialog-actions>
   <input type="file" (click)="fileUpload.value=null"
-         (change)="onFileSelected($event)" #fileUpload [style.display]="'none'">
-  <button mat-raised-button color=primary (click)="fileUpload.click();">
+         (change)="onFileSelected($event)" #fileUpload [style.display]="'none'"
+         accept=".pdf, .zip, .png, .gif, .jpg, .xlsx, .xls, .csv">
+  <button mat-raised-button
+          [style.background-color]="config.backgroundColor"
+          [style.color]="'white'"
+          (click)="fileUpload.click();"
+          aria-label="Select File">
     <mat-icon>folder_open</mat-icon>
     Select File
   </button>
   <span class="file-name" [innerText]="fileName"></span>
 </mat-dialog-actions>
+
 <mat-divider></mat-divider>
 
 <mat-dialog-content>
-<!--  <div class="document-window-container">-->
-  <!--  <input type="file" (click)="fileUpload.value=null" (change)="onFileSelected($event)"/>-->
-  <!--  <button mat-flat-button>Upload</button>-->
-<!--    <div>-->
-      <div class="preview-bounding-box">
-        <img [src]="preview" *ngIf="preview" class="image-preview"/>
-        <span *ngIf="!preview">Select a File to Preview</span>
-      </div>
+  <div class="preview-bounding-box">
+    <img [src]="preview" *ngIf="isPreviewAvailable" class="image-preview"/>
+    <span *ngIf="!file">Select a File to Preview</span>
+    <span *ngIf="file && !isPreviewAvailable">No File Preview Available</span>
+  </div>
 </mat-dialog-content>
-<div>
 
-</div>
 <mat-dialog-actions align="end">
-  <button mat-flat-button mat-dialog-close>Cancel</button>
-  <button mat-raised-button (click)="onClickUpload();"
-          [disabled]="!file"
-  >
+  <button mat-raised-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button
+          [style.background-color]="config.backgroundColor"
+          [style.color]="'white'"
+          (click)="onClickUpload();"
+          [disabled]="!file">
     <mat-icon>file_upload</mat-icon>
     Upload
   </button>

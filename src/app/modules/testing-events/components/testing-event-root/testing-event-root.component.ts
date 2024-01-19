@@ -13,7 +13,8 @@ import {UtilsService} from "../../../../service/utils.service";
 import {Router} from "@angular/router";
 import {Test} from "../../../tests";
 import {UiStringConstants} from "../../../../providers/ui-string-constants";
-import {TestStatus} from "../../models/test-status";
+import {TestStatusCodes} from "../../models/test-status";
+import {UpdateAction} from "../../models/update-action";
 
 @Component({
   selector: 'testing-event-root',
@@ -172,13 +173,15 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
     this.currentItem = undefined;
   }
 
-  updateStatus(newStatus: TestStatus) {
-    if (this.currentItem.testStatus == newStatus){
-      // if there is no change in the status, we don't need to do an update
+  updateStatus(data: UpdateAction) {
+    console.log(data);
+    if (this.currentItem.testStatus == data.status && data.attachment === undefined){
+      // If there is no change in the status without a potentially updated attachment, we don't need to do an update.
+      console.error("Update cancelled, status is equivalent.")
       return;
     }
     this.isLoading = true;
-    this.eventManager.updateTestStatus(this.currentRegistration, this.currentItem.linkId, newStatus).subscribe({
+    this.eventManager.updateTestStatus(this.currentRegistration, this.currentItem.linkId, data).subscribe({
       next: value => {
         this.refreshTrigger$.next(1);
         this.isLoading = false;
