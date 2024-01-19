@@ -57,8 +57,7 @@ export class RegisteredModuleComponent implements OnInit{
           displayItem.linkId = eventItem.linkId; // Test LinkId
           displayItem.testCode = eventItem.code; // Code used to determine test loaded
           const qrItem = this.currentRegistration.item.find((qrItem: QuestionnaireResponseItem) => qrItem.linkId === eventItem.linkId);
-          displayItem.testStatus = qrItem?.answer?.[0]?.valueCoding?.code; // Test Status
-          displayItem.description = eventItem.description;
+          displayItem.testStatus = qrItem.answer[0].valueCoding.code; // Test Status
           registrationDisplay.items.push(displayItem);
         });
         return registrationDisplay;
