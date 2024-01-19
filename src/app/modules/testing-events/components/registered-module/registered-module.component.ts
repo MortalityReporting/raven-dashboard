@@ -3,10 +3,11 @@ import {Registration} from "../../models/registration";
 import {EventManagerService} from "../../services/event-manager.service";
 import {EventModule} from "../../models/event-module";
 import {QuestionnaireResponseItem} from "../../../fhir-util";
-import {combineLatest, map, skipWhile} from "rxjs";
+import {combineLatest, map, skipWhile, takeWhile} from "rxjs";
 import {RegistrationDisplay, RegistrationDisplayItem} from "../../models/registration-display";
 import {EventItem} from "../../models/event-item";
 import {TestStatusDictionary} from "../../models/test-status";
+import {filter} from "rxjs/operators";
 
 @Component({
   selector: 'testing-event-registered-module',
@@ -36,7 +37,13 @@ export class RegisteredModuleComponent implements OnInit{
     const currentRegistration$ = this.eventModuleManager.currentRegistration$;
     const currentEvent$ = this.eventModuleManager.currentEvent$;
     combineLatest([currentRegistration$, currentEvent$]).pipe(
-      skipWhile(combinedResults => combinedResults.some(result => result === undefined)),
+      filter(combinedResults => {
+        if (combinedResults.some(result => result === undefined))
+          return false;
+        else
+          return combinedResults[0]?.questionnaire?.split("/")?.[1] === combinedResults[1]?.fhirId
+      }
+      ),
       map(combinedResults => {
         this.currentRegistration = combinedResults[0];
         this.currentEvent = combinedResults[1];
