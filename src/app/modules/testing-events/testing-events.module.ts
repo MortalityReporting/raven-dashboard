@@ -19,6 +19,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {RouterLink} from "@angular/router";
 import {MatExpansionModule} from "@angular/material/expansion";
+import {WorkflowIgDevelopmentComponent} from "../tests/components/workflow-ig-development/workflow-ig-development.component";
 
 
 
@@ -34,21 +35,22 @@ import {MatExpansionModule} from "@angular/material/expansion";
   exports: [
     TestingEventRootComponent
   ],
-  imports: [
-    CommonModule,
-    MatDividerModule,
-    MatIconModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    TestsModule,
-    MatTooltipModule,
-    MatDialogModule,
-    MatProgressSpinnerModule,
-    RouterLink,
-    MatExpansionModule,
-  ]
+    imports: [
+        CommonModule,
+        MatDividerModule,
+        MatIconModule,
+        MatCardModule,
+        MatCheckboxModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        TestsModule,
+        MatTooltipModule,
+        MatDialogModule,
+        MatProgressSpinnerModule,
+        RouterLink,
+        MatExpansionModule,
+        WorkflowIgDevelopmentComponent,
+    ]
 })
 export class TestingEventsModule { }
