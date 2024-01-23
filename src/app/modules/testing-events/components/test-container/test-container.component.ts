@@ -9,6 +9,7 @@ import {RegistrationDisplayItem} from "../../models/registration-display";
 import {TestStatusCodes} from "../../models/test-status";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {UpdateAction} from "../../models/update-action";
+import {filter} from "rxjs/operators";
 
 @Component({
   selector: 'testing-event-test-container',
@@ -60,7 +61,9 @@ export class TestContainerComponent {
         }
       });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().pipe(
+      filter((result: any) => result.file !== undefined)
+    ).subscribe(result => {
       this.startUpload(result.file);
     });
   }
