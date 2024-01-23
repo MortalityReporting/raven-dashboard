@@ -10,6 +10,7 @@ import {TestStatusCodes} from "../../models/test-status";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {UpdateAction} from "../../models/update-action";
 import {filter} from "rxjs/operators";
+import {UtilsService} from "../../../../service/utils.service";
 
 @Component({
   selector: 'testing-event-test-container',
@@ -28,6 +29,7 @@ export class TestContainerComponent {
 
   constructor(private router: Router, public dialog: MatDialog,
               private eventManager: EventManagerService,
+              private utilsService: UtilsService,
               @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
               ) {
     // const state = this.router.getCurrentNavigation().extras.state
@@ -78,6 +80,7 @@ export class TestContainerComponent {
         }
       },
       error: err => {
+        this.utilsService.showErrorMessage("An error occurred while attempting to upload the file to the server")
         console.error(err)
       }
     })
