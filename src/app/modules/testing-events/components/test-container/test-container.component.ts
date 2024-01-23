@@ -74,13 +74,14 @@ export class TestContainerComponent {
     let upload$ = this.eventManager.uploadDocument(file, this.currentEvent.machineReadableName);
     upload$.subscribe({
       next: value => {
+        this.utilsService.showSuccessMessage("The file was uploaded successfully");
         if (value.type === 4) {
           const attachment = `${value['body']['bucket']}/${value['body']['filename']}`
           this.onUpdateStatus(TestStatusCodes.reviewPending, attachment)
         }
       },
       error: err => {
-        this.utilsService.showErrorMessage("An error occurred while attempting to upload the file to the server")
+        this.utilsService.showErrorMessage("An error occurred while attempting to upload the file to the server");
         console.error(err)
       }
     })
