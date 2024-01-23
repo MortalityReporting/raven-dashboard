@@ -51,6 +51,9 @@ export class AdminPanelComponent implements OnInit {
         if(!this.selectedEvent){
           this.selectedEvent = this.testEvents[0];
         }
+        else {
+          this.selectedEvent = this.testEvents.find(testEvent => testEvent.id == this.selectedEvent.id);
+        }
       },
       error: (e) => {
         this.testEvents = undefined;
@@ -58,10 +61,6 @@ export class AdminPanelComponent implements OnInit {
         this.error = e;
       }
     })
-  }
-
-  onSelectionChanged(testEvent: any) {
-    this.selectedEvent = testEvent;
   }
 
   updateStatusToComplete(userEventRegistrationId: string, currentItemLinkId: string) {
