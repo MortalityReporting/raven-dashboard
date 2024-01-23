@@ -16,6 +16,7 @@
       <app-update-edrs *ngSwitchCase="'update-edrs'" (onTestCompletedEvent)="onUpdateStatus($event)"/>
       <app-validation *ngSwitchCase="'validation'" (onTestCompletedEvent)="onUpdateStatus($event)"/>
       <app-workflow-ig-development *ngSwitchCase="'workflowIgDevelopment'" (onTestCompletedEvent)="onUpdateStatus($event)"/>
+      <app-generic-file-submission *ngSwitchCase="'file-submission'" (onTestCompletedEvent)="onUpdateStatus($event)"/>
     </ng-container>
   </div>
   <div class="test-container-footer">
