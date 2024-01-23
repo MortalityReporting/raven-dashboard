@@ -9,6 +9,8 @@ import {RegistrationDisplayItem} from "../../models/registration-display";
 import {TestStatusCodes} from "../../models/test-status";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {UpdateAction} from "../../models/update-action";
+import {filter} from "rxjs/operators";
+import {UtilsService} from "../../../../service/utils.service";
 
 @Component({
   selector: 'testing-event-test-container',
@@ -27,6 +29,7 @@ export class TestContainerComponent {
 
   constructor(private router: Router, public dialog: MatDialog,
               private eventManager: EventManagerService,
+              private utilsService: UtilsService,
               @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
               ) {
     // const state = this.router.getCurrentNavigation().extras.state
@@ -60,7 +63,9 @@ export class TestContainerComponent {
         }
       });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().pipe(
+      filter((result: any) => result.file !== undefined)
+    ).subscribe(result => {
       this.startUpload(result.file);
     });
   }
@@ -69,12 +74,14 @@ export class TestContainerComponent {
     let upload$ = this.eventManager.uploadDocument(file, this.currentEvent.machineReadableName);
     upload$.subscribe({
       next: value => {
+        this.utilsService.showSuccessMessage("The file was uploaded successfully");
         if (value.type === 4) {
           const attachment = `${value['body']['bucket']}/${value['body']['filename']}`
           this.onUpdateStatus(TestStatusCodes.reviewPending, attachment)
         }
       },
       error: err => {
+        this.utilsService.showErrorMessage("An error occurred while attempting to upload the file to the server");
         console.error(err)
       }
     })
