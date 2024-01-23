@@ -54,6 +54,7 @@ export class AdminPanelComponent implements OnInit {
         else {
           this.selectedEvent = this.testEvents.find(testEvent => testEvent.id == this.selectedEvent.id);
         }
+        this.selectedEvent = this.testEvents[0];
       },
       error: (e) => {
         this.testEvents = undefined;
