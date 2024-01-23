@@ -48,7 +48,9 @@ export class AdminPanelComponent implements OnInit {
       next: value => {
         this.error = undefined;
         this.testEvents = value['events'];
-        this.selectedEvent = this.testEvents[0];
+        if(!this.selectedEvent){
+          this.selectedEvent = this.testEvents[0];
+        }
       },
       error: (e) => {
         this.testEvents = undefined;
