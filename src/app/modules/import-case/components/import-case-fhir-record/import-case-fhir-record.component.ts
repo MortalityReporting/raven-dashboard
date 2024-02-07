@@ -4,7 +4,7 @@ import {UtilsService} from "../../../../service/utils.service";
 import {FhirValidatorComponent} from "../../../fhir-validator/components/fhir-validator/fhir-validator.component";
 import {MatDialog} from "@angular/material/dialog";
 import {openConfirmationDialog} from "ngx-hisb-common-ui";
-import {NgxFhirValidatorComponent, ValidationResults} from "ngx-fhir-validator";
+import {ImplementationGuide, NgxFhirValidatorComponent, ValidationResults} from "ngx-fhir-validator";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {FhirValidatorResultsExportService} from "../../../../service/fhir-validator-results-export.service";
 
@@ -23,6 +23,13 @@ export class ImportCaseFhirRecordComponent implements OnInit{
   fhirResource: any;
   invalidResourceFound: boolean = false;
   preconditionError: string;
+  igList: ImplementationGuide[] = [
+    {
+      "name": "mdi#current",
+      "valueString": "hl7.fhir.us.mdi#current",
+      "display": "MDI FHIR IG - Current"
+    },
+  ];
 
   constructor(
     @Inject('importConfig') public config: ModuleHeaderConfig,
