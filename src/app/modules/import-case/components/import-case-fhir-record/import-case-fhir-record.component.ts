@@ -98,7 +98,6 @@ export class ImportCaseFhirRecordComponent {
   }
 
   onResourceContentChanged(event: any) {
-    //this.invalidResourceFound = false;
     this.validationExecuted = false;
   }
 }
