@@ -91,7 +91,7 @@ export class EdrsSearchResultsGridComponent implements OnInit, OnChanges {
         decedent.race = raceStr;
 
 
-        const mannerOfDeathObservation = this.bundleHelper.findResourceByProfileName(bundle.resource, this.fhirProfiles.MdiToEdrs.Obs_MannerOfDeath);
+        const mannerOfDeathObservation = this.bundleHelper.findResourceByProfileName(bundle.resource, this.fhirProfiles.VRDR.Obs_MannerOfDeath);
         if(!mannerOfDeathObservation){
           decedent.mannerOfDeath = '';
         }
@@ -101,7 +101,7 @@ export class EdrsSearchResultsGridComponent implements OnInit, OnChanges {
         }
 
 
-        const deathDateObservation = this.bundleHelper.findResourceByProfileName(bundle.resource, this.fhirProfiles.MdiToEdrs.Obs_DeathDate)
+        const deathDateObservation = this.bundleHelper.findResourceByProfileName(bundle.resource, this.fhirProfiles.VRDR.Obs_DeathDate)
         decedent.deathDate = deathDateObservation?.effectiveDateTime;
 
         const compositionResource = this.findResourceByType(bundle.resource, "Composition");

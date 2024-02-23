@@ -248,11 +248,11 @@ export class SearchParametersComponent implements OnInit {
       const officialName = this.fhirHelperService.getOfficialName(patientResource);
       decedent.officialName = officialName;
 
-      const mannerOfDeathObservation = this.getObservationByProfile(bundle.resource, this.fhirProfiles.MdiToEdrs.Obs_MannerOfDeath);
+      const mannerOfDeathObservation = this.getObservationByProfile(bundle.resource, this.fhirProfiles.VRDR.Obs_MannerOfDeath);
       const mannerOfDeathStr = this.getMannerOfDeathObservationStr(mannerOfDeathObservation);
       decedent.mannerOfDeath = mannerOfDeathStr;
 
-      const deathDateObservation = this.getObservationByProfile(bundle.resource, this.fhirProfiles.MdiToEdrs.Obs_DeathDate);
+      const deathDateObservation = this.getObservationByProfile(bundle.resource, this.fhirProfiles.VRDR.Obs_DeathDate);
       decedent.deathDate= deathDateObservation.effectiveDateTime;
 
       const mdiCaseNumber = this.getTrackingNumber(bundle.resource, TrackingNumberType.Mdi);
