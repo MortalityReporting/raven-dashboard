@@ -236,8 +236,11 @@ export class MdiToEdrsDocumentHandlerService {
     circumstances.pregnancy = pregnancyResource?.valueCodeableConcept?.coding[0]?.display || this.defaultString;
 
     const tobaccoUseResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Obs_TobaccoUseContributedToDeath);
-    const tobaccoUseCc: CodeableConcept = new CodeableConcept(tobaccoUseResource?.valueCodeableConcept);
-    circumstances.tobaccoUseContributed = tobaccoUseCc?.toString() ?? this.defaultString;
+
+    if(tobaccoUseResource){
+      const tobaccoUseCc: CodeableConcept = new CodeableConcept(tobaccoUseResource?.valueCodeableConcept);
+      circumstances.tobaccoUseContributed = tobaccoUseCc?.toString() ?? this.defaultString;
+    }
 
     return circumstances;
   }

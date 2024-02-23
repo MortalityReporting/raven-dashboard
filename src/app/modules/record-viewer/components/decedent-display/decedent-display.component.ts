@@ -12,6 +12,7 @@ export class DecedentDisplayComponent {
   @Input() decedentInformation: any;
   @Input() type: string = "mdi-to-edrs";
 
+  protected readonly Date = Date;
   color: any;
   textColor: string;
 
