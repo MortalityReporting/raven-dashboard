@@ -7,12 +7,7 @@
   <div class="details-box" *ngIf="type === 'mdi'">
     <div>
       <span class="label" [style.color]="color">Date | Time of Death:</span>
-      @if(decedentInformation?.deathDateTime && Date.parse(decedentInformation?.deathDateTime)){
-        <span class="value" [style.color]="textColor">{{decedentInformation?.deathDateTime| date: 'MM/dd/yy' : 'GMT'}} | {{decedentInformation?.deathDateTime |  date: 'HH:mm':'GMT'}} GMT</span>
-      }
-      @else {
-        <span class="value" [style.color]="textColor">{{decedentInformation?.deathDateTime }}</span>
-      }
+      <span class="value" [style.color]="textColor">{{decedentInformation?.deathDateTime| date: 'MM/dd/yy' : 'GMT'}} | {{decedentInformation?.deathDateTime |  date: 'HH:mm':'GMT'}} GMT</span>
     </div>
     <div>
       <span class="label" [style.color]="color">MDI Case Number | System:</span>
