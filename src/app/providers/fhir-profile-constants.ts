@@ -20,6 +20,7 @@ export class FHIRProfileConstants {
   VRDR = {
     Loc_DeathLocation: "http://hl7.org/fhir/us/vrdr/StructureDefinition/vrdr-death-location",
     Loc_InjuryLocation: "http://hl7.org/fhir/us/vrdr/StructureDefinition/vrdr-injury-location",
+    // Obs_CauseOfDeathPart1: "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-mdi-cause-of-death-part1", // TODO Update and Handle
     Obs_CauseOfDeathPart2: "http://hl7.org/fhir/us/vrdr/StructureDefinition/vrdr-cause-of-death-part2",
     Obs_DeathDate: "http://hl7.org/fhir/us/vrdr/StructureDefinition/vrdr-death-date",
     Obs_DecedentPregnancyStatus: "http://hl7.org/fhir/us/vrdr/StructureDefinition/vrdr-decedent-pregnancy-status",

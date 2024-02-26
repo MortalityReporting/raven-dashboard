@@ -350,7 +350,7 @@ export class MdiToEdrsDocumentHandlerService {
   generateExamAndAutopsy(documentBundle: any, compositionResource: any): Autopsy {
     let autopsy: Autopsy = new Autopsy();
     // let autopsySection = this.getSection(compositionResource, "exam-autopsy");
-    let observation = this.bundleHelper.findResourcesByProfileName(documentBundle, "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-autopsy-performed-indicator")[0];
+    let observation = this.bundleHelper.findResourcesByProfileName(documentBundle, this.fhirProfiles.VRCL.Obs_AutopsyPerformed)[0];
     let performedValue = observation?.valueCodeableConcept;
     autopsy.performed = performedValue?.text || performedValue?.coding?.[0]?.display || performedValue?.coding?.[0]?.code || this.defaultString;
 
