@@ -1,10 +1,10 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, ViewChild} from '@angular/core';
 import {ImportCaseService} from "../../services/import-case.service";
 import {UtilsService} from "../../../../service/utils.service";
 import {FhirValidatorComponent} from "../../../fhir-validator/components/fhir-validator/fhir-validator.component";
 import {MatDialog} from "@angular/material/dialog";
 import {openConfirmationDialog} from "ngx-hisb-common-ui";
-import {NgxFhirValidatorComponent, ValidationResults} from "ngx-fhir-validator";
+import {ImplementationGuide, NgxFhirValidatorComponent, ValidationResults} from "ngx-fhir-validator";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {FhirValidatorResultsExportService} from "../../../../service/fhir-validator-results-export.service";
 
@@ -14,15 +14,25 @@ import {FhirValidatorResultsExportService} from "../../../../service/fhir-valida
   templateUrl: './import-case-fhir-record.component.html',
   styleUrls: ['./import-case-fhir-record.component.scss']
 })
-export class ImportCaseFhirRecordComponent implements OnInit{
+export class ImportCaseFhirRecordComponent {
 
   @ViewChild(FhirValidatorComponent) validator: FhirValidatorComponent;
   @ViewChild(NgxFhirValidatorComponent) fhirValidator
 
   isLoading: boolean = false;
   fhirResource: any;
-  invalidResourceFound: boolean = false;
+  validationExecuted: boolean = false;
   preconditionError: string;
+
+  //we assume that the default IG list is the current one
+  igList: ImplementationGuide[] = [
+    {
+      "name": "mdi#current",
+      "valueString": "hl7.fhir.us.mdi#current",
+      "display": "MDI FHIR IG - Current"
+    },
+  ];
+
 
   constructor(
     @Inject('importConfig') public config: ModuleHeaderConfig,
@@ -51,13 +61,7 @@ export class ImportCaseFhirRecordComponent implements OnInit{
     this.fhirValidatorResultsExportService.exportToPdf(event.jsonResource, event.resultsData);
   }
 
-
-
-
-  ngOnInit(): void {
-  }
-
-  onSubmitInvalidRecord() {
+  onImportRecord() {
     openConfirmationDialog(
       this.dialog,
       {
@@ -81,22 +85,19 @@ export class ImportCaseFhirRecordComponent implements OnInit{
   }
 
   onValidation(event: ValidationResults) {
-    this.invalidResourceFound = !event.isValid;
+    this.validationExecuted = true;
     this.fhirResource = event.resource;
-    if(event.isValid){
-      this.importCase();
-    }
   }
 
   onValidationError(event: any) {
-    this.invalidResourceFound = false;
+    this.validationExecuted = true;
   }
 
-  onSubmit() {
+  onValidate() {
     this.fhirValidator.validateFhirResource();
   }
 
   onResourceContentChanged(event: any) {
-    this.invalidResourceFound = false;
+    this.validationExecuted = false;
   }
 }
