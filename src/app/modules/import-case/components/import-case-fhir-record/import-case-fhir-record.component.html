@@ -16,26 +16,30 @@
     (onValidation)="onValidation($event)"
     (onApiError)="onValidationError($event)"
     (onResourceContentChanged)="onResourceContentChanged($event)"
-    [exportValidationResultsBtnName]="'Export Results (.zip)'"
+    [exportValidationResultsBtnName]="'Export Validation Results (.zip)'"
     (onExportValidationResults)="onExportValidationResults($event)"
+    [igList]="igList"
   />
 
 </div>
 
 <div class="padding-top-md">
-  <h3>2. Submit MDI FHIR Bundle to Raven</h3>
-  <div class="content-offset padding-top-md">
+  <h3>2. Validate Record</h3>
+  <div class="content-offset">
     <button mat-raised-button [style.background-color]="config.backgroundColor" [style.color]="'white'"
-            (click)="onSubmit()" *ngIf="!invalidResourceFound || preconditionError">
-      <mat-icon>send</mat-icon>
-      Submit
+            (click)="onValidate()">
+      Validate Record
     </button>
-    <button mat-raised-button color="warn" (click)="onSubmitInvalidRecord()"
-            *ngIf="invalidResourceFound && !preconditionError && !isLoading"
-            [style.background-color]="config.backgroundColor" [style.color]="'white'"
-    >
+  </div>
+  <div class="padding-top-md">
+    <h3>3. Import MDI FHIR Bundle to Raven</h3>
+      <button mat-raised-button color="warn" (click)="onImportRecord()"
+              [disabled]="preconditionError || isLoading || !validationExecuted"
+              [style.background-color]="validationExecuted ? config.backgroundColor: '#53A26E'"
+              [style.color]="'white'"
+      >
       <mat-icon>send</mat-icon>
-      Submit Invalid Record
+      Import Record
     </button>
 
   </div>
