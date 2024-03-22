@@ -137,7 +137,7 @@ export class MdiToEdrsDocumentHandlerService {
     caseHeader.fullName = this.fhirHelper.getOfficialName(patientResource);
     let genderString = patientResource.gender || this.defaultString;
     caseHeader.gender = genderString.substring(0,1).toUpperCase() + genderString.substring(1);
-    let deathDateResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Obs_DeathDate);
+    let deathDateResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.VRDR.Obs_DeathDate);
     caseHeader.deathDateTime = deathDateResource?.valueDateTime || this.defaultString;
     caseHeader.trackingNumbers = this.getTrackingNumbers(compositionResource);
     caseHeader.mdiCaseNumber = new TrackingNumberExtension()
@@ -226,16 +226,16 @@ export class MdiToEdrsDocumentHandlerService {
   generateCircumstances(documentBundle: any): Circumstances {
     let circumstances: Circumstances = new Circumstances();
 
-    let deathLocationResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Loc_death);
-    let injuryLocationResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Loc_injury);
+    let deathLocationResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.VRDR.Loc_DeathLocation);
+    let injuryLocationResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.VRDR.Loc_InjuryLocation);
 
     circumstances.deathLocation = deathLocationResource?.name ?? this.defaultString;
     circumstances.injuryLocation = injuryLocationResource?.name ?? this.defaultString;
 
-    const pregnancyResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Obs_DecedentPregnancy);
+    const pregnancyResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.VRDR.Obs_DecedentPregnancyStatus);
     circumstances.pregnancy = pregnancyResource?.valueCodeableConcept?.coding[0]?.display || this.defaultString;
 
-    const tobaccoUseResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.MdiToEdrs.Obs_TobaccoUseContributedToDeath);
+    const tobaccoUseResource = this.bundleHelper.findResourceByProfileName(documentBundle, this.fhirProfiles.VRDR.Obs_TobaccoUseContributedToDeath);
     const tobaccoUseCc: CodeableConcept = new CodeableConcept(tobaccoUseResource?.valueCodeableConcept);
     circumstances.tobaccoUseContributed = tobaccoUseCc?.toString() ?? this.defaultString;
 
@@ -286,19 +286,19 @@ export class MdiToEdrsDocumentHandlerService {
             causeOfDeathPart1.event = observation.valueCodeableConcept?.text || undefined;
             causeAndManner.causeOfDeathPart1.push( causeOfDeathPart1 );
           }
-          else if (profile === this.fhirProfiles.MdiToEdrs.Obs_CauseOfDeathPart2) {
+          else if (profile === this.fhirProfiles.VRDR.Obs_CauseOfDeathPart2) {
             let causeOfDeathPart2 = new CauseOfDeathPart2();
             causeOfDeathPart2.id = entry.reference;
             causeOfDeathPart2.value = observation.valueCodeableConcept?.text || this.defaultString;
             causeAndManner.causeOfDeathPart2.push( causeOfDeathPart2 );
           }
-          else if (profile === this.fhirProfiles.MdiToEdrs.Obs_MannerOfDeath) {
+          else if (profile === this.fhirProfiles.VRDR.Obs_MannerOfDeath) {
             let coding = observation.valueCodeableConcept?.coding;
             if (coding != null && coding.length > 0) {
               causeAndManner.mannerOfDeath = coding[0]?.display
             }
           }
-          else if (profile === this.fhirProfiles.MdiToEdrs.Obs_HowDeathInjuryOccurred) {
+          else if (profile === this.fhirProfiles.VRDR.Obs_InjuryIncident) {
             causeAndManner.howDeathInjuryOccurred = observation.valueCodeableConcept?.text || this.defaultString;
             let placeOfInjuryComponent = this.fhirHelper.findObservationComponentByCode(observation, "69450-5");
             causeAndManner.placeOfInjury = placeOfInjuryComponent?.valueCodeableConcept?.text || this.defaultString;
@@ -350,7 +350,7 @@ export class MdiToEdrsDocumentHandlerService {
   generateExamAndAutopsy(documentBundle: any, compositionResource: any): Autopsy {
     let autopsy: Autopsy = new Autopsy();
     // let autopsySection = this.getSection(compositionResource, "exam-autopsy");
-    let observation = this.bundleHelper.findResourcesByProfileName(documentBundle, "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-autopsy-performed-indicator")[0];
+    let observation = this.bundleHelper.findResourcesByProfileName(documentBundle, this.fhirProfiles.VRCL.Obs_AutopsyPerformed)[0];
     let performedValue = observation?.valueCodeableConcept;
     autopsy.performed = performedValue?.text || performedValue?.coding?.[0]?.display || performedValue?.coding?.[0]?.code || this.defaultString;
 
@@ -363,8 +363,9 @@ export class MdiToEdrsDocumentHandlerService {
     let autopsyLocationReference = examAutopsySection.entry.find(entry => entry.reference.startsWith("Location")) // TODO: This is bad handling.
     autopsyLocationReference = autopsyLocationReference?.reference;
     let autopsyLocationResource = this.bundleHelper.findResourceByFullUrl(documentBundle, autopsyLocationReference);
+    console.log(autopsyLocationResource);
     autopsy.autopsyLocation = autopsyLocationResource?.name || this.defaultString;
-    autopsy.autopsyLocationResource = autopsyLocationResource || undefined;
+    autopsy.autopsyLocationResource = autopsyLocationResource;
 
     return autopsy;
   }

@@ -45,18 +45,18 @@ export class ComparisonService {
       );
 
       difference.tobaccoUse = new ObservationTobaccoUseDiff(
-        this.bundleHelper.findResourceByProfileName(userDocument, this.fhirProfiles.MdiToEdrs.Obs_TobaccoUseContributedToDeath),
-        this.bundleHelper.findResourceByProfileName(referenceDocument, this.fhirProfiles.MdiToEdrs.Obs_TobaccoUseContributedToDeath)
+        this.bundleHelper.findResourceByProfileName(userDocument, this.fhirProfiles.VRDR.Obs_TobaccoUseContributedToDeath),
+        this.bundleHelper.findResourceByProfileName(referenceDocument, this.fhirProfiles.VRDR.Obs_TobaccoUseContributedToDeath)
       );
 
       difference.pregnancy = new ObservationDecedentPregnancyDiff(
-        this.bundleHelper.findResourceByProfileName(userDocument, this.fhirProfiles.MdiToEdrs.Obs_DecedentPregnancy ),
-        this.bundleHelper.findResourceByProfileName(referenceDocument, this.fhirProfiles.MdiToEdrs.Obs_DecedentPregnancy )
+        this.bundleHelper.findResourceByProfileName(userDocument, this.fhirProfiles.VRDR.Obs_DecedentPregnancyStatus ),
+        this.bundleHelper.findResourceByProfileName(referenceDocument, this.fhirProfiles.VRDR.Obs_DecedentPregnancyStatus )
       );
 
       difference.deathDate = new ObservationDeathDateDiff(
-        this.bundleHelper.findResourceByProfileName(userDocument, this.fhirProfiles.MdiToEdrs.Obs_DeathDate ),
-        this.bundleHelper.findResourceByProfileName(referenceDocument, this.fhirProfiles.MdiToEdrs.Obs_DeathDate ),
+        this.bundleHelper.findResourceByProfileName(userDocument, this.fhirProfiles.VRDR.Obs_DeathDate ),
+        this.bundleHelper.findResourceByProfileName(referenceDocument, this.fhirProfiles.VRDR.Obs_DeathDate ),
         this.fhirHelper
       );
 
@@ -87,20 +87,20 @@ export class ComparisonService {
       }
 
       difference.causeOfDeath2 = new ObservationCauseOfDeathPart2Diff(
-        this.bundleHelper.findResourceByProfileName( userDocument, this.fhirProfiles.MdiToEdrs.Obs_CauseOfDeathPart2 ),
-        this.bundleHelper.findResourceByProfileName( referenceDocument, this.fhirProfiles.MdiToEdrs.Obs_CauseOfDeathPart2 ));
+        this.bundleHelper.findResourceByProfileName( userDocument, this.fhirProfiles.VRDR.Obs_CauseOfDeathPart2 ),
+        this.bundleHelper.findResourceByProfileName( referenceDocument, this.fhirProfiles.VRDR.Obs_CauseOfDeathPart2 ));
 
       difference.mannerOfDeath = new ObservationMannerOfDeathDiff(
-        this.bundleHelper.findResourceByProfileName( userDocument, this.fhirProfiles.MdiToEdrs.Obs_MannerOfDeath ),
-        this.bundleHelper.findResourceByProfileName( referenceDocument, this.fhirProfiles.MdiToEdrs.Obs_MannerOfDeath ));
+        this.bundleHelper.findResourceByProfileName( userDocument, this.fhirProfiles.VRDR.Obs_MannerOfDeath ),
+        this.bundleHelper.findResourceByProfileName( referenceDocument, this.fhirProfiles.VRDR.Obs_MannerOfDeath ));
 
       difference.locationDeath = new LocationDeathDiff(
-        this.bundleHelper.findResourceByProfileName( userDocument, this.fhirProfiles.MdiToEdrs.Loc_death ),
-        this.bundleHelper.findResourceByProfileName( referenceDocument, this.fhirProfiles.MdiToEdrs.Loc_death ));
+        this.bundleHelper.findResourceByProfileName( userDocument, this.fhirProfiles.VRDR.Loc_DeathLocation ),
+        this.bundleHelper.findResourceByProfileName( referenceDocument, this.fhirProfiles.VRDR.Loc_DeathLocation));
 
       difference.locationInjury = new LocationInjuryDiff(
-        this.bundleHelper.findResourceByProfileName( userDocument, this.fhirProfiles.MdiToEdrs.Loc_injury ),
-        this.bundleHelper.findResourceByProfileName( referenceDocument, this.fhirProfiles.MdiToEdrs.Loc_injury ));
+        this.bundleHelper.findResourceByProfileName( userDocument, this.fhirProfiles.VRDR.Loc_InjuryLocation ),
+        this.bundleHelper.findResourceByProfileName( referenceDocument, this.fhirProfiles.VRDR.Loc_InjuryLocation ));
 
       difference.patient = new USCorePatientDiff(
         this.bundleHelper.findResourceByProfileName( userDocument, this.fhirProfiles.USCore.USCorePatient ),
@@ -111,12 +111,12 @@ export class ComparisonService {
         this.bundleHelper.findResourceByProfileName( referenceDocument, this.fhirProfiles.USCore.USCorePractitioner ));
 
       difference.autopsyPerformed = new ObservationAutopsyPerformedDiff(
-        this.bundleHelper.findResourceByProfileName( userDocument, this.fhirProfiles.MdiToEdrs.Obs_AutopsyPerformed ),
-        this.bundleHelper.findResourceByProfileName( referenceDocument, this.fhirProfiles.MdiToEdrs.Obs_AutopsyPerformed ));
+        this.bundleHelper.findResourceByProfileName( userDocument, this.fhirProfiles.VRCL.Obs_AutopsyPerformed ),
+        this.bundleHelper.findResourceByProfileName( referenceDocument, this.fhirProfiles.VRCL.Obs_AutopsyPerformed ));
 
       difference.howDeathOccurred = new ObservationHowDeathInjuryOccurredDiff(
-        this.bundleHelper.findResourceByProfileName( userDocument, this.fhirProfiles.MdiToEdrs.Obs_HowDeathInjuryOccurred ),
-        this.bundleHelper.findResourceByProfileName( referenceDocument, this.fhirProfiles.MdiToEdrs.Obs_HowDeathInjuryOccurred ));
+        this.bundleHelper.findResourceByProfileName( userDocument, this.fhirProfiles.VRDR.Obs_InjuryIncident ),
+        this.bundleHelper.findResourceByProfileName( referenceDocument, this.fhirProfiles.VRDR.Obs_InjuryIncident ));
 
       difference.caseAdminInfoStatus = (
         difference.mdiToEdrs.extension.style === 'valid' &&
