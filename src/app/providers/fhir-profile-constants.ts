@@ -13,7 +13,7 @@ export class FHIRProfileConstants {
 
   VRCL = {
     Practitioner_VR: "http://hl7.org/fhir/us/vr-common-library/StructureDefinition/Practitioner-vr",
-    Patient_VR: "https://build.fhir.org/ig/HL7/vr-common-library//StructureDefinition-Patient-vr.html",
+    Patient_VR: "http://hl7.org/fhir/us/vr-common-library/StructureDefinition/Patient-vr",
     Obs_AutopsyPerformed: "http://hl7.org/fhir/us/vr-common-library/StructureDefinition/Observation-autopsy-performed-indicator-vr"
   }
 
