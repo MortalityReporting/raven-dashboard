@@ -145,11 +145,12 @@ export class MdiToEdrsDocumentHandlerService {
     caseHeader.mdiCaseNumber.system = this.fhirHelper.getTrackingNumberSystem(compositionResource, TrackingNumberType.Mdi) || "Unknown";
 
     compositionResource.author?.map(( ref: any ) => {
-
+      // TODO: Refactor this to handle missing authors
       let practitioner = this.bundleHelper.findResourceByFullUrl(documentBundle, ref.reference );
 
       let author = new Author();
 
+      // TODO: Do not assume that all address items exist just because address exists
       author.license = practitioner?.identifier != null ? practitioner.identifier[0].value : undefined;
       author.familyName = practitioner?.name[0].family;
       author.givenName = practitioner?.name[0].given;
@@ -364,6 +365,7 @@ export class MdiToEdrsDocumentHandlerService {
     let autopsyLocationResource = this.bundleHelper.findResourceByFullUrl(documentBundle, autopsyLocationReference);
     autopsy.autopsyLocation = autopsyLocationResource?.name || this.defaultString;
     autopsy.autopsyLocationResource = autopsyLocationResource;
+
     return autopsy;
   }
 
