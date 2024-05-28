@@ -1,18 +1,18 @@
 
 <div class="section-button-wrapper">
   <button class="margin-right-md" mat-raised-button (click)="onOpenAll()" [style.background-color]="config.backgroundColor"
-          [style.color]="appConfig.contrastColor">
+    [style.color]="appConfig.contrastColor">
     <mat-icon>expand_more</mat-icon>
     Expand All Sections
   </button>
   <button class="margin-right-md" mat-raised-button (click)="onCloseAll()" [style.background-color]="config.backgroundColor"
-          [style.color]="appConfig.contrastColor">
+    [style.color]="appConfig.contrastColor">
     <mat-icon>expand_less</mat-icon>
     Collapse All Sections
   </button>
   <span class="content-spacer"></span>
   <button mat-raised-button (click)="onOpenInComparisonTool()" [style.background-color]="config.backgroundColor"
-          [style.color]="appConfig.contrastColor">Open in Comparison Tool
+    [style.color]="appConfig.contrastColor">Open in Comparison Tool
   </button>
 </div>
 
@@ -28,13 +28,15 @@
             <div class="content-field-label">
               <p><u>Tracking Numbers</u></p>
             </div>
-            <div class="content-field-value" *ngFor="let trackingNumber of mdiToEdrsRecord?.caseHeader?.trackingNumbers">
-              <record-viewer-mdi-to-edrs-viewer-content-field [label]="trackingNumber.type" [value]="trackingNumber.value"
-                                                        appSetFhirExplorer
-                                                        [profile]="fhirProfiles.MdiToEdrs.Comp_MDItoEDRS"
-                                                        [bundle]="mdiToEdrsRecord.documentBundle">
-              </record-viewer-mdi-to-edrs-viewer-content-field>
-            </div>
+            @for (trackingNumber of mdiToEdrsRecord?.caseHeader?.trackingNumbers; track trackingNumber) {
+              <div class="content-field-value">
+                <record-viewer-mdi-to-edrs-viewer-content-field [label]="trackingNumber.type" [value]="trackingNumber.value"
+                  appSetFhirExplorer
+                  [profile]="fhirProfiles.MdiToEdrs.Comp_MDItoEDRS"
+                  [bundle]="mdiToEdrsRecord.documentBundle">
+                </record-viewer-mdi-to-edrs-viewer-content-field>
+              </div>
+            }
           </div>
           <div class="grid-col-1">
             <div class="content-field-label">
@@ -60,24 +62,24 @@
         <div class="grid-row">
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Legal Sex at Death'"
-                                                      [value]="mdiToEdrsRecord?.caseSummary?.demographics?.gender"
-                                                      appSetFhirExplorer
-                                                      [resource]="mdiToEdrsRecord?.caseSummary?.demographics?.patientResource"></record-viewer-mdi-to-edrs-viewer-content-field>
+              [value]="mdiToEdrsRecord?.caseSummary?.demographics?.gender"
+              appSetFhirExplorer
+            [resource]="mdiToEdrsRecord?.caseSummary?.demographics?.patientResource"/>
           </div>
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Social Security Number'"
-                                                      [value]="mdiToEdrsRecord?.caseSummary?.demographics?.ssn"
-                                                      appSetFhirExplorer
-                                                      [resource]="mdiToEdrsRecord?.caseSummary?.demographics?.patientResource"></record-viewer-mdi-to-edrs-viewer-content-field>
+              [value]="mdiToEdrsRecord?.caseSummary?.demographics?.ssn"
+              appSetFhirExplorer
+            [resource]="mdiToEdrsRecord?.caseSummary?.demographics?.patientResource"/>
           </div>
         </div>
         <div class="grid-row">
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Date of Birth'"
-                                                      [value]="mdiToEdrsRecord?.caseSummary?.demographics?.birthDate"
-                                                      appSetFhirExplorer
-                                                      [resource]="mdiToEdrsRecord?.caseSummary?.demographics?.patientResource">
-            </record-viewer-mdi-to-edrs-viewer-content-field>
+              [value]="mdiToEdrsRecord?.caseSummary?.demographics?.birthDate"
+              appSetFhirExplorer
+              [resource]="mdiToEdrsRecord?.caseSummary?.demographics?.patientResource"
+            />
           </div>
           <div class="grid-col-1">
           </div>
@@ -85,17 +87,17 @@
         <div class="grid-row">
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Race'"
-                                                      [value]="mdiToEdrsRecord?.caseSummary?.demographics?.race"
-                                                      appSetFhirExplorer
-                                                      [resource]="mdiToEdrsRecord?.caseSummary?.demographics?.patientResource">
-            </record-viewer-mdi-to-edrs-viewer-content-field>
+              [value]="mdiToEdrsRecord?.caseSummary?.demographics?.race"
+              appSetFhirExplorer
+              [resource]="mdiToEdrsRecord?.caseSummary?.demographics?.patientResource"
+            />
           </div>
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Ethnicity'"
-                                                      [value]="mdiToEdrsRecord?.caseSummary?.demographics?.ethnicity"
-                                                      appSetFhirExplorer
-                                                      [resource]="mdiToEdrsRecord?.caseSummary?.demographics?.patientResource">
-            </record-viewer-mdi-to-edrs-viewer-content-field>
+              [value]="mdiToEdrsRecord?.caseSummary?.demographics?.ethnicity"
+              appSetFhirExplorer
+              [resource]="mdiToEdrsRecord?.caseSummary?.demographics?.patientResource"
+            />
           </div>
         </div>
         <br/>
@@ -108,46 +110,46 @@
         <div class="grid-row">
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Address Line 1'"
-                                                      [value]="mdiToEdrsRecord?.caseSummary?.demographics?.address?.line1"
-                                                      appSetFhirExplorer
-                                                      [resource]="mdiToEdrsRecord?.caseSummary?.demographics?.patientResource">
+              [value]="mdiToEdrsRecord?.caseSummary?.demographics?.address?.line1"
+              appSetFhirExplorer
+              [resource]="mdiToEdrsRecord?.caseSummary?.demographics?.patientResource">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Address Line 2'"
-                                                      [value]="mdiToEdrsRecord?.caseSummary?.demographics?.address?.line2"
-                                                      appSetFhirExplorer
-                                                      [resource]="mdiToEdrsRecord?.caseSummary?.demographics?.patientResource">
+              [value]="mdiToEdrsRecord?.caseSummary?.demographics?.address?.line2"
+              appSetFhirExplorer
+              [resource]="mdiToEdrsRecord?.caseSummary?.demographics?.patientResource">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
         </div>
         <div class="grid-row">
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'City'"
-                                                      [value]="mdiToEdrsRecord?.caseSummary?.demographics.address?.city"
-                                                      appSetFhirExplorer
-                                                      [resource]="mdiToEdrsRecord?.caseSummary?.demographics?.patientResource">
+              [value]="mdiToEdrsRecord?.caseSummary?.demographics.address?.city"
+              appSetFhirExplorer
+              [resource]="mdiToEdrsRecord?.caseSummary?.demographics?.patientResource">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'State'"
-                                                      [value]="mdiToEdrsRecord?.caseSummary?.demographics?.address?.state"
-                                                      appSetFhirExplorer
-                                                      [resource]="mdiToEdrsRecord?.caseSummary?.demographics?.patientResource">
+              [value]="mdiToEdrsRecord?.caseSummary?.demographics?.address?.state"
+              appSetFhirExplorer
+              [resource]="mdiToEdrsRecord?.caseSummary?.demographics?.patientResource">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Zip Code'"
-                                                      [value]="mdiToEdrsRecord?.caseSummary?.demographics?.address?.zip"
-                                                      appSetFhirExplorer
-                                                      [resource]="mdiToEdrsRecord?.caseSummary?.demographics?.patientResource">
+              [value]="mdiToEdrsRecord?.caseSummary?.demographics?.address?.zip"
+              appSetFhirExplorer
+              [resource]="mdiToEdrsRecord?.caseSummary?.demographics?.patientResource">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Country'"
-                                                      [value]="mdiToEdrsRecord?.caseSummary?.demographics?.address?.country"
-                                                      appSetFhirExplorer
-                                                      [resource]="mdiToEdrsRecord?.caseSummary?.demographics?.patientResource">
+              [value]="mdiToEdrsRecord?.caseSummary?.demographics?.address?.country"
+              appSetFhirExplorer
+              [resource]="mdiToEdrsRecord?.caseSummary?.demographics?.patientResource">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
         </div>
@@ -164,36 +166,36 @@
         <div class="grid-row">
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Death Location'"
-                                                      [value]="mdiToEdrsRecord?.caseSummary?.circumstances.deathLocation"
-                                                      appSetFhirExplorer
-                                                      [profile]="fhirProfiles.VRDR.Loc_DeathLocation"
-                                                      [bundle]="mdiToEdrsRecord?.documentBundle">
+              [value]="mdiToEdrsRecord?.caseSummary?.circumstances.deathLocation"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Loc_DeathLocation"
+              [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Injury Location'"
-                                                      [value]="mdiToEdrsRecord?.caseSummary?.circumstances.injuryLocation"
-                                                      appSetFhirExplorer
-                                                      [profile]="fhirProfiles.VRDR.Loc_InjuryLocation"
-                                                      [bundle]="mdiToEdrsRecord?.documentBundle">
+              [value]="mdiToEdrsRecord?.caseSummary?.circumstances.injuryLocation"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Loc_InjuryLocation"
+              [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
         </div>
         <div class="grid-row">
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Tobacco Use Contributed to Death'"
-                                                      [value]="mdiToEdrsRecord?.caseSummary?.circumstances.tobaccoUseContributed"
-                                                      appSetFhirExplorer
-                                                      [profile]="fhirProfiles.VRDR.Obs_TobaccoUseContributedToDeath"
-                                                      [bundle]="mdiToEdrsRecord?.documentBundle">
+              [value]="mdiToEdrsRecord?.caseSummary?.circumstances.tobaccoUseContributed"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Obs_TobaccoUseContributedToDeath"
+              [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Decedent Pregnancy Status'"
-                                                      [value]="mdiToEdrsRecord?.caseSummary?.circumstances.pregnancy"
-                                                      appSetFhirExplorer
-                                                      [profile]="fhirProfiles.VRDR.Obs_DecedentPregnancyStatus"
-                                                      [bundle]="mdiToEdrsRecord?.documentBundle">
+              [value]="mdiToEdrsRecord?.caseSummary?.circumstances.pregnancy"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Obs_DecedentPregnancyStatus"
+              [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
         </div>
@@ -210,36 +212,36 @@
         <div class="grid-row">
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Death Date/Time'"
-                                                      [value]="mdiToEdrsRecord?.caseSummary?.jurisdiction.deathDateTime"
-                                                      appSetFhirExplorer
-                                                      [profile]="fhirProfiles.VRDR.Obs_DeathDate"
-                                                      [bundle]="mdiToEdrsRecord?.documentBundle">
+              [value]="mdiToEdrsRecord?.caseSummary?.jurisdiction.deathDateTime"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Obs_DeathDate"
+              [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Pronounced Date/Time'"
-                                                      [value]="mdiToEdrsRecord?.caseSummary?.jurisdiction.pronouncedDateTime"
-                                                      appSetFhirExplorer
-                                                      [profile]="fhirProfiles.VRDR.Obs_DeathDate"
-                                                      [bundle]="mdiToEdrsRecord?.documentBundle">
+              [value]="mdiToEdrsRecord?.caseSummary?.jurisdiction.pronouncedDateTime"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Obs_DeathDate"
+              [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
         </div>
         <div class="grid-row">
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Establishment Approach'"
-                                                      [value]="mdiToEdrsRecord?.caseSummary?.jurisdiction.establishmentApproach"
-                                                      appSetFhirExplorer
-                                                      [profile]="fhirProfiles.VRDR.Obs_DeathDate"
-                                                      [bundle]="mdiToEdrsRecord?.documentBundle">
+              [value]="mdiToEdrsRecord?.caseSummary?.jurisdiction.establishmentApproach"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Obs_DeathDate"
+              [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Type of Death Location'"
-                                                      [value]="mdiToEdrsRecord?.caseSummary?.jurisdiction.typeOfDeathLocation"
-                                                      appSetFhirExplorer
-                                                      [profile]="fhirProfiles.VRDR.Obs_DeathDate"
-                                                      [bundle]="mdiToEdrsRecord?.documentBundle">
+              [value]="mdiToEdrsRecord?.caseSummary?.jurisdiction.typeOfDeathLocation"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Obs_DeathDate"
+              [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
         </div>
@@ -266,14 +268,16 @@
                 <th>Event</th>
                 <th>Interval</th>
               </tr>
-              <tr *ngFor="let cause of mdiToEdrsRecord?.caseSummary?.causeAndManner?.causeOfDeathPart1">
-                <td appSetFhirExplorer [resourceId]="cause.id" [bundle]="mdiToEdrsRecord?.documentBundle">
-                  {{cause.event}}
-                </td>
-                <td appSetFhirExplorer [resourceId]="cause.id" [bundle]="mdiToEdrsRecord?.documentBundle">
-                  {{cause.interval}}
-                </td>
-              </tr>
+              @for (cause of mdiToEdrsRecord?.caseSummary?.causeAndManner?.causeOfDeathPart1; track cause) {
+                <tr>
+                  <td appSetFhirExplorer [resourceId]="cause.id" [bundle]="mdiToEdrsRecord?.documentBundle">
+                    {{cause.event}}
+                  </td>
+                  <td appSetFhirExplorer [resourceId]="cause.id" [bundle]="mdiToEdrsRecord?.documentBundle">
+                    {{cause.interval}}
+                  </td>
+                </tr>
+              }
             </table>
           </div>
         </div>
@@ -292,11 +296,13 @@
               <tr>
                 <th>Event</th>
               </tr>
-              <tr *ngFor="let cause of mdiToEdrsRecord?.caseSummary?.causeAndManner?.causeOfDeathPart2;">
-                <td appSetFhirExplorer [resourceId]="cause.id" [bundle]="mdiToEdrsRecord?.documentBundle">
-                  {{cause.value}}
-                </td>
-              </tr>
+              @for (cause of mdiToEdrsRecord?.caseSummary?.causeAndManner?.causeOfDeathPart2; track cause) {
+                <tr>
+                  <td appSetFhirExplorer [resourceId]="cause.id" [bundle]="mdiToEdrsRecord?.documentBundle">
+                    {{cause.value}}
+                  </td>
+                </tr>
+              }
             </table>
           </div>
         </div>
@@ -308,54 +314,54 @@
         <div class="grid-row">
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Manner of Death'"
-                                                      [value]="mdiToEdrsRecord?.caseSummary?.causeAndManner.mannerOfDeath"
-                                                      appSetFhirExplorer
-                                                      [profile]="fhirProfiles.VRDR.Obs_MannerOfDeath"
-                                                      [bundle]="mdiToEdrsRecord?.documentBundle">
+              [value]="mdiToEdrsRecord?.caseSummary?.causeAndManner.mannerOfDeath"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Obs_MannerOfDeath"
+              [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Place of Injury'"
-                                                      [value]="mdiToEdrsRecord?.caseSummary?.causeAndManner.placeOfInjury"
-                                                      appSetFhirExplorer
-                                                      [profile]="fhirProfiles.VRDR.Obs_InjuryIncident"
-                                                      [bundle]="mdiToEdrsRecord?.documentBundle">
+              [value]="mdiToEdrsRecord?.caseSummary?.causeAndManner.placeOfInjury"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Obs_InjuryIncident"
+              [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
         </div>
         <div class="grid-row">
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'How Injury Occurred'"
-                                                      [value]="mdiToEdrsRecord?.caseSummary?.causeAndManner.howDeathInjuryOccurred"
-                                                      appSetFhirExplorer
-                                                      [profile]="fhirProfiles.VRDR.Obs_InjuryIncident"
-                                                      [bundle]="mdiToEdrsRecord?.documentBundle">
+              [value]="mdiToEdrsRecord?.caseSummary?.causeAndManner.howDeathInjuryOccurred"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Obs_InjuryIncident"
+              [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Injury Date/Time'"
-                                                      [value]="mdiToEdrsRecord?.caseSummary?.causeAndManner.injuryDateTime"
-                                                      appSetFhirExplorer
-                                                      [profile]="fhirProfiles.VRDR.Obs_InjuryIncident"
-                                                      [bundle]="mdiToEdrsRecord?.documentBundle">
+              [value]="mdiToEdrsRecord?.caseSummary?.causeAndManner.injuryDateTime"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Obs_InjuryIncident"
+              [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
         </div>
         <div class="grid-row">
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Injury/Event Occurred at Work'"
-                                                      [value]="mdiToEdrsRecord?.caseSummary?.causeAndManner.workInjuryIndicator"
-                                                      appSetFhirExplorer
-                                                      [profile]="fhirProfiles.VRDR.Obs_InjuryIncident"
-                                                      [bundle]="mdiToEdrsRecord?.documentBundle">
+              [value]="mdiToEdrsRecord?.caseSummary?.causeAndManner.workInjuryIndicator"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Obs_InjuryIncident"
+              [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Transportation Role'"
-                                                      [value]="mdiToEdrsRecord?.caseSummary?.causeAndManner.transportationRole"
-                                                      appSetFhirExplorer
-                                                      [profile]="fhirProfiles.VRDR.Obs_InjuryIncident"
-                                                      [bundle]="mdiToEdrsRecord?.documentBundle">
+              [value]="mdiToEdrsRecord?.caseSummary?.causeAndManner.transportationRole"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Obs_InjuryIncident"
+              [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
         </div>
@@ -383,27 +389,27 @@
         <div class="grid-row">
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Autopsy Performed?'"
-                                                      [value]="mdiToEdrsRecord?.caseSummary?.examAndAutopsy.performed"
-                                                      appSetFhirExplorer
-                                                      [profile]="fhirProfiles.VRCL.Obs_AutopsyPerformed"
-                                                      [bundle]="mdiToEdrsRecord?.documentBundle">
+              [value]="mdiToEdrsRecord?.caseSummary?.examAndAutopsy.performed"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRCL.Obs_AutopsyPerformed"
+              [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Results Available?'"
-                                                      [value]="mdiToEdrsRecord?.caseSummary?.examAndAutopsy.resultsAvailable"
-                                                      appSetFhirExplorer
-                                                      [profile]="fhirProfiles.VRCL.Obs_AutopsyPerformed"
-                                                      [bundle]="mdiToEdrsRecord?.documentBundle">
+              [value]="mdiToEdrsRecord?.caseSummary?.examAndAutopsy.resultsAvailable"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRCL.Obs_AutopsyPerformed"
+              [bundle]="mdiToEdrsRecord?.documentBundle">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
         </div>
         <div class="grid-row">
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Autopsy Location'"
-                                                            [value]="mdiToEdrsRecord?.caseSummary?.examAndAutopsy?.autopsyLocation"
-                                                            appSetFhirExplorer
-                                                            [resource]="mdiToEdrsRecord?.caseSummary?.examAndAutopsy?.autopsyLocationResource">
+              [value]="mdiToEdrsRecord?.caseSummary?.examAndAutopsy?.autopsyLocation"
+              appSetFhirExplorer
+              [resource]="mdiToEdrsRecord?.caseSummary?.examAndAutopsy?.autopsyLocationResource">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
           <div class="grid-col-1">

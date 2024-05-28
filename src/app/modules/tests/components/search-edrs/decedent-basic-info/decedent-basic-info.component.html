@@ -21,9 +21,11 @@
       </div>
     </div>
     <div class="col bottom-right">
-      <button *ngIf="btnVisible" [disabled]="!btnEnabled" mat-raised-button
-              (click)="onBtnClick()">{{btnTitle}}
-      </button>
+      @if (btnVisible) {
+        <button [disabled]="!btnEnabled" mat-raised-button
+          (click)="onBtnClick()">{{btnTitle}}
+        </button>
+      }
     </div>
   </div>
 </mat-expansion-panel>
