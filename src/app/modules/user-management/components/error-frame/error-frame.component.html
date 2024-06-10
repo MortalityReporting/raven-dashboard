@@ -3,13 +3,16 @@
   <div>{{error.status}} - {{error.statusText}}</div>
 </div>
 
-<div *ngIf="getTypeOf(error.error) === 'string'">
-  {{error.error}}
-</div>
-
-<div *ngIf="getTypeOf(error.error) === 'object'">
-  <div *ngFor="let key of Object.keys(error.error)">
-    <span class="key">{{key}}:</span> <span class="value">{{error.error[key]}}</span>
+@if (getTypeOf(error.error) === 'string') {
+  <div>
+    {{error.error}}
   </div>
+}
 
-</div>
+@if (getTypeOf(error.error) === 'object') {
+  @for (key of Object.keys(error.error); track key) {
+    <div>
+      <span class="key">{{ key }}:</span> <span class="value">{{ error.error[key] }}</span>
+    </div>
+  }
+}

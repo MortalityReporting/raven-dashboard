@@ -1,9 +1,9 @@
 
-  <div *ngIf="registrationDisplay" class="event-module-status-table">
+@if (registrationDisplay) {
+  <div class="event-module-status-table">
     <div class="event-header">
       {{registrationDisplay.title}}
     </div>
-
     <div class="event-row-header">
       <div class="event-row-header-cell">
         Test Name
@@ -17,27 +17,30 @@
       <div class="event-row-header-cell">
       </div>
     </div>
-    <div class="event-row" *ngFor="let item of registrationDisplay.items">
-      <div class="event-row-cell">
-        {{item.testName}}
+    @for (item of registrationDisplay.items; track item) {
+      <div class="event-row">
+        <div class="event-row-cell">
+          {{item.testName}}
+        </div>
+        <div class="event-row-cell">
+          {{ item.description }}
+        </div>
+        <div class="event-row-cell">
+          {{TestStatusDictionary[item.testStatus].display}}
+        </div>
+        <div class="event-row-cell-button">
+          <button mat-flat-button (click)="loadTestContainer(item)" [style.background-color]="'#009252'" [style.color]="'white'">
+            <mat-icon>launch</mat-icon>
+            Launch
+          </button>
+        </div>
       </div>
-      <div class="event-row-cell">
-        {{ item.description }}
-      </div>
-      <div class="event-row-cell">
-        {{TestStatusDictionary[item.testStatus].display}}
-      </div>
-      <div class="event-row-cell-button">
-        <button mat-flat-button (click)="loadTestContainer(item)" [style.background-color]="'#009252'" [style.color]="'white'">
-          <mat-icon>launch</mat-icon>
-          Launch
-        </button>
-      </div>
-    </div>
+    }
     <div class="event-footer">
       {{ completedTestCounter }} of {{registrationDisplay.items.length}} Complete
     </div>
   </div>
+}
 
 
 

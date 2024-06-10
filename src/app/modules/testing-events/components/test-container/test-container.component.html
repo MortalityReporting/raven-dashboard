@@ -1,51 +1,64 @@
-<div class="test-container-wrapper" *ngIf="registrationDisplayItem; else loading">
-  <div class="test-container-header">
-    <div class="test-container-header-event-name">
-      Event: {{ registrationDisplayItem.eventTitle }}
+@if (registrationDisplayItem) {
+  <div class="test-container-wrapper">
+    <div class="test-container-header">
+      <div class="test-container-header-event-name">
+        Event: {{ registrationDisplayItem.eventTitle }}
+      </div>
+      <div class="test-container-header-test-name">
+        {{ registrationDisplayItem.testName }}
+      </div>
+      <div>
+      </div>
     </div>
-    <div class="test-container-header-test-name">
-      {{ registrationDisplayItem.testName }}
+    <div class="test-container-body">
+      @switch (registrationDisplayItem?.testCode) {
+        @case ('onboarding') {
+          <app-onboarding/>
+        }
+        @case ('search-edrs') {
+          <app-search-edrs (onTestCompletedEvent)="onUpdateStatus($event)"/>
+        }
+        @case ('update-edrs') {
+          <app-update-edrs (onTestCompletedEvent)="onUpdateStatus($event)"/>
+        }
+        @case ('validation') {
+          <app-validation (onTestCompletedEvent)="onUpdateStatus($event)"/>
+        }
+        @case ('workflowIgDevelopment') {
+          <app-workflow-ig-development (onTestCompletedEvent)="onUpdateStatus($event)"/>
+        }
+        @case ('file-submission') {
+          <app-generic-file-submission (onTestCompletedEvent)="onUpdateStatus($event)"/>
+        }
+      }
     </div>
-    <div>
+    <div class="test-container-footer">
+      <div class="test-container-footer-return">
+        <button
+          [style.background-color]="config.backgroundColor"
+          [style.color]="'white'"
+          mat-flat-button (click)="onExitTest()">
+          <mat-icon>arrow_back</mat-icon>
+          Return to Event Modules
+        </button>
+      </div>
+      <div class="test-container-footer-upload">
+        <button
+          [style.background-color]="config.backgroundColor"
+          [style.color]="'white'"
+          mat-flat-button (click)="openDocumentWidow()">
+          <mat-icon>upload</mat-icon>
+          Submit/View Documentation
+        </button>
+      </div>
+      <div class="test-container-footer-status">
+        Current Status: {{ registrationDisplayItem.testStatus }}
+      </div>
     </div>
   </div>
-  <div class="test-container-body">
-    <ng-container [ngSwitch]="registrationDisplayItem?.testCode">
-      <app-onboarding *ngSwitchCase="'onboarding'"/>
-      <app-search-edrs *ngSwitchCase="'search-edrs'" (onTestCompletedEvent)="onUpdateStatus($event)"/>
-      <app-update-edrs *ngSwitchCase="'update-edrs'" (onTestCompletedEvent)="onUpdateStatus($event)"/>
-      <app-validation *ngSwitchCase="'validation'" (onTestCompletedEvent)="onUpdateStatus($event)"/>
-      <app-workflow-ig-development *ngSwitchCase="'workflowIgDevelopment'" (onTestCompletedEvent)="onUpdateStatus($event)"/>
-      <app-generic-file-submission *ngSwitchCase="'file-submission'" (onTestCompletedEvent)="onUpdateStatus($event)"/>
-    </ng-container>
-  </div>
-  <div class="test-container-footer">
-    <div class="test-container-footer-return">
-      <button
-        [style.background-color]="config.backgroundColor"
-        [style.color]="'white'"
-        mat-flat-button (click)="onExitTest()">
-        <mat-icon>arrow_back</mat-icon>
-        Return to Event Modules
-      </button>
-    </div>
-    <div class="test-container-footer-upload">
-      <button
-        [style.background-color]="config.backgroundColor"
-        [style.color]="'white'"
-        mat-flat-button (click)="openDocumentWidow()">
-        <mat-icon>upload</mat-icon>
-        Submit/View Documentation
-      </button>
-    </div>
-    <div class="test-container-footer-status">
-      Current Status: {{ registrationDisplayItem.testStatus }}
-    </div>
-  </div>
-</div>
-<ng-template #loading>
+} @else {
   <div class="margin-md center-contents">
     <!-- TODO: Add error handling. -->
     <mat-spinner></mat-spinner>
   </div>
-</ng-template>
+}

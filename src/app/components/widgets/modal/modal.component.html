@@ -1,21 +1,29 @@
 <h2 mat-dialog-title>{{ title }}</h2>
 <mat-dialog-content class="mat-typography">
-  <div *ngIf="contentType === 'json'"><pre>{{content | json}}</pre></div>
-  <div *ngIf="contentType === 'html'" [innerHtml]="content"></div>
-  <div *ngIf="!contentType || contentType === 'text'">{{ content }}</div>
+  @if (contentType === 'json') {
+    <div><pre>{{content | json}}</pre></div>
+  }
+  @if (contentType === 'html') {
+    <div [innerHtml]="content"></div>
+  }
+  @if (!contentType || contentType === 'text') {
+    <div>{{ content }}</div>
+  }
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button *ngIf="contentType ==='json'"
-          mat-stroked-button matTooltip="Copy content to clipboard"
-          [disabled]="!content"
-          [cdkCopyToClipboard]="JSON.stringify(content, null, 2)"
-          (click)="onCopyToClipboard()">
-    <mat-icon>content_copy</mat-icon>
-    Copy to Clipboard
-  </button>
+  @if (contentType ==='json') {
+    <button
+      mat-stroked-button matTooltip="Copy content to clipboard"
+      [disabled]="!content"
+      [cdkCopyToClipboard]="JSON.stringify(content, null, 2)"
+      (click)="onCopyToClipboard()">
+      <mat-icon>content_copy</mat-icon>
+      Copy to Clipboard
+    </button>
+  }
   <button mat-raised-button mat-dialog-close cdkFocusInitial
-          [style.color]="'white'"
-          [style.background-color]="primaryColor">
+    [style.color]="'white'"
+    [style.background-color]="primaryColor">
     Close
   </button>
 </mat-dialog-actions>

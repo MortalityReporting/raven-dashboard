@@ -29,7 +29,9 @@
     Additional Performers
   </div>
   <div class="grid-cell-span-2">
-    <record-viewer-tox-to-mdi-viewer-grid-section *ngIf="toxSummary?.performers" [data]="toxSummary?.performers" [columns]="['name']"></record-viewer-tox-to-mdi-viewer-grid-section>
+    @if (toxSummary?.performers) {
+      <record-viewer-tox-to-mdi-viewer-grid-section [data]="toxSummary?.performers" [columns]="['name']"></record-viewer-tox-to-mdi-viewer-grid-section>
+    }
   </div>
 
 </div>
