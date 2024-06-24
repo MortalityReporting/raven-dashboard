@@ -33,16 +33,23 @@ export class FHIRProfileConstants {
   MdiToEdrs = {
     Comp_MDItoEDRS: "http://hl7.org/fhir/us/mdi/StructureDefinition/Composition-mdi-and-edrs",
     Doc_MDItoEDRS: "http://hl7.org/fhir/us/mdi/StructureDefinition/Bundle-document-mdi-and-edrs",
-    List_CauseOfDeathPathway: "http://hl7.org/fhir/us/mdi/StructureDefinition/List-cause-of-death-pathway",
-    Obs_CauseOfDeathCondition: "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-cause-of-death-condition",
-    Obs_ConditionContributingToDeath: "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-condition-contributing-to-death",
-    Obs_DeathInjuryEventOccurredAtWork: "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-injury-at-work",
+    DocRef_MDIReport: "http://hl7.org/fhir/us/mdi/StructureDefinition/DocumentReference-mdi-report",
     Obs_CauseOfDeathPart1: "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-mdi-cause-of-death-part1",
+
+    // TODO: Delete the following after ensuring nothing is broken.
+    //List_CauseOfDeathPathway: "http://hl7.org/fhir/us/mdi/StructureDefinition/List-cause-of-death-pathway",
+    //Obs_CauseOfDeathCondition: "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-cause-of-death-condition",
+    //Obs_ConditionContributingToDeath: "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-condition-contributing-to-death",
+    //Obs_DeathInjuryEventOccurredAtWork: "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-injury-at-work",
     //Obs_AutopsyPerformed: "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-autopsy-performed-indicator",
   }
 
   ToxToMdi = {
-    Tox_Diagnostic_Report: "http://hl7.org/fhir/us/mdi/StructureDefinition/DiagnosticReport-toxicology-to-mdi"
+    Tox_Doc_ToxToMDI: "http://hl7.org/fhir/us/mdi/StructureDefinition/Bundle-message-tox-to-mdi",
+    Tox_Diagnostic_Report: "http://hl7.org/fhir/us/mdi/StructureDefinition/DiagnosticReport-toxicology-to-mdi",
+    Tox_MessageHeader_ToxToMDI: "http://hl7.org/fhir/us/mdi/StructureDefinition/MessageHeader-toxicology-to-mdi",
+    Tox_Observation_ToxicologyLabResult: "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-toxicology-lab-result",
+    Tox_Specimen_ToxicologyLab: "https://hl7.org/fhir/us/mdi/2.0.0-snapshot1/StructureDefinition-Specimen-toxicology-lab.html"
   }
 }
 
