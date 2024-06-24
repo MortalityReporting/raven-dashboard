@@ -64,8 +64,7 @@ export class DecedentRecordsGridComponent implements OnInit {
     const codes = [loincCauseOfDeath, loincTimeOfDeath];
     this.isLoading = true;
 
-    // this.decedentService.getDecedentRecords().subscribe(
-    // );
+    // NOTE: Decedents are FHIR Patient resources.
     this.decedentService.getDecedentRecords().pipe(
       map(data => {
         return data
@@ -73,7 +72,6 @@ export class DecedentRecordsGridComponent implements OnInit {
       mergeMap((decedentRecordsList: any[]) =>
         forkJoin(
           decedentRecordsList.map((decedentRecord: any, i) =>
-
             this.decedentService.getDecedentObservationsByCode(decedentRecord, codes).pipe(
               map((observation: any) => {
                 decedentRecord = this.mapToDto(decedentRecord);
@@ -105,6 +103,7 @@ export class DecedentRecordsGridComponent implements OnInit {
     )
     .subscribe({
         next: (data) => {
+          console.log(data);
           this.decedentGridDtoList = data.filter(record => !!record.caseNumber);
           this.dataSource = new MatTableDataSource(this.decedentGridDtoList);
           this.dataSource.sort = this.sort;
