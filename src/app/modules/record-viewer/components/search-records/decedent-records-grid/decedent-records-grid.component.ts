@@ -103,7 +103,6 @@ export class DecedentRecordsGridComponent implements OnInit {
     )
     .subscribe({
         next: (data) => {
-          console.log(data);
           this.decedentGridDtoList = data.filter(record => !!record.caseNumber);
           this.dataSource = new MatTableDataSource(this.decedentGridDtoList);
           this.dataSource.sort = this.sort;
