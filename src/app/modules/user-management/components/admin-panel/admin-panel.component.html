@@ -1,48 +1,50 @@
-<div class="margin-md">
-  @if (auth.isAuthenticated$ | async) {
-  } @else {
-    Please login to an account with appropriate permissions to access this component.
-  }
+<div class="generic-component-wrapper">
+  <div class="generic-component-content">
+    @if (auth.isAuthenticated$ | async) {
+    } @else {
+      Please login to an account with appropriate permissions to access this component.
+    }
 
 
-  @if (testEvents) {
-    <div>
-      <div class="row" style="padding-top: 4px">
-        <mat-form-field appearance="outline" style="min-width: 50%">
-          <mat-label>Select Test Event</mat-label>
-          <mat-select [(value)]="selectedEvent">
-            @for (testEvent of testEvents; track testEvent) {
-              <mat-option class="mat-option"
-                [value]="testEvent">
-                {{ testEvent.title }}
-              </mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
-        <div class="content-spacer"></div>
-        <button mat-raised-button (click)="exportToPdf(selectedEvent)">
-          <mat-icon>download</mat-icon>
-          Download as PDF
-        </button>
-      </div>
-      @if (!isLoading) {
-        <app-event-table
-          (testingEventUpdated)="onTestingEventUpdated($event)"
-          [testingEvent]="selectedEvent">
-        </app-event-table>
-      }
-      @if (isLoading) {
-        <div class="spinner-container">
-          <mat-spinner [diameter]="70"></mat-spinner>
+    @if (testEvents) {
+      <div>
+        <div class="row" style="padding-top: 4px">
+          <mat-form-field appearance="outline" style="min-width: 50%">
+            <mat-label>Select Test Event</mat-label>
+            <mat-select [(value)]="selectedEvent">
+              @for (testEvent of testEvents; track testEvent) {
+                <mat-option class="mat-option"
+                            [value]="testEvent">
+                  {{ testEvent.title }}
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          <div class="content-spacer"></div>
+          <button mat-raised-button (click)="exportToPdf(selectedEvent)">
+            <mat-icon>download</mat-icon>
+            Download as PDF
+          </button>
         </div>
-      }
-    </div>
-  }
+        @if (!isLoading) {
+          <app-event-table
+            (testingEventUpdated)="onTestingEventUpdated($event)"
+            [testingEvent]="selectedEvent">
+          </app-event-table>
+        }
+        @if (isLoading) {
+          <div class="spinner-container">
+            <mat-spinner [diameter]="70"></mat-spinner>
+          </div>
+        }
+      </div>
+    }
 
-  @if (error) {
-    <div>
-      <common-error-frame [error]="error"></common-error-frame>
-    </div>
-  }
+    @if (error) {
+      <div>
+        <common-error-frame [error]="error"></common-error-frame>
+      </div>
+    }
 
+  </div>
 </div>
