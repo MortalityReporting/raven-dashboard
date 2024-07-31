@@ -35,13 +35,6 @@ export class FHIRProfileConstants {
     Doc_MDItoEDRS: "http://hl7.org/fhir/us/mdi/StructureDefinition/Bundle-document-mdi-and-edrs",
     DocRef_MDIReport: "http://hl7.org/fhir/us/mdi/StructureDefinition/DocumentReference-mdi-report",
     Obs_CauseOfDeathPart1: "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-mdi-cause-of-death-part1",
-
-    // TODO: Delete the following after ensuring nothing is broken.
-    //List_CauseOfDeathPathway: "http://hl7.org/fhir/us/mdi/StructureDefinition/List-cause-of-death-pathway",
-    //Obs_CauseOfDeathCondition: "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-cause-of-death-condition",
-    //Obs_ConditionContributingToDeath: "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-condition-contributing-to-death",
-    //Obs_DeathInjuryEventOccurredAtWork: "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-death-injury-at-work",
-    //Obs_AutopsyPerformed: "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-autopsy-performed-indicator",
   }
 
   ToxToMdi = {
@@ -52,10 +45,3 @@ export class FHIRProfileConstants {
     Tox_Specimen_ToxicologyLab: "https://hl7.org/fhir/us/mdi/2.0.0-snapshot1/StructureDefinition-Specimen-toxicology-lab.html"
   }
 }
-
-// TODO: Shift all of this into the object above and refactor related parts of the code.
-
-// export const USCoreLocation: string = "http://hl7.org/fhir/us/core/StructureDefinition/us-core-location";
-// export const USCorePatient: string = "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient";
-// export const USCorePractitioner: string = "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner";
-

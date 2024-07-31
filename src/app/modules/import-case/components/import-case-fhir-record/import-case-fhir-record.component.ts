@@ -27,7 +27,8 @@ export class ImportCaseFhirRecordComponent {
   ig: ImplementationGuide = {
     canonicalUrl:'hl7.fhir.us.mdi#current',
     name: "hl7.fhir.us.mdi",
-    version: "current"};
+    version: "current"
+  };
 
   constructor(
     @Inject('importConfig') public config: ModuleHeaderConfig,
