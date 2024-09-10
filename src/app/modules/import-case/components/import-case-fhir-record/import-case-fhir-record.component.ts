@@ -24,15 +24,11 @@ export class ImportCaseFhirRecordComponent {
   validationExecuted: boolean = false;
   preconditionError: string;
 
-  //we assume that the default IG list is the current one
-  igList: ImplementationGuide[] = [
-    {
-      "name": "mdi#current",
-      "valueString": "hl7.fhir.us.mdi#current",
-      "display": "MDI FHIR IG - Current"
-    },
-  ];
-
+  ig: ImplementationGuide = {
+    canonicalUrl:'hl7.fhir.us.mdi#current',
+    name: "hl7.fhir.us.mdi",
+    version: "current"
+  };
 
   constructor(
     @Inject('importConfig') public config: ModuleHeaderConfig,

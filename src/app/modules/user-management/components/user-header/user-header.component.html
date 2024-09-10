@@ -1,21 +1,23 @@
-  <div class="user-profile-header">
-    <ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOut" class="profile-wrapper">
+<div class="user-profile-header">
+  @if (auth.isAuthenticated$ | async) {
+    <ng-container class="profile-wrapper">
     </ng-container>
+  } @else {
+    <button mat-flat-button
+      (click)="auth.loginWithRedirect({appState: {target: '/'}})"
+      class="login-button">
+      <mat-icon>login</mat-icon>
+      Sign In
+    </button>
+  }
 
-    <ng-template #loggedOut>
-      <button mat-flat-button
-              (click)="auth.loginWithRedirect({appState: {target: '/'}})"
-              class="login-button">
-        <mat-icon>login</mat-icon>
-        Sign In
-      </button>
-    </ng-template>
-    <div *ngIf="auth.user$ | async as user">
+  @if (auth.user$ | async; as user) {
+    <div>
       <img
-           [src]="user?.picture ? user.picture : '/assets/portrait_placeholder.png'"
-           referrerpolicy="no-referrer"
-           class="profile-image"
-           [matMenuTriggerFor]="userMenu">
+        [src]="user?.picture ? user.picture : '/assets/portrait_placeholder.png'"
+        referrerpolicy="no-referrer"
+        class="profile-image"
+        [matMenuTriggerFor]="userMenu">
       <mat-menu #userMenu="matMenu" style="width: 250px;">
         <div mat-menu-item>
           <div class="user-card">
@@ -23,7 +25,7 @@
               [src]="user.picture"
               referrerpolicy="no-referrer"
               class="profile-image"
-            >
+              >
             <div class="details">
               <div class="name">{{user.name}}</div>
               <div class="email">{{user.email}}</div>
@@ -31,11 +33,11 @@
           </div>
         </div>
         <mat-divider></mat-divider>
-        <button mat-menu-item
-                (click)="auth.logout({ logoutParams: { returnTo: env.adminLogoutUrl } })">
+        <button mat-menu-item (click)="auth.logout({ logoutParams: { returnTo: env.adminLogoutUrl } })">
           <mat-icon>logout</mat-icon>
           Sign Out
         </button>
       </mat-menu>
     </div>
-  </div>
+  }
+</div>
