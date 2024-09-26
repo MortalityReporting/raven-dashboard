@@ -1,0 +1,38 @@
+<div class="generic-component-wrapper">
+  <div class="generic-component-content">
+    <div class="record-comparison">
+      <div class="set-record component-border"
+           [ngClass]="setRecordExpanded ? 'expanded': 'collapsed'"
+           [style.background-color]="config.backgroundColor"
+           [style.color]="'white'">
+        <div class="component-title">
+          @if(setRecordExpanded){
+            <div>
+            Set Records
+            </div>
+            <div>
+            <mat-icon class="icon-display" (click)="setRecordExpanded = false" >chevron_left</mat-icon>
+            </div>
+          }
+          @else{
+            <mat-icon class="icon-display" (click)="setRecordExpanded = true">chevron_right</mat-icon>
+          }
+        </div>
+        @if (setRecordExpanded) {
+          <div class="component-container">
+            <rc-set-records></rc-set-records>
+          </div>
+        }
+        @else{
+          <div class="set-record-label">
+            <div class="rotate">
+            Set Records
+            </div>
+          </div>
+        }
+      </div>
+      <div class="entries component-border"><rc-entries></rc-entries></div>
+      <div class="details component-border"><rc-details></rc-details></div>
+    </div>
+  </div>
+</div>

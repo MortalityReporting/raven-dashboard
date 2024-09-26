@@ -6,13 +6,9 @@ import {FhirValidatorComponent} from "./modules/fhir-validator/components/fhir-v
 import {SearchRecordsComponent} from "./modules/record-viewer/components/search-records/search-records.component";
 import {ModuleHeaderConfig} from "./providers/module-header-config";
 import {AppConfiguration} from "./providers/app-configuration";
-import {
-  RecordComparisonContentComponent
-} from "./modules/record-comparison/components/record-comparison-content/record-comparison-content.component";
 import {AdminPanelComponent} from "./modules/user-management/components/admin-panel/admin-panel.component";
 import {AuthGuard} from "@auth0/auth0-angular";
 import {LoggedInComponent} from "./modules/user-management/components/logged-in/logged-in.component";
-import {TestContainerComponent} from "./modules/testing-events/components/test-container/test-container.component";
 import {
   MdiToEdrsViewerComponent
 } from "./modules/record-viewer/components/mdi-to-edrs-viewer/mdi-to-edrs-viewer.component";
@@ -20,9 +16,6 @@ import {OnboardingComponent} from "./modules/tests/components/onboarding/onboard
 import {
   ToxToMdiViewerComponent
 } from "./modules/record-viewer/components/tox-to-mdi-viewer/tox-to-mdi-viewer.component";
-import {
-  WorkflowSimulatorComponent
-} from "./modules/workflow-simulator/components/workflow-simulator/workflow-simulator.component";
 import {SearchEdrsComponent} from "./modules/tests/components/search-edrs/search-edrs.component";
 import {
   TestingEventRootComponent
@@ -30,6 +23,9 @@ import {
 import {
   StandaloneTestsComponent
 } from "./modules/workflow-simulator/components/standalone-tests/standalone-tests.component";
+import {
+  RecordComparisonComponent
+} from "./modules/record-comparison/components/record-comparison.component";
 
 
 const routes: Routes = [
@@ -64,13 +60,13 @@ const routes: Routes = [
     children: [
       {
         path: ':id',
-        component: RecordComparisonContentComponent,
+        component: RecordComparisonComponent,
         data: { moduleConfig: ModuleHeaderConfig.RecordComparison, componentTitle: AppConfiguration.config.workflowTitles['mdiToEdrs'] + " Comparison"}
 
       },
       {
         path: '',
-        component: RecordComparisonContentComponent,
+        component: RecordComparisonComponent,
         data: { moduleConfig: ModuleHeaderConfig.RecordComparison, componentTitle: AppConfiguration.config.workflowTitles['mdiToEdrs'] + " Comparison"}
       },
     ]

@@ -21,13 +21,20 @@ import {MatInputModule} from "@angular/material/input";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule} from "@angular/material/dialog";
-import {Fields} from "./providers/field.config";
+import { RecordComparisonComponent } from './components/record-comparison.component';
+import { SetRecordsComponent } from './components/set-records/set-records.component';
+import { EntriesComponent } from './components/entries/entries.component';
+import { DetailsComponent } from './components/details/details.component';
 
 @NgModule({
     declarations: [
         RecordComparisonContentComponent,
         RecordComparisonContentFieldComponent,
         RecordComparisonDialogComponent,
+        RecordComparisonComponent,
+        SetRecordsComponent,
+        EntriesComponent,
+        DetailsComponent,
     ],
   imports: [
     CommonModule,
