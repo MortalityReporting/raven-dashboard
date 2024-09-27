@@ -1,0 +1,26 @@
+.set-records-container{
+  padding: 16px;
+  margin-top:16px;
+}
+
+.max-width{
+  width: 100%;
+}
+
+.section{
+  margin:16px 0;
+  >.sub-header{
+    font-weight: bold;
+    font-size: medium;
+    margin: 16px 0
+  }
+  .section-item{
+    display: flex;
+    margin: 16px 0;
+  }
+}
+
+.label{
+  font-weight: bold;
+  width: 20%
+}

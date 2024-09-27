@@ -1,1 +1,47 @@
-<p>set-records works!</p>
+<div class="set-records-container">
+  <mat-form-field appearance="outline" class="max-width" floatLabel="always">
+    <mat-label>Document Type</mat-label>
+    <mat-select [formControl]="documentType">
+      @for (document of documentTypes; track document) {
+        <mat-option [value]="document">{{ document }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-divider></mat-divider>
+  <div class="section">
+    <div class="sub-header">User Record</div>
+    <button mat-raised-button>
+      <mat-icon>upload</mat-icon>
+      Upload Document
+    </button>
+    <div class="section-item">
+      <div class="label">Name:</div>
+      <div>{{ userDocumentWrapper?.decedentName }}</div>
+    </div>
+    <div class="section-item">
+      <div class="label">Identifier:</div>
+      <div>{{ userDocumentWrapper?.mdiCaseNumber }}</div>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="section">
+    <div class="sub-header">Compare to Record</div>
+    <form class="example-form">
+      <mat-form-field appearance="outline" class="max-width" floatLabel="always">
+        <mat-label>Decedent Name</mat-label>
+        <input type="text"
+               aria-label="Decedent Name"
+               matInput
+               [formControl]="personFc"
+               [matAutocomplete]="auto">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          @for (option of filteredOptions | async; track option) {
+            <mat-option [value]="option">{{option}}</mat-option>
+          }
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+
+  </div>
+
+</div>

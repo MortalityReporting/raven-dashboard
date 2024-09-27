@@ -28,24 +28,25 @@ export class ReferenceDocumentService {
         map((referenceBundleSearch: any) =>{
           // By convention the API should return an empty array. However, the FHIR server we use does not.
           // We are adding an empty array to prevent NPE errors in the components using this services.
-          if (!referenceBundleSearch?.entry) {
-            return [];
-          }
-          else {
-            return referenceBundleSearch.entry as Object[];
+          return referenceBundleSearch?.entry || [];
+        }),
+        mergeMap((bundleBecList: any[]) => {
+          // Check if bundleBecList is empty
+          if (bundleBecList.length === 0) {
+            // Return an observable that emits an empty array and completes
+            return of([]);
+          } else {
+            // Process the list if not empty
+            return forkJoin(
+              bundleBecList.map((bundleBec: any) => {
+                const composition = bundleBec.resource.entry[0].resource;
+                const subject = this.bundleHelper.findSubjectInBundle(composition, bundleBec.resource);
+                return of(this.createSummary(subject, bundleBec.resource));
+              })
+            );
           }
         })
-      ).pipe(
-        mergeMap( (bundleBecList: any[]) =>
-          forkJoin(
-            bundleBecList.map((bundleBec: any) =>{
-              const composition = bundleBec.resource.entry[0].resource;
-              const subject = this.bundleHelper.findSubjectInBundle(composition, bundleBec.resource)
-              return of(this.createSummary(subject, bundleBec.resource));
-            })
-          )
-        )
-      )
+      );
   }
 
   createSummary(subject: any, bundle: any): any {

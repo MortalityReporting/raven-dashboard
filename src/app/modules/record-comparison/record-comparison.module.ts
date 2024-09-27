@@ -25,6 +25,8 @@ import { RecordComparisonComponent } from './components/record-comparison.compon
 import { SetRecordsComponent } from './components/set-records/set-records.component';
 import { EntriesComponent } from './components/entries/entries.component';
 import { DetailsComponent } from './components/details/details.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocomplete";
 
 @NgModule({
     declarations: [
@@ -49,6 +51,9 @@ import { DetailsComponent } from './components/details/details.component';
     MatButtonModule,
     MatCardModule,
     MatDialogModule,
+    ReactiveFormsModule,
+    MatAutocomplete,
+    MatAutocompleteTrigger,
   ],
     providers: [
         ReferenceDocumentService,
