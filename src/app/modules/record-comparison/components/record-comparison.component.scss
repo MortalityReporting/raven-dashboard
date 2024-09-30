@@ -45,11 +45,15 @@
     }
   }
   >.entries{
-    width: 400px;
+    width: 200px;
     margin: 0 16px;
+    padding: 8px 16px;
+
   }
   >.details{
     flex:1;
+    overflow: auto;
+    padding: 8px 16px;
   }
 }
 

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {MdiToEDRSDocumentWrapper} from "../../models/mdiToEdrsDocumentWrapper";
 
 @Component({
   selector: 'rc-details',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrl: './details.component.scss'
 })
 export class DetailsComponent {
+  @Input() userDocumentWrapper!: MdiToEDRSDocumentWrapper;
 
 }

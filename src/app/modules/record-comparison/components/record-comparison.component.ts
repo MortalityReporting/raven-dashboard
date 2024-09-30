@@ -26,8 +26,6 @@ export class RecordComparisonComponent implements OnInit{
   ngOnInit(): void {
     this.getUserDocumentWrapper();
     this.getReferenceDocumentWrappers();
-
-
   }
 
   private getUserDocumentWrapper() {
@@ -37,7 +35,6 @@ export class RecordComparisonComponent implements OnInit{
         {
           next: (userDocumentWrapper: MdiToEDRSDocumentWrapper) => {
             this.userDocumentWrapper = userDocumentWrapper;
-            console.log(this.userDocumentWrapper);
           },
           error: err => {
             console.error(err)
