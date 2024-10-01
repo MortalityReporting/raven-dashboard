@@ -1,0 +1,22 @@
+.file-upload{
+  margin-top: 16px;
+  height: 300px;
+  overflow-y: scroll;
+  display: flex;
+  background-color: whitesmoke;
+  >.line-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  >.drag-and-drop-area{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.cancel-upload{
+  cursor: pointer;
+}

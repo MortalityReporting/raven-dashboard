@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FormControl} from "@angular/forms";
 import {map, Observable, startWith} from "rxjs";
 import {MdiToEDRSDocumentWrapper} from "../../models/mdiToEdrsDocumentWrapper";
+import {openFileUpload} from "../../../../components/widgets/file-uploader/file-uploader.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'rc-set-records',
@@ -17,6 +19,9 @@ export class SetRecordsComponent implements OnInit{
   filteredOptions: Observable<string[]>;
   @Input() userDocumentWrapper: MdiToEDRSDocumentWrapper;
 
+  constructor(private dialog: MatDialog) {
+  }
+
   ngOnInit(): void {
     this.filteredOptions = this.personFc.valueChanges.pipe(
       startWith(''),
@@ -27,5 +32,14 @@ export class SetRecordsComponent implements OnInit{
     const filterValue = value.toLowerCase();
 
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  onUploadDocument() {
+    openFileUpload(
+      this.dialog,
+      {
+        //empty object for now
+      })
+      .subscribe();
   }
 }
