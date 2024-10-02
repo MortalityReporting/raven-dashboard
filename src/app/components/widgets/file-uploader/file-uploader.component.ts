@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material/dialog";
 import JSZip from "jszip";
 import {HttpClient} from "@angular/common/http";
 import {from, switchMap} from "rxjs";
@@ -14,10 +14,12 @@ import {from, switchMap} from "rxjs";
 export class FileUploaderComponent {
   files: File[] = [];
   dataSource = [];
-  displayedColumns: string[] = ['name', 'size', 'action'];
+  displayedColumns: string[] = ['fileName', 'fileSize', 'action'];
   protected readonly Math = Math;
+  errorMessage: string ='';
+  warningMessage: string = '';
 
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient, private dialogRef: MatDialogRef<any>) {}
 
   onFileSelected(event) {
     this.files = Array.from(event.target.files);
@@ -25,12 +27,14 @@ export class FileUploaderComponent {
   }
 
   removeFile(fileToRemove: File) {
-    this.files = this.files.filter(file => file.name != fileToRemove.name)
+    this.files = this.files.filter(file => file.name != fileToRemove.name);
+    this.dataSource = this.files;
   }
 
   onFileDrop(event: DragEvent) {
     event.preventDefault();
     this.files = Array.from(event.dataTransfer?.files);
+    this.dataSource=this.files;
   }
 
   onDragOver(event: DragEvent) {
@@ -38,10 +42,13 @@ export class FileUploaderComponent {
   }
 
   uploadZip(files: File[]) {
+    this.warningMessage = '';
+    this.errorMessage = '';
     if (files.length == 0) {
+      // add message to the user here
       console.warn('No files selected.');
-    }
-    else {
+      this.warningMessage = "Please select file(s) to upload."
+    } else {
       const zip = new JSZip();
 
       // Add files to the zip
@@ -50,7 +57,7 @@ export class FileUploaderComponent {
       }
 
       // Convert JSZip promise to observable
-      from(zip.generateAsync({ type: 'blob' }))
+      from(zip.generateAsync({type: 'blob'}))
         .pipe(
           switchMap((blob) => {
             const formData = new FormData();
@@ -60,28 +67,35 @@ export class FileUploaderComponent {
         )
         .subscribe({
           next: (response) => {
+            //render success message to the user
             console.log('Upload successful!', response);
           },
           error: (error) => {
+            //render error to the user
             console.error('Upload failed', error);
+            this.errorMessage = "Error uploading the file(s)."
           },
         });
     }
+  }
+
+  onCancel() {
+    this.dialogRef.close();
   }
 }
 
 export function openFileUpload(dialog: MatDialog, dialogData: any) {
 
-    const config = new MatDialogConfig();
+  const config = new MatDialogConfig();
 
-    config.autoFocus = true;
-    config.data = {
-      ...dialogData
-    }
+  config.autoFocus = true;
+  config.data = {
+    ...dialogData
+  }
 
-    const dialogRef = dialog.open(FileUploaderComponent, config);
+  const dialogRef = dialog.open(FileUploaderComponent, config);
 
-    return dialogRef.afterClosed();
+  return dialogRef.afterClosed();
 
 
 }

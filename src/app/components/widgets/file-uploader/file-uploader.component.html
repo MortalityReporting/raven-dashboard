@@ -2,33 +2,38 @@
 <mat-dialog-content>
   Drag and drop files into the area provided or
   <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload multiple>
-  <button class="margin-left-sm" mat-raised-button (click)="fileUpload.click()"><mat-icon>folder_open</mat-icon>Browse files</button>
-  <div class="file-upload">
-    @if(files?.length){
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <button class="margin-left-sm" mat-raised-button (click)="fileUpload.click()">
+    <mat-icon>folder_open</mat-icon>
+    Browse files
+  </button>
+  <div class="file-upload border">
+    @if (files?.length) {
+      <div class="table-container">
+        <table mat-table [dataSource]="dataSource">
 
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>File Name</th>
-        <td mat-cell *matCellDef="let file"> {{file.name}} </td>
-      </ng-container>
+          <ng-container matColumnDef="fileName">
+            <th mat-header-cell *matHeaderCellDef>File Name</th>
+            <td mat-cell *matCellDef="let file"> {{ file.name }}</td>
+          </ng-container>
 
-      <ng-container matColumnDef="size">
-        <th mat-header-cell *matHeaderCellDef> Size </th>
-        <td mat-cell *matCellDef="let file"> {{file.size / 1000}} </td>
-      </ng-container>
+          <ng-container matColumnDef="fileSize">
+            <th mat-header-cell *matHeaderCellDef> Size</th>
+            <td mat-cell *matCellDef="let file"> {{ file.size | fileSize }}</td>
+          </ng-container>
 
-      <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let file">
-          <mat-icon class="cancel-upload" (click)="removeFile(file)" matTooltip="Remove File">close</mat-icon>
-        </td>
-      </ng-container>
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let file">
+              <mat-icon class="cancel-upload" (click)="removeFile(file)" matTooltip="Remove File">close</mat-icon>
+            </td>
+          </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; let even = even; columns: displayedColumns;" [ngClass]="{'background-color': even}"></tr>
+        </table>
+      </div>
     } @else {
-      <div class="drag-and-drop-area border"
+      <div class="drag-and-drop-area background-color"
            (drop)="onFileDrop($event)"
            (dragover)="onDragOver($event)">
         Drag and drop files here.
@@ -37,7 +42,22 @@
   </div>
 
 </mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-raised-button>Cancel</button>
-  <button mat-raised-button (click)="uploadZip(files)"><mat-icon>upload</mat-icon>Upload</button>
+<mat-dialog-actions>
+  <div class="actions">
+    <div class="message">
+      @if(errorMessage){
+        <span class="error">{{ errorMessage }}</span>
+      }
+      @if(warningMessage){
+        <span class="warning">{{ warningMessage }}</span>
+      }
+    </div>
+    <div>
+      <button mat-raised-button (click)="onCancel()">Cancel</button>
+      <button mat-raised-button (click)="uploadZip(files)">
+        <mat-icon>upload</mat-icon>
+        Upload
+      </button>
+    </div>
+  </div>
 </mat-dialog-actions>

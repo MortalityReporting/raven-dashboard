@@ -46,6 +46,7 @@ import { FileUploaderComponent } from './components/widgets/file-uploader/file-u
 import {
   MatTableModule
 } from "@angular/material/table";
+import {FileSizePipe} from "./components/widgets/file-uploader/file-size.pipe";
 
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
@@ -96,6 +97,7 @@ export const configFactory = (configService: ConfigService) => {
     MatSidenavModule,
     UserManagementModule,
     MatTableModule,
+    FileSizePipe
   ],
   providers: [
     {
