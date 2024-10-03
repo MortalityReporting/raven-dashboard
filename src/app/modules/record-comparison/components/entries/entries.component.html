@@ -1,1 +1,12 @@
 <h3>Entries</h3>
+
+@for (entity of this.comparisonResult.entityResults; track entity.entityName) {
+  {{entity.entityName}}<br/>
+  @for (field of entity["fields"]; track field["label"]) {
+    <em>{{field["label"]}}</em><br/>
+    @if (field["type"] === "string" || field["type"] === "code") {
+
+    }
+  }
+  <br/>
+}
