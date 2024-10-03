@@ -42,11 +42,6 @@ import {WorkflowSimulatorModule} from "./modules/workflow-simulator/workflow-sim
 import {TestsModule} from "./modules/tests/tests.module";
 import {AppConstants} from "./providers/app-constants";
 import {ModuleHeaderComponent} from "./components/module-header/module-header.component";
-import { FileUploaderComponent } from './components/widgets/file-uploader/file-uploader.component';
-import {
-  MatTableModule
-} from "@angular/material/table";
-import {FileSizePipe} from "./components/widgets/file-uploader/file-size.pipe";
 
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
@@ -64,8 +59,7 @@ export const configFactory = (configService: ConfigService) => {
     ModalComponent,
     CardHoverDirective,
     ModuleHeaderComponent,
-    BreadcrumbComponent,
-    FileUploaderComponent
+    BreadcrumbComponent
   ],
   imports: [
     // TODO: Clean up imports after refactor.
@@ -96,8 +90,6 @@ export const configFactory = (configService: ConfigService) => {
     TestsModule.forRoot(environment, ModuleHeaderConfig.WorkflowSimulator, AppConfiguration.config),
     MatSidenavModule,
     UserManagementModule,
-    MatTableModule,
-    FileSizePipe
   ],
   providers: [
     {

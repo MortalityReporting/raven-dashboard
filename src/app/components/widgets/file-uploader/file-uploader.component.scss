@@ -13,6 +13,9 @@
     justify-content: center;
   }
 }
+.no-padding-bottom{
+  padding-bottom: 0;
+}
 
 .background-color{
   background-color: whitesmoke;
@@ -27,15 +30,11 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0 16px;
-  margin-bottom: 16px;
-  >.message{
-    font-size: medium;
-    >.error{
-      color: #F25465;
-    }
-    >.warning{
-      color: #F8B15E;
-    }
-  }
+  margin: 0 16px 16px 16px;
+}
+
+.warning-message{
+  font-size: medium;
+  color: #F25465;
+  margin-top: 8px;
 }

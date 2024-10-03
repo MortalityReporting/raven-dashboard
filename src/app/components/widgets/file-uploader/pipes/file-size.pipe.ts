@@ -15,7 +15,7 @@ export class FileSizePipe implements PipeTransform {
     const sizes = ['bytes', 'KB', 'MB', 'GB'];
 
     const i = Math.floor(Math.log(value) / Math.log(k));
-    if(sizes.length >= i){
+    if(sizes.length <= i){
       console.error("File size is too large for processing");
       return '';
     }

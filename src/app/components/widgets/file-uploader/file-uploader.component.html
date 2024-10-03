@@ -1,5 +1,5 @@
 <div mat-dialog-title>Submit File(s)</div>
-<mat-dialog-content>
+<mat-dialog-content [ngClass]="warningMessage.length > 0 ? 'no-padding-bottom': '' ">
   Drag and drop files into the area provided or
   <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload multiple>
   <button class="margin-left-sm" mat-raised-button (click)="fileUpload.click()">
@@ -29,7 +29,8 @@
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></tr>
-          <tr mat-row *matRowDef="let row; let even = even; columns: displayedColumns;" [ngClass]="{'background-color': even}"></tr>
+          <tr mat-row *matRowDef="let row; let even = even; columns: displayedColumns;"
+              [ngClass]="{'background-color': even}"></tr>
         </table>
       </div>
     } @else {
@@ -40,24 +41,20 @@
       </div>
     }
   </div>
-
+    <div class="warning-message">{{ warningMessage }}</div>
 </mat-dialog-content>
 <mat-dialog-actions>
   <div class="actions">
-    <div class="message">
-      @if(errorMessage){
-        <span class="error">{{ errorMessage }}</span>
-      }
-      @if(warningMessage){
-        <span class="warning">{{ warningMessage }}</span>
-      }
-    </div>
     <div>
       <button mat-raised-button (click)="onCancel()">Cancel</button>
       <button mat-raised-button (click)="uploadZip(files)">
         <mat-icon>upload</mat-icon>
         Upload
       </button>
+    </div>
+
+    <div class="message">
+      Total: {{ files | totalFileSize | fileSize }}
     </div>
   </div>
 </mat-dialog-actions>

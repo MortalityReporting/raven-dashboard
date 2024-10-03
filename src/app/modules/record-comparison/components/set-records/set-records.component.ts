@@ -40,6 +40,7 @@ export class SetRecordsComponent implements OnInit{
       {
         //empty object for now
       })
-      .subscribe();
+      .subscribe(result=> console.log(result));
+
   }
 }
