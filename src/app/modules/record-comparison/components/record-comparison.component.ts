@@ -1,60 +1,25 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {ModuleHeaderConfig} from "../../../providers/module-header-config";
-import {ReferenceDocumentService} from "../services/reference-document.service";
 import {MdiToEDRSDocumentWrapper} from "../models/mdiToEdrsDocumentWrapper";
-import {ActivatedRoute} from "@angular/router";
-import {UserDocumentService} from "../services/user-document.service";
+import {Bundle} from "../../fhir-util";
 
 @Component({
   selector: 'rc-record-comparison',
   templateUrl: './record-comparison.component.html',
   styleUrl: './record-comparison.component.scss'
 })
-export class RecordComparisonComponent implements OnInit{
+export class RecordComparisonComponent{
 
   setRecordExpanded = true;
   userDocumentWrapper: MdiToEDRSDocumentWrapper; // A
-  referenceDocumentWrapper: MdiToEDRSDocumentWrapper; // B
+  referenceRecordBundle: Bundle;
 
   constructor(
     @Inject('comparisonConfig') public config: ModuleHeaderConfig,
-    private referenceDocumentService: ReferenceDocumentService,
-    private userDocumentService: UserDocumentService,
-    private route: ActivatedRoute,
-    ) {}
+  ) {}
 
-  ngOnInit(): void {
-    this.getUserDocumentWrapper();
-    this.getReferenceDocumentWrappers();
-  }
-
-  private getUserDocumentWrapper() {
-    let compositionId = this.route.snapshot.params['id'];
-    if (compositionId) {
-      this.userDocumentService.getUserDocumentBundle(compositionId).subscribe(
-        {
-          next: (userDocumentWrapper: MdiToEDRSDocumentWrapper) => {
-            this.userDocumentWrapper = userDocumentWrapper;
-          },
-          error: err => {
-            console.error(err)
-          }
-        },
-      );
-    }
-  }
-
-  private getReferenceDocumentWrappers() {
-    this.referenceDocumentService.getReferenceDocuments().subscribe(
-      {
-        next: value => {
-          console.log("On value loaded")
-          console.log(value);
-        },
-        error: err => {
-          console.error(err);
-        }
-      }
-    );
+  setSelectedReferenceRecord(event: Bundle) {
+    console.log(event);
+    this.referenceRecordBundle = event;
   }
 }

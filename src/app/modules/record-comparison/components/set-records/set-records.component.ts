@@ -1,9 +1,19 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl} from "@angular/forms";
-import {map, Observable, startWith} from "rxjs";
-import {MdiToEDRSDocumentWrapper} from "../../models/mdiToEdrsDocumentWrapper";
+import {distinctUntilChanged, map, Observable, startWith, switchMap} from "rxjs";
 import {openFileUpload} from "../../../../components/widgets/file-uploader/file-uploader.component";
 import {MatDialog} from "@angular/material/dialog";
+import {ReferenceDocumentService} from "../../services/reference-document.service";
+import {MdiToEDRSDocumentWrapper} from "../../models/mdiToEdrsDocumentWrapper";
+import {filter} from "rxjs/operators";
+import {Bundle} from "../../../fhir-util";
+import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
+
+export class ReferenceRecord{
+  display: string;
+  bundle: Bundle;
+}
+
 
 @Component({
   selector: 'rc-set-records',
@@ -11,27 +21,21 @@ import {MatDialog} from "@angular/material/dialog";
   styleUrl: './set-records.component.scss'
 })
 export class SetRecordsComponent implements OnInit{
+  @Output() referenceRecordSelectedEvent = new EventEmitter<Bundle>();
+
+  //TODO load the reference record types from API
   documentTypes = ["EDRS", "MDI-and-EDRS Document Bundle"]
   documentType = new FormControl<string | null>(null);
 
-  personFc = new FormControl('');
-  options: string[] = ['One', 'Two', 'Three'];
-  filteredOptions: Observable<string[]>;
-  @Input() userDocumentWrapper: MdiToEDRSDocumentWrapper;
+  referenceRecordFc = new FormControl();
+  filteredOptions: Observable<ReferenceRecord[]>;
+  selectedPatient: MdiToEDRSDocumentWrapper;
 
-  constructor(private dialog: MatDialog) {
+  constructor(private dialog: MatDialog, private referenceDocumentService: ReferenceDocumentService) {
   }
 
   ngOnInit(): void {
-    this.filteredOptions = this.personFc.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value || '')),
-    );
-  }
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.options.filter(option => option.toLowerCase().includes(filterValue));
+    this.subscribeToReferenceRecordsOptions();
   }
 
   onUploadDocument() {
@@ -42,5 +46,37 @@ export class SetRecordsComponent implements OnInit{
       })
       .subscribe(result=> console.log(result));
 
+  }
+
+  displayTriggerEventFn(triggerEvent: ReferenceRecord): string {
+    return triggerEvent?.display;
+  }
+
+  private subscribeToReferenceRecordsOptions(){
+    this.filteredOptions = this.referenceRecordFc.valueChanges
+      .pipe(
+        startWith(''),
+        distinctUntilChanged(),
+        switchMap(value => {
+          return this._filter(value || '')
+        })
+      );
+  }
+
+  private _filter(value: string): Observable<ReferenceRecord[]> {
+    return this.referenceDocumentService.getReferenceDocuments().pipe(
+      filter(data => !!data),
+      map((data) => {
+        return data.filter(option =>
+          option.display?.toLowerCase()?.includes(value)
+          ||
+          option.display?.toLowerCase()?.includes(value)
+        )
+      })
+    )
+  }
+
+  onReferenceRecordSelected(event: MatAutocompleteSelectedEvent) {
+    this.referenceRecordSelectedEvent.emit(event.option.value.bundle);
   }
 }

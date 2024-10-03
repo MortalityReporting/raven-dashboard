@@ -16,11 +16,11 @@
     </button>
     <div class="section-item">
       <div class="label">Name:</div>
-      <div>{{ userDocumentWrapper?.decedentName }}</div>
+      <div>{{ selectedPatient?.decedentName }}</div>
     </div>
     <div class="section-item">
       <div class="label">Identifier:</div>
-      <div>{{ userDocumentWrapper?.mdiCaseNumber }}</div>
+      <div>{{ selectedPatient?.mdiCaseNumber }}</div>
     </div>
   </div>
   <mat-divider></mat-divider>
@@ -29,14 +29,13 @@
     <form class="example-form">
       <mat-form-field appearance="outline" class="max-width" floatLabel="always">
         <mat-label>Decedent Name</mat-label>
-        <input type="text"
-               aria-label="Decedent Name"
-               matInput
-               [formControl]="personFc"
-               [matAutocomplete]="auto">
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <input type="text" matInput [formControl]="referenceRecordFc" [matAutocomplete]="auto">
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          [displayWith]="displayTriggerEventFn"
+          (optionSelected)="onReferenceRecordSelected($event)">
           @for (option of filteredOptions | async; track option) {
-            <mat-option [value]="option">{{option}}</mat-option>
+            <mat-option [value]="option"> {{ option.display }}</mat-option>
           }
         </mat-autocomplete>
       </mat-form-field>
