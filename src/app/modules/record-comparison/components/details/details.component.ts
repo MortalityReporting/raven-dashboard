@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {MdiToEDRSDocumentWrapper} from "../../models/mdiToEdrsDocumentWrapper";
+import {Bundle} from "../../../fhir-util";
 
 @Component({
   selector: 'rc-details',
@@ -7,6 +7,6 @@ import {MdiToEDRSDocumentWrapper} from "../../models/mdiToEdrsDocumentWrapper";
   styleUrl: './details.component.scss'
 })
 export class DetailsComponent {
-  @Input() userDocumentWrapper!: MdiToEDRSDocumentWrapper;
+  @Input() referenceRecordBundle!: Bundle;
 
 }
