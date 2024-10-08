@@ -28,7 +28,7 @@ import {MatCardModule} from "@angular/material/card";
 import {MatListModule} from "@angular/material/list";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
-import {HeaderComponent, NavMenuComponent} from "ngx-hisb-common-ui";
+import {HeaderComponent} from "ngx-hisb-common-ui";
 import {AppConfiguration} from "./providers/app-configuration";
 import { CardHoverDirective } from './directives/card-hover.directive';
 import { UiStringConstants } from "./providers/ui-string-constants";
@@ -42,6 +42,7 @@ import {WorkflowSimulatorModule} from "./modules/workflow-simulator/workflow-sim
 import {TestsModule} from "./modules/tests/tests.module";
 import {AppConstants} from "./providers/app-constants";
 import {ModuleHeaderComponent} from "./components/module-header/module-header.component";
+import {NavMenuComponent} from "./components/nav-menu/nav-menu.component";
 
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
@@ -64,7 +65,6 @@ export const configFactory = (configService: ConfigService) => {
   imports: [
     // TODO: Clean up imports after refactor.
     HeaderComponent, // Confirmed
-    NavMenuComponent, // Confirmed
     BrowserModule, // Confirmed
     AppRoutingModule, // Confirmed
     BrowserAnimationsModule, // Confirmed
@@ -89,7 +89,8 @@ export const configFactory = (configService: ConfigService) => {
     WorkflowSimulatorModule.forRoot(environment, ModuleHeaderConfig.WorkflowSimulator, AppConfiguration.config),
     TestsModule.forRoot(environment, ModuleHeaderConfig.WorkflowSimulator, AppConfiguration.config),
     MatSidenavModule,
-    UserManagementModule
+    UserManagementModule,
+    NavMenuComponent
   ],
   providers: [
     {
@@ -134,7 +135,21 @@ export const configFactory = (configService: ConfigService) => {
 export class AppModule {
   constructor(private matIconRegistry: MatIconRegistry,
               private domSanitizer: DomSanitizer) {
-    const path = "assets"
+    const path = "assets/files/svg"
+    this.matIconRegistry.addSvgIcon("menu", this.domSanitizer
+      .bypassSecurityTrustResourceUrl(`${path}/menu.svg`));
+    this.matIconRegistry.addSvgIcon("home", this.domSanitizer
+      .bypassSecurityTrustResourceUrl(`${path}/home.svg`));
+    this.matIconRegistry.addSvgIcon("chevron_right", this.domSanitizer
+      .bypassSecurityTrustResourceUrl(`${path}/chevron_right.svg`));
+    this.matIconRegistry.addSvgIcon("event_admin", this.domSanitizer
+      .bypassSecurityTrustResourceUrl(`${path}/event_admin.svg`));
+    this.matIconRegistry.addSvgIcon("event_register", this.domSanitizer
+      .bypassSecurityTrustResourceUrl(`${path}/event_register.svg`));
+    this.matIconRegistry.addSvgIcon("testing_event", this.domSanitizer
+      .bypassSecurityTrustResourceUrl(`${path}/testing_event.svg`));
+    this.matIconRegistry.addSvgIcon("arrow_down", this.domSanitizer
+      .bypassSecurityTrustResourceUrl(`${path}/arrow_down.svg`));
     this.matIconRegistry.addSvgIcon("record-viewer", this.domSanitizer
       .bypassSecurityTrustResourceUrl(`${path}/record-viewer.svg`));
     this.matIconRegistry.addSvgIcon("record-import", this.domSanitizer
@@ -145,5 +160,7 @@ export class AppModule {
       .bypassSecurityTrustResourceUrl(`${path}/fhir-validator.svg`));
     this.matIconRegistry.addSvgIcon("workflow-simulator", this.domSanitizer
       .bypassSecurityTrustResourceUrl(`${path}/workflow-simulator.svg`));
+    this.matIconRegistry.addSvgIcon("admin-panel", this.domSanitizer
+      .bypassSecurityTrustResourceUrl(`${path}/admin-panel.svg`));
   }
 }

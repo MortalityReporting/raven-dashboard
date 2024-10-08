@@ -1,0 +1,86 @@
+<ul class="nav-wrapper">
+  <div class="menu">
+    <mat-icon svgIcon="menu" (click)="isExpanded = !isExpanded"></mat-icon>
+  </div>
+  <li class="main-item-wrapper">
+
+    <div class="main-item">
+      <mat-icon svgIcon="home"></mat-icon>
+      @if (isExpanded) {
+        <span class="menu-text">Home</span>
+      }
+    </div>
+  </li>
+  <li class="main-item-wrapper">
+
+    <div class="main-item" (click)="mdiRecordsSectionExpanded = !mdiRecordsSectionExpanded;">
+      @if (isExpanded) {
+        <span>MDI Records</span>
+      }
+    </div>
+
+    @if (mdiRecordsSectionExpanded) {
+      <ul class="sub-item-wrapper">
+        <li class="sub-item">
+          <mat-icon svgIcon="record-viewer"></mat-icon>
+          @if (isExpanded) {
+            <span class="menu-text">Viewer</span>
+          }
+        </li>
+        <li class="sub-item">
+          <mat-icon svgIcon="record-import"></mat-icon>
+          @if (isExpanded) {
+            <span class="menu-text">Import</span>
+          }
+        </li>
+        <li class="sub-item">
+          <mat-icon svgIcon="record-comparison"></mat-icon>
+          @if (isExpanded) {
+            <span class="menu-text">Comparison</span>
+          }
+        </li>
+        <li class="sub-item">
+          <mat-icon svgIcon="fhir-validator"></mat-icon>
+          @if (isExpanded) {
+            <span class="menu-text">Validator</span>
+          }
+        </li>
+      </ul>
+    }
+  </li>
+  <li class="main-item-wrapper">
+    <div class="main-item" (click)="testingAndEventsSectionExpanded = !testingAndEventsSectionExpanded;">
+      @if (isExpanded) {
+        <span>Testing and Events</span>
+      }
+    </div>
+    @if (testingAndEventsSectionExpanded) {
+      <ul class="sub-item-wrapper">
+        <li class="sub-item">
+          <mat-icon svgIcon="workflow-simulator"></mat-icon>
+          @if (isExpanded) {
+            <span class="menu-text">Workflow Simulator</span>
+          }
+        </li>
+        <li class="sub-item">
+          <mat-icon svgIcon="testing_event"></mat-icon>
+          @if (isExpanded) {
+            <span class="menu-text">Testing Events</span>
+          }
+        </li>
+        <li class="sub-item">
+          <mat-icon svgIcon="event_register"></mat-icon>
+          @if (isExpanded) {
+            <span class="menu-text">Event Registration</span>
+          }
+        </li>
+        <li class="sub-item">
+          <mat-icon svgIcon="admin-panel"></mat-icon>
+          @if (isExpanded) {
+            <span class="menu-text">Event Admin Panel</span>
+          }</li>
+      </ul>
+    }
+  </li>
+</ul>
+
