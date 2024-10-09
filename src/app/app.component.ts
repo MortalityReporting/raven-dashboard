@@ -25,8 +25,6 @@ export class AppComponent implements OnInit {
   // TODO: remove extra code once confirmed working on live.
   constructor(
     private configService: ConfigService,
-    private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer,
     private themeService: ThemeService,
     public platform: Platform,
     private _snackBar: MatSnackBar
@@ -40,64 +38,6 @@ export class AppComponent implements OnInit {
     this.themeService.setColor(this.color);
     this.themeService.setContrastColor(this.contrastColor);
 
-    const path = "assets"
-    this.matIconRegistry.addSvgIcon("fhir_logo", this.domSanitizer
-      .bypassSecurityTrustResourceUrl(`${path}/LOGO_FHIR_2.svg`));
-
-    this.matIconRegistry.addSvgIcon("home", this.domSanitizer
-      .bypassSecurityTrustResourceUrl(`${path}/home.svg`));
-    this.matIconRegistry.addSvgIcon("record_comparison", this.domSanitizer
-      .bypassSecurityTrustResourceUrl(`${path}/record-comparison.svg`));
-    this.matIconRegistry.addSvgIcon("record_viewer", this.domSanitizer
-      .bypassSecurityTrustResourceUrl(`${path}/record-viewer.svg`));
-    this.matIconRegistry.addSvgIcon("record_import", this.domSanitizer
-      .bypassSecurityTrustResourceUrl(`${path}/record-import.svg`));
-    this.matIconRegistry.addSvgIcon("workflow_simulator", this.domSanitizer
-      .bypassSecurityTrustResourceUrl(`${path}/workflow-simulator.svg`));
-    this.matIconRegistry.addSvgIcon("fhir_validator", this.domSanitizer
-      .bypassSecurityTrustResourceUrl(`${path}/fhir-validator.svg`));
-    this.matIconRegistry.addSvgIcon("admin_panel", this.domSanitizer
-      .bypassSecurityTrustResourceUrl(`${path}/admin-panel.svg`));
-
-    this.optionConfig = {
-      options: [
-        {
-          routerLink: "/",
-          label: "Home",
-          iconName: "home"
-        },
-        {
-          routerLink: AppConfiguration.config.modules['recordViewer'].route,
-          label: AppConfiguration.config.modules['recordViewer'].title,
-          iconName: "record_viewer"
-        },
-        {
-          routerLink: AppConfiguration.config.modules['recordImport'].route,
-          label: AppConfiguration.config.modules['recordImport'].title,
-          iconName: "record_import"
-        },
-        {
-          routerLink: AppConfiguration.config.modules['recordComparison'].route,
-          label: AppConfiguration.config.modules['recordComparison'].title,
-          iconName: "record_comparison"
-        },
-        {
-          routerLink: AppConfiguration.config.modules['fhirValidator'].route,
-          label: AppConfiguration.config.modules['fhirValidator'].title,
-          iconName: "fhir_validator"
-        },
-        {
-          routerLink: AppConfiguration.config.modules['workflowSimulator'].route,
-          label: AppConfiguration.config.modules['workflowSimulator'].title,
-          iconName: "workflow_simulator"
-        },
-        {
-          routerLink: AppConfiguration.config.modules['adminPanel'].route,
-          label: AppConfiguration.config.modules['adminPanel'].title,
-          iconName: "admin_panel"
-        }
-      ]
-    }
     this.headerConfig = {
       menuItem: [
         {

@@ -160,7 +160,7 @@ export class AppModule {
       .bypassSecurityTrustResourceUrl(`${path}/fhir-validator.svg`));
     this.matIconRegistry.addSvgIcon("workflow-simulator", this.domSanitizer
       .bypassSecurityTrustResourceUrl(`${path}/workflow-simulator.svg`));
-    this.matIconRegistry.addSvgIcon("admin-panel", this.domSanitizer
-      .bypassSecurityTrustResourceUrl(`${path}/admin-panel.svg`));
+    this.matIconRegistry.addSvgIcon("admin_panel", this.domSanitizer
+      .bypassSecurityTrustResourceUrl(`${path}/admin_panel.svg`));
   }
 }

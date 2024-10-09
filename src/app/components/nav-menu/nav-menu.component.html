@@ -3,84 +3,52 @@
     <mat-icon svgIcon="menu" (click)="isExpanded = !isExpanded"></mat-icon>
   </div>
   <li class="main-item-wrapper">
-
-    <div class="main-item">
-      <mat-icon svgIcon="home"></mat-icon>
-      @if (isExpanded) {
-        <span class="menu-text">Home</span>
-      }
-    </div>
+    <ul class="sub-item-wrapper">
+      <li class="sub-item" (click)="onPathSelected('')">
+        <mat-icon svgIcon="home" [ngClass]="this.currentRoute == '' ? 'selected-menu-item ' : ''"></mat-icon>
+        @if (isExpanded) {
+          <span class="menu-text">Home</span>
+        }
+      </li>
+    </ul>
   </li>
-  <li class="main-item-wrapper">
 
-    <div class="main-item" (click)="mdiRecordsSectionExpanded = !mdiRecordsSectionExpanded;">
+  <!-- MDI Records Menu Section -->
+  <li class="main-item-wrapper">
+    <div class="main-item">
       @if (isExpanded) {
         <span>MDI Records</span>
       }
     </div>
-
-    @if (mdiRecordsSectionExpanded) {
-      <ul class="sub-item-wrapper">
-        <li class="sub-item">
-          <mat-icon svgIcon="record-viewer"></mat-icon>
+    <ul class="sub-item-wrapper">
+      @for(item of MDI_RECORDS_CONFIG; track item.route){
+        <li class="sub-item" (click)="onPathSelected(item.route)">
+          <mat-icon svgIcon="{{item.icon}}" [ngClass]="this.currentRoute == item.route ? 'selected-menu-item ' : ''"></mat-icon>
           @if (isExpanded) {
-            <span class="menu-text">Viewer</span>
+            <span class="menu-text">{{ item.display }}</span>
           }
         </li>
-        <li class="sub-item">
-          <mat-icon svgIcon="record-import"></mat-icon>
-          @if (isExpanded) {
-            <span class="menu-text">Import</span>
-          }
-        </li>
-        <li class="sub-item">
-          <mat-icon svgIcon="record-comparison"></mat-icon>
-          @if (isExpanded) {
-            <span class="menu-text">Comparison</span>
-          }
-        </li>
-        <li class="sub-item">
-          <mat-icon svgIcon="fhir-validator"></mat-icon>
-          @if (isExpanded) {
-            <span class="menu-text">Validator</span>
-          }
-        </li>
-      </ul>
-    }
+      }
+    </ul>
   </li>
+
+  <!-- Testing and Events Menu Section -->
   <li class="main-item-wrapper">
-    <div class="main-item" (click)="testingAndEventsSectionExpanded = !testingAndEventsSectionExpanded;">
+    <div class="main-item">
       @if (isExpanded) {
         <span>Testing and Events</span>
       }
     </div>
-    @if (testingAndEventsSectionExpanded) {
-      <ul class="sub-item-wrapper">
-        <li class="sub-item">
-          <mat-icon svgIcon="workflow-simulator"></mat-icon>
+    <ul class="sub-item-wrapper">
+      @for(item of TESTING_AND_EVENTS_CONFIG; track item.route){
+        <li class="sub-item" (click)="onPathSelected(item.route)">
+          <mat-icon svgIcon="{{item.icon}}" [ngClass]="this.currentRoute == item.route ? 'selected-menu-item ' : ''"></mat-icon>
           @if (isExpanded) {
-            <span class="menu-text">Workflow Simulator</span>
+            <span class="menu-text">{{ item.display }}</span>
           }
         </li>
-        <li class="sub-item">
-          <mat-icon svgIcon="testing_event"></mat-icon>
-          @if (isExpanded) {
-            <span class="menu-text">Testing Events</span>
-          }
-        </li>
-        <li class="sub-item">
-          <mat-icon svgIcon="event_register"></mat-icon>
-          @if (isExpanded) {
-            <span class="menu-text">Event Registration</span>
-          }
-        </li>
-        <li class="sub-item">
-          <mat-icon svgIcon="admin-panel"></mat-icon>
-          @if (isExpanded) {
-            <span class="menu-text">Event Admin Panel</span>
-          }</li>
-      </ul>
-    }
+      }
+    </ul>
   </li>
 </ul>
 
