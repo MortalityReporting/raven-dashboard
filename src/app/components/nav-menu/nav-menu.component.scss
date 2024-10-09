@@ -6,7 +6,7 @@ $light-orange-color: #FFCC71;
   height: 100%;
   color: whitesmoke;
   margin: 0;
-  padding: 0 16px;
+  padding: 0 0;
   >.menu{
     display: flex;
     height: 64px;
@@ -22,7 +22,7 @@ $light-orange-color: #FFCC71;
     >.main-item {
       display: flex;
       align-items: center;
-      padding: 24px 0 4px 0;
+      padding: 24px 8px 4px 8px;
       height: 32px;
       font-size: large;
       font-weight: 200;
@@ -33,7 +33,7 @@ $light-orange-color: #FFCC71;
       list-style: none;
       >.sub-item {
         cursor: pointer;
-        padding: 8px 0;
+        padding: 8px 8px;
         list-style: none;
         display: flex;
         align-items: center;
