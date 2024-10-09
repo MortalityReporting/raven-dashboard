@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {MatIconRegistry} from "@angular/material/icon";
-import {DomSanitizer, platformBrowser} from "@angular/platform-browser";
-import {OptionConfig, HeaderConfig} from "ngx-hisb-common-ui";
+import {platformBrowser} from "@angular/platform-browser";
+import { HeaderConfig} from "ngx-hisb-common-ui";
 import {AppConfiguration} from "./providers/app-configuration";
 import {ThemeService} from "./service/theme.service";
 import {ConfigService} from "./service/config.service";
@@ -19,7 +18,6 @@ export class AppComponent implements OnInit {
   version: string;
   color = AppConfiguration.config.color;
   contrastColor = AppConfiguration.config.contrastColor;
-  optionConfig: OptionConfig;
   headerConfig: HeaderConfig;
 
   // TODO: remove extra code once confirmed working on live.
