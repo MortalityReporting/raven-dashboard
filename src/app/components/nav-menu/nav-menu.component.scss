@@ -14,9 +14,9 @@ $light-orange-color: #FFCC71;
     justify-content: center;
     cursor: pointer;
   }
-  >.menu:hover{
-    color: $light-orange-color;
-  }
+  //>.menu:hover{
+  //  color: $light-orange-color;
+  //}
   >.main-item-wrapper {
     list-style: none;
     >.main-item {
@@ -33,10 +33,14 @@ $light-orange-color: #FFCC71;
       list-style: none;
       >.sub-item {
         cursor: pointer;
-        padding: 8px 8px;
         list-style: none;
         display: flex;
         align-items: center;
+        padding: 0 2px;
+        >.icon {
+          padding: 8px;
+          border-radius: 4px;
+        }
       }
       >.sub-item:hover {
         color: #FFCC71;
@@ -47,8 +51,10 @@ $light-orange-color: #FFCC71;
 
 .menu-text{
   margin-left: 8px;
+  padding-right: 16px;
 }
 
 .selected-menu-item {
-  color: $light-orange-color;
+  background-color: $light-orange-color;
+  color: $dark-grey-color;
 }

@@ -5,7 +5,7 @@
   <li class="main-item-wrapper">
     <ul class="sub-item-wrapper">
       <li class="sub-item" (click)="onPathSelected('')">
-        <mat-icon svgIcon="home" [ngClass]="this.currentRoute == '' ? 'selected-menu-item ' : ''"></mat-icon>
+        <mat-icon class="icon" svgIcon="home" [ngClass]="this.currentRoute == '' ? 'selected-menu-item ' : ''"></mat-icon>
         @if (isExpanded) {
           <span class="menu-text">Home</span>
         }
@@ -23,7 +23,7 @@
     <ul class="sub-item-wrapper">
       @for(item of MDI_RECORDS_CONFIG; track item.route){
         <li class="sub-item" (click)="onPathSelected(item.route)">
-          <mat-icon svgIcon="{{item.icon}}" [ngClass]="this.currentRoute == item.route ? 'selected-menu-item ' : ''"></mat-icon>
+          <mat-icon class="icon" svgIcon="{{item.icon}}" [ngClass]="this.currentRoute == item.route ? 'selected-menu-item ' : ''"></mat-icon>
           @if (isExpanded) {
             <span class="menu-text">{{ item.display }}</span>
           }
@@ -42,7 +42,7 @@
     <ul class="sub-item-wrapper">
       @for(item of TESTING_AND_EVENTS_CONFIG; track item.route){
         <li class="sub-item" (click)="onPathSelected(item.route)">
-          <mat-icon svgIcon="{{item.icon}}" [ngClass]="this.currentRoute == item.route ? 'selected-menu-item ' : ''"></mat-icon>
+          <mat-icon class="icon"  svgIcon="{{item.icon}}" [ngClass]="this.currentRoute == item.route ? 'selected-menu-item ' : ''"></mat-icon>
           @if (isExpanded) {
             <span class="menu-text">{{ item.display }}</span>
           }
