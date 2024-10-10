@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {MatIcon} from "@angular/material/icon";
 import {MatDivider} from "@angular/material/divider";
 import {MatTooltip} from "@angular/material/tooltip";
@@ -32,9 +32,9 @@ export class NavMenuComponent {
 
   TESTING_AND_EVENTS_CONFIG = [
     { name: 'workflow-simulator', display: 'Workflow Simulator', route: 'workflow-simulator', icon: 'workflow-simulator'},
-    { name: 'testing-event', display: 'Testing Event', route: 'testing-event', icon: 'testing_event'},
+    { name: 'testing-event', display: 'Testing Events', route: 'testing-event', icon: 'testing_event'},
     { name: 'event-registration', display: 'Event Registration', route: 'event-registration', icon: 'event_register'},
-    { name: 'admin-panel', display: 'Event Admin Panel',  route: 'admin-panel', icon: 'admin_panel'}
+    { name: 'admin-panel', display: 'Admin Panel',  route: 'admin-panel', icon: 'admin_panel'}
   ]
 
   constructor(private activatedRoute: ActivatedRoute, public router: Router ) {

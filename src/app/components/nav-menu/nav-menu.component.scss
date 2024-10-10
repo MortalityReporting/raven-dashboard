@@ -4,9 +4,11 @@ $light-orange-color: #FFCC71;
 .nav-wrapper{
   background-color: $dark-grey-color;
   height: 100%;
+  width: 120px;
   color: whitesmoke;
   margin: 0;
   padding: 0 0;
+  font-family: "Helvetica Narrow","Arial Narrow",Tahoma,Arial,Helvetica,sans-serif;
   >.menu{
     display: flex;
     height: 64px;
@@ -34,12 +36,12 @@ $light-orange-color: #FFCC71;
         display: flex;
         align-items: center;
         padding: 4px 2px;
-        font-size: small;
+        margin-bottom: 8px;
         >.icon {
           padding: 4px;
           border-radius: 4px;
-          min-height: 24px;
-          min-width: 24px
+          min-height: 32px;
+          min-width: 32px
         }
       }
       >.sub-item:hover {
@@ -50,8 +52,8 @@ $light-orange-color: #FFCC71;
 }
 
 .menu-text{
-  margin-left: 8px;
-  padding-right: 8px;
+  margin-left: 4px;
+  padding-right: 4px;
 }
 
 .selected-menu-item {
