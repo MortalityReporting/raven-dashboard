@@ -31,7 +31,6 @@ export class NavMenuComponent {
   ]
 
   TESTING_AND_EVENTS_CONFIG = [
-    { name: 'workflow-simulator', display: 'Workflow Simulator', route: 'workflow-simulator', icon: 'workflow-simulator'},
     { name: 'testing-event', display: 'Testing Events', route: 'testing-event', icon: 'testing_event'},
     { name: 'event-registration', display: 'Event Registration', route: 'event-registration', icon: 'event_register'},
     { name: 'admin-panel', display: 'Admin Panel',  route: 'admin-panel', icon: 'admin_panel'}

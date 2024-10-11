@@ -4,11 +4,11 @@ $light-orange-color: #FFCC71;
 .nav-wrapper{
   background-color: $dark-grey-color;
   height: 100%;
-  width: 120px;
+  max-width: 140px;
   color: whitesmoke;
   margin: 0;
   padding: 0 0;
-  font-family: "Helvetica Narrow","Arial Narrow",Tahoma,Arial,Helvetica,sans-serif;
+  //font-family: "Helvetica Narrow","Arial Narrow",Tahoma,Arial,Helvetica,sans-serif;
   >.menu{
     display: flex;
     height: 64px;
@@ -18,13 +18,14 @@ $light-orange-color: #FFCC71;
   }
   >.main-item-wrapper {
     list-style: none;
+    padding: 16px 0;
     >.main-item {
       display: flex;
       align-items: center;
-      padding: 24px 8px 4px 8px;
+      padding: 16px 8px 4px 8px;
       height: 32px;
-      font-size: medium;
-      font-weight: 200;
+      font-size: large;
+      font-weight: 600;
       color: white;
     }
     >.sub-item-wrapper {
@@ -40,8 +41,8 @@ $light-orange-color: #FFCC71;
         >.icon {
           padding: 4px;
           border-radius: 4px;
-          min-height: 32px;
-          min-width: 32px
+          min-height: 28px;
+          min-width: 28px
         }
       }
       >.sub-item:hover {
@@ -59,4 +60,15 @@ $light-orange-color: #FFCC71;
 .selected-menu-item {
   background-color: $light-orange-color;
   color: $dark-grey-color;
+}
+
+.mat-divider {
+  border-top-color: rgba(211, 211, 211, 0.1);
+  width: 85%;
+  border-top-width: medium;
+}
+.centered-content{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
