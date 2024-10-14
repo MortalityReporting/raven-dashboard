@@ -80,7 +80,7 @@ export class UiStringConstants {
     {
       name: 'updateEdrs',
       display: 'Update EDRS',
-      description: "Onboarding module description",
+      description: "Updated EDRS module description",
       status: TestStatusCodes.notStarted,
       route: 'update-edrs'
     },

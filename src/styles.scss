@@ -52,6 +52,7 @@ $lg: 24px;
 .margin-bottom-xs { margin-bottom: $xs; }
 .margin-bottom-sm { margin-bottom: $sm; }
 .margin-bottom-md { margin-bottom: $md; }
+.margin-bottom-lg { margin-bottom: $lg; }
 .margin-top-xs { margin-top: $xs; }
 .margin-top-sm { margin-top: $sm; }
 .margin-top-md { margin-top: $md; }
@@ -62,6 +63,7 @@ $lg: 24px;
 .padding-bottom-md { padding-bottom: $md; }
 .padding-top-md { padding-top: $md; }
 .padding-bottom-md { padding-bottom: $md; }
+margin-bottom-lg { padding-bottom: $lg; }
 .padding-left-md { padding-left: $md; }
 .padding-right-md { padding-right: $md; }
 .border-radius-xs { border-radius: $xs; }
@@ -491,3 +493,7 @@ TODO: Refactor to generalize class names and move to a common shared .css file.
   transform: translateY(4vh) !important;
 }
 
+.title-decoration-sm {
+  border-left: 8px solid black;
+  padding-left: 8px;
+}

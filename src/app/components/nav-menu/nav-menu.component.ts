@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {MatIcon} from "@angular/material/icon";
 import {MatDivider} from "@angular/material/divider";
 import {MatTooltip} from "@angular/material/tooltip";
-import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
+import {NavigationEnd, Router} from "@angular/router";
 import {NgClass} from "@angular/common";
 import {filter} from "rxjs/operators";
 
@@ -36,9 +36,9 @@ export class NavMenuComponent {
     { name: 'admin-panel', display: 'Admin Panel',  route: 'admin-panel', icon: 'admin_panel'}
   ]
 
-  constructor(private activatedRoute: ActivatedRoute, public router: Router ) {
+  constructor(public router: Router ) {
     this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(e => {
-      this.currentRoute = e?.['urlAfterRedirects']?.substring(1)
+      this.currentRoute = e?.['urlAfterRedirects']?.substring(1).split('/')[0];
     });
   }
 

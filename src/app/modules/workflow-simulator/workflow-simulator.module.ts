@@ -8,6 +8,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {TestsModule} from "../tests/tests.module";
 import { WorkflowSimulatorComponent } from './components/workflow-simulator/workflow-simulator.component';
 import {MatTabsModule} from "@angular/material/tabs";
+import {MatDivider} from "@angular/material/divider";
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import {MatTabsModule} from "@angular/material/tabs";
     MatCardModule,
     MatButtonModule,
     MatTabsModule,
+    MatDivider,
   ]
 })
 export class WorkflowSimulatorModule {

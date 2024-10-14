@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {Test} from "../../../tests";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {UiStringConstants} from "../../../../providers/ui-string-constants";
+import {AppConfiguration} from "../../../../providers/app-configuration";
 
 @Component({
   selector: 'app-standalone-tests',
@@ -11,6 +12,7 @@ import {UiStringConstants} from "../../../../providers/ui-string-constants";
 })
 export class StandaloneTestsComponent {
 
+  appConfiguration: any = AppConfiguration.config;
   standaloneTests: Test[];
   constructor(
     @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
