@@ -8,18 +8,12 @@ import {AppConfiguration} from "../../../../../providers/app-configuration";
   templateUrl: './event-registration-card.component.html',
   styleUrls: ['./event-registration-card.component.scss']
 })
-export class EventRegistrationCardComponent implements OnInit{
+export class EventRegistrationCardComponent{
   @Input() event: EventModule;
   @Input() registered: boolean;
   @Output() registerClickEvent = new EventEmitter<EventModule>()
-  appConfiguration: any = AppConfiguration.config;
-  constructor() {
-  }
 
-  ngOnInit() {
-    // console.log(this.event);
-    // console.log(this.registered);
-  }
+  appConfiguration: any = AppConfiguration.config;
 
   onClickRegister(event: EventModule) {
     this.registerClickEvent.emit(event);
