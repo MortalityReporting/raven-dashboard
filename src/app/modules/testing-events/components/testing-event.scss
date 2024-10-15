@@ -159,3 +159,20 @@ mat-expansion-panel-body {
   margin-left: -50px;
   margin-top: -50px;
 }
+
+.no-registrations-found{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  >.actions {
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  >.message {
+    font-size: large;
+  }
+}

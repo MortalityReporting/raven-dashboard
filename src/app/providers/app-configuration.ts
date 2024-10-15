@@ -39,6 +39,18 @@ export class AppConfiguration {
         color: "#335963",
         icon: "workflow-simulator"
       },
+      eventList: {
+        title: "Event List",
+        route: "event-list",
+        color: "#335963",
+        icon: "testing_event"
+      },
+      eventRegistration: {
+        title: "Event Registration",
+        route: "event-registration",
+        color: "#335963",
+        icon: "event_register"
+      },
       adminPanel: {
         title: "Event Admin Panel",
         route: "admin-panel",

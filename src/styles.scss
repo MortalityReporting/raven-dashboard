@@ -62,8 +62,9 @@ $lg: 24px;
 .margin-top-lg { margin-top: $lg }
 .padding-bottom-md { padding-bottom: $md; }
 .padding-top-md { padding-top: $md; }
+.padding-top-lg { padding-top: $lg; }
 .padding-bottom-md { padding-bottom: $md; }
-margin-bottom-lg { padding-bottom: $lg; }
+.padding-bottom-lg { padding-bottom: $lg; }
 .padding-left-md { padding-left: $md; }
 .padding-right-md { padding-right: $md; }
 .border-radius-xs { border-radius: $xs; }
@@ -293,6 +294,12 @@ margin-bottom-lg { padding-bottom: $lg; }
     }
 
   }
+}
+
+.item-header {
+  background-color: whitesmoke;
+  border-left: 8px solid black;
+  padding-left: 8px;
 }
 
 

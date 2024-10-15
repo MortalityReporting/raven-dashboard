@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {EventModule} from "../../models/event-module";
+import {EventModule} from "../../../models/event-module";
+import {AppConfiguration} from "../../../../../providers/app-configuration";
 
 @Component({
   selector: 'testing-event-registration-card',
@@ -10,7 +11,7 @@ export class EventRegistrationCardComponent implements OnInit{
   @Input() event: EventModule;
   @Input() registered: boolean;
   @Output() registerClickEvent = new EventEmitter<EventModule>()
-
+  appConfiguration: any = AppConfiguration.config;
   constructor() {
   }
 

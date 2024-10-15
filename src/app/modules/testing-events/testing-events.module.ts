@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {TestContainerComponent} from "./components/test-container/test-container.component";
 import {TestingEventRootComponent} from "./components/testing-event-root/testing-event-root.component";
-import {EventRegistrationCardComponent} from "./components/event-registration-card/event-registration-card.component";
+import {EventRegistrationCardComponent} from "./components/event-registration/event-registration-card/event-registration-card.component";
 import {RegisteredModuleComponent} from "./components/registered-module/registered-module.component";
 import {MatDividerModule} from "@angular/material/divider";
 import {MatIconModule} from "@angular/material/icon";
@@ -21,6 +21,8 @@ import {RouterLink} from "@angular/router";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {WorkflowIgDevelopmentComponent} from "../tests/components/workflow-ig-development/workflow-ig-development.component";
 import {GenericFileSubmissionComponent} from "../tests/components/generic-file-submission/generic-file-submission.component";
+import { EventRegistrationComponent } from './components/event-registration/event-registration.component';
+import {SortByRegistrationStatusPipe} from "./pipes/sort-by-registration-status.pipe";
 
 
 
@@ -31,7 +33,8 @@ import {GenericFileSubmissionComponent} from "../tests/components/generic-file-s
     EventRegistrationCardComponent,
     RegisteredModuleComponent,
     DocumentWindowComponent,
-    SanitizedUrlPipe
+    SanitizedUrlPipe,
+    EventRegistrationComponent
   ],
   exports: [
     TestingEventRootComponent
@@ -53,6 +56,7 @@ import {GenericFileSubmissionComponent} from "../tests/components/generic-file-s
         MatExpansionModule,
         WorkflowIgDevelopmentComponent,
         GenericFileSubmissionComponent,
+        SortByRegistrationStatusPipe,
     ]
 })
 export class TestingEventsModule { }

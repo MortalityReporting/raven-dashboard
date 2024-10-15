@@ -24,6 +24,12 @@ import {
   StandaloneTestsComponent
 } from "./modules/workflow-simulator/components/standalone-tests/standalone-tests.component";
 import {UpdateEdrsComponent} from "./modules/tests/components/update-edrs/update-edrs.component";
+import {
+  TestingEventRootComponent
+} from "./modules/testing-events/components/testing-event-root/testing-event-root.component";
+import {
+  EventRegistrationComponent
+} from "./modules/testing-events/components/event-registration/event-registration.component";
 
 
 const routes: Routes = [
@@ -106,6 +112,17 @@ const routes: Routes = [
         data: {moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Updated EDRS"}
       },
     ]
+  },
+  {
+    path: AppConfiguration.config.modules['eventList'].route,
+    component: TestingEventRootComponent,
+    data: { moduleConfig: ModuleHeaderConfig.EventList, componentTitle: undefined}
+  },
+  {
+    path: AppConfiguration.config.modules['eventRegistration'].route,
+    component: EventRegistrationComponent,
+    data: { moduleConfig: ModuleHeaderConfig.EventRegistration, componentTitle: undefined},
+    canActivate: [AuthGuard]
   },
   {
     path: AppConfiguration.config.modules['adminPanel'].route,

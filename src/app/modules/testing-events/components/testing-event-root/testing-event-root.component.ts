@@ -1,19 +1,23 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
-import {combineLatest, mergeMap, Observable, ReplaySubject, retry, share, skipWhile, Subject, switchMap} from "rxjs";
+import {
+  combineLatest,
+  mergeMap,
+  Observable,
+  ReplaySubject,
+  share,
+  skipWhile,
+  switchMap
+} from "rxjs";
 import {UserProfileManagerService} from "../../../user-management";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {EventModule} from "../../models/event-module";
 import {EventManagerService} from "../../services/event-manager.service";
 import {Registration} from "../../models/registration";
-import {QuestionnaireResponse} from "../../../fhir-util";
 import {UserProfile} from "../../../user-management/models/user-profile";
 import {RegistrationDisplayItem} from "../../models/registration-display";
 import {UtilsService} from "../../../../service/utils.service";
 import {Router} from "@angular/router";
-import {Test} from "../../../tests";
-import {UiStringConstants} from "../../../../providers/ui-string-constants";
-import {TestStatusCodes} from "../../models/test-status";
 import {UpdateAction} from "../../models/update-action";
 
 @Component({
@@ -28,7 +32,6 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
   currentIndex: number = -1;
   currentItem: RegistrationDisplayItem;
   isLoading: boolean = false;
-  standaloneTests: Test[]
 
   // Event Modules/Questionnaires
   eventList: EventModule[];
@@ -45,6 +48,8 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
     home: true,
     registration: false
   }
+  currentUser: any = null;
+  allEvents: any [] = [];
 
   constructor(@Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
               public auth: AuthService,
@@ -52,13 +57,13 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
               private userProfileManager: UserProfileManagerService,
               private utilsService: UtilsService,
               private router: Router,
-              private uiStringConstants: UiStringConstants,
   ) {
-    this.standaloneTests = uiStringConstants.WORKFLOW_STANDALONE_TESTS
   }
 
   ngOnInit(): void {
     // Subscribe to the currently selected registration. (Not set initially, updated on user selection.)
+    // this.testFetchData();
+
     this.eventManager.currentRegistration$.subscribe({
       next: (value: Registration) => {
         this.currentRegistration = value;
@@ -93,6 +98,27 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
     //   this.selectEvent(index);
     // }
   }
+
+  // testFetchData(){
+  //   this.userProfileManager.currentUser$.pipe(
+  //     skipWhile(value=> !value),
+  //     tap(value => this.currentUser = value),
+  //     switchMap(() => this.eventManager.getAllEvents()),
+  //     tap(value => this.allEvents = value),
+  //     switchMap((value)=> this.eventManager.getAllRegistrations(this.currentUser.fhirId, value))
+  //   ).subscribe({
+  //     next: value=> {
+  //       console.log(this.allEvents);
+  //       console.log(value);
+  //     }
+  //   })
+  //   // combineLatest([this.events$, this.user$]).pipe(
+  //   //   tap(value=> console.log(value))
+  //   // ).subscribe({
+  //   //   next: value=> console.log(value)
+  //   // })
+  //
+  // }
 
   fetchData(): Observable<any> {
     return combineLatest([this.events$, this.user$]).pipe(
@@ -133,31 +159,11 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
     }
   }
 
-  isRegistered(event: EventModule): boolean {
-    return this.registrations.some((registration: Registration) => registration.questionnaire.endsWith(event.fhirId));
-  }
-
   getTitle(registration: Registration): string {
     const matchedEvent: EventModule = this.eventManager.matchRegistrationToEvent(registration, this.eventList);
     return matchedEvent.title;
   }
 
-
-  registerForEvent(event: any) {
-    const registrationAsFhir: QuestionnaireResponse = new Registration(event, `Practitioner/${this.userFhirId}`);
-    this.eventManager.createNewRegistration(registrationAsFhir).subscribe({
-      next: value => {
-        console.log(value);
-      },
-      error: err => {
-        console.error(err);
-      },
-      complete: () => {
-        // TODO: Figure out where this needs to go to refresh the call and get the new registrations!
-        this.refreshTrigger$.next(1);
-      }
-    })
-  }
 
   ngOnDestroy(): void {
     // sessionStorage.setItem('index', String(this.currentIndex));
@@ -195,7 +201,7 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
 
   }
 
-  onStandaloneTestSelected(standaloneTest: any){
-    this.router.navigate([`/workflow-simulator/${standaloneTest.route}`]);
+  onRegisterForEvent() {
+    this.router.navigate(['event-registration'])
   }
 }

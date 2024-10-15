@@ -1,0 +1,15 @@
+<div class="generic-component-wrapper">
+  <div class="generic-component-content">
+
+    @for (event of eventList | sortByRegistrationStatus: registrations ; track event.fhirId; let i=$index) {
+      <div [ngClass]="i != 0 ? 'padding-top-lg' : ''">
+        <testing-event-registration-card
+          [event]="event"
+          [registered]="isRegistered(event)"
+          (registerClickEvent)="registerForEvent($event)">
+        </testing-event-registration-card>
+      </div>
+      <mat-divider></mat-divider>
+    }
+  </div>
+</div>

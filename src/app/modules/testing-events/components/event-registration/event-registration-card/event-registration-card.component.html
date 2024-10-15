@@ -1,0 +1,34 @@
+<div class="item">
+  <div class="item-header"
+       [style.border-left-color]="registered ? appConfiguration.modules?.['eventRegistration'].color :appConfiguration.color">
+    <h2>{{ event.title }}</h2>
+  </div>
+
+  <div class="event-details">
+
+    <div class="tests">
+      @for (testItem of event.items; track testItem.linkId) {
+        <ul>
+          <li>{{ testItem.name }}</li>
+        </ul>
+      }
+    </div>
+
+    <div class="description">
+      {{ event.description }}
+    </div>
+    <div class="actions">
+      @if (!registered) {
+
+        <button mat-raised-button class="register-button" (click)="onClickRegister(event)">
+          <mat-icon>check_box_outline_blank</mat-icon>
+          Register
+        </button>
+
+      } @else {
+        <span class="margin-right-md margin-top-xs">Registered</span>
+        <mat-icon>check</mat-icon>
+      }
+    </div>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 import {
   QuestionnaireResponseItem,
 } from "../../fhir-util";
-import {TestStatusCodes, TestStatusDictionary, TestStatusReverseLookUp, TestStatusSystem} from "./test-status";
+import {TestStatusCodes, TestStatusReverseLookUp, TestStatusSystem} from "./test-status";
 
 export class EventItem {
   constructor(item: any) {
@@ -9,7 +9,6 @@ export class EventItem {
     this.name = item.text;
     this.code = item.code[0].code;
     this.description = item.extension?.find(element => element.url == 'description')?.valueString ?? 'Description not found.';
-    //if (item)
   }
 
   setStatus(status: TestStatusCodes) {
