@@ -48,10 +48,9 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
     home: true,
     registration: false
   }
-  currentUser: any = null;
-  allEvents: any [] = [];
 
-  constructor(@Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
+  constructor(@Inject('workflowSimulatorConfig')
+              public config: ModuleHeaderConfig,
               public auth: AuthService,
               protected eventManager: EventManagerService,
               private userProfileManager: UserProfileManagerService,
@@ -62,8 +61,6 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Subscribe to the currently selected registration. (Not set initially, updated on user selection.)
-    // this.testFetchData();
-
     this.eventManager.currentRegistration$.subscribe({
       next: (value: Registration) => {
         this.currentRegistration = value;
@@ -98,27 +95,6 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
     //   this.selectEvent(index);
     // }
   }
-
-  // testFetchData(){
-  //   this.userProfileManager.currentUser$.pipe(
-  //     skipWhile(value=> !value),
-  //     tap(value => this.currentUser = value),
-  //     switchMap(() => this.eventManager.getAllEvents()),
-  //     tap(value => this.allEvents = value),
-  //     switchMap((value)=> this.eventManager.getAllRegistrations(this.currentUser.fhirId, value))
-  //   ).subscribe({
-  //     next: value=> {
-  //       console.log(this.allEvents);
-  //       console.log(value);
-  //     }
-  //   })
-  //   // combineLatest([this.events$, this.user$]).pipe(
-  //   //   tap(value=> console.log(value))
-  //   // ).subscribe({
-  //   //   next: value=> console.log(value)
-  //   // })
-  //
-  // }
 
   fetchData(): Observable<any> {
     return combineLatest([this.events$, this.user$]).pipe(
@@ -180,7 +156,6 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
   }
 
   updateStatus(data: UpdateAction) {
-    console.log(data);
     if (this.currentItem.testStatus == data.status && data.attachment === undefined){
       // If there is no change in the status without a potentially updated attachment, we don't need to do an update.
       console.error("Update cancelled, status is equivalent.")

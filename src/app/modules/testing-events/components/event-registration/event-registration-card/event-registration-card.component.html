@@ -19,12 +19,12 @@
     </div>
     <div class="actions">
       @if (!registered) {
-
-        <button mat-raised-button class="register-button" (click)="onClickRegister(event)">
-          <mat-icon>check_box_outline_blank</mat-icon>
+        <button mat-flat-button
+                (click)="onClickRegister(event)"
+                [style.background-color]="appConfiguration.modules['eventRegistration'].color"
+                [style.color]="'white'">
           Register
         </button>
-
       } @else {
         <span class="margin-right-md margin-top-xs">Registered</span>
         <mat-icon>check</mat-icon>

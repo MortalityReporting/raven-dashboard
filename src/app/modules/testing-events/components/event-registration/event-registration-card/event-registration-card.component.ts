@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {EventModule} from "../../../models/event-module";
 import {AppConfiguration} from "../../../../../providers/app-configuration";
 
+
 @Component({
   selector: 'testing-event-registration-card',
   templateUrl: './event-registration-card.component.html',
@@ -23,4 +24,5 @@ export class EventRegistrationCardComponent implements OnInit{
   onClickRegister(event: EventModule) {
     this.registerClickEvent.emit(event);
   }
+
 }
