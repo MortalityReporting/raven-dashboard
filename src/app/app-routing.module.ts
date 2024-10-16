@@ -113,9 +113,9 @@ const routes: Routes = [
     ]
   },
   {
-    path: AppConfiguration.config.modules['eventList'].route,
+    path: AppConfiguration.config.modules['testingEvents'].route,
     component: TestingEventRootComponent,
-    data: { moduleConfig: ModuleHeaderConfig.EventList, componentTitle: undefined}
+    data: { moduleConfig: ModuleHeaderConfig.TestingEvents, componentTitle: undefined}
   },
   {
     path: AppConfiguration.config.modules['eventRegistration'].route,

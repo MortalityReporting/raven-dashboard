@@ -31,7 +31,7 @@ export class NavMenuComponent {
   ]
 
   TESTING_AND_EVENTS_CONFIG = [
-    { name: 'event-list', display: 'Event List', route: 'event-list', icon: 'testing_event'},
+    { name: 'testing-events', display: 'Testing Events', route: 'testing-events', icon: 'testing_event'},
     { name: 'event-registration', display: 'Event Registration', route: 'event-registration', icon: 'event_register'},
     { name: 'admin-panel', display: 'Admin Panel',  route: 'admin-panel', icon: 'admin_panel'}
   ]

@@ -39,9 +39,9 @@ export class AppConfiguration {
         color: "#335963",
         icon: "workflow-simulator"
       },
-      eventList: {
-        title: "Event List",
-        route: "event-list",
+      testingEvents: {
+        title: "Testing Events",
+        route: "testing-events",
         color: "#335963",
         icon: "testing_event"
       },

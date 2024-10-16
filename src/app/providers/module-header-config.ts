@@ -7,7 +7,7 @@ export class ModuleHeaderConfig {
   static FhirValidator = new ModuleHeaderConfig(AppConfiguration.config.modules["fhirValidator"].title, AppConfiguration.config.modules["fhirValidator"].color, AppConfiguration.config.modules["fhirValidator"].icon);
   static WorkflowSimulator = new ModuleHeaderConfig(AppConfiguration.config.modules["workflowSimulator"].title, AppConfiguration.config.modules["workflowSimulator"].color, AppConfiguration.config.modules["workflowSimulator"].icon);
   static AdminPanel = new ModuleHeaderConfig(AppConfiguration.config.modules["adminPanel"].title, AppConfiguration.config.modules["adminPanel"].color, AppConfiguration.config.modules["adminPanel"].icon)
-  static EventList = new ModuleHeaderConfig(AppConfiguration.config.modules["eventList"].title, AppConfiguration.config.modules["eventList"].color, AppConfiguration.config.modules["eventList"].icon)
+  static TestingEvents = new ModuleHeaderConfig(AppConfiguration.config.modules["testingEvents"].title, AppConfiguration.config.modules["testingEvents"].color, AppConfiguration.config.modules["testingEvents"].icon)
   static EventRegistration = new ModuleHeaderConfig(AppConfiguration.config.modules["eventRegistration"].title, AppConfiguration.config.modules["eventRegistration"].color, AppConfiguration.config.modules["eventRegistration"].icon)
 
   constructor(title, backgroundColor, icon) {
