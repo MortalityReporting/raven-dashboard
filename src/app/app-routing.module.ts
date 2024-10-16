@@ -89,7 +89,6 @@ const routes: Routes = [
   },
   { // Workflow Simulator Module
     path: AppConfiguration.config.modules['workflowSimulator'].route,
-    data: {moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: undefined},
     children: [
       {
         path: '',
