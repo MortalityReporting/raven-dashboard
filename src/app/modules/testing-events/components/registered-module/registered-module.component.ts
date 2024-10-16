@@ -8,6 +8,7 @@ import {RegistrationDisplay, RegistrationDisplayItem} from "../../models/registr
 import {EventItem} from "../../models/event-item";
 import {TestStatusDictionary} from "../../models/test-status";
 import {filter} from "rxjs/operators";
+import {AppConfiguration} from "../../../../providers/app-configuration";
 
 @Component({
   selector: 'testing-event-registered-module',
@@ -22,7 +23,7 @@ export class RegisteredModuleComponent implements OnInit{
   currentEvent: EventModule;
   registrationDisplay: RegistrationDisplay;
   completedTestCounter: number = 0;
-
+  appConfiguration: any = AppConfiguration.config;
   constructor(
     public eventModuleManager: EventManagerService
   ) {

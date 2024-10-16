@@ -17,7 +17,7 @@
       <div class="event-row-header-cell">
       </div>
     </div>
-    @for (item of registrationDisplay.items; track item) {
+    @for (item of registrationDisplay.items; track item.linkId) {
       <div class="event-row">
         <div class="event-row-cell">
           {{item.testName}}
@@ -29,7 +29,8 @@
           {{TestStatusDictionary[item.testStatus].display}}
         </div>
         <div class="event-row-cell-button">
-          <button mat-flat-button (click)="loadTestContainer(item)" [style.background-color]="'#009252'" [style.color]="'white'">
+          <button mat-flat-button (click)="loadTestContainer(item)"
+                  [style.background-color]="appConfiguration.modules['testingEvents'].color" [style.color]="'white'">
             <mat-icon>launch</mat-icon>
             Launch
           </button>
