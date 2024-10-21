@@ -6,6 +6,7 @@ import {UserProfile} from "../../../user-management/models/user-profile";
 import {EventManagerService} from "../../services/event-manager.service";
 import {Registration} from "../../models/registration";
 import {QuestionnaireResponse} from "../../../fhir-util";
+import {AppConfiguration} from "../../../../providers/app-configuration";
 
 @Component({
   selector: 'app-event-registration',
@@ -17,6 +18,9 @@ export class EventRegistrationComponent implements OnInit{
   eventList: EventModule[];
   currentUser: UserProfile;
   registrations: Registration[] = [];
+  availableEvent: EventModule[] = [];
+  registeredEvent: EventModule[] = [];
+  appConfiguration: any = AppConfiguration.config;
 
   constructor(
       private userProfileManager: UserProfileManagerService,
@@ -37,6 +41,8 @@ export class EventRegistrationComponent implements OnInit{
     ).subscribe({
       next: value=> {
         this.registrations = value;
+        this.availableEvent = this.eventList.filter( event=> !this.isRegistered(event));
+        this.registeredEvent = this.eventList.filter( event=> this.isRegistered(event));
       }
     })
   }
@@ -48,7 +54,7 @@ export class EventRegistrationComponent implements OnInit{
   registerForEvent(event: any) {
     const registrationAsFhir: QuestionnaireResponse = new Registration(event, `Practitioner/${this.currentUser.fhirId}`);
     this.eventManager.createNewRegistration(registrationAsFhir).subscribe({
-      next: value => {
+      next: () => {
         this.fetchData();
       },
       error: err => {
