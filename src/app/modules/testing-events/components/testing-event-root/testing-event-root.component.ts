@@ -85,6 +85,11 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
     registrations$.subscribe({
         next: (registrations: Registration[]) => {
           this.registrations = registrations;
+          if(!this.registrations?.length){
+            this.registrations = [];
+            this.currentIndex = -1;
+            this.selectEvent(this.currentIndex);
+          }
         }
       });
 
