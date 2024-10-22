@@ -22,7 +22,6 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {WorkflowIgDevelopmentComponent} from "../tests/components/workflow-ig-development/workflow-ig-development.component";
 import {GenericFileSubmissionComponent} from "../tests/components/generic-file-submission/generic-file-submission.component";
 import { EventRegistrationComponent } from './components/event-registration/event-registration.component';
-import {SortByRegistrationStatusPipe} from "./pipes/sort-by-registration-status.pipe";
 
 
 
@@ -56,7 +55,6 @@ import {SortByRegistrationStatusPipe} from "./pipes/sort-by-registration-status.
         MatExpansionModule,
         WorkflowIgDevelopmentComponent,
         GenericFileSubmissionComponent,
-        SortByRegistrationStatusPipe,
     ]
 })
 export class TestingEventsModule { }
