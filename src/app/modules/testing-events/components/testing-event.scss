@@ -20,13 +20,21 @@
       scroll-behavior: smooth;
       overflow-y: scroll;
       border-radius: 5px;
-      max-width: 25em;
+      max-width: 20em;
       min-width: 10em;
       display: flex;
       flex-direction: column;
-      > button {
-        justify-content: left;
-        color: white;
+      color: whitesmoke;
+      padding: 4px 8px 4px 4px;
+      >.menu-items{
+        >.item {
+          margin: 16px 0;
+          cursor: pointer;
+          border-left: 4px solid whitesmoke;
+        }
+        >.item:hover{
+          color: white;
+        }
       }
     }
     > .testing-event-body-content {
@@ -142,12 +150,12 @@ mat-expansion-panel-body {
 .menu-divider {
   @extend .margin-md;
 }
+
 .register-header {
-  @extend .padding-sm;
-  @extend .margin-bottom-md;
-  font-size: larger;
-  font-weight: bold;
-  color: white;
+  border-bottom: 2px solid black;
+  font-size: x-large;
+  padding-bottom: 4px;
+  margin-bottom: 16px;
 }
 
 .spinner-container {

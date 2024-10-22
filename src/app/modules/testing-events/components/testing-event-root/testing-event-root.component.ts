@@ -19,6 +19,7 @@ import {RegistrationDisplayItem} from "../../models/registration-display";
 import {UtilsService} from "../../../../service/utils.service";
 import {Router} from "@angular/router";
 import {UpdateAction} from "../../models/update-action";
+import {AppConfiguration} from "../../../../providers/app-configuration";
 
 @Component({
   selector: 'testing-event-root',
@@ -29,9 +30,10 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
   // Registrations/QuestionnaireResponses
   registrations: Registration[] = [];
   currentRegistration: Registration = undefined;
-  currentIndex: number = -1;
+  currentIndex: number = -2;
   currentItem: RegistrationDisplayItem;
   isLoading: boolean = false;
+  appConfiguration: any = AppConfiguration.config;
 
   // Event Modules/Questionnaires
   eventList: EventModule[];
@@ -163,7 +165,7 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
     }
     this.isLoading = true;
     this.eventManager.updateTestStatus(this.currentRegistration, this.currentItem.linkId, data).subscribe({
-      next: value => {
+      next: () => {
         this.refreshTrigger$.next(1);
         this.isLoading = false;
       },
