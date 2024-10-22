@@ -34,6 +34,15 @@
           cursor: pointer;
           border-left: 4px solid white;
         }
+        >.register-for-event {
+          font-weight: normal;
+          font-style: italic;
+          >.link {
+            font-weight: bold;
+            text-decoration: underline;
+            cursor: pointer;
+          }
+        }
         >.item:hover{
         }
       }

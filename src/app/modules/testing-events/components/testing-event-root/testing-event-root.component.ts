@@ -46,10 +46,6 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
   events$: Observable<EventModule[]>;
   user$: Observable<UserProfile>;
   showRoot: boolean = true;
-  show: {home: boolean, registration: boolean} = {
-    home: true,
-    registration: false
-  }
 
   constructor(@Inject('workflowSimulatorConfig')
               public config: ModuleHeaderConfig,
@@ -85,11 +81,6 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
     registrations$.subscribe({
         next: (registrations: Registration[]) => {
           this.registrations = registrations;
-          if(!this.registrations?.length){
-            this.registrations = [];
-            this.currentIndex = -1;
-            this.selectEvent(this.currentIndex);
-          }
         }
       });
 
@@ -123,17 +114,7 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
       // If no item is selected, return current registration to undefined.
       this.eventManager.setCurrentRegistration(undefined);
       this.eventManager.setCurrentEvent(undefined);
-      if (index === -1) {
-        this.show.home = false;
-        this.show.registration = true;
-      }
-      else if (index === -2) {
-        this.show.home = true;
-        this.show.registration = false;
-      }
     } else {
-      this.show.home = false;
-      this.show.registration = false;
       // If item is selected, set current registration as it.
       const registration: Registration = this.registrations[index];
       this.eventManager.setCurrentRegistration(registration);
@@ -180,7 +161,6 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
         this.utilsService.showErrorMessage("Server error updating the test event status");
       }
     })
-
   }
 
   onRegisterForEvent() {
