@@ -1,40 +1,71 @@
-.event-module-status-table {
-  display: flex;
-  flex-direction: column;
-  background-color: lightgrey;
-  > .event-header {
-    grid-column-start: span 3;
-    font-size: larger;
-    font-weight: bold;
-    padding: 8px;
-    background-color: darkgrey;
-  }
-  > .event-footer {
-    justify-self: end;
-    align-self: end;
-    padding: 8px;
-    font-size: larger;
-    font-weight: bold;
-  }
-  > .event-row {
-    margin-left: 8px;
-    margin-bottom: 8px;
-    display: grid;
-    grid-template-columns: 20% auto 20% minmax(0px, 150px);
-    > .event-row-cell {
-      margin-right: 8px;
-      padding: 4px;
-      background-color: white;
-    }
-    > .event-row-cell-button {
-      margin-right: 8px;
-    }
-  }
-  > .event-row-header {
-    @extend .event-row;
-    text-align: center;
-    font-weight: bold;
-    width: 100%;
-  }
 
+.tests {
+  margin-left: 8px;
+  >.event-title{
+    border-bottom: 2px solid black;
+    font-size: x-large;
+    padding-bottom: 4px;
+    margin-bottom: 16px;
+  }
+  >.headers{
+    display: flex;
+    border-bottom: 1px solid #cdcdcd;
+    font-size: medium;
+    font-weight: 400;
+    padding-top: 16px;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+    >.test-name {
+      flex-basis: 20%;
+    }
+    >.test-description {
+      flex-basis: 40%;
+    }
+    >.test-status {
+      flex-basis: 20%;
+    }
+    >.actions {
+      flex-basis: 20%;
+    }
+  }
+  >.test-items {
+    margin-top: 8px;
+    > .test-line-item {
+      display: flex;
+      padding: 8px 0;
+      > .test-name {
+        flex-basis: 20%;
+      }
+
+      > .test-description {
+        flex-basis: 40%;
+      }
+
+      > .test-status {
+        flex-basis: 20%;
+      }
+
+      > .actions {
+        align-items: center;
+        flex-basis: 20%;
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+  }
+  >.footer{
+    display: flex;
+    padding-top: 16px;
+    >.spacer {
+      flex-grow: 1;
+    }
+    >.content {
+      width: 150px;
+      border-top: 1px solid #cdcdcd;
+      font-weight: 600;
+      padding-top: 8px;
+      display: flex;
+      justify-content: center;
+    }
+  }
 }

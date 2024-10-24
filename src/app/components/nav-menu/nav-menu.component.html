@@ -1,0 +1,81 @@
+<ul class="nav-wrapper">
+  <div class="menu">
+    <mat-icon svgIcon="menu" (click)="isExpanded = !isExpanded"></mat-icon>
+  </div>
+
+  <div class="centered-content">
+    <mat-divider ></mat-divider>
+  </div>
+
+  <li class="main-item-wrapper">
+    <ul class="sub-item-wrapper">
+      <li class="sub-item" (click)="onPathSelected('')">
+        <mat-icon class="icon" svgIcon="home" [ngClass]="this.currentRoute == '' ? 'selected-menu-item ' : ''"></mat-icon>
+        @if (isExpanded) {
+          <span class="menu-text">Home</span>
+        }
+      </li>
+    </ul>
+  </li>
+
+  <div class="centered-content">
+    <mat-divider ></mat-divider>
+  </div>
+
+  <!-- MDI Records Menu Section -->
+  <li class="main-item-wrapper">
+    <div class="main-item">
+      @if (isExpanded) {
+        <span>MDI Records</span>
+      }
+    </div>
+    <ul class="sub-item-wrapper">
+      @for(item of MDI_RECORDS_CONFIG; track item.route){
+        <li class="sub-item" (click)="onPathSelected(item.route)">
+          <mat-icon class="icon" svgIcon="{{item.icon}}" [ngClass]="this.currentRoute == item.route ? 'selected-menu-item ' : ''"></mat-icon>
+          @if (isExpanded) {
+            <span class="menu-text">{{ item.display }}</span>
+          }
+        </li>
+      }
+    </ul>
+  </li>
+
+  <!-- Workflow Simulator Menu Section -->
+  <div class="centered-content">
+    <mat-divider ></mat-divider>
+  </div>
+  <li class="main-item-wrapper">
+    <ul class="sub-item-wrapper">
+      <li class="sub-item" (click)="onPathSelected('workflow-simulator')">
+        <mat-icon class="icon" svgIcon="workflow-simulator" [ngClass]="this.currentRoute == 'workflow-simulator' ? 'selected-menu-item ' : ''"></mat-icon>
+        @if (isExpanded) {
+          <span class="menu-text">Workflow Simulator</span>
+        }
+      </li>
+    </ul>
+  </li>
+  <div class="centered-content">
+    <mat-divider ></mat-divider>
+  </div>
+
+  <!-- Testing and Events Menu Section -->
+  <li class="main-item-wrapper">
+    <div class="main-item">
+      @if (isExpanded) {
+        <span>Testing Events</span>
+      }
+    </div>
+    <ul class="sub-item-wrapper">
+      @for(item of TESTING_AND_EVENTS_CONFIG; track item.route){
+        <li class="sub-item" (click)="onPathSelected(item.route)">
+          <mat-icon class="icon"  svgIcon="{{item.icon}}" [ngClass]="this.currentRoute == item.route ? 'selected-menu-item ' : ''"></mat-icon>
+          @if (isExpanded) {
+            <span class="menu-text">{{ item.display }}</span>
+          }
+        </li>
+      }
+    </ul>
+  </li>
+</ul>
+

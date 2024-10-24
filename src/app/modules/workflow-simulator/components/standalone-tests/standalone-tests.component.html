@@ -1,30 +1,20 @@
 <div class="generic-component-wrapper">
   <div class="generic-component-content">
-    <div class="margin-top-md">
+
+    <div class="instructions">
       Select a testing workflow from the list below. You will walk through a series of steps to guide in testing of
       that workflow using the Raven platform, with demonstrations of relevant FHIR Resources and API interactions.
     </div>
 
-
-    @for (test of standaloneTests; track test) {
-      <div  class="margin-top-md margin-bottom-md">
-        <div class="margin-top-md">
-          <mat-card>
-            <mat-card-header>
-              <mat-card-title><span class="title">{{test.display}}</span></mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-              <div class="card-container">
-                {{test.description}}
-              </div>
-            </mat-card-content>
-            <mat-card-actions>
-              <button mat-raised-button (click)="onStartTest(test)" [style.background-color]="config.backgroundColor"
-              [style.color]="'white'">Start Workflow</button>
-            </mat-card-actions>
-          </mat-card>
+    @for (test of standaloneTests; track test.name) {
+      <div  class="margin-top-lg margin-bottom-md">
+        <h2 class="item-header" [style.border-left-color]="appConfiguration.color">{{ test.display }}</h2>
+        <div>{{ test.description }}</div>
+        <div class="margin-top-lg">
+          <button mat-raised-button (click)="onStartTest(test)" [style.background-color]="config.backgroundColor" [style.color]="'white'">Start Workflow</button>
         </div>
       </div>
+      <mat-divider class="larger-divider"></mat-divider>
     }
   </div>
 </div>

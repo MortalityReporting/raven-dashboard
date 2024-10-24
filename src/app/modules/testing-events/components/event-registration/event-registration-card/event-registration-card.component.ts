@@ -1,25 +1,22 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {EventModule} from "../../models/event-module";
+import {EventModule} from "../../../models/event-module";
+import {AppConfiguration} from "../../../../../providers/app-configuration";
+
 
 @Component({
   selector: 'testing-event-registration-card',
   templateUrl: './event-registration-card.component.html',
   styleUrls: ['./event-registration-card.component.scss']
 })
-export class EventRegistrationCardComponent implements OnInit{
+export class EventRegistrationCardComponent{
   @Input() event: EventModule;
   @Input() registered: boolean;
   @Output() registerClickEvent = new EventEmitter<EventModule>()
 
-  constructor() {
-  }
-
-  ngOnInit() {
-    // console.log(this.event);
-    // console.log(this.registered);
-  }
+  appConfiguration: any = AppConfiguration.config;
 
   onClickRegister(event: EventModule) {
     this.registerClickEvent.emit(event);
   }
+
 }

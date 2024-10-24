@@ -12,7 +12,6 @@ import {
 import {AdminPanelComponent} from "./modules/user-management/components/admin-panel/admin-panel.component";
 import {AuthGuard} from "@auth0/auth0-angular";
 import {LoggedInComponent} from "./modules/user-management/components/logged-in/logged-in.component";
-import {TestContainerComponent} from "./modules/testing-events/components/test-container/test-container.component";
 import {
   MdiToEdrsViewerComponent
 } from "./modules/record-viewer/components/mdi-to-edrs-viewer/mdi-to-edrs-viewer.component";
@@ -20,16 +19,17 @@ import {OnboardingComponent} from "./modules/tests/components/onboarding/onboard
 import {
   ToxToMdiViewerComponent
 } from "./modules/record-viewer/components/tox-to-mdi-viewer/tox-to-mdi-viewer.component";
-import {
-  WorkflowSimulatorComponent
-} from "./modules/workflow-simulator/components/workflow-simulator/workflow-simulator.component";
 import {SearchEdrsComponent} from "./modules/tests/components/search-edrs/search-edrs.component";
+import {
+  StandaloneTestsComponent
+} from "./modules/workflow-simulator/components/standalone-tests/standalone-tests.component";
+import {UpdateEdrsComponent} from "./modules/tests/components/update-edrs/update-edrs.component";
 import {
   TestingEventRootComponent
 } from "./modules/testing-events/components/testing-event-root/testing-event-root.component";
 import {
-  StandaloneTestsComponent
-} from "./modules/workflow-simulator/components/standalone-tests/standalone-tests.component";
+  EventRegistrationComponent
+} from "./modules/testing-events/components/event-registration/event-registration.component";
 
 
 const routes: Routes = [
@@ -92,25 +92,36 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: TestingEventRootComponent,
-        data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: undefined}
-      },
-      {
-        path: 'standalone-tests',
         component: StandaloneTestsComponent,
-        data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Standalone Tests"}
-      },
-      {
-        path: 'search-edrs',
-        component: SearchEdrsComponent,
-        data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Search EDRS"}
+        data: {moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: undefined}
       },
       {
         path: 'onboarding',
         component: OnboardingComponent,
-        data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Onboarding"}
-      }
+        data: {moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Onboarding"}
+      },
+      {
+        path: 'search-edrs',
+        component: SearchEdrsComponent,
+        data: {moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Search EDRS"}
+      },
+      {
+        path: 'update-edrs',
+        component: UpdateEdrsComponent,
+        data: {moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Updated EDRS"}
+      },
     ]
+  },
+  {
+    path: AppConfiguration.config.modules['testingEvents'].route,
+    component: TestingEventRootComponent,
+    data: { moduleConfig: ModuleHeaderConfig.TestingEvents, componentTitle: undefined}
+  },
+  {
+    path: AppConfiguration.config.modules['eventRegistration'].route,
+    component: EventRegistrationComponent,
+    data: { moduleConfig: ModuleHeaderConfig.EventRegistration, componentTitle: undefined},
+    canActivate: [AuthGuard]
   },
   {
     path: AppConfiguration.config.modules['adminPanel'].route,

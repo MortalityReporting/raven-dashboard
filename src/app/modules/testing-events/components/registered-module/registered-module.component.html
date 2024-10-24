@@ -1,46 +1,35 @@
-
 @if (registrationDisplay) {
-  <div class="event-module-status-table">
-    <div class="event-header">
-      {{registrationDisplay.title}}
+  <div class="tests">
+    <div class="event-title" [style.border-block-color]="appConfiguration.modules['testingEvents'].color">{{ registrationDisplay.title }}</div>
+    <div class="headers">
+      <div class="test-name">Test Name</div>
+      <div class="test-description">Description</div>
+      <div class="test-status">Status</div>
+      <div class="actions"></div>
     </div>
-    <div class="event-row-header">
-      <div class="event-row-header-cell">
-        Test Name
-      </div>
-      <div class="event-row-header-cell">
-        Description
-      </div>
-      <div class="event-row-header-cell">
-        Status
-      </div>
-      <div class="event-row-header-cell">
-      </div>
+    <div class="test-items">
+      @for (item of registrationDisplay.items; track item.linkId) {
+        <div class="test-line-item">
+          <div class="test-name">{{ item.testName }}</div>
+          <div class="test-description">{{ item.description }}</div>
+          <div class="test-status"> {{ TestStatusDictionary[item.testStatus].display }}</div>
+          <div class="actions">
+            <button mat-flat-button (click)="loadTestContainer(item)"
+                    [style.background-color]="appConfiguration.modules['testingEvents'].color" [style.color]="'white'">
+              <mat-icon>launch</mat-icon>
+              Launch
+            </button>
+          </div>
+        </div>
+      }
     </div>
-    @for (item of registrationDisplay.items; track item) {
-      <div class="event-row">
-        <div class="event-row-cell">
-          {{item.testName}}
-        </div>
-        <div class="event-row-cell">
-          {{ item.description }}
-        </div>
-        <div class="event-row-cell">
-          {{TestStatusDictionary[item.testStatus].display}}
-        </div>
-        <div class="event-row-cell-button">
-          <button mat-flat-button (click)="loadTestContainer(item)" [style.background-color]="'#009252'" [style.color]="'white'">
-            <mat-icon>launch</mat-icon>
-            Launch
-          </button>
-        </div>
+    <div class="footer">
+      <div class="spacer"></div>
+      <div class="content">
+      {{ completedTestCounter }} of {{ registrationDisplay.items.length }} Complete
       </div>
-    }
-    <div class="event-footer">
-      {{ completedTestCounter }} of {{registrationDisplay.items.length}} Complete
     </div>
   </div>
 }
-
 
 

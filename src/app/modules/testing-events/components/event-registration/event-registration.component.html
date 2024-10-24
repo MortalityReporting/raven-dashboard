@@ -1,0 +1,35 @@
+<div class="generic-component-wrapper">
+  <div class="generic-component-content">
+    <div class="padding-bottom-lg">
+      <div class="item-header" [style.border-left-color]="appConfiguration.modules?.['eventRegistration'].color">
+        <h2>Available</h2>
+      </div>
+      @for (event of availableEvent; track event.fhirId; let i = $index) {
+        <div [ngClass]="i != 0 ? 'padding-top-lg' : ''">
+          <testing-event-registration-card
+            [event]="event"
+            [registered]="isRegistered(event)"
+            (registerClickEvent)="registerForEvent($event)">
+          </testing-event-registration-card>
+        </div>
+        <mat-divider></mat-divider>
+      }
+    </div>
+
+    <div class="padding-top-lg">
+      <div class="item-header" [style.border-left-color]="appConfiguration.modules?.['eventRegistration'].color">
+        <h2>Registered</h2>
+      </div>
+      @for (event of registeredEvent; track event.fhirId; let i = $index) {
+        <div [ngClass]="i != 0 ? 'padding-top-lg' : ''">
+          <testing-event-registration-card
+            [event]="event"
+            [registered]="isRegistered(event)"
+            (registerClickEvent)="registerForEvent($event)">
+          </testing-event-registration-card>
+        </div>
+        <mat-divider></mat-divider>
+      }
+    </div>
+  </div>
+</div>
