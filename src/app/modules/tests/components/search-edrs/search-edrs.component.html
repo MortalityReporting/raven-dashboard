@@ -12,8 +12,12 @@
 
       <mat-step label="{{ uiConstants.step2.STEP_LABEL }}" [completed]="false">
         {{ uiConstants.step2.DESCRIPTION }}
-          <app-endpoint-configuration-step></app-endpoint-configuration-step>
+          <app-establish-connection></app-establish-connection>
       </mat-step>
+      <!--      <mat-step label="{{ uiConstants.step2.STEP_LABEL }}" [completed]="false">-->
+      <!--        {{ uiConstants.step2.DESCRIPTION }}-->
+      <!--          <app-endpoint-configuration-step></app-endpoint-configuration-step>-->
+      <!--      </mat-step>-->
 
       <mat-step label="{{ uiConstants.step3.STEP_LABEL }}" [completed]="false">
         {{ uiConstants.step3.DESCRIPTION }}

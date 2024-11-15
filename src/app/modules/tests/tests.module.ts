@@ -61,6 +61,7 @@ import {ClipboardModule} from "@angular/cdk/clipboard";
 import { UpdateEdrsComponent } from './components/update-edrs/update-edrs.component';
 import {NgxHisbLoggerModule} from "ngx-hisb-logger";
 import { ValidationComponent } from './components/validation/validation.component';
+import { EstablishConnectionComponent } from './components/search-edrs/establish-connection/establish-connection.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { ValidationComponent } from './components/validation/validation.componen
     HttpResponseResultsComponent,
     UpdateEdrsComponent,
     ValidationComponent,
+    EstablishConnectionComponent,
   ],
   exports: [
     EdrsResultsStepComponent,

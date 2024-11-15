@@ -1,0 +1,58 @@
+.grid-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%; /* Full width of the container */
+}
+
+.grid-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.display {
+  flex-basis: 20%;
+  padding: 8px;
+  font-weight: bold;
+  min-width: 100px;
+  max-width: 160px;
+}
+
+.value {
+  flex-grow: 1; /* Takes the remaining space in the row */
+  padding: 8px;
+}
+
+.line-item{
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  >.token-preview{
+    max-width: 60%;
+    border: 1px solid #CDCDCD;
+    border-radius: 4px;
+    height: 48px;
+    margin: 0 16px;
+    overflow: auto;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+  }
+}
+
+.code-container {
+  position: relative;
+  padding: 16px;
+  border: 1px solid #CDCDCD;
+  border-radius: 4px;
+  overflow: auto;
+}
+
+.code-container .icon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  cursor: pointer;
+}
+

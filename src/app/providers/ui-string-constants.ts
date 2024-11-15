@@ -36,14 +36,28 @@ export class UiStringConstants {
 
       // Step 2
       step2: {
-        STEP_LABEL: `Configure Endpoint`,
-        DESCRIPTION: `Step 2 - Configure the EDRS endpoint. The BlueJay test server is provided as a default.`,
-        DISCLAIMER: `Please be aware that for custom endpoint configuration users are responsible for all security considerations. Raven does not store any user information, though some web browsers may attempt to store sensitive data input into form fields.`,
+        STEP_LABEL: `Establish Connection`,
+        DESCRIPTION: `Step 2 - Establish Connection. The BlueJay test server is provided as a default.`,
         VIEW_CAPABILITY_STMT_BTN: `View Server Capability Statement`,
         VIEW_SERVER_$MDI_DOCS_OP_DEFINITION_BTN: `View Server $mdi-documents Operation Definition`,
         PROCEED_TO_NEXT_STEP_BTN: `Proceed to search`,
         authenticationOptions: ['None', 'Basic', 'Bearer Token'],
-        endpointTypeOptions: ['Registered Endpoint', 'Custom Endpoint']
+        endpointTypeOptions: ['Registered Endpoint', 'Custom Endpoint'],
+        auth0Credentials: {
+          grantType: { name: 'GRANT TYPE', value: 'Client Credentials', display: 'Grant Type' },
+          accessTokenUrl: { name: 'ACCESS TOKEN URL', value: 'https://dev-dk7cyfpkwowbtdbt.us.auth0.com/oauth/token', display: 'Access Token' },
+          clientId: { name: 'CLIENT ID', value: 'vsRE3dEgCWF24mEf1KOsWD88igoHKAKl', display: 'Client ID' },
+          clientSecret: { name: 'CLIENT SECRET', value: 'UZVZxFR_Ykj2ByXqqsahso0PO1wDk0Wutl2lCvzf-21Y_I2OugTxUa1hnpwb27Ym', display: 'Client Secret' },
+          audience: { name: 'AUDIENCE', value: 'http://bluejay-fhir-api/', display: 'Audience' },
+          curlExample: { display:
+          "curl \t--request POST\n"+
+              "\t--url https://dev-dk7cyfpkwowbtdbt.us.auth0.com/oauth/token\n" +
+              "\t--header 'content-type: application/json\n" +
+              "\t--data '{\"client_id\":\"vsRE3dEgCWF24mEf1KOsWD88igoHKAKl\",\"client_secret\":\"UZVZxFR_Ykj2ByXqqsahso0PO1wDk0Wutl2lCvzf-21Y_I2OugTxUa1hnpwb27Ym\",\"audience\":\"http://bluejay-fhir-api/\",\"grant_type\":\"client_credentials\"}'"
+          ,
+            value: `curl --request POST   --url https://dev-dk7cyfpkwowbtdbt.us.auth0.com/oauth/token   --header 'content-type: application/json'   --data '{"client_id":"vsRE3dEgCWF24mEf1KOsWD88igoHKAKl","client_secret":"UZVZxFR_Ykj2ByXqqsahso0PO1wDk0Wutl2lCvzf-21Y_I2OugTxUa1hnpwb27Ym","audience":"http://bluejay-fhir-api/","grant_type":"client_credentials"}'`
+          }
+        }
       },
       // Step 3
       step3: {
