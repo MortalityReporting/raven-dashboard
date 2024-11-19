@@ -12,16 +12,15 @@
 
         <mat-step label="{{ uiConstants.step2.STEP_LABEL }}" [completed]="false">
           {{ uiConstants.step2.DESCRIPTION }}
-          <app-endpoint-configuration-step></app-endpoint-configuration-step>
+          <app-establish-connection></app-establish-connection>
         </mat-step>
+
 
         <mat-step label="{{ uiConstants.step3.STEP_LABEL }}" [completed]="false">
           {{ uiConstants.step3.DESCRIPTION }}
           <app-edrs-results-step [parentStepper]="stepper"></app-edrs-results-step>
 
-          <div class="padding-top-md">
-            <button mat-raised-button matStepperPrevious>Back</button>
-          </div>
+          <div class="padding-top-md"><button mat-raised-button matStepperPrevious>Back</button></div>
         </mat-step>
 
       </mat-horizontal-stepper>

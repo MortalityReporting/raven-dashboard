@@ -61,7 +61,8 @@ import {ClipboardModule} from "@angular/cdk/clipboard";
 import { UpdateEdrsComponent } from './components/update-edrs/update-edrs.component';
 import {NgxHisbLoggerModule} from "ngx-hisb-logger";
 import { ValidationComponent } from './components/validation/validation.component';
-import { EstablishConnectionComponent } from './components/search-edrs/establish-connection/establish-connection.component';
+import { EstablishConnectionComponent } from './components/search-edrs-bluejay/establish-connection/establish-connection.component';
+import { SearchEdrsBluejayComponent } from './components/search-edrs-bluejay/search-edrs-bluejay.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { EstablishConnectionComponent } from './components/search-edrs/establish
     UpdateEdrsComponent,
     ValidationComponent,
     EstablishConnectionComponent,
+    SearchEdrsBluejayComponent,
   ],
   exports: [
     EdrsResultsStepComponent,
