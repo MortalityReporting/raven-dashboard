@@ -20,7 +20,7 @@ export class SearchEdrsBluejayComponent implements OnInit, OnDestroy{
     private uiStringConstants: UiStringConstants,
     private accessTokenService: AccessTokenService,
   ) {
-    this.uiConstants = uiStringConstants.WorkflowSimulator.searchEdrsBlueJay;
+    this.uiConstants = this.uiStringConstants.WorkflowSimulator.searchEdrsBlueJay;
   }
 
   ngOnInit(): void {
