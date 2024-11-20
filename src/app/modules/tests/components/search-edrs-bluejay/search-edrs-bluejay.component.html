@@ -12,7 +12,7 @@
 
         <mat-step label="{{ uiConstants.step2.STEP_LABEL }}" [completed]="false">
           {{ uiConstants.step2.DESCRIPTION }}
-          <app-establish-connection></app-establish-connection>
+          <app-establish-connection  [parentStepper]="stepper"></app-establish-connection>
         </mat-step>
 
 

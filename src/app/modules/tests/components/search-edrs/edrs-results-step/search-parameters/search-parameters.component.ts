@@ -169,7 +169,7 @@ export class SearchParametersComponent implements OnInit {
     let accessToken = null;
     let authObject = null;
     if (this.isAccessTokenSearchActive) { // when we use auth0 to access Bluejay
-      accessToken = this.accessTokenService;
+      accessToken = this.accessToken;
     } else if (this.customEndpoint) { //when we use custom endpoint (Minnesota had a test case)
       authObject = this.customEndpoint.auth
     } else { //we use simple authentication

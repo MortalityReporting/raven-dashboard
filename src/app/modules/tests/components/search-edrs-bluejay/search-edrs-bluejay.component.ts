@@ -7,7 +7,7 @@ import {AccessTokenService} from "../../services/access-token.service";
 @Component({
   selector: 'app-search-edrs-bluejay',
   templateUrl: './search-edrs-bluejay.component.html',
-  styleUrl: './search-edrs-bluejay.component.css'
+  styleUrl: './search-edrs-bluejay.component.scss'
 })
 export class SearchEdrsBluejayComponent implements OnInit, OnDestroy{
   @Output() onTestCompletedEvent = new EventEmitter<any>()

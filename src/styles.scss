@@ -505,3 +505,8 @@ TODO: Refactor to generalize class names and move to a common shared .css file.
   border-left: 8px solid black;
   padding-left: 8px;
 }
+
+.right-aligned {
+  display: flex;
+  justify-content: flex-end;
+}

@@ -80,13 +80,15 @@
   </div>
 </div>
 
-<div class="padding-top-md padding-bottom-md row">
+<div class="actions">
   <button mat-raised-button matStepperPrevious>Back</button>
-  <div class="push-right">
+
+  <mat-error>{{ errorMessage }}</mat-error>
+
     <button type="submit" mat-raised-button
+            (click)="onProceed();"
             [style.background-color]="moduleConfig.backgroundColor"
-            [style.color]="'white'" matStepperNext>
+            [style.color]="'white'" >
       {{ uiConstantsStep2.PROCEED_TO_NEXT_STEP_BTN }}
     </button>
-  </div>
 </div>
