@@ -49,7 +49,7 @@ export class UiStringConstants {
     STEP_LABEL: `Establish Connection`,
     DESCRIPTION: `Step 2 - Establish Connection. The BlueJay test server is provided as a default.`,
     VIEW_CAPABILITY_STMT_BTN: `View Server Capability Statement`,
-    VIEW_SERVER_$MDI_DOCS_OP_DEFINITION_BTN: `View Server $mdi-documents Operation Definition`,
+    VIEW_SERVER_$MDI_DOCS_OP_DEFINITION_BTN: `View Server $document Operation Definition`,
     PROCEED_TO_NEXT_STEP_BTN: `Proceed to Search`,
     authenticationOptions: ['None', 'Basic', 'Bearer Token'],
     endpointTypeOptions: ['Registered Endpoint', 'Custom Endpoint'],
