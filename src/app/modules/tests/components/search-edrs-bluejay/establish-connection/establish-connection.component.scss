@@ -3,39 +3,39 @@
 .grid-container {
   display: flex;
   flex-direction: column;
-  width: 100%; /* Full width of the container */
 }
 
 .grid-row {
   display: flex;
   align-items: center;
-  width: 100%;
 }
 
 .display {
   flex-basis: 20%;
-  padding: 8px;
+  @extend .padding-md;
   font-weight: bold;
   min-width: 100px;
   max-width: 160px;
 }
 
 .value {
-  flex-grow: 1; /* Takes the remaining space in the row */
-  padding: 8px;
+  flex-grow: 1;
+  @extend .padding-md;
 }
 
 .line-item {
   display: flex;
   align-items: center;
-  padding: 8px 0;
+  @extend .padding-top-md;
+  @extend .padding-bottom-md;
   >.token-preview {
-    max-width: 60%;
     min-width: 60%;
     border: 1px solid #CDCDCD;
     border-radius: 4px;
     height: 48px;
     margin: 0 16px;
+    @extend .margin-left-lg;
+    @extend .margin-right-lg;
     overflow: auto;
     white-space: nowrap;
     display: flex;
@@ -46,8 +46,9 @@
 
 .code-container {
   position: relative;
-  padding: 8px;
-  margin: 16px 0;
+  @extend .padding-md;
+  @extend .margin-top-lg;
+  @extend .margin-bottom-lg;
   border: 1px solid #CDCDCD;
   border-radius: 4px;
   overflow: auto;
