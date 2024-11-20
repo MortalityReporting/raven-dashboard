@@ -96,7 +96,7 @@ export class EndpointConfigurationStepComponent implements OnInit {
   }
 
   onViewServerMdiDocs() {
-    window.open(this.config.blueJayServerBaseUrl + "OperationDefinition/Composition-it-mdi-documents", "_blank");
+    window.open(this.config.blueJayServerBaseUrl + "OperationDefinition/Composition-it-document", "_blank");
   }
 
   onViewServerCapabilityStmt() {
