@@ -116,20 +116,22 @@ export class UiStringConstants {
     {
       name: 'search-edrs',
       display: 'Search EDRS',
-      description: "The \"EDRS Search\" workflow simulates '" +
-        "searching cases in an Electronic Death Registration System (EDRS). Testers representing Medical Examiners/Coroners (ME/Cs) " +
-        "can provide search parameters executed against the BlueJay EDRS test server, which implements the MDI Documents FHIR " +
-        "Operation for search. Supported parameters include primary case identification fields, as well as additional data " +
-        "(e.g., demographics information) if it exists in the test EDRS case records. Search parameters and all relevant " +
-        "HTTP requests and responses are provided in both human readable forms and as FHIR resources for demonstration.",
+      description: 'The "Search EDRS" workflow demonstrates searching for records in an Electronic Death Registration System (EDRS) ' +
+        'using the MDI FHIR IG and associated API documentation.' +
+        '\n\nTesters assume the role of Medical Examiners/Coroners (ME/Cs), executing a search against any compatible ' +
+        'system implementing the MDI Documents FHIR Operation. Supported parameters include primary case identification ' +
+        'fields and select decedent demographics information. As part of the demonstration, search parameters and all ' +
+        'relevant HTTP requests/responses are provided in both human readable form as well as FHIR Resources.',
       status: TestStatusCodes.notStarted,
       route: 'search-edrs'
     },
     {
       name: 'search-edrs-bluejay',
-      display: 'Search EDRS - Bluejay',
-      description: "The \"EDRS Search - Bluejay\" workflow simulates '" +
-        "placeholder text here",
+      display: 'Search EDRS - BlueJay with OAuth 2.0',
+      description: 'The "Search EDRS - BlueJay" workflow demonstrates searching for records in BlueJay, a stand-in for ' +
+        'Electronic Death Registration Systems (EDRS), using the MDI FHIR IG and associated APIs. ' +
+        '\n\nThis test is identical to the standard "Search EDRS" workflow while also demonstrating the use of ' +
+        'OAuth 2.0 for client authorization.' ,
       status: TestStatusCodes.notStarted,
       route: 'search-edrs-bluejay'
     },
