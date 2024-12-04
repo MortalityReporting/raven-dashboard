@@ -46,11 +46,11 @@ export class UiStringConstants {
   };
 
   private STEP_2_SEARCH_EDRS_BLUEJAY = {
-    STEP_LABEL: `Establish Connection`,
+    STEP_LABEL: `Establish Authorization`,
     DESCRIPTION: `Step 2 - Establish Connection. The BlueJay test server is provided as a default.`,
     VIEW_CAPABILITY_STMT_BTN: `View Server Capability Statement`,
     VIEW_SERVER_$MDI_DOCS_OP_DEFINITION_BTN: `View Server $document Operation Definition`,
-    PROCEED_TO_NEXT_STEP_BTN: `Proceed to Search`,
+    PROCEED_TO_NEXT_STEP_BTN: `Establish Authorization`,
     authenticationOptions: ['None', 'Basic', 'Bearer Token'],
     endpointTypeOptions: ['Registered Endpoint', 'Custom Endpoint'],
     auth0Credentials: this.blueJayAuth0Credentials

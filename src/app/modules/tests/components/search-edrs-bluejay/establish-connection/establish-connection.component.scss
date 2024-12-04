@@ -29,7 +29,7 @@
   @extend .padding-top-md;
   @extend .padding-bottom-md;
   >.token-preview {
-    min-width: 60%;
+    flex-grow: 1;
     border: 1px solid #CDCDCD;
     border-radius: 4px;
     height: 48px;
@@ -66,4 +66,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.no-wrap-label{
+  white-space: nowrap;
 }
