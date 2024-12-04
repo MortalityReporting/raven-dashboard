@@ -10,21 +10,23 @@
   ></app-decedent-basic-info>
 </div>
 
-<mat-expansion-panel [expanded]="true" class="top-spacer">
-  <mat-expansion-panel-header>
-    <mat-panel-title class="panel-title">
-      Endpoint Configuration
-    </mat-panel-title>
-  </mat-expansion-panel-header>
-  <div class="row">
-    <div class="col" style="margin-top: 1em; flex-direction: row-reverse">
-      EDRS Server: {{ edrsServer }}
+@if(endpointConfigRendered){
+  <mat-expansion-panel [expanded]="true" class="top-spacer">
+    <mat-expansion-panel-header>
+      <mat-panel-title class="panel-title">
+        Endpoint Configuration
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="row">
+      <div class="col" style="margin-top: 1em; flex-direction: row-reverse">
+        EDRS Server: {{ edrsServer }}
+      </div>
+      <div style="flex-direction: row-reverse">
+        <button mat-raised-button (click)="onChangeEndpointConfiguration()">Change Endpoint Configuration</button>
+      </div>
     </div>
-    <div style="flex-direction: row-reverse">
-      <button mat-raised-button (click)="onChangeEndpointConfiguration()">Change Endpoint Configuration</button>
-    </div>
-  </div>
-</mat-expansion-panel>
+  </mat-expansion-panel>
+}
 
 <div style="margin-top: 1em">
   <app-search-parameters

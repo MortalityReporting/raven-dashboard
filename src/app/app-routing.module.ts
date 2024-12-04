@@ -30,6 +30,7 @@ import {
   EventRegistrationComponent
 } from "./modules/testing-events/components/event-registration/event-registration.component";
 import {authGuard} from "./guards/auth.guard";
+import {SearchEdrsBluejayComponent} from "./modules/tests/components/search-edrs-bluejay/search-edrs-bluejay.component";
 
 
 const routes: Routes = [
@@ -104,6 +105,11 @@ const routes: Routes = [
         path: 'search-edrs',
         component: SearchEdrsComponent,
         data: {moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Search EDRS"}
+      },
+      {
+        path: 'search-edrs-bluejay',
+        component: SearchEdrsBluejayComponent,
+        data: {moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Search EDRS Bluejay"}
       },
       {
         path: 'update-edrs',

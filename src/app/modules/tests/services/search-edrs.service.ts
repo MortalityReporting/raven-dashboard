@@ -70,11 +70,14 @@ export class SearchEdrsService {
   }
 
 
-  searchEdrs(uri, params, auth: { username: string, password: string }): Observable<any> {
+  searchEdrs(uri, params, basicAuth: { username: string, password: string }, accessToken: string): Observable<any> {
     let httpHeaders = new HttpHeaders().set('Content-Type', 'application/fhir+json');
-    if (auth) {
-      const basicAuthString = 'Basic ' + btoa(`${auth.username}:${auth.password}`);
+    if (basicAuth) {
+      const basicAuthString = 'Basic ' + btoa(`${basicAuth.username}:${basicAuth.password}`);
       httpHeaders = httpHeaders.set('Authorization', basicAuthString);
+    }
+    else if(accessToken){
+      httpHeaders = httpHeaders.set('Authorization', `Bearer ${accessToken}`);
     }
     let httpOptions = {headers: httpHeaders}
     const operationDefinitionLocation = uri + this.appConstants.COMPOSITION_$DOCUMENT; // TODO: Move to constants.
