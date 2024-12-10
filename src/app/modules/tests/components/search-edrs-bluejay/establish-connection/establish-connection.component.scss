@@ -1,0 +1,73 @@
+@import "src/styles";
+
+.grid-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.grid-row {
+  display: flex;
+  align-items: center;
+}
+
+.display {
+  flex-basis: 20%;
+  @extend .padding-md;
+  font-weight: bold;
+  min-width: 100px;
+  max-width: 160px;
+}
+
+.value {
+  flex-grow: 1;
+  @extend .padding-md;
+}
+
+.line-item {
+  display: flex;
+  align-items: center;
+  @extend .padding-top-md;
+  @extend .padding-bottom-md;
+  >.token-preview {
+    flex-grow: 1;
+    border: 1px solid #CDCDCD;
+    border-radius: 4px;
+    height: 48px;
+    @extend .margin-left-lg;
+    @extend .margin-right-lg;
+    @extend .padding-right-md;
+    @extend .padding-left-md;
+    overflow: auto;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.code-container {
+  position: relative;
+  @extend .padding-md;
+  @extend .margin-top-lg;
+  @extend .margin-bottom-lg;
+  border: 1px solid #CDCDCD;
+  border-radius: 4px;
+  overflow: auto;
+}
+
+.code-container .icon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  cursor: pointer;
+}
+
+.actions {
+  @extend .margin-top-md;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.no-wrap-label{
+  white-space: nowrap;
+}

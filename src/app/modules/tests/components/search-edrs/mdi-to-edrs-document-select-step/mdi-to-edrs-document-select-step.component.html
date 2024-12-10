@@ -14,14 +14,10 @@
   </mat-card-content>
 </mat-card>
 
-<div>
-  <div class="action-buttons">
-    <div class="push-right">
-      <button mat-raised-button
-              [style.background-color]="config.backgroundColor"
-              [style.color]="'white'"(click)="onAdvanceStepper()" class="action-button">
-        {{ uiConstants.step1.PROCEED_TO_NEXT_STEP_BTN }}
-      </button>
-    </div>
-  </div>
+<div class="margin-top-md right-aligned">
+  <button mat-raised-button
+          [style.background-color]="config.backgroundColor"
+          [style.color]="'white'" (click)="onAdvanceStepper()" class="action-button">
+    {{ uiConstants.step1.PROCEED_TO_NEXT_STEP_BTN }}
+  </button>
 </div>

@@ -9,7 +9,7 @@
     @for (test of standaloneTests; track test.name) {
       <div  class="margin-top-lg margin-bottom-md">
         <h2 class="item-header" [style.border-left-color]="appConfiguration.color">{{ test.display }}</h2>
-        <div>{{ test.description }}</div>
+        <div class="description">{{ test.description }}</div>
         <div class="margin-top-lg">
           <button mat-raised-button (click)="onStartTest(test)" [style.background-color]="config.backgroundColor" [style.color]="'white'">Start Workflow</button>
         </div>

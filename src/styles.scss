@@ -57,8 +57,10 @@ $lg: 24px;
 .margin-top-sm { margin-top: $sm; }
 .margin-top-md { margin-top: $md; }
 .margin-left-md { margin-left: $md; }
+.margin-left-lg { margin-left: $lg; }
 .margin-left-xs { margin-left: $xs; }
 .margin-right-md { margin-right: $md; }
+.margin-right-lg { margin-right: $lg; }
 .margin-right-sm { margin-right: $sm; }
 .margin-top-lg { margin-top: $lg }
 .padding-bottom-md { padding-bottom: $md; }
@@ -505,4 +507,9 @@ TODO: Refactor to generalize class names and move to a common shared .css file.
 .title-decoration-sm {
   border-left: 8px solid black;
   padding-left: 8px;
+}
+
+.right-aligned {
+  display: flex;
+  justify-content: flex-end;
 }
