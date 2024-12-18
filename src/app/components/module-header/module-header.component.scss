@@ -1,4 +1,4 @@
-@import "src/styles";
+@use "src/styles";
 .module-header {
   @extend .margin-md;
   color: white;
