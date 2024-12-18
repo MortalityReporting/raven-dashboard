@@ -4,9 +4,10 @@ import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {FhirValidatorResultsExportService} from "../../../../service/fhir-validator-results-export.service";
 
 @Component({
-  selector: 'app-fhir-validator',
-  templateUrl: './fhir-validator.component.html',
-  styleUrls: ['./fhir-validator.component.scss']
+    selector: 'app-fhir-validator',
+    templateUrl: './fhir-validator.component.html',
+    styleUrls: ['./fhir-validator.component.scss'],
+    standalone: false
 })
 export class FhirValidatorComponent {
   constructor(

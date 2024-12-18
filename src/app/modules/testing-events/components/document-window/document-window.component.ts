@@ -6,9 +6,10 @@ import {mergeMap} from "rxjs";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 
 @Component({
-  selector: 'app-document-window',
-  templateUrl: './document-window.component.html',
-  styleUrls: ['./document-window.component.scss']
+    selector: 'app-document-window',
+    templateUrl: './document-window.component.html',
+    styleUrls: ['./document-window.component.scss'],
+    standalone: false
 })
 export class DocumentWindowComponent {
   fileName: string = "No File Selected";

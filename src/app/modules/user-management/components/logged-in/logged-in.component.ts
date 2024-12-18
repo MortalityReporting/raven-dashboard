@@ -3,9 +3,10 @@ import {Router} from "@angular/router";
 import {environment} from "../../../../../environments/environment";
 
 @Component({
-  selector: 'app-logged-in',
-  templateUrl: './logged-in.component.html',
-  styleUrls: ['./logged-in.component.css']
+    selector: 'app-logged-in',
+    templateUrl: './logged-in.component.html',
+    styleUrls: ['./logged-in.component.css'],
+    standalone: false
 })
 export class LoggedInComponent implements OnInit{
   constructor(private router: Router) {}

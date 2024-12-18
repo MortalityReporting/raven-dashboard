@@ -9,17 +9,16 @@ import {AuthService} from "@auth0/auth0-angular";
 import {AppConstants} from "../../providers/app-constants";
 
 @Component({
-  selector: 'app-nav-menu',
-  standalone: true,
-  imports: [
-    MatIcon,
-    MatDivider,
-    MatTooltip,
-    NgClass,
-    AsyncPipe,
-  ],
-  templateUrl: './nav-menu.component.html',
-  styleUrl: './nav-menu.component.scss'
+    selector: 'app-nav-menu',
+    imports: [
+        MatIcon,
+        MatDivider,
+        MatTooltip,
+        NgClass,
+        AsyncPipe,
+    ],
+    templateUrl: './nav-menu.component.html',
+    styleUrl: './nav-menu.component.scss'
 })
 export class NavMenuComponent {
   isExpanded: boolean = true;

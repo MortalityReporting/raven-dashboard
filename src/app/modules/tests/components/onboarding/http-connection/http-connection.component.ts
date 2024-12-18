@@ -30,9 +30,10 @@ import {ModuleHeaderConfig} from "../../../../../providers/module-header-config"
 
 
 @Component({
-  selector: 'app-http-connection',
-  templateUrl: './http-connection.component.html',
-  styleUrls: ['./http-connection.component.scss']
+    selector: 'app-http-connection',
+    templateUrl: './http-connection.component.html',
+    styleUrls: ['./http-connection.component.scss'],
+    standalone: false
 })
 export class HttpConnectionComponent implements OnInit, OnChanges{
 

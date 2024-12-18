@@ -1,7 +1,8 @@
 import { Directive, Input, ElementRef, AfterViewInit } from '@angular/core';
 
 @Directive({
-  selector: "[customSpinner]"
+    selector: "[customSpinner]",
+    standalone: false
 })
 export class CustomSpinnerDirective implements AfterViewInit{
 

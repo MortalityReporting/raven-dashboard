@@ -11,9 +11,10 @@ import {filter} from "rxjs/operators";
 import {AppConfiguration} from "../../../../providers/app-configuration";
 
 @Component({
-  selector: 'testing-event-registered-module',
-  templateUrl: './registered-module.component.html',
-  styleUrls: ['./registered-module.component.scss']
+    selector: 'testing-event-registered-module',
+    templateUrl: './registered-module.component.html',
+    styleUrls: ['./registered-module.component.scss'],
+    standalone: false
 })
 //TODO: Rename to RegistrationStatus
 export class RegisteredModuleComponent implements OnInit{

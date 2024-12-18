@@ -9,9 +9,10 @@ import {FhirExplorerService} from "../../../fhir-explorer/services/fhir-explorer
 import {UtilsService} from "../../../../service/utils.service";
 
 @Component({
-  selector: 'record-viewer-mdi-to-edrs-viewer',
-  templateUrl: './mdi-to-edrs-viewer.component.html',
-  styleUrls: ['./mdi-to-edrs-viewer.component.scss']
+    selector: 'record-viewer-mdi-to-edrs-viewer',
+    templateUrl: './mdi-to-edrs-viewer.component.html',
+    styleUrls: ['./mdi-to-edrs-viewer.component.scss'],
+    standalone: false
 })
 export class MdiToEdrsViewerComponent implements OnInit, OnDestroy {
   @ViewChild(MdiToEdrsViewerContentComponent) contentComponent: MdiToEdrsViewerContentComponent;

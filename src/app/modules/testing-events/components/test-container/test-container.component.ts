@@ -13,9 +13,10 @@ import {filter} from "rxjs/operators";
 import {UtilsService} from "../../../../service/utils.service";
 
 @Component({
-  selector: 'testing-event-test-container',
-  templateUrl: './test-container.component.html',
-  styleUrls: ['../testing-event.scss']
+    selector: 'testing-event-test-container',
+    templateUrl: './test-container.component.html',
+    styleUrls: ['../testing-event.scss'],
+    standalone: false
 })
 export class TestContainerComponent {
 

@@ -16,9 +16,10 @@ import {TrackingNumberType} from "../../../../../fhir-mdi-library";
 import {ModuleHeaderConfig} from "../../../../../../providers/module-header-config";
 
 @Component({
-  selector: 'app-mdi-to-edrs-grid',
-  templateUrl: './mdi-to-edrs-grid.component.html',
-  styleUrls: ['./mdi-to-edrs-grid.component.scss']
+    selector: 'app-mdi-to-edrs-grid',
+    templateUrl: './mdi-to-edrs-grid.component.html',
+    styleUrls: ['./mdi-to-edrs-grid.component.scss'],
+    standalone: false
 })
 // For now this class component is almost exactly the same as the one we use for the decedent-records-grid.
 // However, the functionality will be different and we are going to change the code at some point in the near future.

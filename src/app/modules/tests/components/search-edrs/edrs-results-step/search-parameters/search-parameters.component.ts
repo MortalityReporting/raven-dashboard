@@ -16,9 +16,10 @@ import {map, switchMap, tap} from "rxjs";
 import {filter} from "rxjs/operators";
 
 @Component({
-  selector: 'app-search-parameters',
-  templateUrl: './search-parameters.component.html',
-  styleUrls: ['./search-parameters.component.scss']
+    selector: 'app-search-parameters',
+    templateUrl: './search-parameters.component.html',
+    styleUrls: ['./search-parameters.component.scss'],
+    standalone: false
 })
 export class SearchParametersComponent implements OnInit {
 

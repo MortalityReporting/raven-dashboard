@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'docrefBase64'
+    name: 'docrefBase64',
+    standalone: false
 })
 export class DocRefBase64TransformPipe implements PipeTransform {
 

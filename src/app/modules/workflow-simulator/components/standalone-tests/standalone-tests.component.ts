@@ -6,9 +6,10 @@ import {UiStringConstants} from "../../../../providers/ui-string-constants";
 import {AppConfiguration} from "../../../../providers/app-configuration";
 
 @Component({
-  selector: 'app-standalone-tests',
-  templateUrl: './standalone-tests.component.html',
-  styleUrls: ['./standalone-tests.component.scss']
+    selector: 'app-standalone-tests',
+    templateUrl: './standalone-tests.component.html',
+    styleUrls: ['./standalone-tests.component.scss'],
+    standalone: false
 })
 export class StandaloneTestsComponent {
 

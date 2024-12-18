@@ -22,9 +22,10 @@ import {UpdateAction} from "../../models/update-action";
 import {AppConfiguration} from "../../../../providers/app-configuration";
 
 @Component({
-  selector: 'testing-event-root',
-  templateUrl: './testing-event-root.component.html',
-  styleUrls: ['../testing-event.scss']
+    selector: 'testing-event-root',
+    templateUrl: './testing-event-root.component.html',
+    styleUrls: ['../testing-event.scss'],
+    standalone: false
 })
 export class TestingEventRootComponent implements OnInit, OnDestroy {
   // Registrations/QuestionnaireResponses

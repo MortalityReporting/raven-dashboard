@@ -4,9 +4,10 @@ import {AppConfiguration} from "../../../../../providers/app-configuration";
 
 
 @Component({
-  selector: 'testing-event-registration-card',
-  templateUrl: './event-registration-card.component.html',
-  styleUrls: ['./event-registration-card.component.scss']
+    selector: 'testing-event-registration-card',
+    templateUrl: './event-registration-card.component.html',
+    styleUrls: ['./event-registration-card.component.scss'],
+    standalone: false
 })
 export class EventRegistrationCardComponent{
   @Input() event: EventModule;

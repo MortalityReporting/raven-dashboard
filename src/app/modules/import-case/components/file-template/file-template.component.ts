@@ -4,9 +4,10 @@ import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {FileTemplateService} from "../../services/file-template.service";
 
 @Component({
-  selector: 'app-file-template',
-  templateUrl: './file-template.component.html',
-  styleUrls: ['./file-template.component.css']
+    selector: 'app-file-template',
+    templateUrl: './file-template.component.html',
+    styleUrls: ['./file-template.component.css'],
+    standalone: false
 })
 export class FileTemplateComponent {
   @Input() fileTemplate: FileTemplate;

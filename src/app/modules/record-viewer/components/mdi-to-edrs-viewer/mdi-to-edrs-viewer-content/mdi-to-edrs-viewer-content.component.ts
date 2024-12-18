@@ -7,9 +7,10 @@ import {MdiToEdrsRecord} from "../../../models/mdiToEdrsRecord";
 import {FHIRProfileConstants} from "../../../../../providers/fhir-profile-constants";
 
 @Component({
-  selector: 'record-viewer-mdi-to-edrs-viewer-content',
-  templateUrl: './mdi-to-edrs-viewer-content.component.html',
-  styleUrls: ['../mdi-to-edrs-viewer.component.scss', '../../../record-viewer-styles.scss']
+    selector: 'record-viewer-mdi-to-edrs-viewer-content',
+    templateUrl: './mdi-to-edrs-viewer-content.component.html',
+    styleUrls: ['../mdi-to-edrs-viewer.component.scss', '../../../record-viewer-styles.scss'],
+    standalone: false
 })
 export class MdiToEdrsViewerContentComponent implements OnInit {
   @Input() mdiToEdrsRecord: MdiToEdrsRecord;

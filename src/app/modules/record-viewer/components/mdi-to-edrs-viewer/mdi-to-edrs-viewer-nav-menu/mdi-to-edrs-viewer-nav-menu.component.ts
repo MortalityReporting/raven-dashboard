@@ -3,9 +3,10 @@ import {AppConfiguration} from "../../../../../providers/app-configuration";
 import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
 
 @Component({
-  selector: 'record-viewer-mdi-to-edrs-viewer-nav-menu',
-  templateUrl: './mdi-to-edrs-viewer-nav-menu.component.html',
-  styleUrls: ['../mdi-to-edrs-viewer.component.scss', '../../../record-viewer-styles.scss']
+    selector: 'record-viewer-mdi-to-edrs-viewer-nav-menu',
+    templateUrl: './mdi-to-edrs-viewer-nav-menu.component.html',
+    styleUrls: ['../mdi-to-edrs-viewer.component.scss', '../../../record-viewer-styles.scss'],
+    standalone: false
 })
 export class MdiToEdrsViewerNavMenuComponent {
   @Output() menuClickEvent = new EventEmitter<string>()
