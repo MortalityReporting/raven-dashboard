@@ -1,0 +1,14 @@
+<button mat-button (click)="fileInput.click()">Select File</button>
+
+<input
+  style="display: none"
+  #attachments
+  type="file"
+  (change)="onFileChanged($event)"
+  #fileInput
+  multiple
+/>
+
+@for(file of fileList; track file; let index = $index){
+  <div>{{ file.name }} <button mat-icon-button (click)="removeSelectedFile(index)"><mat-icon>remove</mat-icon></button></div>
+}
