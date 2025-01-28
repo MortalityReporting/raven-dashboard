@@ -21,7 +21,6 @@ import {Router} from "@angular/router";
 import {UpdateAction} from "../../models/update-action";
 import {AppConfiguration} from "../../../../providers/app-configuration";
 import {MatDialog} from "@angular/material/dialog";
-import {openMultiFileUpload} from "../../multi-file-upload/components/multi-file-upload/multi-file-upload.component";
 
 @Component({
     selector: 'testing-event-root',
@@ -169,21 +168,5 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
 
   onRegisterForEvent() {
     this.router.navigate(['event-registration'])
-  }
-
-  onUploadFiles() {
-    //We can pass data about the width and height of the dialog also the primary color
-    openMultiFileUpload(
-      this.dialog,
-      {
-        width: "512px",
-        minHeight: "120px",
-        maxHeight: "420px",
-      })
-      .subscribe(
-        action => {
-          console.log(action);
-        }
-      );
   }
 }

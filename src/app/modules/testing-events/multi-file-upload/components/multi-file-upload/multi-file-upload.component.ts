@@ -2,9 +2,9 @@ import {Component, ElementRef, Inject, ViewChild} from '@angular/core';
 import {MatButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
-import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material/dialog";
 import {DragAndDropDirective} from "../../directives/drag-and-drop.directive";
-import {DashboardApiInterfaceService} from "../../../../dashboard-api";
+import JSZip from "jszip";
 
 export interface MultiFileUploadDialogData {
   height?: string;
@@ -34,7 +34,7 @@ export class MultiFileUploadComponent {
       width: string
       height: string
     },
-    private dashboardApiInterfaceService: DashboardApiInterfaceService
+    private dialogRef: MatDialogRef<any>,
   ) {
   }
 
@@ -61,14 +61,41 @@ export class MultiFileUploadComponent {
 
   selectFiles(incomingFiles: File[]) {
     //TODO handle incorrect file types and file size here. Need clear requirements to implement
-    console.log(this.fileList)
+    this.fileList = [...this.fileList, ...incomingFiles];
+  }
+
+  async zipFiles(fileList: File[], archiveName: string): Promise<File> {
+    let zip = new JSZip();
+    fileList.forEach(file => zip.file(file.name, file));
+    const content = await zip.generateAsync({ type: 'blob' });
+    return new File([content], archiveName, { type: 'application/zip' });
+  }
+
+  onUploadFiles(){
+    if(this.fileList.length == 0){
+      console.warn("No files selected for upload")
+    }
+    else if(this.fileList.length == 1){
+      //one file, no need to zip it
+      this.dialogRef.close({file: this.fileList[0]})
+    }
+    else {
+      this.zipFiles(this.fileList, 'archive.zip') //we can append to the name whatever we want and pass it to dialog data
+        .then(archive => this.dialogRef.close({file: archive}))
+    }
+
+  }
+
+  onClose() {
+    this.fileList = [];
+    this.dialogRef.close();
   }
 }
+
 
 export function openMultiFileUpload(dialog: MatDialog, dialogData: MultiFileUploadDialogData) {
 
   const config = new MatDialogConfig();
-  console.log(dialogData);
 
   config.autoFocus = true;
   config.data = {

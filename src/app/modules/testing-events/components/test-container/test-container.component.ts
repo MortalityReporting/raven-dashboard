@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Inject, Input, Output} from '@angular/core';
 import {Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
-import {DocumentWindowComponent} from "../document-window/document-window.component";
 import {EventManagerService} from "../../services/event-manager.service";
 import {Registration} from "../../models/registration";
 import {EventModule} from "../../models/event-module";
@@ -11,6 +10,9 @@ import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {UpdateAction} from "../../models/update-action";
 import {filter} from "rxjs/operators";
 import {UtilsService} from "../../../../service/utils.service";
+import {
+  MultiFileUploadComponent
+} from "../../multi-file-upload/components/multi-file-upload/multi-file-upload.component";
 
 @Component({
     selector: 'testing-event-test-container',
@@ -53,20 +55,53 @@ export class TestContainerComponent {
     this.onUpdateStatus(TestStatusCodes.complete);
   }
 
-  openDocumentWidow() {
-    // TODO: Currently this approach to userId through binding doesn't allow proper page refresh as the previous pages might not have been initialized. Handle as an observable.
-    const dialogRef = this.dialog.open(DocumentWindowComponent,
-      {
-        data: {
-          userId: this.userId,
-          registrationId: this.currentRegistration.id,
-          eventItemLinkId: this.registrationDisplayItem.linkId
-        }
-      });
+  // openDocumentWidow() {
+  //   // TODO: Currently this approach to userId through binding doesn't allow proper page refresh as the previous pages might not have been initialized. Handle as an observable.
+  //   const dialogRef = this.dialog.open(DocumentWindowComponent,
+  //     {
+  //       data: {
+  //         userId: this.userId,
+  //         registrationId: this.currentRegistration.id,
+  //         eventItemLinkId: this.registrationDisplayItem.linkId
+  //       }
+  //     });
+  //
+  //   dialogRef.afterClosed().pipe(
+  //     filter((result: any) => result.file !== undefined)
+  //   ).subscribe(result => {
+  //     console.log(result.file);
+  //     this.startUpload(result.file);
+  //   });
+  // }
 
+
+  // onUploadFiles() {
+  //   //We can pass data about the width and height of the dialog also the primary color
+  //   openMultiFileUpload(
+  //     this.dialog,
+  //     {
+  //       width: "512px",
+  //       minHeight: "120px",
+  //       maxHeight: "420px",
+  //     })
+  //     .subscribe(
+  //       action => {
+  //         console.log(action);
+  //       }
+  //     );
+  // }
+
+  openMultifileUpload() {
+    const dialogRef = this.dialog.open(MultiFileUploadComponent,
+      {
+        width: "512px",
+        minHeight: "120px",
+        maxHeight: "420px",
+      });
     dialogRef.afterClosed().pipe(
       filter((result: any) => result.file !== undefined)
     ).subscribe(result => {
+      console.log(result.file);
       this.startUpload(result.file);
     });
   }

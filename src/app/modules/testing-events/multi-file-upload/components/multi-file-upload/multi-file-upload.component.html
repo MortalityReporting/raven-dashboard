@@ -12,10 +12,10 @@
   </div>
   <div class="actions">
     <button mat-stroked-button class="action-button" (click)="fileInput.click()">Browse Files</button>
-    <button mat-stroked-button class="action-button" (click)="fileInput.click()">
+    <button mat-stroked-button class="action-button" (click)="onUploadFiles()" [disabled]="fileList.length == 0">
       <mat-icon class="centered-button-icon">upload</mat-icon>
     </button>
-    <button mat-stroked-button class="action-button" (click)="fileInput.click()">
+    <button mat-stroked-button class="action-button" (click)="onClose()">
       <mat-icon class="centered-button-icon">close</mat-icon>
     </button>
     <input
