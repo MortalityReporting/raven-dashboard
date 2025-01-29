@@ -55,41 +55,6 @@ export class TestContainerComponent {
     this.onUpdateStatus(TestStatusCodes.complete);
   }
 
-  // openDocumentWidow() {
-  //   // TODO: Currently this approach to userId through binding doesn't allow proper page refresh as the previous pages might not have been initialized. Handle as an observable.
-  //   const dialogRef = this.dialog.open(DocumentWindowComponent,
-  //     {
-  //       data: {
-  //         userId: this.userId,
-  //         registrationId: this.currentRegistration.id,
-  //         eventItemLinkId: this.registrationDisplayItem.linkId
-  //       }
-  //     });
-  //
-  //   dialogRef.afterClosed().pipe(
-  //     filter((result: any) => result.file !== undefined)
-  //   ).subscribe(result => {
-  //     console.log(result.file);
-  //     this.startUpload(result.file);
-  //   });
-  // }
-
-
-  // onUploadFiles() {
-  //   //We can pass data about the width and height of the dialog also the primary color
-  //   openMultiFileUpload(
-  //     this.dialog,
-  //     {
-  //       width: "512px",
-  //       minHeight: "120px",
-  //       maxHeight: "420px",
-  //     })
-  //     .subscribe(
-  //       action => {
-  //         console.log(action);
-  //       }
-  //     );
-  // }
 
   openMultifileUpload() {
     const dialogRef = this.dialog.open(MultiFileUploadComponent,
@@ -99,9 +64,8 @@ export class TestContainerComponent {
         maxHeight: "420px",
       });
     dialogRef.afterClosed().pipe(
-      filter((result: any) => result.file !== undefined)
+      filter((result: any) => result?.file !== undefined)
     ).subscribe(result => {
-      console.log(result.file);
       this.startUpload(result.file);
     });
   }

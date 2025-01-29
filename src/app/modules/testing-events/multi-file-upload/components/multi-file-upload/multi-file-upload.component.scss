@@ -13,6 +13,7 @@
   align-items: flex-end;
   justify-content: center;
   margin-top: 24px;
+  font-size: larger;
 }
 
 .actions{
@@ -33,11 +34,22 @@
     display: flex;
     flex-direction: row;
     background-color: white;
-    justify-content: space-between;
     align-items: center;
     border: 1px solid rgba(210, 210, 210, .8);
     border-radius: 4px;
     margin: 4px 0;
+    >.file-name-and-size{
+      flex-grow: 1;
+      display: flex;
+      justify-content: space-between;
+      margin-left: 4px;
+      >.filename{
+        margin-left: 4px;
+      }
+      >.filesize{
+        color: #646064
+      }
+    }
   }
 }
 
@@ -56,6 +68,14 @@
   margin: 4px;
 }
 
-.filename{
-  margin-left: 4px;
+.info{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 4px 24px;
+  >.hint{
+    font-size: smaller;
+    font-style: italic;
+  }
 }
+

@@ -4,7 +4,12 @@ import {MatIcon} from "@angular/material/icon";
 import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material/dialog";
 import {DragAndDropDirective} from "../../directives/drag-and-drop.directive";
-import JSZip from "jszip";
+import JSZip, {file} from "jszip";
+import {FilesizePipe} from "../../pipes/filesize.pipe";
+import {FilenameShortenerPipe} from "../../pipes/filename-shortener.pipe";
+import {MatError} from "@angular/material/form-field";
+import {NgClass} from "@angular/common";
+
 
 export interface MultiFileUploadDialogData {
   height?: string;
@@ -13,12 +18,21 @@ export interface MultiFileUploadDialogData {
   width?: string;
 }
 
+/*
+Allowed extensions list
+  zip, pdf, doc, docx, xls, xlsx, ppt, pptx, rtf, txt, png, jpg, jpeg
+*/
+
 @Component({
   selector: 'app-multi-file-upload',
   imports: [
     MatIcon,
     MatButton,
-    DragAndDropDirective
+    DragAndDropDirective,
+    FilesizePipe,
+    FilenameShortenerPipe,
+    MatError,
+    NgClass,
   ],
   templateUrl: './multi-file-upload.component.html',
   styleUrl: './multi-file-upload.component.scss'
@@ -40,15 +54,28 @@ export class MultiFileUploadComponent {
 
   fileList: File[] = [];
   isLoading = false;
+  MAX_TOTAL_SIZE: number = 2*(1024 * 1024);
+  totalFileSize = 0;
+
+  getTotalFileSize(fileList: File[]) {
+    if (!fileList || fileList.length === 0) {
+      return 0;
+    }
+    return fileList.reduce((acc, file) => acc + file.size, 0);
+  }
+
+  setTotalFileSize(){
+    this.totalFileSize = this.fileList.reduce((acc, file) => acc + file.size, 0);
+  }
 
   onFileChanged(event: any) {
     this.isLoading = true;
     Array.from(event.target.files).forEach(selectedFile => {
       if (!this.fileList.some(file => file.name === (selectedFile as File).name)) {
         this.fileList.push(selectedFile as File);
+        this.setTotalFileSize();
       }
     });
-    console.log(this.fileList)
     this.isLoading = false;
   }
 
@@ -57,11 +84,13 @@ export class MultiFileUploadComponent {
     this.fileList.splice(index, 1);
     // delete file from FileList
     this.fileList.splice(index, 1);
+    this.setTotalFileSize();
   }
 
   selectFiles(incomingFiles: File[]) {
     //TODO handle incorrect file types and file size here. Need clear requirements to implement
     this.fileList = [...this.fileList, ...incomingFiles];
+    this.setTotalFileSize();
   }
 
   async zipFiles(fileList: File[], archiveName: string): Promise<File> {
@@ -75,21 +104,20 @@ export class MultiFileUploadComponent {
     if(this.fileList.length == 0){
       console.warn("No files selected for upload")
     }
-    else if(this.fileList.length == 1){
-      //one file, no need to zip it
-      this.dialogRef.close({file: this.fileList[0]})
-    }
     else {
       this.zipFiles(this.fileList, 'archive.zip') //we can append to the name whatever we want and pass it to dialog data
-        .then(archive => this.dialogRef.close({file: archive}))
+        .then(archive => {
+          this.dialogRef.close({file: archive})
+        })
     }
-
   }
 
   onClose() {
     this.fileList = [];
     this.dialogRef.close();
   }
+
+  protected readonly file = file;
 }
 
 
