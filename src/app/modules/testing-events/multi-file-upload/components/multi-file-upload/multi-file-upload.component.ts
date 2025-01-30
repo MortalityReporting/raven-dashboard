@@ -7,8 +7,7 @@ import {DragAndDropDirective} from "../../directives/drag-and-drop.directive";
 import JSZip, {file} from "jszip";
 import {FilesizePipe} from "../../pipes/filesize.pipe";
 import {FilenameShortenerPipe} from "../../pipes/filename-shortener.pipe";
-import {MatError} from "@angular/material/form-field";
-import {NgClass} from "@angular/common";
+import {FileTypePipe} from "../../pipes/file-type.pipe";
 
 
 export interface MultiFileUploadDialogData {
@@ -18,11 +17,6 @@ export interface MultiFileUploadDialogData {
   width?: string;
 }
 
-/*
-Allowed extensions list
-  zip, pdf, doc, docx, xls, xlsx, ppt, pptx, rtf, txt, png, jpg, jpeg
-*/
-
 @Component({
   selector: 'app-multi-file-upload',
   imports: [
@@ -31,8 +25,7 @@ Allowed extensions list
     DragAndDropDirective,
     FilesizePipe,
     FilenameShortenerPipe,
-    MatError,
-    NgClass,
+    FileTypePipe,
   ],
   templateUrl: './multi-file-upload.component.html',
   styleUrl: './multi-file-upload.component.scss'
@@ -49,12 +42,15 @@ export class MultiFileUploadComponent {
       height: string
     },
     private dialogRef: MatDialogRef<any>,
+    private fileTypePipe: FileTypePipe,
   ) {
   }
 
   fileList: File[] = [];
-  isLoading = false;
   MAX_TOTAL_SIZE: number = 2*(1024 * 1024);
+  readonly ALLOWED_FILE_TYPES : string[] = [
+    "zip", "pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "rtf", "txt", "png", "jpg", "jpeg"
+  ]
   totalFileSize = 0;
 
   getTotalFileSize(fileList: File[]) {
@@ -69,14 +65,12 @@ export class MultiFileUploadComponent {
   }
 
   onFileChanged(event: any) {
-    this.isLoading = true;
     Array.from(event.target.files).forEach(selectedFile => {
       if (!this.fileList.some(file => file.name === (selectedFile as File).name)) {
         this.fileList.push(selectedFile as File);
         this.setTotalFileSize();
       }
     });
-    this.isLoading = false;
   }
 
   removeSelectedFile(index: number) {
@@ -90,6 +84,7 @@ export class MultiFileUploadComponent {
   selectFiles(incomingFiles: File[]) {
     //TODO handle incorrect file types and file size here. Need clear requirements to implement
     this.fileList = [...this.fileList, ...incomingFiles];
+    console.log(this.fileList[0]);
     this.setTotalFileSize();
   }
 
@@ -101,14 +96,18 @@ export class MultiFileUploadComponent {
   }
 
   onUploadFiles(){
-    if(this.fileList.length == 0){
-      console.warn("No files selected for upload")
+    this.fileList = this.fileList.filter(file => this.ALLOWED_FILE_TYPES.includes(this.fileTypePipe.transform(file, this.ALLOWED_FILE_TYPES)));
+    if(this.MAX_TOTAL_SIZE >= this.getTotalFileSize(this.fileList)){
+      console.warn("Max file size is exceeded. Cannot upload files.");
+      return;
+    }
+    else if(this.fileList.length == 0){
+      console.warn("No files selected for upload");
+      return;
     }
     else {
       this.zipFiles(this.fileList, 'archive.zip') //we can append to the name whatever we want and pass it to dialog data
-        .then(archive => {
-          this.dialogRef.close({file: archive})
-        })
+        .then(archive => this.dialogRef.close({file: archive}))
     }
   }
 

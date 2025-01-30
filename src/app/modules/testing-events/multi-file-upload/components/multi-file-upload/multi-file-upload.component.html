@@ -1,30 +1,42 @@
 <div class="multi-file-wrapper" dragAndDrop (onFileDropped)="selectFiles($event)">
   <div class="info-text">Drag and drop the file(s) here or click on "Browse Files".</div>
   <div class="files-scrollable-container">
-    @for (file of fileList; track file.name; let index = $index;) {
+    @for (file of fileList; track file.name; let index = $index; ) {
       <div class="line-item">
         <div class="file-name-and-size">
-          <div class="filename">{{ file.name | filenameShortener:30 }}</div> <div class="filesize">{{ file.size | filesize }}</div>
+          <div class="filename">{{ file.name | filenameShortener:30 }}</div>
+          <div class="filesize">{{ file.size | filesize }}</div>
         </div>
         <button mat-stroked-button class="action-button" (click)="removeSelectedFile(index)">
           <mat-icon class="centered-button-icon">close</mat-icon>
         </button>
       </div>
+      @if (file | fileType: ALLOWED_FILE_TYPES; as invalidExtension) {
+        <div class="invalid-file danger-color">{{ invalidExtension }} is not a valid file type and will be
+          submitted.
+        </div>
+      }
+      @if (file.size >= MAX_TOTAL_SIZE) {
+        <div class="invalid-file danger-color">This file is too large and cannot be uploaded.</div>
+      }
     }
   </div>
-  <div class="info">
-    <div>Total Size: {{ totalFileSize | filesize}}</div>
-    <div class="hint">
-      @if(totalFileSize >= MAX_TOTAL_SIZE){
-        <span class="danger-color">You have exceeded the total maximum size of {{ MAX_TOTAL_SIZE | filesize }}</span>
-      } @else {
-        Maximum size is {{ MAX_TOTAL_SIZE | filesize }}
-      }
+  @if (fileList.length > 0) {
+    <div class="info">
+      <div>Total Size: {{ totalFileSize | filesize }}</div>
+      <div class="hint">
+        @if (totalFileSize >= MAX_TOTAL_SIZE) {
+          <span class="danger-color">You have exceeded the total maximum size of {{ MAX_TOTAL_SIZE | filesize }}</span>
+        } @else {
+          Maximum size is {{ MAX_TOTAL_SIZE | filesize }}
+        }
+      </div>
     </div>
-  </div>
+  }
   <div class="actions">
     <button mat-stroked-button class="action-button" (click)="fileInput.click()">Browse Files</button>
-    <button mat-stroked-button class="action-button" (click)="onUploadFiles()" [disabled]="fileList.length == 0">
+    <button mat-stroked-button class="action-button" (click)="onUploadFiles()"
+            [disabled]="fileList.length == 0 || totalFileSize >= MAX_TOTAL_SIZE">
       <mat-icon class="centered-button-icon">upload</mat-icon>
     </button>
     <button mat-stroked-button class="action-button" (click)="onClose()">
