@@ -133,7 +133,7 @@ export class ToxToMdiMessageHandlerService {
     const toxLabNumber = this.getTrackingNumber(diagnosticReport, TrackingNumberType.Tox);
     let toxHeader = new ToxHeader();
     toxHeader.fullName = this.fhirHelper.getOfficialName(subject);
-    toxHeader.reportDate = diagnosticReport.issued.split("T")[0] || undefined;
+    toxHeader.reportDate = diagnosticReport?.issued?.split("T")?.[0] || undefined;
     toxHeader.toxCaseNumber = toxLabNumber.value;
     toxHeader.toxCaseSystem = toxLabNumber.system;
     return toxHeader
