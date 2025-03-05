@@ -12,9 +12,10 @@ import {openTextInputDialog} from "ngx-hisb-common-ui";
 import {ModuleHeaderConfig} from "../../../../../../providers/module-header-config";
 
 @Component({
-  selector: 'app-import-mdi-to-edrs-document',
-  templateUrl: './import-mdi-to-edrs-document.component.html',
-  styleUrls: ['./import-mdi-to-edrs-document.component.scss']
+    selector: 'app-import-mdi-to-edrs-document',
+    templateUrl: './import-mdi-to-edrs-document.component.html',
+    styleUrls: ['./import-mdi-to-edrs-document.component.scss'],
+    standalone: false
 })
 export class ImportMdiToEdrsDocumentComponent implements OnInit {
 

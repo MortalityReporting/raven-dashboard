@@ -3,9 +3,10 @@ import {Router} from "@angular/router";
 import {ModuleHeaderService} from "../../service/module-header.service";
 
 @Component({
-  selector: 'app-module-header',
-  templateUrl: './module-header.component.html',
-  styleUrls: ['./module-header.component.scss']
+    selector: 'app-module-header',
+    templateUrl: './module-header.component.html',
+    styleUrls: ['./module-header.component.scss'],
+    standalone: false
 })
 export class ModuleHeaderComponent implements OnInit {
 

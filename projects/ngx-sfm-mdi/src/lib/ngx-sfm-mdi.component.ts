@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'lib-ngx-sfm-mdi',
-  template: `
+    selector: 'lib-ngx-sfm-mdi',
+    template: `
     <p>
       ngx-sfm-mdi works!
     </p>
   `,
-  styles: [
-  ]
+    styles: [],
+    standalone: false
 })
 export class NgxSfmMdiComponent {
 

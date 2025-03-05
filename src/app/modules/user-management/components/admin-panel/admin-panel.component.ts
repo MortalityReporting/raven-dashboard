@@ -11,9 +11,10 @@ import {UtilsService} from "../../../../service/utils.service";
 import {UpdateAction} from "../../../testing-events/models/update-action";
 
 @Component({
-  selector: 'app-admin-panel',
-  templateUrl: './admin-panel.component.html',
-  styleUrls: ['./admin-panel.component.scss'],
+    selector: 'app-admin-panel',
+    templateUrl: './admin-panel.component.html',
+    styleUrls: ['./admin-panel.component.scss'],
+    standalone: false
 })
 export class AdminPanelComponent implements OnInit {
   currentUser: any;

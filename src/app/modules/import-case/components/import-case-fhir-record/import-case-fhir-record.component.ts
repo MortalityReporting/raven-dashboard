@@ -10,9 +10,10 @@ import {FhirValidatorResultsExportService} from "../../../../service/fhir-valida
 
 
 @Component({
-  selector: 'app-import-case-fhir-record',
-  templateUrl: './import-case-fhir-record.component.html',
-  styleUrls: ['./import-case-fhir-record.component.scss']
+    selector: 'app-import-case-fhir-record',
+    templateUrl: './import-case-fhir-record.component.html',
+    styleUrls: ['./import-case-fhir-record.component.scss'],
+    standalone: false
 })
 export class ImportCaseFhirRecordComponent {
 

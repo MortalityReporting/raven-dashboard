@@ -8,9 +8,10 @@ import {ToxToMdiRecord} from "../../models/toxToMdiRecord";
 import {ToxToMdiViewerContentComponent} from "./tox-to-mdi-viewer-content/tox-to-mdi-viewer-content.component";
 
 @Component({
-  selector: 'record-viewer-tox-to-mdi-viewer',
-  templateUrl: './tox-to-mdi-viewer.component.html',
-  styleUrls: ['./tox-to-mdi-viewer.component.css']
+    selector: 'record-viewer-tox-to-mdi-viewer',
+    templateUrl: './tox-to-mdi-viewer.component.html',
+    styleUrls: ['./tox-to-mdi-viewer.component.css'],
+    standalone: false
 })
 export class ToxToMdiViewerComponent implements OnInit {
   @ViewChild(ToxToMdiViewerContentComponent) contentComponent: ToxToMdiViewerContentComponent;

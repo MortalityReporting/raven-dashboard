@@ -9,9 +9,10 @@ import {QuestionnaireResponse} from "../../../fhir-util";
 import {AppConfiguration} from "../../../../providers/app-configuration";
 
 @Component({
-  selector: 'app-event-registration',
-  templateUrl: './event-registration.component.html',
-  styleUrl: './event-registration.component.scss'
+    selector: 'app-event-registration',
+    templateUrl: './event-registration.component.html',
+    styleUrl: './event-registration.component.scss',
+    standalone: false
 })
 export class EventRegistrationComponent implements OnInit{
   // Event Modules/Questionnaires

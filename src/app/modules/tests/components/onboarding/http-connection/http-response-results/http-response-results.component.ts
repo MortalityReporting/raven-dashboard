@@ -2,9 +2,10 @@ import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {Clipboard} from '@angular/cdk/clipboard';
 
 @Component({
-  selector: 'app-http-response-results',
-  templateUrl: './http-response-results.component.html',
-  styleUrls: ['./http-response-results.component.scss']
+    selector: 'app-http-response-results',
+    templateUrl: './http-response-results.component.html',
+    styleUrls: ['./http-response-results.component.scss'],
+    standalone: false
 })
 export class HttpResponseResultsComponent  implements OnChanges {
   @Input() errorResponse: any;

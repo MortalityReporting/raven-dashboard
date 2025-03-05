@@ -8,10 +8,12 @@ Parent component for the Search EDRS flow
 */
 
 @Component({
-  selector: 'app-search-edrs',
-  templateUrl: './search-edrs.component.html',
-  styleUrls: ['./search-edrs.component.scss'],
-  encapsulation: ViewEncapsulation.None // we need this to disable the header for the stepper and use it as an indicator
+    selector: 'app-search-edrs',
+    templateUrl: './search-edrs.component.html',
+    styleUrls: ['./search-edrs.component.scss'],
+    encapsulation: ViewEncapsulation.None // we need this to disable the header for the stepper and use it as an indicator
+    ,
+    standalone: false
 })
 export class SearchEdrsComponent implements OnInit {
   @Output() onTestCompletedEvent = new EventEmitter<any>()

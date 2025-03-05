@@ -3,9 +3,10 @@ import {UtilsService} from "../../../../service/utils.service";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
-  selector: 'record-comparison-container-dialog',
-  templateUrl: 'record-comparison-dialog.component.html',
-  styleUrls: ['./record-comparison-dialog.component.scss'],
+    selector: 'record-comparison-container-dialog',
+    templateUrl: 'record-comparison-dialog.component.html',
+    styleUrls: ['./record-comparison-dialog.component.scss'],
+    standalone: false
 })
 export class RecordComparisonDialogComponent {
   text: string = undefined;

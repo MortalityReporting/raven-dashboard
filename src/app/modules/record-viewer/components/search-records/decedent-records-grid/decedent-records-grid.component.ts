@@ -15,9 +15,10 @@ import {TrackingNumberType} from "../../../../fhir-mdi-library";
 
 
 @Component({
-  selector: 'record-viewer-decedent-records-grid',
-  templateUrl: './decedent-records-grid.component.html',
-  styleUrls: ['../../../record-viewer-styles.scss','../search-records.component.scss']
+    selector: 'record-viewer-decedent-records-grid',
+    templateUrl: './decedent-records-grid.component.html',
+    styleUrls: ['../../../record-viewer-styles.scss', '../search-records.component.scss'],
+    standalone: false
 })
 export class DecedentRecordsGridComponent implements OnInit {
 

@@ -4,9 +4,10 @@ import {ThemeService} from "../../../../service/theme.service";
 
 
 @Component({
-  selector: 'app-decedent-display',
-  templateUrl: './decedent-display.component.html',
-  styleUrls: ['./decedent-display.component.css']
+    selector: 'app-decedent-display',
+    templateUrl: './decedent-display.component.html',
+    styleUrls: ['./decedent-display.component.css'],
+    standalone: false
 })
 export class DecedentDisplayComponent {
   @Input() decedentInformation: any;

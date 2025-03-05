@@ -8,9 +8,10 @@ import {UtilsService} from "../../../../../service/utils.service";
 import {ActivatedRoute} from "@angular/router";
 
 @Component({
-  selector: 'app-edrs-results-step',
-  templateUrl: './edrs-results-step.component.html',
-  styleUrls: ['./edrs-results-step.component.scss']
+    selector: 'app-edrs-results-step',
+    templateUrl: './edrs-results-step.component.html',
+    styleUrls: ['./edrs-results-step.component.scss'],
+    standalone: false
 })
 
 export class EdrsResultsStepComponent implements OnInit {

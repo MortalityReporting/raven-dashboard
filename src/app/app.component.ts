@@ -8,9 +8,10 @@ import {Platform} from "@angular/cdk/platform";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: []
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: [],
+    standalone: false
 })
 export class AppComponent implements OnInit {
   title: string;

@@ -1,11 +1,11 @@
-@import "src/styles";
+@use "src/styles" as s;
 $dark-red-background: #B65454;
 $dark-green-background: #335963;
 
 
 .title-row {
   @extend .padding-md;
-  background-color: $primary-color;
+  background-color: s.$primary-color;
   > * {
     color: white;
     font-weight: bold;
@@ -21,7 +21,7 @@ $dark-green-background: #335963;
   > * {
     font-variant-caps: all-small-caps;
     font-weight: bold;
-    padding: $xs;
+    padding: s.$xs;
     text-align: center;
   }
   > .user-group {
@@ -39,7 +39,7 @@ $dark-green-background: #335963;
   > * {
     font-weight: bolder;
     font-variant-caps: all-small-caps;
-    padding: $xs $sm;
+    padding: s.$xs s.$sm;
   }
   > .user-header {
     background-color: #EED8D8;

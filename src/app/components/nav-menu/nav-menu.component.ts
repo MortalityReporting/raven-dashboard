@@ -1,22 +1,18 @@
 import {Component} from '@angular/core';
 import {MatIcon} from "@angular/material/icon";
 import {MatDivider} from "@angular/material/divider";
-import {MatTooltip} from "@angular/material/tooltip";
 import {NavigationEnd, Router} from "@angular/router";
-import {AsyncPipe, NgClass} from "@angular/common";
+import {NgClass} from "@angular/common";
 import {filter} from "rxjs/operators";
 import {AuthService} from "@auth0/auth0-angular";
 import {AppConstants} from "../../providers/app-constants";
 
 @Component({
   selector: 'app-nav-menu',
-  standalone: true,
   imports: [
     MatIcon,
     MatDivider,
-    MatTooltip,
     NgClass,
-    AsyncPipe,
   ],
   templateUrl: './nav-menu.component.html',
   styleUrl: './nav-menu.component.scss'

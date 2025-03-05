@@ -6,9 +6,10 @@ import {openConfirmationDialog} from "ngx-hisb-common-ui";
 import {MatDialog} from "@angular/material/dialog";
 
 @Component({
-  selector: 'app-event-table',
-  templateUrl: './event-table.component.html',
-  styleUrls: ['./event-table.component.scss']
+    selector: 'app-event-table',
+    templateUrl: './event-table.component.html',
+    styleUrls: ['./event-table.component.scss'],
+    standalone: false
 })
 export class EventTableComponent implements OnChanges {
   @Input() testingEvent: any;

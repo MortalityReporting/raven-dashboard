@@ -5,9 +5,10 @@ import {TestStatusCodes} from "../../../testing-events";
 import {AccessTokenService} from "../../services/access-token.service";
 
 @Component({
-  selector: 'app-search-edrs-bluejay',
-  templateUrl: './search-edrs-bluejay.component.html',
-  styleUrl: './search-edrs-bluejay.component.scss'
+    selector: 'app-search-edrs-bluejay',
+    templateUrl: './search-edrs-bluejay.component.html',
+    styleUrl: './search-edrs-bluejay.component.scss',
+    standalone: false
 })
 export class SearchEdrsBluejayComponent implements OnInit, OnDestroy{
   @Output() onTestCompletedEvent = new EventEmitter<any>()

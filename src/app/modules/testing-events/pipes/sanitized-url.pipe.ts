@@ -4,7 +4,8 @@ import {DomSanitizer, SafeResourceUrl, SafeValue} from "@angular/platform-browse
 import {HttpClient} from "@angular/common/http";
 
 @Pipe({
-  name: 'sanitized'
+    name: 'sanitized',
+    standalone: false
 })
 export class SanitizedUrlPipe implements PipeTransform {
   constructor(private readonly http: HttpClient,

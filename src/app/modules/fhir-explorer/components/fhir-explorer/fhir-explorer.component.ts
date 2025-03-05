@@ -4,9 +4,10 @@ import {UtilsService} from "../../../../service/utils.service";
 import {FhirExplorerService} from "../../services/fhir-explorer.service";
 
 @Component({
-  selector: 'app-fhir-explorer',
-  templateUrl: './fhir-explorer.component.html',
-  styleUrls: ['./fhir-explorer.component.scss']
+    selector: 'app-fhir-explorer',
+    templateUrl: './fhir-explorer.component.html',
+    styleUrls: ['./fhir-explorer.component.scss'],
+    standalone: false
 })
 export class FhirExplorerComponent implements OnInit {
 

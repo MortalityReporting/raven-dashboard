@@ -20,11 +20,13 @@ import {UtilsService} from "../../../../service/utils.service";
 import {Router} from "@angular/router";
 import {UpdateAction} from "../../models/update-action";
 import {AppConfiguration} from "../../../../providers/app-configuration";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
-  selector: 'testing-event-root',
-  templateUrl: './testing-event-root.component.html',
-  styleUrls: ['../testing-event.scss']
+    selector: 'testing-event-root',
+    templateUrl: './testing-event-root.component.html',
+    styleUrls: ['../testing-event.scss'],
+    standalone: false
 })
 export class TestingEventRootComponent implements OnInit, OnDestroy {
   // Registrations/QuestionnaireResponses
@@ -54,6 +56,7 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
               private userProfileManager: UserProfileManagerService,
               private utilsService: UtilsService,
               private router: Router,
+              protected dialog: MatDialog,
   ) {
   }
 

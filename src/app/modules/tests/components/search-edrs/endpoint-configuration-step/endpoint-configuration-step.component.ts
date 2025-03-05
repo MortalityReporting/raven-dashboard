@@ -8,9 +8,10 @@ import {ConfigService} from "../../../../../service/config.service";
 import {Config} from "../../../../../model/config";
 
 @Component({
-  selector: 'app-endpoint-configuration-step',
-  templateUrl: './endpoint-configuration-step.component.html',
-  styleUrls: ['./endpoint-configuration-step.component.scss']
+    selector: 'app-endpoint-configuration-step',
+    templateUrl: './endpoint-configuration-step.component.html',
+    styleUrls: ['./endpoint-configuration-step.component.scss'],
+    standalone: false
 })
 export class EndpointConfigurationStepComponent implements OnInit {
   blueJayUri = '';

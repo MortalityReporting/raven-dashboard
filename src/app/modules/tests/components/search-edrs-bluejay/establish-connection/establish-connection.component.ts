@@ -8,9 +8,10 @@ import {AccessTokenService} from "../../../services/access-token.service";
 import {MatStepper} from "@angular/material/stepper";
 
 @Component({
-  selector: 'app-establish-connection',
-  templateUrl: './establish-connection.component.html',
-  styleUrl: './establish-connection.component.scss'
+    selector: 'app-establish-connection',
+    templateUrl: './establish-connection.component.html',
+    styleUrl: './establish-connection.component.scss',
+    standalone: false
 })
 export class EstablishConnectionComponent implements OnInit, OnDestroy {
 
