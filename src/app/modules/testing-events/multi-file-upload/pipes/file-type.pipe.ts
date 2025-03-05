@@ -1,8 +1,13 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Injectable, Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({
   name: 'fileType'
 })
+
+@Injectable({
+  providedIn: 'root'
+})
+
 export class FileTypePipe implements PipeTransform {
 
   transform(file: File, allowedTypes: string[]): string | null {

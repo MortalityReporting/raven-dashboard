@@ -96,8 +96,8 @@ export class MultiFileUploadComponent {
   }
 
   onUploadFiles(){
-    this.fileList = this.fileList.filter(file => this.ALLOWED_FILE_TYPES.includes(this.fileTypePipe.transform(file, this.ALLOWED_FILE_TYPES)));
-    if(this.MAX_TOTAL_SIZE >= this.getTotalFileSize(this.fileList)){
+    this.fileList = this.fileList.filter(file => this.fileTypePipe.transform(file, this.ALLOWED_FILE_TYPES) == null);
+    if(this.MAX_TOTAL_SIZE < this.getTotalFileSize(this.fileList)){
       console.warn("Max file size is exceeded. Cannot upload files.");
       return;
     }
