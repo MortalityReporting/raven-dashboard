@@ -5,7 +5,7 @@ import {ModuleHeaderConfig} from "../../../../../providers/module-header-config"
 import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material/dialog";
 import {DragAndDropDirective} from "../../directives/drag-and-drop.directive";
 import JSZip, {file} from "jszip";
-import {FilesizePipe} from "../../pipes/filesize.pipe";
+import {FileSizePipe} from "../../pipes/file-size.pipe";
 import {FilenameShortenerPipe} from "../../pipes/filename-shortener.pipe";
 import {FileTypePipe} from "../../pipes/file-type.pipe";
 
@@ -23,7 +23,7 @@ export interface MultiFileUploadDialogData {
     MatIcon,
     MatButton,
     DragAndDropDirective,
-    FilesizePipe,
+    FileSizePipe,
     FilenameShortenerPipe,
     FileTypePipe,
   ],
@@ -32,6 +32,7 @@ export interface MultiFileUploadDialogData {
 })
 export class MultiFileUploadComponent {
   @ViewChild('attachments') attachment: ElementRef;
+  private fileTypePipe: FileTypePipe = new FileTypePipe();
   constructor(
     @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
     @Inject(MAT_DIALOG_DATA) public data: {
@@ -42,7 +43,6 @@ export class MultiFileUploadComponent {
       height: string
     },
     private dialogRef: MatDialogRef<any>,
-    private fileTypePipe: FileTypePipe,
   ) {
   }
 

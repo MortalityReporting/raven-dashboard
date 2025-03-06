@@ -1,11 +1,7 @@
-import {Injectable, Pipe, PipeTransform} from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({
   name: 'fileType'
-})
-
-@Injectable({
-  providedIn: 'root'
 })
 
 export class FileTypePipe implements PipeTransform {
