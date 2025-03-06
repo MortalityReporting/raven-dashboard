@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'filesize'
+  name: 'fileSize'
 })
-export class FilesizePipe implements PipeTransform {
+export class FileSizePipe implements PipeTransform {
 
   transform(value: number): string {
     if (value < 1024) {

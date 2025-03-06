@@ -5,7 +5,7 @@
       <div class="line-item">
         <div class="file-name-and-size">
           <div class="filename">{{ file.name | filenameShortener:30 }}</div>
-          <div class="filesize">{{ file.size | filesize }}</div>
+          <div class="filesize">{{ file.size | fileSize }}</div>
         </div>
         <button mat-stroked-button class="action-button" (click)="removeSelectedFile(index)">
           <mat-icon class="centered-button-icon">close</mat-icon>
@@ -23,12 +23,12 @@
   </div>
   @if (fileList.length > 0) {
     <div class="info">
-      <div>Total Size: {{ totalFileSize | filesize }}</div>
+      <div>Total Size: {{ totalFileSize | fileSize }}</div>
       <div class="hint">
         @if (totalFileSize >= MAX_TOTAL_SIZE) {
-          <span class="danger-color">You have exceeded the total maximum size of {{ MAX_TOTAL_SIZE | filesize }}</span>
+          <span class="danger-color">You have exceeded the total maximum size of {{ MAX_TOTAL_SIZE | fileSize }}</span>
         } @else {
-          Maximum size is {{ MAX_TOTAL_SIZE | filesize }}
+          Maximum size is {{ MAX_TOTAL_SIZE | fileSize }}
         }
       </div>
     </div>
