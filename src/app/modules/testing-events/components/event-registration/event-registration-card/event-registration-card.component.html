@@ -1,0 +1,27 @@
+<div class="item border">
+  <div class="title">{{ event.title }}</div>
+
+  <div class="event-details">
+    <div class="tests">
+      @for (testItem of event.items; track testItem.linkId) {
+        <ul>
+          <li>{{ testItem.name }}</li>
+        </ul>
+      }
+    </div>
+    <div class="description">
+      {{ event.description }}
+    </div>
+  </div>
+
+  <div class="actions">
+    @if (!registered) {
+      <button mat-flat-button
+              (click)="onClickRegister(event)"
+              [style.background-color]="appConfiguration.modules['eventRegistration'].color"
+              [style.color]="'white'">
+        Register for Event
+      </button>
+    }
+  </div>
+</div>

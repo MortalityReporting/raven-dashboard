@@ -10,11 +10,16 @@ import {TrackingNumberType} from "../../../../../fhir-mdi-library";
 import {ModuleHeaderConfig} from "../../../../../../providers/module-header-config";
 import {ConfigService} from "../../../../../../service/config.service";
 import {Config} from "../../../../../../model/config";
+import {AccessTokenService} from "../../../../services/access-token.service";
+import {ActivatedRoute} from "@angular/router";
+import {map, switchMap, tap} from "rxjs";
+import {filter} from "rxjs/operators";
 
 @Component({
-  selector: 'app-search-parameters',
-  templateUrl: './search-parameters.component.html',
-  styleUrls: ['./search-parameters.component.scss']
+    selector: 'app-search-parameters',
+    templateUrl: './search-parameters.component.html',
+    styleUrls: ['./search-parameters.component.scss'],
+    standalone: false
 })
 export class SearchParametersComponent implements OnInit {
 
@@ -37,6 +42,9 @@ export class SearchParametersComponent implements OnInit {
 
   config: Config;
 
+  accessToken: string;
+  isAccessTokenSearchActive = false;
+
   constructor(
     private fb: UntypedFormBuilder,
     private searchEdrsService: SearchEdrsService,
@@ -44,7 +52,9 @@ export class SearchParametersComponent implements OnInit {
     private fhirHelperService: FhirHelperService,
     @Inject('workflowSimulatorConfig') public moduleConfig: ModuleHeaderConfig,
     @Inject('fhirProfiles') public fhirProfiles: FHIRProfileConstants,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private accessTokenService: AccessTokenService,
+    private route: ActivatedRoute
   ) {
     this.config = this.configService.config;
   }
@@ -60,6 +70,17 @@ export class SearchParametersComponent implements OnInit {
         this.decedentInfo = value;
       }
     });
+
+    this.route.url.subscribe( event =>
+       event[0].path !== 'search-edrs-bluejay'
+    );
+
+    this.route.url.pipe(
+      map(event =>  event?.[0]?.path === 'search-edrs-bluejay'),
+      tap(value=> this.isAccessTokenSearchActive = value),
+      filter(value => value),
+      switchMap(() => this.accessTokenService.accessToken$)
+    ).subscribe(value => this.accessToken = value);
 
     this.searchEdrsService.getOperationDefinitionList().subscribe({
       next: value => {
@@ -146,33 +167,26 @@ export class SearchParametersComponent implements OnInit {
 
   private executeEdrsSearch() {
     this.clearSearchResultEmitter.emit();
-    if (this.customEndpoint) {
-      this.searchEdrsService.searchEdrs(this.customEndpoint.endpoint,
-        this.getSearchParametersResourcePreview(), this.customEndpoint.auth).subscribe({
-        next: value => {
-          this.searchResultsEmitter.emit({ response: value, success: true });
-        },
-        error: err => {
-          console.error(err);
-          this.utilsService.showErrorMessage();
-          this.searchResultsEmitter.emit({ response: err, success: false });
-        }
-      });
-    }
-    else {
+    let accessToken = null;
+    let authObject = null;
+    if (this.isAccessTokenSearchActive) { // when we use auth0 to access Bluejay
+      accessToken = this.accessToken;
+    } else if (this.customEndpoint) { //when we use custom endpoint (Minnesota had a test case)
+      authObject = this.customEndpoint.auth
+    } else { //we use simple authentication
       let authStringSplit = this.config.ravenFhirServerBasicAuth.split(":");
-      let authObject = {"username": authStringSplit[0], "password": authStringSplit[1]};
-      this.searchEdrsService.searchEdrs(this.config.blueJayServerBaseUrl, this.getSearchParametersResourcePreview(), authObject).subscribe({
-        next: value => {
-          this.searchResultsEmitter.emit({ response: value, success: true });
-        },
-        error: err => {
-          console.error(err);
-          this.utilsService.showErrorMessage();
-          this.searchResultsEmitter.emit({ response: err, success: false });
-        }
-      });
+      authObject = {"username": authStringSplit[0], "password": authStringSplit[1]};
     }
+    this.searchEdrsService.searchEdrs(this.config.blueJayServerBaseUrl, this.getSearchParametersResourcePreview(), authObject, accessToken).subscribe({
+      next: value => {
+        this.searchResultsEmitter.emit({response: value, success: true});
+      },
+      error: err => {
+        console.error(err);
+        this.utilsService.showErrorMessage();
+        this.searchResultsEmitter.emit({response: err, success: false});
+      }
+    });
   }
 
   private setInitialFormControls(){

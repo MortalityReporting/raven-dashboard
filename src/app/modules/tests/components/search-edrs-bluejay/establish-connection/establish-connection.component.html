@@ -1,0 +1,94 @@
+<div class="margin-top-md">
+  <app-decedent-basic-info [decedentInfo]="decedentInfo"></app-decedent-basic-info>
+</div>
+
+<div class="padding-top-md row">
+  BlueJay is a FHIR server which serves as an MDI IG reference implementation.
+  It is used to demonstrate interaction through the defined FHIR APIs, leveraging OAuth 2.0 for authorization.
+  This process demonstrates connecting to the BlueJay server using OAuth 2.0.
+</div>
+
+<div class="padding-top-md row">
+  A client ID and client secret are provided here for demonstration purposes.
+  In a real workflow, this will vary on a number of factors, including the type of connection.
+  For backend services connecting to other backend services, this is typically "machine to machine"
+  which is how this example is configured. Frontend applications instead begin with a user login process,
+  such as through a single sign on service, replacing this skip.
+</div>
+
+<div class="padding-top-md">
+  <mat-card>
+    <mat-card-content>
+      <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+        <mat-tab label="Request Parameters">
+          <div class="grid-container">
+            <div class="grid-row">
+              <div class="grid-item display">{{ uiConstantsStep2.auth0Credentials.accessTokenUrl.display }}:</div>
+              <div class="grid-item value">{{ uiConstantsStep2.auth0Credentials.accessTokenUrl.value }}</div>
+            </div>
+            <div class="grid-row">
+              <div class="grid-item display">{{ uiConstantsStep2.auth0Credentials.clientId.display }}:</div>
+              <div class="grid-item value">{{ uiConstantsStep2.auth0Credentials.clientId.value }}</div>
+            </div>
+            <div class="grid-row">
+              <div class="grid-item display">{{ uiConstantsStep2.auth0Credentials.clientSecret.display }}:</div>
+              <div class="grid-item value">{{ uiConstantsStep2.auth0Credentials.clientSecret.value }}:</div>
+            </div>
+            <div class="grid-row">
+              <div class="grid-item display">{{ uiConstantsStep2.auth0Credentials.grantType.display }}:</div>
+              <div class="grid-item value">{{ uiConstantsStep2.auth0Credentials.grantType.value }}</div>
+            </div>
+            <div class="grid-row">
+              <div class="grid-item display">{{ uiConstantsStep2.auth0Credentials.audience.display }}:</div>
+              <div class="grid-item value">{{ uiConstantsStep2.auth0Credentials.audience.value }}</div>
+            </div>
+          </div>
+
+        </mat-tab>
+        <mat-tab label="Curl Example">
+          <div class="code-container">
+            <pre>{{ uiConstantsStep2.auth0Credentials.curlExample.display }}</pre>
+            <span class="icon" (click)="onCopyToClipboard(uiConstantsStep2.auth0Credentials.curlExample.value)">
+              <mat-icon matTooltip="Copy curl command to clipboard">content_copy</mat-icon>
+            </span>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div class="padding-top-md row">
+  Request the authorization token using the following button to store it within Raven for further use.
+  You may also copy the token to use it an external tool.
+</div>
+
+<div class="line-item">
+  <div>
+    <button mat-raised-button (click)="onRequestAuth0Token()">
+      <span class="no-wrap-label">Request Authorization Token</span>
+    </button>
+  </div>
+  <div class="token-preview">
+    {{ bearerToken }}
+  </div>
+  <div>
+    <button mat-icon-button [matTooltip]="bearerToken?.length > 0 ? 'Copy token to clipboard' : 'Request Bearer token first'"
+      [disabled]="!bearerToken" [cdkCopyToClipboard]="bearerToken">
+      <mat-icon>content_copy</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div class="actions">
+  <button mat-raised-button matStepperPrevious>Back</button>
+
+  <mat-error>{{ errorMessage }}</mat-error>
+
+    <button type="submit" mat-raised-button
+            (click)="onProceed();"
+            [style.background-color]="moduleConfig.backgroundColor"
+            [style.color]="'white'" >
+      {{ uiConstantsStep2.PROCEED_TO_NEXT_STEP_BTN }}
+    </button>
+</div>

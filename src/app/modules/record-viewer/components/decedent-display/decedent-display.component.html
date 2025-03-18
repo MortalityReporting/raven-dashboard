@@ -4,24 +4,28 @@
     <span class="label" [style.color]="color">Decedent Name:</span>
     <span class="value-name" [style.color]="textColor">{{decedentInformation?.fullName}}</span>
   </div>
-  <div class="details-box" *ngIf="type === 'mdi'">
-    <div>
-      <span class="label" [style.color]="color">Date | Time of Death:</span>
-      <span class="value" [style.color]="textColor">{{decedentInformation?.deathDateTime| date: 'MM/dd/yy' : 'GMT'}} | {{decedentInformation?.deathDateTime |  date: 'HH:mm':'GMT'}} GMT</span>
+  @if (type === 'mdi') {
+    <div class="details-box">
+      <div>
+        <span class="label" [style.color]="color">Date | Time of Death:</span>
+        <span class="value" [style.color]="textColor">{{decedentInformation?.deathDateTime| date: 'MM/dd/yy' : 'GMT'}} | {{decedentInformation?.deathDateTime |  date: 'HH:mm':'GMT'}} GMT</span>
+      </div>
+      <div>
+        <span class="label" [style.color]="color">MDI Case Number | System:</span>
+        <span class="value" [style.color]="textColor">{{decedentInformation?.mdiCaseNumber?.value}} | {{decedentInformation?.mdiCaseNumber?.system}}</span>
+      </div>
     </div>
-    <div>
-      <span class="label" [style.color]="color">MDI Case Number | System:</span>
-      <span class="value" [style.color]="textColor">{{decedentInformation?.mdiCaseNumber?.value}} | {{decedentInformation?.mdiCaseNumber?.system}}</span>
+  }
+  @if (type === 'tox') {
+    <div class="details-box">
+      <div>
+        <span class="label" [style.color]="color">Date Report Issued:</span>
+        <span class="value" [style.color]="textColor">{{decedentInformation?.reportDate}} </span>
+      </div>
+      <div>
+        <span class="label" [style.color]="color">Tox Lab Case Number | System:</span>
+        <span class="value" [style.color]="textColor">{{decedentInformation?.toxCaseNumber}} | {{decedentInformation?.toxCaseSystem}}</span>
+      </div>
     </div>
-  </div>
-  <div class="details-box" *ngIf="type === 'tox'">
-    <div>
-      <span class="label" [style.color]="color">Date Report Issued:</span>
-      <span class="value" [style.color]="textColor">{{decedentInformation?.reportDate}} </span>
-    </div>
-    <div>
-      <span class="label" [style.color]="color">Tox Lab Case Number | System:</span>
-      <span class="value" [style.color]="textColor">{{decedentInformation?.toxCaseNumber}} | {{decedentInformation?.toxCaseSystem}}</span>
-    </div>
-  </div>
+  }
 </div>

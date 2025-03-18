@@ -8,7 +8,6 @@ import {ModuleHeaderConfig} from "../model/model-header-config";
   providedIn: 'root'
 })
 export class ModuleHeaderService {
-  routerNaviEndValue
 
   private moduleHeaderConfig = new Subject<ModuleHeaderConfig>();
   moduleHeaderConfig$ = this.moduleHeaderConfig.asObservable();

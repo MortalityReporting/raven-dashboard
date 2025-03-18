@@ -1,7 +1,8 @@
 import {Directive, ElementRef, HostListener, Input, Renderer2} from '@angular/core';
 
 @Directive({
-  selector: '[cardHover]'
+    selector: '[cardHover]',
+    standalone: false
 })
 export class CardHoverDirective {
 

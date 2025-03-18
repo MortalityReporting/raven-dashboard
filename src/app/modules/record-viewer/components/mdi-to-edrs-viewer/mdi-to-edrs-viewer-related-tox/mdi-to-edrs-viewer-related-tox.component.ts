@@ -6,9 +6,10 @@ import {ModuleHeaderConfig} from "../../../../../providers/module-header-config"
 import {AppConfiguration} from "../../../../../providers/app-configuration";
 
 @Component({
-  selector: 'record-viewer-mdi-to-edrs-viewer-related-tox',
-  templateUrl: './mdi-to-edrs-viewer-related-tox.component.html',
-  styleUrls: ['../mdi-to-edrs-viewer.component.scss', '../../../record-viewer-styles.scss']
+    selector: 'record-viewer-mdi-to-edrs-viewer-related-tox',
+    templateUrl: './mdi-to-edrs-viewer-related-tox.component.html',
+    styleUrls: ['../mdi-to-edrs-viewer.component.scss', '../../../record-viewer-styles.scss'],
+    standalone: false
 })
 export class MdiToEdrsViewerRelatedToxComponent implements OnInit {
   @Input() toxicologyRecordList: any[];

@@ -6,49 +6,55 @@
   <div>
     <div class="padding-top-md">
       <input type="file" class="file-input" (click)="fileUpload.value=null"
-             accept=".csv, text/csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-             (change)="onFileSelected($event)" #fileUpload>
+        accept=".csv, text/csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+        (change)="onFileSelected($event)" #fileUpload>
       <div>
+      </div>
     </div>
-  </div>
 
-  <div class="padding-top-md">
-    <h3>2. Submit Test Cases to Raven</h3>
-    <div class="row">
-      Select your completed spreadsheet, the type of the template used, and submit to raven.
+    <div class="padding-top-md">
+      <h3>2. Submit Test Cases to Raven</h3>
+      <div class="row">
+        Select your completed spreadsheet, the type of the template used, and submit to raven.
+      </div>
+      <div class="row margin-top-md">
+        <button mat-raised-button class="upload-btn"
+          (click)="clearUI(); fileUpload.click();" [disabled]=isLoading
+          [style.background-color]="config.backgroundColor" [style.color]="'white'"
+          >
+          <mat-icon>upload_file</mat-icon>
+          Browse for Import Spreadsheet
+        </button>
+        <span class="file-name margin-left-md">{{file?.name}}
+          @if (form.submitted &&!file) {
+            <mat-error
+              >No File Selected.
+            </mat-error>
+          }
+        </span>
+      </div>
     </div>
-    <div class="row margin-top-md">
-      <button mat-raised-button class="upload-btn"
-              (click)="clearUI(); fileUpload.click();" [disabled]=isLoading
-              [style.background-color]="config.backgroundColor" [style.color]="'white'"
-      >
-        <mat-icon>upload_file</mat-icon>
-        Browse for Import Spreadsheet
-      </button>
-      <span class="file-name margin-left-md">{{file?.name}}
-        <mat-error
-          *ngIf="form.submitted &&!file">No File Selected.
-        </mat-error>
-      </span>
-    </div>
-  </div>
     <div class="margin-top-md">
       <form [formGroup]="importCaseForm" (ngSubmit)="onSubmit()" class="row" #form="ngForm" >
         <mat-form-field appearance="outline" style="min-width: 50%" class="margin-top-sm">
           <mat-label>Select Template Type</mat-label>
           <mat-select formControlName="fileTemplate">
-            <mat-option *ngFor="let template of fileTemplates" [value]="template">
-              {{template.description}}
-            </mat-option>
+            @for (template of fileTemplates; track template) {
+              <mat-option [value]="template">
+                {{template.description}}
+              </mat-option>
+            }
           </mat-select>
-          <mat-error *ngIf="fileTemplate.errors?.['required']">
-            Please select a template type above...
-          </mat-error>
+          @if (fileTemplate.errors?.['required']) {
+            <mat-error>
+              Please select a template type above...
+            </mat-error>
+          }
         </mat-form-field>
         <div class="content-spacer"></div>
         <button mat-raised-button type=submit
-                [style.background-color]="config.backgroundColor"
-                [style.color]="'white'" [disabled]="isLoading">
+          [style.background-color]="config.backgroundColor"
+          [style.color]="'white'" [disabled]="isLoading">
           Submit
         </button>
       </form>
@@ -56,74 +62,73 @@
   </div>
 
 
-  <div *ngIf="errorsGenerated" class="error-container">
-    <div> Error: {{ error?.error?.error }} Status: {{ error?.status }} </div>
-    <div> Error Message: {{ error?.error?.message }} </div>
-  </div>
+  @if (errorsGenerated) {
+    <div class="error-container">
+      <div> Error: {{ error?.error?.error }} Status: {{ error?.status }} </div>
+      <div> Error Message: {{ error?.error?.message }} </div>
+    </div>
+  }
 
   <div class="padding-top-md">
     <h3>3. Review Test Case Mapping</h3>
-    <div *ngIf="!isExportSuccessful || errorsGenerated">Review available once spreadsheet is submitted.</div>
-    <div class="wrapper" *ngIf="isExportSuccessful">
-      <div class="result-colum">
-
-        <table mat-table [dataSource]="dataSource" style="width: 95%;" class="mat-elevation-z1">
-
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Name</th>
-            <td mat-cell *matCellDef="let record"> {{record.fhirResponse.name}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef> Status</th>
-            <td mat-cell *matCellDef="let record"
+    @if (!isExportSuccessful || errorsGenerated) {
+      <div>Review available once spreadsheet is submitted.</div>
+    }
+    @if (isExportSuccessful) {
+      <div class="wrapper">
+        <div class="result-colum">
+          <table mat-table [dataSource]="dataSource" style="width: 95%;" class="mat-elevation-z1">
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Name</th>
+              <td mat-cell *matCellDef="let record"> {{record.fhirResponse.name}} </td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> Status</th>
+              <td mat-cell *matCellDef="let record"
                 [ngClass]="record.fhirResponse?.status?.toLowerCase() == 'success' ? 'success': 'error' ">
-              {{record.fhirResponse.status}}
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="state">
-            <th mat-header-cell *matHeaderCellDef> Response</th>
-            <td mat-cell *matCellDef="let record"> {{record.fhirResponse.statusCode}} </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                {{record.fhirResponse.status}}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="state">
+              <th mat-header-cell *matHeaderCellDef> Response</th>
+              <td mat-cell *matCellDef="let record"> {{record.fhirResponse.statusCode}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"
               (click)="selectedCase = row; scrollToTop(fhirBundle);"
               [ngClass]="{'selected-row': row == selectedCase}"
               style="cursor: pointer"
-          ></tr>
-          <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell">No records loaded.</td>
-          </tr>
-
-        </table>
-
-      </div>
-
-      <div class="result-colum">
-        <mat-tab-group class="mat-elevation-z1" mat-stretch-tabs="false">
-          <mat-tab label="Mappings">
-            <app-mappings [fhirBundle]="selectedCase"></app-mappings>
-          </mat-tab>
-          <mat-tab label="MDI FHIR Bundle">
-            <div class="table-container" #fhirBundle>
-              <div style="position:fixed; margin-left: 30rem; margin-top: 1.2rem">
-                <button mat-stroked-button color="primary" (click)="onExpandFhirBundle()"
-                        matTooltip="Expand the FHIR Bundle content"
-                        aria-label="Expand the FHIR Bundle content">
-                  <mat-icon>open_in_full</mat-icon>
-                </button>
+            ></tr>
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell">No records loaded.</td>
+            </tr>
+          </table>
+        </div>
+        <div class="result-colum">
+          <mat-tab-group class="mat-elevation-z1" mat-stretch-tabs="false">
+            <mat-tab label="Mappings">
+              <app-mappings [fhirBundle]="selectedCase"></app-mappings>
+            </mat-tab>
+            <mat-tab label="MDI FHIR Bundle">
+              <div class="table-container" #fhirBundle>
+                <div style="position:fixed; margin-left: 30rem; margin-top: 1.2rem">
+                  <button mat-stroked-button color="primary" (click)="onExpandFhirBundle()"
+                    matTooltip="Expand the FHIR Bundle content"
+                    aria-label="Expand the FHIR Bundle content">
+                    <mat-icon>open_in_full</mat-icon>
+                  </button>
+                </div>
+                <div><pre> {{selectedCase?.fhirBundle | json}} </pre></div>
               </div>
-              <div><pre> {{selectedCase?.fhirBundle | json}} </pre></div>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
       </div>
-
+    }
+  </div>
+  @if (isLoading) {
+    <div class="spinner-container">
+      <mat-spinner [diameter]="70"></mat-spinner>
     </div>
-  </div>
-  <div class="spinner-container" *ngIf="isLoading">
-    <mat-spinner [diameter]="70"></mat-spinner>
-  </div>
+  }
 </div>

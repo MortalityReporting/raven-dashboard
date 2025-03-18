@@ -20,9 +20,10 @@ import {TrackingNumberType} from "../../../../../fhir-mdi-library";
 import {BundleHelperService, CodeableConcept} from "../../../../../fhir-util";
 
 @Component({
-  selector: 'app-edrs-search-results-grid',
-  templateUrl: './edrs-search-results-grid.component.html',
-  styleUrls: ['./edrs-search-results-grid.component.scss']
+    selector: 'app-edrs-search-results-grid',
+    templateUrl: './edrs-search-results-grid.component.html',
+    styleUrls: ['./edrs-search-results-grid.component.scss'],
+    standalone: false
 })
 export class EdrsSearchResultsGridComponent implements OnInit, OnChanges {
 

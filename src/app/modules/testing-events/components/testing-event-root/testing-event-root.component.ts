@@ -1,34 +1,41 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
-import {combineLatest, mergeMap, Observable, ReplaySubject, retry, share, skipWhile, Subject, switchMap} from "rxjs";
+import {
+  combineLatest,
+  mergeMap,
+  Observable,
+  ReplaySubject,
+  share,
+  skipWhile,
+  switchMap
+} from "rxjs";
 import {UserProfileManagerService} from "../../../user-management";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {EventModule} from "../../models/event-module";
 import {EventManagerService} from "../../services/event-manager.service";
 import {Registration} from "../../models/registration";
-import {QuestionnaireResponse} from "../../../fhir-util";
 import {UserProfile} from "../../../user-management/models/user-profile";
 import {RegistrationDisplayItem} from "../../models/registration-display";
 import {UtilsService} from "../../../../service/utils.service";
 import {Router} from "@angular/router";
-import {Test} from "../../../tests";
-import {UiStringConstants} from "../../../../providers/ui-string-constants";
-import {TestStatusCodes} from "../../models/test-status";
 import {UpdateAction} from "../../models/update-action";
+import {AppConfiguration} from "../../../../providers/app-configuration";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
-  selector: 'testing-event-root',
-  templateUrl: './testing-event-root.component.html',
-  styleUrls: ['../testing-event.scss']
+    selector: 'testing-event-root',
+    templateUrl: './testing-event-root.component.html',
+    styleUrls: ['../testing-event.scss'],
+    standalone: false
 })
 export class TestingEventRootComponent implements OnInit, OnDestroy {
   // Registrations/QuestionnaireResponses
   registrations: Registration[] = [];
   currentRegistration: Registration = undefined;
-  currentIndex: number = -1;
+  currentIndex: number = -2;
   currentItem: RegistrationDisplayItem;
   isLoading: boolean = false;
-  standaloneTests: Test[]
+  appConfiguration: any = AppConfiguration.config;
 
   // Event Modules/Questionnaires
   eventList: EventModule[];
@@ -41,20 +48,16 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
   events$: Observable<EventModule[]>;
   user$: Observable<UserProfile>;
   showRoot: boolean = true;
-  show: {home: boolean, registration: boolean} = {
-    home: true,
-    registration: false
-  }
 
-  constructor(@Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
+  constructor(@Inject('workflowSimulatorConfig')
+              public config: ModuleHeaderConfig,
               public auth: AuthService,
               protected eventManager: EventManagerService,
               private userProfileManager: UserProfileManagerService,
               private utilsService: UtilsService,
               private router: Router,
-              private uiStringConstants: UiStringConstants,
+              protected dialog: MatDialog,
   ) {
-    this.standaloneTests = uiStringConstants.WORKFLOW_STANDALONE_TESTS
   }
 
   ngOnInit(): void {
@@ -114,17 +117,7 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
       // If no item is selected, return current registration to undefined.
       this.eventManager.setCurrentRegistration(undefined);
       this.eventManager.setCurrentEvent(undefined);
-      if (index === -1) {
-        this.show.home = false;
-        this.show.registration = true;
-      }
-      else if (index === -2) {
-        this.show.home = true;
-        this.show.registration = false;
-      }
     } else {
-      this.show.home = false;
-      this.show.registration = false;
       // If item is selected, set current registration as it.
       const registration: Registration = this.registrations[index];
       this.eventManager.setCurrentRegistration(registration);
@@ -133,31 +126,11 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
     }
   }
 
-  isRegistered(event: EventModule): boolean {
-    return this.registrations.some((registration: Registration) => registration.questionnaire.endsWith(event.fhirId));
-  }
-
   getTitle(registration: Registration): string {
     const matchedEvent: EventModule = this.eventManager.matchRegistrationToEvent(registration, this.eventList);
     return matchedEvent.title;
   }
 
-
-  registerForEvent(event: any) {
-    const registrationAsFhir: QuestionnaireResponse = new Registration(event, `Practitioner/${this.userFhirId}`);
-    this.eventManager.createNewRegistration(registrationAsFhir).subscribe({
-      next: value => {
-        console.log(value);
-      },
-      error: err => {
-        console.error(err);
-      },
-      complete: () => {
-        // TODO: Figure out where this needs to go to refresh the call and get the new registrations!
-        this.refreshTrigger$.next(1);
-      }
-    })
-  }
 
   ngOnDestroy(): void {
     // sessionStorage.setItem('index', String(this.currentIndex));
@@ -174,7 +147,6 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
   }
 
   updateStatus(data: UpdateAction) {
-    console.log(data);
     if (this.currentItem.testStatus == data.status && data.attachment === undefined){
       // If there is no change in the status without a potentially updated attachment, we don't need to do an update.
       console.error("Update cancelled, status is equivalent.")
@@ -182,7 +154,7 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
     }
     this.isLoading = true;
     this.eventManager.updateTestStatus(this.currentRegistration, this.currentItem.linkId, data).subscribe({
-      next: value => {
+      next: () => {
         this.refreshTrigger$.next(1);
         this.isLoading = false;
       },
@@ -192,10 +164,9 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
         this.utilsService.showErrorMessage("Server error updating the test event status");
       }
     })
-
   }
 
-  onStandaloneTestSelected(standaloneTest: any){
-    this.router.navigate([`/workflow-simulator/${standaloneTest.route}`]);
+  onRegisterForEvent() {
+    this.router.navigate(['event-registration'])
   }
 }

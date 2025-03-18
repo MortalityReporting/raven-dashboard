@@ -16,26 +16,28 @@
     </div>
 
     <mat-accordion multi>
-      <mat-expansion-panel *ngFor="let stage of stageList,  let i = index;" [expanded]="stage.expanded">
-        <mat-expansion-panel-header>
-          <mat-panel-title class="margin-top-md margin-bottom-md">
-            <button
-              mat-mini-fab color="warn" aria-label="Remove Stage" matTooltip="Remove stage"
-              (click)="removeComponent(i); $event.stopPropagation() "
-              [disabled]="stageList?.length == 1">
-              <mat-icon>remove</mat-icon>
-            </button>
-            <span class="margin-left-md">Stage {{ getStageIndex(i) }}</span>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <app-http-connection [stage]=stage (formValueChangeEvent)="onFormValueChange($event ,i);"></app-http-connection>
-      </mat-expansion-panel>
+      @for (stage of stageList; track stage; let i = $index) {
+        <mat-expansion-panel [expanded]="stage.expanded">
+          <mat-expansion-panel-header>
+            <mat-panel-title class="margin-top-md margin-bottom-md">
+              <button
+                mat-mini-fab color="warn" aria-label="Remove Stage" matTooltip="Remove stage"
+                (click)="removeComponent(i); $event.stopPropagation() "
+                [disabled]="stageList?.length == 1">
+                <mat-icon>remove</mat-icon>
+              </button>
+              <span class="margin-left-md">Stage {{ getStageIndex(i) }}</span>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <app-http-connection [stage]=stage (formValueChangeEvent)="onFormValueChange($event ,i);"></app-http-connection>
+        </mat-expansion-panel>
+      }
     </mat-accordion>
     <div class="flex margin-bottom-md margin-top-md">
       <button class="push-right" type="button" mat-raised-button
-              [style.background-color]="config.backgroundColor"
-              [style.color]="'white'"
-              (click)="addStage()">
+        [style.background-color]="config.backgroundColor"
+        [style.color]="'white'"
+        (click)="addStage()">
         <mat-icon>add</mat-icon>
         Add Stage
       </button>

@@ -1,4 +1,4 @@
-@import "../../../../styles";
+@use "src/styles";
 
 /** Testing Event Container **/
 .testing-event-wrapper {
@@ -19,14 +19,32 @@
       @extend .scrollable;
       scroll-behavior: smooth;
       overflow-y: scroll;
-      border-radius: 5px;
-      max-width: 25em;
+      max-width: 20em;
       min-width: 10em;
       display: flex;
       flex-direction: column;
-      > button {
-        justify-content: left;
-        color: white;
+      color: black;
+      padding: 4px 8px 4px 4px;
+      border-right: 1px solid #cdcdcd;
+      >.menu-items{
+        font-size: smaller;
+        font-weight: bold;
+        >.item {
+          margin: 16px 0;
+          cursor: pointer;
+          border-left: 4px solid white;
+        }
+        >.register-for-event {
+          font-weight: normal;
+          font-style: italic;
+          >.link {
+            font-weight: bold;
+            text-decoration: underline;
+            cursor: pointer;
+          }
+        }
+        >.item:hover{
+        }
       }
     }
     > .testing-event-body-content {
@@ -142,12 +160,12 @@ mat-expansion-panel-body {
 .menu-divider {
   @extend .margin-md;
 }
+
 .register-header {
-  @extend .padding-sm;
-  @extend .margin-bottom-md;
-  font-size: larger;
-  font-weight: bold;
-  color: white;
+  border-bottom: 2px solid black;
+  font-size: x-large;
+  padding-bottom: 4px;
+  margin-bottom: 16px;
 }
 
 .spinner-container {
@@ -158,4 +176,21 @@ mat-expansion-panel-body {
   left: 50%;
   margin-left: -50px;
   margin-top: -50px;
+}
+
+.no-registrations-found{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  >.actions {
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  >.message {
+    font-size: large;
+  }
 }

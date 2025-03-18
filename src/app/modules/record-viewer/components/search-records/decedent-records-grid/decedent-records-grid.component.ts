@@ -15,9 +15,10 @@ import {TrackingNumberType} from "../../../../fhir-mdi-library";
 
 
 @Component({
-  selector: 'record-viewer-decedent-records-grid',
-  templateUrl: './decedent-records-grid.component.html',
-  styleUrls: ['../../../record-viewer-styles.scss','../search-records.component.scss']
+    selector: 'record-viewer-decedent-records-grid',
+    templateUrl: './decedent-records-grid.component.html',
+    styleUrls: ['../../../record-viewer-styles.scss', '../search-records.component.scss'],
+    standalone: false
 })
 export class DecedentRecordsGridComponent implements OnInit {
 
@@ -64,8 +65,7 @@ export class DecedentRecordsGridComponent implements OnInit {
     const codes = [loincCauseOfDeath, loincTimeOfDeath];
     this.isLoading = true;
 
-    // this.decedentService.getDecedentRecords().subscribe(
-    // );
+    // NOTE: Decedents are FHIR Patient resources.
     this.decedentService.getDecedentRecords().pipe(
       map(data => {
         return data
@@ -73,7 +73,6 @@ export class DecedentRecordsGridComponent implements OnInit {
       mergeMap((decedentRecordsList: any[]) =>
         forkJoin(
           decedentRecordsList.map((decedentRecord: any, i) =>
-
             this.decedentService.getDecedentObservationsByCode(decedentRecord, codes).pipe(
               map((observation: any) => {
                 decedentRecord = this.mapToDto(decedentRecord);

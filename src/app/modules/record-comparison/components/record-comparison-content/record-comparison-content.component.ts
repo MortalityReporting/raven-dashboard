@@ -22,9 +22,10 @@ import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {FieldConfig, Fields} from "../../providers/field.config";
 
 @Component({
-  selector: 'record-comparison-content',
-  templateUrl: './record-comparison-content.component.html',
-  styleUrls: ['./record-comparison-content.component.scss'],
+    selector: 'record-comparison-content',
+    templateUrl: './record-comparison-content.component.html',
+    styleUrls: ['./record-comparison-content.component.scss'],
+    standalone: false
 })
 export class RecordComparisonContentComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;

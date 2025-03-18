@@ -3,7 +3,8 @@ import {BundleHelperService} from "../../fhir-util";
 import {FhirExplorerService} from "../services/fhir-explorer.service";
 
 @Directive({
-  selector: '[appSetFhirExplorer]'
+    selector: '[appSetFhirExplorer]',
+    standalone: false
 })
 export class SetFhirExplorerDirective {
   @Input() bundle: any;

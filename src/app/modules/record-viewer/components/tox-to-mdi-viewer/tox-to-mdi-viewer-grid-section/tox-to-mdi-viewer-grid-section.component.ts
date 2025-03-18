@@ -4,9 +4,10 @@ import {MatTableDataSource} from "@angular/material/table";
 import {FhirExplorerService} from "../../../../fhir-explorer/services/fhir-explorer.service";
 
 @Component({
-  selector: 'record-viewer-tox-to-mdi-viewer-grid-section',
-  templateUrl: './tox-to-mdi-viewer-grid-section.component.html',
-  styleUrls: ['../tox-to-mdi-viewer.component.css']
+    selector: 'record-viewer-tox-to-mdi-viewer-grid-section',
+    templateUrl: './tox-to-mdi-viewer-grid-section.component.html',
+    styleUrls: ['../tox-to-mdi-viewer.component.css'],
+    standalone: false
 })
 export class ToxToMdiViewerGridSectionComponent implements OnInit {
   @Input() data: any[];

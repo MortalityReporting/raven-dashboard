@@ -20,10 +20,12 @@
         <div class="col-left content-field-value">{{ decedentInfo?.mdiTrackingNumber }}</div>
       </div>
     </div>
-    <div class="col bottom-right">
-      <button *ngIf="btnVisible" [disabled]="!btnEnabled" mat-raised-button
-              (click)="onBtnClick()">{{btnTitle}}
-      </button>
+    <div class="col margin-left-md">
+      @if (btnVisible) {
+        <button [disabled]="!btnEnabled" mat-raised-button
+          (click)="onBtnClick()">{{btnTitle}}
+        </button>
+      }
     </div>
   </div>
 </mat-expansion-panel>

@@ -8,9 +8,10 @@ import {ConfigService} from "../../../../../service/config.service";
 import {Config} from "../../../../../model/config";
 
 @Component({
-  selector: 'app-endpoint-configuration-step',
-  templateUrl: './endpoint-configuration-step.component.html',
-  styleUrls: ['./endpoint-configuration-step.component.scss']
+    selector: 'app-endpoint-configuration-step',
+    templateUrl: './endpoint-configuration-step.component.html',
+    styleUrls: ['./endpoint-configuration-step.component.scss'],
+    standalone: false
 })
 export class EndpointConfigurationStepComponent implements OnInit {
   blueJayUri = '';
@@ -96,7 +97,7 @@ export class EndpointConfigurationStepComponent implements OnInit {
   }
 
   onViewServerMdiDocs() {
-    window.open(this.config.blueJayServerBaseUrl + "OperationDefinition/Composition-it-mdi-documents", "_blank");
+    window.open(this.config.blueJayServerBaseUrl + "OperationDefinition/Composition-it-document", "_blank");
   }
 
   onViewServerCapabilityStmt() {

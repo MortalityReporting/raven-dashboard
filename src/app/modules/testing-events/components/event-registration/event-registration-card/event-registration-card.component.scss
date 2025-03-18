@@ -1,0 +1,32 @@
+.item {
+  > .title {
+    margin: 16px;
+    font-weight: 600;
+    font-size: medium;
+  }
+
+  > .event-details {
+    display: flex;
+    justify-content: space-between;
+
+    > .tests {
+      width: 30%;
+    }
+
+    > .description {
+      width: 70%;
+      border-left: 1px solid #cdcdcd;
+      margin-bottom: 8px;
+      padding-left: 16px;
+    }
+  }
+
+  > .actions {
+    margin: 8px 0 16px 16px;
+  }
+}
+
+
+ul {
+  margin-top: 0;
+}

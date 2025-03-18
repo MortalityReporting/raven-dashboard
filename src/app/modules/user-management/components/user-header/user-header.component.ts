@@ -6,9 +6,10 @@ import {AuthService} from "@auth0/auth0-angular";
 import {environment as env} from "../../../../../environments/environment";
 
 @Component({
-  selector: 'app-user-header',
-  templateUrl: './user-header.component.html',
-  styleUrls: ['./user-header.component.scss']
+    selector: 'app-user-header',
+    templateUrl: './user-header.component.html',
+    styleUrls: ['./user-header.component.scss'],
+    standalone: false
 })
 export class UserHeaderComponent {
   currentUser$: Observable<UserProfile> = new Observable<UserProfile>(null);

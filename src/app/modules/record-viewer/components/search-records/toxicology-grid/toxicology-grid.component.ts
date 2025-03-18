@@ -9,9 +9,10 @@ import {ToxToMdiMessageHandlerService} from "../../../services/tox-to-mdi-messag
 import {TrackingNumberType} from "../../../../fhir-mdi-library";
 
 @Component({
-  selector: 'record-viewer-toxicology-grid',
-  templateUrl: './toxicology-grid.component.html',
-  styleUrls: ['../../../record-viewer-styles.scss','../search-records.component.scss']
+    selector: 'record-viewer-toxicology-grid',
+    templateUrl: './toxicology-grid.component.html',
+    styleUrls: ['../../../record-viewer-styles.scss', '../search-records.component.scss'],
+    standalone: false
 })
 export class ToxicologyGridComponent implements OnInit {
 

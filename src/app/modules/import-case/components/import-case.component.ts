@@ -4,9 +4,10 @@ import {FileTemplate} from "../models/file-template";
 import {Observable} from "rxjs";
 import {FileTemplateService} from "../services/file-template.service";
 @Component({
-  selector: 'app-import-case',
-  templateUrl: './import-case.component.html',
-  styleUrls: ['./import-case.component.scss']
+    selector: 'app-import-case',
+    templateUrl: './import-case.component.html',
+    styleUrls: ['./import-case.component.scss'],
+    standalone: false
 })
 
 export class ImportCaseComponent implements OnInit {

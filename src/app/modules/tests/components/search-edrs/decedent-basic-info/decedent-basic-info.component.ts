@@ -2,9 +2,10 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UiStringConstants} from "../../../../../providers/ui-string-constants";
 
 @Component({
-  selector: 'app-decedent-basic-info',
-  templateUrl: './decedent-basic-info.component.html',
-  styleUrls: ['./decedent-basic-info.component.scss']
+    selector: 'app-decedent-basic-info',
+    templateUrl: './decedent-basic-info.component.html',
+    styleUrls: ['./decedent-basic-info.component.scss'],
+    standalone: false
 })
 export class DecedentBasicInfoComponent implements OnInit {
 

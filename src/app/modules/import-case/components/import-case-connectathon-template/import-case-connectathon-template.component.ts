@@ -12,9 +12,10 @@ import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 
 
 @Component({
-  selector: 'app-import-case-connectathon-template',
-  templateUrl: './import-case-connectathon-template.component.html',
-  styleUrls: ['./import-case-connectathon-template.component.scss']
+    selector: 'app-import-case-connectathon-template',
+    templateUrl: './import-case-connectathon-template.component.html',
+    styleUrls: ['./import-case-connectathon-template.component.scss'],
+    standalone: false
 })
 export class ImportCaseConnectathonTemplateComponent implements OnInit {
   @Input() fileTemplates: FileTemplate[] = []

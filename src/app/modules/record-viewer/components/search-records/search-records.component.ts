@@ -2,9 +2,10 @@ import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {AppConfiguration} from "../../../../providers/app-configuration";
 
 @Component({
-  selector: 'record-viewer-search-records',
-  templateUrl: './search-records.component.html',
-  styleUrls: ['./search-records.component.scss', '../../record-viewer-styles.scss']
+    selector: 'record-viewer-search-records',
+    templateUrl: './search-records.component.html',
+    styleUrls: ['./search-records.component.scss', '../../record-viewer-styles.scss'],
+    standalone: false
 })
 export class SearchRecordsComponent implements OnInit, OnDestroy {
 
