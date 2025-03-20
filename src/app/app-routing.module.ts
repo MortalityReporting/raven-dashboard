@@ -62,7 +62,7 @@ const routes: Routes = [
       {
         path: 'dcr/:id',
         component: DcrViewerComponent,
-        data: { moduleConfig: ModuleHeaderConfig.RecordViewer, componentTitle: AppConfiguration.config.workflowTitles['drc'] + " Viewer"}
+        data: { moduleConfig: ModuleHeaderConfig.RecordViewer, componentTitle: AppConfiguration.config.workflowTitles['dcr'] + " Viewer"}
       }
     ],
   },
