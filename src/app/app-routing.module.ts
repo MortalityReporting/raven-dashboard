@@ -57,6 +57,11 @@ const routes: Routes = [
         path: 'tox/:id',
         component: ToxToMdiViewerComponent,
         data: { moduleConfig: ModuleHeaderConfig.RecordViewer, componentTitle: AppConfiguration.config.workflowTitles['toxToMdi'] + " Viewer"}
+      },
+      {
+        path: 'dcr/:id',
+        component: ToxToMdiViewerComponent,
+        data: { moduleConfig: ModuleHeaderConfig.RecordViewer, componentTitle: AppConfiguration.config.workflowTitles['drc'] + " Viewer"}
       }
     ],
   },

@@ -16,6 +16,11 @@
                   (serverErrorEventEmitter)="onServerErrorDetected()"
                 ></record-viewer-toxicology-grid>
               </mat-tab>
+              <mat-tab [label]="appConfig.workflowTitles?.['dcr'] + 's'">
+                <dcr-grid
+                  (serverErrorEventEmitter)="onServerErrorDetected()"
+                ></dcr-grid>
+              </mat-tab>
             </mat-tab-group>
           </mat-card-content>
         </mat-card>

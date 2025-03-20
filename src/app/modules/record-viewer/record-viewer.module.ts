@@ -52,6 +52,8 @@ import {
 import {CommonErrorComponent} from "ngx-hisb-common-ui";
 import {CustomSpinnerDirective} from "./directives/custom-spinner.directive";
 import { ToxDemoCardComponent } from './components/tox-to-mdi-viewer/tox-demo-card/tox-demo-card.component';
+import { DcrViewerComponent } from './components/dcr-viewer/dcr-viewer.component';
+import { DcrGridComponent } from './components/search-records/dcr-grid/dcr-grid.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +74,9 @@ import { ToxDemoCardComponent } from './components/tox-to-mdi-viewer/tox-demo-ca
     ToxToMdiViewerCertifierComponent,
     ToxToMdiViewerGridSectionComponent,
     CustomSpinnerDirective,
-    ToxDemoCardComponent
+    ToxDemoCardComponent,
+    DcrViewerComponent,
+    DcrGridComponent
   ],
     imports: [
         CommonModule,
