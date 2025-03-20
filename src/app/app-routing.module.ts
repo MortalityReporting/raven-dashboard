@@ -31,6 +31,7 @@ import {
 } from "./modules/testing-events/components/event-registration/event-registration.component";
 import {authGuard} from "./guards/auth.guard";
 import {SearchEdrsBluejayComponent} from "./modules/tests/components/search-edrs-bluejay/search-edrs-bluejay.component";
+import {DcrViewerComponent} from "./modules/record-viewer/components/dcr-viewer/dcr-viewer.component";
 
 
 const routes: Routes = [
@@ -60,7 +61,7 @@ const routes: Routes = [
       },
       {
         path: 'dcr/:id',
-        component: ToxToMdiViewerComponent,
+        component: DcrViewerComponent,
         data: { moduleConfig: ModuleHeaderConfig.RecordViewer, componentTitle: AppConfiguration.config.workflowTitles['drc'] + " Viewer"}
       }
     ],
