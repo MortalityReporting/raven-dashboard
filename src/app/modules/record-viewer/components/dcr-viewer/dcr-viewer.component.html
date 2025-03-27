@@ -1,1 +1,10 @@
 <p>death-certificate-review works!</p>
+<div class="viewer-container-wrapper">
+  <div class="viewer-container-header">
+    <app-decedent-display
+      appSetFhirExplorer
+      [resource]="dcrRecord?.documentBundle"
+      [decedentInformation]="dcrRecord?.caseHeader" [type]="'dcr'">
+    </app-decedent-display>
+  </div>
+</div>
