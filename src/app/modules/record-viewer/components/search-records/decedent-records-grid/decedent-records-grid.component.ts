@@ -12,6 +12,7 @@ import {MatSelect} from "@angular/material/select";
 import {MatTableDataSource} from "@angular/material/table";
 import {AppConfiguration} from "../../../../../providers/app-configuration";
 import {TrackingNumberType} from "../../../../fhir-mdi-library";
+import {FHIRProfileConstants} from "../../../../../providers/fhir-profile-constants";
 
 
 @Component({
@@ -35,7 +36,7 @@ export class DecedentRecordsGridComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   @ViewChild('input') input: ElementRef;
-  private fhirProfiles: any;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -44,7 +45,8 @@ export class DecedentRecordsGridComponent implements OnInit {
     private utilsService: UtilsService,
     private fhirHelperService: FhirHelperService,
     @Inject('config') public config: ModuleHeaderConfig,
-    @Inject('appConfig') public appConfig: AppConfiguration
+    @Inject('appConfig') public appConfig: AppConfiguration,
+    @Inject('fhirProfiles') public fhirProfiles: FHIRProfileConstants
 
   ) {
   }
