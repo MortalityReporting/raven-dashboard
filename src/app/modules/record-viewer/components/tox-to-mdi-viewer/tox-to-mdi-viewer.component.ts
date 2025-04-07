@@ -37,6 +37,7 @@ export class ToxToMdiViewerComponent implements OnInit {
       next: record => {
         this.fhirExplorerService.setSelectedFhirResource(record.messageBundle);
         this.toxToMdiRecord = record;
+        console.log(record)
       },
       error: err => {
         console.error(err);

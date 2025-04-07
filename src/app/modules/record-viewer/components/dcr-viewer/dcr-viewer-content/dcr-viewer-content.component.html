@@ -1,0 +1,84 @@
+
+<div class="section-button-wrapper">
+  <button mat-raised-button (click)="onOpenAll()" [style.background-color]="config.backgroundColor" [style.color]="appConfig.contrastColor">
+    <mat-icon>expand_more</mat-icon>
+    Expand All Sections
+  </button>
+  <button mat-raised-button (click)="onCloseAll()" [style.background-color]="config.backgroundColor" [style.color]="appConfig.contrastColor">
+    <mat-icon>expand_less</mat-icon>
+    Collapse All Sections
+  </button>
+  <span class="content-spacer"></span>
+
+</div>
+
+<mat-accordion multi>
+
+  <!-- Patient Demographics Abridged -->
+  <mat-expansion-panel class="summary-section" id="caseAdminInfo" [expanded]="isExpanded('caseAdminInfo')" [style.border-color]="appConfig.color">
+    <mat-expansion-panel-header (click)="onToggleState( 'caseAdminInfo' )">
+      <mat-panel-title>Case Admin Info</mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="summary-section-body">
+      <app-dcr-content-case-admin-info
+        [caseAdminInfo]="dcrRecord?.dcrSummary?.caseAdminInfo">
+      </app-dcr-content-case-admin-info>
+    </div>
+  </mat-expansion-panel>
+
+  <!-- Patient Demographics Abridged -->
+  <mat-expansion-panel class="summary-section" id="demographics" [expanded]="isExpanded('demographics')" [style.border-color]="appConfig.color">
+    <mat-expansion-panel-header (click)="onToggleState( 'demographics' )">
+      <mat-panel-title>Demographics</mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="summary-section-body">
+      <app-dcr-content-demographics [dcrRecord]="dcrRecord"></app-dcr-content-demographics>
+    </div>
+  </mat-expansion-panel>
+
+  <!-- Death Investigation -->
+  <mat-expansion-panel class="summary-section" #performers id="deathInvestigation" [expanded]="isExpanded('deathInvestigation')" [style.border-color]="appConfig.color">
+    <mat-expansion-panel-header (click)="onToggleState( 'deathInvestigation' )">
+      <mat-panel-title>Death Investigation</mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="summary-section-body">
+      @if (dcrRecord?.dcrSummary?.deathInvestigation) {
+      <app-dcr-content-death-investigation
+        [deathInvestigation]="dcrRecord?.dcrSummary?.deathInvestigation">
+      </app-dcr-content-death-investigation>
+      }
+    </div>
+  </mat-expansion-panel>
+
+  <!-- Place Of Death -->
+  <mat-expansion-panel class="summary-section" id="placeOfDeath" [expanded]="isExpanded('placeOfDeath')" [style.border-color]="appConfig.color">
+    <mat-expansion-panel-header (click)="onToggleState( 'placeOfDeath' )">
+      <mat-panel-title>Place Of Death</mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="summary-section-body">
+      @if (dcrRecord?.dcrSummary?.placeOfDeath) {
+        <app-dcr-content-place-of-death
+          [placeOfDeath]="dcrRecord?.dcrSummary?.placeOfDeath">
+        </app-dcr-content-place-of-death>
+      }
+    </div>
+    {{ dcrRecord?.toxSummary | json }}
+  </mat-expansion-panel>
+
+  <!-- Cremation Clearance Info-->
+  <mat-expansion-panel class="summary-section" id="cremationClearance" [expanded]="isExpanded('cremationClearance')" [style.border-color]="appConfig.color">
+    <mat-expansion-panel-header (click)="onToggleState( 'cremationClearance' )">
+      <mat-panel-title>Cremation Clearance Info</mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="summary-section-body">
+      @if (dcrRecord?.dcrSummary?.cremationClearanceInfo) {
+      <app-dcr-content-cremation-clearance
+        [cremationClearanceInfo]="dcrRecord?.dcrSummary?.cremationClearanceInfo"
+      >
+      </app-dcr-content-cremation-clearance>
+    }
+    </div>
+  </mat-expansion-panel>
+
+</mat-accordion>
+

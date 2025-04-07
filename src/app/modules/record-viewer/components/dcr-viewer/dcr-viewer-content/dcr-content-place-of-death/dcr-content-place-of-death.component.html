@@ -1,0 +1,70 @@
+<!--<pre>{{ placeOfDeath | json }}</pre>-->
+<div class="summary-section-grid">
+  <div class="content-field-label">
+    <p><u>Facility</u></p>
+  </div>
+  <div class="grid-row">
+    <div class="grid-col-1">
+      <record-viewer-mdi-to-edrs-viewer-content-field
+        [label]="'Facility Name'"
+        [value]="placeOfDeath?.facilityName"
+        appSetFhirExplorer
+        [resource]="placeOfDeath.resource">
+      </record-viewer-mdi-to-edrs-viewer-content-field>
+    </div>
+    <div class="grid-col-1"></div>
+  </div>
+  <div class="grid-row">
+    <div class="grid-col-1">
+      <record-viewer-mdi-to-edrs-viewer-content-field
+        [label]="'Address Line 1'"
+        [value]="placeOfDeath?.address?.line1"
+        appSetFhirExplorer
+        [resource]="placeOfDeath.resource">
+      </record-viewer-mdi-to-edrs-viewer-content-field>
+    </div>
+    <div class="grid-col-1">
+      <record-viewer-mdi-to-edrs-viewer-content-field
+        [label]="'Address Line 2'"
+        [value]="placeOfDeath?.address?.line2"
+        appSetFhirExplorer
+        [resource]="placeOfDeath.resource">
+      </record-viewer-mdi-to-edrs-viewer-content-field>
+    </div>
+  </div>
+  <div class="grid-row">
+    <div class="grid-col-1">
+      <record-viewer-mdi-to-edrs-viewer-content-field
+        [label]="'City'"
+        [value]="placeOfDeath?.address?.city"
+        appSetFhirExplorer
+        [resource]="placeOfDeath.resource">
+      </record-viewer-mdi-to-edrs-viewer-content-field>
+    </div>
+    <div class="grid-col-1">
+      <record-viewer-mdi-to-edrs-viewer-content-field
+        [label]="'State'"
+        [value]="placeOfDeath?.address?.state"
+        appSetFhirExplorer
+        [resource]="placeOfDeath.resource">
+      </record-viewer-mdi-to-edrs-viewer-content-field>
+    </div>
+    <div class="grid-col-1">
+      <record-viewer-mdi-to-edrs-viewer-content-field
+        [label]="'Zip Code'"
+        [value]="placeOfDeath?.address?.zip"
+        appSetFhirExplorer
+        [resource]="placeOfDeath.resource">
+      </record-viewer-mdi-to-edrs-viewer-content-field>
+    </div>
+    <div class="grid-col-1">
+      <record-viewer-mdi-to-edrs-viewer-content-field
+        [label]="'Country'"
+        [value]="placeOfDeath?.address?.country"
+        appSetFhirExplorer
+        [resource]="placeOfDeath.resource">
+      </record-viewer-mdi-to-edrs-viewer-content-field>
+    </div>
+  </div>
+</div>
+

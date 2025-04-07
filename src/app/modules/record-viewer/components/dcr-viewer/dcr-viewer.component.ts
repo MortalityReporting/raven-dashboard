@@ -1,11 +1,11 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {MdiToEdrsDocumentHandlerService} from "../../services/mdi-to-edrs-document-handler.service";
 import {FhirExplorerService} from "../../../fhir-explorer/services/fhir-explorer.service";
 import {UtilsService} from "../../../../service/utils.service";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {AppConfiguration} from "../../../../providers/app-configuration";
 import {DcrDocumentHandlerService} from "../../services/dcr-document-handler.service";
+import {DcrViewerContentComponent} from "./dcr-viewer-content/dcr-viewer-content.component";
 
 @Component({
   selector: 'app-dcr-viewer',
@@ -14,8 +14,12 @@ import {DcrDocumentHandlerService} from "../../services/dcr-document-handler.ser
   styleUrl: './dcr-viewer.component.css'
 })
 export class DcrViewerComponent implements OnInit{
+
+  @ViewChild(DcrViewerContentComponent) contentComponent: DcrViewerContentComponent;
   dcrRecord: any;
   isLoading: boolean = false;
+  showFhirExplorerDrawer = false;
+  showDrawer = [this.showFhirExplorerDrawer];
 
   constructor(
     private route: ActivatedRoute,
@@ -32,7 +36,9 @@ export class DcrViewerComponent implements OnInit{
     this.isLoading = true;
     this.documentHandler.getRecord(subjectId).subscribe({
       next: record => {
-        this.fhirExplorerService.setSelectedFhirResource(record.documentBundle);
+        // this.fhirExplorerService.setSelectedFhirResource(record.documentBundle);
+        console.log(record);
+        this.fhirExplorerService.setSelectedFhirResource(record.messageBundle);
         this.dcrRecord = record;
         this.isLoading = false;
       },
@@ -42,5 +48,18 @@ export class DcrViewerComponent implements OnInit{
         this.isLoading = false;
       }
     });
+  }
+
+  onItemClick(id: string) {
+    this.contentComponent.onSetState(id);
+  }
+
+  closeAllDrawers() {
+    this.showDrawer = new Array(this.showDrawer.length).fill(false);
+  }
+
+  openDrawer(index: number) {
+    this.showDrawer = new Array(this.showDrawer.length).fill(false);
+    this.showDrawer[index] = true;
   }
 }

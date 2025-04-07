@@ -1,0 +1,40 @@
+<div class="summary-section-body">
+  <div class="summary-section-grid">
+    <div class="grid-row">
+      <div class="grid-col-1">
+        <record-viewer-mdi-to-edrs-viewer-content-field
+          [label]="'Date of Birth'"
+          [value]="dcrRecord?.dcrSummary?.demographics?.birthDate"
+          appSetFhirExplorer
+          [resource]="dcrRecord?.dcrSummary?.demographics?.patientResource"
+        />
+      </div>
+      <div class="grid-col-1">
+        <record-viewer-mdi-to-edrs-viewer-content-field
+          [label]="'Sex'"
+          [value]="dcrRecord?.dcrSummary?.demographics?.gender"
+          appSetFhirExplorer
+          [resource]="dcrRecord?.dcrSummary?.demographics?.patientResource"
+        />
+      </div>
+    </div>
+    <div class="grid-row">
+      <div class="grid-col-1">
+        <record-viewer-mdi-to-edrs-viewer-content-field
+          [label]="'Race'"
+          [value]="dcrRecord?.dcrSummary?.demographics?.race"
+          appSetFhirExplorer
+          [resource]="dcrRecord?.dcrSummary?.demographics?.patientResource"
+        />
+      </div>
+      <div class="grid-col-1">
+        <record-viewer-mdi-to-edrs-viewer-content-field
+          [label]="'Ethnicity'"
+          [value]="dcrRecord?.dcrSummary?.demographics?.ethnicity"
+          appSetFhirExplorer
+          [resource]="dcrRecord?.dcrSummary?.demographics?.patientResource"
+        />
+      </div>
+    </div>
+  </div>
+</div>

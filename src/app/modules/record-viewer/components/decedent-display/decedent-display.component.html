@@ -28,4 +28,16 @@
       </div>
     </div>
   }
+  @if (type === 'dcr') {
+    <div class="details-box">
+      <div>
+        <span class="label" [style.color]="color">Date Report Issued:</span>
+        <span class="value" [style.color]="textColor">{{decedentInformation?.reportDate}} </span>
+      </div>
+      <div>
+        <span class="label" [style.color]="color">Tox Lab Case Number | System:</span>
+        <span class="value" [style.color]="textColor">{{decedentInformation?.dcrCaseNumber}} | {{decedentInformation?.dcrCaseSystem}}</span>
+      </div>
+    </div>
+  }
 </div>

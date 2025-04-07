@@ -27,6 +27,7 @@ export class FHIRProfileConstants {
     Obs_InjuryIncident: "http://hl7.org/fhir/us/vrdr/StructureDefinition/vrdr-injury-incident",
     Obs_MannerOfDeath: "http://hl7.org/fhir/us/vrdr/StructureDefinition/vrdr-manner-of-death",
     Obs_TobaccoUseContributedToDeath: "http://hl7.org/fhir/us/vrdr/StructureDefinition/vrdr-tobacco-use-contributed-to-death",
+    Org_Funeral_Home: "http://hl7.org/fhir/us/vrdr/StructureDefinition/vrdr-funeral-home"
 
   }
 
@@ -43,5 +44,9 @@ export class FHIRProfileConstants {
     Tox_MessageHeader_ToxToMDI: "http://hl7.org/fhir/us/mdi/StructureDefinition/MessageHeader-toxicology-to-mdi",
     Tox_Observation_ToxicologyLabResult: "http://hl7.org/fhir/us/mdi/StructureDefinition/Observation-toxicology-lab-result",
     Tox_Specimen_ToxicologyLab: "https://hl7.org/fhir/us/mdi/2.0.0-snapshot1/StructureDefinition-Specimen-toxicology-lab.html"
+  }
+
+  DCR = {
+    Drc_composition: "http://hl7.org/fhir/us/mdi/StructureDefinition/Composition-mdi-dcr",
   }
 }

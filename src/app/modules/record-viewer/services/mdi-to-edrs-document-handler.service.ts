@@ -173,7 +173,7 @@ export class MdiToEdrsDocumentHandlerService {
 
   createCaseSummary(documentBundle: any, patientResource: any, compositionResource: any): CaseSummary {
     let summary: CaseSummary = new CaseSummary();
-    summary.demographics = this.generateDemographics(documentBundle, compositionResource, patientResource);
+    summary.demographics = this.generateDemographics(patientResource);
     summary.circumstances = this.generateCircumstances(documentBundle);
     summary.jurisdiction = this.generateJurisdiction(documentBundle, compositionResource);
     summary.causeAndManner = this.generateCauseAndManner(documentBundle, compositionResource);
@@ -188,7 +188,7 @@ export class MdiToEdrsDocumentHandlerService {
     return summary;
   }
 
-  generateDemographics(documentBundle: any, compositionResource: any, patientResource: any): Demographics {
+  generateDemographics(patientResource: any): Demographics {
     let demographics: Demographics = new Demographics();
 
     demographics.patientResource = patientResource;
