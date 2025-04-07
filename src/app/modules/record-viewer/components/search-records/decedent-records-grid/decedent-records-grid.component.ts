@@ -76,7 +76,7 @@ export class DecedentRecordsGridComponent implements OnInit {
       map(decedentRecords =>
         decedentRecords
           .filter(record =>
-            record?.meta?.profile?.indexOf(this.fhirProfiles.DCR.Dcr_composition) == -1
+            record?.meta?.profile?.indexOf(this.fhirProfiles.DCR.Dcr_Structure_Definition) == -1
           )
       ),
       mergeMap((decedentRecordsList: any[]) =>
