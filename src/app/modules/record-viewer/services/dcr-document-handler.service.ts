@@ -66,7 +66,7 @@ export class DcrDocumentHandlerService {
 
     const fullName: string = this.fhirHelper.getOfficialName(patientResource);
 
-    const composition = this.bundleHelper.findResourceByProfileName(documentBundleList, this.fhirProfiles.DCR.Drc_composition);
+    const composition = this.bundleHelper.findResourceByProfileName(documentBundleList, this.fhirProfiles.DCR.Dcr_composition);
     const trackingNumber = this.toxToMdiMessageHandlerService.getTrackingNumber(composition, TrackingNumberType.Dcr);
     const dcrCaseNumber = trackingNumber?.value
     const dcrCaseSystem: string = trackingNumber?.system;

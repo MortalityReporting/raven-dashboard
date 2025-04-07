@@ -47,6 +47,7 @@ export class FHIRProfileConstants {
   }
 
   DCR = {
-    Drc_composition: "http://hl7.org/fhir/us/mdi/StructureDefinition/Composition-mdi-dcr",
+    Dcr_composition: "http://hl7.org/fhir/us/mdi/StructureDefinition/Composition-mdi-dcr",
+    Dcr_Structure_Definition: "http://hl7.org/fhir/us/vrdr/StructureDefinition/vrdr-decedent"
   }
 }

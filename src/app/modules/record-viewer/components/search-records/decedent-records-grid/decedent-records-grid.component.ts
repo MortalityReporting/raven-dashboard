@@ -15,10 +15,10 @@ import {TrackingNumberType} from "../../../../fhir-mdi-library";
 
 
 @Component({
-    selector: 'record-viewer-decedent-records-grid',
-    templateUrl: './decedent-records-grid.component.html',
-    styleUrls: ['../../../record-viewer-styles.scss', '../search-records.component.scss'],
-    standalone: false
+  selector: 'record-viewer-decedent-records-grid',
+  templateUrl: './decedent-records-grid.component.html',
+  styleUrls: ['../../../record-viewer-styles.scss', '../search-records.component.scss'],
+  standalone: false
 })
 export class DecedentRecordsGridComponent implements OnInit {
 
@@ -35,6 +35,7 @@ export class DecedentRecordsGridComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   @ViewChild('input') input: ElementRef;
+  private fhirProfiles: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -70,6 +71,12 @@ export class DecedentRecordsGridComponent implements OnInit {
       map(data => {
         return data
       }),
+      map(decedentRecords =>
+        decedentRecords
+          .filter(record =>
+            record?.meta?.profile?.indexOf(this.fhirProfiles.DCR.Dcr_composition) == -1
+          )
+      ),
       mergeMap((decedentRecordsList: any[]) =>
         forkJoin(
           decedentRecordsList.map((decedentRecord: any, i) =>
