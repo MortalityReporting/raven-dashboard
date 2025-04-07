@@ -1,0 +1,10 @@
+.label{
+  font-weight: bold;
+}
+
+.signature-block{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 16px;
+}
