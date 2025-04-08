@@ -50,21 +50,6 @@
     </div>
   </mat-expansion-panel>
 
-  <!-- Place Of Death -->
-  <mat-expansion-panel class="summary-section" id="placeOfDeath" [expanded]="isExpanded('placeOfDeath')" [style.border-color]="appConfig.color">
-    <mat-expansion-panel-header (click)="onToggleState( 'placeOfDeath' )">
-      <mat-panel-title>Place Of Death</mat-panel-title>
-    </mat-expansion-panel-header>
-    <div class="summary-section-body">
-      @if (dcrRecord?.dcrSummary?.placeOfDeath) {
-        <app-dcr-content-place-of-death
-          [placeOfDeath]="dcrRecord?.dcrSummary?.placeOfDeath">
-        </app-dcr-content-place-of-death>
-      }
-    </div>
-    {{ dcrRecord?.toxSummary | json }}
-  </mat-expansion-panel>
-
   <!-- Cremation Clearance Info-->
   <mat-expansion-panel class="summary-section" id="cremationClearance" [expanded]="isExpanded('cremationClearance')" [style.border-color]="appConfig.color">
     <mat-expansion-panel-header (click)="onToggleState( 'cremationClearance' )">

@@ -33,31 +33,14 @@ export class DcrDocumentHandlerService {
   ) { }
   public defaultString: string = "VALUE NOT FOUND";
 
-  getRecords(): Observable<any[]> {
+  getRecords(): Observable<DcrGridDTO[]> {
     //TODO we need to refactor all this code once we can access the records from the dcr grid. Presently we are fetching the data directly (via hardcoded url)
     return this.fhirClient.read('Composition', '$dcr-message').pipe(
-      map((record: any)=> {
+      map((record: any) => {
         const result = record.entry.map(documentBundle => {
-          console.log(documentBundle);
           const documentBundleList = documentBundle.resource.entry?.[1]?.resource;
-          const dcrHeader = this.constructHeader(documentBundleList);
-
-          const patientResource = this.bundleHelper.findResourceByProfileName(documentBundleList, this.fhirProfiles.USCore.USCorePatient);
-          const demographics = this.mdiToEdrsDocumentHandlerService.generateDemographics(patientResource);
-          const deathInvestigation = this.generateDeathInvestigation(documentBundleList);
-          const placeOfDeath = this.generatePlaceOfDeath(documentBundleList);
-          const cremationClearanceInfo = this.generateCremationClearanceInfo(documentBundleList);
-          const caseAdminInfo = this.generateCaseAdminInfo(documentBundleList);
-          const dcrSummary = {
-            caseAdminInfo: caseAdminInfo,
-            dcrHeader: dcrHeader,
-            demographics: demographics,
-            deathInvestigation: deathInvestigation,
-            cremationClearanceInfo: cremationClearanceInfo,
-            placeOfDeath: placeOfDeath
-          };
           const dcrGridDTO: DcrGridDTO = this.constructDcrGridDto(documentBundleList);
-          return {dcrRecord: record, dcrSummary: dcrSummary, dcrGridDTO: dcrGridDTO};
+          return dcrGridDTO;
         });
         return result;
       })
@@ -67,8 +50,26 @@ export class DcrDocumentHandlerService {
   getById(id: string): Observable<any> {
     return this.fhirClient.read(`Composition/${id}`, '$dcr-message').pipe(
       map((record: any) => {
-        console.log(record);
-        return record;
+        const documentBundleList = record.entry[1].resource;
+        const dcrHeader = this.constructHeader(documentBundleList);
+
+        const patientResource = this.bundleHelper.findResourceByProfileName(documentBundleList, this.fhirProfiles.USCore.USCorePatient);
+        const demographics = this.mdiToEdrsDocumentHandlerService.generateDemographics(patientResource);
+        const deathInvestigation = this.generateDeathInvestigation(documentBundleList);
+        const placeOfDeath = this.generatePlaceOfDeath(documentBundleList);
+        const cremationClearanceInfo = this.generateCremationClearanceInfo(documentBundleList);
+        const caseAdminInfo = this.generateCaseAdminInfo(documentBundleList);
+        const dcrSummary = {
+          caseAdminInfo: caseAdminInfo,
+          dcrHeader: dcrHeader,
+          demographics: demographics,
+          deathInvestigation: deathInvestigation,
+          cremationClearanceInfo: cremationClearanceInfo,
+          placeOfDeath: placeOfDeath
+        };
+        const dcrGridDTO: DcrGridDTO = this.constructDcrGridDto(documentBundleList);
+        const result = {dcrRecord: record, dcrSummary: dcrSummary, dcrGridDTO: dcrGridDTO};
+        return result;
       })
     )
   }
@@ -100,7 +101,8 @@ export class DcrDocumentHandlerService {
     if(!deathDateResource){
       return null;
     }
-    const result = {dateTimeOfDeath: deathDateResource?.valueDateTime || this.defaultString, resource: deathDateResource};
+    const placeOfDeath = this.generatePlaceOfDeath(documentBundleList);
+    const result = {dateTimeOfDeath: deathDateResource?.valueDateTime || this.defaultString, resource: deathDateResource , placeOfDeath:placeOfDeath};
     return result;
   }
 

@@ -18,22 +18,22 @@
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Decedent Name</th>
     <td mat-cell class="pointer"
-        *matCellDef="let decedent"> {{decedent?.dcrGridDTO?.lastName | titlecase}} {{ decedent.dcrGridDTO?.firstName ? ', ' + decedent.dcrGridDTO?.firstName : '' }}</td>
+        *matCellDef="let dcrGridDTO"> {{dcrGridDTO?.lastName | titlecase}} {{ dcrGridDTO?.firstName ? ', ' + dcrGridDTO?.firstName : '' }}</td>
   </ng-container>
 
   <ng-container matColumnDef="gender">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Gender</th>
-    <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent?.dcrGridDTO?.gender | titlecase}}</td>
+    <td mat-cell class="pointer" *matCellDef="let dcrGridDTO"> {{dcrGridDTO?.gender | titlecase}}</td>
   </ng-container>
 
   <ng-container matColumnDef="deathDate">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of Death</th>
-    <td mat-cell class="pointer" *matCellDef="let decedent"> {{ decedent?.dcrGridDTO?.deathDate | date: 'MM/dd/yyyy' }} </td>
+    <td mat-cell class="pointer" *matCellDef="let dcrGridDTO"> {{ dcrGridDTO?.deathDate | date: 'MM/dd/yyyy' }} </td>
   </ng-container>
 
   <ng-container matColumnDef="caseNumber">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> MDI Case Number</th>
-    <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.dcrGridDTO?.caseNumber }} </td>
+    <td mat-cell class="pointer" *matCellDef="let dcrGridDTO"> {{dcrGridDTO?.recordId }} </td>
   </ng-container>
 
 

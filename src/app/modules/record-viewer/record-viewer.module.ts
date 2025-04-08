@@ -58,7 +58,6 @@ import { DcrViewerNavMenuComponent } from './components/dcr-viewer/dcr-viewer-na
 import { DcrViewerContentComponent } from './components/dcr-viewer/dcr-viewer-content/dcr-viewer-content.component';
 import { DcrContentDemographicsComponent } from './components/dcr-viewer/dcr-viewer-content/dcr-content-demographics/dcr-content-demographics.component';
 import { DcrContentDeathInvestigationComponent } from './components/dcr-viewer/dcr-viewer-content/dcr-content-death-investigation/dcr-content-death-investigation.component';
-import { DcrContentPlaceOfDeathComponent } from './components/dcr-viewer/dcr-viewer-content/dcr-content-place-of-death/dcr-content-place-of-death.component';
 import { DcrContentCremationClearanceComponent } from './components/dcr-viewer/dcr-viewer-content/dcr-content-cremation-clearance/dcr-content-cremation-clearance.component';
 import { DcrContentCaseAdminInfoComponent } from './components/dcr-viewer/dcr-viewer-content/dcr-content-case-admin-info/dcr-content-case-admin-info.component';
 
@@ -88,7 +87,6 @@ import { DcrContentCaseAdminInfoComponent } from './components/dcr-viewer/dcr-vi
     DcrViewerContentComponent,
     DcrContentDemographicsComponent,
     DcrContentDeathInvestigationComponent,
-    DcrContentPlaceOfDeathComponent,
     DcrContentCremationClearanceComponent,
     DcrContentCaseAdminInfoComponent,
   ],

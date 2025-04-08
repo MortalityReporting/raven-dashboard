@@ -5,6 +5,7 @@ import {AppConfiguration} from "../../../../../providers/app-configuration";
 import {Router} from "@angular/router";
 import {DcrDocumentHandlerService} from "../../../services/dcr-document-handler.service";
 import {MatSort} from "@angular/material/sort";
+import {DcrGridDTO} from "../../../models/dcr-record";
 
 @Component({
   selector: 'dcr-grid',
@@ -17,7 +18,7 @@ export class DcrGridComponent implements OnInit {
   @ViewChild('input') input: ElementRef;
   @ViewChild(MatSort) sort: MatSort;
 
-  dataSource = new MatTableDataSource();
+  dataSource = new MatTableDataSource<DcrGridDTO>();
   displayedColumns: string[] = ['name', 'gender', 'deathDate', 'caseNumber'];
 
   isLoading = false;
@@ -38,7 +39,7 @@ export class DcrGridComponent implements OnInit {
   }
 
   onCaseSelected(row: any) {
-    this.router.navigate([`${this.appConfig.modules['recordViewer'].route}/dcr/`, row.dcrGridDTO.recordId]);
+    this.router.navigate([`${this.appConfig.modules['recordViewer'].route}/dcr/`, row.recordId]);
   }
 
   onClearFilters() {

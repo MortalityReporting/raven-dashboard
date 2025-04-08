@@ -34,6 +34,7 @@ export interface PlaceOfDeath {
 export interface DeathInvestigation{
   resource: FhirResource;
   dateTimeOfDeath: Date;
+  placeOfDeath: PlaceOfDeath;
 }
 
 export interface DcrHeader {

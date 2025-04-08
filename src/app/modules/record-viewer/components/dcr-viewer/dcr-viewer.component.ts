@@ -32,15 +32,12 @@ export class DcrViewerComponent implements OnInit{
 
 
   ngOnInit(): void {
-    let subjectId = this.route.snapshot.params['id'];
+    let recordId = this.route.snapshot.params['id'];
     this.isLoading = true;
-    this.dcrDocumentHandler.getRecords().subscribe({
-      next: record => {
-        // this.fhirExplorerService.setSelectedFhirResource(record.documentBundle);
-        console.log(record);
-        this.fhirExplorerService.setSelectedFhirResource(record[0].messageBundle);
-        this.dcrRecord = record;
+    this.dcrDocumentHandler.getById(recordId).subscribe({
+      next: data => {
         this.isLoading = false;
+        this.dcrRecord = data;
       },
       error: err => {
         console.error(err);
@@ -48,16 +45,6 @@ export class DcrViewerComponent implements OnInit{
         this.isLoading = false;
       }
     });
-
-    // this.dcrDocumentHandler.getAllData().subscribe({
-    //   next: value => {
-    //     console.log(value)
-    //   },
-    //   error: err => {
-    //     console.error(err)
-    //   }
-    // })
-
   }
 
   onItemClick(id: string) {

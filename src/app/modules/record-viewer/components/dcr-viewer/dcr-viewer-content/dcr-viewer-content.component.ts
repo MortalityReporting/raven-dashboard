@@ -18,7 +18,6 @@ export class DcrViewerContentComponent {
     { expanded: true, id: 'caseAdminInfo' },
     { expanded: false, id: 'demographics' },
     { expanded: false, id: 'deathInvestigation' },
-    { expanded: false, id: 'placeOfDeath' },
     { expanded: false, id: 'cremationClearance' },
   ];
 
