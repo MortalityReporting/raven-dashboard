@@ -15,35 +15,25 @@
 
 <table mat-table [dataSource]="dataSource" matSort matSortDisableClear matSortActive="personId">
 
-  <ng-container matColumnDef="lastName">
+  <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Decedent Name</th>
     <td mat-cell class="pointer"
-        *matCellDef="let decedent"> {{decedent.lastName | titlecase}}{{decedent.firstName ? ', ' + decedent.firstName : ''}}</td>
+        *matCellDef="let decedent"> {{decedent?.dcrGridDTO?.lastName | titlecase}} {{ decedent.dcrGridDTO?.firstName ? ', ' + decedent.dcrGridDTO?.firstName : '' }}</td>
   </ng-container>
 
   <ng-container matColumnDef="gender">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Gender</th>
-    <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.gender | titlecase}} </td>
+    <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent?.dcrGridDTO?.gender | titlecase}}</td>
   </ng-container>
 
-  <ng-container matColumnDef="age">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Age</th>
-    <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.age}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="tod">
+  <ng-container matColumnDef="deathDate">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of Death</th>
-    <td mat-cell class="pointer" *matCellDef="let decedent"> {{ decedent.tod | date: 'MM/dd/yyyy' }} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="mannerOfDeath">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Manner of Death</th>
-    <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.mannerOfDeath | titlecase}} </td>
+    <td mat-cell class="pointer" *matCellDef="let decedent"> {{ decedent?.dcrGridDTO?.deathDate | date: 'MM/dd/yyyy' }} </td>
   </ng-container>
 
   <ng-container matColumnDef="caseNumber">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> MDI Case Number</th>
-    <td mat-cell class="pointer" *matCellDef="let decedent" [matTooltip]="'System: ' + (decedent.system || 'Unknown')"> {{decedent.caseNumber }} </td>
+    <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.dcrGridDTO?.caseNumber }} </td>
   </ng-container>
 
 

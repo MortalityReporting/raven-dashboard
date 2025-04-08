@@ -23,7 +23,7 @@ export class DcrViewerComponent implements OnInit{
 
   constructor(
     private route: ActivatedRoute,
-    public documentHandler: DcrDocumentHandlerService,
+    public dcrDocumentHandler: DcrDocumentHandlerService,
     private fhirExplorerService: FhirExplorerService,
     private utilsService: UtilsService,
     @Inject('config') public config: ModuleHeaderConfig,
@@ -34,11 +34,11 @@ export class DcrViewerComponent implements OnInit{
   ngOnInit(): void {
     let subjectId = this.route.snapshot.params['id'];
     this.isLoading = true;
-    this.documentHandler.getRecord(subjectId).subscribe({
+    this.dcrDocumentHandler.getRecords().subscribe({
       next: record => {
         // this.fhirExplorerService.setSelectedFhirResource(record.documentBundle);
         console.log(record);
-        this.fhirExplorerService.setSelectedFhirResource(record.messageBundle);
+        this.fhirExplorerService.setSelectedFhirResource(record[0].messageBundle);
         this.dcrRecord = record;
         this.isLoading = false;
       },
@@ -48,6 +48,16 @@ export class DcrViewerComponent implements OnInit{
         this.isLoading = false;
       }
     });
+
+    // this.dcrDocumentHandler.getAllData().subscribe({
+    //   next: value => {
+    //     console.log(value)
+    //   },
+    //   error: err => {
+    //     console.error(err)
+    //   }
+    // })
+
   }
 
   onItemClick(id: string) {

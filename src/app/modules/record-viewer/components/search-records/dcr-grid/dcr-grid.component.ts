@@ -3,8 +3,8 @@ import {MatTableDataSource} from "@angular/material/table";
 import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
 import {AppConfiguration} from "../../../../../providers/app-configuration";
 import {Router} from "@angular/router";
-import {map} from "rxjs";
-import {DecedentService} from "../../../services/decedent.service";
+import {DcrDocumentHandlerService} from "../../../services/dcr-document-handler.service";
+import {MatSort} from "@angular/material/sort";
 
 @Component({
   selector: 'dcr-grid',
@@ -15,15 +15,16 @@ import {DecedentService} from "../../../services/decedent.service";
 export class DcrGridComponent implements OnInit {
   @Output() serverErrorEventEmitter = new EventEmitter();
   @ViewChild('input') input: ElementRef;
+  @ViewChild(MatSort) sort: MatSort;
 
   dataSource = new MatTableDataSource();
-  displayedColumns: string[] = ['lastName', 'gender', 'tod', 'caseNumber'];
+  displayedColumns: string[] = ['name', 'gender', 'deathDate', 'caseNumber'];
 
   isLoading = false;
 
   constructor(
     private router: Router,
-    private decedentService: DecedentService,
+    private dcrDocumentHandlerService: DcrDocumentHandlerService,
     @Inject('config') public config: ModuleHeaderConfig,
     @Inject('appConfig') public appConfig: AppConfiguration
   ){}
@@ -37,7 +38,7 @@ export class DcrGridComponent implements OnInit {
   }
 
   onCaseSelected(row: any) {
-    this.router.navigate([`${this.appConfig.modules['recordViewer'].route}/dcr/`, row.decedentId]);
+    this.router.navigate([`${this.appConfig.modules['recordViewer'].route}/dcr/`, row.dcrGridDTO.recordId]);
   }
 
   onClearFilters() {
@@ -49,64 +50,23 @@ export class DcrGridComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.decedentService.getDecedentRecords().pipe(
-      map(data => {
-        // console.log(data);
-        return data
-      }),
-      // mergeMap((decedentRecordsList: any[]) =>
-      //   forkJoin(
-      //     decedentRecordsList.map((decedentRecord: any, i) =>
-      //       this.decedentService.getDecedentObservationsByCode(decedentRecord, codes).pipe(
-      //         map((observation: any) => {
-      //           decedentRecord = this.mapToDto(decedentRecord);
-      //           const tod = observation?.entry?.find(entry => entry.resource?.code?.coding[0]?.code == loincTimeOfDeath)?.resource?.valueDateTime;
-      //           decedentRecord.tod = tod;
-      //           const mannerOfDeath =  observation?.entry?.find(entry => entry.resource?.code?.coding?.[0]?.code == loincCauseOfDeath)?.resource?.valueCodeableConcept?.coding?.[0]?.display;
-      //           decedentRecord.mannerOfDeath = mannerOfDeath;
-      //           decedentRecord.index = i + 1;
-      //           return decedentRecord;
-      //         })
-      //       )
-      //     ))
-      // )
-    ).pipe(
-      // mergeMap((decedentRecordsList: any[]) =>
-      //   forkJoin(
-      //     decedentRecordsList.map((decedentRecord: any, i) =>
-      //       this.decedentService.getComposition(decedentRecord.decedentId).pipe(
-      //         map((searchset: any) => {
-      //           const mdiSystem = this.fhirHelperService.getTrackingNumberSystem(searchset?.entry?.[0]?.resource, TrackingNumberType.Mdi);
-      //           decedentRecord.system = mdiSystem;
-      //           const caseNumber = searchset?.entry?.[0]?.resource?.extension?.[0]?.valueIdentifier?.value;
-      //           decedentRecord.caseNumber = caseNumber;
-      //           return decedentRecord
-      //         })
-      //       )
-      //     ))
-      // )
+    this.isLoading = true;
+    this.dcrDocumentHandlerService.getRecords().subscribe({
+      next: data => {
+        console.log(data);
+        this.isLoading = false;
+        this.dataSource = new MatTableDataSource(data);
+        this.dataSource.sort = this.sort;
+      },
+      error: error => {
+        this.isLoading = false;
+        console.error(error);
+        this.serverErrorEventEmitter.emit();
+      },
+      complete: () => {
+        this.isLoading = false;
+      }
+      }
     )
-      .subscribe({
-        next: (data) => {
-          // console.log(data);
-          // this.decedentGridDtoList = data.filter(record => !!record.caseNumber);
-          // this.dataSource = new MatTableDataSource(this.decedentGridDtoList);
-          // this.dataSource.sort = this.sort;
-          // this.mannerOfDeathList = this.getMannerOfDeathList(this.decedentGridDtoList);
-          // this.setDataSourceFilters();
-        },
-        error: (e) => {
-          this.isLoading = false;
-          console.error(e);
-          this.serverErrorEventEmitter.emit();
-        },
-        complete:  () => {
-          this.isLoading = false;
-        },
-      });
   }
-
-
-
-
 }

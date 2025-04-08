@@ -4,6 +4,7 @@ import {Demographics} from "./case.summary";
 export interface DrcRecord {
   resource: Bundle;
   dcrSummary: DcrSummary;
+  dcrGridDTO: DcrGridDTO;
 }
 
 export interface FuneralHome {
@@ -35,11 +36,20 @@ export interface DeathInvestigation{
   dateTimeOfDeath: Date;
 }
 
-export interface DcrHeader{
+export interface DcrHeader {
   fullName: string;
   reportDate: string;
   dcrCaseNumber: string;
   dcrCaseSystem: string;
+}
+
+export interface DcrGridDTO {
+  firstName: string;
+  lastName: string;
+  gender: string;
+  mdiCaseNumber: string;
+  deathDate: string;
+  recordId: string;
 }
 
 export interface DcrSummary {
