@@ -10,7 +10,14 @@
           [resource]="deathInvestigation.resource"
         />
       </div>
-      <div class="grid-col-1"></div>
+      <div class="grid-col-1">
+        <record-viewer-mdi-to-edrs-viewer-content-field
+          [label]="'Type'"
+          [value]="deathInvestigation.type"
+          appSetFhirExplorer
+          [resource]="deathInvestigation.resource"
+        />
+      </div>
     </div>
 
     <div class="content-field-label margin-top-lg">

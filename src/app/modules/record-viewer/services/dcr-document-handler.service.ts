@@ -101,8 +101,10 @@ export class DcrDocumentHandlerService {
     if(!deathDateResource){
       return null;
     }
+    const component = deathDateResource.component.find(component => component.code.coding.find(coding => coding.code === "58332-8"));
+    const type =  component.valueCodeableConcept.text || component?.valueCodeableConcept?.coding?.[0]?.display;
     const placeOfDeath = this.generatePlaceOfDeath(documentBundleList);
-    const result = {dateTimeOfDeath: deathDateResource?.valueDateTime || this.defaultString, resource: deathDateResource , placeOfDeath:placeOfDeath};
+    const result = {dateTimeOfDeath: deathDateResource?.valueDateTime || this.defaultString, resource: deathDateResource , placeOfDeath:placeOfDeath, type: type };
     return result;
   }
 
