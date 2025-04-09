@@ -60,6 +60,7 @@ import { DcrContentDemographicsComponent } from './components/dcr-viewer/dcr-vie
 import { DcrContentDeathInvestigationComponent } from './components/dcr-viewer/dcr-viewer-content/dcr-content-death-investigation/dcr-content-death-investigation.component';
 import { DcrContentCremationClearanceComponent } from './components/dcr-viewer/dcr-viewer-content/dcr-content-cremation-clearance/dcr-content-cremation-clearance.component';
 import { DcrContentCaseAdminInfoComponent } from './components/dcr-viewer/dcr-viewer-content/dcr-content-case-admin-info/dcr-content-case-admin-info.component';
+import { DcrViewerSignatureComponent } from './components/dcr-viewer/dcr-viewer-content/dcr-viewer-signature/dcr-viewer-signature.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import { DcrContentCaseAdminInfoComponent } from './components/dcr-viewer/dcr-vi
     DcrContentDeathInvestigationComponent,
     DcrContentCremationClearanceComponent,
     DcrContentCaseAdminInfoComponent,
+    DcrViewerSignatureComponent,
   ],
     imports: [
         CommonModule,

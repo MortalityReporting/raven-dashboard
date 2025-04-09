@@ -19,6 +19,7 @@ export class DcrViewerContentComponent {
     { expanded: false, id: 'demographics' },
     { expanded: false, id: 'deathInvestigation' },
     { expanded: false, id: 'cremationClearance' },
+    { expanded: false, id: 'signature' },
   ];
 
   constructor(

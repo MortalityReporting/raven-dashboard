@@ -54,6 +54,19 @@ export interface DcrGridDTO {
   recordId: string;
 }
 
+export interface SignedBy{
+  resource: FhirResource;
+  name: string;
+}
+
+export interface SignatureBlock{
+  fileFormat: string;
+  dateTime: string;
+  signatureStr:string;
+  resource: FhirResource;
+  signedBy: SignedBy;
+}
+
 export interface DcrSummary {
   caseAdminInfo: CaseAdminInfo;
   dcrHeader: DcrHeader;
@@ -61,4 +74,5 @@ export interface DcrSummary {
   deathInvestigation: DeathInvestigation;
   cremationClearanceInfo: CremationClearanceInfo;
   placeOfDeath: PlaceOfDeath;
+  signatureBlock: SignatureBlock;
 }

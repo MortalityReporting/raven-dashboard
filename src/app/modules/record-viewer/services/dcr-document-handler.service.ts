@@ -8,10 +8,10 @@ import {
   CaseAdminInfo,
   CremationClearanceInfo,
   DcrGridDTO,
-  DcrHeader,
+  DcrHeader, DcrSummary,
   DeathInvestigation,
   FuneralHome,
-  PlaceOfDeath
+  PlaceOfDeath, SignatureBlock, SignedBy
 } from "../models/dcr-record";
 import {ToxToMdiMessageHandlerService} from "./tox-to-mdi-message-handler.service";
 import {MdiToEdrsDocumentHandlerService} from "./mdi-to-edrs-document-handler.service";
@@ -59,13 +59,16 @@ export class DcrDocumentHandlerService {
         const placeOfDeath = this.generatePlaceOfDeath(documentBundleList);
         const cremationClearanceInfo = this.generateCremationClearanceInfo(documentBundleList);
         const caseAdminInfo = this.generateCaseAdminInfo(documentBundleList);
-        const dcrSummary = {
+        const signatureBlock = this.generateSignatureBlock(documentBundleList);
+
+        const dcrSummary: DcrSummary = {
           caseAdminInfo: caseAdminInfo,
           dcrHeader: dcrHeader,
           demographics: demographics,
           deathInvestigation: deathInvestigation,
           cremationClearanceInfo: cremationClearanceInfo,
-          placeOfDeath: placeOfDeath
+          placeOfDeath: placeOfDeath,
+          signatureBlock: signatureBlock,
         };
         const dcrGridDTO: DcrGridDTO = this.constructDcrGridDto(documentBundleList);
         const result = {dcrRecord: record, dcrSummary: dcrSummary, dcrGridDTO: dcrGridDTO};
@@ -160,4 +163,17 @@ export class DcrDocumentHandlerService {
     return {firstName: firstName, lastName: lastName, mdiCaseNumber: trackingNumber, deathDate: deathDate, gender: gender, recordId: recordId};
   }
 
+  private generateSignatureBlock(documentBundleList: any): SignatureBlock | null {
+    if (!documentBundleList?.signature) {
+      return null;
+    }
+    const signatureData = documentBundleList.signature
+    const fileFormat = signatureData.targetFormat;
+    const dateTime = signatureData.when;
+    const signatureStr = signatureData.data;
+    const signedByPractitionerResource = this.bundleHelper.findResourceByFullUrl(documentBundleList, signatureData?.who?.reference);
+    const signedByName = this.fhirHelper.getOfficialName(signedByPractitionerResource, PatientNameReturn.fullname);
+    const signedBy: SignedBy = {resource: signedByPractitionerResource, name: signedByName};
+    return {resource: documentBundleList, signatureStr: signatureStr, dateTime: dateTime, fileFormat: fileFormat, signedBy: signedBy};
+  }
 }

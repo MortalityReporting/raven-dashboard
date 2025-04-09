@@ -65,5 +65,21 @@
     </div>
   </mat-expansion-panel>
 
+
+  <!-- Cremation Clearance Info-->
+  <mat-expansion-panel class="summary-section" id="signature" [expanded]="isExpanded('signature')" [style.border-color]="appConfig.color">
+    <mat-expansion-panel-header (click)="onToggleState( 'signature' )">
+      <mat-panel-title>Signature</mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="summary-section-body">
+      @if (dcrRecord?.dcrSummary?.signatureBlock) {
+        <app-dcr-viewer-signature
+          [signature]="dcrRecord?.dcrSummary?.signatureBlock"
+        >
+        </app-dcr-viewer-signature>
+      }
+    </div>
+  </mat-expansion-panel>
+
 </mat-accordion>
 
