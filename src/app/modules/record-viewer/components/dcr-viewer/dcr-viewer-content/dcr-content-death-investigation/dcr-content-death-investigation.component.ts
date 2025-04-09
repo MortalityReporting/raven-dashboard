@@ -1,4 +1,5 @@
-import {Component, Input} from '@angular/core';
+import {Component, input, Input} from '@angular/core';
+import {DeathInvestigation} from "../../../../models/dcr-record";
 
 @Component({
   selector: 'app-dcr-content-death-investigation',
@@ -7,5 +8,5 @@ import {Component, Input} from '@angular/core';
   styleUrl: './dcr-content-death-investigation.component.css'
 })
 export class DcrContentDeathInvestigationComponent{
-  @Input() deathInvestigation!: any;
+  deathInvestigation = input<DeathInvestigation>();
 }

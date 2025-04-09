@@ -1,4 +1,5 @@
-import {Component, Input} from '@angular/core';
+import {Component, input, Input} from '@angular/core';
+import {Demographics} from "../../../../models/case.summary";
 
 @Component({
   selector: 'app-dcr-content-demographics',
@@ -7,5 +8,5 @@ import {Component, Input} from '@angular/core';
   styleUrl: './dcr-content-demographics.component.css'
 })
 export class DcrContentDemographicsComponent {
-  @Input() dcrRecord: any;
+  demographics = input<Demographics>();
 }

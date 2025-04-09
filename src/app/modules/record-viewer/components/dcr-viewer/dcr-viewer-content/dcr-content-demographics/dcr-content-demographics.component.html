@@ -4,17 +4,17 @@
       <div class="grid-col-1">
         <record-viewer-mdi-to-edrs-viewer-content-field
           [label]="'Date of Birth'"
-          [value]="dcrRecord?.dcrSummary?.demographics?.birthDate"
+          [value]="demographics()?.birthDate"
           appSetFhirExplorer
-          [resource]="dcrRecord?.dcrSummary?.demographics?.patientResource"
+          [resource]="demographics()?.patientResource"
         />
       </div>
       <div class="grid-col-1">
         <record-viewer-mdi-to-edrs-viewer-content-field
           [label]="'Sex'"
-          [value]="dcrRecord?.dcrSummary?.demographics?.gender"
+          [value]="demographics()?.gender"
           appSetFhirExplorer
-          [resource]="dcrRecord?.dcrSummary?.demographics?.patientResource"
+          [resource]="demographics()?.patientResource"
         />
       </div>
     </div>
@@ -22,17 +22,17 @@
       <div class="grid-col-1">
         <record-viewer-mdi-to-edrs-viewer-content-field
           [label]="'Race'"
-          [value]="dcrRecord?.dcrSummary?.demographics?.race"
+          [value]="demographics()?.race"
           appSetFhirExplorer
-          [resource]="dcrRecord?.dcrSummary?.demographics?.patientResource"
+          [resource]="demographics()?.patientResource"
         />
       </div>
       <div class="grid-col-1">
         <record-viewer-mdi-to-edrs-viewer-content-field
           [label]="'Ethnicity'"
-          [value]="dcrRecord?.dcrSummary?.demographics?.ethnicity"
+          [value]="demographics()?.ethnicity"
           appSetFhirExplorer
-          [resource]="dcrRecord?.dcrSummary?.demographics?.patientResource"
+          [resource]="demographics()?.patientResource"
         />
       </div>
     </div>

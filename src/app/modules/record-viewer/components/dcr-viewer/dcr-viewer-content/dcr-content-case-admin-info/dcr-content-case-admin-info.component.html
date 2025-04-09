@@ -7,9 +7,9 @@
       <div class="grid-col-1">
         <record-viewer-mdi-to-edrs-viewer-content-field
           [label]="'Name'"
-          [value]="caseAdminInfo?.name"
+          [value]="caseAdminInfo()?.name"
           appSetFhirExplorer
-          [resource]="caseAdminInfo?.resource"
+          [resource]="caseAdminInfo()?.resource"
         />
       </div>
       <div class="grid-col-1">
@@ -17,15 +17,9 @@
           [label]="'Phone Number'"
           [value]=""
           appSetFhirExplorer
-          [resource]="caseAdminInfo?.resource"
+          [resource]="caseAdminInfo()?.resource"
         />
       </div>
     </div>
-<!--    <div class="grid-row margin-top-lg signature-block">-->
-<!--        <span class="label">Signature:</span>-->
-<!--        @if(caseAdminInfo?.signature){-->
-<!--          <img src="{{ 'data:image/jpg;base64,' +  caseAdminInfo.signature }}" alt="signature" width="200px"/>-->
-<!--        }-->
-<!--      </div>-->
   </div>
 </div>

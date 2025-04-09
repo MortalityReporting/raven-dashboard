@@ -32,7 +32,7 @@
       <mat-panel-title>Demographics</mat-panel-title>
     </mat-expansion-panel-header>
     <div class="summary-section-body">
-      <app-dcr-content-demographics [dcrRecord]="dcrRecord"></app-dcr-content-demographics>
+      <app-dcr-content-demographics [demographics]="dcrRecord?.dcrSummary?.demographics"></app-dcr-content-demographics>
     </div>
   </mat-expansion-panel>
 

@@ -6,9 +6,9 @@
     <div class="grid-col-1">
       <record-viewer-mdi-to-edrs-viewer-content-field
         [label]="'Name'"
-        [value]="cremationClearanceInfo?.funeralHome?.name"
+        [value]="cremationClearanceInfo()?.funeralHome?.name"
         appSetFhirExplorer
-        [resource]="cremationClearanceInfo?.resource">
+        [resource]="cremationClearanceInfo()?.resource">
       </record-viewer-mdi-to-edrs-viewer-content-field>
     </div>
     <div class="grid-col-1"></div>
@@ -17,17 +17,17 @@
     <div class="grid-col-1">
       <record-viewer-mdi-to-edrs-viewer-content-field
         [label]="'Address Line 1'"
-        [value]="cremationClearanceInfo?.funeralHome?.address?.line1"
+        [value]="cremationClearanceInfo()?.funeralHome?.address?.line1"
         appSetFhirExplorer
-        [resource]="cremationClearanceInfo?.resource">
+        [resource]="cremationClearanceInfo()?.resource">
       </record-viewer-mdi-to-edrs-viewer-content-field>
     </div>
     <div class="grid-col-1">
       <record-viewer-mdi-to-edrs-viewer-content-field
         [label]="'Address Line 2'"
-        [value]="cremationClearanceInfo?.funeralHome?.address?.line2"
+        [value]="cremationClearanceInfo()?.funeralHome?.address?.line2"
         appSetFhirExplorer
-        [resource]="cremationClearanceInfo?.resource">
+        [resource]="cremationClearanceInfo()?.resource">
       </record-viewer-mdi-to-edrs-viewer-content-field>
     </div>
   </div>
@@ -35,33 +35,33 @@
     <div class="grid-col-1">
       <record-viewer-mdi-to-edrs-viewer-content-field
         [label]="'City'"
-        [value]="cremationClearanceInfo?.funeralHome?.address?.city"
+        [value]="cremationClearanceInfo()?.funeralHome?.address?.city"
         appSetFhirExplorer
-        [resource]="cremationClearanceInfo?.resource">
+        [resource]="cremationClearanceInfo()?.resource">
       </record-viewer-mdi-to-edrs-viewer-content-field>
     </div>
     <div class="grid-col-1">
       <record-viewer-mdi-to-edrs-viewer-content-field
         [label]="'State'"
-        [value]="cremationClearanceInfo?.funeralHome?.address?.state"
+        [value]="cremationClearanceInfo()?.funeralHome?.address?.state"
         appSetFhirExplorer
-        [resource]="cremationClearanceInfo?.resource">
+        [resource]="cremationClearanceInfo()?.resource">
       </record-viewer-mdi-to-edrs-viewer-content-field>
     </div>
     <div class="grid-col-1">
       <record-viewer-mdi-to-edrs-viewer-content-field
         [label]="'Zip Code'"
-        [value]="cremationClearanceInfo?.funeralHome?.address?.zip"
+        [value]="cremationClearanceInfo()?.funeralHome?.address?.zip"
         appSetFhirExplorer
-        [resource]="cremationClearanceInfo?.resource">
+        [resource]="cremationClearanceInfo()?.resource">
       </record-viewer-mdi-to-edrs-viewer-content-field>
     </div>
     <div class="grid-col-1">
       <record-viewer-mdi-to-edrs-viewer-content-field
         [label]="'Country'"
-        [value]="cremationClearanceInfo?.funeralHome?.address?.country"
+        [value]="cremationClearanceInfo()?.funeralHome?.address?.country"
         appSetFhirExplorer
-        [resource]="cremationClearanceInfo?.resource">
+        [resource]="cremationClearanceInfo()?.resource">
       </record-viewer-mdi-to-edrs-viewer-content-field>
     </div>
   </div>
