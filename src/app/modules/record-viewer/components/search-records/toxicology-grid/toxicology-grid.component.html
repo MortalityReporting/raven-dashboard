@@ -4,10 +4,10 @@
     <mat-label>Filter</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Search Toxicology Reports" #input>
   </mat-form-field>
-  <span class="content-spacer"></span>
-  <div style="margin: auto">
-
-  </div>
+  <button mat-raised-button class="primary-color-button" style="margin-left: 2em" (click)="onClearFilters()"
+          [style.background-color]="config.backgroundColor" [style.color]="'white'">
+    Clear Filters
+  </button>
 </div>
 
 @if (isLoading) {
