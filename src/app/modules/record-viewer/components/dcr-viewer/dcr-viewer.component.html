@@ -2,7 +2,7 @@
   <div class="viewer-container-header">
     <app-decedent-display
       appSetFhirExplorer
-      [resource]="dcrRecord?.documentBundle"
+      [resource]="dcrRecord?.resource"
       [decedentInformation]="dcrRecord?.dcrSummary?.dcrHeader" [type]="'dcr'">
     </app-decedent-display>
   </div>

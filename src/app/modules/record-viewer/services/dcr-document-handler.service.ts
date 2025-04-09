@@ -71,7 +71,7 @@ export class DcrDocumentHandlerService {
           signatureBlock: signatureBlock,
         };
         const dcrGridDTO: DcrGridDTO = this.constructDcrGridDto(documentBundleList);
-        const result = {dcrRecord: record, dcrSummary: dcrSummary, dcrGridDTO: dcrGridDTO};
+        const result = {resource: record, dcrSummary: dcrSummary, dcrGridDTO: dcrGridDTO};
         return result;
       })
     )
