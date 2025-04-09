@@ -14,7 +14,7 @@ export interface FuneralHome {
 
 export interface CaseAdminInfo {
   name: string;
-  signature: string;
+  email: string;
   resource: FhirResource;
 }
 

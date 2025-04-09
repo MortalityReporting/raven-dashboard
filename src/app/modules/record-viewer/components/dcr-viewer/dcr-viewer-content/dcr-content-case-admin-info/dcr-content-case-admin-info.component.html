@@ -14,8 +14,8 @@
       </div>
       <div class="grid-col-1">
         <record-viewer-mdi-to-edrs-viewer-content-field
-          [label]="'Phone Number'"
-          [value]=""
+          [label]="'Email'"
+          [value]="caseAdminInfo()?.email"
           appSetFhirExplorer
           [resource]="caseAdminInfo()?.resource"
         />
