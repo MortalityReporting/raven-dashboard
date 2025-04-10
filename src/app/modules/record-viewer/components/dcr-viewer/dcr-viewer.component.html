@@ -3,7 +3,8 @@
     <app-decedent-display
       appSetFhirExplorer
       [resource]="dcrRecord?.resource"
-      [decedentInformation]="dcrRecord?.dcrSummary?.dcrHeader" [type]="'dcr'">
+      [decedentInformation]="dcrRecord?.dcrSummary?.dcrHeader"
+      [type]="'dcr'">
     </app-decedent-display>
   </div>
   <div class="viewer-container-body">
@@ -32,7 +33,7 @@
     <div class="viewer-container-body-tabs">
       <div (click)="openDrawer(0);"
            class="hl7-fhir-logo-tab">
-        <img src="assets/icon-fhir-32.png" class="fhir-explorer-icon">
+        <img alt='FHIR Icon Logo' src="assets/icon-fhir-32.png" class="fhir-explorer-icon">
         <span class="fhir-explorer-label">FHIR Explorer</span>
       </div>
     </div>
