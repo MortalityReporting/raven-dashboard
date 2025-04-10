@@ -149,8 +149,6 @@ export class DcrDocumentHandlerService {
     const firstName = this.fhirHelper.getOfficialName(patientResource, PatientNameReturn.firstonly);
     const lastName = this.fhirHelper.getOfficialName(patientResource, PatientNameReturn.lastonly);
 
-    const trackingNumber = this.fhirHelper.getTrackingNumber(documentBundleList.resource);
-
     const gender = patientResource.gender;
 
     const deathDateObsResource = this.bundleHelper.findResourceByProfileName(documentBundleList, this.fhirProfiles.VRDR.Obs_DeathDate);
@@ -158,8 +156,10 @@ export class DcrDocumentHandlerService {
     const compositionResource = this.bundleHelper.findResourceByProfileName(documentBundleList, this.fhirProfiles.DCR.Dcr_composition);
     const recordId = compositionResource.id;
 
+    let organizationResource = this.bundleHelper.findResourceByProfileName(documentBundleList, this.fhirProfiles.VRDR.Org_Funeral_Home);
+    const funeralHomeName = organizationResource.name
 
-    return {firstName: firstName, lastName: lastName, mdiCaseNumber: trackingNumber, deathDate: deathDate, gender: gender, recordId: recordId};
+    return {firstName: firstName, lastName: lastName, deathDate: deathDate, gender: gender, recordId: recordId, funeralHomeName: funeralHomeName};
   }
 
   private generateSignatureBlock(documentBundleList: any): SignatureBlock | null {

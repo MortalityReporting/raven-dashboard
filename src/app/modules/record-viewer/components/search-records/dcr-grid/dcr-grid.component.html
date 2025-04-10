@@ -31,9 +31,9 @@
     <td mat-cell class="pointer" *matCellDef="let dcrGridDTO"> {{ dcrGridDTO?.deathDate | date: 'MM/dd/yyyy' }} </td>
   </ng-container>
 
-  <ng-container matColumnDef="caseNumber">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> MDI Case Number</th>
-    <td mat-cell class="pointer" *matCellDef="let dcrGridDTO"> {{dcrGridDTO?.recordId }} </td>
+  <ng-container matColumnDef="funeralHomeName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Funeral Home</th>
+    <td mat-cell class="pointer" *matCellDef="let dcrGridDTO"> {{dcrGridDTO?.funeralHomeName }} </td>
   </ng-container>
 
 

@@ -19,7 +19,7 @@ export class DcrGridComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   dataSource = new MatTableDataSource<DcrGridDTO>();
-  displayedColumns: string[] = ['name', 'gender', 'deathDate', 'caseNumber'];
+  displayedColumns: string[] = ['name', 'gender', 'deathDate', 'funeralHomeName'];
 
   isLoading = false;
 

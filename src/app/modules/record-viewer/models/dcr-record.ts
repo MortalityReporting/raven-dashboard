@@ -49,9 +49,9 @@ export interface DcrGridDTO {
   firstName: string;
   lastName: string;
   gender: string;
-  mdiCaseNumber: string;
   deathDate: string;
   recordId: string;
+  funeralHomeName: string;
 }
 
 export interface SignedBy{
