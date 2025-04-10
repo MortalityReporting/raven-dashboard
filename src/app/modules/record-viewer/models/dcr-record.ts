@@ -42,7 +42,6 @@ export interface DcrHeader {
   fullName: string;
   reportDate: string;
   dcrCaseNumber: string;
-  dcrCaseSystem: string;
 }
 
 export interface DcrGridDTO {

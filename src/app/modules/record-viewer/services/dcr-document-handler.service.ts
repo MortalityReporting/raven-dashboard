@@ -81,10 +81,7 @@ export class DcrDocumentHandlerService {
     const fullName: string = this.fhirHelper.getOfficialName(patientResource);
 
     const composition = this.bundleHelper.findResourceByProfileName(documentBundleList, this.fhirProfiles.DCR.Dcr_composition);
-    const value = this.fhirHelper.getTrackingNumber(composition,  TrackingNumberType.Dcr);
-    const system = this.fhirHelper.getTrackingNumberSystem(composition,  TrackingNumberType.Dcr);
-    const dcrCaseNumber = value
-    const dcrCaseSystem: string = system;
+    const dcrCaseNumber = this.fhirHelper.getTrackingNumber(composition,  TrackingNumberType.Dcr);
 
     const deathDateResource = this.bundleHelper.findResourceByProfileName(documentBundleList, this.fhirProfiles.VRDR.Obs_DeathDate);
     const deathDate = deathDateResource?.valueDateTime || this.defaultString;
@@ -93,7 +90,6 @@ export class DcrDocumentHandlerService {
       fullName: fullName,
       reportDate: deathDate,
       dcrCaseNumber: dcrCaseNumber,
-      dcrCaseSystem: dcrCaseSystem
     }
     return header;
   }
