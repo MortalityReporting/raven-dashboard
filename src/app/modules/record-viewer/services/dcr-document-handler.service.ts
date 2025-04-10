@@ -13,7 +13,6 @@ import {
   FuneralHome,
   PlaceOfDeath, SignatureBlock, SignedBy
 } from "../models/dcr-record";
-import {ToxToMdiMessageHandlerService} from "./tox-to-mdi-message-handler.service";
 import {MdiToEdrsDocumentHandlerService} from "./mdi-to-edrs-document-handler.service";
 import {PatientNameReturn} from "../../fhir-util/services/fhir-helper.service";
 
@@ -27,7 +26,6 @@ export class DcrDocumentHandlerService {
     private fhirClient: FhirClientService,
     private fhirHelper: FhirHelperService,
     private bundleHelper: BundleHelperService,
-    private toxToMdiMessageHandlerService: ToxToMdiMessageHandlerService,
     private mdiToEdrsDocumentHandlerService: MdiToEdrsDocumentHandlerService,
     @Inject('fhirProfiles') public fhirProfiles: FHIRProfileConstants
   ) { }
@@ -83,9 +81,10 @@ export class DcrDocumentHandlerService {
     const fullName: string = this.fhirHelper.getOfficialName(patientResource);
 
     const composition = this.bundleHelper.findResourceByProfileName(documentBundleList, this.fhirProfiles.DCR.Dcr_composition);
-    const trackingNumber = this.toxToMdiMessageHandlerService.getTrackingNumber(composition, TrackingNumberType.Dcr);
-    const dcrCaseNumber = trackingNumber?.value
-    const dcrCaseSystem: string = trackingNumber?.system;
+    const value = this.fhirHelper.getTrackingNumber(composition,  TrackingNumberType.Dcr);
+    const system = this.fhirHelper.getTrackingNumberSystem(composition,  TrackingNumberType.Dcr);
+    const dcrCaseNumber = value
+    const dcrCaseSystem: string = system;
 
     const deathDateResource = this.bundleHelper.findResourceByProfileName(documentBundleList, this.fhirProfiles.VRDR.Obs_DeathDate);
     const deathDate = deathDateResource?.valueDateTime || this.defaultString;
