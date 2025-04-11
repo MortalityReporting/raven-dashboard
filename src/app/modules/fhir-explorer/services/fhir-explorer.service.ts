@@ -23,7 +23,6 @@ export class FhirExplorerService {
 
   setSelectedFhirResource(fhirResource: any) {
     this.fhirResource.next(fhirResource);
-    console.log(fhirResource);
   }
 
   translateToXml( resource: any ): Observable<any> {

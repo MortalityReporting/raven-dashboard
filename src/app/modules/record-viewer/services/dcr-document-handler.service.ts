@@ -15,6 +15,7 @@ import {
 } from "../models/dcr-record";
 import {MdiToEdrsDocumentHandlerService} from "./mdi-to-edrs-document-handler.service";
 import {PatientNameReturn} from "../../fhir-util/services/fhir-helper.service";
+import {AppConstants} from "../../../providers/app-constants";
 
 
 @Injectable({
@@ -22,19 +23,25 @@ import {PatientNameReturn} from "../../fhir-util/services/fhir-helper.service";
 })
 export class DcrDocumentHandlerService {
 
+  public defaultString: string = this.appConstants.VALUE_NOT_FOUND;
+
   constructor(
     private fhirClient: FhirClientService,
     private fhirHelper: FhirHelperService,
     private bundleHelper: BundleHelperService,
     private mdiToEdrsDocumentHandlerService: MdiToEdrsDocumentHandlerService,
+    private appConstants: AppConstants,
     @Inject('fhirProfiles') public fhirProfiles: FHIRProfileConstants
   ) { }
-  public defaultString: string = "VALUE NOT FOUND";
+
 
   getRecords(): Observable<DcrGridDTO[]> {
     //TODO we need to refactor all this code once we can access the records from the dcr grid. Presently we are fetching the data directly (via hardcoded url)
     return this.fhirClient.read('Composition', '$dcr-message').pipe(
       map((record: any) => {
+        if(!record.entry){
+          return [];
+        }
         const result = record.entry.map(documentBundle => {
           const documentBundleList = documentBundle.resource.entry?.[1]?.resource;
           const dcrGridDTO: DcrGridDTO = this.constructDcrGridDto(documentBundleList);
@@ -102,7 +109,11 @@ export class DcrDocumentHandlerService {
     const component = deathDateResource.component.find(component => component.code.coding.find(coding => coding.code === "58332-8"));
     const type =  component.valueCodeableConcept.text || component?.valueCodeableConcept?.coding?.[0]?.display;
     const placeOfDeath = this.generatePlaceOfDeath(documentBundleList);
-    const result = {dateTimeOfDeath: deathDateResource?.valueDateTime || this.defaultString, resource: deathDateResource , placeOfDeath:placeOfDeath, type: type };
+    const result = {
+      dateTimeOfDeath: deathDateResource?.valueDateTime || this.defaultString,
+      resource: deathDateResource ,
+      placeOfDeath:placeOfDeath,
+      type: type || this.defaultString };
     return result;
   }
 
@@ -112,7 +123,7 @@ export class DcrDocumentHandlerService {
     const type = "Not Implemented";
     const address: Address = new Address(deathLocationResource);
     const facility = "Not Implemented";
-    const facilityName = deathLocationResource?.name;
+    const facilityName = deathLocationResource?.name || this.defaultString;
     return {type: type, address: address, facility: facility, facilityName: facilityName, resource: deathLocationResource};
   }
 
@@ -133,28 +144,31 @@ export class DcrDocumentHandlerService {
     if(!practitionerResource){
       return null;
     }
-    const name  = this.fhirHelper.getOfficialName(practitionerResource);
-    const email = practitionerResource.telecom.find(el=> el.system == 'email').value;
+    const name  = this.fhirHelper.getOfficialName(practitionerResource) || this.defaultString;
+    const email = practitionerResource.telecom.find(el=> el.system == 'email').value || this.defaultString;
     return {name: name, resource: practitionerResource, email: email};
   }
 
   private constructDcrGridDto(documentBundleList: any): DcrGridDTO  {
 
     const patientResource = this.bundleHelper.findResourceByProfileName(documentBundleList, this.fhirProfiles.USCore.USCorePatient);
-    const firstName = this.fhirHelper.getOfficialName(patientResource, PatientNameReturn.firstonly);
-    const lastName = this.fhirHelper.getOfficialName(patientResource, PatientNameReturn.lastonly);
+    const firstName = this.fhirHelper.getOfficialName(patientResource, PatientNameReturn.firstonly) || this.defaultString;
+    const lastName = this.fhirHelper.getOfficialName(patientResource, PatientNameReturn.lastonly) || this.defaultString;
 
-    const gender = patientResource.gender;
+    //const gender = patientResource.gender;
 
     const deathDateObsResource = this.bundleHelper.findResourceByProfileName(documentBundleList, this.fhirProfiles.VRDR.Obs_DeathDate);
-    const deathDate = deathDateObsResource?.valueDateTime;
+    const deathDate = deathDateObsResource?.valueDateTime || this.defaultString;
     const compositionResource = this.bundleHelper.findResourceByProfileName(documentBundleList, this.fhirProfiles.DCR.Dcr_composition);
-    const recordId = compositionResource.id;
+    const recordId = compositionResource.id || this.defaultString;
 
     let organizationResource = this.bundleHelper.findResourceByProfileName(documentBundleList, this.fhirProfiles.VRDR.Org_Funeral_Home);
-    const funeralHomeName = organizationResource.name
+    const funeralHomeName = organizationResource.name || this.defaultString;
 
-    return {firstName: firstName, lastName: lastName, deathDate: deathDate, gender: gender, recordId: recordId, funeralHomeName: funeralHomeName};
+      // TODO uncomment when we know how to use gender/sex fields per the CDC guidelines. Note that gender should come from Sex at Death
+    //return {firstName: firstName, lastName: lastName, deathDate: deathDate, gender: gender, recordId: recordId, funeralHomeName: funeralHomeName};
+
+    return {firstName: firstName, lastName: lastName, deathDate: deathDate, recordId: recordId, funeralHomeName: funeralHomeName};
   }
 
   private generateSignatureBlock(documentBundleList: any): SignatureBlock | null {
@@ -163,10 +177,10 @@ export class DcrDocumentHandlerService {
     }
     const signatureData = documentBundleList.signature
     const fileFormat = signatureData.targetFormat;
-    const dateTime = signatureData.when;
+    const dateTime = signatureData.when || this.defaultString;
     const signatureStr = signatureData.data;
     const signedByPractitionerResource = this.bundleHelper.findResourceByFullUrl(documentBundleList, signatureData?.who?.reference);
-    const signedByName = this.fhirHelper.getOfficialName(signedByPractitionerResource, PatientNameReturn.fullname);
+    const signedByName = this.fhirHelper.getOfficialName(signedByPractitionerResource, PatientNameReturn.fullname) || this.defaultString;
     const signedBy: SignedBy = {resource: signedByPractitionerResource, name: signedByName};
     return {resource: documentBundleList, signatureStr: signatureStr, dateTime: dateTime, fileFormat: fileFormat, signedBy: signedBy};
   }

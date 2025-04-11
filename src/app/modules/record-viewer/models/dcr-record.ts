@@ -47,7 +47,8 @@ export interface DcrHeader {
 export interface DcrGridDTO {
   firstName: string;
   lastName: string;
-  gender: string;
+  // TODO uncomment when we know how to use gender/sex fields per the CDC guidelines. Note that gender should come from Sex at Death
+  // gender: string;
   deathDate: string;
   recordId: string;
   funeralHomeName: string;

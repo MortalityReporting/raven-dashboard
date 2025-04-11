@@ -54,7 +54,6 @@ export class DcrGridComponent implements OnInit {
     this.isLoading = true;
     this.dcrDocumentHandlerService.getRecords().subscribe({
       next: data => {
-        console.log(data);
         this.isLoading = false;
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.sort = this.sort;

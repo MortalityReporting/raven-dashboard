@@ -12,4 +12,6 @@ export class AppConstants {
     ADMIN: "admin",
   };
 
+  VALUE_NOT_FOUND= "VALUE NOT FOUND";
+
 }
