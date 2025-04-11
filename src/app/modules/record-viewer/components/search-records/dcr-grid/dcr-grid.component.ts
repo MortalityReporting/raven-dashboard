@@ -11,7 +11,7 @@ import {DcrGridDTO} from "../../../models/dcr-record";
   selector: 'dcr-grid',
   standalone: false,
   templateUrl: './dcr-grid.component.html',
-  styleUrl: './dcr-grid.component.scss'
+  styleUrls: ['../../../record-viewer-styles.scss', '../search-records.component.scss'],
 })
 export class DcrGridComponent implements OnInit {
   @Output() serverErrorEventEmitter = new EventEmitter();

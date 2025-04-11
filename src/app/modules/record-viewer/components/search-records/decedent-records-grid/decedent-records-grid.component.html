@@ -1,29 +1,25 @@
-<div class="padding-top-md">
-  <div class="row">
-    <mat-form-field >
-      <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Search decedents" #input>
-    </mat-form-field>
+<div class="margin-top-lg">
+  <mat-form-field class="filter-width" appearance="outline" floatLabel="always" >
+    <mat-label>Filter Results</mat-label>
+    <input matInput (keyup)="applyFilter($event)" #input>
+  </mat-form-field>
 
-    <mat-form-field appearance="outline" style="margin-left: 2em">
-      <mat-label>Manner of Death</mat-label>
-      <mat-select (selectionChange)="applyMannerOfDeathFilter()" #mannerOfDeathSelect='matSelect'>
-        @for (mannerOfDeath of mannerOfDeathList; track mannerOfDeath) {
-          <mat-option [value]="mannerOfDeath">
-            {{ mannerOfDeath }}
-          </mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
+  <mat-form-field appearance="outline" class="margin-left-md filter-width"  floatLabel="always">
+    <mat-label>Manner of Death</mat-label>
+    <mat-select (selectionChange)="applyMannerOfDeathFilter()" #mannerOfDeathSelect='matSelect'>
+      @for (mannerOfDeath of mannerOfDeathList; track mannerOfDeath) {
+        <mat-option [value]="mannerOfDeath">
+          {{ mannerOfDeath }}
+        </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
 
-    <button mat-raised-button class="primary-color-button" style="margin-left: 2em" (click)="onClearFilters()"
-      [style.background-color]="config.backgroundColor" [style.color]="'white'">
-      Clear Filters
-    </button>
-  </div>
-
+  <button mat-raised-button class="primary-color-button margin-left-md" (click)="onClearFilters()"
+          [style.background-color]="config.backgroundColor" [style.color]="'white'">
+    Clear Filters
+  </button>
 </div>
-
 
 
 <table mat-table [dataSource]="dataSource" matSort matSortDisableClear matSortActive="personId">
