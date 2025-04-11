@@ -36,7 +36,6 @@ export class DcrDocumentHandlerService {
 
 
   getRecords(): Observable<DcrGridDTO[]> {
-    //TODO we need to refactor all this code once we can access the records from the dcr grid. Presently we are fetching the data directly (via hardcoded url)
     return this.fhirClient.read('Composition', '$dcr-message').pipe(
       map((record: any) => {
         if(!record.entry){

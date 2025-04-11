@@ -19,7 +19,9 @@ export class DcrGridComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   dataSource = new MatTableDataSource<DcrGridDTO>();
-  displayedColumns: string[] = ['name', 'gender', 'deathDate', 'funeralHomeName'];
+  //displayedColumns: string[] = ['name', 'gender', 'deathDate', 'funeralHomeName'];
+  // TODO uncomment when we know how to use gender/sex fields per the CDC guidelines. Note that gender should come from Sex at Death
+  displayedColumns: string[] = ['name',  'deathDate', 'funeralHomeName'];
 
   isLoading = false;
 
