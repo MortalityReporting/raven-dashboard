@@ -73,6 +73,16 @@
     matTooltipPosition="before"
     >
   </tr>
+  <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell" [colSpan]="displayedColumns.length">
+      @if (!isLoading) {
+        No results found.
+      } @else {
+        <span class="inline-spinner-wrapper">
+          <mat-spinner [diameter]="72" customSpinner [spinnerColor]="config.backgroundColor"></mat-spinner>
+        </span>
+      }</td>
+  </tr>
 
 </table>
 
