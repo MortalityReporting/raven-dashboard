@@ -10,12 +10,13 @@
         />
       </div>
       <div class="grid-col-1">
-        <record-viewer-mdi-to-edrs-viewer-content-field
-          [label]="'Sex'"
-          [value]="demographics()?.gender"
-          appSetFhirExplorer
-          [resource]="demographics()?.patientResource"
-        />
+        <!--    TODO uncomment when we know how to use gender/sex fields per the CDC guidelines. Note that gender should come from Sex at Death-->
+<!--        <record-viewer-mdi-to-edrs-viewer-content-field-->
+<!--          [label]="'Sex'"-->
+<!--          [value]="demographics()?.gender"-->
+<!--          appSetFhirExplorer-->
+<!--          [resource]="demographics()?.patientResource"-->
+<!--        />-->
       </div>
     </div>
     <div class="grid-row">

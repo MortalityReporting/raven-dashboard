@@ -26,7 +26,9 @@ import {ModuleHeaderConfig} from "../../../../../../providers/module-header-conf
 export class MdiToEdrsGridComponent implements OnInit {
 
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['index', 'lastName', 'gender', 'tod', 'mannerOfDeath', 'caseNumber'];
+  //    TODO uncomment when we know how to use gender/sex fields per the CDC guidelines. Note that gender should come from Sex at Death
+  //displayedColumns: string[] = ['index', 'lastName', 'gender', 'tod', 'mannerOfDeath', 'caseNumber'];
+  displayedColumns: string[] = ['index', 'lastName', 'tod', 'mannerOfDeath', 'caseNumber'];
   decedentGridDtoList: any[];
   isLoading = true;
   selectedCase: any;

@@ -26,7 +26,9 @@ export class DecedentRecordsGridComponent implements OnInit {
   @ViewChild('mannerOfDeathSelect') mannerOfDeathSelect: MatSelect;
 
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['lastName', 'gender', 'tod', 'mannerOfDeath', 'caseNumber'];
+  //TODO uncomment when we know how to use gender/sex fields per the CDC guidelines. Note that gender should come from Sex at Death
+  //displayedColumns: string[] = ['lastName', 'gender', 'tod', 'mannerOfDeath', 'caseNumber'];
+  displayedColumns: string[] = ['lastName', 'tod', 'mannerOfDeath', 'caseNumber'];
   decedentGridDtoList: DecedentGridDTO[];
   isLoading = true;
   mannerOfDeathList: string [] = [];
