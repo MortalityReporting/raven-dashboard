@@ -35,9 +35,13 @@ export class ToxToMdiViewerComponent implements OnInit {
     let toxLabId = this.route.snapshot.params['id'];
     this.toxicologyHandler.getRecord(toxLabId).subscribe({
       next: record => {
-        this.fhirExplorerService.setSelectedFhirResource(record.messageBundle);
-        this.toxToMdiRecord = record;
-        console.log(record)
+        if(record?.messageBundle){
+          this.fhirExplorerService.setSelectedFhirResource(record.messageBundle);
+          this.toxToMdiRecord = record;
+        }
+        else{
+          console.warn("No message bundle found")
+        }
       },
       error: err => {
         console.error(err);

@@ -49,8 +49,7 @@ export class ToxToMdiMessageHandlerService {
       true
     ).pipe(
       map((messageBundleList: any) => {
-        if (!messageBundleList) return undefined;
-        console.log(messageBundleList)
+        if (!messageBundleList || !messageBundleList?.[0]) return undefined;
         const messageBundle = messageBundleList?.[0];
         const diagnosticReport = this.getDiagnosticReportFromMessageBundle(messageBundle);
         return new ToxToMdiRecord(
