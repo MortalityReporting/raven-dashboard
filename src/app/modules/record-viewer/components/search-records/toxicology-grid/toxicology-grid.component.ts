@@ -60,6 +60,7 @@ export class ToxicologyGridComponent implements OnInit {
         this.toxGridDtoList = []; // Initialize data.
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.sort = this.sort;
+        this.isLoading = false;
       },
       error: (e) => {
         console.error(e);
