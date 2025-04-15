@@ -13,6 +13,20 @@
     </div>
     <div class="grid-col-1"></div>
   </div>
+  @if (cremationClearanceInfo()?.funeralHome?.addressText) {
+    <div class="grid-row">
+      <div class="grid-col-1">
+        <record-viewer-mdi-to-edrs-viewer-content-field
+          [label]="'Address Description'"
+          [value]="cremationClearanceInfo()?.funeralHome?.addressText"
+          appSetFhirExplorer
+          [resource]="cremationClearanceInfo()?.resource">
+        </record-viewer-mdi-to-edrs-viewer-content-field>
+      </div>
+      <div class="grid-col-1"></div>
+    </div>
+  }
+  @else {
   <div class="grid-row">
     <div class="grid-col-1">
       <record-viewer-mdi-to-edrs-viewer-content-field
@@ -65,5 +79,6 @@
       </record-viewer-mdi-to-edrs-viewer-content-field>
     </div>
   </div>
+  }
 </div>
 

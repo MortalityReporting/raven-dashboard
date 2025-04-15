@@ -119,11 +119,12 @@ export class DcrDocumentHandlerService {
   private generatePlaceOfDeath(documentBundleList: any): PlaceOfDeath{
     const deathLocationResource = this.bundleHelper.findResourceByProfileName(documentBundleList, this.fhirProfiles.VRDR.Loc_DeathLocation);
 
-    const type = "Not Implemented";
+    const type = this.defaultString;
     const address: Address = new Address(deathLocationResource);
-    const facility = "Not Implemented";
+    const addressText = deathLocationResource?.['address']?.text;
+    const facility = this.defaultString;
     const facilityName = deathLocationResource?.name || this.defaultString;
-    return {type: type, address: address, facility: facility, facilityName: facilityName, resource: deathLocationResource};
+    return {type: type, address: address, addressText: addressText, facility: facility, facilityName: facilityName, resource: deathLocationResource};
   }
 
   private generateCremationClearanceInfo(documentBundleList: any): CremationClearanceInfo {
@@ -132,7 +133,8 @@ export class DcrDocumentHandlerService {
       return null;
     }
     const address = new Address(organizationResource);
-    const funeralHome: FuneralHome = {address: address, name: organizationResource.name};
+    const addressText = organizationResource?.['address']?.text;
+    const funeralHome: FuneralHome = {address: address, name: organizationResource.name, addressText: addressText};
     return {resource: organizationResource, funeralHome: funeralHome};
   }
 

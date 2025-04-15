@@ -10,6 +10,7 @@ export interface DrcRecord {
 export interface FuneralHome {
   name: string;
   address: Address;
+  addressText: string;
 }
 
 export interface CaseAdminInfo {
@@ -26,6 +27,7 @@ export interface CremationClearanceInfo {
 export interface PlaceOfDeath {
   type: string;
   address: Address;
+  addressText: string;
   facility: any;
   facilityName: string;
   resource: FhirResource;

@@ -39,7 +39,7 @@ export class ToxToMdiViewerComponent implements OnInit {
           this.fhirExplorerService.setSelectedFhirResource(record.messageBundle);
           this.toxToMdiRecord = record;
         }
-        else{
+        else {
           console.warn("No message bundle found")
         }
       },
