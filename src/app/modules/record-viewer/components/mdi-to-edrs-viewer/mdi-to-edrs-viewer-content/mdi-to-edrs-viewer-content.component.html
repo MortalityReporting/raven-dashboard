@@ -61,10 +61,11 @@
       <div class="summary-section-grid">
         <div class="grid-row">
           <div class="grid-col-1">
-            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Legal Sex at Death'"
-              [value]="mdiToEdrsRecord?.caseSummary?.demographics?.gender"
-              appSetFhirExplorer
-            [resource]="mdiToEdrsRecord?.caseSummary?.demographics?.patientResource"/>
+            <!--    TODO uncomment when we know how to use gender/sex fields per the CDC guidelines. Note that gender should come from Sex at Death-->
+<!--            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Legal Sex at Death'"-->
+<!--              [value]="mdiToEdrsRecord?.caseSummary?.demographics?.gender"-->
+<!--              appSetFhirExplorer-->
+<!--            [resource]="mdiToEdrsRecord?.caseSummary?.demographics?.patientResource"/>-->
           </div>
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Social Security Number'"

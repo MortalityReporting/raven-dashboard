@@ -1,29 +1,25 @@
-<div class="padding-top-md">
-  <div class="row">
-    <mat-form-field >
-      <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Search decedents" #input>
-    </mat-form-field>
+<div class="margin-top-lg">
+  <mat-form-field class="filter-width" appearance="outline" floatLabel="always" >
+    <mat-label>Filter Results</mat-label>
+    <input matInput (keyup)="applyFilter($event)" #input>
+  </mat-form-field>
 
-    <mat-form-field appearance="outline" style="margin-left: 2em">
-      <mat-label>Manner of Death</mat-label>
-      <mat-select (selectionChange)="applyMannerOfDeathFilter()" #mannerOfDeathSelect='matSelect'>
-        @for (mannerOfDeath of mannerOfDeathList; track mannerOfDeath) {
-          <mat-option [value]="mannerOfDeath">
-            {{ mannerOfDeath }}
-          </mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
+  <mat-form-field appearance="outline" class="margin-left-md filter-width"  floatLabel="always">
+    <mat-label>Manner of Death</mat-label>
+    <mat-select (selectionChange)="applyMannerOfDeathFilter()" #mannerOfDeathSelect='matSelect'>
+      @for (mannerOfDeath of mannerOfDeathList; track mannerOfDeath) {
+        <mat-option [value]="mannerOfDeath">
+          {{ mannerOfDeath }}
+        </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
 
-    <button mat-raised-button class="primary-color-button" style="margin-left: 2em" (click)="onClearFilters()"
-      [style.background-color]="config.backgroundColor" [style.color]="'white'">
-      Clear Filters
-    </button>
-  </div>
-
+  <button mat-raised-button class="primary-color-button margin-left-md" (click)="onClearFilters()"
+          [style.background-color]="config.backgroundColor" [style.color]="'white'">
+    Clear Filters
+  </button>
 </div>
-
 
 
 <table mat-table [dataSource]="dataSource" matSort matSortDisableClear matSortActive="personId">
@@ -33,11 +29,11 @@
     <td mat-cell class="pointer"
     *matCellDef="let decedent"> {{decedent.lastName | titlecase}}{{decedent.firstName ? ', ' + decedent.firstName : ''}}</td>
   </ng-container>
-
-  <ng-container matColumnDef="gender">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Gender</th>
-    <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.gender | titlecase}} </td>
-  </ng-container>
+<!--    TODO uncomment when we know how to use gender/sex fields per the CDC guidelines. Note that gender should come from Sex at Death-->
+<!--  <ng-container matColumnDef="gender">-->
+<!--    <th mat-header-cell *matHeaderCellDef mat-sort-header> Gender</th>-->
+<!--    <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.gender | titlecase}} </td>-->
+<!--  </ng-container>-->
 
   <ng-container matColumnDef="age">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Age</th>

@@ -6,7 +6,8 @@ export class AppConfiguration {
     contrastColor: "#fafafa",
     workflowTitles: {
       mdiToEdrs: "MDI and EDRS Document",
-      toxToMdi: "Tox to MDI Message"
+      toxToMdi: "Tox to MDI Message",
+      dcr: "Death Certificate Review Document"
     },
     modules: {
       recordViewer: {

@@ -34,7 +34,9 @@ export class EdrsSearchResultsGridComponent implements OnInit, OnChanges {
 
   @ViewChild(MatTabGroup) resultsTabGroup: MatTabGroup;
 
-  resultTableColumns = ['officialName', 'gender', 'address', 'edrsFileNumber'];
+  //    TODO uncomment when we know how to use gender/sex fields per the CDC guidelines. Note that gender should come from Sex at Death
+  // resultTableColumns = ['officialName', 'gender', 'address', 'edrsFileNumber'];
+  resultTableColumns = ['officialName', 'address', 'edrsFileNumber'];
   resultTableDataSource = new MatTableDataSource<any>();
   selectedCase: any;
 

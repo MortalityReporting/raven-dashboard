@@ -1,0 +1,25 @@
+<div class="summary-section-body">
+  <div class="summary-section-grid">
+    <div class="content-field-label">
+      <p><u>Submitter</u></p>
+    </div>
+    <div class="grid-row">
+      <div class="grid-col-1">
+        <record-viewer-mdi-to-edrs-viewer-content-field
+          [label]="'Name'"
+          [value]="caseAdminInfo()?.name"
+          appSetFhirExplorer
+          [resource]="caseAdminInfo()?.resource"
+        />
+      </div>
+      <div class="grid-col-1">
+        <record-viewer-mdi-to-edrs-viewer-content-field
+          [label]="'Email'"
+          [value]="caseAdminInfo()?.email"
+          appSetFhirExplorer
+          [resource]="caseAdminInfo()?.resource"
+        />
+      </div>
+    </div>
+  </div>
+</div>

@@ -7,6 +7,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {AppConfiguration} from "../../../../../providers/app-configuration";
 import {ToxToMdiMessageHandlerService} from "../../../services/tox-to-mdi-message-handler.service";
 import {TrackingNumberType} from "../../../../fhir-mdi-library";
+import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
 
 @Component({
     selector: 'record-viewer-toxicology-grid',
@@ -33,7 +34,8 @@ export class ToxicologyGridComponent implements OnInit {
     private route: ActivatedRoute,
     private toxicologyHandler: ToxToMdiMessageHandlerService,
     private router: Router,
-    @Inject('appConfig') public appConfig: AppConfiguration
+    @Inject('appConfig') public appConfig: AppConfiguration,
+    @Inject('config') public config: ModuleHeaderConfig
   ) {
   }
 
@@ -58,6 +60,7 @@ export class ToxicologyGridComponent implements OnInit {
         this.toxGridDtoList = []; // Initialize data.
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.sort = this.sort;
+        this.isLoading = false;
       },
       error: (e) => {
         console.error(e);
@@ -96,6 +99,14 @@ export class ToxicologyGridComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  onClearFilters() {
+    this.input.nativeElement.value = '';
+    this.dataSource.filter = '';
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
 }

@@ -52,6 +52,15 @@ import {
 import {CommonErrorComponent} from "ngx-hisb-common-ui";
 import {CustomSpinnerDirective} from "./directives/custom-spinner.directive";
 import { ToxDemoCardComponent } from './components/tox-to-mdi-viewer/tox-demo-card/tox-demo-card.component';
+import { DcrViewerComponent } from './components/dcr-viewer/dcr-viewer.component';
+import { DcrGridComponent } from './components/search-records/dcr-grid/dcr-grid.component';
+import { DcrViewerNavMenuComponent } from './components/dcr-viewer/dcr-viewer-nav-menu/dcr-viewer-nav-menu.component';
+import { DcrViewerContentComponent } from './components/dcr-viewer/dcr-viewer-content/dcr-viewer-content.component';
+import { DcrContentDemographicsComponent } from './components/dcr-viewer/dcr-viewer-content/dcr-content-demographics/dcr-content-demographics.component';
+import { DcrContentDeathInvestigationComponent } from './components/dcr-viewer/dcr-viewer-content/dcr-content-death-investigation/dcr-content-death-investigation.component';
+import { DcrContentCremationClearanceComponent } from './components/dcr-viewer/dcr-viewer-content/dcr-content-cremation-clearance/dcr-content-cremation-clearance.component';
+import { DcrContentCaseAdminInfoComponent } from './components/dcr-viewer/dcr-viewer-content/dcr-content-case-admin-info/dcr-content-case-admin-info.component';
+import { DcrViewerSignatureComponent } from './components/dcr-viewer/dcr-viewer-content/dcr-viewer-signature/dcr-viewer-signature.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +81,16 @@ import { ToxDemoCardComponent } from './components/tox-to-mdi-viewer/tox-demo-ca
     ToxToMdiViewerCertifierComponent,
     ToxToMdiViewerGridSectionComponent,
     CustomSpinnerDirective,
-    ToxDemoCardComponent
+    ToxDemoCardComponent,
+    DcrViewerComponent,
+    DcrGridComponent,
+    DcrViewerNavMenuComponent,
+    DcrViewerContentComponent,
+    DcrContentDemographicsComponent,
+    DcrContentDeathInvestigationComponent,
+    DcrContentCremationClearanceComponent,
+    DcrContentCaseAdminInfoComponent,
+    DcrViewerSignatureComponent,
   ],
     imports: [
         CommonModule,
