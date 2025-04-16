@@ -1,33 +1,38 @@
-
 <div class="summary-section-body">
   <div class="summary-section-grid">
     <div class="grid-row">
       <div class="grid-col-2">
         <record-viewer-mdi-to-edrs-viewer-content-field
           [label]="'Signed'"
-          [value]="signature?.signedBy?.name"
+          [value]="signature()?.signedBy?.name"
           appSetFhirExplorer
-          [resource]="signature?.signedBy?.resource"
+          [resource]="signature()?.signedBy?.resource"
         />
       </div>
       <div class="grid-col-2">
         <record-viewer-mdi-to-edrs-viewer-content-field
           [label]="'Date'"
-          [value]="signature?.dateTime"
+          [value]="signature()?.dateTime"
           appSetFhirExplorer
-          [resource]="signature?.resource"
+          [resource]="signature()?.resource"
         />
       </div>
     </div>
-    <div class="grid-row">
-      <div class="grid-col-1">
-        <div class="grid-row margin-top-lg signature-block">
-          @if(signature?.signatureStr){
-            <img src="{{ 'data:image/jpg;base64,' +  signature.signatureStr }}" alt="signature" width="200px"/>
-          }
+
+    @if (signature()?.signatureStr) {
+      <div class="grid-row">
+        <div class="grid-col-2">
+          <div class="content-field">
+            <div class="content-field-label"></div>
+            <div class="content-field-value" style="cursor: auto">
+              <img src="{{ 'data:image/jpg;base64,' +  signature().signatureStr }}" alt="signature" width="80%"/>
+            </div>
+          </div>
+        </div>
+        <div class="grid-col-2">
         </div>
       </div>
-    </div>
-
+    }
   </div>
+
 </div>
