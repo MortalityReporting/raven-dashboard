@@ -32,6 +32,9 @@ import {
 import {authGuard} from "./guards/auth.guard";
 import {SearchEdrsBluejayComponent} from "./modules/tests/components/search-edrs-bluejay/search-edrs-bluejay.component";
 import {DcrViewerComponent} from "./modules/record-viewer/components/dcr-viewer/dcr-viewer.component";
+import {
+  DeathCertificateReviewSubmissionComponent
+} from "./modules/tests/components/death-certificate-review-submission/death-certificate-review-submission.component";
 
 
 const routes: Routes = [
@@ -121,6 +124,11 @@ const routes: Routes = [
         path: 'update-edrs',
         component: UpdateEdrsComponent,
         data: {moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Updated EDRS"}
+      },
+      {
+        path: 'dcr-submission',
+        component: DeathCertificateReviewSubmissionComponent,
+        data: {moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Death Certificate ReviewSubmission"}
       },
     ]
   },

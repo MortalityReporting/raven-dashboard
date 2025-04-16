@@ -63,6 +63,7 @@ import {NgxHisbLoggerModule} from "ngx-hisb-logger";
 import { ValidationComponent } from './components/validation/validation.component';
 import { EstablishConnectionComponent } from './components/search-edrs-bluejay/establish-connection/establish-connection.component';
 import { SearchEdrsBluejayComponent } from './components/search-edrs-bluejay/search-edrs-bluejay.component';
+import { DeathCertificateReviewSubmissionComponent } from './components/death-certificate-review-submission/death-certificate-review-submission.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +86,7 @@ import { SearchEdrsBluejayComponent } from './components/search-edrs-bluejay/sea
     ValidationComponent,
     EstablishConnectionComponent,
     SearchEdrsBluejayComponent,
+    DeathCertificateReviewSubmissionComponent,
   ],
   exports: [
     EdrsResultsStepComponent,
