@@ -1,75 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
-
-
-// http://hl7.org/fhir/us/core/ValueSet-omb-race-category.html
-export const RACE = [
-  {
-    code: '1002-5',
-    system: 'urn:oid:2.16.840.1.113883.6.238',
-    display: 'American Indian or Alaska Native'
-  },
-  {
-    code: '2028-9',
-    system: 'urn:oid:2.16.840.1.113883.6.238',
-    display: 'Asian'
-  },
-  {
-    code: '2076-5',
-    system: 'urn:oid:2.16.840.1.113883.6.238',
-    display: 'Black or African American'
-  },
-  {
-    code: '2076-8',
-    system: 'urn:oid:2.16.840.1.113883.6.238',
-    display: 'Native Hawaiian or Other Pacific Islander'
-  },
-  {
-    code: '2106-3',
-    system: 'urn:oid:2.16.840.1.113883.6.238',
-    display: 'White'
-  },
-  {
-    code: '2131-1',
-    system: 'urn:oid:2.16.840.1.113883.6.238',
-    display: 'Other Race'
-  },
-  {
-    code: 'ASKU',
-    system: 'http://terminology.hl7.org/CodeSystem/v3-NullFlavor',
-    display: 'Asked but Unknown'
-  },
-  {
-    code: 'UNK',
-    system: 'http://terminology.hl7.org/CodeSystem/v3-NullFlavor',
-    display: 'unknown'
-  }
-]
-
-
-export const ETHNICITY = [
-  {
-    code: '2135-2',
-    system: 'urn:oid:2.16.840.1.113883.6.238',
-    display: 'Hispanic or Latino'
-  },
-  {
-    code: '2135-5',
-    system: 'urn:oid:2.16.840.1.113883.6.238',
-    display: 'Not Hispanic or Latino'
-  },
-  {
-    code: 'ASKU',
-    system: 'http://terminology.hl7.org/CodeSystem/v3-NullFlavor',
-    display: 'Asked but Unknown'
-  },
-  {
-    code: 'UNK',
-    system: 'http://terminology.hl7.org/CodeSystem/v3-NullFlavor',
-    display: 'unknown'
-  }
-]
-
+import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
+import {ETHNICITY, RACE_CATEGORIES} from "../../providers/module-constants"
 
 @Component({
   selector: 'app-death-certificate-review-submission',
@@ -78,9 +10,9 @@ export const ETHNICITY = [
   styleUrl: './death-certificate-review-submission.component.scss'
 })
 
-
-
 export class DeathCertificateReviewSubmissionComponent {
+  readonly ETHNICITY = Object.values(ETHNICITY);
+  readonly RACE_CATEGORIES = Object.values(RACE_CATEGORIES);
 
   address = new FormGroup({
     addressLine1: new FormControl(''),
@@ -88,7 +20,6 @@ export class DeathCertificateReviewSubmissionComponent {
     city: new FormControl(''),
     state: new FormControl(''),
     zip: new FormControl(''),
-    county: new FormControl(''),
   })
 
   dcrForm = new FormGroup({
@@ -96,21 +27,32 @@ export class DeathCertificateReviewSubmissionComponent {
       firstName: new FormControl(''),
       lastName: new FormControl(''),
       email: new FormControl(''),
+      phone: new FormControl(''),
+      fax: new FormControl(''),
     }),
     funeralHome: new FormGroup({
       name: new FormControl(''),
       address: this.address,
     }),
     deathInvestigation: new FormGroup({
-      dateTime: new FormControl(''),
+      dateOfDeath: new FormControl(''),
+      timeOfDeath: new FormControl(''),
       placeOfDeath: new FormControl(''),
       address: this.address,
     }),
     decedentInfo: new FormGroup({
       firstName: new FormControl(''),
       lastName: new FormControl(''),
+      middleName: new FormControl(''),
       race: new FormControl(''),
       ethnicity: new FormControl(''),
     })
   });
+
+  constructor(@Inject('importConfig') public config: ModuleHeaderConfig) { }
+
+
+  onSubmit() {
+    console.log(this.dcrForm)
+  }
 }

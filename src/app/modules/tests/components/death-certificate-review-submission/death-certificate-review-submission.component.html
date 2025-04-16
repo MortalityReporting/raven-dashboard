@@ -1,1 +1,174 @@
-<p>death-certificate-review-submission works!</p>
+<div class="viewer-container-wrapper">
+    <div class="viewer-container-body">
+        <form [formGroup]="dcrForm" (submit)="onSubmit()">
+            <div class="section-label">Submitter</div>
+            <div formGroupName="submitter">
+                <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                    <mat-label>First Name</mat-label>
+                    <input matInput type="text" formControlName="firstName">
+                </mat-form-field>
+
+                <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput type="text" formControlName="lastName">
+                </mat-form-field>
+
+                <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                    <mat-label>Email</mat-label>
+                    <input matInput type="email" formControlName="email">
+                </mat-form-field>
+
+                <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                    <mat-label>Phone#</mat-label>
+                    <input matInput type="text" formControlName="phone">
+                </mat-form-field>
+
+                <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                    <mat-label>Fax#</mat-label>
+                    <input matInput type="text" formControlName="fax">
+                </mat-form-field>
+            </div>
+
+            <mat-divider/>
+
+            <div class="section-label">Funeral Home</div>
+            <div formGroupName="funeralHome">
+                <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                    <mat-label>Name</mat-label>
+                    <input matInput type="text" formControlName="name">
+                </mat-form-field>
+
+
+                <!-- Address Form -->
+                <div formGroupName="address">
+                    <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                        <mat-label>Address Line 1</mat-label>
+                        <input matInput type="text" formControlName="addressLine1">
+                    </mat-form-field>
+
+                    <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                        <mat-label>Address Line 2</mat-label>
+                        <input matInput type="text" formControlName="addressLine2">
+                    </mat-form-field>
+
+                    <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                        <mat-label>City</mat-label>
+                        <input matInput type="text" formControlName="city">
+                    </mat-form-field>
+
+                    <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                        <mat-label>State</mat-label>
+                        <input matInput type="text" formControlName="state">
+                    </mat-form-field>
+
+                </div>
+                <!-- END Address Form -->
+
+            </div>
+
+            <mat-divider/>
+
+            <div class="section-label">Death Investigation</div>
+            <div formGroupName="deathInvestigation">
+
+                <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                    <mat-label>Date of Death</mat-label>
+                    <input matInput type="text" formControlName="dateOfDeath">
+                </mat-form-field>
+
+                <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                    <mat-label>Time of Death</mat-label>
+                    <input matInput type="text" formControlName="timeOfDeath">
+                </mat-form-field>
+
+                <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                    <mat-label>Place of Death</mat-label>
+                    <input matInput type="text" formControlName="placeOfDeath">
+                </mat-form-field>
+
+                <!-- Address Form -->
+                <div formGroupName="address">
+                    <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                        <mat-label>Address Line 1</mat-label>
+                        <input matInput type="text" formControlName="addressLine1">
+                    </mat-form-field>
+
+                    <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                        <mat-label>Address Line 2</mat-label>
+                        <input matInput type="text" formControlName="addressLine2">
+                    </mat-form-field>
+
+                    <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                        <mat-label>City</mat-label>
+                        <input matInput type="text" formControlName="city">
+                    </mat-form-field>
+
+                    <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                        <mat-label>State</mat-label>
+                        <input matInput type="text" formControlName="state">
+                    </mat-form-field>
+
+                </div>
+                <!-- END Address Form -->
+
+            </div>
+
+            <mat-divider/>
+
+            <div class="section-label">Decedent Demographics</div>
+            <div formGroupName="decedentInfo">
+                <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                    <mat-label>First Name</mat-label>
+                    <input matInput type="text" formControlName="firstName">
+                </mat-form-field>
+
+                <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                    <mat-label>Middle Name</mat-label>
+                    <input matInput type="text" formControlName="middleName">
+                </mat-form-field>
+
+                <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput type="text" formControlName="lastName">
+                </mat-form-field>
+
+                <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                    <mat-label>Race</mat-label>
+                    <input matInput type="text" formControlName="race">
+                </mat-form-field>
+
+                <div class="row">
+                    <mat-radio-group formControlName="race">
+                        <mat-label>Race</mat-label>
+                        @for (raceCategory of RACE_CATEGORIES.slice(-2); track raceCategory) {
+                            <div>
+                                <mat-radio-button [value]="raceCategory">
+                                    {{ raceCategory.display }}
+                                </mat-radio-button>
+                            </div>
+                        }
+                    </mat-radio-group>
+                </div>
+
+                <div class="row">
+                    <mat-radio-group formControlName="ethnicity">
+                        <mat-label>Ethnicity</mat-label>
+                        @for (ethnicGroup of ETHNICITY; track ethnicGroup) {
+                            <div>
+                                <mat-radio-button class="example-radio-button" [value]="ethnicGroup">
+                                    {{ ethnicGroup.display }}
+                                </mat-radio-button>
+                            </div>
+                        }
+                    </mat-radio-group>
+                </div>
+            </div>
+
+            <button mat-raised-button type=submit
+                    [style.background-color]="config.backgroundColor"
+                    [style.color]="'white'">
+                Submit
+            </button>
+        </form>
+    </div>
+</div>
