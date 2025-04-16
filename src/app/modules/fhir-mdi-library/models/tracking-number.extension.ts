@@ -15,5 +15,6 @@ export const trackingNumberUrl = "http://hl7.org/fhir/us/mdi/StructureDefinition
 export enum TrackingNumberType {
   Mdi = "mdi-case-number",
   Edrs = "edrs-file-number",
-  Tox = "tox-lab-case-number"
+  Tox = "tox-lab-case-number",
+  Dcr = "funeral-home-case-number"
 }

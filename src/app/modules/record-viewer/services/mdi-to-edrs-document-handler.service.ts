@@ -23,13 +23,15 @@ import {ToxRecordStub} from "../models/tox-record-stub";
 import {FHIRProfileConstants} from "../../../providers/fhir-profile-constants";
 import {TrackingNumberExtension, TrackingNumberType} from "../../fhir-mdi-library";
 import {MdiToEdrsRecord} from "../models/mdiToEdrsRecord";
+import {AppConstants} from "../../../providers/app-constants";
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class MdiToEdrsDocumentHandlerService {
 
-  public defaultString: string = "VALUE NOT FOUND";
+  public defaultString: string = this.appConstants.VALUE_NOT_FOUND;
 
   // TODO: Refactor this in conjunction with directives.
   private currentDocumentBundle: any;
@@ -40,6 +42,7 @@ export class MdiToEdrsDocumentHandlerService {
     private fhirHelper: FhirHelperService,
     private bundleHelper: BundleHelperService,
     private fhirClient: FhirClientService,
+    private appConstants: AppConstants,
     @Inject('fhirProfiles') public fhirProfiles: FHIRProfileConstants
   ) {}
 
@@ -173,7 +176,7 @@ export class MdiToEdrsDocumentHandlerService {
 
   createCaseSummary(documentBundle: any, patientResource: any, compositionResource: any): CaseSummary {
     let summary: CaseSummary = new CaseSummary();
-    summary.demographics = this.generateDemographics(documentBundle, compositionResource, patientResource);
+    summary.demographics = this.generateDemographics(patientResource);
     summary.circumstances = this.generateCircumstances(documentBundle);
     summary.jurisdiction = this.generateJurisdiction(documentBundle, compositionResource);
     summary.causeAndManner = this.generateCauseAndManner(documentBundle, compositionResource);
@@ -188,7 +191,7 @@ export class MdiToEdrsDocumentHandlerService {
     return summary;
   }
 
-  generateDemographics(documentBundle: any, compositionResource: any, patientResource: any): Demographics {
+  generateDemographics(patientResource: any): Demographics {
     let demographics: Demographics = new Demographics();
 
     demographics.patientResource = patientResource;

@@ -142,6 +142,13 @@ export class UiStringConstants {
       status: TestStatusCodes.notStarted,
       route: 'update-edrs'
     },
+    {
+      name: 'dcrSubmission',
+      display: 'Death Certificate Review Submission',
+      description: "Death Certificate Review Submission description",
+      status: TestStatusCodes.notStarted,
+      route: 'dcr-submission'
+    },
   ];
 
 }

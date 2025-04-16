@@ -21,7 +21,12 @@ export class Address extends FhirType {
   constructor(resource?: FhirResource) {
     super();
     if (!resource?.["address"]) return;
-    const addressElement = resource?.['address']?.[0];
+    let addressElement = null;
+    if(resource?.["address"]?.length){
+      addressElement = resource?.['address']?.[0]
+    } else {
+      addressElement = resource?.['address'];
+    }
     this.line1 = addressElement?.line?.[0] || undefined;
     this.line2 = addressElement?.line?.[1] || undefined;
     this.city = addressElement?.city || undefined;

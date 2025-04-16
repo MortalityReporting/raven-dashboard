@@ -18,7 +18,7 @@ export class DecedentService {
 
     return this.fhirClient.search("Observation", "", false, true, "", params)
   }
-Z
+
   getDecedentRecords():  Observable<any> {
     // Headers are added in the FHIR Auth Interceptor
     return this.fhirClient.search("Patient", "", true).pipe(

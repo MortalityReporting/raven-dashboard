@@ -12,20 +12,23 @@ import {MatSelect} from "@angular/material/select";
 import {MatTableDataSource} from "@angular/material/table";
 import {AppConfiguration} from "../../../../../providers/app-configuration";
 import {TrackingNumberType} from "../../../../fhir-mdi-library";
+import {FHIRProfileConstants} from "../../../../../providers/fhir-profile-constants";
 
 
 @Component({
-    selector: 'record-viewer-decedent-records-grid',
-    templateUrl: './decedent-records-grid.component.html',
-    styleUrls: ['../../../record-viewer-styles.scss', '../search-records.component.scss'],
-    standalone: false
+  selector: 'record-viewer-decedent-records-grid',
+  templateUrl: './decedent-records-grid.component.html',
+  styleUrls: ['../../../record-viewer-styles.scss', '../search-records.component.scss'],
+  standalone: false
 })
 export class DecedentRecordsGridComponent implements OnInit {
 
   @ViewChild('mannerOfDeathSelect') mannerOfDeathSelect: MatSelect;
 
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['lastName', 'gender', 'tod', 'mannerOfDeath', 'caseNumber'];
+  //TODO uncomment when we know how to use gender/sex fields per the CDC guidelines. Note that gender should come from Sex at Death
+  //displayedColumns: string[] = ['lastName', 'gender', 'tod', 'mannerOfDeath', 'caseNumber'];
+  displayedColumns: string[] = ['lastName', 'tod', 'mannerOfDeath', 'caseNumber'];
   decedentGridDtoList: DecedentGridDTO[];
   isLoading = true;
   mannerOfDeathList: string [] = [];
@@ -36,6 +39,7 @@ export class DecedentRecordsGridComponent implements OnInit {
 
   @ViewChild('input') input: ElementRef;
 
+
   constructor(
     private route: ActivatedRoute,
     private decedentService: DecedentService,
@@ -43,7 +47,8 @@ export class DecedentRecordsGridComponent implements OnInit {
     private utilsService: UtilsService,
     private fhirHelperService: FhirHelperService,
     @Inject('config') public config: ModuleHeaderConfig,
-    @Inject('appConfig') public appConfig: AppConfiguration
+    @Inject('appConfig') public appConfig: AppConfiguration,
+    @Inject('fhirProfiles') public fhirProfiles: FHIRProfileConstants
 
   ) {
   }
@@ -70,6 +75,12 @@ export class DecedentRecordsGridComponent implements OnInit {
       map(data => {
         return data
       }),
+      map(decedentRecords =>
+        decedentRecords
+          .filter(record =>
+            record?.meta?.profile?.indexOf(this.fhirProfiles.DCR.Dcr_Structure_Definition) == -1
+          )
+      ),
       mergeMap((decedentRecordsList: any[]) =>
         forkJoin(
           decedentRecordsList.map((decedentRecord: any, i) =>

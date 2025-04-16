@@ -35,10 +35,11 @@
               <th mat-header-cell *matHeaderCellDef> Name</th>
               <td mat-cell *matCellDef="let decedent"> {{decedent.officialName}} </td>
             </ng-container>
-            <ng-container matColumnDef="gender">
-              <th mat-header-cell *matHeaderCellDef> Gender </th>
-              <td mat-cell *matCellDef="let decedent"> {{decedent.gender}} </td>
-            </ng-container>
+            <!--    TODO uncomment when we know how to use gender/sex fields per the CDC guidelines. Note that gender should come from Sex at Death-->
+<!--            <ng-container matColumnDef="gender">-->
+<!--              <th mat-header-cell *matHeaderCellDef> Gender </th>-->
+<!--              <td mat-cell *matCellDef="let decedent"> {{decedent.gender}} </td>-->
+<!--            </ng-container>-->
             <ng-container matColumnDef="address">
               <th mat-header-cell *matHeaderCellDef> Address </th>
               <td mat-cell *matCellDef="let decedent">

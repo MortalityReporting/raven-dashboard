@@ -1,0 +1,53 @@
+<div class="margin-top-lg">
+    <mat-form-field class="filter-width" appearance="outline" floatLabel="always" >
+      <mat-label>Filter Results</mat-label>
+      <input matInput (keyup)="applyFilter($event)" #input>
+    </mat-form-field>
+
+    <button mat-raised-button class="primary-color-button margin-left-md" (click)="onClearFilters()"
+            [style.background-color]="config.backgroundColor" [style.color]="'white'">
+      Clear Filters
+    </button>
+</div>
+
+<table mat-table [dataSource]="dataSource" matSort matSortDisableClear matSortActive="personId">
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Decedent Name</th>
+    <td mat-cell class="pointer"
+        *matCellDef="let dcrGridDTO"> {{dcrGridDTO?.lastName | titlecase}} {{ dcrGridDTO?.firstName ? ', ' + dcrGridDTO?.firstName : '' }}</td>
+  </ng-container>
+
+<!--    TODO uncomment when we know how to use gender/sex fields per the CDC guidelines. Note that gender should come from Sex at Death-->
+<!--  <ng-container matColumnDef="gender">-->
+<!--    <th mat-header-cell *matHeaderCellDef mat-sort-header> Gender</th>-->
+<!--    <td mat-cell class="pointer" *matCellDef="let dcrGridDTO"> {{dcrGridDTO?.gender | titlecase}}</td>-->
+<!--  </ng-container>-->
+
+  <ng-container matColumnDef="deathDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of Death</th>
+    <td mat-cell class="pointer" *matCellDef="let dcrGridDTO"> {{ dcrGridDTO?.deathDate | date: 'MM/dd/yyyy' }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="funeralHomeName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Funeral Home</th>
+    <td mat-cell class="pointer" *matCellDef="let dcrGridDTO"> {{dcrGridDTO?.funeralHomeName }} </td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onCaseSelected(row)"></tr>
+
+  <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell" [colSpan]="displayedColumns.length">
+      @if (!isLoading) {
+        No results found.
+      } @else {
+        <span class="inline-spinner-wrapper">
+          <mat-spinner [diameter]="72" customSpinner [spinnerColor]="config.backgroundColor"></mat-spinner>
+        </span>
+      }</td>
+  </tr>
+
+</table>
+

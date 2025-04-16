@@ -1,0 +1,41 @@
+<div class="summary-section-body">
+  <div class="summary-section-grid">
+    <div class="grid-row">
+      <div class="grid-col-1">
+        <record-viewer-mdi-to-edrs-viewer-content-field
+          [label]="'Date of Birth'"
+          [value]="demographics()?.birthDate"
+          appSetFhirExplorer
+          [resource]="demographics()?.patientResource"
+        />
+      </div>
+      <div class="grid-col-1">
+        <!--    TODO uncomment when we know how to use gender/sex fields per the CDC guidelines. Note that gender should come from Sex at Death-->
+<!--        <record-viewer-mdi-to-edrs-viewer-content-field-->
+<!--          [label]="'Sex'"-->
+<!--          [value]="demographics()?.gender"-->
+<!--          appSetFhirExplorer-->
+<!--          [resource]="demographics()?.patientResource"-->
+<!--        />-->
+      </div>
+    </div>
+    <div class="grid-row">
+      <div class="grid-col-1">
+        <record-viewer-mdi-to-edrs-viewer-content-field
+          [label]="'Race'"
+          [value]="demographics()?.race"
+          appSetFhirExplorer
+          [resource]="demographics()?.patientResource"
+        />
+      </div>
+      <div class="grid-col-1">
+        <record-viewer-mdi-to-edrs-viewer-content-field
+          [label]="'Ethnicity'"
+          [value]="demographics()?.ethnicity"
+          appSetFhirExplorer
+          [resource]="demographics()?.patientResource"
+        />
+      </div>
+    </div>
+  </div>
+</div>

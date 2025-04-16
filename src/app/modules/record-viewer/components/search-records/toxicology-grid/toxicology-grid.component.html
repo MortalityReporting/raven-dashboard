@@ -1,13 +1,13 @@
-
-<div style="display: flex" class="padding-top-md">
-  <mat-form-field>
-    <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Search Toxicology Reports" #input>
+<div class="margin-top-lg">
+  <mat-form-field class="filter-width" appearance="outline" floatLabel="always" >
+    <mat-label>Filter Results</mat-label>
+    <input matInput (keyup)="applyFilter($event)" #input>
   </mat-form-field>
-  <span class="content-spacer"></span>
-  <div style="margin: auto">
 
-  </div>
+  <button mat-raised-button class="primary-color-button margin-left-md" (click)="onClearFilters()"
+          [style.background-color]="config.backgroundColor" [style.color]="'white'">
+    Clear Filters
+  </button>
 </div>
 
 @if (isLoading) {
@@ -72,6 +72,16 @@
     [matTooltip]="row.error ? 'Error in record, please see logs.' : null"
     matTooltipPosition="before"
     >
+  </tr>
+  <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell" [colSpan]="displayedColumns.length">
+      @if (!isLoading) {
+        No results found.
+      } @else {
+        <span class="inline-spinner-wrapper">
+          <mat-spinner [diameter]="72" customSpinner [spinnerColor]="config.backgroundColor"></mat-spinner>
+        </span>
+      }</td>
   </tr>
 
 </table>

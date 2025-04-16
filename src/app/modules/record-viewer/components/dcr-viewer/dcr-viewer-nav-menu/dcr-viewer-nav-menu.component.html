@@ -1,0 +1,35 @@
+<div #menu
+     [style.background-color]="config.backgroundColor"
+     class="border-radius-xs">
+  <mat-nav-list aria-label="Toxicology Record Navigation">
+    <div>
+      <button mat-flat-button (click)="onItemClick('dcrCaseNumber')" [style.color]="appConfig.contrastColor"
+              [style.background-color]="config.backgroundColor">
+        <mat-icon aria-hidden="true"> info</mat-icon>
+        DCR Case Number
+      </button>
+    </div>
+    <div>
+      <button mat-flat-button (click)="onItemClick('demographics');" [style.color]="appConfig.contrastColor"
+              [style.background-color]="config.backgroundColor">
+        <mat-icon aria-hidden="true"> person</mat-icon>
+        Demographics
+      </button>
+    </div>
+    <div>
+      <button mat-flat-button (click)="onItemClick('deathInvestigation');" [style.color]="appConfig.contrastColor"
+              [style.background-color]="config.backgroundColor">
+        <mat-icon aria-hidden="true"> medical_services</mat-icon>
+        Death Investigation
+      </button>
+    </div>
+    <div>
+      <button mat-flat-button (click)="onItemClick('cremationClearance');" [style.color]="appConfig.contrastColor"
+              [style.background-color]="config.backgroundColor">
+        <mat-icon aria-hidden="true" svgIcon="clinical_notes"></mat-icon>
+        Cremation Clearance Info
+      </button>
+    </div>
+  </mat-nav-list>
+</div>
+
