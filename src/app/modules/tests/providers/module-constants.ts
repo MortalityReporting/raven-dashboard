@@ -24,6 +24,13 @@ export const ETHNICITY = [
     display: "Not Hispanic or Latino",
     definition: "",
   },
+
+  {
+    code: "ASKU",
+    system: "http://terminology.hl7.org/CodeSystem/v3-NullFlavor",
+    display: "Asked but unknown",
+    definition: "Information was sought but not found (e.g., patient was asked but didn't know)",
+  },
   {
     code: "UNK",
     system: "http://terminology.hl7.org/CodeSystem/v3-NullFlavor",
@@ -65,6 +72,12 @@ export const RACE_CATEGORIES = [
     definition: "White",
   },
   {
+    code: "ASKU",
+    system: "http://terminology.hl7.org/CodeSystem/v3-NullFlavor",
+    display: "Asked but no answer",
+    definition: "Information was sought but not found (e.g., patient was asked but didn't know)",
+  },
+  {
     code: "UNK",
     system: "http://terminology.hl7.org/CodeSystem/v3-NullFlavor",
     display: "Unknown",
@@ -75,5 +88,5 @@ export const RACE_CATEGORIES = [
       " of \"unknown\". (E.g. a local code sent as a translation that conveys 'unknown') Those properties further " +
       "qualify the nature of what is unknown. (E.g. specifying a use code of \"H\" and a URL prefix of \"tel:\" to " +
       "convey that it is the home phone number that is unknown.)",
-  }
+  },
 ];

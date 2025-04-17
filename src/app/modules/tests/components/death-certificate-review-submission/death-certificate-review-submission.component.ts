@@ -1,7 +1,9 @@
-import {Component, Inject} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {Component, Inject, OnInit} from '@angular/core';
+import {FormControl, FormGroup, UntypedFormArray, UntypedFormControl} from "@angular/forms";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {ETHNICITY, RACE_CATEGORIES} from "../../providers/module-constants"
+import {MatCheckboxChange} from "@angular/material/checkbox";
+
 
 @Component({
   selector: 'app-death-certificate-review-submission',
@@ -10,9 +12,14 @@ import {ETHNICITY, RACE_CATEGORIES} from "../../providers/module-constants"
   styleUrl: './death-certificate-review-submission.component.scss'
 })
 
-export class DeathCertificateReviewSubmissionComponent {
+export class DeathCertificateReviewSubmissionComponent implements OnInit {
   readonly ETHNICITY = Object.values(ETHNICITY);
   readonly RACE_CATEGORIES = Object.values(RACE_CATEGORIES);
+
+  race = new FormGroup({
+    raceCheck:  this.createRaceCategoryControls(RACE_CATEGORIES.slice(0, 5)),
+    raceRadio: new FormControl(''),
+  });
 
   address = new FormGroup({
     addressLine1: new FormControl(''),
@@ -44,7 +51,7 @@ export class DeathCertificateReviewSubmissionComponent {
       firstName: new FormControl(''),
       lastName: new FormControl(''),
       middleName: new FormControl(''),
-      race: new FormControl(''),
+      race: this.race,
       ethnicity: new FormControl(''),
     })
   });
@@ -54,5 +61,20 @@ export class DeathCertificateReviewSubmissionComponent {
 
   onSubmit() {
     console.log(this.dcrForm)
+  }
+
+  ngOnInit(): void {
+    this.dcrForm.valueChanges.subscribe(value=> console.log(this.dcrForm))
+  }
+
+  private createRaceCategoryControls(raceCategories) {
+    const arr = raceCategories.map(category => {
+      return new UntypedFormControl(category.selected || false);
+    });
+    return new UntypedFormArray(arr);
+  }
+
+  onRaceCategoryCheckboxChange(event: MatCheckboxChange) {
+    console.log(event)
   }
 }

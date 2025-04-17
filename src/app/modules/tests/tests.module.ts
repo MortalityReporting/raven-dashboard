@@ -64,6 +64,7 @@ import { ValidationComponent } from './components/validation/validation.componen
 import { EstablishConnectionComponent } from './components/search-edrs-bluejay/establish-connection/establish-connection.component';
 import { SearchEdrsBluejayComponent } from './components/search-edrs-bluejay/search-edrs-bluejay.component';
 import { DeathCertificateReviewSubmissionComponent } from './components/death-certificate-review-submission/death-certificate-review-submission.component';
+import {MatListItem, MatSelectionList} from "@angular/material/list";
 
 @NgModule({
   declarations: [
@@ -119,6 +120,8 @@ import { DeathCertificateReviewSubmissionComponent } from './components/death-ce
     MatDividerModule,
     ClipboardModule,
     NgxHisbLoggerModule,
+    MatSelectionList,
+    MatListItem,
   ],
 })
 export class TestsModule {

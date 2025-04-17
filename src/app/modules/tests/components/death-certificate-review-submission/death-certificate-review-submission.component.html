@@ -132,28 +132,37 @@
                     <input matInput type="text" formControlName="lastName">
                 </mat-form-field>
 
-                <mat-form-field class="form-field" appearance="outline" floatLabel="always">
-                    <mat-label>Race</mat-label>
-                    <input matInput type="text" formControlName="race">
-                </mat-form-field>
+                <div formGroupName="race">
 
-                <div class="row">
-                    <mat-radio-group formControlName="race">
-                        <mat-label>Race</mat-label>
-                        @for (raceCategory of RACE_CATEGORIES.slice(-2); track raceCategory) {
-                            <div>
-                                <mat-radio-button [value]="raceCategory">
-                                    {{ raceCategory.display }}
-                                </mat-radio-button>
-                            </div>
-                        }
-                    </mat-radio-group>
+                    <div>
+                        <mat-selection-list>
+                            @for (category of race?.['controls']?.['raceCheck']?.['controls']; track category; let i = $index) {
+                                <mat-list-item>
+                                    <mat-checkbox [formControl]="$any(category)"
+                                                  (change)="onRaceCategoryCheckboxChange($event)">
+                                        {{ RACE_CATEGORIES.slice(0, 5)[i].display }}
+                                    </mat-checkbox>
+                                </mat-list-item>
+                            }
+                        </mat-selection-list>
+                    </div>
+                    <div class="row">
+                        <mat-radio-group formControlName="raceRadio">
+                            @for (raceCategory of RACE_CATEGORIES.slice(-1); track raceCategory) {
+                                <div>
+                                    <mat-radio-button [value]="raceCategory">
+                                        {{ raceCategory.display }}
+                                    </mat-radio-button>
+                                </div>
+                            }
+                        </mat-radio-group>
+                    </div>
                 </div>
 
                 <div class="row">
                     <mat-radio-group formControlName="ethnicity">
                         <mat-label>Ethnicity</mat-label>
-                        @for (ethnicGroup of ETHNICITY; track ethnicGroup) {
+                        @for (ethnicGroup of ETHNICITY.slice(0, 2).concat(ETHNICITY.slice(3)); track ethnicGroup) {
                             <div>
                                 <mat-radio-button class="example-radio-button" [value]="ethnicGroup">
                                     {{ ethnicGroup.display }}
