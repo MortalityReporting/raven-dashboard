@@ -65,6 +65,9 @@ import { EstablishConnectionComponent } from './components/search-edrs-bluejay/e
 import { SearchEdrsBluejayComponent } from './components/search-edrs-bluejay/search-edrs-bluejay.component';
 import { DeathCertificateReviewSubmissionComponent } from './components/death-certificate-review-submission/death-certificate-review-submission.component';
 import {MatListItem, MatSelectionList} from "@angular/material/list";
+import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
+import {provideNativeDateAdapter} from "@angular/material/core";
+import {MatTimepicker, MatTimepickerInput, MatTimepickerToggle} from "@angular/material/timepicker";
 
 @NgModule({
   declarations: [
@@ -122,6 +125,12 @@ import {MatListItem, MatSelectionList} from "@angular/material/list";
     NgxHisbLoggerModule,
     MatSelectionList,
     MatListItem,
+    MatDatepicker,
+    MatDatepickerToggle,
+    MatDatepickerInput,
+    MatTimepickerInput,
+    MatTimepicker,
+    MatTimepickerToggle,
   ],
 })
 export class TestsModule {
@@ -129,6 +138,7 @@ export class TestsModule {
     return {
       ngModule: TestsModule,
       providers: [
+        provideNativeDateAdapter(),
         {
           provide: 'env',
           useValue: environment

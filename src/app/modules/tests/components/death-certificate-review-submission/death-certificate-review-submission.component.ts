@@ -1,8 +1,10 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, UntypedFormArray, UntypedFormControl} from "@angular/forms";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
-import {ETHNICITY, RACE_CATEGORIES} from "../../providers/module-constants"
+import {ETHNICITY, PLACE_OF_DEATH, RACE_CATEGORIES} from "../../providers/module-constants"
 import {MatCheckboxChange} from "@angular/material/checkbox";
+import {MatRadioChange} from "@angular/material/radio";
+
 
 
 @Component({
@@ -15,6 +17,13 @@ import {MatCheckboxChange} from "@angular/material/checkbox";
 export class DeathCertificateReviewSubmissionComponent implements OnInit {
   readonly ETHNICITY = Object.values(ETHNICITY);
   readonly RACE_CATEGORIES = Object.values(RACE_CATEGORIES);
+  readonly PLACE_OF_DEATH = Object.values(PLACE_OF_DEATH);
+
+  placeOfDeath = new FormGroup({
+    placeOfDeathRadio: new FormControl(''),
+    description: new FormControl({value: '', disabled: true}),
+  });
+
 
   race = new FormGroup({
     raceCheck:  this.createRaceCategoryControls(RACE_CATEGORIES.slice(0, 5)),
@@ -34,17 +43,17 @@ export class DeathCertificateReviewSubmissionComponent implements OnInit {
       firstName: new FormControl(''),
       lastName: new FormControl(''),
       email: new FormControl(''),
-      phone: new FormControl(''),
-      fax: new FormControl(''),
     }),
     funeralHome: new FormGroup({
       name: new FormControl(''),
       address: this.address,
+      phone: new FormControl(''),
+      fax: new FormControl(''),
     }),
     deathInvestigation: new FormGroup({
       dateOfDeath: new FormControl(''),
       timeOfDeath: new FormControl(''),
-      placeOfDeath: new FormControl(''),
+      placeOfDeath: this.placeOfDeath,
       address: this.address,
     }),
     decedentInfo: new FormGroup({
@@ -64,7 +73,7 @@ export class DeathCertificateReviewSubmissionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dcrForm.valueChanges.subscribe(value=> console.log(this.dcrForm))
+    this.dcrForm.valueChanges.subscribe(value=> console.log(this.dcrForm));
   }
 
   private createRaceCategoryControls(raceCategories) {
@@ -75,6 +84,23 @@ export class DeathCertificateReviewSubmissionComponent implements OnInit {
   }
 
   onRaceCategoryCheckboxChange(event: MatCheckboxChange) {
-    console.log(event)
+    console.log(event);
+    this.race.controls['raceRadio'].reset();
   }
+
+  onRaceCategoryRadioChange(event: MatRadioChange) {
+    console.log(event);
+    this.race.controls['raceCheck'].reset();
+  }
+
+  onRacePlaceOfDeathRadioChange(event: MatRadioChange) {
+    if(event.value != 'Other'){
+      this.placeOfDeath.controls['description'].reset();
+      this.placeOfDeath.controls['description'].disable();
+    }
+    else{
+      this.placeOfDeath.controls['description'].enable();
+    }
+  }
+
 }

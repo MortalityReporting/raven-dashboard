@@ -1,68 +1,103 @@
-<div class="viewer-container-wrapper">
-    <div class="viewer-container-body">
-        <form [formGroup]="dcrForm" (submit)="onSubmit()">
+<div class="generic-component-wrapper">
+  <div class="generic-component-content">
+    <div class="form-wrapper">
+      <mat-card>
+        <mat-card-content>
+          <form [formGroup]="dcrForm" (submit)="onSubmit()">
             <div class="section-label">Submitter</div>
             <div formGroupName="submitter">
-                <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+              <div class="form-row">
+                <div class="form-col">
+                  <mat-form-field class="form-field" appearance="outline" floatLabel="always">
                     <mat-label>First Name</mat-label>
                     <input matInput type="text" formControlName="firstName">
-                </mat-form-field>
+                  </mat-form-field>
+                </div>
 
-                <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                <div class="form-col">
+                  <mat-form-field class="form-field" appearance="outline" floatLabel="always">
                     <mat-label>Last Name</mat-label>
                     <input matInput type="text" formControlName="lastName">
-                </mat-form-field>
+                  </mat-form-field>
+                </div>
 
-                <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+              </div>
+              <div class="form-row">
+                <div class="form-col">
+                  <mat-form-field class="form-field" appearance="outline" floatLabel="always">
                     <mat-label>Email</mat-label>
                     <input matInput type="email" formControlName="email">
-                </mat-form-field>
-
-                <mat-form-field class="form-field" appearance="outline" floatLabel="always">
-                    <mat-label>Phone#</mat-label>
-                    <input matInput type="text" formControlName="phone">
-                </mat-form-field>
-
-                <mat-form-field class="form-field" appearance="outline" floatLabel="always">
-                    <mat-label>Fax#</mat-label>
-                    <input matInput type="text" formControlName="fax">
-                </mat-form-field>
+                  </mat-form-field>
+                </div>
+                <div class="form-col"></div>
+              </div>
             </div>
 
             <mat-divider/>
 
             <div class="section-label">Funeral Home</div>
             <div formGroupName="funeralHome">
-                <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+              <div class="form-row">
+                <div class="form-col">
+                  <mat-form-field class="form-field" appearance="outline" floatLabel="always">
                     <mat-label>Name</mat-label>
                     <input matInput type="text" formControlName="name">
-                </mat-form-field>
-
-
-                <!-- Address Form -->
-                <div formGroupName="address">
-                    <mat-form-field class="form-field" appearance="outline" floatLabel="always">
-                        <mat-label>Address Line 1</mat-label>
-                        <input matInput type="text" formControlName="addressLine1">
-                    </mat-form-field>
-
-                    <mat-form-field class="form-field" appearance="outline" floatLabel="always">
-                        <mat-label>Address Line 2</mat-label>
-                        <input matInput type="text" formControlName="addressLine2">
-                    </mat-form-field>
-
-                    <mat-form-field class="form-field" appearance="outline" floatLabel="always">
-                        <mat-label>City</mat-label>
-                        <input matInput type="text" formControlName="city">
-                    </mat-form-field>
-
-                    <mat-form-field class="form-field" appearance="outline" floatLabel="always">
-                        <mat-label>State</mat-label>
-                        <input matInput type="text" formControlName="state">
-                    </mat-form-field>
-
+                  </mat-form-field>
                 </div>
-                <!-- END Address Form -->
+              </div>
+
+
+              <!-- Address Form -->
+              <div class="form-row h2-label">Address</div>
+
+              <div formGroupName="address">
+                <div class="form-row">
+                  <div class="form-col">
+                    <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                      <mat-label>Address Line 1</mat-label>
+                      <input matInput type="text" formControlName="addressLine1">
+                    </mat-form-field>
+                  </div>
+                  <div class="form-col">
+                    <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                      <mat-label>Address Line 2</mat-label>
+                      <input matInput type="text" formControlName="addressLine2">
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-col">
+                    <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                      <mat-label>City</mat-label>
+                      <input matInput type="text" formControlName="city">
+                    </mat-form-field>
+                  </div>
+                  <div class="form-col">
+                    <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                      <mat-label>State</mat-label>
+                      <input matInput type="text" formControlName="state">
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+
+              <!-- END Address Form -->
+
+
+              <div class="form-row">
+                <div class="form-col">
+                  <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                    <mat-label>Phone#</mat-label>
+                    <input matInput type="text" formControlName="phone">
+                  </mat-form-field>
+                </div>
+                <div class="form-col">
+                  <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                    <mat-label>Fax#</mat-label>
+                    <input matInput type="text" formControlName="fax">
+                  </mat-form-field>
+                </div>
+              </div>
 
             </div>
 
@@ -70,46 +105,87 @@
 
             <div class="section-label">Death Investigation</div>
             <div formGroupName="deathInvestigation">
-
-                <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+              <div class="form-row">
+                <div class="form-col">
+                  <mat-form-field class="form-field" appearance="outline" floatLabel="always">
                     <mat-label>Date of Death</mat-label>
-                    <input matInput type="text" formControlName="dateOfDeath">
-                </mat-form-field>
-
-                <mat-form-field class="form-field" appearance="outline" floatLabel="always">
-                    <mat-label>Time of Death</mat-label>
-                    <input matInput type="text" formControlName="timeOfDeath">
-                </mat-form-field>
-
-                <mat-form-field class="form-field" appearance="outline" floatLabel="always">
-                    <mat-label>Place of Death</mat-label>
-                    <input matInput type="text" formControlName="placeOfDeath">
-                </mat-form-field>
-
-                <!-- Address Form -->
-                <div formGroupName="address">
-                    <mat-form-field class="form-field" appearance="outline" floatLabel="always">
-                        <mat-label>Address Line 1</mat-label>
-                        <input matInput type="text" formControlName="addressLine1">
-                    </mat-form-field>
-
-                    <mat-form-field class="form-field" appearance="outline" floatLabel="always">
-                        <mat-label>Address Line 2</mat-label>
-                        <input matInput type="text" formControlName="addressLine2">
-                    </mat-form-field>
-
-                    <mat-form-field class="form-field" appearance="outline" floatLabel="always">
-                        <mat-label>City</mat-label>
-                        <input matInput type="text" formControlName="city">
-                    </mat-form-field>
-
-                    <mat-form-field class="form-field" appearance="outline" floatLabel="always">
-                        <mat-label>State</mat-label>
-                        <input matInput type="text" formControlName="state">
-                    </mat-form-field>
-
+                    <input matInput [matDatepicker]="datepicker" formControlName="dateOfDeath">
+                    <mat-datepicker #datepicker/>
+                    <mat-datepicker-toggle [for]="datepicker" matSuffix/>
+                  </mat-form-field>
                 </div>
-                <!-- END Address Form -->
+
+                <div class="form-col">
+                  <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                    <mat-label>Date of Death</mat-label>
+                    <input matInput [matTimepicker]="timepicker" formControlName="timeOfDeath">
+                    <mat-timepicker #timepicker/>
+                    <mat-timepicker-toggle [for]="timepicker" matSuffix/>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div formGroupName="placeOfDeath">
+                <div class="form-row">
+                  <div class="form-col">
+                    <div class="h2-label">Place of Death</div>
+                    <mat-radio-group formControlName="placeOfDeathRadio"
+                                     (change)="onRacePlaceOfDeathRadioChange($event);">
+                      @for (place of PLACE_OF_DEATH; track place) {
+                        <div>
+                          <mat-radio-button [value]="place">
+                            {{ place }}
+                          </mat-radio-button>
+                        </div>
+                      }
+                    </mat-radio-group>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-col">
+                    <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                      <mat-label>Other</mat-label>
+                      <input matInput type="text" formControlName="description"
+                             [disabled]="placeOfDeath.controls['placeOfDeathRadio'].value!='Other'">
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+
+
+              <!-- Address Form -->
+              <div class="form-row h2-label">Address</div>
+              <div formGroupName="address">
+                <div class="form-row">
+                  <div class="form-col">
+                    <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                      <mat-label>Address Line 1</mat-label>
+                      <input matInput type="text" formControlName="addressLine1">
+                    </mat-form-field>
+                  </div>
+                  <div class="form-col">
+                    <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                      <mat-label>Address Line 2</mat-label>
+                      <input matInput type="text" formControlName="addressLine2">
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-col">
+                    <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                      <mat-label>City</mat-label>
+                      <input matInput type="text" formControlName="city">
+                    </mat-form-field>
+                  </div>
+                  <div class="form-col">
+                    <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                      <mat-label>State</mat-label>
+                      <input matInput type="text" formControlName="state">
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+
+              <!-- END Address Form -->
 
             </div>
 
@@ -117,67 +193,86 @@
 
             <div class="section-label">Decedent Demographics</div>
             <div formGroupName="decedentInfo">
-                <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+              <div class="form-row">
+                <div class="form-col">
+                  <mat-form-field class="form-field" appearance="outline" floatLabel="always">
                     <mat-label>First Name</mat-label>
                     <input matInput type="text" formControlName="firstName">
-                </mat-form-field>
+                  </mat-form-field>
+                </div>
 
-                <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                <div class="form-col">
+                  <mat-form-field class="form-field" appearance="outline" floatLabel="always">
                     <mat-label>Middle Name</mat-label>
                     <input matInput type="text" formControlName="middleName">
-                </mat-form-field>
+                  </mat-form-field>
+                </div>
 
-                <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                <div class="form-col">
+                  <mat-form-field class="form-field" appearance="outline" floatLabel="always">
                     <mat-label>Last Name</mat-label>
                     <input matInput type="text" formControlName="lastName">
-                </mat-form-field>
-
-                <div formGroupName="race">
-
-                    <div>
-                        <mat-selection-list>
-                            @for (category of race?.['controls']?.['raceCheck']?.['controls']; track category; let i = $index) {
-                                <mat-list-item>
-                                    <mat-checkbox [formControl]="$any(category)"
-                                                  (change)="onRaceCategoryCheckboxChange($event)">
-                                        {{ RACE_CATEGORIES.slice(0, 5)[i].display }}
-                                    </mat-checkbox>
-                                </mat-list-item>
-                            }
-                        </mat-selection-list>
-                    </div>
-                    <div class="row">
-                        <mat-radio-group formControlName="raceRadio">
-                            @for (raceCategory of RACE_CATEGORIES.slice(-1); track raceCategory) {
-                                <div>
-                                    <mat-radio-button [value]="raceCategory">
-                                        {{ raceCategory.display }}
-                                    </mat-radio-button>
-                                </div>
-                            }
-                        </mat-radio-group>
-                    </div>
+                  </mat-form-field>
                 </div>
+              </div>
 
-                <div class="row">
-                    <mat-radio-group formControlName="ethnicity">
-                        <mat-label>Ethnicity</mat-label>
-                        @for (ethnicGroup of ETHNICITY.slice(0, 2).concat(ETHNICITY.slice(3)); track ethnicGroup) {
+              <div class="form-row">
+                <div class="form-col">
+                  <div formGroupName="race">
+                    <div class="h2-label">Race</div>
+                    <mat-selection-list>
+                      @for (category of race?.['controls']?.['raceCheck']?.['controls']; track category; let i = $index) {
+                        <mat-list-item>
+                          <mat-checkbox
+                              [formControl]="$any(category)"
+                              (change)="onRaceCategoryCheckboxChange($event)">
+                            {{ RACE_CATEGORIES.slice(0, 5)[i].display }}
+                          </mat-checkbox>
+                        </mat-list-item>
+                      }
+
+                      <mat-list-item>
+                        <mat-radio-group formControlName="raceRadio"
+                                         (change)="onRaceCategoryRadioChange($event)">
+                          @for (raceCategory of RACE_CATEGORIES.slice(-1); track raceCategory) {
                             <div>
-                                <mat-radio-button class="example-radio-button" [value]="ethnicGroup">
-                                    {{ ethnicGroup.display }}
-                                </mat-radio-button>
+                              <mat-radio-button [value]="raceCategory">
+                                {{ raceCategory.display }}
+                              </mat-radio-button>
                             </div>
-                        }
-                    </mat-radio-group>
+                          }
+                        </mat-radio-group>
+                      </mat-list-item>
+                    </mat-selection-list>
+                  </div>
                 </div>
+                <div class="form-col">
+                  <mat-selection-list>
+                    <mat-radio-group formControlName="ethnicity">
+                      <div class="h2-label">Ethnicity</div>
+                      <mat-list-item>
+                        @for (ethnicGroup of ETHNICITY.slice(0, 2).concat(ETHNICITY.slice(3)); track ethnicGroup) {
+                          <div>
+                            <mat-radio-button class="example-radio-button" [value]="ethnicGroup">
+                              {{ ethnicGroup.display }}
+                            </mat-radio-button>
+                          </div>
+                        }
+                      </mat-list-item>
+                    </mat-radio-group>
+                  </mat-selection-list>
+                </div>
+              </div>
             </div>
 
             <button mat-raised-button type=submit
                     [style.background-color]="config.backgroundColor"
                     [style.color]="'white'">
-                Submit
+              Submit
             </button>
-        </form>
+          </form>
+        </mat-card-content>
+      </mat-card>
     </div>
+  </div>
 </div>

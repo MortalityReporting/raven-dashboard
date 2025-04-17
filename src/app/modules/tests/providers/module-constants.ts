@@ -90,3 +90,5 @@ export const RACE_CATEGORIES = [
       "convey that it is the home phone number that is unknown.)",
   },
 ];
+
+export const PLACE_OF_DEATH = ["Decedent's Residence", "Residence of Another", "Hospital - Inpatient", "Hospital ER/Outpatient", "Hospice Facility", "Nursing Home/LTCF", "Street/Highway", "Body of Water", "Other" ]
