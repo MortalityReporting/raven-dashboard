@@ -43,7 +43,15 @@ export class DeathCertificateReviewSubmissionComponent implements OnInit {
     city: new FormControl('', Validators.required),
     state: new FormControl('', Validators.required),
     zip: new FormControl('', Validators.required),
-  })
+  });
+
+  optionalAddress = new FormGroup({
+    addressLine1: new FormControl(''),
+    addressLine2: new FormControl(''),
+    city: new FormControl(''),
+    state: new FormControl(''),
+    zip: new FormControl(''),
+  });
 
   dcrForm = new FormGroup({
     submitter: new FormGroup({
@@ -61,7 +69,7 @@ export class DeathCertificateReviewSubmissionComponent implements OnInit {
       dateOfDeath: new FormControl('', Validators.required),
       timeOfDeath: new FormControl(''),
       placeOfDeath: this.placeOfDeath,
-      address: this.address,
+      address: this.optionalAddress,
     }),
     decedentInfo: new FormGroup({
       firstName: new FormControl('', Validators.required),
@@ -76,16 +84,9 @@ export class DeathCertificateReviewSubmissionComponent implements OnInit {
 
 
   onSubmit() {
-    this.dcrForm.controls.decedentInfo.controls.ethnicity.setValidators([Validators.required]);
-    this.dcrForm.controls.decedentInfo.controls.ethnicity.updateValueAndValidity();
 
-    this.dcrForm.controls.decedentInfo.controls.race.setValidators([this.raceValidator]);
-    this.dcrForm.controls.decedentInfo.controls.race.updateValueAndValidity();
+    this.constructValidatorsAndValidate();
 
-    this.dcrForm.controls.deathInvestigation.controls.placeOfDeath.setValidators([this.placeOfDeathRequiredValidator, this.placeOfDeathDescriptionRequiredValidator]);
-    this.dcrForm.controls.deathInvestigation.controls.placeOfDeath.updateValueAndValidity();
-
-    this.dcrForm.updateValueAndValidity()
   }
 
   ngOnInit(): void {
@@ -142,12 +143,15 @@ export class DeathCertificateReviewSubmissionComponent implements OnInit {
     return { placeOfDeathDescriptionRequired: true }; //Return error object if invalid
   }
 
-  private addressRequired(control: AbstractControl): ValidationErrors | null  {
-    const value = control.value;
-    if (value?.placeOfDeathRadio !== 'Other' || value?.description) {
-      return null;
-    }
-    return { placeOfDeathDescriptionRequired: true }; //Return error object if invalid
-  }
+  private constructValidatorsAndValidate() {
+    this.dcrForm.controls.decedentInfo.controls.ethnicity.setValidators([Validators.required]);
+    this.dcrForm.controls.decedentInfo.controls.ethnicity.updateValueAndValidity();
 
+    this.dcrForm.controls.decedentInfo.controls.race.setValidators([this.raceValidator]);
+    this.dcrForm.controls.decedentInfo.controls.race.updateValueAndValidity();
+
+    this.dcrForm.controls.deathInvestigation.controls.placeOfDeath.setValidators([this.placeOfDeathRequiredValidator, this.placeOfDeathDescriptionRequiredValidator]);
+    this.dcrForm.controls.deathInvestigation.controls.placeOfDeath.updateValueAndValidity();
+
+  }
 }

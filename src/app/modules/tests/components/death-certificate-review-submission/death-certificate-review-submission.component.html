@@ -180,9 +180,10 @@
                   <div class="form-col">
                     <mat-form-field class="form-field" appearance="outline" floatLabel="always">
                       <mat-label>Other</mat-label>
-                      <input matInput type="text" formControlName="description">
+                      <input matInput type="text" formControlName="description" required>
                       @if(dcrForm.controls.deathInvestigation.controls.placeOfDeath.hasError('placeOfDeathDescriptionRequired')){
                         <mat-error>Please enter location. </mat-error>
+                        <mat-hint>Please enter N/A if no information is available </mat-hint>
                       }
                     </mat-form-field>
                   </div>
@@ -192,7 +193,7 @@
 
               <!-- Address Form -->
               <div class="h2-label">Place of Death Address</div>
-              <div class="hint">This section is filled only when</div>
+              <div class="hint">This section is filled if the death did not occur in a facility and is optional.</div>
 
               <div formGroupName="address">
                 <div class="form-row">
@@ -200,9 +201,6 @@
                     <mat-form-field class="form-field" appearance="outline" floatLabel="always">
                       <mat-label>Address Line 1</mat-label>
                       <input matInput type="text" formControlName="addressLine1">
-                      @if (dcrForm.controls.deathInvestigation.controls.address.controls.addressLine1.invalid) {
-                        <mat-error>Address Line 1 is required</mat-error>
-                      }
                     </mat-form-field>
                   </div>
                   <div class="form-col">
@@ -217,18 +215,12 @@
                     <mat-form-field class="form-field" appearance="outline" floatLabel="always">
                       <mat-label>City</mat-label>
                       <input matInput type="text" formControlName="city">
-                      @if (dcrForm.controls.deathInvestigation.controls.address.controls.city.invalid) {
-                        <mat-error>City is required</mat-error>
-                      }
                     </mat-form-field>
                   </div>
                   <div class="form-col">
                     <mat-form-field class="form-field" appearance="outline" floatLabel="always">
                       <mat-label>State</mat-label>
                       <input matInput type="text" formControlName="state">
-                      @if (dcrForm.controls.deathInvestigation.controls.address.controls.state.invalid) {
-                        <mat-error>State is required</mat-error>
-                      }
                     </mat-form-field>
                   </div>
                 </div>
@@ -326,11 +318,17 @@
               </div>
             </div>
 
-            <button mat-raised-button type=submit
-                    [style.background-color]="config.backgroundColor"
-                    [style.color]="'white'">
-              Submit
-            </button>
+            <div class="controls">
+              <button mat-raised-button type="button" (click)="dcrForm.reset()">
+                Clear
+              </button>
+              <button mat-raised-button type=submit
+                      class="margin-left-md"
+                      [style.background-color]="config.backgroundColor"
+                      [style.color]="'white'">
+                Submit
+              </button>
+            </div>
           </form>
         </mat-card-content>
       </mat-card>
