@@ -38,7 +38,7 @@ export class DeathCertificateReviewSubmissionComponent implements OnInit {
   });
 
   address = new FormGroup({
-    addressLine1: new FormControl('', Validators.required),
+    addressLine1: new FormControl('', [Validators.required]),
     addressLine2: new FormControl(''),
     city: new FormControl('', Validators.required),
     state: new FormControl('', Validators.required),
@@ -110,11 +110,11 @@ export class DeathCertificateReviewSubmissionComponent implements OnInit {
 
   onRacePlaceOfDeathRadioChange(event: MatRadioChange) {
     if(event.value != 'Other'){
-      this.placeOfDeath.controls['description'].reset();
-      this.placeOfDeath.controls['description'].disable();
+      this.placeOfDeath.controls.description.reset();
+      this.placeOfDeath.controls.description.disable();
     }
     else{
-      this.placeOfDeath.controls['description'].enable();
+      this.placeOfDeath.controls.description.enable();
     }
   }
 
@@ -135,6 +135,14 @@ export class DeathCertificateReviewSubmissionComponent implements OnInit {
   }
 
   private placeOfDeathDescriptionRequiredValidator(control: AbstractControl): ValidationErrors | null  {
+    const value = control.value;
+    if (value?.placeOfDeathRadio !== 'Other' || value?.description) {
+      return null;
+    }
+    return { placeOfDeathDescriptionRequired: true }; //Return error object if invalid
+  }
+
+  private addressRequired(control: AbstractControl): ValidationErrors | null  {
     const value = control.value;
     if (value?.placeOfDeathRadio !== 'Other' || value?.description) {
       return null;

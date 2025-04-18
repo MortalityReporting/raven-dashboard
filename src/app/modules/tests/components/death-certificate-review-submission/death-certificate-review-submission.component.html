@@ -180,8 +180,7 @@
                   <div class="form-col">
                     <mat-form-field class="form-field" appearance="outline" floatLabel="always">
                       <mat-label>Other</mat-label>
-                      <input matInput type="text" formControlName="description"
-                             [disabled]="placeOfDeath.controls['placeOfDeathRadio'].value!='Other'">
+                      <input matInput type="text" formControlName="description">
                       @if(dcrForm.controls.deathInvestigation.controls.placeOfDeath.hasError('placeOfDeathDescriptionRequired')){
                         <mat-error>Please enter location. </mat-error>
                       }
@@ -192,7 +191,9 @@
 
 
               <!-- Address Form -->
-              <div class="h2-label">Address</div>
+              <div class="h2-label">Place of Death Address</div>
+              <div class="hint">This section is filled only when</div>
+
               <div formGroupName="address">
                 <div class="form-row">
                   <div class="form-col">
