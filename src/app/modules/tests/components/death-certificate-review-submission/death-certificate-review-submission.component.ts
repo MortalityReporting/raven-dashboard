@@ -1,5 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormControl, FormGroup, UntypedFormArray, UntypedFormControl} from "@angular/forms";
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  UntypedFormArray,
+  UntypedFormControl, ValidationErrors,
+  Validators
+} from "@angular/forms";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {ETHNICITY, PLACE_OF_DEATH, RACE_CATEGORIES} from "../../providers/module-constants"
 import {MatCheckboxChange} from "@angular/material/checkbox";
@@ -31,34 +38,34 @@ export class DeathCertificateReviewSubmissionComponent implements OnInit {
   });
 
   address = new FormGroup({
-    addressLine1: new FormControl(''),
+    addressLine1: new FormControl('', Validators.required),
     addressLine2: new FormControl(''),
-    city: new FormControl(''),
-    state: new FormControl(''),
-    zip: new FormControl(''),
+    city: new FormControl('', Validators.required),
+    state: new FormControl('', Validators.required),
+    zip: new FormControl('', Validators.required),
   })
 
   dcrForm = new FormGroup({
     submitter: new FormGroup({
-      firstName: new FormControl(''),
-      lastName: new FormControl(''),
-      email: new FormControl(''),
+      firstName: new FormControl('', Validators.required),
+      lastName: new FormControl('', Validators.required),
+      email: new FormControl('', Validators.required),
     }),
     funeralHome: new FormGroup({
-      name: new FormControl(''),
+      name: new FormControl('', Validators.required),
       address: this.address,
-      phone: new FormControl(''),
+      phone: new FormControl('', Validators.required),
       fax: new FormControl(''),
     }),
     deathInvestigation: new FormGroup({
-      dateOfDeath: new FormControl(''),
+      dateOfDeath: new FormControl('', Validators.required),
       timeOfDeath: new FormControl(''),
       placeOfDeath: this.placeOfDeath,
       address: this.address,
     }),
     decedentInfo: new FormGroup({
-      firstName: new FormControl(''),
-      lastName: new FormControl(''),
+      firstName: new FormControl('', Validators.required),
+      lastName: new FormControl('', Validators.required),
       middleName: new FormControl(''),
       race: this.race,
       ethnicity: new FormControl(''),
@@ -69,11 +76,21 @@ export class DeathCertificateReviewSubmissionComponent implements OnInit {
 
 
   onSubmit() {
-    console.log(this.dcrForm)
+    this.dcrForm.controls.decedentInfo.controls.ethnicity.setValidators([Validators.required]);
+    this.dcrForm.controls.decedentInfo.controls.ethnicity.updateValueAndValidity();
+
+    this.dcrForm.controls.decedentInfo.controls.race.setValidators([this.raceValidator]);
+    this.dcrForm.controls.decedentInfo.controls.race.updateValueAndValidity();
+
+    this.dcrForm.controls.deathInvestigation.controls.placeOfDeath.setValidators([this.placeOfDeathRequiredValidator, this.placeOfDeathDescriptionRequiredValidator]);
+    this.dcrForm.controls.deathInvestigation.controls.placeOfDeath.updateValueAndValidity();
+
+    this.dcrForm.updateValueAndValidity()
   }
 
   ngOnInit(): void {
-    this.dcrForm.valueChanges.subscribe(value=> console.log(this.dcrForm));
+    this.dcrForm.valueChanges.subscribe(value=> {
+    });
   }
 
   private createRaceCategoryControls(raceCategories) {
@@ -84,12 +101,10 @@ export class DeathCertificateReviewSubmissionComponent implements OnInit {
   }
 
   onRaceCategoryCheckboxChange(event: MatCheckboxChange) {
-    console.log(event);
     this.race.controls['raceRadio'].reset();
   }
 
   onRaceCategoryRadioChange(event: MatRadioChange) {
-    console.log(event);
     this.race.controls['raceCheck'].reset();
   }
 
@@ -101,6 +116,30 @@ export class DeathCertificateReviewSubmissionComponent implements OnInit {
     else{
       this.placeOfDeath.controls['description'].enable();
     }
+  }
+
+  private raceValidator(control: AbstractControl): ValidationErrors | null  {
+    const value = control.value;
+    if (value?.raceCheck?.find(check=> !!check) || value?.raceRadio) {
+      return null;
+    }
+    return { raceSelectionRequired: true }; //Return error object if invalid
+  }
+
+  private placeOfDeathRequiredValidator(control: AbstractControl): ValidationErrors | null  {
+    const value = control.value;
+    if (value?.placeOfDeathRadio) {
+      return null;
+    }
+    return { placeOfDeathRequired: true }; //Return error object if invalid
+  }
+
+  private placeOfDeathDescriptionRequiredValidator(control: AbstractControl): ValidationErrors | null  {
+    const value = control.value;
+    if (value?.placeOfDeathRadio !== 'Other' || value?.description) {
+      return null;
+    }
+    return { placeOfDeathDescriptionRequired: true }; //Return error object if invalid
   }
 
 }
