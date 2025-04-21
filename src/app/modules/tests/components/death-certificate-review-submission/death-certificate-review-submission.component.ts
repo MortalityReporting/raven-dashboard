@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {
-  AbstractControl, FormArray, FormBuilder,
+  AbstractControl, FormBuilder,
   FormControl,
   FormGroup,
   ValidationErrors,
@@ -29,7 +29,6 @@ export class DeathCertificateReviewSubmissionComponent implements OnInit {
     placeOfDeathRadio: new FormControl(''),
     description: new FormControl({value: '', disabled: true}),
   });
-
 
   race = new FormGroup({
     raceCheck: this.fb.array(this.RACE_CATEGORIES.slice(0, 5).map(() => new FormControl(false))),
@@ -90,22 +89,27 @@ export class DeathCertificateReviewSubmissionComponent implements OnInit {
   onSubmit() {
 
     this.constructValidatorsAndValidate();
-    const data = this.constructParametersResource();
-    console.log(data);
-    //this.dcrService.submitForm(data);
+    if (this.dcrForm.invalid){
+      //TODO add from invalid message
+    }
+    else {
+      const data = this.constructParametersResource();
+      console.log(data);
+      this.dcrService.submitForm(data).subscribe({
+        next: value => {
+          //TODO render form submitted message
+        },
+        error: error => {
+          console.error(error);
+        }
+      })
+    }
 
   }
 
   ngOnInit(): void {
     this.dcrForm.valueChanges.subscribe(value => {
     });
-  }
-
-  private createRaceCategoryControls(raceCategories) {
-    const arr = raceCategories.map(category => {
-      return new FormControl(category.display);
-    });
-    return new FormArray(arr);
   }
 
   onRaceCategoryCheckboxChange(event: MatCheckboxChange) {

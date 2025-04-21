@@ -191,7 +191,8 @@ export class DcrDocumentHandlerService {
     return {resource: documentBundleList, signatureStr: signatureStr, dateTime: dateTime, fileFormat: fileFormat, signedBy: signedBy};
   }
 
-  submitForm(data: Parameters[]) {
-
+  submitForm(data: Parameters[]):Observable<any> {
+    const parametersResource = { resourceType: "Parameters", parameter: data };
+    return this.fhirClient.create('Parameters' , parametersResource)
   }
 }
