@@ -17,6 +17,11 @@ import {MdiToEdrsDocumentHandlerService} from "./mdi-to-edrs-document-handler.se
 import {PatientNameReturn} from "../../fhir-util/services/fhir-helper.service";
 import {AppConstants} from "../../../providers/app-constants";
 
+export interface Parameters{
+  name: string;
+  valueString: string;
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -184,5 +189,9 @@ export class DcrDocumentHandlerService {
     const signedByName = this.fhirHelper.getOfficialName(signedByPractitionerResource, PatientNameReturn.fullname) || this.defaultString;
     const signedBy: SignedBy = {resource: signedByPractitionerResource, name: signedByName};
     return {resource: documentBundleList, signatureStr: signatureStr, dateTime: dateTime, fileFormat: fileFormat, signedBy: signedBy};
+  }
+
+  submitForm(data: Parameters[]) {
+
   }
 }
