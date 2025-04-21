@@ -275,7 +275,7 @@
                       @for (category of race?.['controls']?.['raceCheck']?.['controls']; track category; let i = $index) {
                         <mat-list-item>
                           <mat-checkbox
-                            [formControl]="$any(category)"
+                            [formControl]="category"
                             (change)="onRaceCategoryCheckboxChange($event)">
                             {{ RACE_CATEGORIES.slice(0, 5)[i].display }}
                           </mat-checkbox>
