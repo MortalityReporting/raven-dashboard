@@ -68,6 +68,9 @@ import {MatListItem, MatSelectionList} from "@angular/material/list";
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
 import {provideNativeDateAdapter} from "@angular/material/core";
 import {MatTimepicker, MatTimepickerInput, MatTimepickerToggle} from "@angular/material/timepicker";
+import { DcrFormCompletionComponent } from './components/death-certificate-review-submission/dcr-form-completion/dcr-form-completion.component';
+import { DcrFhirBundleReviewComponent } from './components/death-certificate-review-submission/dcr-fhir-bundle-review/dcr-fhir-bundle-review.component';
+import { DcrSubmitFormComponent } from './components/death-certificate-review-submission/dcr-submit-form/dcr-submit-form.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +94,9 @@ import {MatTimepicker, MatTimepickerInput, MatTimepickerToggle} from "@angular/m
     EstablishConnectionComponent,
     SearchEdrsBluejayComponent,
     DeathCertificateReviewSubmissionComponent,
+    DcrFormCompletionComponent,
+    DcrFhirBundleReviewComponent,
+    DcrSubmitFormComponent,
   ],
   exports: [
     EdrsResultsStepComponent,
