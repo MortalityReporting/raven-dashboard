@@ -90,5 +90,10 @@ export const RACE_CATEGORIES = [
       "convey that it is the home phone number that is unknown.)",
   },
 ];
-
-export const PLACE_OF_DEATH = ["Decedent's Residence", "Residence of Another", "Hospital - Inpatient", "Hospital ER/Outpatient", "Hospice Facility", "Nursing Home/LTCF", "Street/Highway", "Body of Water", "Other" ]
+//https://hl7.org/fhir/us/vrdr/STU3/ValueSet-vrdr-place-of-death-vs.html
+export const PLACE_OF_DEATH = [
+  "On arrival at hospital", "Death in home",
+  "Death in hospice", "Death in hospital",
+  "Death in hospital-based emergency department or outpatient department",
+  "Death in nursing home or long term care facility",
+  "Other" ]
