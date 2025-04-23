@@ -1,3 +1,22 @@
+@use '@angular/material' as mat;
+
+mat-form-field {
+  @include mat.form-field-overrides((
+    container-height: 1.8em,
+    container-vertical-padding: 0.7em,
+    //container-text-size: smaller
+  ));
+  @include mat.icon-button-overrides((
+    icon-size: 1em,
+    state-layer-size: 0.1em
+  ));
+  @include mat.radio-overrides((
+
+    state-layer-size: 0.1em
+  ));
+}
+
+
 .form-wrapper{
   //display: flex;
   //justify-content: center;
@@ -15,7 +34,7 @@
 
 .form-row {
   display: flex;
-  margin: 8px 0;
+  margin: 4px 0;
 }
 
 .form-col {
@@ -38,3 +57,23 @@
   display: flex;
   justify-content: flex-end;
 }
+
+
+.iterative-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.iterative-container-item {
+  flex: 50%;
+}
+
+.step-label{
+  font-size: larger;
+  padding: 26px 16px;
+  background-color: whitesmoke;
+  border: #5F6368 1px solid;
+  border-radius: 4px;
+}
+
+
