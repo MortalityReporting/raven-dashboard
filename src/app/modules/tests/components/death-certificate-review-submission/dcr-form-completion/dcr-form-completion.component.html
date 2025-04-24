@@ -1,4 +1,4 @@
-<form [formGroup]="dcrForm" (submit)="onSubmit()">
+<form [formGroup]="dcrForm" (submit)="onSubmit()" #formDirective="ngForm">
   <div class="row">
     <div class="col section">
       <div class="section-title">
@@ -343,7 +343,7 @@
     </div>
   </div>
   <div class="controls">
-    <button mat-raised-button type="button" (click)="dcrForm.reset()">
+    <button mat-raised-button type="button" (click)="onFormClear()">
       Clear
     </button>
     <button mat-raised-button type=submit

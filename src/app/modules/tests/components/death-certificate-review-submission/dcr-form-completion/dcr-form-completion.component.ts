@@ -1,7 +1,15 @@
-import {Component, Inject, output, ViewEncapsulation} from '@angular/core';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
+import {Component, Inject, output, ViewChild} from '@angular/core';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormGroupDirective,
+  ValidationErrors,
+  Validators
+} from "@angular/forms";
 import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
-import {DcrDocumentHandlerService, Parameters} from "../../../../record-viewer/services/dcr-document-handler.service";
+import {Parameters} from "../../../../record-viewer/services/dcr-document-handler.service";
 import {MatCheckboxChange} from "@angular/material/checkbox";
 import {MatRadioChange} from "@angular/material/radio";import {ETHNICITY, PLACE_OF_DEATH, RACE_CATEGORIES} from "../../../providers/module-constants"
 import {DeathCertificateReviewService} from "../../../services/death-certificate-review.service";
@@ -16,7 +24,7 @@ import {UtilsService} from "../../../../../service/utils.service";
 export class DcrFormCompletionComponent {
 
   submitDcrForm = output<Parameters[]>();
-
+  @ViewChild('formDirective') formDirective: FormGroupDirective;
 
   readonly ETHNICITY = Object.values(ETHNICITY);
   readonly RACE_CATEGORIES = Object.values(RACE_CATEGORIES);
@@ -101,11 +109,6 @@ export class DcrFormCompletionComponent {
       })
     }
 
-  }
-
-  ngOnInit(): void {
-    this.dcrForm.valueChanges.subscribe(value => {
-    });
   }
 
   onRaceCategoryCheckboxChange(event: MatCheckboxChange) {
@@ -358,4 +361,11 @@ export class DcrFormCompletionComponent {
     }
   }
 
+  onFormClear() {
+    this.dcrForm.reset();
+    this.formDirective.resetForm();
+    this.placeOfDeath.setErrors(null);
+    this.dcrForm.controls.decedentInfo.controls.ethnicity.setErrors(null);
+    this.dcrForm.controls.decedentInfo.controls.race.setErrors(null);
+  }
 }

@@ -1,5 +1,5 @@
-import {Component, output} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Component, output, ViewChild} from '@angular/core';
+import {FormControl, FormGroup, FormGroupDirective, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-dcr-submit-form',
@@ -8,6 +8,8 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
   styleUrls: ['./dcr-submit-form.component.scss', '../death-certificate-review-submission.component.scss']
 })
 export class DcrSubmitFormComponent {
+
+  @ViewChild('formDirective') formDirective: FormGroupDirective;
 
   submitToExternalApi = output<{username?: string, password?: string, externalApiUrl?: string}>();
 
@@ -25,5 +27,6 @@ export class DcrSubmitFormComponent {
 
   onClearFormData() {
     this.dcrSubmitToApiForm.reset();
+    this.formDirective.resetForm();
   }
 }
