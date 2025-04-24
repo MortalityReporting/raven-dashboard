@@ -1,22 +1,21 @@
 @use '@angular/material' as mat;
 
-mat-form-field {
+:host {
   @include mat.form-field-overrides((
     container-height: 1.8em,
     container-vertical-padding: 0.5em,
-    container-text-size: 1em
+    container-text-size: 1em,
+    subscript-text-line-height: 0.8em,
+    subscript-text-size: 0.8em,
   ));
   @include mat.icon-button-overrides((
-    //icon-size: 1em,
-    //state-layer-size: 0.1em
+    icon-size: 1.2em,
   ));
   @include mat.radio-overrides((
-    //state-layer-size: 0.1em,
-    //touch-target-display: 0.1em,
+    state-layer-size: 2em,
   ));
   @include mat.checkbox-overrides((
-    state-layer-size: 0.1em,
-    touch-target-display: 0.1em,
+    state-layer-size: 2em,
   ));
 }
 
