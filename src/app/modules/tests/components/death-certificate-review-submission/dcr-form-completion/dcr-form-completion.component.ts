@@ -1,4 +1,4 @@
-import {Component, Inject, output} from '@angular/core';
+import {Component, Inject, output, ViewEncapsulation} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
 import {DcrDocumentHandlerService, Parameters} from "../../../../record-viewer/services/dcr-document-handler.service";
@@ -9,7 +9,7 @@ import {MatRadioChange} from "@angular/material/radio";import {ETHNICITY, PLACE_
   selector: 'app-dcr-form-completion',
   standalone: false,
   templateUrl: './dcr-form-completion.component.html',
-  styleUrls: ['./dcr-form-completion.component.scss',  '../death-certificate-review-submission.component.scss']
+  styleUrls: ['./dcr-form-completion.component.scss',  '../death-certificate-review-submission.component.scss'],
 })
 export class DcrFormCompletionComponent {
 

@@ -14,6 +14,10 @@ mat-form-field {
     //state-layer-size: 0.1em,
     //touch-target-display: 0.1em,
   ));
+  @include mat.checkbox-overrides((
+    state-layer-size: 0.1em,
+    touch-target-display: 0.1em,
+  ));
 }
 
 .step {
@@ -22,7 +26,7 @@ mat-form-field {
 }
 
 .form-wrapper{
-  //display: flex;
+  display: flex;
   //justify-content: center;
 }
 
