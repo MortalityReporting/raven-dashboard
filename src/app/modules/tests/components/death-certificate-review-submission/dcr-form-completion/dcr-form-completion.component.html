@@ -142,6 +142,12 @@
                 <input matInput type="text" formControlName="state">
               </mat-form-field>
             </div>
+            <div class="form-col">
+              <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                <mat-label>Zip Code</mat-label>
+                <input matInput type="text" formControlName="zip">
+              </mat-form-field>
+            </div>
           </div>
         </div>
 
@@ -205,6 +211,15 @@
                 <input matInput type="text" formControlName="state">
                 @if (dcrForm.controls.funeralHome.controls.address.controls.state.invalid) {
                   <mat-error>Address State is required</mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <div class="form-col">
+              <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                <mat-label>Zip Code</mat-label>
+                <input matInput type="text" formControlName="zip">
+                @if (dcrForm.controls.funeralHome.controls.address.controls.zip.invalid) {
+                  <mat-error>Zip Code is required</mat-error>
                 }
               </mat-form-field>
             </div>

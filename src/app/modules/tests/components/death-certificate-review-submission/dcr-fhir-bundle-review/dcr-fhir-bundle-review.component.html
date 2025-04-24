@@ -1,5 +1,7 @@
 <div class="resource-reviewer">
-  <pre>{{ fhirResource | json }}</pre>
+  @if(fhirBundle){
+    <pre>{{ fhirBundle | json }}</pre>
+  }
 </div>
 <div class="controls">
   <button mat-raised-button>Copy Content</button>

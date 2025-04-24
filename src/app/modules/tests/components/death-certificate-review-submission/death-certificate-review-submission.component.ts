@@ -11,6 +11,8 @@ import {Parameters} from "../../../record-viewer/services/dcr-document-handler.s
 
 export class DeathCertificateReviewSubmissionComponent {
 
+  fhirBundle: any;
+
   submitDcrForm(event: Parameters[]) {
     console.log(event);
   }

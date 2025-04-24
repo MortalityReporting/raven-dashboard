@@ -1,4 +1,5 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, signal, Signal, ViewChild} from '@angular/core';
+import {DeathCertificateReviewService} from "../../../services/death-certificate-review.service";
 
 @Component({
   selector: 'app-dcr-fhir-bundle-review',
@@ -7,5 +8,9 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
   styleUrls: ['./dcr-fhir-bundle-review.component.scss', '../death-certificate-review-submission.component.scss']
 })
 export class DcrFhirBundleReviewComponent {
-  fhirResource: any;
+  fhirBundle = signal(null);
+
+  constructor(private deathCertificateReviewService: DeathCertificateReviewService) {
+    this.fhirBundle = this.deathCertificateReviewService.fhirBundle();
+  }
 }

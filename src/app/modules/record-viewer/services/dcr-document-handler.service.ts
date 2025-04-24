@@ -169,7 +169,7 @@ export class DcrDocumentHandlerService {
     const recordId = compositionResource.id || this.defaultString;
 
     let organizationResource = this.bundleHelper.findResourceByProfileName(documentBundleList, this.fhirProfiles.VRDR.Org_Funeral_Home);
-    const funeralHomeName = organizationResource.name || this.defaultString;
+    const funeralHomeName = organizationResource?.name || this.defaultString;
 
       // TODO uncomment when we know how to use gender/sex fields per the CDC guidelines. Note that gender should come from Sex at Death
     //return {firstName: firstName, lastName: lastName, deathDate: deathDate, gender: gender, recordId: recordId, funeralHomeName: funeralHomeName};

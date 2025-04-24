@@ -4,6 +4,8 @@ import {ModuleHeaderConfig} from "../../../../../providers/module-header-config"
 import {DcrDocumentHandlerService, Parameters} from "../../../../record-viewer/services/dcr-document-handler.service";
 import {MatCheckboxChange} from "@angular/material/checkbox";
 import {MatRadioChange} from "@angular/material/radio";import {ETHNICITY, PLACE_OF_DEATH, RACE_CATEGORIES} from "../../../providers/module-constants"
+import {DeathCertificateReviewService} from "../../../services/death-certificate-review.service";
+import {UtilsService} from "../../../../../service/utils.service";
 
 @Component({
   selector: 'app-dcr-form-completion',
@@ -75,8 +77,9 @@ export class DcrFormCompletionComponent {
 
   constructor(
     @Inject('importConfig') public config: ModuleHeaderConfig,
-    private dcrService: DcrDocumentHandlerService,
-    private fb: FormBuilder
+    private deathCertificateReviewService: DeathCertificateReviewService,
+    private fb: FormBuilder,
+    private utilService: UtilsService
   ) {
   }
 
@@ -84,21 +87,18 @@ export class DcrFormCompletionComponent {
   onSubmit() {
 
     this.constructValidatorsAndValidate();
+    const data = this.constructParametersResource();
     if (this.dcrForm.invalid){
-      //TODO add from invalid message
+      this.utilService.showErrorMessage("Invalid form detected. Please fill all required fields");
     }
     else {
-      const data = this.constructParametersResource();
-      console.log(data);
-      this.submitDcrForm.emit(data);
-      // this.dcrService.submitForm(data).subscribe({
-      //   next: value => {
-      //     //TODO render form submitted message
-      //   },
-      //   error: error => {
-      //     console.error(error);
-      //   }
-      // })
+      this.deathCertificateReviewService.generateDcrFhirBundle(data).subscribe({
+        next: result => {console.log(result);},
+        error: err => {
+          console.error(err);
+          this.utilService.showErrorMessage(err.message);
+        }
+      })
     }
 
   }
@@ -304,8 +304,11 @@ export class DcrFormCompletionComponent {
       const selectedRace = this.dcrForm.controls.decedentInfo.controls.race.controls.raceCheck.controls
         ?.map((control, index) => control.value ? this.RACE_CATEGORIES.slice(0, 5)[index].display : null)
         .filter(value => value !== null);
-      const decedentRace = {name: 'decedentRace', valueString: selectedRace.toString()};
-      parameters.push(decedentRace);
+
+      selectedRace.forEach(race=> {
+        const raceParam = {name: 'decedentRace', valueString: race};
+        parameters.push(raceParam);
+      });
     } else {
       const decedentRace = {
         name: 'decedentRace',
@@ -332,7 +335,7 @@ export class DcrFormCompletionComponent {
       const year = date.getFullYear();
       const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed
       const day = date.getDate().toString().padStart(2, '0');
-      return `${year}-${month}-${day}`;
+      return `${month}/${day}/${year}`;
     } catch (error) {
       console.error('Error parsing date string:', error);
       return null;
