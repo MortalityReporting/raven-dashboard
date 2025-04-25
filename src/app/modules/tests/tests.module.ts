@@ -68,9 +68,9 @@ import {MatListItem, MatSelectionList} from "@angular/material/list";
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
 import {provideNativeDateAdapter} from "@angular/material/core";
 import {MatTimepicker, MatTimepickerInput, MatTimepickerToggle} from "@angular/material/timepicker";
-import { DcrFormCompletionComponent } from './components/death-certificate-review-submission/dcr-form-completion/dcr-form-completion.component';
+import { DcrFormSubmissionComponent } from './components/death-certificate-review-submission/dcr-form-submission/dcr-form-submission.component';
 import { DcrFhirBundleReviewComponent } from './components/death-certificate-review-submission/dcr-fhir-bundle-review/dcr-fhir-bundle-review.component';
-import { DcrSubmitFormComponent } from './components/death-certificate-review-submission/dcr-submit-form/dcr-submit-form.component';
+import { DcrExternalApiBundleSubmission } from './components/death-certificate-review-submission/dcr-external-api-bundle-submission/dcr-external-api-bundle-submission.component';
 
 @NgModule({
   declarations: [
@@ -94,9 +94,9 @@ import { DcrSubmitFormComponent } from './components/death-certificate-review-su
     EstablishConnectionComponent,
     SearchEdrsBluejayComponent,
     DeathCertificateReviewSubmissionComponent,
-    DcrFormCompletionComponent,
+    DcrFormSubmissionComponent,
     DcrFhirBundleReviewComponent,
-    DcrSubmitFormComponent,
+    DcrExternalApiBundleSubmission,
   ],
   exports: [
     EdrsResultsStepComponent,

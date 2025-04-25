@@ -16,12 +16,12 @@ import {DeathCertificateReviewService} from "../../../services/death-certificate
 import {UtilsService} from "../../../../../service/utils.service";
 
 @Component({
-  selector: 'app-dcr-form-completion',
+  selector: 'app-dcr-form-submission',
   standalone: false,
-  templateUrl: './dcr-form-completion.component.html',
-  styleUrls: ['./dcr-form-completion.component.scss',  '../death-certificate-review-submission.component.scss'],
+  templateUrl: './dcr-form-submission.component.html',
+  styleUrls: ['./dcr-form-submission.component.scss',  '../death-certificate-review-submission.component.scss'],
 })
-export class DcrFormCompletionComponent {
+export class DcrFormSubmissionComponent {
 
   submitDcrForm = output<Parameters[]>();
   @ViewChild('formDirective') formDirective: FormGroupDirective;

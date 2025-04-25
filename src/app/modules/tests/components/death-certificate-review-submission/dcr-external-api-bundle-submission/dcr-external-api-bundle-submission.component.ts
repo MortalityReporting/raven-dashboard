@@ -4,12 +4,12 @@ import {DeathCertificateReviewService} from "../../../services/death-certificate
 import {UtilsService} from "../../../../../service/utils.service";
 
 @Component({
-  selector: 'app-dcr-submit-form',
+  selector: 'app-dcr-external-api-bundle-submission',
   standalone: false,
-  templateUrl: './dcr-submit-form.component.html',
-  styleUrls: ['./dcr-submit-form.component.scss', '../death-certificate-review-submission.component.scss']
+  templateUrl: './dcr-external-api-bundle-submission.component.html',
+  styleUrls: ['./dcr-external-api-bundle-submission.component.scss', '../death-certificate-review-submission.component.scss']
 })
-export class DcrSubmitFormComponent {
+export class DcrExternalApiBundleSubmission {
 
   @ViewChild('formDirective') formDirective: FormGroupDirective;
 
