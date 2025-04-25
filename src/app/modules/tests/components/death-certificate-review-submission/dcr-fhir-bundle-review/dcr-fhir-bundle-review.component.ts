@@ -1,4 +1,4 @@
-import {Component, ElementRef, signal, Signal, ViewChild} from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {DeathCertificateReviewService} from "../../../services/death-certificate-review.service";
 
 @Component({

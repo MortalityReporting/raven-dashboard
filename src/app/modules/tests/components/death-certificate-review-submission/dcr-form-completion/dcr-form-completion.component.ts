@@ -94,11 +94,8 @@ export class DcrFormCompletionComponent {
 
 
   onSubmit() {
-
     this.constructValidatorsAndValidate();
     const data = this.constructParametersResource();
-    console.log(data);
-    console.log(this.dcrForm);
     if (this.dcrForm.invalid){
       this.utilService.showErrorMessage("Invalid form detected. Please fill all required fields");
     }

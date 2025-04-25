@@ -33,5 +33,19 @@ export class DeathCertificateReviewService {
     );
   }
 
+  submitToExternalApi(formData: any, fhirBundle: any): Observable<any> {
+    let httpHeaders = new HttpHeaders().set('Content-Type', 'application/fhir+json');
+    const basicAuthString = 'Basic ' + btoa(`${formData.username}:${formData.password}`);
+    httpHeaders = httpHeaders.set('Authorization', basicAuthString);
+
+    const  httpOptions = {headers: httpHeaders}
+
+    return this.http.post(`${formData.externalApiUrl}`, fhirBundle, httpOptions).pipe(
+      tap((res: any) => {
+        this.setFhirBundle(res)
+      })
+    );
+  }
+
 
 }

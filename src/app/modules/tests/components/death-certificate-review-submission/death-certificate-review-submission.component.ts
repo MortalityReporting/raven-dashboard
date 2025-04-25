@@ -1,6 +1,4 @@
 import {Component} from '@angular/core';
-import {Parameters} from "../../../record-viewer/services/dcr-document-handler.service";
-
 
 @Component({
   selector: 'app-death-certificate-review-submission',
@@ -9,15 +7,4 @@ import {Parameters} from "../../../record-viewer/services/dcr-document-handler.s
   styleUrl: './death-certificate-review-submission.component.scss'
 })
 
-export class DeathCertificateReviewSubmissionComponent {
-
-  fhirBundle: any;
-
-  submitDcrForm(event: Parameters[]) {
-    console.log(event);
-  }
-
-  onSubmitToExternalApi(event) {
-    console.log(event);
-  }
-}
+export class DeathCertificateReviewSubmissionComponent {}
