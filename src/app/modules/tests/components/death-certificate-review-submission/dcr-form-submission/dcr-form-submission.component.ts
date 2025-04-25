@@ -11,7 +11,8 @@ import {
 import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
 import {Parameters} from "../../../../record-viewer/services/dcr-document-handler.service";
 import {MatCheckboxChange} from "@angular/material/checkbox";
-import {MatRadioChange} from "@angular/material/radio";import {ETHNICITY, PLACE_OF_DEATH, RACE_CATEGORIES} from "../../../providers/module-constants"
+import {MatRadioChange} from "@angular/material/radio";
+import {ETHNICITY, PLACE_OF_DEATH, RACE_CATEGORIES} from "../../../providers/module-constants"
 import {DeathCertificateReviewService} from "../../../services/death-certificate-review.service";
 import {UtilsService} from "../../../../../service/utils.service";
 
@@ -19,7 +20,7 @@ import {UtilsService} from "../../../../../service/utils.service";
   selector: 'app-dcr-form-submission',
   standalone: false,
   templateUrl: './dcr-form-submission.component.html',
-  styleUrls: ['./dcr-form-submission.component.scss',  '../death-certificate-review-submission.component.scss'],
+  styleUrls: ['./dcr-form-submission.component.scss', '../death-certificate-review-submission.component.scss'],
 })
 export class DcrFormSubmissionComponent {
 
@@ -96,12 +97,13 @@ export class DcrFormSubmissionComponent {
   onSubmit() {
     this.constructValidatorsAndValidate();
     const data = this.constructParametersResource();
-    if (this.dcrForm.invalid){
+    if (this.dcrForm.invalid) {
       this.utilService.showErrorMessage("Invalid form detected. Please fill all required fields");
-    }
-    else {
+    } else {
       this.deathCertificateReviewService.generateDcrFhirBundle(data).subscribe({
-        next: result => {console.log(result);},
+        next: result => {
+          console.log(result);
+        },
         error: err => {
           console.error(err);
           this.utilService.showErrorMessage(err.message);
@@ -251,10 +253,9 @@ export class DcrFormSubmissionComponent {
 
 
     const timeOfDeathStr = this.getTimeStr(this.dcrForm.controls.deathInvestigation.controls.timeOfDeath.value);
-    if(timeOfDeathStr){
+    if (timeOfDeathStr) {
       parameters.push({name: 'dateOfDeath', valueDateTime: `${dateOfDeathStr}T${timeOfDeathStr}`});
-    }
-    else {
+    } else {
       parameters.push({name: 'dateOfDeath', valueDateTime: dateOfDeathStr});
     }
 
@@ -329,16 +330,24 @@ export class DcrFormSubmissionComponent {
         ?.map((control, index) => control.value ? this.RACE_CATEGORIES.slice(0, 5)[index].display : null)
         .filter(value => value !== null);
 
-      selectedRace.forEach(race=> {
+      selectedRace.forEach(race => {
         const raceParam = {name: 'decedentRace', valueString: race};
         parameters.push(raceParam);
       });
     } else {
-      const decedentRace = {
-        name: 'decedentRace',
-        valueString: this.dcrForm.controls.decedentInfo.controls.race.controls.raceRadio.value
-      };
-      parameters.push(decedentRace);
+      if (this.dcrForm.controls.decedentInfo.controls.race.controls.raceRadio.value?.['display'] == 'Other') {
+        const decedentRace = {
+          name: 'decedentRace',
+          valueString: this.dcrForm.controls.decedentInfo.controls.race.controls.description.value
+        };
+        parameters.push(decedentRace);
+      } else {
+        const decedentRace = {
+          name: 'decedentRace',
+          valueString: this.dcrForm.controls.decedentInfo.controls.race.controls.raceRadio.value?.['display']
+        };
+        parameters.push(decedentRace);
+      }
     }
 
     const decedentEthnicity = {
@@ -351,7 +360,7 @@ export class DcrFormSubmissionComponent {
   }
 
   private getDateStr(dateString: string) {
-    if(!dateString){
+    if (!dateString) {
       return '';
     }
     try {
