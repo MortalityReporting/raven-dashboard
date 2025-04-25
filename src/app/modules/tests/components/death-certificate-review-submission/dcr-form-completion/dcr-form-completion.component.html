@@ -101,7 +101,6 @@
                 <input matInput type="text" formControlName="description" required>
                 @if (dcrForm.controls.deathInvestigation.controls.placeOfDeath.hasError('placeOfDeathDescriptionRequired')) {
                   <mat-error>Please enter location.</mat-error>
-                  <mat-hint>Please enter N/A if no information is available</mat-hint>
                 }
               </mat-form-field>
             </div>
@@ -290,7 +289,13 @@
                 <div class="h2-label">
                   <mat-error>Race&#42; is required</mat-error>
                 </div>
-              } @else {
+              }
+              @else if (dcrForm.controls.decedentInfo.controls.race.hasError('raceDescriptionRequired')) {
+                <div class="h2-label">
+                  <mat-error>Race description is required</mat-error>
+                </div>
+              }
+              @else {
                 <div class="h2-label">Race&#42;</div>
               }
 
@@ -304,11 +309,9 @@
                     </div>
 
                 }
-
-
                   <mat-radio-group formControlName="raceRadio"
                                    (change)="onRaceCategoryRadioChange($event)">
-                    @for (raceCategory of RACE_CATEGORIES.slice(-1); track raceCategory) {
+                    @for (raceCategory of [RACE_CATEGORIES[RACE_CATEGORIES.length -1], RACE_CATEGORIES[RACE_CATEGORIES.length -3]]; track raceCategory) {
                       <div>
                         <mat-radio-button [value]="raceCategory">
                           {{ raceCategory.display }}
@@ -316,8 +319,17 @@
                       </div>
                     }
                   </mat-radio-group>
-
-
+              <div class="form-row">
+                <div class="form-col">
+                  <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                    <mat-label>Other</mat-label>
+                    <input matInput type="text" formControlName="description" required>
+                    @if (dcrForm.controls.decedentInfo.controls.race.hasError('raceDescriptionRequired')) {
+                      <mat-error>Please enter race.</mat-error>
+                    }
+                  </mat-form-field>
+                </div>
+              </div>
             </div>
           </div>
           <div class="form-col">

@@ -38,6 +38,7 @@ export class DcrFormCompletionComponent {
   race = new FormGroup({
     raceCheck: this.fb.array(this.RACE_CATEGORIES.slice(0, 5).map(() => new FormControl(false))),
     raceRadio: new FormControl(''),
+    description: new FormControl({value: '', disabled: true}),
   });
 
   address = new FormGroup({
@@ -96,6 +97,8 @@ export class DcrFormCompletionComponent {
 
     this.constructValidatorsAndValidate();
     const data = this.constructParametersResource();
+    console.log(data);
+    console.log(this.dcrForm);
     if (this.dcrForm.invalid){
       this.utilService.showErrorMessage("Invalid form detected. Please fill all required fields");
     }
@@ -112,11 +115,19 @@ export class DcrFormCompletionComponent {
   }
 
   onRaceCategoryCheckboxChange(event: MatCheckboxChange) {
-    this.race.controls['raceRadio'].reset();
+    this.race.controls.raceRadio.reset();
+    this.race.controls.description.reset();
+    this.race.controls.description.disable();
   }
 
   onRaceCategoryRadioChange(event: MatRadioChange) {
     this.race.controls['raceCheck'].reset();
+    if (event.value.display != 'Other') {
+      this.race.controls.description.reset();
+      this.race.controls.description.disable();
+    } else {
+      this.race.controls.description.enable();
+    }
   }
 
   onRacePlaceOfDeathRadioChange(event: MatRadioChange) {
@@ -134,6 +145,14 @@ export class DcrFormCompletionComponent {
       return null;
     }
     return {raceSelectionRequired: true}; //Return error object if invalid
+  }
+
+  private raceDescriptionRequiredValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (value?.raceRadio.display !== 'Other' || value?.description) {
+      return null;
+    }
+    return {raceDescriptionRequired: true}; //Return error object if invalid
   }
 
   private placeOfDeathRequiredValidator(control: AbstractControl): ValidationErrors | null {
@@ -156,7 +175,7 @@ export class DcrFormCompletionComponent {
     this.dcrForm.controls.decedentInfo.controls.ethnicity.setValidators([Validators.required]);
     this.dcrForm.controls.decedentInfo.controls.ethnicity.updateValueAndValidity();
 
-    this.dcrForm.controls.decedentInfo.controls.race.setValidators([this.raceValidator]);
+    this.dcrForm.controls.decedentInfo.controls.race.setValidators([this.raceValidator, this.raceDescriptionRequiredValidator]);
     this.dcrForm.controls.decedentInfo.controls.race.updateValueAndValidity();
 
     this.dcrForm.controls.deathInvestigation.controls.placeOfDeath.setValidators([this.placeOfDeathRequiredValidator, this.placeOfDeathDescriptionRequiredValidator]);
@@ -232,10 +251,15 @@ export class DcrFormCompletionComponent {
 
     //Death Investigation Section
     const dateOfDeathStr = this.getDateStr(this.dcrForm.controls.deathInvestigation.controls.dateOfDeath.value)
-    parameters.push({name: 'dateOfDeath', valueString: dateOfDeathStr});
+
 
     const timeOfDeathStr = this.getTimeStr(this.dcrForm.controls.deathInvestigation.controls.timeOfDeath.value);
-    parameters.push({name: 'timeOfDeath', valueString: timeOfDeathStr});
+    if(timeOfDeathStr){
+      parameters.push({name: 'dateOfDeath', valueDateTime: `${dateOfDeathStr}T${timeOfDeathStr}`});
+    }
+    else {
+      parameters.push({name: 'dateOfDeath', valueDateTime: dateOfDeathStr});
+    }
 
     let placeOfDeathObj = this.dcrForm.controls.deathInvestigation.controls.placeOfDeath.value;
     if (placeOfDeathObj.placeOfDeathRadio != "Other") {
@@ -338,7 +362,7 @@ export class DcrFormCompletionComponent {
       const year = date.getFullYear();
       const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed
       const day = date.getDate().toString().padStart(2, '0');
-      return `${month}/${day}/${year}`;
+      return `${year}-${month}-${day}`;
     } catch (error) {
       console.error('Error parsing date string:', error);
       return null;

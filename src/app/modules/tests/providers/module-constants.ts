@@ -72,6 +72,12 @@ export const RACE_CATEGORIES = [
     definition: "White",
   },
   {
+    code: "2131-1",
+    system: "urn:oid:2.16.840.1.113883.6.238",
+    display: "Other",
+    definition: "Other Race",
+  },
+  {
     code: "ASKU",
     system: "http://terminology.hl7.org/CodeSystem/v3-NullFlavor",
     display: "Asked but no answer",

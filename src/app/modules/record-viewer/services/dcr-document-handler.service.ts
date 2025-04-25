@@ -19,7 +19,8 @@ import {AppConstants} from "../../../providers/app-constants";
 
 export interface Parameters{
   name: string;
-  valueString: string;
+  valueString?: string;
+  valueDateTime?: string;
 }
 
 
