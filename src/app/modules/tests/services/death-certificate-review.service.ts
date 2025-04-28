@@ -27,8 +27,8 @@ export class DeathCertificateReviewService {
     httpHeaders = httpHeaders.set('Authorization', basicAuthString);
 
     const  httpOptions = {headers: httpHeaders}
-
-    return this.http.post(`${this.dcrFhirBundleUrl}`, data, httpOptions).pipe(
+    const resource =  { resourceType: "Parameters", parameter: data };
+    return this.http.post(`${this.dcrFhirBundleUrl}`, resource, httpOptions).pipe(
       tap((res: any) => {this.setFhirBundle(res)})
     );
   }

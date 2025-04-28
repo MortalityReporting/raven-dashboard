@@ -86,7 +86,7 @@
                 @for (place of PLACE_OF_DEATH; track place) {
                   <div class="iterative-container-item">
                     <mat-radio-button [value]="place">
-                      {{ place }}
+                      {{ place.display }}
                     </mat-radio-button>
                   </div>
                 }
@@ -287,7 +287,7 @@
             <div formGroupName="race">
               @if (dcrForm.controls.decedentInfo.controls.race.hasError('raceSelectionRequired')) {
                 <div class="h2-label">
-                  <mat-error>Race&#42; is required</mat-error>
+                  <mat-error class="info-icon">Race&#42; is required</mat-error>
                 </div>
               }
               @else if (dcrForm.controls.decedentInfo.controls.race.hasError('raceDescriptionRequired')) {
@@ -296,7 +296,9 @@
                 </div>
               }
               @else {
-                <div class="h2-label">Race&#42;</div>
+                <div class="h2-label flex-centered">Race&#42;
+                  <mat-icon class="info-icon" matTooltip="Based on US Core 5.0.1 and the 1997 OMB Race Categories">info</mat-icon>
+                </div>
               }
 
                 @for (category of race?.['controls']?.['raceCheck']?.['controls']; track category; let i = $index) {
@@ -366,3 +368,14 @@
     </button>
   </div>
 </form>
+@if (errorResponse) {
+  <mat-card class="error-text">
+    <mat-card-content>
+      <div class="form-row section-title margin-md">
+        The following error(s) were generated as a result of the submit operation:
+      </div>
+
+      <pre>{{ errorResponse | json }}</pre>
+    </mat-card-content>
+  </mat-card>
+}

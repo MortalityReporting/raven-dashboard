@@ -100,10 +100,34 @@ export const RACE_CATEGORIES = [
 
 //https://hl7.org/fhir/us/vrdr/STU3/ValueSet-vrdr-place-of-death-vs.html
 export const PLACE_OF_DEATH = [
-  "\tDead on arrival at hospital", "Death in home",
-  "Death in hospice", "Death in hospital",
-  "Death in hospital-based emergency department or outpatient department",
-  "Death in nursing home or long term care facility",
-  "Other",
-  "Unknown"
+  {
+    code: "63238001",
+    system: "http://snomed.info/sct",
+    display: "Dead on arrival at hospital"
+  },
+  {
+    code: "440081000124100",
+    system: "http://snomed.info/sct",
+    display: "Death in home"
+  },
+  {
+    code: "16983000",
+    system: "http://snomed.info/sct",
+    display: "Death in hospital"
+  },
+  {
+    code: "450381000124100",
+    system: "http://snomed.info/sct",
+    display: "Death in nursing home or long term care facility"
+  },
+  {
+    code: " OTH",
+    system: "http://terminology.hl7.org/CodeSystem/v3-NullFlavor",
+    display: "Other"
+  },
+  {
+    code: "UNK",
+    system: "http://terminology.hl7.org/CodeSystem/v3-NullFlavor",
+    display: "Unknown"
+  }
 ]

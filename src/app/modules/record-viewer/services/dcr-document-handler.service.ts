@@ -21,6 +21,7 @@ export interface Parameters{
   name: string;
   valueString?: string;
   valueDateTime?: string;
+  valueCode?: string;
 }
 
 

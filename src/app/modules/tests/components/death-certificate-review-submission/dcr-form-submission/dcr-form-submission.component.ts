@@ -26,6 +26,7 @@ export class DcrFormSubmissionComponent {
 
   submitDcrForm = output<Parameters[]>();
   @ViewChild('formDirective') formDirective: FormGroupDirective;
+  errorResponse: any;
 
   readonly ETHNICITY = Object.values(ETHNICITY);
   readonly RACE_CATEGORIES = Object.values(RACE_CATEGORIES);
@@ -97,6 +98,7 @@ export class DcrFormSubmissionComponent {
   onSubmit() {
     this.constructValidatorsAndValidate();
     const data = this.constructParametersResource();
+    this.errorResponse = null;
     if (this.dcrForm.invalid) {
       this.utilService.showErrorMessage("Invalid form detected. Please fill all required fields");
     } else {
@@ -105,6 +107,7 @@ export class DcrFormSubmissionComponent {
           console.log(result);
         },
         error: err => {
+          this.errorResponse = err;
           console.error(err);
           this.utilService.showErrorMessage(err.message);
         }
@@ -130,7 +133,7 @@ export class DcrFormSubmissionComponent {
   }
 
   onRacePlaceOfDeathRadioChange(event: MatRadioChange) {
-    if (event.value != 'Other') {
+    if (event.value?.display != 'Other') {
       this.placeOfDeath.controls.description.reset();
       this.placeOfDeath.controls.description.disable();
     } else {
@@ -155,8 +158,12 @@ export class DcrFormSubmissionComponent {
   }
 
   private placeOfDeathRequiredValidator(control: AbstractControl): ValidationErrors | null {
+    // const value = control.value;
+    // if (value?.placeOfDeathRadio) {
+    //   return null;
+    // }
     const value = control.value;
-    if (value?.placeOfDeathRadio) {
+    if (value?.raceRadio?.display !== 'Other' || value?.description) {
       return null;
     }
     return {placeOfDeathRequired: true}; //Return error object if invalid
@@ -189,145 +196,183 @@ export class DcrFormSubmissionComponent {
     parameters.push(name);
 
     //Submitter Section
-    const submitterFirstName = {
-      name: 'submitterFirstName',
-      valueString: this.dcrForm.controls.submitter.controls.firstName.value
-    };
-    parameters.push(submitterFirstName);
+    if(this.dcrForm.controls.submitter.controls.firstName.value){
+      const submitterFirstName = {
+        name: 'submitterFirstName',
+        valueString: this.dcrForm.controls.submitter.controls.firstName.value
+      };
+      parameters.push(submitterFirstName);
+    }
 
-    const submitterLastName = {
-      name: 'submitterLastName',
-      valueString: this.dcrForm.controls.submitter.controls.lastName.value
-    };
-    parameters.push(submitterLastName);
+    if(this.dcrForm.controls.submitter.controls.lastName.value){
+      const submitterLastName = {
+        name: 'submitterLastName',
+        valueString: this.dcrForm.controls.submitter.controls.lastName.value
+      };
+      parameters.push(submitterLastName);
+    }
 
-    const submitterEmail = {name: 'submitterEmail', valueString: this.dcrForm.controls.submitter.controls.email.value};
-    parameters.push(submitterEmail);
-
+    if(this.dcrForm.controls.submitter.controls.email.value){
+      const submitterEmail = {name: 'submitterEmail', valueString: this.dcrForm.controls.submitter.controls.email.value};
+      parameters.push(submitterEmail);
+    }
 
     //Funeral Home Section
-    const funeralHomeName = {
-      name: 'funeralHomeName',
-      valueString: this.dcrForm.controls.funeralHome.controls.name.value
-    };
-    parameters.push(funeralHomeName);
+    if(this.dcrForm.controls.funeralHome.controls.name.value){
+      const funeralHomeName = {
+        name: 'funeralHomeName',
+        valueString: this.dcrForm.controls.funeralHome.controls.name.value
+      };
+      parameters.push(funeralHomeName);
+    }
 
-    const funeralHomeAddrLine1 = {
-      name: 'funeralHomeAddrLine1',
-      valueString: this.dcrForm.controls.funeralHome.controls.address.controls.addressLine1.value
-    };
-    parameters.push(funeralHomeAddrLine1);
+    if(this.dcrForm.controls.funeralHome.controls.address.controls.addressLine1.value){
+      const funeralHomeAddrLine1 = {
+        name: 'funeralHomeAddrLine1',
+        valueString: this.dcrForm.controls.funeralHome.controls.address.controls.addressLine1.value
+      };
+      parameters.push(funeralHomeAddrLine1);
+    }
 
-    const funeralHomeAddrLine2 = {
-      name: 'funeralHomeAddrLine2',
-      valueString: this.dcrForm.controls.funeralHome.controls.address.controls.addressLine2.value ?? ""
-    };
-    parameters.push(funeralHomeAddrLine2);
+    if(this.dcrForm.controls.funeralHome.controls.address.controls.addressLine2.value){
+      const funeralHomeAddrLine2 = {
+        name: 'funeralHomeAddrLine2',
+        valueString: this.dcrForm.controls.funeralHome.controls.address.controls.addressLine2.value
+      };
+      parameters.push(funeralHomeAddrLine2);
+    }
 
-    const funeralHomeAddrCity = {
-      name: 'funeralHomeAddrCity',
-      valueString: this.dcrForm.controls.funeralHome.controls.address.controls.city.value
-    };
-    parameters.push(funeralHomeAddrCity);
+    if(this.dcrForm.controls.funeralHome.controls.address.controls.city.value){
+      const funeralHomeAddrCity = {
+        name: 'funeralHomeAddrCity',
+        valueString: this.dcrForm.controls.funeralHome.controls.address.controls.city.value
+      };
+      parameters.push(funeralHomeAddrCity);
+    }
 
-    const funeralHomeAddrZip = {
-      name: 'funeralHomeAddrZip',
-      valueString: this.dcrForm.controls.funeralHome.controls.address.controls.zip.value
-    };
-    parameters.push(funeralHomeAddrZip);
+    if(this.dcrForm.controls.funeralHome.controls.address.controls.zip.value){
+      const funeralHomeAddrZip = {
+        name: 'funeralHomeAddrZip',
+        valueString: this.dcrForm.controls.funeralHome.controls.address.controls.zip.value
+      };
+      parameters.push(funeralHomeAddrZip);
+    }
 
-    const funeralHomeAddrPhone = {
-      name: 'funeralHomeAddrPhone',
-      valueString: this.dcrForm.controls.funeralHome.controls.phone.value
-    };
-    parameters.push(funeralHomeAddrPhone);
+    if(this.dcrForm.controls.funeralHome.controls.phone.value){
+      const funeralHomeAddrPhone = {
+        name: 'funeralHomeAddrPhone',
+        valueString: this.dcrForm.controls.funeralHome.controls.phone.value
+      };
+      parameters.push(funeralHomeAddrPhone);
+    }
 
-    const funeralHomeAddrFax = {
-      name: 'funeralHomeAddrFax',
-      valueString: this.dcrForm.controls.funeralHome.controls.fax.value ?? ""
-    };
-    parameters.push(funeralHomeAddrFax);
+    if(this.dcrForm.controls.funeralHome.controls.fax.value){
+      const funeralHomeAddrFax = {
+        name: 'funeralHomeAddrFax',
+        valueString: this.dcrForm.controls.funeralHome.controls.fax.value
+      };
+      parameters.push(funeralHomeAddrFax);
+    }
+
+
 
     //Death Investigation Section
     const dateOfDeathStr = this.getDateStr(this.dcrForm.controls.deathInvestigation.controls.dateOfDeath.value)
 
-
     const timeOfDeathStr = this.getTimeStr(this.dcrForm.controls.deathInvestigation.controls.timeOfDeath.value);
-    if (timeOfDeathStr) {
-      parameters.push({name: 'dateOfDeath', valueDateTime: `${dateOfDeathStr}T${timeOfDeathStr}`});
-    } else {
-      parameters.push({name: 'dateOfDeath', valueDateTime: dateOfDeathStr});
+    if(dateOfDeathStr){
+      if (timeOfDeathStr) {
+        parameters.push({name: 'dateOfDeath', valueDateTime: `${dateOfDeathStr}T${timeOfDeathStr}`});
+      } else {
+        parameters.push({name: 'dateOfDeath', valueDateTime: dateOfDeathStr});
+      }
     }
 
     let placeOfDeathObj = this.dcrForm.controls.deathInvestigation.controls.placeOfDeath.value;
-    if (placeOfDeathObj.placeOfDeathRadio != "Other") {
-      const placeOfDeath = {name: 'placeOfDeath', valueString: placeOfDeathObj.placeOfDeathRadio};
+    if (placeOfDeathObj.placeOfDeathRadio?.['display'] != "Other") {
+      const placeOfDeath = {name: 'placeOfDeath', valueCode: placeOfDeathObj.placeOfDeathRadio?.['code']};
       parameters.push(placeOfDeath);
 
-      const placeOfDeathOther = {name: 'placeOfDeathOther', valueString: ""};
-      parameters.push(placeOfDeathOther);
     } else {
-      const placeOfDeath = {name: 'placeOfDeath', valueString: placeOfDeathObj.placeOfDeathRadio};
+      const placeOfDeath = {name: 'placeOfDeath', valueCode: placeOfDeathObj.placeOfDeathRadio?.['code']};
       parameters.push(placeOfDeath);
 
       const placeOfDeathOther = {name: 'placeOfDeathOther', valueString: placeOfDeathObj.description};
       parameters.push(placeOfDeathOther);
     }
-    const placeOfDeathAddrLine1 = {
-      name: 'placeOfDeathAddrLine1',
-      valueString: this.dcrForm.controls.deathInvestigation.controls.address.controls.addressLine1.value ?? ''
-    };
-    parameters.push(placeOfDeathAddrLine1);
 
-    const placeOfDeathAddrLine2 = {
-      name: 'placeOfDeathAddrLine2',
-      valueString: this.dcrForm.controls.deathInvestigation.controls.address.controls.addressLine2.value ?? ''
-    };
-    parameters.push(placeOfDeathAddrLine2);
+    if(this.dcrForm.controls.deathInvestigation.controls.address.controls.addressLine1.value){
+      const placeOfDeathAddrLine1 = {
+        name: 'placeOfDeathAddrLine1',
+        valueString: this.dcrForm.controls.deathInvestigation.controls.address.controls.addressLine1.value
+      };
+      parameters.push(placeOfDeathAddrLine1);
+    }
 
-    const placeOfDeathAddrCity = {
-      name: 'placeOfDeathAddrLine2',
-      valueString: this.dcrForm.controls.deathInvestigation.controls.address.controls.city.value ?? ''
-    };
-    parameters.push(placeOfDeathAddrCity);
+    if(this.dcrForm.controls.deathInvestigation.controls.address.controls.addressLine2.value){
+      const placeOfDeathAddrLine2 = {
+        name: 'placeOfDeathAddrLine2',
+        valueString: this.dcrForm.controls.deathInvestigation.controls.address.controls.addressLine2.value
+      };
+      parameters.push(placeOfDeathAddrLine2);
+    }
 
-    const placeOfDeathAddrState = {
-      name: 'placeOfDeathAddrState',
-      valueString: this.dcrForm.controls.deathInvestigation.controls.address.controls.state.value ?? ''
-    };
-    parameters.push(placeOfDeathAddrState);
+    if(this.dcrForm.controls.deathInvestigation.controls.address.controls.city.value){
+      const placeOfDeathAddrCity = {
+        name: 'placeOfDeathAddrLine2',
+        valueString: this.dcrForm.controls.deathInvestigation.controls.address.controls.city.value
+      };
+      parameters.push(placeOfDeathAddrCity);
+    }
 
-    const placeOfDeathAddrZip = {
-      name: 'placeOfDeathAddrZip',
-      valueString: this.dcrForm.controls.deathInvestigation.controls.address.controls.zip.value ?? ''
-    };
-    parameters.push(placeOfDeathAddrZip);
+    if(this.dcrForm.controls.deathInvestigation.controls.address.controls.state.value){
+      const placeOfDeathAddrState = {
+        name: 'placeOfDeathAddrState',
+        valueString: this.dcrForm.controls.deathInvestigation.controls.address.controls.state.value
+      };
+      parameters.push(placeOfDeathAddrState);
+    }
+
+    if(this.dcrForm.controls.deathInvestigation.controls.address.controls.zip.value){
+      const placeOfDeathAddrZip = {
+        name: 'placeOfDeathAddrZip',
+        valueString: this.dcrForm.controls.deathInvestigation.controls.address.controls.zip.value
+      };
+      parameters.push(placeOfDeathAddrZip);
+    }
+
 
 
     //Decedent Info Section
-    const decedentFirstName = {
-      name: 'decedentFirstName',
-      valueString: this.dcrForm.controls.decedentInfo.controls.firstName.value
-    };
-    parameters.push(decedentFirstName);
+    if(this.dcrForm.controls.decedentInfo.controls.firstName.value){
+      const decedentFirstName = {
+        name: 'decedentFirstName',
+        valueString: this.dcrForm.controls.decedentInfo.controls.firstName.value
+      };
+      parameters.push(decedentFirstName);
+    }
 
-    const decedentMiddleName = {
-      name: 'decedentMiddleName',
-      valueString: this.dcrForm.controls.decedentInfo.controls.middleName.value ?? ""
-    };
-    parameters.push(decedentMiddleName);
+    if(this.dcrForm.controls.decedentInfo.controls.middleName.value){
+      const decedentMiddleName = {
+        name: 'decedentMiddleName',
+        valueString: this.dcrForm.controls.decedentInfo.controls.middleName.value
+      };
+      parameters.push(decedentMiddleName);
+    }
 
-    const decedentLastName = {
-      name: 'decedentLastName',
-      valueString: this.dcrForm.controls.decedentInfo.controls.lastName.value
-    };
-    parameters.push(decedentLastName);
+    if(this.dcrForm.controls.decedentInfo.controls.lastName.value){
+      const decedentLastName = {
+        name: 'decedentLastName',
+        valueString: this.dcrForm.controls.decedentInfo.controls.lastName.value
+      };
+      parameters.push(decedentLastName);
+    }
 
     const decedentRaceCheck = this.dcrForm.controls.decedentInfo.controls.race.controls.raceCheck.value;
 
     if (decedentRaceCheck.find(value => !!value)) {
       const selectedRace = this.dcrForm.controls.decedentInfo.controls.race.controls.raceCheck.controls
-        ?.map((control, index) => control.value ? this.RACE_CATEGORIES.slice(0, 5)[index].display : null)
+        ?.map((control, index) => control.value ? this.RACE_CATEGORIES.slice(0, 5)[index].code : null)
         .filter(value => value !== null);
 
       selectedRace.forEach(race => {
@@ -344,18 +389,18 @@ export class DcrFormSubmissionComponent {
       } else {
         const decedentRace = {
           name: 'decedentRace',
-          valueString: this.dcrForm.controls.decedentInfo.controls.race.controls.raceRadio.value?.['display']
+          valueCode: this.dcrForm.controls.decedentInfo.controls.race.controls.raceRadio.value?.['code']
         };
         parameters.push(decedentRace);
       }
     }
-
-    const decedentEthnicity = {
-      name: 'decedentEthnicity',
-      valueString: this.dcrForm.controls.decedentInfo.controls.ethnicity.value?.['display']
-    };
-    parameters.push(decedentEthnicity);
-
+    if(this.dcrForm.controls.decedentInfo.controls.ethnicity.value?.['display']){
+      const decedentEthnicity = {
+        name: 'decedentEthnicity',
+        valueCode: this.dcrForm.controls.decedentInfo.controls.ethnicity.value?.['code']
+      };
+      parameters.push(decedentEthnicity);
+    }
     return parameters;
   }
 
@@ -397,5 +442,6 @@ export class DcrFormSubmissionComponent {
     this.placeOfDeath.setErrors(null);
     this.dcrForm.controls.decedentInfo.controls.ethnicity.setErrors(null);
     this.dcrForm.controls.decedentInfo.controls.race.setErrors(null);
+    this.errorResponse = null;
   }
 }
