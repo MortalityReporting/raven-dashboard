@@ -33,6 +33,7 @@ export class DcrFormSubmissionComponent {
   readonly PLACE_OF_DEATH = Object.values(PLACE_OF_DEATH);
 
   placeOfDeath = new FormGroup({
+    placeOfDeathFacilityName: new FormControl('', [Validators.required]),
     placeOfDeathRadio: new FormControl(''),
     description: new FormControl({value: '', disabled: true}),
   });
@@ -49,6 +50,7 @@ export class DcrFormSubmissionComponent {
     city: new FormControl('', Validators.required),
     state: new FormControl('', Validators.required),
     zip: new FormControl('', Validators.required),
+    country: new FormControl('USA', Validators.required),
   });
 
   optionalAddress = new FormGroup({
@@ -57,6 +59,7 @@ export class DcrFormSubmissionComponent {
     city: new FormControl(''),
     state: new FormControl(''),
     zip: new FormControl(''),
+    country: new FormControl('USA'),
   });
 
   dcrForm = new FormGroup({
@@ -83,6 +86,7 @@ export class DcrFormSubmissionComponent {
       middleName: new FormControl(''),
       race: this.race,
       ethnicity: new FormControl(''),
+      decedentDateOfBirth: new FormControl('', Validators.required),
     })
   });
 
@@ -250,12 +254,28 @@ export class DcrFormSubmissionComponent {
       parameters.push(funeralHomeAddrCity);
     }
 
+    if(this.dcrForm.controls.funeralHome.controls.address.controls.state.value){
+      const funeralHomeAddrState = {
+        name: 'funeralHomeAddrState',
+        valueString: this.dcrForm.controls.funeralHome.controls.address.controls.state.value
+      };
+      parameters.push(funeralHomeAddrState);
+    }
+
     if(this.dcrForm.controls.funeralHome.controls.address.controls.zip.value){
       const funeralHomeAddrZip = {
         name: 'funeralHomeAddrZip',
         valueString: this.dcrForm.controls.funeralHome.controls.address.controls.zip.value
       };
       parameters.push(funeralHomeAddrZip);
+    }
+
+    if(this.dcrForm.controls.funeralHome.controls.address.controls.country.value){
+      const funeralHomeAddrCountry = {
+        name: 'funeralHomeAddrCountry',
+        valueString: this.dcrForm.controls.funeralHome.controls.address.controls.country.value
+      };
+      parameters.push(funeralHomeAddrCountry);
     }
 
     if(this.dcrForm.controls.funeralHome.controls.phone.value){
@@ -286,6 +306,14 @@ export class DcrFormSubmissionComponent {
       } else {
         parameters.push({name: 'dateOfDeath', valueDateTime: dateOfDeathStr});
       }
+    }
+
+    if(this.dcrForm.controls.deathInvestigation.controls.placeOfDeath.controls.placeOfDeathFacilityName.value){
+      const placeOfDeathFacilityName = {
+        name: 'placeOfDeathFacilityName',
+        valueString: this.dcrForm.controls.deathInvestigation.controls.placeOfDeath.controls.placeOfDeathFacilityName.value
+      };
+      parameters.push(placeOfDeathFacilityName);
     }
 
     let placeOfDeathObj = this.dcrForm.controls.deathInvestigation.controls.placeOfDeath.value;
@@ -341,6 +369,14 @@ export class DcrFormSubmissionComponent {
       parameters.push(placeOfDeathAddrZip);
     }
 
+    if(this.dcrForm.controls.deathInvestigation.controls.address.controls.country.value){
+      const placeOfDeathAddrZip = {
+        name: 'placeOfDeathAddrCountry',
+        valueString: this.dcrForm.controls.deathInvestigation.controls.address.controls.country.value
+      };
+      parameters.push(placeOfDeathAddrZip);
+    }
+
 
 
     //Decedent Info Section
@@ -366,6 +402,14 @@ export class DcrFormSubmissionComponent {
         valueString: this.dcrForm.controls.decedentInfo.controls.lastName.value
       };
       parameters.push(decedentLastName);
+    }
+
+    if(this.dcrForm.controls.decedentInfo.controls.decedentDateOfBirth.value){
+      const decedentDateOfBirth = {
+        name: 'decedentDateOfBirth',
+        valueString: this.getDateStr(this.dcrForm.controls.decedentInfo.controls.decedentDateOfBirth.value)
+      };
+      parameters.push(decedentDateOfBirth);
     }
 
     const decedentRaceCheck = this.dcrForm.controls.decedentInfo.controls.race.controls.raceCheck.value;

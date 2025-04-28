@@ -65,7 +65,19 @@
             </mat-form-field>
           </div>
         </div>
+
         <div formGroupName="placeOfDeath">
+          <div class="form-row">
+            <div class="form-col">
+              <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                <mat-label>Place of Death Facility Name</mat-label>
+                <input matInput type="string" formControlName="placeOfDeathFacilityName">
+                @if (dcrForm.controls.deathInvestigation.controls.placeOfDeath.controls.placeOfDeathFacilityName.invalid) {
+                  <mat-error>Facility Name is required</mat-error>
+                }
+              </mat-form-field>
+            </div>
+          </div>
           <div class="form-row">
             <div class="form-col">
 
@@ -94,18 +106,19 @@
 
             </div>
           </div>
-          <div class="form-row">
-            <div class="form-col">
-              <mat-form-field class="form-field" appearance="outline" floatLabel="always">
-                <mat-label>Other</mat-label>
-                <input matInput type="text" formControlName="description" required>
-                @if (dcrForm.controls.deathInvestigation.controls.placeOfDeath.hasError('placeOfDeathDescriptionRequired')) {
-                  <mat-error>Please enter location.</mat-error>
-                }
-              </mat-form-field>
-            </div>
+        </div>
+        <div class="form-row">
+          <div class="form-col">
+            <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+              <mat-label>Other</mat-label>
+              <input matInput type="text" formControlName="description" required>
+              @if (dcrForm.controls.deathInvestigation.controls.placeOfDeath.hasError('placeOfDeathDescriptionRequired')) {
+                <mat-error>Please enter location.</mat-error>
+              }
+            </mat-form-field>
           </div>
         </div>
+        <!--        </div>-->
 
 
         <!-- Address Form -->
@@ -147,6 +160,16 @@
                 <input matInput type="text" formControlName="zip">
               </mat-form-field>
             </div>
+          </div>
+          <div class="form-row">
+            <div class="form-col">
+              <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                <mat-label>Country</mat-label>
+                <input matInput type="text" formControlName="country">
+              </mat-form-field>
+            </div>
+            <div class="form-col"></div>
+            <div class="form-col"></div>
           </div>
         </div>
 
@@ -222,6 +245,20 @@
                 }
               </mat-form-field>
             </div>
+
+          </div>
+          <div class="form-row">
+            <div class="form-col">
+              <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+                <mat-label>Country</mat-label>
+                <input matInput type="text" formControlName="country">
+                @if (dcrForm.controls.funeralHome.controls.address.controls.country.invalid) {
+                  <mat-error>Country is required</mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <div class="form-col"></div>
+            <div class="form-col"></div>
           </div>
         </div>
 
@@ -282,6 +319,22 @@
           </div>
         </div>
 
+        <div class="row">
+          <div class="form-col">
+            <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+              <mat-label>Date of Birth</mat-label>
+              <input matInput [matDatepicker]="datepickerDob" formControlName="decedentDateOfBirth">
+              @if (dcrForm.controls.decedentInfo.controls.decedentDateOfBirth.invalid) {
+                <mat-error>Date of Birth is required</mat-error>
+              }
+              <mat-datepicker #datepickerDob/>
+              <mat-datepicker-toggle [for]="datepickerDob" matSuffix/>
+            </mat-form-field>
+          </div>
+          <div class="form-col"></div>
+          <div class="form-col"></div>
+        </div>
+
         <div class="form-row">
           <div class="form-col">
             <div formGroupName="race">
@@ -289,38 +342,38 @@
                 <div class="h2-label">
                   <mat-error class="info-icon">Race&#42; is required</mat-error>
                 </div>
-              }
-              @else if (dcrForm.controls.decedentInfo.controls.race.hasError('raceDescriptionRequired')) {
+              } @else if (dcrForm.controls.decedentInfo.controls.race.hasError('raceDescriptionRequired')) {
                 <div class="h2-label">
                   <mat-error>Race description is required</mat-error>
                 </div>
-              }
-              @else {
+              } @else {
                 <div class="h2-label flex-centered">Race&#42;
-                  <mat-icon class="info-icon" matTooltip="Based on US Core 5.0.1 and the 1997 OMB Race Categories">info</mat-icon>
+                  <mat-icon class="info-icon" matTooltip="Based on US Core 5.0.1 and the 1997 OMB Race Categories">
+                    info
+                  </mat-icon>
                 </div>
               }
 
-                @for (category of race?.['controls']?.['raceCheck']?.['controls']; track category; let i = $index) {
-                    <div>
-                    <mat-checkbox
-                      [formControl]="category"
-                      (change)="onRaceCategoryCheckboxChange($event)">
-                      {{ RACE_CATEGORIES.slice(0, 5)[i].display }}
-                    </mat-checkbox>
-                    </div>
+              @for (category of race?.['controls']?.['raceCheck']?.['controls']; track category; let i = $index) {
+                <div>
+                  <mat-checkbox
+                    [formControl]="category"
+                    (change)="onRaceCategoryCheckboxChange($event)">
+                    {{ RACE_CATEGORIES.slice(0, 5)[i].display }}
+                  </mat-checkbox>
+                </div>
 
+              }
+              <mat-radio-group formControlName="raceRadio"
+                               (change)="onRaceCategoryRadioChange($event)">
+                @for (raceCategory of [RACE_CATEGORIES[RACE_CATEGORIES.length - 1], RACE_CATEGORIES[RACE_CATEGORIES.length - 3]]; track raceCategory) {
+                  <div>
+                    <mat-radio-button [value]="raceCategory">
+                      {{ raceCategory.display }}
+                    </mat-radio-button>
+                  </div>
                 }
-                  <mat-radio-group formControlName="raceRadio"
-                                   (change)="onRaceCategoryRadioChange($event)">
-                    @for (raceCategory of [RACE_CATEGORIES[RACE_CATEGORIES.length -1], RACE_CATEGORIES[RACE_CATEGORIES.length -3]]; track raceCategory) {
-                      <div>
-                        <mat-radio-button [value]="raceCategory">
-                          {{ raceCategory.display }}
-                        </mat-radio-button>
-                      </div>
-                    }
-                  </mat-radio-group>
+              </mat-radio-group>
               <div class="form-row">
                 <div class="form-col">
                   <mat-form-field class="form-field" appearance="outline" floatLabel="always">
@@ -335,22 +388,22 @@
             </div>
           </div>
           <div class="form-col">
-              <mat-radio-group formControlName="ethnicity">
-                @if (dcrForm.controls.decedentInfo.controls.ethnicity.hasError('required')) {
-                  <div class="h2-label">
-                    <mat-error>Ethnicity&#42; is required</mat-error>
-                  </div>
-                } @else {
-                  <div class="h2-label">Ethnicity&#42;</div>
-                }
-                @for (ethnicGroup of ETHNICITY.slice(0, 2).concat(ETHNICITY.slice(3)); track ethnicGroup) {
-                  <div>
-                    <mat-radio-button class="example-radio-button" [value]="ethnicGroup">
-                      {{ ethnicGroup.display }}
-                    </mat-radio-button>
-                  </div>
-                }
-              </mat-radio-group>
+            <mat-radio-group formControlName="ethnicity">
+              @if (dcrForm.controls.decedentInfo.controls.ethnicity.hasError('required')) {
+                <div class="h2-label">
+                  <mat-error>Ethnicity&#42; is required</mat-error>
+                </div>
+              } @else {
+                <div class="h2-label">Ethnicity&#42;</div>
+              }
+              @for (ethnicGroup of ETHNICITY.slice(0, 2).concat(ETHNICITY.slice(3)); track ethnicGroup) {
+                <div>
+                  <mat-radio-button class="example-radio-button" [value]="ethnicGroup">
+                    {{ ethnicGroup.display }}
+                  </mat-radio-button>
+                </div>
+              }
+            </mat-radio-group>
           </div>
         </div>
       </div>
