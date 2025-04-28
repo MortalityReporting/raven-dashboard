@@ -67,6 +67,18 @@
         </div>
 
         <div formGroupName="placeOfDeath">
+          @if (dcrForm.controls.deathInvestigation.controls.placeOfDeath.hasError('placeOfDeathRequired')) {
+            <mat-error>
+              <div class="h2-label">Place of Death &#42; is required</div>
+            </mat-error>
+          } @else if (dcrForm.controls.deathInvestigation.controls.placeOfDeath.hasError('placeOfDeathDescriptionRequired')) {
+            <mat-error>
+              <div class="h2-label">Please fill the location for the place of death</div>
+            </mat-error>
+          } @else {
+            <div class="h2-label">Place of Death &#42;</div>
+          }
+
           <div class="form-row">
             <div class="form-col">
               <mat-form-field class="form-field" appearance="outline" floatLabel="always">
@@ -81,17 +93,6 @@
           <div class="form-row">
             <div class="form-col">
 
-              @if (dcrForm.controls.deathInvestigation.controls.placeOfDeath.hasError('placeOfDeathRequired')) {
-                <mat-error>
-                  <div class="h2-label">Place of Death &#42; is required</div>
-                </mat-error>
-              } @else if (dcrForm.controls.deathInvestigation.controls.placeOfDeath.hasError('placeOfDeathDescriptionRequired')) {
-                <mat-error>
-                  <div class="h2-label">Please fill the location for the place of death</div>
-                </mat-error>
-              } @else {
-                <div class="h2-label">Place of Death &#42;</div>
-              }
 
               <mat-radio-group formControlName="placeOfDeathRadio"
                                (change)="onRacePlaceOfDeathRadioChange($event);" class="iterative-container">
