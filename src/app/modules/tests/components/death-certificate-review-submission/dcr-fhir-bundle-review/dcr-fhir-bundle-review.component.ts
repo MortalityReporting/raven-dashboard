@@ -1,5 +1,6 @@
-import {Component, signal} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {DeathCertificateReviewService} from "../../../services/death-certificate-review.service";
+import {UtilsService} from "../../../../../service/utils.service";
 
 @Component({
   selector: 'app-dcr-fhir-bundle-review',
@@ -8,9 +9,13 @@ import {DeathCertificateReviewService} from "../../../services/death-certificate
   styleUrls: ['./dcr-fhir-bundle-review.component.scss', '../death-certificate-review-submission.component.scss']
 })
 export class DcrFhirBundleReviewComponent {
-  fhirBundle = signal(null);
 
-  constructor(private deathCertificateReviewService: DeathCertificateReviewService) {
-    this.fhirBundle = this.deathCertificateReviewService.fhirBundle();
+  deathCertificateReviewService = inject(DeathCertificateReviewService);
+  utilsService = inject(UtilsService);
+
+  onCopyToClipboard() {
+    this.utilsService.showSuccessMessage("Content copied to clipboard.")
   }
+
+  protected readonly JSON = JSON;
 }

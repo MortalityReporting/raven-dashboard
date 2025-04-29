@@ -29,7 +29,10 @@ export class DeathCertificateReviewService {
     const  httpOptions = {headers: httpHeaders}
     const resource =  { resourceType: "Parameters", parameter: data };
     return this.http.post(`${this.dcrFhirBundleUrl}`, resource, httpOptions).pipe(
-      tap((res: any) => {this.setFhirBundle(res)})
+      tap((res: any) => {
+        console.log(res)
+        this.setFhirBundle(res)
+      })
     );
   }
 
@@ -40,11 +43,7 @@ export class DeathCertificateReviewService {
 
     const  httpOptions = {headers: httpHeaders}
 
-    return this.http.post(`${formData.externalApiUrl}`, fhirBundle, httpOptions).pipe(
-      tap((res: any) => {
-        this.setFhirBundle(res)
-      })
-    );
+    return this.http.post(`${formData.externalApiUrl}`, fhirBundle, httpOptions);
   }
 
 

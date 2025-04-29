@@ -1,8 +1,12 @@
 <div class="resource-reviewer">
-  @if(fhirBundle){
-    <pre>{{ fhirBundle | json }}</pre>
+  @if (deathCertificateReviewService.fhirBundle()) {
+    <pre>{{ deathCertificateReviewService.fhirBundle() | json }}</pre>
   }
 </div>
 <div class="controls">
-  <button mat-raised-button>Copy Content</button>
+  <button mat-raised-button
+          [cdkCopyToClipboard]="JSON.stringify(deathCertificateReviewService.fhirBundle(), null, 2)"
+          (click)="onCopyToClipboard()">
+    Copy Content
+  </button>
 </div>

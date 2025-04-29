@@ -169,14 +169,6 @@ export class DcrFormSubmissionComponent {
     return {placeOfDeathRequired: true}; //Return error object if invalid
   }
 
-  // private placeOfDeathFacilityNameRequiredValidator(control: AbstractControl): ValidationErrors | null {
-  //   const value = control.value;
-  //   console.log(control)
-  //   if (value?.raceRadio?.display !== 'Other' || value?.description) {
-  //     return null;
-  //   }
-  //   return {placeOfDeathRequired: true}; //Return error object if invalid
-  // }
 
   private placeOfDeathDescriptionRequiredValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
