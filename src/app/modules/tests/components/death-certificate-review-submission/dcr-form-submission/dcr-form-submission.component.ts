@@ -33,6 +33,7 @@ export class DcrFormSubmissionComponent {
   readonly PLACE_OF_DEATH = Object.values(PLACE_OF_DEATH);
 
   placeOfDeath = new FormGroup({
+    placeOfDeathFacilityName: new FormControl('', [Validators.required]),
     placeOfDeathRadio: new FormControl(''),
     description: new FormControl({value: '', disabled: true}),
   });
@@ -49,6 +50,7 @@ export class DcrFormSubmissionComponent {
     city: new FormControl('', Validators.required),
     state: new FormControl('', Validators.required),
     zip: new FormControl('', Validators.required),
+    country: new FormControl('USA', Validators.required),
   });
 
   optionalAddress = new FormGroup({
