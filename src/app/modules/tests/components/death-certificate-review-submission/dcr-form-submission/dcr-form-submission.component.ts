@@ -33,7 +33,6 @@ export class DcrFormSubmissionComponent {
   readonly PLACE_OF_DEATH = Object.values(PLACE_OF_DEATH);
 
   placeOfDeath = new FormGroup({
-    placeOfDeathFacilityName: new FormControl('', [Validators.required]),
     placeOfDeathRadio: new FormControl(''),
     description: new FormControl({value: '', disabled: true}),
   });
@@ -314,10 +313,10 @@ export class DcrFormSubmissionComponent {
       }
     }
 
-    if(this.dcrForm.controls.deathInvestigation.controls.placeOfDeath.controls.placeOfDeathFacilityName.value){
+    if(this.dcrForm.controls.deathInvestigation.controls.placeOfDeathFacilityName.value){
       const placeOfDeathFacilityName = {
         name: 'placeOfDeathFacilityName',
-        valueString: this.dcrForm.controls.deathInvestigation.controls.placeOfDeath.controls.placeOfDeathFacilityName.value
+        valueString: this.dcrForm.controls.deathInvestigation.controls.placeOfDeathFacilityName.value
       };
       parameters.push(placeOfDeathFacilityName);
     }
