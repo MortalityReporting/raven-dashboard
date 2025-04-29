@@ -5,6 +5,7 @@
 </div>
 <div class="controls">
   <button mat-raised-button
+          [disabled]="!deathCertificateReviewService.fhirBundle()"
           [cdkCopyToClipboard]="JSON.stringify(deathCertificateReviewService.fhirBundle(), null, 2)"
           (click)="onCopyToClipboard()">
     Copy Content
