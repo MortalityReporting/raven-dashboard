@@ -109,11 +109,12 @@ export class DcrFormSubmissionComponent {
       this.deathCertificateReviewService.generateDcrFhirBundle(data).subscribe({
         next: result => {
           console.log(result);
+          this.utilService.showSuccessMessage("FHIR Bundle Generated Successfully!");
         },
         error: err => {
           this.errorResponse = err;
           console.error(err);
-          this.utilService.showErrorMessage(err.message);
+          this.utilService.showErrorMessage("Error Generating FHIR Bundle!");
         }
       })
     }
@@ -344,7 +345,7 @@ export class DcrFormSubmissionComponent {
 
     if(this.dcrForm.controls.deathInvestigation.controls.address.controls.city.value){
       const placeOfDeathAddrCity = {
-        name: 'placeOfDeathAddrLine2',
+        name: 'placeOfDeathAddressCity',
         valueString: this.dcrForm.controls.deathInvestigation.controls.address.controls.city.value
       };
       parameters.push(placeOfDeathAddrCity);

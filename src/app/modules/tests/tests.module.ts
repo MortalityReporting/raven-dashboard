@@ -71,6 +71,7 @@ import {MatTimepicker, MatTimepickerInput, MatTimepickerToggle} from "@angular/m
 import { DcrFormSubmissionComponent } from './components/death-certificate-review-submission/dcr-form-submission/dcr-form-submission.component';
 import { DcrFhirBundleReviewComponent } from './components/death-certificate-review-submission/dcr-fhir-bundle-review/dcr-fhir-bundle-review.component';
 import { DcrExternalApiBundleSubmission } from './components/death-certificate-review-submission/dcr-external-api-bundle-submission/dcr-external-api-bundle-submission.component';
+import { DcrErrorViewerComponent } from './components/death-certificate-review-submission/dcr-form-submission/dcr-error-viewer/dcr-error-viewer.component';
 
 @NgModule({
   declarations: [
@@ -97,6 +98,7 @@ import { DcrExternalApiBundleSubmission } from './components/death-certificate-r
     DcrFormSubmissionComponent,
     DcrFhirBundleReviewComponent,
     DcrExternalApiBundleSubmission,
+    DcrErrorViewerComponent,
   ],
   exports: [
     EdrsResultsStepComponent,
