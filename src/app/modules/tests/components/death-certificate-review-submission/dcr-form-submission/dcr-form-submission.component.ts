@@ -156,7 +156,7 @@ export class DcrFormSubmissionComponent {
 
   private raceDescriptionRequiredValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
-    if (value?.raceRadio?.display !== 'Other' || value?.description) {
+    if (!!value?.raceRadio && (value?.raceRadio?.display !== 'Other' || value?.description)) {
       return null;
     }
     return {raceDescriptionRequired: true}; //Return error object if invalid
@@ -164,7 +164,7 @@ export class DcrFormSubmissionComponent {
 
   private placeOfDeathRequiredValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
-    if (value?.raceRadio?.display !== 'Other' || value?.description) {
+    if (!!value?.placeOfDeathRadio) {
       return null;
     }
     return {placeOfDeathRequired: true}; //Return error object if invalid
@@ -173,7 +173,7 @@ export class DcrFormSubmissionComponent {
 
   private placeOfDeathDescriptionRequiredValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
-    if (value?.placeOfDeathRadio !== 'Other' || value?.description) {
+    if (value?.placeOfDeathRadio.display !== 'Other' || value?.description) {
       return null;
     }
     return {placeOfDeathDescriptionRequired: true}; //Return error object if invalid

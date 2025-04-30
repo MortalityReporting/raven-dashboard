@@ -26,15 +26,16 @@ export class DcrExternalApiBundleSubmission {
   });
 
   onSubmit() {
+    this.errorResponse = null;
     if(this.dcrSubmitToApiForm.valid) {
       if(this.deathCertificateReviewService.fhirBundle()) {
         this.isFhirBundleMissing = false;
         this.deathCertificateReviewService.submitToExternalApi(this.dcrSubmitToApiForm.value, this.deathCertificateReviewService.fhirBundle()).subscribe({
           next: (value) => {
-            this.utilsService.showSuccessMessage("FHIR Bundle was submitted successfully!.");
+            this.utilsService.showSuccessMessage("FHIR Bundle was submitted successfully!");
           },
           error: (err) => {
-            console.log(err);
+            console.error(err);
             this.errorResponse = err;
             this.utilsService.showErrorMessage("FHIR Bundle submission failed!");
           }
@@ -50,6 +51,7 @@ export class DcrExternalApiBundleSubmission {
     this.dcrSubmitToApiForm.reset();
     this.formDirective.resetForm();
     this.isFhirBundleMissing = false;
+    this.errorResponse = null;
   }
 
 
