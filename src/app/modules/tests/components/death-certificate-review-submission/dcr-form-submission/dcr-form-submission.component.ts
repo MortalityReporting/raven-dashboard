@@ -101,7 +101,11 @@ export class DcrFormSubmissionComponent {
 
   onSubmit() {
     this.constructValidatorsAndValidate();
+    if(!this.dcrForm.controls.deathInvestigation.controls.placeOfDeathFacilityName.value){
+      this.dcrForm.controls.deathInvestigation.controls.placeOfDeathFacilityName.patchValue('N/A')
+    }
     const data = this.constructParametersResource();
+
     this.errorResponse = null;
     if (this.dcrForm.invalid) {
       this.utilService.showErrorMessage("Invalid form detected. Please fill all required fields");
