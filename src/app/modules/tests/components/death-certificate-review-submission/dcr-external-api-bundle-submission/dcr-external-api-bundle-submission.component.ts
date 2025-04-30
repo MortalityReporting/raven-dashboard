@@ -12,6 +12,7 @@ import {UtilsService} from "../../../../../service/utils.service";
 export class DcrExternalApiBundleSubmission {
 
   @ViewChild('formDirective') formDirective: FormGroupDirective;
+  errorResponse: any;
 
   deathCertificateReviewService = inject(DeathCertificateReviewService);
   utilsService = inject(UtilsService)
@@ -34,6 +35,7 @@ export class DcrExternalApiBundleSubmission {
           },
           error: (err) => {
             console.log(err);
+            this.errorResponse = err;
             this.utilsService.showErrorMessage("FHIR Bundle submission failed!");
           }
         })

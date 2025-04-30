@@ -42,3 +42,15 @@
     </div>
   </div>
 </form>
+@if (errorResponse) {
+  <mat-card >
+    <mat-card-header>
+      <div class="section-title">
+        API Submission Error
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <app-dcr-error-viewer [errorResponse]=errorResponse></app-dcr-error-viewer>
+    </mat-card-content>
+  </mat-card>
+}
