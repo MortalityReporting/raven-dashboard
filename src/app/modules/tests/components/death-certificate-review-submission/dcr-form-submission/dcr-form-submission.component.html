@@ -414,10 +414,10 @@
     <button mat-raised-button type="button" (click)="onFormClear()">
       Clear
     </button>
-    <button mat-raised-button type=submit
-            class="margin-left-md"
-            [style.background-color]="config.backgroundColor"
-            [style.color]="'white'">
+    <button class="margin-left-md"
+      mat-raised-button aria-label="Generate DCR FHIR Bundle" color="primary" type="submit"
+      [style.background-color]="config.backgroundColor"
+      [style.color]="'white'">
       Generate DCR FHIR Bundle
     </button>
   </div>

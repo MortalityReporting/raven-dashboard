@@ -91,7 +91,7 @@ export class DcrFormSubmissionComponent {
   });
 
   constructor(
-    @Inject('importConfig') public config: ModuleHeaderConfig,
+    @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
     private deathCertificateReviewService: DeathCertificateReviewService,
     private fb: FormBuilder,
     private utilService: UtilsService
