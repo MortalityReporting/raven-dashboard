@@ -1,0 +1,20 @@
+.json-error{
+  overflow: scroll;
+  height: 400px;
+  padding: 16px;
+  color: darkred;
+}
+
+.human-readable{
+  min-height: 400px;
+}
+
+.error-label{
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.error-data{
+  color: darkred;
+  overflow-wrap: break-word;
+}

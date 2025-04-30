@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-death-certificate-review-submission',
@@ -6,6 +6,5 @@ import { Component } from '@angular/core';
   templateUrl: './death-certificate-review-submission.component.html',
   styleUrl: './death-certificate-review-submission.component.scss'
 })
-export class DeathCertificateReviewSubmissionComponent {
 
-}
+export class DeathCertificateReviewSubmissionComponent {}

@@ -1,0 +1,36 @@
+<mat-tab-group  mat-stretch-tabs="false">
+  <mat-tab label="Human Readbale Format" >
+    <div class="human-readable">
+      <div class="margin-md">
+        <div class="error-label">
+          Status:
+        </div>
+        <div class="error-data">
+          {{ errorResponse()?.status }}
+        </div>
+      </div>
+      <div class="margin-md">
+        <div class="error-label">
+          Message:
+        </div>
+        <div class="error-data">
+          {{ errorResponse()?.message }}
+        </div>
+      </div>
+
+      <div class="margin-md">
+        <div class="error-label">
+          FHIR Error Message:
+        </div>
+        <div class="error-data">
+          {{ errorResponse()?.error?.text?.div }}
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="JSON Format">
+    <div class="json-error">
+      <pre>{{ errorResponse() | json }}</pre>
+    </div>
+  </mat-tab>
+</mat-tab-group>

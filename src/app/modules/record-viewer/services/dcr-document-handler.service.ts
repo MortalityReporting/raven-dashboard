@@ -17,6 +17,13 @@ import {MdiToEdrsDocumentHandlerService} from "./mdi-to-edrs-document-handler.se
 import {PatientNameReturn} from "../../fhir-util/services/fhir-helper.service";
 import {AppConstants} from "../../../providers/app-constants";
 
+export interface Parameters{
+  name: string;
+  valueString?: string;
+  valueDateTime?: string;
+  valueCode?: string;
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -164,7 +171,7 @@ export class DcrDocumentHandlerService {
     const recordId = compositionResource.id || this.defaultString;
 
     let organizationResource = this.bundleHelper.findResourceByProfileName(documentBundleList, this.fhirProfiles.VRDR.Org_Funeral_Home);
-    const funeralHomeName = organizationResource.name || this.defaultString;
+    const funeralHomeName = organizationResource?.name || this.defaultString;
 
       // TODO uncomment when we know how to use gender/sex fields per the CDC guidelines. Note that gender should come from Sex at Death
     //return {firstName: firstName, lastName: lastName, deathDate: deathDate, gender: gender, recordId: recordId, funeralHomeName: funeralHomeName};
@@ -184,5 +191,10 @@ export class DcrDocumentHandlerService {
     const signedByName = this.fhirHelper.getOfficialName(signedByPractitionerResource, PatientNameReturn.fullname) || this.defaultString;
     const signedBy: SignedBy = {resource: signedByPractitionerResource, name: signedByName};
     return {resource: documentBundleList, signatureStr: signatureStr, dateTime: dateTime, fileFormat: fileFormat, signedBy: signedBy};
+  }
+
+  submitForm(data: Parameters[]):Observable<any> {
+    const parametersResource = { resourceType: "Parameters", parameter: data };
+    return this.fhirClient.create('Parameters' , parametersResource)
   }
 }

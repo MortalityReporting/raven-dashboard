@@ -1,1 +1,46 @@
-<p>death-certificate-review-submission works!</p>
+<div class="generic-component-wrapper">
+  <div class="generic-component-content">
+
+    <mat-card class="margin-bottom-lg">
+      <mat-card-header>
+        <mat-card-title>
+          Step 1 - Complete Form and Generate DCR FHIR Bundle
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <app-dcr-form-submission></app-dcr-form-submission>
+      </mat-card-content>
+
+    </mat-card>
+
+
+    <mat-card class="margin-bottom-lg">
+      <mat-card-header>
+        <mat-card-title>
+          Step 2 - Review DCR FHIR bundle
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+
+        <app-dcr-fhir-bundle-review></app-dcr-fhir-bundle-review>
+      </mat-card-content>
+    </mat-card>
+
+
+    <mat-card class="margin-bottom-lg">
+      <mat-card-header>
+        <mat-card-title>
+          Step 3 - Enter Submission Details
+        </mat-card-title>
+        <mat-card-subtitle>
+          Note: Only basic authorization is currently supported
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <app-dcr-external-api-bundle-submission></app-dcr-external-api-bundle-submission>
+      </mat-card-content>
+    </mat-card>
+
+
+  </div>
+</div>
