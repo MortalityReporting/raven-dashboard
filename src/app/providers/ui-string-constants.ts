@@ -144,8 +144,8 @@ export class UiStringConstants {
     },
     {
       name: 'dcrSubmission',
-      display: 'Death Certificate Review Submission',
-      description: "Death Certificate Review Submission description",
+      display: 'Cremation Clearance Request Submission',
+      description: "Cremation Clearance, also known as \"cremation authorization,\" is often required by many states and jurisdictions. This is done to ensure that physical evidence is not needed for any further inquiries into the death. Our CCR workflow simulator provides an example of a form-based CCR request process, demonstrating how a funeral home submits a request to a case management system.",
       status: TestStatusCodes.notStarted,
       route: 'dcr-submission'
     },

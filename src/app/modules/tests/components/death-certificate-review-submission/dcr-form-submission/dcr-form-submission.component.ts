@@ -115,6 +115,7 @@ export class DcrFormSubmissionComponent {
           this.errorResponse = err;
           console.error(err);
           this.utilService.showErrorMessage("Error Generating FHIR Bundle!");
+          this.deathCertificateReviewService.setFhirBundle(null);
         }
       })
     }
@@ -156,7 +157,7 @@ export class DcrFormSubmissionComponent {
 
   private raceDescriptionRequiredValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
-    if (!!value?.raceRadio && (value?.raceRadio?.display !== 'Other' || value?.description)) {
+    if (value?.raceRadio?.display !== 'Other' || value?.description) {
       return null;
     }
     return {raceDescriptionRequired: true}; //Return error object if invalid
@@ -436,6 +437,8 @@ export class DcrFormSubmissionComponent {
         parameters.push(decedentRace);
       }
     }
+
+
     if(this.dcrForm.controls.decedentInfo.controls.ethnicity.value?.['display']){
       const decedentEthnicity = {
         name: 'decedentEthnicity',
