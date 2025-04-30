@@ -114,7 +114,7 @@
             <mat-form-field class="form-field" appearance="outline" floatLabel="always">
               <mat-label>Place of Death Facility Name</mat-label>
               <input matInput type="string" formControlName="placeOfDeathFacilityName">
-              <mat-hint>If death did not occur in a facility, please enter N/A and complete the address section below.
+              <mat-hint>If death did not occur in a facility, please complete the address section below.
               </mat-hint>
               @if (dcrForm.controls.deathInvestigation.controls.placeOfDeathFacilityName.invalid) {
                 <mat-error>Place of Death is required</mat-error>
@@ -414,10 +414,10 @@
     <button mat-raised-button type="button" (click)="onFormClear()">
       Clear
     </button>
-    <button mat-raised-button type=submit
-            class="margin-left-md"
-            [style.background-color]="config.backgroundColor"
-            [style.color]="'white'">
+    <button class="margin-left-md"
+      mat-raised-button aria-label="Generate DCR FHIR Bundle" color="primary" type="submit"
+      [style.background-color]="config.backgroundColor"
+      [style.color]="'white'">
       Generate DCR FHIR Bundle
     </button>
   </div>

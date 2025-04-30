@@ -1,7 +1,8 @@
-import {Component, inject, ViewChild} from '@angular/core';
+import {Component, Inject, inject, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, FormGroupDirective, Validators} from "@angular/forms";
 import {DeathCertificateReviewService} from "../../../services/death-certificate-review.service";
 import {UtilsService} from "../../../../../service/utils.service";
+import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
 
 @Component({
   selector: 'app-dcr-external-api-bundle-submission',
@@ -10,6 +11,10 @@ import {UtilsService} from "../../../../../service/utils.service";
   styleUrls: ['./dcr-external-api-bundle-submission.component.scss', '../death-certificate-review-submission.component.scss']
 })
 export class DcrExternalApiBundleSubmission {
+
+  constructor(
+    @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig
+  ) {}
 
   @ViewChild('formDirective') formDirective: FormGroupDirective;
   errorResponse: any;

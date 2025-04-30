@@ -37,8 +37,13 @@
   </div>
   <div class="form-row">
     <div class="controls">
-      <button mat-raised-button>Submit</button>
-      <button class="margin-left-md" mat-raised-button type=button (click)="onClearFormData()">Clear Form Data</button>
+      <button class="margin-left-md"
+              mat-raised-button aria-label="Generate DCR FHIR Bundle" color="primary" type="submit"
+              [style.background-color]="config.backgroundColor"
+              [style.color]="'white'">
+        Submit to External API
+      </button>
+      <button class="margin-left-md" mat-raised-button type=button (click)="onClearFormData()">Clear Form</button>
     </div>
   </div>
 </form>
