@@ -390,13 +390,7 @@
           </div>
           <div class="form-col">
             <mat-radio-group formControlName="ethnicity">
-              @if (dcrForm.controls.decedentInfo.controls.ethnicity.hasError('required')) {
-                <div class="h2-label">
-                  <mat-error>Ethnicity&#42; is required</mat-error>
-                </div>
-              } @else {
-                <div class="h2-label">Ethnicity&#42;</div>
-              }
+              <div class="h2-label">Ethnicity</div>
               @for (ethnicGroup of ETHNICITY.slice(0, 2).concat(ETHNICITY.slice(3)); track ethnicGroup) {
                 <div>
                   <mat-radio-button class="example-radio-button" [value]="ethnicGroup">
@@ -415,18 +409,18 @@
       Clear
     </button>
     <button class="margin-left-md"
-      mat-raised-button aria-label="Generate DCR FHIR Bundle" color="primary" type="submit"
-      [style.background-color]="config.backgroundColor"
-      [style.color]="'white'">
+            mat-raised-button aria-label="Generate DCR FHIR Bundle" color="primary" type="submit"
+            [style.background-color]="config.backgroundColor"
+            [style.color]="'white'">
       Generate DCR FHIR Bundle
     </button>
   </div>
 </form>
 @if (errorResponse) {
-  <mat-card >
+  <mat-card>
     <mat-card-header>
       <div class="section-title">
-      Bundle Generation Error
+        Bundle Generation Error
       </div>
     </mat-card-header>
     <mat-card-content>
