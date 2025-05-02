@@ -185,7 +185,6 @@ export class DcrFormSubmissionComponent {
   }
 
   private constructValidatorsAndValidate() {
-    this.dcrForm.controls.decedentInfo.controls.ethnicity.setValidators([Validators.required]);
     this.dcrForm.controls.decedentInfo.controls.ethnicity.updateValueAndValidity();
 
     this.dcrForm.controls.decedentInfo.controls.race.setValidators([this.raceValidator, this.raceDescriptionRequiredValidator]);
@@ -350,7 +349,7 @@ export class DcrFormSubmissionComponent {
 
     if(this.dcrForm.controls.deathInvestigation.controls.address.controls.city.value){
       const placeOfDeathAddrCity = {
-        name: 'placeOfDeathAddressCity',
+        name: 'placeOfDeathAddrCity',
         valueString: this.dcrForm.controls.deathInvestigation.controls.address.controls.city.value
       };
       parameters.push(placeOfDeathAddrCity);
