@@ -64,6 +64,14 @@ import { ValidationComponent } from './components/validation/validation.componen
 import { EstablishConnectionComponent } from './components/search-edrs-bluejay/establish-connection/establish-connection.component';
 import { SearchEdrsBluejayComponent } from './components/search-edrs-bluejay/search-edrs-bluejay.component';
 import { DeathCertificateReviewSubmissionComponent } from './components/death-certificate-review-submission/death-certificate-review-submission.component';
+import {MatListItem, MatSelectionList} from "@angular/material/list";
+import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
+import {provideNativeDateAdapter} from "@angular/material/core";
+import {MatTimepicker, MatTimepickerInput, MatTimepickerToggle} from "@angular/material/timepicker";
+import { DcrFormSubmissionComponent } from './components/death-certificate-review-submission/dcr-form-submission/dcr-form-submission.component';
+import { DcrFhirBundleReviewComponent } from './components/death-certificate-review-submission/dcr-fhir-bundle-review/dcr-fhir-bundle-review.component';
+import { DcrExternalApiBundleSubmission } from './components/death-certificate-review-submission/dcr-external-api-bundle-submission/dcr-external-api-bundle-submission.component';
+import { DcrErrorViewerComponent } from './components/death-certificate-review-submission/dcr-form-submission/dcr-error-viewer/dcr-error-viewer.component';
 
 @NgModule({
   declarations: [
@@ -87,6 +95,10 @@ import { DeathCertificateReviewSubmissionComponent } from './components/death-ce
     EstablishConnectionComponent,
     SearchEdrsBluejayComponent,
     DeathCertificateReviewSubmissionComponent,
+    DcrFormSubmissionComponent,
+    DcrFhirBundleReviewComponent,
+    DcrExternalApiBundleSubmission,
+    DcrErrorViewerComponent,
   ],
   exports: [
     EdrsResultsStepComponent,
@@ -119,6 +131,14 @@ import { DeathCertificateReviewSubmissionComponent } from './components/death-ce
     MatDividerModule,
     ClipboardModule,
     NgxHisbLoggerModule,
+    MatSelectionList,
+    MatListItem,
+    MatDatepicker,
+    MatDatepickerToggle,
+    MatDatepickerInput,
+    MatTimepickerInput,
+    MatTimepicker,
+    MatTimepickerToggle,
   ],
 })
 export class TestsModule {
@@ -126,6 +146,7 @@ export class TestsModule {
     return {
       ngModule: TestsModule,
       providers: [
+        provideNativeDateAdapter(),
         {
           provide: 'env',
           useValue: environment

@@ -128,7 +128,7 @@ const routes: Routes = [
       {
         path: 'dcr-submission',
         component: DeathCertificateReviewSubmissionComponent,
-        data: {moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Death Certificate ReviewSubmission"}
+        data: {moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Cremation Clearance Request Submission"}
       },
     ]
   },
