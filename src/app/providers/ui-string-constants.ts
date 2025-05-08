@@ -149,6 +149,13 @@ export class UiStringConstants {
       status: TestStatusCodes.notStarted,
       route: 'dcr-submission'
     },
+    {
+      name: 'toxRecordSubmission',
+      display: 'Toxicology Record Submission',
+      description: "Toxicology record submission description",
+      status: TestStatusCodes.notStarted,
+      route: 'tox-submission'
+    },
   ];
 
 }
