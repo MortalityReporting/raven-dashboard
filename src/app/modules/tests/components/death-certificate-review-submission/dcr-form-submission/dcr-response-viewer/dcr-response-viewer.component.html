@@ -1,0 +1,68 @@
+<mat-tab-group mat-stretch-tabs="false">
+  @if (errorResponse()) {
+    <mat-tab label="Human Readbale Format">
+      <div class="human-readable">
+        <div class="margin-md">
+          <div class="label">
+            Status:
+          </div>
+          <div class="error-data">
+            {{ errorResponse()?.status }}
+          </div>
+        </div>
+        <div class="margin-md">
+          <div class="label">
+            Message:
+          </div>
+          <div class="error-data">
+            {{ errorResponse()?.message }}
+          </div>
+        </div>
+
+        <div class="margin-md">
+          <div class="label">
+            FHIR Error Message:
+          </div>
+          <div class="error-data">
+            {{ errorResponse()?.error?.text?.div }}
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="JSON Format">
+      <div class="json-error">
+        <pre>{{ errorResponse() | json }}</pre>
+      </div>
+    </mat-tab>
+  }
+
+  @if (successResponse()) {
+    <mat-tab label="Human Readbale Format">
+      <div class="human-readable">
+        <div class="margin-md">
+          <div class="success-label">
+            Status:
+          </div>
+          <div class="success-data">
+            {{ successResponse()?.status }}
+          </div>
+        </div>
+        <div class="margin-md">
+          <div class="success-label">
+            Message:
+          </div>
+          <div class="success-data">
+            {{ errorResponse()?.message }}
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab>JSON Response</mat-tab>
+    <mat-tab label="JSON Format">
+      <div class="json-success">
+        <pre>{{ errorResponse() | json }}</pre>
+      </div>
+    </mat-tab>
+  }
+
+</mat-tab-group>

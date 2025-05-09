@@ -47,6 +47,11 @@ export class DeathCertificateReviewService {
         value: param.paramValue
       }));
 
+    const headerObject: Record<string, string> = {};
+    httpHeaders.keys().forEach(key => {
+      headerObject[key] = httpHeaders.get(key) || '';
+    });
+
     httpHeaders = httpHeaders.append('Authorization', basicAuthString);
     if(transformedParameters.length > 0) {
       transformedParameters.forEach(param => {

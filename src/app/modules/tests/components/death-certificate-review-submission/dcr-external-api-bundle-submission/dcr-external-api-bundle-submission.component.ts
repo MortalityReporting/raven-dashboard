@@ -20,13 +20,15 @@ export class DcrExternalApiBundleSubmission implements OnInit{
 
   constructor(
     @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {}
 
   dcrSubmitToApiForm: FormGroup;
 
   @ViewChild('formDirective') formDirective: FormGroupDirective;
   errorResponse: any;
+  successResponse: any;
+  requestHeaders: any;
 
   deathCertificateReviewService = inject(DeathCertificateReviewService);
   utilsService = inject(UtilsService)
@@ -37,12 +39,14 @@ export class DcrExternalApiBundleSubmission implements OnInit{
     // Transform parameters to the format required by your API if needed
     const formValue = this.dcrSubmitToApiForm.value;
     this.errorResponse = null;
+    this.successResponse = null;
     if(this.dcrSubmitToApiForm.valid) {
       if(this.deathCertificateReviewService.fhirBundle()) {
         this.isFhirBundleMissing = false;
         this.deathCertificateReviewService.submitToExternalApi(formValue, this.deathCertificateReviewService.fhirBundle()).subscribe({
           next: (value) => {
             this.utilsService.showSuccessMessage("FHIR Bundle was submitted successfully!");
+            this.successResponse = value;
           },
           error: (err) => {
             console.error(err);

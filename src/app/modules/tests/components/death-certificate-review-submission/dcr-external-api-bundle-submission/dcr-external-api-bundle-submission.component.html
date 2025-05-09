@@ -84,7 +84,7 @@
   </div>
 
 </form>
-@if (errorResponse) {
+@if (errorResponse || successResponse) {
   <mat-card >
     <mat-card-header>
       <div class="section-title">
@@ -92,7 +92,14 @@
       </div>
     </mat-card-header>
     <mat-card-content>
-      <app-dcr-error-viewer [errorResponse]=errorResponse></app-dcr-error-viewer>
+      <app-dcr-response-viewer
+        [errorResponse]=errorResponse
+        [successResponse]=successResponse
+      >
+      </app-dcr-response-viewer>
     </mat-card-content>
   </mat-card>
 }
+
+
+
