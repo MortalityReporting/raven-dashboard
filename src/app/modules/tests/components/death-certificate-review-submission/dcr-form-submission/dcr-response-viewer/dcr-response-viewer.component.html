@@ -34,12 +34,22 @@
         <pre>{{ errorResponse() | json }}</pre>
       </div>
     </mat-tab>
+    <mat-tab label="Request Header">
+      <div class="json-error">
+        <pre>{{ requestHeader() | json }}</pre>
+      </div>
+    </mat-tab>
   }
 
   @if (successResponse()) {
     <mat-tab label="JSON Format">
       <div class="json-success">
         <pre>{{ successResponse() | json }}</pre>
+      </div>
+    </mat-tab>
+    <mat-tab label="Request Header">
+      <div class="json-success">
+        <pre>{{ requestHeader() | json }}</pre>
       </div>
     </mat-tab>
   }

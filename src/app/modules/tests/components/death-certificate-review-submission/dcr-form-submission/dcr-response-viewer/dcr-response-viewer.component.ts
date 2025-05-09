@@ -1,4 +1,4 @@
-import {Component, input, Input} from '@angular/core';
+import {Component, input} from '@angular/core';
 
 @Component({
   selector: 'app-dcr-response-viewer',
@@ -9,4 +9,5 @@ import {Component, input, Input} from '@angular/core';
 export class DcrResponseViewerComponent {
     errorResponse= input<any>();
     successResponse= input<any>();
+    requestHeader = input<any>();
 }

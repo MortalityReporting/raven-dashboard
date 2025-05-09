@@ -14,6 +14,12 @@ export class DeathCertificateReviewService {
     this._fhirBundle.set(bundle);
   }
 
+  private _requestHeader = signal<any>(null);
+  public readonly requestHeader = this._requestHeader.asReadonly();
+  public setRequestHeader(data: any) {
+    this._requestHeader.set(data);
+  }
+
   dcrFhirBundleUrl = '';
 
   constructor(private http: HttpClient, private configService: ConfigService) {
@@ -28,9 +34,16 @@ export class DeathCertificateReviewService {
 
     const  httpOptions = {headers: httpHeaders}
     const resource =  { resourceType: "Parameters", parameter: data };
+
+    const headerObject: Record<string, string> = {};
+    httpHeaders.keys().forEach(key => {
+      headerObject[key] = httpHeaders.get(key) || '';
+    });
+    this.setRequestHeader(headerObject);
+    console.log(headerObject)
+
     return this.http.post(`${this.dcrFhirBundleUrl}`, resource, httpOptions).pipe(
       tap((res: any) => {
-        console.log(res)
         this.setFhirBundle(res)
       })
     );
@@ -47,10 +60,6 @@ export class DeathCertificateReviewService {
         value: param.paramValue
       }));
 
-    const headerObject: Record<string, string> = {};
-    httpHeaders.keys().forEach(key => {
-      headerObject[key] = httpHeaders.get(key) || '';
-    });
 
     httpHeaders = httpHeaders.append('Authorization', basicAuthString);
     if(transformedParameters.length > 0) {
@@ -58,10 +67,13 @@ export class DeathCertificateReviewService {
         httpHeaders = httpHeaders.append(param.key, param.value);
       })
     }
+    const headerObject: Record<string, string> = {};
+    httpHeaders.keys().forEach(key => {
+      headerObject[key] = httpHeaders.get(key) || '';
+    });
+    this.setRequestHeader(headerObject);
 
-    const  httpOptions = {headers: httpHeaders}
-
-    return this.http.post(`${formData.externalApiUrl}`, fhirBundle, httpOptions);
+    return this.http.post(`${formData.externalApiUrl}`, fhirBundle)
   }
 
 
