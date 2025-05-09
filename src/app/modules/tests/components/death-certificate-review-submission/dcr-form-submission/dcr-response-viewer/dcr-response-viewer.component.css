@@ -9,7 +9,7 @@
   min-height: 400px;
 }
 
-.error-label{
+.label{
   font-weight: bold;
   margin-right: 8px;
 }
@@ -17,4 +17,16 @@
 .error-data{
   color: darkred;
   overflow-wrap: break-word;
+}
+
+.success-data{
+  color: darkgreen;
+  overflow-wrap: break-word;
+}
+
+.json-success{
+  overflow: scroll;
+  height: 400px;
+  padding: 16px;
+  color: darkgreen;
 }

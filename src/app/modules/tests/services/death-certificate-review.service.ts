@@ -14,6 +14,12 @@ export class DeathCertificateReviewService {
     this._fhirBundle.set(bundle);
   }
 
+  private _requestHeader = signal<any>(null);
+  public readonly requestHeader = this._requestHeader.asReadonly();
+  public setRequestHeader(data: any) {
+    this._requestHeader.set(data);
+  }
+
   dcrFhirBundleUrl = '';
 
   constructor(private http: HttpClient, private configService: ConfigService) {
@@ -28,9 +34,16 @@ export class DeathCertificateReviewService {
 
     const  httpOptions = {headers: httpHeaders}
     const resource =  { resourceType: "Parameters", parameter: data };
+
+    const headerObject: Record<string, string> = {};
+    httpHeaders.keys().forEach(key => {
+      headerObject[key] = httpHeaders.get(key) || '';
+    });
+    this.setRequestHeader(headerObject);
+    console.log(headerObject)
+
     return this.http.post(`${this.dcrFhirBundleUrl}`, resource, httpOptions).pipe(
       tap((res: any) => {
-        console.log(res)
         this.setFhirBundle(res)
       })
     );
@@ -39,11 +52,28 @@ export class DeathCertificateReviewService {
   submitToExternalApi(formData: any, fhirBundle: any): Observable<any> {
     let httpHeaders = new HttpHeaders().set('Content-Type', 'application/fhir+json');
     const basicAuthString = 'Basic ' + btoa(`${formData.username}:${formData.password}`);
-    httpHeaders = httpHeaders.set('Authorization', basicAuthString);
 
-    const  httpOptions = {headers: httpHeaders}
+    const transformedParameters = formData.parameters
+      .filter((param: {paramKey: string, paramValue: string}) => param.paramKey?.trim())
+      .map((param: {paramKey: string, paramValue: string}) => ({
+        key: param.paramKey,
+        value: param.paramValue
+      }));
 
-    return this.http.post(`${formData.externalApiUrl}`, fhirBundle, httpOptions);
+
+    httpHeaders = httpHeaders.append('Authorization', basicAuthString);
+    if(transformedParameters.length > 0) {
+      transformedParameters.forEach(param => {
+        httpHeaders = httpHeaders.append(param.key, param.value);
+      })
+    }
+    const headerObject: Record<string, string> = {};
+    httpHeaders.keys().forEach(key => {
+      headerObject[key] = httpHeaders.get(key) || '';
+    });
+    this.setRequestHeader(headerObject);
+
+    return this.http.post(`${formData.externalApiUrl}`, fhirBundle)
   }
 
 
