@@ -39,7 +39,20 @@ export class DeathCertificateReviewService {
   submitToExternalApi(formData: any, fhirBundle: any): Observable<any> {
     let httpHeaders = new HttpHeaders().set('Content-Type', 'application/fhir+json');
     const basicAuthString = 'Basic ' + btoa(`${formData.username}:${formData.password}`);
-    httpHeaders = httpHeaders.set('Authorization', basicAuthString);
+
+    const transformedParameters = formData.parameters
+      .filter((param: {paramKey: string, paramValue: string}) => param.paramKey?.trim())
+      .map((param: {paramKey: string, paramValue: string}) => ({
+        key: param.paramKey,
+        value: param.paramValue
+      }));
+
+    httpHeaders = httpHeaders.append('Authorization', basicAuthString);
+    if(transformedParameters.length > 0) {
+      transformedParameters.forEach(param => {
+        httpHeaders = httpHeaders.append(param.key, param.value);
+      })
+    }
 
     const  httpOptions = {headers: httpHeaders}
 

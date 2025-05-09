@@ -4,7 +4,7 @@
       <mat-form-field class="form-field" appearance="outline" floatLabel="always">
         <mat-label>Submission URL</mat-label>
         <input matInput type="text" formControlName="externalApiUrl">
-        @if (dcrSubmitToApiForm.controls.externalApiUrl.invalid) {
+        @if (dcrSubmitToApiForm.controls?.['externalApiUrl']?.invalid) {
           <mat-error>URL is required</mat-error>
         }
       </mat-form-field>
@@ -15,7 +15,7 @@
       <mat-form-field class="form-field" appearance="outline" floatLabel="always">
         <mat-label>Username</mat-label>
         <input matInput type="text" formControlName="username">
-        @if (dcrSubmitToApiForm.controls.username.invalid) {
+        @if (dcrSubmitToApiForm.controls?.['username']?.invalid) {
           <mat-error>Username is required</mat-error>
         }
       </mat-form-field>
@@ -24,19 +24,55 @@
       <mat-form-field class="form-field" appearance="outline" floatLabel="always">
         <mat-label>Password</mat-label>
         <input matInput type="password" formControlName="password">
-        @if (dcrSubmitToApiForm.controls.password.invalid) {
+        @if (dcrSubmitToApiForm.controls?.['password']?.invalid) {
           <mat-error>Password is required</mat-error>
         }
       </mat-form-field>
     </div>
+  </div>
+  <div class="parameters-section">
+    <div class="h2-label">Additional Header Parameters</div>
+    <div class="hint">This section is filled if the death did not occur in a facility and is optional.</div>
+    <div formArrayName="parameters">
+      @for(itemGroup of parameterControls; track itemGroup; let index = $index) {
+        <div class="form-row no-margin" [formGroupName]="index">
+          <div class="form-col">
+            <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+              <mat-label>Key</mat-label>
+              <input matInput type="text" formControlName="paramKey">
+            </mat-form-field>
+          </div>
+          <div class="form-col">
+            <mat-form-field class="form-field" appearance="outline" floatLabel="always">
+              <mat-label>Value</mat-label>
+              <input matInput type="text" formControlName="paramValue">
+            </mat-form-field>
+          </div>
+          <button
+            type="button"
+            mat-icon-button
+            color="warn"
+            aria-label="Remove parameter"
+            (click)="removeParameter(index)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="form-row">
+    <button class="margin-left-sm" mat-raised-button type="button" color="success" (click)="addParameter()">
+      <mat-icon>add</mat-icon>
+      Add Parameter
+    </button>
   </div>
   <div class="form-row">
     @if(isFhirBundleMissing){
       <mat-error class="margin-left-md">Please generate FHIR Bundle prior to submission.</mat-error>
     }
   </div>
-  <div class="form-row">
-    <div class="controls">
+  <div class="controls">
       <button class="margin-left-md"
               mat-raised-button aria-label="Generate DCR FHIR Bundle" color="primary" type="submit"
               [style.background-color]="config.backgroundColor"
@@ -44,8 +80,9 @@
         Submit to External API
       </button>
       <button class="margin-left-md" mat-raised-button type=button (click)="onClearFormData()">Clear Form</button>
-    </div>
+
   </div>
+
 </form>
 @if (errorResponse) {
   <mat-card >
