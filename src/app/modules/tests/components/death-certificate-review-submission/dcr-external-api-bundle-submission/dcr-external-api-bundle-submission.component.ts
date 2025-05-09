@@ -45,6 +45,7 @@ export class DcrExternalApiBundleSubmission implements OnInit{
         this.isFhirBundleMissing = false;
         this.deathCertificateReviewService.submitToExternalApi(formValue, this.deathCertificateReviewService.fhirBundle()).subscribe({
           next: (value) => {
+            console.log(value);
             this.utilsService.showSuccessMessage("FHIR Bundle was submitted successfully!");
             this.successResponse = value;
           },
