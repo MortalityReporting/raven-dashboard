@@ -71,9 +71,11 @@ export class DeathCertificateReviewService {
     httpHeaders.keys().forEach(key => {
       headerObject[key] = httpHeaders.get(key) || '';
     });
+
+    const  httpOptions = {headers: httpHeaders}
     this.setRequestHeader(headerObject);
 
-    return this.http.post(`${formData.externalApiUrl}`, fhirBundle)
+    return this.http.post(`${formData.externalApiUrl}`, fhirBundle, httpOptions)
   }
 
 
