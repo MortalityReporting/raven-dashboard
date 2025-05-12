@@ -181,7 +181,7 @@ export class DcrFormSubmissionComponent {
 
   private placeOfDeathDescriptionRequiredValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
-    if (value?.placeOfDeathRadio.display !== 'Other' || value?.description) {
+    if (value?.placeOfDeathRadio?.display !== 'Other' || value?.description) {
       return null;
     }
     return {placeOfDeathDescriptionRequired: true}; //Return error object if invalid
