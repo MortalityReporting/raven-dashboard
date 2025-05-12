@@ -32,7 +32,7 @@
   </div>
   <div class="parameters-section">
     <div class="h2-label">Additional Header Parameters</div>
-    <div class="hint">This section is filled if the death did not occur in a facility and is optional.</div>
+    <div class="hint">Enter key values header parameters here.</div>
     <div formArrayName="parameters">
       @for(itemGroup of parameterControls; track itemGroup; let index = $index) {
         <div class="form-row no-margin" [formGroupName]="index">
