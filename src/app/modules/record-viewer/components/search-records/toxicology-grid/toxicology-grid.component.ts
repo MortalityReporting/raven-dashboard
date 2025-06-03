@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Inject, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Inject, OnInit, output, Output, signal, ViewChild} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
 import {ActivatedRoute, Router} from "@angular/router";
 import {forkJoin, map, mergeMap} from "rxjs";
@@ -23,17 +23,20 @@ export class ToxicologyGridComponent implements OnInit {
   toxGridDtoList: ToxicologyGridDto[];
   isLoading = true;
   showSystems = false;
+  selectedToxRecord = signal<ToxicologyGridDto>(null)
 
   @ViewChild(MatSort) sort: MatSort;
 
   @ViewChild('input') input: ElementRef;
 
   @Output() serverErrorEventEmitter = new EventEmitter();
+  onToxRecordSelected = output<ToxicologyGridDto>();
+
+
 
   constructor(
     private route: ActivatedRoute,
     private toxicologyHandler: ToxToMdiMessageHandlerService,
-    private router: Router,
     @Inject('appConfig') public appConfig: AppConfiguration,
     @Inject('config') public config: ModuleHeaderConfig
   ) {
@@ -41,12 +44,13 @@ export class ToxicologyGridComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = true;
+    this.selectedToxRecord.set(null);
 
     // TODO: Add logic to skip invalid records missing either a subject or tox tracking number.
     this.toxicologyHandler.getToxicologyRecords().pipe(
       mergeMap((diagnosticReportList: any[]) =>
         forkJoin(
-          diagnosticReportList.map((diagnosticReport: any, i) =>
+          diagnosticReportList.map((diagnosticReport: any) =>
             this.toxicologyHandler.getSubject(diagnosticReport).pipe(
               map((subject: any) => {
                 let diagnosticReportDto = this.mapToDto(diagnosticReport, subject);
@@ -93,7 +97,8 @@ export class ToxicologyGridComponent implements OnInit {
   }
 
   onCaseSelected(row: any) {
-    this.router.navigate([`${this.appConfig.modules['recordViewer'].route}/tox/`, row.toxcasesystem + "|" + row.toxcasenumber]);
+    this.selectedToxRecord.set(row);
+    this.onToxRecordSelected.emit(row);
   }
 
   applyFilter(event: Event) {

@@ -71,6 +71,7 @@
     [style.background-color]="!row.error ? null : '#FFD6D6'"
     [matTooltip]="row.error ? 'Error in record, please see logs.' : null"
     matTooltipPosition="before"
+    [ngClass]="{'selected-table-row' : (row.toxcasenumber == selectedToxRecord()?.toxcasenumber && row.mdicasenumber == selectedToxRecord()?.mdicasenumber) } "
     >
   </tr>
   <tr class="mat-row" *matNoDataRow>

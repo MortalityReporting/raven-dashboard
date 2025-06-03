@@ -72,9 +72,14 @@ import { DcrFormSubmissionComponent } from './components/death-certificate-revie
 import { DcrFhirBundleReviewComponent } from './components/death-certificate-review-submission/dcr-fhir-bundle-review/dcr-fhir-bundle-review.component';
 import { DcrExternalApiBundleSubmission } from './components/death-certificate-review-submission/dcr-external-api-bundle-submission/dcr-external-api-bundle-submission.component';
 import { DcrResponseViewerComponent } from './components/death-certificate-review-submission/dcr-form-submission/dcr-response-viewer/dcr-response-viewer.component';
-import { DcrErrorViewerComponent } from './components/death-certificate-review-submission/dcr-form-submission/dcr-error-viewer/dcr-error-viewer.component';
 import { ToxicologyRecordSubmissionComponent } from './components/toxicology-record-submission/toxicology-record-submission.component';
 import {RecordViewerModule} from "../record-viewer/record-viewer.module";
+import {
+  ToxRecordDetailsComponent
+} from "./components/toxicology-record-submission/tox-record-details/tox-record-details.component";
+import {
+  SimpleJsonViewerComponent
+} from "./components/toxicology-record-submission/simple-json-viewer/simple-json-viewer.component";
 
 @NgModule({
   declarations: [
@@ -102,8 +107,8 @@ import {RecordViewerModule} from "../record-viewer/record-viewer.module";
     DcrFhirBundleReviewComponent,
     DcrExternalApiBundleSubmission,
     DcrResponseViewerComponent,
-    DcrErrorViewerComponent,
     ToxicologyRecordSubmissionComponent,
+    ToxRecordDetailsComponent
   ],
   exports: [
     EdrsResultsStepComponent,
@@ -145,6 +150,7 @@ import {RecordViewerModule} from "../record-viewer/record-viewer.module";
     MatTimepicker,
     MatTimepickerToggle,
     RecordViewerModule,
+    SimpleJsonViewerComponent,
   ],
 })
 export class TestsModule {

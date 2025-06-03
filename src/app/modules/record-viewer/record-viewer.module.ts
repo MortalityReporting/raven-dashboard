@@ -94,7 +94,9 @@ import { DcrViewerSignatureComponent } from './components/dcr-viewer/dcr-viewer-
     ],
   exports: [
     ToxToMdiViewerGridSectionComponent,
-    ToxicologyGridComponent
+    ToxicologyGridComponent,
+    ToxToMdiViewerMdiCaseComponent,
+    ToxToMdiViewerContentComponent
   ],
     imports: [
         CommonModule,

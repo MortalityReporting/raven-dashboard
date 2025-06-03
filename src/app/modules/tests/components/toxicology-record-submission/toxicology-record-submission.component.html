@@ -1,6 +1,43 @@
 <div class="generic-component-wrapper">
   <div class="generic-component-content">
-    <record-viewer-toxicology-grid>
-    </record-viewer-toxicology-grid>
+
+    <mat-card class="margin-bottom-lg">
+      <mat-card-header>
+        <mat-card-title>
+          Step 1 - Select Toxicology Record
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <record-viewer-toxicology-grid (onToxRecordSelected)="onToxRecordSelected($event)">
+        </record-viewer-toxicology-grid>
+      </mat-card-content>
+    </mat-card>
+
+
+    <mat-card class="margin-bottom-lg">
+      <mat-card-header>
+        <mat-card-title>
+          Step 2 - Review Record
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        @if(selectedToxRecord()){
+          <tests-tox-record-details [selectedToxRecord]="selectedToxRecord()"></tests-tox-record-details>
+        }
+      </mat-card-content>
+    </mat-card>
+
+
+    <mat-card class="margin-bottom-lg">
+      <mat-card-header>
+        <mat-card-title>
+          Step 3 - Enter Submission Details
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <app-dcr-external-api-bundle-submission></app-dcr-external-api-bundle-submission>
+      </mat-card-content>
+    </mat-card>
+
   </div>
 </div>

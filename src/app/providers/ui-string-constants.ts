@@ -136,13 +136,6 @@ export class UiStringConstants {
       route: 'search-edrs-bluejay'
     },
     {
-      name: 'updateEdrs',
-      display: 'Update EDRS',
-      description: "Updated EDRS module description",
-      status: TestStatusCodes.notStarted,
-      route: 'update-edrs'
-    },
-    {
       name: 'dcrSubmission',
       display: 'Cremation Clearance Request Submission',
       description: "Cremation Clearance, also known as \"cremation authorization,\" is often required by many states and jurisdictions. This is done to ensure that physical evidence is not needed for any further inquiries into the death. Our CCR workflow simulator provides an example of a form-based CCR request process, demonstrating how a funeral home submits a request to a case management system.",
@@ -155,6 +148,13 @@ export class UiStringConstants {
       description: "Toxicology record submission description",
       status: TestStatusCodes.notStarted,
       route: 'tox-submission'
+    },
+    {
+      name: 'updateEdrs',
+      display: 'Update EDRS',
+      description: "Updated EDRS module description",
+      status: TestStatusCodes.notStarted,
+      route: 'update-edrs'
     },
   ];
 

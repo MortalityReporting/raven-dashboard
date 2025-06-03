@@ -44,3 +44,13 @@ textarea {
 .filter-width{
   min-width: 30%;
 }
+
+.selected-table-row {
+  background: #E2ECEE;
+
+  .mat-mdc-cell {
+    background: #E2ECEE;
+    border-top: 1px solid #335963;
+    border-bottom: 1px solid #335963;
+  }
+}
