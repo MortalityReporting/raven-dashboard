@@ -71,6 +71,7 @@ import {MatTimepicker, MatTimepickerInput, MatTimepickerToggle} from "@angular/m
 import { DcrFormSubmissionComponent } from './components/death-certificate-review-submission/dcr-form-submission/dcr-form-submission.component';
 import { DcrFhirBundleReviewComponent } from './components/death-certificate-review-submission/dcr-fhir-bundle-review/dcr-fhir-bundle-review.component';
 import { DcrExternalApiBundleSubmission } from './components/death-certificate-review-submission/dcr-external-api-bundle-submission/dcr-external-api-bundle-submission.component';
+import { DcrResponseViewerComponent } from './components/death-certificate-review-submission/dcr-form-submission/dcr-response-viewer/dcr-response-viewer.component';
 import { DcrErrorViewerComponent } from './components/death-certificate-review-submission/dcr-form-submission/dcr-error-viewer/dcr-error-viewer.component';
 import { ToxicologyRecordSubmissionComponent } from './components/toxicology-record-submission/toxicology-record-submission.component';
 import {RecordViewerModule} from "../record-viewer/record-viewer.module";
@@ -100,6 +101,7 @@ import {RecordViewerModule} from "../record-viewer/record-viewer.module";
     DcrFormSubmissionComponent,
     DcrFhirBundleReviewComponent,
     DcrExternalApiBundleSubmission,
+    DcrResponseViewerComponent,
     DcrErrorViewerComponent,
     ToxicologyRecordSubmissionComponent,
   ],

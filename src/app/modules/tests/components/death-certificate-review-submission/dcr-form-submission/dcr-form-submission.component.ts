@@ -31,6 +31,7 @@ export class DcrFormSubmissionComponent {
   readonly ETHNICITY = Object.values(ETHNICITY);
   readonly RACE_CATEGORIES = Object.values(RACE_CATEGORIES);
   readonly PLACE_OF_DEATH = Object.values(PLACE_OF_DEATH);
+  requestHeader: any;
 
   placeOfDeath = new FormGroup({
     placeOfDeathRadio: new FormControl(''),
@@ -90,6 +91,7 @@ export class DcrFormSubmissionComponent {
     })
   });
 
+
   constructor(
     @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
     private deathCertificateReviewService: DeathCertificateReviewService,
@@ -107,17 +109,18 @@ export class DcrFormSubmissionComponent {
     const data = this.constructParametersResource();
 
     this.errorResponse = null;
+    this.deathCertificateReviewService.setRequestHeader(null);
     if (this.dcrForm.invalid) {
       this.utilService.showErrorMessage("Invalid form detected. Please fill all required fields");
     } else {
       this.deathCertificateReviewService.generateDcrFhirBundle(data).subscribe({
         next: result => {
-          console.log(result);
           this.utilService.showSuccessMessage("FHIR Bundle Generated Successfully!");
+          this.requestHeader = this.deathCertificateReviewService.requestHeader();
         },
         error: err => {
           this.errorResponse = err;
-          console.error(err);
+          this.requestHeader = this.deathCertificateReviewService.requestHeader();
           this.utilService.showErrorMessage("Error Generating FHIR Bundle!");
           this.deathCertificateReviewService.setFhirBundle(null);
         }
@@ -178,7 +181,7 @@ export class DcrFormSubmissionComponent {
 
   private placeOfDeathDescriptionRequiredValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
-    if (value?.placeOfDeathRadio.display !== 'Other' || value?.description) {
+    if (value?.placeOfDeathRadio?.display !== 'Other' || value?.description) {
       return null;
     }
     return {placeOfDeathDescriptionRequired: true}; //Return error object if invalid
