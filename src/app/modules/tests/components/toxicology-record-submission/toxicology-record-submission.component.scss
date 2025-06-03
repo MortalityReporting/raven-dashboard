@@ -1,0 +1,29 @@
+.loading {
+  margin-top: 1rem;
+  font-family: monospace;
+}
+
+.loading:after {
+  content: "...";
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  animation: ellipsis-dot 1s infinite .3s;
+  animation-fill-mode: forwards;
+  width: 2em;
+}
+
+@keyframes ellipsis-dot {
+  25% {
+    content: "";
+  }
+  50% {
+    content: ".";
+  }
+  75% {
+    content: "..";
+  }
+  100% {
+    content: "...";
+  }
+}

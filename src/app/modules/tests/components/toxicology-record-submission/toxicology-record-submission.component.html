@@ -8,7 +8,7 @@
         </mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <record-viewer-toxicology-grid (onToxRecordSelected)="onToxRecordSelected($event)">
+        <record-viewer-toxicology-grid [currentModule]="'workflowSimulator'" (onToxRecordSelected)="onToxRecordSelected($event)">
         </record-viewer-toxicology-grid>
       </mat-card-content>
     </mat-card>
@@ -21,9 +21,18 @@
         </mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        @if(selectedToxRecord()){
-          <tests-tox-record-details [selectedToxRecord]="selectedToxRecord()"></tests-tox-record-details>
+        @if(!isLoadingData){
+          @if(selectedToxRecord()){
+            <tests-tox-record-details [selectedToxRecord]="selectedToxRecord()"></tests-tox-record-details>
+          }
+          @else {
+            <em>No record Selected. Select a record from the grid above.</em>
+          }
         }
+        @else {
+          <div class="loading">Loading Toxicology Record Details</div>
+        }
+
       </mat-card-content>
     </mat-card>
 

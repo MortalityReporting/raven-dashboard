@@ -1,13 +1,11 @@
-import {Component, ElementRef, EventEmitter, Inject, OnInit, output, Output, signal, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Inject, OnInit, output, input, Output, signal, ViewChild} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
-import {ActivatedRoute, Router} from "@angular/router";
 import {forkJoin, map, mergeMap} from "rxjs";
 import {ToxicologyGridDto} from "../../../../../model/toxicology.grid.dto";
 import {MatTableDataSource} from "@angular/material/table";
 import {AppConfiguration} from "../../../../../providers/app-configuration";
 import {ToxToMdiMessageHandlerService} from "../../../services/tox-to-mdi-message-handler.service";
 import {TrackingNumberType} from "../../../../fhir-mdi-library";
-import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
 
 @Component({
     selector: 'record-viewer-toxicology-grid',
@@ -16,14 +14,16 @@ import {ModuleHeaderConfig} from "../../../../../providers/module-header-config"
     standalone: false
 })
 export class ToxicologyGridComponent implements OnInit {
-
+  currentModule = input('recordViewer');
+  selectedToxRecord = signal<ToxicologyGridDto>(null);
 
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['lastName', 'reportdate', 'toxcasenumber', 'toxcasesystem', 'mdicasenumber', 'mdicasesystem'];
   toxGridDtoList: ToxicologyGridDto[];
   isLoading = true;
   showSystems = false;
-  selectedToxRecord = signal<ToxicologyGridDto>(null)
+
+  appConfiguration: AppConfiguration = AppConfiguration.config;
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -35,10 +35,7 @@ export class ToxicologyGridComponent implements OnInit {
 
 
   constructor(
-    private route: ActivatedRoute,
     private toxicologyHandler: ToxToMdiMessageHandlerService,
-    @Inject('appConfig') public appConfig: AppConfiguration,
-    @Inject('config') public config: ModuleHeaderConfig
   ) {
   }
 

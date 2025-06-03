@@ -12,8 +12,11 @@ import {AppConfiguration} from "../../../../../providers/app-configuration";
     standalone: false
 })
 export class ToxToMdiViewerContentComponent implements OnInit {
+  currentModule = input('recordViewer');
+  collapseAllSections = input<boolean>(false);
+  appConfiguration: AppConfiguration = AppConfiguration.config;
+
   @Input() toxToMdiRecord: ToxToMdiRecord;
-  collapseAllSections = input<boolean>(false)
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
   idStateList = [
