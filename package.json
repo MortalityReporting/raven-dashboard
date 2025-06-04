@@ -22,7 +22,7 @@
     "@angular/router": "^19.0.4",
     "@auth0/auth0-angular": "^2.1.0",
     "diff": "^5.1.0",
-    "jspdf": "^2.5.1",
+    "jspdf": "^2.5.2",
     "jspdf-autotable": "^3.6.0",
     "jszip": "^3.10.1",
     "ngx-fhir-validator": "github:HISB-Libraries/ngx-fhir-validator",
