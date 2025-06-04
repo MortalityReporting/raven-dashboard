@@ -1,8 +1,9 @@
-import {Component, Inject, signal} from '@angular/core';
+import {Component, inject, Inject, signal} from '@angular/core';
 import {AppConfiguration} from "../../../../providers/app-configuration";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {ToxicologyGridDto} from "../../../../model/toxicology.grid.dto";
 import {ToxToMdiMessageHandlerService} from "../../../record-viewer";
+import {ExternalApiSubmissionService} from "../../services/external-api-submission.service";
 
 @Component({
   selector: 'test-toxicology-record-submission',
@@ -12,6 +13,8 @@ import {ToxToMdiMessageHandlerService} from "../../../record-viewer";
 })
 export class ToxicologyRecordSubmissionComponent{
   selectedToxRecord = signal<any>(null);
+  externalApiSubmissionService = inject(ExternalApiSubmissionService);
+
   constructor(
     @Inject('appConfig') public appConfig: AppConfiguration,
     @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
@@ -26,11 +29,13 @@ export class ToxicologyRecordSubmissionComponent{
 
   private getToxRecordDetails(toxRecordDto: ToxicologyGridDto) {
     this.isLoadingData = true;
+    this.externalApiSubmissionService.setJsonRecord(null);
     this.toxicologyHandler.getRecord(toxRecordDto.toxcasenumber).subscribe({
       next: record => {
         this.isLoadingData = false;
         if(record?.messageBundle){
           this.selectedToxRecord.set(record);
+          this.externalApiSubmissionService.setJsonRecord(record);
         }
         else {
           console.warn("No message bundle found")
