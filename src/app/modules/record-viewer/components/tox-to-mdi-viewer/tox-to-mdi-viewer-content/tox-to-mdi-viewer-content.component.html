@@ -1,6 +1,6 @@
 
 <div class="section-button-wrapper">
-  <button class="margin-right-md" mat-raised-button (click)="onOpenAll()"
+  <button class="margin-right-sm" mat-raised-button (click)="onOpenAll()"
           [style.background-color]="appConfiguration?.modules[currentModule()]?.color"   [style.color]="appConfig.contrastColor">
     <mat-icon>expand_more</mat-icon>
     Expand All Sections
@@ -20,7 +20,7 @@
       <div class="grid-row">
         <div class="grid-col-1">
           @if (toxToMdiRecord) {
-            <record-viewer-tox-to-mdi-viewer-mdi-case [toxSummary]="toxToMdiRecord?.toxSummary"></record-viewer-tox-to-mdi-viewer-mdi-case>
+            <record-viewer-tox-to-mdi-viewer-mdi-case [currentModule]="currentModule()" [toxSummary]="toxToMdiRecord?.toxSummary"></record-viewer-tox-to-mdi-viewer-mdi-case>
           }
         </div>
       </div>
