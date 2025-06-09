@@ -11,10 +11,10 @@
     </button>
   }
 
-  @if (auth.user$ | async; as user) {
+  @if (currentUser()) {
     <div>
       <img
-        [src]="user?.picture ? user.picture : '/assets/portrait_placeholder.png'"
+        [src]="currentUser()?.picture ? currentUser().picture : '/assets/portrait_placeholder.png'"
         referrerpolicy="no-referrer"
         class="profile-image"
         [matMenuTriggerFor]="userMenu">
@@ -22,13 +22,13 @@
         <div mat-menu-item>
           <div class="user-card">
             <img
-              [src]="user.picture"
+              [src]="currentUser().picture"
               referrerpolicy="no-referrer"
               class="profile-image"
               >
             <div class="details">
-              <div class="name">{{user.name}}</div>
-              <div class="email">{{user.email}}</div>
+              <div class="name">{{currentUser().name}}</div>
+              <div class="email">{{currentUser().email}}</div>
             </div>
           </div>
         </div>

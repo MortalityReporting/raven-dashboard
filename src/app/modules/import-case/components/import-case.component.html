@@ -23,7 +23,7 @@
             }
             @if (selectedInputOption == inputOptions[1]) {
               <app-import-case-connectathon-template
-                [fileTemplates]="fileTemplates$ | async"
+                [fileTemplates]="fileTemplate"
               ></app-import-case-connectathon-template>
             }
           </mat-card-content>
@@ -34,7 +34,7 @@
           <mat-card-content>
             <div style="font-size: large" class="margin-bottom-sm">Import Templates</div>
             <mat-divider></mat-divider>
-            @for (template of fileTemplates$ | async; track template) {
+            @for (template of fileTemplate; track template) {
               <div class="margin-top-md">
                 <app-file-template [fileTemplate]="template"></app-file-template>
               </div>
