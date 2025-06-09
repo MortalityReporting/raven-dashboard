@@ -23,7 +23,7 @@
     "@auth0/auth0-angular": "^2.2.3",
     "diff": "^5.1.0",
     "jspdf": "^3.0.0",
-    "jspdf-autotable": "^3.6.0",
+    "jspdf-autotable": "^5.0.2",
     "jszip": "^3.10.1",
     "ngx-fhir-validator": "github:HISB-Libraries/ngx-fhir-validator",
     "ngx-hisb-common-ui": "github:HISB-Libraries/ngx-hisb-common-ui",
