@@ -1,10 +1,9 @@
 import {Component, signal} from '@angular/core';
-import {map, Observable, of, skipWhile, tap} from "rxjs";
+import {Observable, skipWhile} from "rxjs";
 import {UserProfile} from "../../models/user-profile";
 import {UserProfileManagerService} from "../../services/user-profile-manager.service";
 import {AuthService, User} from "@auth0/auth0-angular";
 import {environment as env} from "../../../../../environments/environment";
-import {toSignal} from "@angular/core/rxjs-interop";
 
 @Component({
     selector: 'app-user-header',
