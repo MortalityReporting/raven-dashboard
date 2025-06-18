@@ -10,7 +10,7 @@
   </mat-tab>
   <mat-tab label="JSON">
     <div class="margin-top-md">
-      <app-simple-json-viewer [selectedToxRecord]="selectedToxRecord()"></app-simple-json-viewer>
+      <app-simple-json-viewer [messageBundle]="selectedToxRecord()?.messageBundle"></app-simple-json-viewer>
     </div>
   </mat-tab>
 </mat-tab-group>

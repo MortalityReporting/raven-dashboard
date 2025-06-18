@@ -10,5 +10,5 @@ import {JsonPipe} from "@angular/common";
   styleUrl: './simple-json-viewer.component.scss'
 })
 export class SimpleJsonViewerComponent {
-  selectedToxRecord = input<any>(null)
+  messageBundle = input<any>(null)
 }

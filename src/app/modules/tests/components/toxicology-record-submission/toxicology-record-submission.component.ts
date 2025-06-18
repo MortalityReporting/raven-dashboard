@@ -35,7 +35,7 @@ export class ToxicologyRecordSubmissionComponent{
         this.isLoadingData = false;
         if(record?.messageBundle){
           this.selectedToxRecord.set(record);
-          this.externalApiSubmissionService.setJsonRecord(record);
+          this.externalApiSubmissionService.setJsonRecord(record.messageBundle);
         }
         else {
           console.warn("No message bundle found")
