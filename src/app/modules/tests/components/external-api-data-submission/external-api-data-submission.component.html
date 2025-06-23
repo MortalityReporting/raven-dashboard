@@ -1,10 +1,10 @@
-<form [formGroup]="dcrSubmitToApiForm" (submit)="onSubmit()" #formDirective="ngForm">
+<form [formGroup]="submitToApiForm" (submit)="onSubmit()" #formDirective="ngForm">
   <div class="form-row">
     <div class="form-col">
       <mat-form-field class="form-field" appearance="outline" floatLabel="always">
         <mat-label>Submission URL</mat-label>
         <input matInput type="text" formControlName="externalApiUrl">
-        @if (dcrSubmitToApiForm.controls?.['externalApiUrl']?.invalid) {
+        @if (submitToApiForm.controls?.['externalApiUrl']?.invalid) {
           <mat-error>URL is required</mat-error>
         }
       </mat-form-field>
@@ -15,7 +15,7 @@
       <mat-form-field class="form-field" appearance="outline" floatLabel="always">
         <mat-label>Username</mat-label>
         <input matInput type="text" formControlName="username">
-        @if (dcrSubmitToApiForm.controls?.['username']?.invalid) {
+        @if (submitToApiForm.controls?.['username']?.invalid) {
           <mat-error>Username is required</mat-error>
         }
       </mat-form-field>
@@ -24,7 +24,7 @@
       <mat-form-field class="form-field" appearance="outline" floatLabel="always">
         <mat-label>Password</mat-label>
         <input matInput type="password" formControlName="password">
-        @if (dcrSubmitToApiForm.controls?.['password']?.invalid) {
+        @if (submitToApiForm.controls?.['password']?.invalid) {
           <mat-error>Password is required</mat-error>
         }
       </mat-form-field>
@@ -92,12 +92,12 @@
       </div>
     </mat-card-header>
     <mat-card-content>
-      <app-dcr-response-viewer
+      <app-response-viewer
         [errorResponse]=errorResponse
         [successResponse]=successResponse
         [requestHeader]="requestHeader"
       >
-      </app-dcr-response-viewer>
+      </app-response-viewer>
     </mat-card-content>
   </mat-card>
 }

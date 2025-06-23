@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, Inject, input, Input, OnInit} from '@angular/core';
 import { ToxSummary } from "../../../models/tox.summary";
 import { ModuleHeaderConfig } from "../../../../../providers/module-header-config";
 import { AppConfiguration } from "../../../../../providers/app-configuration";
@@ -12,8 +12,9 @@ import { ToxToMdiMessageHandlerService } from "../../../services/tox-to-mdi-mess
 })
 export class ToxToMdiViewerMdiCaseComponent implements OnInit {
   @Input() toxSummary: ToxSummary;
+  currentModule = input('recordViewer');
   relatedCaseAvailable = false;
-
+  appConfiguration: AppConfiguration = AppConfiguration.config;
   constructor(
     private toxHandler: ToxToMdiMessageHandlerService,
     @Inject('config') public config: ModuleHeaderConfig,

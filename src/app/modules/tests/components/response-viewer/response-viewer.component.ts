@@ -1,12 +1,12 @@
 import {Component, input} from '@angular/core';
 
 @Component({
-  selector: 'app-dcr-response-viewer',
+  selector: 'app-response-viewer',
   standalone: false,
-  templateUrl: './dcr-response-viewer.component.html',
-  styleUrl: './dcr-response-viewer.component.css'
+  templateUrl: './response-viewer.component.html',
+  styleUrl: './response-viewer.component.css'
 })
-export class DcrResponseViewerComponent {
+export class ResponseViewerComponent {
     errorResponse= input<any>();
     successResponse= input<any>();
     requestHeader = input<any>();

@@ -35,6 +35,9 @@ import {DcrViewerComponent} from "./modules/record-viewer/components/dcr-viewer/
 import {
   DeathCertificateReviewSubmissionComponent
 } from "./modules/tests/components/death-certificate-review-submission/death-certificate-review-submission.component";
+import {
+  ToxicologyRecordSubmissionComponent
+} from "./modules/tests/components/toxicology-record-submission/toxicology-record-submission.component";
 
 
 const routes: Routes = [
@@ -129,6 +132,11 @@ const routes: Routes = [
         path: 'dcr-submission',
         component: DeathCertificateReviewSubmissionComponent,
         data: {moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Cremation Clearance Request Submission"}
+      },
+      {
+        path: 'tox-submission',
+        component: ToxicologyRecordSubmissionComponent,
+        data: {moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: "Toxicology Record Submission"}
       },
     ]
   },

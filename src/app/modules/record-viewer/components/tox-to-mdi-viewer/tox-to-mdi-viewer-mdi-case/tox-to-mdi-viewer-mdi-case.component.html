@@ -3,14 +3,17 @@
     MDI Case Number:
   </div>
   <div class="mdi-case-number-value" appSetFhirExplorer [resource]="toxSummary.diagnosticReportResource">
-    {{toxSummary?.mdiCaseNumber || "No MDI Tracking Number Found"}}
+    {{ toxSummary?.mdiCaseNumber || "No MDI Tracking Number Found" }}
   </div>
-  <div class="mdi-case-number-open-related">
-    @if (relatedCaseAvailable) {
-      <button mat-raised-button color="accent" [routerLink]="'/' + appConfig.modules['recordViewer'].route + '/mdi/' + relatedCaseAvailable"
-        aria-label="Open Related MDI Document">
-        Open Related MDI Document
-        <mat-icon aria-hidden="true">open_in_browser</mat-icon></button>
+  @if(this.currentModule() == 'recordViewer'){
+    <div class="mdi-case-number-open-related">
+      @if (relatedCaseAvailable) {
+        <button mat-raised-button color="accent"
+                [routerLink]="'/' + appConfig.modules['recordViewer'].route + '/mdi/' + relatedCaseAvailable"
+                aria-label="Open Related MDI Document">
+          Open Related MDI Document
+          <mat-icon aria-hidden="true">open_in_browser</mat-icon>
+        </button>
       }
       @if (!relatedCaseAvailable) {
         <button mat-raised-button color="accent" disabled>
@@ -19,4 +22,5 @@
         </button>
       }
     </div>
-  </div>
+  }
+</div>

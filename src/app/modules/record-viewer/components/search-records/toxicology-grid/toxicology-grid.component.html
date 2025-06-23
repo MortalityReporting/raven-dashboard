@@ -5,7 +5,7 @@
   </mat-form-field>
 
   <button mat-raised-button class="primary-color-button margin-left-md" (click)="onClearFilters()"
-          [style.background-color]="config.backgroundColor" [style.color]="'white'">
+          [style.background-color]="appConfiguration?.modules[currentModule()]?.color" [style.color]="'white'">
     Clear Filters
   </button>
 </div>
@@ -71,17 +71,14 @@
     [style.background-color]="!row.error ? null : '#FFD6D6'"
     [matTooltip]="row.error ? 'Error in record, please see logs.' : null"
     matTooltipPosition="before"
+    [ngClass]="{'selected-table-row' : (row.toxcasenumber == selectedToxRecord()?.toxcasenumber && row.mdicasenumber == selectedToxRecord()?.mdicasenumber) } "
     >
   </tr>
   <tr class="mat-row" *matNoDataRow>
     <td class="mat-cell" [colSpan]="displayedColumns.length">
       @if (!isLoading) {
         No results found.
-      } @else {
-        <span class="inline-spinner-wrapper">
-          <mat-spinner [diameter]="72" customSpinner [spinnerColor]="config.backgroundColor"></mat-spinner>
-        </span>
-      }</td>
+      }
   </tr>
 
 </table>

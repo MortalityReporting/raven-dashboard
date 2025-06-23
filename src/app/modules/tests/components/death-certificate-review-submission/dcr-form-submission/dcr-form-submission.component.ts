@@ -1,4 +1,4 @@
-import {Component, Inject, output, ViewChild} from '@angular/core';
+import {Component, inject, Inject, output, ViewChild} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -15,6 +15,7 @@ import {MatRadioChange} from "@angular/material/radio";
 import {ETHNICITY, PLACE_OF_DEATH, RACE_CATEGORIES} from "../../../providers/module-constants"
 import {DeathCertificateReviewService} from "../../../services/death-certificate-review.service";
 import {UtilsService} from "../../../../../service/utils.service";
+import {ExternalApiSubmissionService} from "../../../services/external-api-submission.service";
 
 @Component({
   selector: 'app-dcr-form-submission',
@@ -27,6 +28,7 @@ export class DcrFormSubmissionComponent {
   submitDcrForm = output<Parameters[]>();
   @ViewChild('formDirective') formDirective: FormGroupDirective;
   errorResponse: any;
+  externalApiSubmissionService = inject(ExternalApiSubmissionService);
 
   readonly ETHNICITY = Object.values(ETHNICITY);
   readonly RACE_CATEGORIES = Object.values(RACE_CATEGORIES);
@@ -109,18 +111,18 @@ export class DcrFormSubmissionComponent {
     const data = this.constructParametersResource();
 
     this.errorResponse = null;
-    this.deathCertificateReviewService.setRequestHeader(null);
+    this.externalApiSubmissionService.setRequestHeader(null);
     if (this.dcrForm.invalid) {
       this.utilService.showErrorMessage("Invalid form detected. Please fill all required fields");
     } else {
       this.deathCertificateReviewService.generateDcrFhirBundle(data).subscribe({
         next: result => {
           this.utilService.showSuccessMessage("FHIR Bundle Generated Successfully!");
-          this.requestHeader = this.deathCertificateReviewService.requestHeader();
+          this.requestHeader = this.externalApiSubmissionService.requestHeader();
         },
         error: err => {
           this.errorResponse = err;
-          this.requestHeader = this.deathCertificateReviewService.requestHeader();
+          this.requestHeader = this.externalApiSubmissionService.requestHeader();
           this.utilService.showErrorMessage("Error Generating FHIR Bundle!");
           this.deathCertificateReviewService.setFhirBundle(null);
         }
