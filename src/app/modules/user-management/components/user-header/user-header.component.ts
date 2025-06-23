@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import {map, Observable, of, skipWhile, tap} from "rxjs";
+import {Component, signal} from '@angular/core';
+import {Observable, skipWhile} from "rxjs";
 import {UserProfile} from "../../models/user-profile";
 import {UserProfileManagerService} from "../../services/user-profile-manager.service";
-import {AuthService} from "@auth0/auth0-angular";
+import {AuthService, User} from "@auth0/auth0-angular";
 import {environment as env} from "../../../../../environments/environment";
 
 @Component({
@@ -13,8 +13,8 @@ import {environment as env} from "../../../../../environments/environment";
 })
 export class UserHeaderComponent {
   currentUser$: Observable<UserProfile> = new Observable<UserProfile>(null);
-  //currentUserImage$: Observable<any> = new Observable<any>(null)
   env = env;
+  currentUser= signal<User>(null)
 
   constructor(
     private userProfileManager: UserProfileManagerService,
@@ -25,6 +25,7 @@ export class UserHeaderComponent {
     ).subscribe({
         next: user => {
           this.userProfileManager.setCurrentUser(user);
+          this.currentUser.set(user);
         }
       }
     )

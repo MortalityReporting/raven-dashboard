@@ -1,13 +1,11 @@
-import {Component, ElementRef, EventEmitter, Inject, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Inject, OnInit, output, input, Output, signal, ViewChild} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
-import {ActivatedRoute, Router} from "@angular/router";
 import {forkJoin, map, mergeMap} from "rxjs";
 import {ToxicologyGridDto} from "../../../../../model/toxicology.grid.dto";
 import {MatTableDataSource} from "@angular/material/table";
 import {AppConfiguration} from "../../../../../providers/app-configuration";
 import {ToxToMdiMessageHandlerService} from "../../../services/tox-to-mdi-message-handler.service";
 import {TrackingNumberType} from "../../../../fhir-mdi-library";
-import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
 
 @Component({
     selector: 'record-viewer-toxicology-grid',
@@ -16,7 +14,8 @@ import {ModuleHeaderConfig} from "../../../../../providers/module-header-config"
     standalone: false
 })
 export class ToxicologyGridComponent implements OnInit {
-
+  currentModule = input('recordViewer');
+  selectedToxRecord = signal<ToxicologyGridDto>(null);
 
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['lastName', 'reportdate', 'toxcasenumber', 'toxcasesystem', 'mdicasenumber', 'mdicasesystem'];
@@ -24,29 +23,31 @@ export class ToxicologyGridComponent implements OnInit {
   isLoading = true;
   showSystems = false;
 
+  appConfiguration: AppConfiguration = AppConfiguration.config;
+
   @ViewChild(MatSort) sort: MatSort;
 
   @ViewChild('input') input: ElementRef;
 
   @Output() serverErrorEventEmitter = new EventEmitter();
+  onToxRecordSelected = output<ToxicologyGridDto>();
+
+
 
   constructor(
-    private route: ActivatedRoute,
     private toxicologyHandler: ToxToMdiMessageHandlerService,
-    private router: Router,
-    @Inject('appConfig') public appConfig: AppConfiguration,
-    @Inject('config') public config: ModuleHeaderConfig
   ) {
   }
 
   ngOnInit(): void {
     this.isLoading = true;
+    this.selectedToxRecord.set(null);
 
     // TODO: Add logic to skip invalid records missing either a subject or tox tracking number.
     this.toxicologyHandler.getToxicologyRecords().pipe(
       mergeMap((diagnosticReportList: any[]) =>
         forkJoin(
-          diagnosticReportList.map((diagnosticReport: any, i) =>
+          diagnosticReportList.map((diagnosticReport: any) =>
             this.toxicologyHandler.getSubject(diagnosticReport).pipe(
               map((subject: any) => {
                 let diagnosticReportDto = this.mapToDto(diagnosticReport, subject);
@@ -93,7 +94,8 @@ export class ToxicologyGridComponent implements OnInit {
   }
 
   onCaseSelected(row: any) {
-    this.router.navigate([`${this.appConfig.modules['recordViewer'].route}/tox/`, row.toxcasesystem + "|" + row.toxcasenumber]);
+    this.selectedToxRecord.set(row);
+    this.onToxRecordSelected.emit(row);
   }
 
   applyFilter(event: Event) {

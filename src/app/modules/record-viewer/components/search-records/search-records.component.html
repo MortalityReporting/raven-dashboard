@@ -14,6 +14,7 @@
               <mat-tab [label]="appConfig.workflowTitles?.['toxToMdi'] + 's'">
                 <record-viewer-toxicology-grid
                   (serverErrorEventEmitter)="onServerErrorDetected()"
+                  (onToxRecordSelected)="onToxRecordSelected($event)"
                 ></record-viewer-toxicology-grid>
               </mat-tab>
               <mat-tab [label]="appConfig.workflowTitles?.['dcr'] + 's'">

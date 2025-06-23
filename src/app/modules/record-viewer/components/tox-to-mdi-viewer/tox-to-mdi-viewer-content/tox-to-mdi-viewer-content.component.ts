@@ -1,4 +1,4 @@
-import {Component, Inject, Input, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, input, Input, OnInit, ViewChild} from '@angular/core';
 import {ToxToMdiRecord} from "../../../models/toxToMdiRecord";
 import {MatAccordion} from "@angular/material/expansion";
 import {FHIRProfileConstants} from "../../../../../providers/fhir-profile-constants";
@@ -11,7 +11,11 @@ import {AppConfiguration} from "../../../../../providers/app-configuration";
     styleUrls: ['../tox-to-mdi-viewer.component.css'],
     standalone: false
 })
-export class ToxToMdiViewerContentComponent {
+export class ToxToMdiViewerContentComponent implements AfterViewInit {
+  currentModule = input('recordViewer');
+  collapseAllSections = input<boolean>(false);
+  appConfiguration: AppConfiguration = AppConfiguration.config;
+
   @Input() toxToMdiRecord: ToxToMdiRecord;
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
@@ -28,6 +32,12 @@ export class ToxToMdiViewerContentComponent {
     @Inject('appConfig') public appConfig: AppConfiguration,
     @Inject('fhirProfiles') public fhirProfiles: FHIRProfileConstants
   ) {
+  }
+
+  ngAfterViewInit(): void {
+    if(this.collapseAllSections()){
+      this.onCloseAll();
+    }
   }
 
   onSetState(resourceId){
@@ -54,4 +64,5 @@ export class ToxToMdiViewerContentComponent {
   }
 
   protected readonly ToxToMdiRecord = ToxToMdiRecord;
+
 }

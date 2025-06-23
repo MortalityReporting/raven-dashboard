@@ -6,56 +6,55 @@ import {
   FormGroupDirective,
   Validators
 } from "@angular/forms";
-import {DeathCertificateReviewService} from "../../../services/death-certificate-review.service";
-import {UtilsService} from "../../../../../service/utils.service";
-import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
+import {UtilsService} from "../../../../service/utils.service";
+import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
+import {ExternalApiSubmissionService} from "../../services/external-api-submission.service";
 
 @Component({
-  selector: 'app-dcr-external-api-bundle-submission',
+  selector: 'app-external-api-data-submission',
   standalone: false,
-  templateUrl: './dcr-external-api-bundle-submission.component.html',
-  styleUrls: ['./dcr-external-api-bundle-submission.component.scss', '../death-certificate-review-submission.component.scss']
+  templateUrl: './external-api-data-submission.component.html',
+  styleUrls: ['./external-api-data-submission.component.scss', '../death-certificate-review-submission/death-certificate-review-submission.component.scss']
 })
-export class DcrExternalApiBundleSubmission implements OnInit{
+export class ExternalApiDataSubmission implements OnInit{
 
   constructor(
     @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
     private fb: FormBuilder,
   ) {}
 
-  dcrSubmitToApiForm: FormGroup;
+  submitToApiForm: FormGroup;
   requestHeader: any;
 
   @ViewChild('formDirective') formDirective: FormGroupDirective;
   errorResponse: any;
   successResponse: any;
 
-  deathCertificateReviewService = inject(DeathCertificateReviewService);
+  externalApiSubmissionService = inject(ExternalApiSubmissionService);
   utilsService = inject(UtilsService)
   isFhirBundleMissing = false;
 
 
   onSubmit() {
     // Transform parameters to the format required by your API if needed
-    const formValue = this.dcrSubmitToApiForm.value;
+    const formValue = this.submitToApiForm.value;
     this.errorResponse = null;
     this.successResponse = null;
-    this.deathCertificateReviewService.setRequestHeader(null);
-    if(this.dcrSubmitToApiForm.valid) {
-      if(this.deathCertificateReviewService.fhirBundle()) {
+    this.externalApiSubmissionService.setRequestHeader(null);
+    if(this.submitToApiForm.valid) {
+      if(this.externalApiSubmissionService.jsonRecord()) {
         this.isFhirBundleMissing = false;
-        this.deathCertificateReviewService.submitToExternalApi(formValue, this.deathCertificateReviewService.fhirBundle()).subscribe({
+        this.externalApiSubmissionService.submitToExternalApi(formValue, this.externalApiSubmissionService.jsonRecord()).subscribe({
           next: (value) => {
-            console.log(value);
-            this.utilsService.showSuccessMessage("FHIR Bundle was submitted successfully!");
+            this.utilsService.showSuccessMessage("Data Submitted Successfully!");
             this.successResponse = value;
-            this.requestHeader = this.deathCertificateReviewService.requestHeader();
+            this.requestHeader = this.externalApiSubmissionService.requestHeader();
           },
           error: (err) => {
             console.error(err);
             this.errorResponse = err;
-            this.utilsService.showErrorMessage("FHIR Bundle submission failed!");
-            this.requestHeader = this.deathCertificateReviewService.requestHeader();
+            this.utilsService.showErrorMessage("Data Submission failed!");
+            this.requestHeader = this.externalApiSubmissionService.requestHeader();
           }
         })
       }
@@ -66,7 +65,7 @@ export class DcrExternalApiBundleSubmission implements OnInit{
   }
 
   onClearFormData() {
-    this.dcrSubmitToApiForm.reset();
+    this.submitToApiForm.reset();
     this.formDirective.resetForm();
     this.isFhirBundleMissing = false;
     this.errorResponse = null;
@@ -82,17 +81,17 @@ export class DcrExternalApiBundleSubmission implements OnInit{
       paramValue: ['']
     });
 
-    (this.dcrSubmitToApiForm.get('parameters') as FormArray).push(parameterGroup);
+    (this.submitToApiForm.get('parameters') as FormArray).push(parameterGroup);
   }
 
   // Remove a parameter at specified index
   removeParameter(index: number): void {
-    (this.dcrSubmitToApiForm.get('parameters') as FormArray).removeAt(index);
+    (this.submitToApiForm.get('parameters') as FormArray).removeAt(index);
   }
 
 
   private initForm(): void {
-    this.dcrSubmitToApiForm = this.fb.group({
+    this.submitToApiForm = this.fb.group({
       externalApiUrl: ['', [Validators.required, Validators.pattern(/^https?:\/\/.+/)]],
       username: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -103,7 +102,7 @@ export class DcrExternalApiBundleSubmission implements OnInit{
 
 
   get parameterControls(): FormGroup[] {
-    return (this.dcrSubmitToApiForm.get('parameters') as FormArray).controls as FormGroup[];
+    return (this.submitToApiForm.get('parameters') as FormArray).controls as FormGroup[];
   }
 
 }

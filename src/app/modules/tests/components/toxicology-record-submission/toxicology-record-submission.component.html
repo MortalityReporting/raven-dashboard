@@ -4,25 +4,35 @@
     <mat-card class="margin-bottom-lg">
       <mat-card-header>
         <mat-card-title>
-          Step 1 - Complete Form and Generate DCR FHIR Bundle
+          Step 1 - Select Toxicology Record
         </mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <app-dcr-form-submission></app-dcr-form-submission>
+        <record-viewer-toxicology-grid [currentModule]="'workflowSimulator'" (onToxRecordSelected)="onToxRecordSelected($event)">
+        </record-viewer-toxicology-grid>
       </mat-card-content>
-
     </mat-card>
 
 
     <mat-card class="margin-bottom-lg">
       <mat-card-header>
         <mat-card-title>
-          Step 2 - Review DCR FHIR bundle
+          Step 2 - Review Record
         </mat-card-title>
       </mat-card-header>
       <mat-card-content>
+        @if(!isLoadingData){
+          @if(selectedToxRecord()){
+            <tests-tox-record-details [selectedToxRecord]="selectedToxRecord()"></tests-tox-record-details>
+          }
+          @else {
+            <em>No record Selected. Select a record from the grid above.</em>
+          }
+        }
+        @else {
+          <div class="loading">Loading Toxicology Record Details</div>
+        }
 
-        <app-dcr-fhir-bundle-review></app-dcr-fhir-bundle-review>
       </mat-card-content>
     </mat-card>
 
@@ -32,15 +42,11 @@
         <mat-card-title>
           Step 3 - Enter Submission Details
         </mat-card-title>
-        <mat-card-subtitle>
-          Note: Only basic authorization is currently supported
-        </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         <app-external-api-data-submission></app-external-api-data-submission>
       </mat-card-content>
     </mat-card>
-
 
   </div>
 </div>

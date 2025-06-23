@@ -70,8 +70,16 @@ import {provideNativeDateAdapter} from "@angular/material/core";
 import {MatTimepicker, MatTimepickerInput, MatTimepickerToggle} from "@angular/material/timepicker";
 import { DcrFormSubmissionComponent } from './components/death-certificate-review-submission/dcr-form-submission/dcr-form-submission.component';
 import { DcrFhirBundleReviewComponent } from './components/death-certificate-review-submission/dcr-fhir-bundle-review/dcr-fhir-bundle-review.component';
-import { DcrExternalApiBundleSubmission } from './components/death-certificate-review-submission/dcr-external-api-bundle-submission/dcr-external-api-bundle-submission.component';
-import { DcrResponseViewerComponent } from './components/death-certificate-review-submission/dcr-form-submission/dcr-response-viewer/dcr-response-viewer.component';
+import { ExternalApiDataSubmission } from './components/external-api-data-submission/external-api-data-submission.component';
+import { ResponseViewerComponent } from './components/response-viewer/response-viewer.component';
+import { ToxicologyRecordSubmissionComponent } from './components/toxicology-record-submission/toxicology-record-submission.component';
+import {RecordViewerModule} from "../record-viewer/record-viewer.module";
+import {
+  ToxRecordDetailsComponent
+} from "./components/toxicology-record-submission/tox-record-details/tox-record-details.component";
+import {
+  SimpleJsonViewerComponent
+} from "./components/toxicology-record-submission/simple-json-viewer/simple-json-viewer.component";
 
 @NgModule({
   declarations: [
@@ -97,8 +105,10 @@ import { DcrResponseViewerComponent } from './components/death-certificate-revie
     DeathCertificateReviewSubmissionComponent,
     DcrFormSubmissionComponent,
     DcrFhirBundleReviewComponent,
-    DcrExternalApiBundleSubmission,
-    DcrResponseViewerComponent,
+    ExternalApiDataSubmission,
+    ResponseViewerComponent,
+    ToxicologyRecordSubmissionComponent,
+    ToxRecordDetailsComponent
   ],
   exports: [
     EdrsResultsStepComponent,
@@ -139,6 +149,8 @@ import { DcrResponseViewerComponent } from './components/death-certificate-revie
     MatTimepickerInput,
     MatTimepicker,
     MatTimepickerToggle,
+    RecordViewerModule,
+    SimpleJsonViewerComponent,
   ],
 })
 export class TestsModule {

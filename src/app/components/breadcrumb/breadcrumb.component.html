@@ -1,12 +1,12 @@
 <ol id="breadcrumbNav" class="breadcrumb-nav">
-  @for (breadcrumb of breadcrumbs$ | async; track breadcrumb; let i = $index) {
+  @for (breadcrumb of breadcrumbs; track breadcrumb.url; let i = $index) {
     <li>
-      @if (i != (breadcrumbs$ | async)?.length - 1) {
+      @if (i != breadcrumbs?.length - 1) {
         <a [routerLink]="breadcrumb.url"
           >{{ breadcrumb.label }}
         </a>
       }
-      @if (i == (breadcrumbs$ | async)?.length - 1) {
+      @if (i == breadcrumbs?.length - 1) {
         <span
           class="breadcrumb-last-li"
           >{{ breadcrumb.label }}
