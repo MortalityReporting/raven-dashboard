@@ -5,6 +5,7 @@ import {ModuleHeaderConfig} from "../../../../../providers/module-header-config"
 import {AppConfiguration} from "../../../../../providers/app-configuration";
 import {MdiToEdrsRecord} from "../../../models/mdiToEdrsRecord";
 import {FHIRProfileConstants} from "../../../../../providers/fhir-profile-constants";
+import {MdiToEdrsDocumentHandlerService} from "../../../services/mdi-to-edrs-document-handler.service";
 
 @Component({
     selector: 'record-viewer-mdi-to-edrs-viewer-content',
@@ -35,6 +36,7 @@ export class MdiToEdrsViewerContentComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    public mdiToEdrsDocumentHandlerService: MdiToEdrsDocumentHandlerService,
 
     @Inject('config') public config: ModuleHeaderConfig,
     @Inject('appConfig') public appConfig: AppConfiguration,
