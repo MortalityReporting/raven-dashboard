@@ -43,9 +43,12 @@
               <p><u>Chief Medical Examiner/Coroner</u></p>
             </div>
             <div>
-              <record-viewer-mdi-to-edrs-viewer-practitioner-card [practitioner]="mdiToEdrsRecord.caseHeader.authors[0]">
-
-              </record-viewer-mdi-to-edrs-viewer-practitioner-card>
+              @if(mdiToEdrsRecord?.caseHeader?.authors?.[0]){
+                <record-viewer-mdi-to-edrs-viewer-practitioner-card [practitioner]="mdiToEdrsRecord.caseHeader.authors[0]"/>
+              }
+              @else {
+                {{ mdiToEdrsDocumentHandlerService.defaultString }}
+              }
             </div>
           </div>
         </div>
