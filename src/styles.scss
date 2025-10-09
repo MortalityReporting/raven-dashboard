@@ -515,3 +515,10 @@ TODO: Refactor to generalize class names and move to a common shared .css file.
   display: flex;
   justify-content: flex-end;
 }
+
+.terminology-logo {
+  @extend .hl7-fhir-logo-landing-page;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
