@@ -8,8 +8,8 @@
           <mat-card-content onclick="window.open('https://build.fhir.org/ig/HL7/fhir-mdi-ig/', '_blank')">
             <div class="zulip-row">
               <div class="card-bold-text">
-
-                The Raven Platform is a testing tool built on the current CI Build version of the MDI FHIR IG, which may change periodically.
+                The Raven Platform is a testing tool built on the current CI Build version of the MDI FHIR IG, which may
+                change periodically.
                 It currently supports the version 2.0.0-ballot release as of March 2024.
               </div>
               <div class="card-open-new-window-icon">
@@ -23,7 +23,10 @@
       <h1 class="title-decoration" [style.border-left-color]="appConfiguration.color">
         Welcome to the Raven Testing Platform!</h1>
       <div class="playlist-wrapper">
-        <iframe src="https://www.kaltura.com/p/2019031/sp/201903100/embedIframeJs/uiconf_id/40436601/partner_id/2019031/widget_id/1_la1g3oii?iframeembed=true&playerId=kaltura_player_&flashvars[playlistAPI.kpl0Id]=1_w9ob4is2&flashvars[ks]=&&flashvars[imageDefaultDuration]=30&flashvars[localizationCode]=en&flashvars[forceMobileHTML5]=true&flashvars[scrubber.sliderPreview]=false&flashvars[nextPrevBtn.plugin]=true&flashvars[sideBarContainer.plugin]=true&flashvars[sideBarContainer.position]=left&flashvars[sideBarContainer.clickToClose]=true&flashvars[chapters.plugin]=true&flashvars[chapters.layout]=vertical&flashvars[chapters.thumbnailRotator]=false&flashvars[streamSelector.plugin]=true&flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&flashvars[dualScreen.plugin]=true&flashvars[hotspots.plugin]=true&flashvars[kmsPlaylistHistory.plugin]=true&flashvars[kmsPlaylistHistory.iframeHTML5Js]=//kms-a.akamaihd.net/dc-1/latest/public/build0/playlisthistory/asset/mwembed-kms-playlist-history-v1.1.0.js?ver=522c33efdda0b8dc6ce90c991beb9666&flashvars[kmsPlaylistHistory.iframeHTML5Css]=//kms-a.akamaihd.net/dc-1/latest/public/build0/playlisthistory/asset/mwembed-kms-playlist-history-v1.1.0.css?ver=522c33efdda0b8dc6ce90c991beb9666&flashvars[kmsPlaylistHistory.progressBarColor]=%2300b4d1&flashvars[kmsPlaylistHistory.progressBarColorComplete]=%23bbbbbb&flashvars[kmsPlaylistHistory.completeOverlayIconColor]=&flashvars[playlistAPI.playlistUrl]=https://mediaspace.gatech.edu/playlist/details/{playlistAPI.kpl0Id}" width="740" height="330" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *"  frameborder="0" title="Raven Walkthrough"></iframe>
+        <iframe
+          src="https://www.kaltura.com/p/2019031/sp/201903100/embedIframeJs/uiconf_id/40436601/partner_id/2019031/widget_id/1_la1g3oii?iframeembed=true&playerId=kaltura_player_&flashvars[playlistAPI.kpl0Id]=1_w9ob4is2&flashvars[ks]=&&flashvars[imageDefaultDuration]=30&flashvars[localizationCode]=en&flashvars[forceMobileHTML5]=true&flashvars[scrubber.sliderPreview]=false&flashvars[nextPrevBtn.plugin]=true&flashvars[sideBarContainer.plugin]=true&flashvars[sideBarContainer.position]=left&flashvars[sideBarContainer.clickToClose]=true&flashvars[chapters.plugin]=true&flashvars[chapters.layout]=vertical&flashvars[chapters.thumbnailRotator]=false&flashvars[streamSelector.plugin]=true&flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&flashvars[dualScreen.plugin]=true&flashvars[hotspots.plugin]=true&flashvars[kmsPlaylistHistory.plugin]=true&flashvars[kmsPlaylistHistory.iframeHTML5Js]=//kms-a.akamaihd.net/dc-1/latest/public/build0/playlisthistory/asset/mwembed-kms-playlist-history-v1.1.0.js?ver=522c33efdda0b8dc6ce90c991beb9666&flashvars[kmsPlaylistHistory.iframeHTML5Css]=//kms-a.akamaihd.net/dc-1/latest/public/build0/playlisthistory/asset/mwembed-kms-playlist-history-v1.1.0.css?ver=522c33efdda0b8dc6ce90c991beb9666&flashvars[kmsPlaylistHistory.progressBarColor]=%2300b4d1&flashvars[kmsPlaylistHistory.progressBarColorComplete]=%23bbbbbb&flashvars[kmsPlaylistHistory.completeOverlayIconColor]=&flashvars[playlistAPI.playlistUrl]=https://mediaspace.gatech.edu/playlist/details/{playlistAPI.kpl0Id}"
+          width="740" height="330" allowfullscreen webkitallowfullscreen mozAllowFullScreen
+          allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0" title="Raven Walkthrough"></iframe>
       </div>
       <mat-divider class="larger-divider"></mat-divider>
 
@@ -59,10 +62,32 @@
         </mat-card>
       </div>
       <div class="flex-cell hl7-fhir-logo-disclaimer">
-          The HL7 FHIR Logo is used in accordance with the policy for the FHIR Icon Pack laid out at https://hl7.org/fhir/downloads.html.
+        The HL7 FHIR Logo is used in accordance with the policy for the FHIR Icon Pack laid out at
+        https://hl7.org/fhir/downloads.html.
       </div>
     </div>
     <div class="option-tile-container">
+      <div class="flex-cell margin-top-xs orange-border margin-bottom-md">
+        <mat-card (click)="openPdf()">
+          <mat-card-content>
+            <div class="zulip-row">
+                <div class="terminology-logo">
+                  <img src="../../../assets/files/svg/arrows.svg" class="hl7-fhir-logo-lg"/>
+                </div>
+              <div class="">
+                <div class="card-bold-text larget-text">Terminology Mapping Service for Toxicology</div>
+                <div class="margin-top-sm">
+                  Download our slide deck for a proof of concept system supporting complex code mapping for toxicology
+                  related concepts using FHIR and the OMOP Common Data Model!
+                </div>
+              </div>
+              <div>
+                <mat-icon (click)="openPdf()">download</mat-icon>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
       <div class="flex-cell">
         <mat-card #recordViewer (click)="onBtnClick(appConfiguration?.modules?.['recordViewer']?.route);"
                   cardHover [color]="appConfiguration?.modules?.['recordViewer']?.color">
@@ -71,7 +96,7 @@
               <mat-icon [style.color]="appConfiguration?.modules?.['recordViewer']?.color">
                 circle
               </mat-icon>
-              {{appConfiguration?.modules?.['recordViewer']?.title}}
+              {{ appConfiguration?.modules?.['recordViewer']?.title }}
             </mat-card-title>
           </mat-card-header>
           <mat-card-content>
@@ -91,7 +116,7 @@
               <mat-icon [style.color]="appConfiguration?.modules?.['recordImport']?.color">
                 circle
               </mat-icon>
-              {{appConfiguration?.modules?.['recordImport']?.title}}
+              {{ appConfiguration?.modules?.['recordImport']?.title }}
             </mat-card-title>
           </mat-card-header>
           <mat-card-content>
@@ -109,7 +134,7 @@
               <mat-icon [style.color]="appConfiguration?.modules?.['recordComparison']?.color">
                 circle
               </mat-icon>
-              {{appConfiguration?.modules?.['recordComparison']?.title}}
+              {{ appConfiguration?.modules?.['recordComparison']?.title }}
             </mat-card-title>
           </mat-card-header>
           <mat-card-content>
@@ -126,7 +151,7 @@
             <mat-card-title class="mat-card-title-decoration">
               <mat-icon [style.color]="appConfiguration?.modules?.['fhirValidator']?.color">circle
               </mat-icon>
-              {{appConfiguration?.modules?.['fhirValidator']?.title}}
+              {{ appConfiguration?.modules?.['fhirValidator']?.title }}
             </mat-card-title>
           </mat-card-header>
           <mat-card-content>
@@ -145,7 +170,7 @@
               <mat-icon [style.color]="appConfiguration?.modules?.['workflowSimulator']?.color">
                 circle
               </mat-icon>
-              {{appConfiguration?.modules?.['workflowSimulator']?.title}}
+              {{ appConfiguration?.modules?.['workflowSimulator']?.title }}
             </mat-card-title>
           </mat-card-header>
 
@@ -153,19 +178,24 @@
             <p>
               Supports either testing events or standalone testing for various MDI related workflows, such as a Case
               Management System (CMS) to Electronic Death Registration System (EDRS) using
-              the {{appConfiguration?.workflowTitles?.['mdiToEdrs']}}.
+              the {{ appConfiguration?.workflowTitles?.['mdiToEdrs'] }}.
             </p>
           </mat-card-content>
 
         </mat-card>
-
-
 
       </div>
       <div class="resources-wrapper">
         <h2 class="title-decoration-sm" [style.border-left-color]="appConfiguration.color">
           Resources</h2>
         <ul class="list-decoration">
+          <li>
+            <button mat-flat-button onclick="window.open('https://www.cdcfoundation.org/MDI-Connect-Resources', '_blank')"
+                    class="align-left">
+              CDCF Resources for MDI Offices and IT Developers
+              <mat-icon iconPositionEnd>open_in_new</mat-icon>
+            </button>
+          </li>
           <li>
             <button mat-flat-button onclick="window.open('https://github.com/MortalityReporting', '_blank')"
                     class="align-left">
