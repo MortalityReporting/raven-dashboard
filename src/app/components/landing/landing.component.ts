@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {Router} from "@angular/router";
 import {AppConfiguration} from "../../providers/app-configuration";
+import {ConfigService} from "../../service/config.service";
 
 @Component({
     selector: 'app-landing',
@@ -8,17 +9,17 @@ import {AppConfiguration} from "../../providers/app-configuration";
     styleUrls: ['./landing.component.scss'],
     standalone: false
 })
-export class LandingComponent implements OnInit {
+export class LandingComponent{
 
   appConfiguration: any = AppConfiguration.config;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private configService: ConfigService) { }
 
   onBtnClick(url: string): void {
     this.router.navigate([url]);
   }
 
-  ngOnInit(): void {
+  openPdf() {
+    window.open(this.configService.config.dashboardApiUrl + "files/TerminologyServicePoC.pdf ", "_blank");
   }
-
 }
