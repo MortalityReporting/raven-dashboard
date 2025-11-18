@@ -4,6 +4,9 @@ import {FhirType} from "../base/fhir.type";
 export class CodeableConcept extends FhirType {
   constructor(codeableConcept: any) {
     super();
+    if (!codeableConcept) {
+      return;
+    }
     if (codeableConcept.text) this.text = codeableConcept.text;
     if (codeableConcept.coding) this.coding = codeableConcept.coding;
   }
