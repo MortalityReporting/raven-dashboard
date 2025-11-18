@@ -1,12 +1,16 @@
 import {Injectable} from '@angular/core';
 import {TrackingNumberType} from "../../fhir-mdi-library";
+import {AppConstants} from "../../../providers/app-constants";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FhirHelperService {
+  public defaultString: string = this.appConstants.VALUE_NOT_FOUND;
 
-  constructor() { }
+  constructor(
+    private appConstants: AppConstants,
+  ) { }
 
   findObservationComponentByCode(observation: any, componentCode: string): any {
     if(!observation?.component || !componentCode){
@@ -57,7 +61,7 @@ export class FhirHelperService {
 
   getOfficialName(resource: any, returnStyle: PatientNameReturn = 0, includePrefix: boolean = false): string {
     if(!resource.name){
-      return '';
+      return this.defaultString;
     }
     let nameList = resource.name;
     let firstOrOfficialName = (nameList.filter((humanName: any) => humanName.use === "official"))[0];
