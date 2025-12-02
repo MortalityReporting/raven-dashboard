@@ -56,7 +56,7 @@ export class DecedentRecordsGridComponent implements OnInit {
   mapToDto(resource: any): DecedentGridDTO {
     let decedentDTO = new DecedentGridDTO();
     decedentDTO.decedentId = resource?.id;
-    decedentDTO.firstName = resource?.name?.[0]?.given[0];
+    decedentDTO.firstName = resource?.name?.[0]?.given?.[0];
     decedentDTO.lastName = resource?.name?.[0]?.family;
     decedentDTO.gender = resource?.gender;
     decedentDTO.system = resource?.identifier?.[0]?.system || null;
