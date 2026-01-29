@@ -21,19 +21,17 @@
   </button>
 </div>
 
-
 <table mat-table [dataSource]="dataSource" matSort matSortDisableClear matSortActive="personId">
-
   <ng-container matColumnDef="lastName">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Decedent Name</th>
     <td mat-cell class="pointer"
     *matCellDef="let decedent"> {{decedent.lastName | titlecase}}{{decedent.firstName ? ', ' + decedent.firstName : ''}}</td>
   </ng-container>
-<!--    TODO uncomment when we know how to use gender/sex fields per the CDC guidelines. Note that gender should come from Sex at Death-->
-<!--  <ng-container matColumnDef="gender">-->
-<!--    <th mat-header-cell *matHeaderCellDef mat-sort-header> Gender</th>-->
-<!--    <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.gender | titlecase}} </td>-->
-<!--  </ng-container>-->
+
+  <ng-container matColumnDef="gender">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Gender</th>
+    <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.gender | titlecase}} </td>
+  </ng-container>
 
   <ng-container matColumnDef="age">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Age</th>
@@ -69,6 +67,16 @@
         </span>
       }</td>
     </tr>
-
   </table>
+
+<mat-paginator
+  #paginator
+  [length]="totalDataSize"
+  [pageSizeOptions]="pageSizes"
+  [pageSize]="pageSize"
+  showFirstLastButtons
+  (page)="onPageChanged($event)"
+  aria-label="Select page">
+></mat-paginator>
+
 

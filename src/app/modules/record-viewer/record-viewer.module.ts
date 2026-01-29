@@ -61,6 +61,8 @@ import { DcrContentDeathInvestigationComponent } from './components/dcr-viewer/d
 import { DcrContentCremationClearanceComponent } from './components/dcr-viewer/dcr-viewer-content/dcr-content-cremation-clearance/dcr-content-cremation-clearance.component';
 import { DcrContentCaseAdminInfoComponent } from './components/dcr-viewer/dcr-viewer-content/dcr-content-case-admin-info/dcr-content-case-admin-info.component';
 import { DcrViewerSignatureComponent } from './components/dcr-viewer/dcr-viewer-content/dcr-viewer-signature/dcr-viewer-signature.component';
+import {MatPaginator} from "@angular/material/paginator";
+import {MatProgressBar} from "@angular/material/progress-bar";
 
 @NgModule({
     declarations: [
@@ -98,31 +100,33 @@ import { DcrViewerSignatureComponent } from './components/dcr-viewer/dcr-viewer-
     ToxToMdiViewerMdiCaseComponent,
     ToxToMdiViewerContentComponent
   ],
-    imports: [
-        CommonModule,
-        FhirUtilModule, // Dependency
-        FhirMdiLibraryModule, // Dependency
-        MatSidenavModule,
-        MatIconModule,
-        MatListModule,
-        MatTooltipModule,
-        MatToolbarModule,
-        MatButtonModule,
-        RouterModule,
-        FhirExplorerModule,
-        MatTableModule,
-        MatExpansionModule,
-        MatInputModule,
-        MatProgressSpinnerModule,
-        MatTabsModule,
-        FormsModule,
-        MatCardModule,
-        MatSelectModule,
-        MatCheckboxModule,
-        MatSortModule,
-        ScrollingModule,
-        CommonErrorComponent
-    ]
+  imports: [
+    CommonModule,
+    FhirUtilModule, // Dependency
+    FhirMdiLibraryModule, // Dependency
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatTooltipModule,
+    MatToolbarModule,
+    MatButtonModule,
+    RouterModule,
+    FhirExplorerModule,
+    MatTableModule,
+    MatExpansionModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
+    MatTabsModule,
+    FormsModule,
+    MatCardModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatSortModule,
+    ScrollingModule,
+    CommonErrorComponent,
+    MatPaginator,
+    MatProgressBar
+  ]
 })
 export class RecordViewerModule {
   constructor(private matIconRegistry: MatIconRegistry,
