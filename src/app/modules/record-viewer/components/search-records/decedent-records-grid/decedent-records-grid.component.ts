@@ -377,24 +377,44 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
   // }
 
 
+  // onPageChanged(event: PageEvent) {
+  //   this.pageSize = event.pageSize;
+  //   this.currentPage = event.pageIndex;
+  //   this.getDecedentRecords(this.currentPage, this.pageSize);
+  //   if(event.pageIndex == 0){
+  //     // loading the first page requested
+  //   }
+  //   if (this.pageSize !== event.pageSize) {
+  //     this.pageSize = event.pageSize;
+  //     this.getDecedentRecords();
+  //     return; //changing the page size reloads the grid from the first page and new page size.
+  //   }
+  //
+  //   //page changed detection
+  //   if (event.pageIndex > event.previousPageIndex && this.urlNext) {
+  //     this.getNext(this.urlNext);
+  //   } else if(event.pageIndex < event.previousPageIndex && this.urlPrevious){
+  //     this.getPrevious(this.urlNext);
+  //   }
+  // }
+
+
   onPageChanged(event: PageEvent) {
-    this.pageSize = event.pageSize;
-    this.currentPage = event.pageIndex;
     this.getDecedentRecords(this.currentPage, this.pageSize);
-    // if(event.pageIndex == 0){
-    //   // loading the first page requested
-    // }
-    // if (this.pageSize !== event.pageSize) {
-    //   this.pageSize = event.pageSize;
-    //   this.getDecedentRecords();
-    //   return; //changing the page size reloads the grid from the first page and new page size.
-    // }
-    //
-    // //page changed detection
-    // if (event.pageIndex > event.previousPageIndex && this.urlNext) {
-    //   this.getNext(this.urlNext);
-    // } else if(event.pageIndex < event.previousPageIndex && this.urlPrevious){
-    //   this.getPrevious(this.urlNext);
-    // }
+    if(event.pageIndex == 0){
+      // loading the first page requested
+    }
+    if (this.pageSize !== event.pageSize) {
+      this.pageSize = event.pageSize;
+      this.getDecedentRecords();
+      return; //changing the page size reloads the grid from the first page and new page size.
+    }
+
+    //page changed detection
+    if (event.pageIndex > event.previousPageIndex && this.urlNext) {
+      this.getNext(this.urlNext);
+    } else if(event.pageIndex < event.previousPageIndex && this.urlPrevious){
+      this.getPrevious(this.urlNext);
+    }
   }
 }
