@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable, signal} from '@angular/core';
 import {HttpParams} from "@angular/common/http";
 import {Observable, skipWhile, tap} from "rxjs";
-import {FhirClientService, FhirResource} from "../../fhir-util";
+import {Bundle, FhirClientService, FhirResource} from "../../fhir-util";
+import {ConfigService} from "../../../service/config.service";
 // import {SortDirection} from "@angular/material/sort-direction.d";
 
 @Injectable({
@@ -9,7 +10,19 @@ import {FhirClientService, FhirResource} from "../../fhir-util";
 })
 export class DecedentService {
 
-  constructor(private fhirClient: FhirClientService) { }
+  private readonly serverBaseUrl: string;
+  constructor(private fhirClient: FhirClientService, private configService: ConfigService,) {
+    this.serverBaseUrl = this.configService?.config?.ravenFhirServerBaseUrl;
+  }
+
+
+  // TODO delete if search result bundle is not used
+  private _searchResultsBundleId = signal<string | null>(null);
+  public readonly searchResultsId = this._searchResultsBundleId.asReadonly();
+  public setSearchResultsBundleId(id: string | null) {
+    this. _searchResultsBundleId.set(id);
+  }
+
 
   getDecedentObservationsByCode(decedent: any, codeList: string[]):  Observable<any> {
     // Headers are added in the FHIR Auth Interceptor
@@ -20,9 +33,21 @@ export class DecedentService {
     return this.fhirClient.search("Observation", "", false, true, "", params)
   }
 
-  getDecedentRecords(pageNumber: number, pageSize: number = 10):  Observable<any> {
-    const getPagesOffset = pageNumber * pageSize;
-    return this.fhirClient.search("Patient", `?_count=${pageSize}&_getpagesoffset=${getPagesOffset}`, false, true ).pipe(
+  getDecedentRecords(pageNumber: number, pageSize: number):  Observable<any> {
+    let httpRequest = null;
+    if(this.searchResultsId()){
+      const url = `${this.serverBaseUrl}?_getpages=${this.searchResultsId()}&_getpagesoffset=${pageNumber}&_count=${pageSize}&_pretty=${true}&_bundletype=searchset`;
+      httpRequest = this.fhirClient.search('', null, false, false, url);
+    }
+    else{
+      httpRequest = this.fhirClient.search("Patient", `?_count=${pageSize}`, false, true);
+    }
+    return httpRequest.pipe(
+      tap(data => {
+        if(!this.searchResultsId()){
+          this.getSearchResultsBundleId(data);
+        }
+      }),
       skipWhile((result: any) => {
         return !result
       })
@@ -37,23 +62,17 @@ export class DecedentService {
     return this.fhirClient.read("Composition", compositionId, "/$document")
   }
 
-  // TODO: Update demo data and move to unit testing.
-  // getMockResponse(): Observable<any> {
-  //   return this.http.get('../../assets/data/case_comparion_demo_data.json')
-  // }
+  // TODO delete if search result bundle returns the correct id and there is no need to extract the Bundle id next link
+  private getSearchResultsBundleId(data: Bundle) {
+    const url = data.link.find(el=> el.relation == 'next').url
+    const match = url.match(/_getpages=([a-f0-9\-]+)/);
+    let searchBundleId = '';
+    if (match) {
+      // Extract the captured value
+      searchBundleId = match[1];
+      this.setSearchResultsBundleId(searchBundleId);
+    } else {
+      console.warn("ID not found in the URL.");
+    }
+  }
 }
-
-
-// totalItems: number = 810; // Total records from your API
-// pageSize: number = 20;   // Items per page
-//
-// // Function to calculate the offset for the last page
-// getLastPageOffset(): number {
-//   const totalPages = Math.ceil(this.totalItems / this.pageSize);
-//   // Ensure we don't calculate an offset for page 0 if there are no items
-//   if (totalPages === 0) {
-//     return 0;
-//   }
-//   const lastPageOffset = (totalPages - 1) * this.pageSize;
-//   return lastPageOffset;
-// }

@@ -34,12 +34,11 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
   isLoading = true;
   mannerOfDeathList: string [] = [];
   pipe: DatePipe;
+
   pageSize = 10;
   currentPage = 0;
-  curre
+
   @Output() serverErrorEventEmitter = new EventEmitter();
-  urlPrevious = '';
-  urlNext='';
   totalDataSize: number = 0;
 
   @ViewChild(MatSort) sort: MatSort;
@@ -80,233 +79,80 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  // getNext(fullUrl: string){
-  //   this.getDecedentRecords(fullUrl);
-  // }
-  //  getPrevious(fullUrl: string){
-  //   this.getDecedentRecords(fullUrl);
-  //  }
+   getDecedentRecords(pageNumber: number, pageSize: number){
+     const loincCauseOfDeath = '69449-7';
+     const loincTimeOfDeath = '81956-5';
+     const codes = [loincCauseOfDeath, loincTimeOfDeath];
 
-  getDecedentRecords(pageNumber: number, pageSize: number){
-    const loincCauseOfDeath = '69449-7';
-    const loincTimeOfDeath = '81956-5';
-    const codes = [loincCauseOfDeath, loincTimeOfDeath];
-    this.isLoading = true;
-    // NOTE: Decedents are FHIR Patient resources.
-    // this.urlPrevious = '';
-    // this.urlNext = '';
-   // const pageSize = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSize;
-    this.decedentService.getDecedentRecords(pageNumber,  pageSize).pipe(
-      map(data => {
-        console.log(data);
-        this.totalDataSize = data.total;
-        this.urlPrevious = data.link.find(link => link.relation == 'previous')?.url;
-        this.urlNext = data.link.find(link => link.relation == 'next')?.url;
-        const result = this.bundleHelperService.mapBundleToEntries(data);
-        return result;
-      }),
-      map(decedentRecords =>
-        decedentRecords
-          .filter(record =>
-            record?.meta?.profile?.indexOf(this.fhirProfiles.DCR.Dcr_Structure_Definition) == -1
-          )
-      ),
-      mergeMap((decedentRecordsList: any[]) =>
-        forkJoin(
-          decedentRecordsList.map((decedentRecord: any, i) =>
-            this.decedentService.getDecedentObservationsByCode(decedentRecord, codes).pipe(
-              map((observation: any) => {
-                decedentRecord = this.mapToDto(decedentRecord);
-                const tod = observation?.entry?.find(entry => entry.resource?.code?.coding[0]?.code == loincTimeOfDeath)?.resource?.valueDateTime;
-                decedentRecord.tod = tod;
-                const mannerOfDeath =  observation?.entry?.find(entry => entry.resource?.code?.coding?.[0]?.code == loincCauseOfDeath)?.resource?.valueCodeableConcept?.coding?.[0]?.display;
-                decedentRecord.mannerOfDeath = mannerOfDeath;
-                decedentRecord.index = i + 1;
-                return decedentRecord;
-              })
-            )
-          ))
-      )
-    ).pipe(
-      mergeMap((decedentRecordsList: any[]) =>
-        forkJoin(
-          decedentRecordsList.map((decedentRecord: any, i) =>
-            this.decedentService.getComposition(decedentRecord.decedentId).pipe(
-              map((searchset: any) => {
-                const mdiSystem = this.fhirHelperService.getTrackingNumberSystem(searchset?.entry?.[0]?.resource, TrackingNumberType.Mdi);
-                decedentRecord.system = mdiSystem;
-                const caseNumber = searchset?.entry?.[0]?.resource?.extension?.[0]?.valueIdentifier?.value;
-                decedentRecord.caseNumber = caseNumber;
-                return decedentRecord
-              })
-            )
-          ))
-      )
-    )
-      .subscribe({
-        next: (data) => {
-          this.decedentGridDtoList = data.filter(record => !!record.caseNumber);
-          this.dataSource = new MatTableDataSource(this.decedentGridDtoList);
-          this.dataSource.sort = this.sort;
-          this.mannerOfDeathList = this.getMannerOfDeathList(this.decedentGridDtoList);
-          this.setDataSourceFilters();
-        },
-        error: (e) => {
-          this.isLoading = false;
-          console.error(e);
-          this.serverErrorEventEmitter.emit();
-        },
-        complete:  () => {
-          this.isLoading = false;
-        },
-      });
+     this.isLoading = true;
+    // const pageSize = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSize;
+     this.decedentService.getDecedentRecords(pageNumber,  pageSize).pipe(
+       map(data => {
+         this.totalDataSize = data.total;
+         const result = this.bundleHelperService.mapBundleToEntries(data);
+         return result;
+       }),
+       map(decedentRecords =>
+         decedentRecords
+           .filter(record =>
+             record?.meta?.profile?.indexOf(this.fhirProfiles.DCR.Dcr_Structure_Definition) == -1
+           )
+       ),
+       mergeMap((decedentRecordsList: any[]) =>
+         forkJoin(
+           decedentRecordsList.map((decedentRecord: any, i) =>
+             this.decedentService.getDecedentObservationsByCode(decedentRecord, codes).pipe(
+               map((observation: any) => {
+                 decedentRecord = this.mapToDto(decedentRecord);
+                 const tod = observation?.entry?.find(entry => entry.resource?.code?.coding[0]?.code == loincTimeOfDeath)?.resource?.valueDateTime;
+                 decedentRecord.tod = tod;
+                 const mannerOfDeath =  observation?.entry?.find(entry => entry.resource?.code?.coding?.[0]?.code == loincCauseOfDeath)?.resource?.valueCodeableConcept?.coding?.[0]?.display;
+                 decedentRecord.mannerOfDeath = mannerOfDeath;
+                 decedentRecord.index = i + 1;
+                 return decedentRecord;
+               })
+             )
+           ))
+       )
+     ).pipe(
+       mergeMap((decedentRecordsList: any[]) =>
+         forkJoin(
+           decedentRecordsList.map((decedentRecord: any, i) =>
+             this.decedentService.getComposition(decedentRecord.decedentId).pipe(
+               map((searchset: any) => {
+                 const mdiSystem = this.fhirHelperService.getTrackingNumberSystem(searchset?.entry?.[0]?.resource, TrackingNumberType.Mdi);
+                 decedentRecord.system = mdiSystem;
+                 const caseNumber = searchset?.entry?.[0]?.resource?.extension?.[0]?.valueIdentifier?.value;
+                 decedentRecord.caseNumber = caseNumber;
+                 return decedentRecord
+               })
+             )
+           ))
+       )
+     )
+       .subscribe({
+         next: (data) => {
+           this.decedentGridDtoList = data.filter(record => !!record.caseNumber);
+           this.dataSource = new MatTableDataSource(this.decedentGridDtoList);
+           this.dataSource.sort = this.sort;
+           this.mannerOfDeathList = this.getMannerOfDeathList(this.decedentGridDtoList);
+           this.setDataSourceFilters();
+         },
+         error: (e) => {
+           this.isLoading = false;
+           console.error(e);
+           this.serverErrorEventEmitter.emit();
+         },
+         complete:  () => {
+           this.isLoading = false;
+         },
+       });
 
-  }
-
-   //
-   // getDecedentRecords(fullUrl?: string){
-   //   const loincCauseOfDeath = '69449-7';
-   //   const loincTimeOfDeath = '81956-5';
-   //   const codes = [loincCauseOfDeath, loincTimeOfDeath];
-   //   this.isLoading = true;
-   //   // NOTE: Decedents are FHIR Patient resources.
-   //   this.urlPrevious = '';
-   //   this.urlNext = '';
-   //   const pageSize = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSize;
-   //   this.decedentService.getDecedentRecords(pageSize,  fullUrl).pipe(
-   //     map(data => {
-   //       console.log(data);
-   //       this.totalDataSize = data.total;
-   //       this.urlPrevious = data.link.find(link => link.relation == 'previous')?.url;
-   //       this.urlNext = data.link.find(link => link.relation == 'next')?.url;
-   //       const result = this.bundleHelperService.mapBundleToEntries(data);
-   //       return result;
-   //     }),
-   //     map(decedentRecords =>
-   //       decedentRecords
-   //         .filter(record =>
-   //           record?.meta?.profile?.indexOf(this.fhirProfiles.DCR.Dcr_Structure_Definition) == -1
-   //         )
-   //     ),
-   //     mergeMap((decedentRecordsList: any[]) =>
-   //       forkJoin(
-   //         decedentRecordsList.map((decedentRecord: any, i) =>
-   //           this.decedentService.getDecedentObservationsByCode(decedentRecord, codes).pipe(
-   //             map((observation: any) => {
-   //               decedentRecord = this.mapToDto(decedentRecord);
-   //               const tod = observation?.entry?.find(entry => entry.resource?.code?.coding[0]?.code == loincTimeOfDeath)?.resource?.valueDateTime;
-   //               decedentRecord.tod = tod;
-   //               const mannerOfDeath =  observation?.entry?.find(entry => entry.resource?.code?.coding?.[0]?.code == loincCauseOfDeath)?.resource?.valueCodeableConcept?.coding?.[0]?.display;
-   //               decedentRecord.mannerOfDeath = mannerOfDeath;
-   //               decedentRecord.index = i + 1;
-   //               return decedentRecord;
-   //             })
-   //           )
-   //         ))
-   //     )
-   //   ).pipe(
-   //     mergeMap((decedentRecordsList: any[]) =>
-   //       forkJoin(
-   //         decedentRecordsList.map((decedentRecord: any, i) =>
-   //           this.decedentService.getComposition(decedentRecord.decedentId).pipe(
-   //             map((searchset: any) => {
-   //               const mdiSystem = this.fhirHelperService.getTrackingNumberSystem(searchset?.entry?.[0]?.resource, TrackingNumberType.Mdi);
-   //               decedentRecord.system = mdiSystem;
-   //               const caseNumber = searchset?.entry?.[0]?.resource?.extension?.[0]?.valueIdentifier?.value;
-   //               decedentRecord.caseNumber = caseNumber;
-   //               return decedentRecord
-   //             })
-   //           )
-   //         ))
-   //     )
-   //   )
-   //     .subscribe({
-   //       next: (data) => {
-   //         this.decedentGridDtoList = data.filter(record => !!record.caseNumber);
-   //         this.dataSource = new MatTableDataSource(this.decedentGridDtoList);
-   //         this.dataSource.sort = this.sort;
-   //         this.mannerOfDeathList = this.getMannerOfDeathList(this.decedentGridDtoList);
-   //         this.setDataSourceFilters();
-   //       },
-   //       error: (e) => {
-   //         this.isLoading = false;
-   //         console.error(e);
-   //         this.serverErrorEventEmitter.emit();
-   //       },
-   //       complete:  () => {
-   //         this.isLoading = false;
-   //       },
-   //     });
-
-   //}
+   }
 
   ngOnInit(): void {
+    this.decedentService.setSearchResultsBundleId(null);
     this.getDecedentRecords(this.currentPage, this.pageSize);
-    // const loincCauseOfDeath = '69449-7';
-    // const loincTimeOfDeath = '81956-5';
-    // const codes = [loincCauseOfDeath, loincTimeOfDeath];
-    // this.isLoading = true;
-    // // NOTE: Decedents are FHIR Patient resources.
-    // this.decedentService.getDecedentRecords().pipe(
-    //   map(data => {
-    //     console.log(data);
-    //     return data
-    //   }),
-    //   map(decedentRecords =>
-    //     decedentRecords
-    //       .filter(record =>
-    //         record?.meta?.profile?.indexOf(this.fhirProfiles.DCR.Dcr_Structure_Definition) == -1
-    //       )
-    //   ),
-    //   mergeMap((decedentRecordsList: any[]) =>
-    //     forkJoin(
-    //       decedentRecordsList.map((decedentRecord: any, i) =>
-    //         this.decedentService.getDecedentObservationsByCode(decedentRecord, codes).pipe(
-    //           map((observation: any) => {
-    //             decedentRecord = this.mapToDto(decedentRecord);
-    //             const tod = observation?.entry?.find(entry => entry.resource?.code?.coding[0]?.code == loincTimeOfDeath)?.resource?.valueDateTime;
-    //             decedentRecord.tod = tod;
-    //             const mannerOfDeath =  observation?.entry?.find(entry => entry.resource?.code?.coding?.[0]?.code == loincCauseOfDeath)?.resource?.valueCodeableConcept?.coding?.[0]?.display;
-    //             decedentRecord.mannerOfDeath = mannerOfDeath;
-    //             decedentRecord.index = i + 1;
-    //             return decedentRecord;
-    //           })
-    //         )
-    //       ))
-    //   )
-    // ).pipe(
-    //   mergeMap((decedentRecordsList: any[]) =>
-    //     forkJoin(
-    //       decedentRecordsList.map((decedentRecord: any, i) =>
-    //           this.decedentService.getComposition(decedentRecord.decedentId).pipe(
-    //           map((searchset: any) => {
-    //             const mdiSystem = this.fhirHelperService.getTrackingNumberSystem(searchset?.entry?.[0]?.resource, TrackingNumberType.Mdi);
-    //             decedentRecord.system = mdiSystem;
-    //             const caseNumber = searchset?.entry?.[0]?.resource?.extension?.[0]?.valueIdentifier?.value;
-    //             decedentRecord.caseNumber = caseNumber;
-    //             return decedentRecord
-    //           })
-    //         )
-    //       ))
-    //   )
-    // )
-    // .subscribe({
-    //     next: (data) => {
-    //       this.decedentGridDtoList = data.filter(record => !!record.caseNumber);
-    //       this.dataSource = new MatTableDataSource(this.decedentGridDtoList);
-    //       this.dataSource.sort = this.sort;
-    //       this.mannerOfDeathList = this.getMannerOfDeathList(this.decedentGridDtoList);
-    //       this.setDataSourceFilters();
-    //     },
-    //     error: (e) => {
-    //       this.isLoading = false;
-    //       console.error(e);
-    //       this.serverErrorEventEmitter.emit();
-    //     },
-    //     complete:  () => {
-    //       this.isLoading = false;
-    //     },
-    // });
   }
 
   onCaseSelected(row: any) {
@@ -358,63 +204,10 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // onPageChanged(event: PageEvent) {
-  //   if(event.pageIndex == 0){
-  //     // loading the first page requested
-  //   }
-  //   if (this.defaultPageSize !== event.pageSize) {
-  //     this.defaultPageSize = event.pageSize;
-  //     this.getDecedentRecords();
-  //     return; //changing the page size reloads the grid from the first page and new page size.
-  //   }
-  //
-  //   //page changed detection
-  //   if (event.pageIndex > event.previousPageIndex && this.urlNext) {
-  //     this.getNext(this.urlNext);
-  //   } else if(event.pageIndex < event.previousPageIndex && this.urlPrevious){
-  //     this.getPrevious(this.urlNext);
-  //   }
-  // }
-
-
-  // onPageChanged(event: PageEvent) {
-  //   this.pageSize = event.pageSize;
-  //   this.currentPage = event.pageIndex;
-  //   this.getDecedentRecords(this.currentPage, this.pageSize);
-  //   if(event.pageIndex == 0){
-  //     // loading the first page requested
-  //   }
-  //   if (this.pageSize !== event.pageSize) {
-  //     this.pageSize = event.pageSize;
-  //     this.getDecedentRecords();
-  //     return; //changing the page size reloads the grid from the first page and new page size.
-  //   }
-  //
-  //   //page changed detection
-  //   if (event.pageIndex > event.previousPageIndex && this.urlNext) {
-  //     this.getNext(this.urlNext);
-  //   } else if(event.pageIndex < event.previousPageIndex && this.urlPrevious){
-  //     this.getPrevious(this.urlNext);
-  //   }
-  // }
-
-
-  onPageChanged(event: PageEvent) {
+  onPageChanged(event: PageEvent): void {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
     this.getDecedentRecords(this.currentPage, this.pageSize);
-    if(event.pageIndex == 0){
-      // loading the first page requested
-    }
-    if (this.pageSize !== event.pageSize) {
-      this.pageSize = event.pageSize;
-      this.getDecedentRecords();
-      return; //changing the page size reloads the grid from the first page and new page size.
-    }
-
-    //page changed detection
-    if (event.pageIndex > event.previousPageIndex && this.urlNext) {
-      this.getNext(this.urlNext);
-    } else if(event.pageIndex < event.previousPageIndex && this.urlPrevious){
-      this.getPrevious(this.urlNext);
-    }
   }
+
 }

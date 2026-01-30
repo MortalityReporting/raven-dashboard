@@ -80,59 +80,59 @@ export class MdiToEdrsGridComponent implements OnInit {
       }
     });
 
-    this.decedentService.getDecedentRecords().pipe(
-      mergeMap((decedentRecordsList: any[]) =>
-        forkJoin(
-          decedentRecordsList.map((decedentRecord: any, i) =>
-            this.decedentService.getDecedentObservationsByCode(decedentRecord, codes).pipe(
-              map((observation: any) => {
-                decedentRecord = this.mapToDto(decedentRecord);
-                //const tod = observation?.entry?.find(entry => entry.resource?.code?.coding[0]?.code == loincTimeOfDeath)?.resource?.effectiveDateTime;
-                // TODO: duplicate code!!! We use the same coe in the decedent-record grid and we should refactor it
-                const tod = observation?.entry?.find(entry => entry.resource?.code?.coding[0]?.code == loincTimeOfDeath)?.resource?.valueDateTime;
-                decedentRecord.tod = tod;
-                const mannerOfDeath =  observation?.entry?.find(entry => entry.resource?.code?.coding[0]?.code == loincCauseOfDeath)?.resource?.valueCodeableConcept?.coding[0]?.display;
-                decedentRecord.mannerOfDeath = mannerOfDeath;
-                decedentRecord.index = i + 1;
-                return decedentRecord;
-              })
-            )
-          ))
-      )
-    ).pipe(
-      mergeMap((decedentRecordsList: any[]) =>
-        forkJoin(
-          decedentRecordsList.map((decedentRecord: any, i) =>
-            this.decedentService.getComposition(decedentRecord.decedentId).pipe(
-              map((composition: any) => {
-                const caseNumber = composition?.entry?.[0]?.resource?.extension?.[0]?.valueIdentifier?.value;
-                decedentRecord.caseNumber = caseNumber;
-                const mdiSystem = this.fhirHelperService.getTrackingNumberSystem(composition?.entry?.[0]?.resource, TrackingNumberType.Mdi);
-                decedentRecord.system = mdiSystem;
-                return decedentRecord
-              })
-            )
-          ))
-      )
-    )
-      .subscribe({
-        next: (data) => {
-          this.decedentGridDtoList = data.filter(record => !!record.caseNumber);
-          this.dataSource = new MatTableDataSource(this.decedentGridDtoList);
-          this.mannerOfDeathList = this.getMannerOfDeathList(this.decedentGridDtoList);
-          this.dataSource.sort = this.sort;
-          this.dataSource.paginator = this.paginator;
-          this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
-          this.setDataSourceFilters();
-        },
-        error: (e) => {
-          console.error(e);
-          this.utilsService.showErrorMessage();
-        },
-        complete:  () => {
-          this.isLoading = false;
-        }
-      });
+    // this.decedentService.getDecedentRecords().pipe(
+    //   mergeMap((decedentRecordsList: any[]) =>
+    //     forkJoin(
+    //       decedentRecordsList.map((decedentRecord: any, i) =>
+    //         this.decedentService.getDecedentObservationsByCode(decedentRecord, codes).pipe(
+    //           map((observation: any) => {
+    //             decedentRecord = this.mapToDto(decedentRecord);
+    //             //const tod = observation?.entry?.find(entry => entry.resource?.code?.coding[0]?.code == loincTimeOfDeath)?.resource?.effectiveDateTime;
+    //             // TODO: duplicate code!!! We use the same coe in the decedent-record grid and we should refactor it
+    //             const tod = observation?.entry?.find(entry => entry.resource?.code?.coding[0]?.code == loincTimeOfDeath)?.resource?.valueDateTime;
+    //             decedentRecord.tod = tod;
+    //             const mannerOfDeath =  observation?.entry?.find(entry => entry.resource?.code?.coding[0]?.code == loincCauseOfDeath)?.resource?.valueCodeableConcept?.coding[0]?.display;
+    //             decedentRecord.mannerOfDeath = mannerOfDeath;
+    //             decedentRecord.index = i + 1;
+    //             return decedentRecord;
+    //           })
+    //         )
+    //       ))
+    //   )
+    // ).pipe(
+    //   mergeMap((decedentRecordsList: any[]) =>
+    //     forkJoin(
+    //       decedentRecordsList.map((decedentRecord: any, i) =>
+    //         this.decedentService.getComposition(decedentRecord.decedentId).pipe(
+    //           map((composition: any) => {
+    //             const caseNumber = composition?.entry?.[0]?.resource?.extension?.[0]?.valueIdentifier?.value;
+    //             decedentRecord.caseNumber = caseNumber;
+    //             const mdiSystem = this.fhirHelperService.getTrackingNumberSystem(composition?.entry?.[0]?.resource, TrackingNumberType.Mdi);
+    //             decedentRecord.system = mdiSystem;
+    //             return decedentRecord
+    //           })
+    //         )
+    //       ))
+    //   )
+    // )
+    //   .subscribe({
+    //     next: (data) => {
+    //       this.decedentGridDtoList = data.filter(record => !!record.caseNumber);
+    //       this.dataSource = new MatTableDataSource(this.decedentGridDtoList);
+    //       this.mannerOfDeathList = this.getMannerOfDeathList(this.decedentGridDtoList);
+    //       this.dataSource.sort = this.sort;
+    //       this.dataSource.paginator = this.paginator;
+    //       this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+    //       this.setDataSourceFilters();
+    //     },
+    //     error: (e) => {
+    //       console.error(e);
+    //       this.utilsService.showErrorMessage();
+    //     },
+    //     complete:  () => {
+    //       this.isLoading = false;
+    //     }
+    //   });
   }
 
   onCaseSelected(decedent: any) {
