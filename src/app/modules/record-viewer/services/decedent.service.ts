@@ -35,8 +35,9 @@ export class DecedentService {
 
   getDecedentRecords(pageNumber: number, pageSize: number):  Observable<any> {
     let httpRequest = null;
+    const pageOffset = pageNumber * pageSize;
     if(this.searchResultsId()){
-      const url = `${this.serverBaseUrl}?_getpages=${this.searchResultsId()}&_getpagesoffset=${pageNumber}&_count=${pageSize}&_pretty=${true}&_bundletype=searchset`;
+      const url = `${this.serverBaseUrl}?_getpages=${this.searchResultsId()}&_getpagesoffset=${pageOffset}&_count=${pageSize}&_pretty=${true}&_bundletype=searchset`;
       httpRequest = this.fhirClient.search('', null, false, false, url);
     }
     else{
@@ -45,7 +46,7 @@ export class DecedentService {
     return httpRequest.pipe(
       tap(data => {
         if(!this.searchResultsId()){
-          this.getSearchResultsBundleId(data);
+          this.setSearchResultsBundleId(data.id);
         }
       }),
       skipWhile((result: any) => {
@@ -60,19 +61,5 @@ export class DecedentService {
 
   getDocumentBundle(compositionId: string): Observable<any> {
     return this.fhirClient.read("Composition", compositionId, "/$document")
-  }
-
-  // TODO delete if search result bundle returns the correct id and there is no need to extract the Bundle id next link
-  private getSearchResultsBundleId(data: Bundle) {
-    const url = data.link.find(el=> el.relation == 'next').url
-    const match = url.match(/_getpages=([a-f0-9\-]+)/);
-    let searchBundleId = '';
-    if (match) {
-      // Extract the captured value
-      searchBundleId = match[1];
-      this.setSearchResultsBundleId(searchBundleId);
-    } else {
-      console.warn("ID not found in the URL.");
-    }
   }
 }
