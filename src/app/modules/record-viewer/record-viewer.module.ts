@@ -10,7 +10,7 @@ import {RouterModule} from "@angular/router";
 import {FhirExplorerModule} from "../fhir-explorer/fhir-explorer.module";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {DomSanitizer} from "@angular/platform-browser";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatSortModule} from "@angular/material/sort";
 import {ModuleHeaderConfig} from "../../providers/module-header-config";
 import {MatTableModule} from "@angular/material/table";
@@ -19,6 +19,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatListModule} from "@angular/material/list";
 import {MatCardModule} from "@angular/material/card";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatInputModule} from "@angular/material/input";
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
@@ -63,6 +64,7 @@ import { DcrContentCaseAdminInfoComponent } from './components/dcr-viewer/dcr-vi
 import { DcrViewerSignatureComponent } from './components/dcr-viewer/dcr-viewer-content/dcr-viewer-signature/dcr-viewer-signature.component';
 import {MatPaginator} from "@angular/material/paginator";
 import {MatProgressBar} from "@angular/material/progress-bar";
+import {provideNativeDateAdapter} from '@angular/material/core';
 
 @NgModule({
     declarations: [
@@ -125,7 +127,9 @@ import {MatProgressBar} from "@angular/material/progress-bar";
     ScrollingModule,
     CommonErrorComponent,
     MatPaginator,
-    MatProgressBar
+    MatProgressBar,
+    MatDatepickerModule,
+    ReactiveFormsModule
   ]
 })
 export class RecordViewerModule {
@@ -159,7 +163,8 @@ export class RecordViewerModule {
         {
           provide: 'fhirProfiles',
           useValue: fhirProfiles
-        }
+        },
+        provideNativeDateAdapter()
       ]
     }
   }
