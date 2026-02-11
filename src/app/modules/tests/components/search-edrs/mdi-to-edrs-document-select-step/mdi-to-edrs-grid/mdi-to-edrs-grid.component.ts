@@ -28,7 +28,6 @@ export interface SearchParams{
 
 export type Gender = 'male' | 'female' | 'unknown';
 
-
 @Component({
     selector: 'app-mdi-to-edrs-grid',
     templateUrl: './mdi-to-edrs-grid.component.html',
@@ -154,6 +153,7 @@ export class MdiToEdrsGridComponent implements OnInit, AfterViewInit {
     this.isLoading = true;
     this.decedentService.getDecedentRecords(pageNumber,  pageSize, searchParms).pipe(
       map(data => {
+        //Filter patients only from the bundle
         this.totalDataSize = data.total;
         const result = this.bundleHelperService.mapBundleToEntries(data);
         return result;

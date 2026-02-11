@@ -1,7 +1,8 @@
 <div class="margin-top-lg margin-bottom-md">
   <form [formGroup]="searchFilterForm" (ngSubmit)="onSearch()">
     <ng-container formGroupName="deathDate">
-      <mat-form-field appearance="outline" class="margin-left-md">
+      <mat-form-field appearance="outline" class="margin-left-md" floatLabel="always">
+        <mat-label>Death Date</mat-label>
         <mat-date-range-input [rangePicker]="picker">
           <input matStartDate formControlName="start" placeholder="Start date">
           <input matEndDate formControlName="end" placeholder="End date">
@@ -12,7 +13,7 @@
       </mat-form-field>
     </ng-container>
 
-    <mat-form-field appearance="outline" class="margin-left-md filter-width"  floatLabel="always">
+    <mat-form-field appearance="outline" class="margin-left-md narrow-filter"  floatLabel="always">
       <mat-label>Gender</mat-label>
       <mat-select [formControl]="searchFilterForm.controls.gender">
         <mat-option [value]="null">All</mat-option>
@@ -27,44 +28,43 @@
             [style.background-color]="config.backgroundColor" [style.color]="'white'">
       Search
     </button>
-    <button mat-raised-button class="margin-left-md" type="button" (click)="onClearFilters()">
-      Clear Search Form
-    </button>
   </form>
 </div>
 
-@if(isLoading){
-  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+@if (isLoading) {
+  <div class="spinner-container">
+    <mat-spinner [diameter]="70"></mat-spinner>
+  </div>
 }
-<table mat-table [dataSource]="dataSource" matSort matSortDisableClear matSortActive="personId">
+<table mat-table [dataSource]="dataSource">
   <ng-container matColumnDef="lastName">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Decedent Name</th>
+    <th mat-header-cell *matHeaderCellDef> Decedent Name</th>
     <td mat-cell class="pointer"
     *matCellDef="let decedent"> {{decedent.lastName | titlecase}}{{decedent.firstName ? ', ' + decedent.firstName : ''}}</td>
   </ng-container>
 
   <ng-container matColumnDef="gender">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Gender</th>
+    <th mat-header-cell *matHeaderCellDef> Gender</th>
     <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.gender | titlecase}} </td>
   </ng-container>
 
   <ng-container matColumnDef="age">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Age</th>
+    <th mat-header-cell *matHeaderCellDef> Age</th>
     <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.age}} </td>
   </ng-container>
 
   <ng-container matColumnDef="tod">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of Death</th>
+    <th mat-header-cell *matHeaderCellDef> Date of Death</th>
     <td mat-cell class="pointer" *matCellDef="let decedent"> {{ decedent.tod | date: 'MM/dd/yyyy' }} </td>
   </ng-container>
 
   <ng-container matColumnDef="mannerOfDeath">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Manner of Death</th>
+    <th mat-header-cell *matHeaderCellDef> Manner of Death</th>
     <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.mannerOfDeath | titlecase}} </td>
   </ng-container>
 
   <ng-container matColumnDef="caseNumber">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> MDI Case Number</th>
+    <th mat-header-cell *matHeaderCellDef> MDI Case Number</th>
     <td mat-cell class="pointer" *matCellDef="let decedent" [matTooltip]="'System: ' + (decedent.system || 'Unknown')"> {{decedent.caseNumber }} </td>
   </ng-container>
 

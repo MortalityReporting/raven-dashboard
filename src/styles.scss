@@ -522,3 +522,7 @@ TODO: Refactor to generalize class names and move to a common shared .css file.
   align-items: center;
   justify-content: center;
 }
+
+.narrow-filter{
+  max-width: 10em;
+}

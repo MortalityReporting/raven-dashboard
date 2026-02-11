@@ -63,7 +63,6 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
   totalDataSize: number = 0;
   readonly pageSizes = [5, 10, 20];
 
-  @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   readonly searchFilterForm = new FormGroup({
@@ -141,7 +140,6 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
    getDecedentRecords(pageNumber: number, pageSize: number, searchParms?: SearchParams){
@@ -192,7 +190,6 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
          next: (data) => {
            this.decedentGridDtoList = data.filter(record => !!record.caseNumber);
            this.dataSource = new MatTableDataSource(this.decedentGridDtoList);
-           this.dataSource.sort = this.sort;
            this.setDataSourceFilters();
          },
          error: (e) => {
@@ -228,16 +225,6 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
     this.dataSource.filterPredicate = (data, filter) => {
       const formatted = this.datePipe.transform(data.tod,'MM/dd/yyyy');
       return formatted.indexOf(filter) >= 0 || defaultPredicate(data,filter) ;
-    }
-  }
-
-  onClearFilters() {
-    if(this.searchFilterForm.touched) {
-      this.searchFilterForm.reset();
-      this.searchFilterForm.markAsPristine();
-      this.currentPage = 0;
-      this.paginator.pageIndex = this.currentPage;
-      this.getDecedentRecords(this.currentPage, this.pageSize);
     }
   }
 
