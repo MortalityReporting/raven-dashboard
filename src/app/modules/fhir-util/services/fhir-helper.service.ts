@@ -94,7 +94,7 @@ export class FhirHelperService {
         return firstOrOfficialName?.given?.[0].trim() || ""
       }
       case PatientNameReturn.lastonly: {
-        return firstOrOfficialName?.family.trim() || ""
+        return firstOrOfficialName?.family?.trim() || ""
       }
     }
   }
