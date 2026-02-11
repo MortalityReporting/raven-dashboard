@@ -136,7 +136,9 @@ export class MdiToEdrsGridComponent implements OnInit, AfterViewInit {
     if(searchParams){
       this.decedentService.setSearchResultsBundleId(null);
     }
-    this.getDecedentRecords(1, this.pageSize, searchParams)
+    this.currentPage = 0;
+    this.paginator.pageIndex = this.currentPage;
+    this.getDecedentRecords(this.currentPage, this.pageSize, searchParams)
   }
 
   ngAfterViewInit(): void {
@@ -252,6 +254,8 @@ export class MdiToEdrsGridComponent implements OnInit, AfterViewInit {
     if(this.searchFilterForm.touched) {
       this.searchFilterForm.reset();
       this.searchFilterForm.markAsPristine();
+      this.currentPage = 0;
+      this.paginator.pageIndex = this.currentPage;
       this.getDecedentRecords(this.currentPage, this.pageSize);
     }
   }
