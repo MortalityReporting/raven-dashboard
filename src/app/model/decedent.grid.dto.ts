@@ -1,6 +1,6 @@
 export class DecedentGridDTO {
   index: number;
-  decedentId: number;
+  decedentId: number | string;
   firstName: string;
   lastName: string;
   gender: string;
@@ -9,5 +9,6 @@ export class DecedentGridDTO {
   system: string;
   status: string;
   mannerOfDeath: string;
-  patientResource: any
+  patientResource: any;
+  caseNumber: string | null = null;
 }

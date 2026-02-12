@@ -3,7 +3,8 @@ import {HttpParams} from "@angular/common/http";
 import {Observable, skipWhile, tap} from "rxjs";
 import {FhirClientService} from "../../fhir-util";
 import {ConfigService} from "../../../service/config.service";
-import {SearchParams} from "../components/search-records/decedent-records-grid/decedent-records-grid.component";
+import {GridSearchParams} from "../models/grid-search-params";
+
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +43,7 @@ export class DecedentService {
     return this.fhirClient.search("Observation", "", false, true, "", params)
   }
 
-  getDecedentRecords(pageNumber: number, pageSize: number, searchParams?: SearchParams): Observable<any> {
+  getDecedentRecords(pageNumber: number, pageSize: number, searchParams?: GridSearchParams): Observable<any> {
     const httpRequest = this.searchResultsId()
       ? this.createPaginationRequest(pageNumber, pageSize, searchParams)
       : this.createInitialSearchRequest(pageSize, searchParams);
@@ -57,7 +58,7 @@ export class DecedentService {
     );
   }
 
-  private createPaginationRequest(pageNumber: number, pageSize: number, searchParams?: SearchParams): Observable<any> {
+  private createPaginationRequest(pageNumber: number, pageSize: number, searchParams?: GridSearchParams): Observable<any> {
     const pageOffset = pageNumber * pageSize;
 
     let params = new HttpParams()
@@ -74,7 +75,7 @@ export class DecedentService {
     return this.fhirClient.search('', null, false, false, url);
   }
 
-  private createInitialSearchRequest(pageSize: number, searchParams?: SearchParams): Observable<any> {
+  private createInitialSearchRequest(pageSize: number, searchParams?: GridSearchParams): Observable<any> {
     let params = new HttpParams()
       .set('_include', 'Composition:subject')
       .set('_count', pageSize.toString())
@@ -85,7 +86,7 @@ export class DecedentService {
     return this.fhirClient.search("Composition", `?${params.toString()}`, false, true);
   }
 
-  private addSearchFilters(params: HttpParams, searchParams?: SearchParams): HttpParams {
+  private addSearchFilters(params: HttpParams, searchParams?: GridSearchParams): HttpParams {
     if (!searchParams) return params;
 
     if (searchParams.deathDate?.start) {
