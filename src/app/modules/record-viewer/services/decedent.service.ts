@@ -1,7 +1,7 @@
 import {Injectable, signal} from '@angular/core';
 import {HttpParams} from "@angular/common/http";
 import {catchError, forkJoin, map, mergeMap, Observable, of, skipWhile, tap} from "rxjs";
-import {BundleHelperService, FhirClientService, FhirHelperService, FhirResource} from "../../fhir-util";
+import {Bundle, BundleHelperService, FhirClientService, FhirHelperService, FhirResource} from "../../fhir-util";
 import {ConfigService} from "../../../service/config.service";
 import {GridSearchParams} from "../models/grid-search-params";
 import {DecedentGridDTO} from "../../../model/decedent.grid.dto";
@@ -142,6 +142,11 @@ export class DecedentService {
 
   private processDecedentRecordsBundle(bundle: any): Observable<DecedentRecordsResult> {
     const totalCount = bundle.total || 0;
+
+    if(!bundle.entry || bundle.entry.length === 0) {
+      return of({ dtos: [], totalCount });
+    }
+
     const allResources = this.bundleHelperService.mapBundleToEntries(bundle);
 
     const compositions = allResources.filter(r => r.resourceType === 'Composition');
