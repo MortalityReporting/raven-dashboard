@@ -110,6 +110,10 @@ export class DecedentService {
       params = params.append('patient.gender', searchParams.gender);
     }
 
+    if (searchParams.name) {
+      params = params.append('patient.name', searchParams.name);
+    }
+
     return params;
   }
 

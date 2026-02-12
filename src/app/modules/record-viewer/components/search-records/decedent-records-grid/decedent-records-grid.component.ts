@@ -55,6 +55,7 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   readonly searchFilterForm = new FormGroup({
+    name: new FormControl<string>(''),
     gender: new FormControl<Gender | null>(null),
     deathDate: this.fb.group({
       start: [null],
@@ -87,6 +88,12 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
     const deathDate = this.deathDateRange;
     if (deathDate) {
       params.deathDate = deathDate;
+    }
+
+    // Add death date range
+    const name = this.searchFilterForm.controls.name.value;
+    if (name) {
+      params.name = name;
     }
 
     return params;
@@ -168,6 +175,22 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
     this.currentPage = event.pageIndex;
     let searchParams: GridSearchParams = this.searchParams;
     this.getDecedentRecords(this.currentPage, this.pageSize, searchParams);
+  }
+
+  getDecedentFullName(decedent: DecedentGridDTO): string {
+    if (decedent.lastName === 'MASKED' || decedent.firstName === 'MASKED') {
+      return 'MASKED';
+    }
+
+    if (!decedent.lastName && !decedent.firstName) {
+      return '';
+    }
+
+    if (!decedent.firstName) {
+      return decedent.lastName || '';
+    }
+
+    return `${decedent.lastName}, ${decedent.firstName}`;
   }
 
 }

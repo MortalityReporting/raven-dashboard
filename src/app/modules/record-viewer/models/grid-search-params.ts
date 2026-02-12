@@ -2,6 +2,7 @@ import {Gender} from "../components/search-records/decedent-records-grid/deceden
 import {DeathDateRange} from "./death-date-range";
 
 export interface GridSearchParams {
+  name?: string;
   deathDate?: DeathDateRange,
   gender?: Gender
 }

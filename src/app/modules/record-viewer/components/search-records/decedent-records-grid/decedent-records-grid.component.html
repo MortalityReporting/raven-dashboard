@@ -1,5 +1,12 @@
 <div class="margin-top-lg margin-bottom-md">
   <form [formGroup]="searchFilterForm" (ngSubmit)="onSearch()">
+
+    <mat-form-field appearance="outline" class="margin-left-md" floatLabel="always" style="min-width: 20em">
+      <mat-label>Name</mat-label>
+        <input matInput type="text" formControlName="name">
+      <mat-hint>Enter first name, last name or part of a name</mat-hint>
+    </mat-form-field>
+
     <ng-container formGroupName="deathDate">
       <mat-form-field appearance="outline" class="margin-left-md" floatLabel="always">
         <mat-label>Death Date</mat-label>
@@ -13,12 +20,12 @@
       </mat-form-field>
     </ng-container>
 
-    <mat-form-field appearance="outline" class="margin-left-md narrow-filter"  floatLabel="always">
+    <mat-form-field appearance="outline" class="margin-left-md narrow-filter" floatLabel="always">
       <mat-label>Gender</mat-label>
       <mat-select [formControl]="searchFilterForm.controls.gender">
         <mat-option [value]="null">All</mat-option>
         @for (option of genderOptions; track option) {
-          <mat-option  [value]="option.value">
+          <mat-option [value]="option.value">
             {{ option.label }}
           </mat-option>
         }
@@ -40,32 +47,35 @@
   <ng-container matColumnDef="lastName">
     <th mat-header-cell *matHeaderCellDef> Decedent Name</th>
     <td mat-cell class="pointer"
-    *matCellDef="let decedent"> {{decedent.lastName | titlecase}}{{decedent.firstName ? ', ' + decedent.firstName : ''}}</td>
+        *matCellDef="let decedent"> {{ getDecedentFullName(decedent) }}
+    </td>
   </ng-container>
 
   <ng-container matColumnDef="gender">
     <th mat-header-cell *matHeaderCellDef> Gender</th>
-    <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.gender | titlecase}} </td>
+    <td mat-cell class="pointer" *matCellDef="let decedent"> {{ decedent.gender | titlecase }}</td>
   </ng-container>
 
   <ng-container matColumnDef="age">
     <th mat-header-cell *matHeaderCellDef> Age</th>
-    <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.age}} </td>
+    <td mat-cell class="pointer" *matCellDef="let decedent"> {{ decedent.age }}</td>
   </ng-container>
 
   <ng-container matColumnDef="tod">
     <th mat-header-cell *matHeaderCellDef> Date of Death</th>
-    <td mat-cell class="pointer" *matCellDef="let decedent"> {{ decedent.tod | date: 'MM/dd/yyyy' }} </td>
+    <td mat-cell class="pointer" *matCellDef="let decedent"> {{ decedent.tod | date: 'MM/dd/yyyy' }}</td>
   </ng-container>
 
   <ng-container matColumnDef="mannerOfDeath">
     <th mat-header-cell *matHeaderCellDef> Manner of Death</th>
-    <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.mannerOfDeath | titlecase}} </td>
+    <td mat-cell class="pointer" *matCellDef="let decedent"> {{ decedent.mannerOfDeath | titlecase }}</td>
   </ng-container>
 
   <ng-container matColumnDef="caseNumber">
     <th mat-header-cell *matHeaderCellDef> MDI Case Number</th>
-    <td mat-cell class="pointer" *matCellDef="let decedent" [matTooltip]="'System: ' + (decedent.system || 'Unknown')"> {{decedent.caseNumber }} </td>
+    <td mat-cell class="pointer" *matCellDef="let decedent"
+        [matTooltip]="'System: ' + (decedent.system || 'Unknown')"> {{ decedent.caseNumber }}
+    </td>
   </ng-container>
 
 
@@ -74,9 +84,11 @@
 
   <tr class="mat-row" *matNoDataRow>
     <td class="mat-cell" [colSpan]="displayedColumns.length">
-      @if (!isLoading) { No results found. }
-    </tr>
-  </table>
+      @if (!isLoading) {
+        No results found.
+      }
+  </tr>
+</table>
 
 
 <mat-paginator
@@ -87,6 +99,7 @@
   showFirstLastButtons
   (page)="onPageChanged($event)"
   aria-label="Select page">
-></mat-paginator>
+  >
+</mat-paginator>
 
 
