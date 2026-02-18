@@ -9,7 +9,7 @@
 
     <ng-container formGroupName="deathDate">
       <mat-form-field appearance="outline" class="margin-left-md" floatLabel="always">
-        <mat-label>Death Date</mat-label>
+        <mat-label>Date of Death</mat-label>
         <mat-date-range-input [rangePicker]="picker">
           <input matStartDate formControlName="start" placeholder="Start date">
           <input matEndDate formControlName="end" placeholder="End date">
@@ -52,7 +52,7 @@
   </ng-container>
 
   <ng-container matColumnDef="gender">
-    <th mat-header-cell *matHeaderCellDef> Gender</th>
+    <th mat-header-cell *matHeaderCellDef> Sex</th>
     <td mat-cell class="pointer" *matCellDef="let decedent"> {{ decedent.gender | titlecase }}</td>
   </ng-container>
 
