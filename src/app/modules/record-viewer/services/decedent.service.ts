@@ -114,6 +114,10 @@ export class DecedentService {
       params = params.append('patient.name', searchParams.name);
     }
 
+    if (searchParams.mannerOfDeath) {
+      params = params.append('manner-of-death', `http://snomed.info/sct|${searchParams.mannerOfDeath}`);
+    }
+
     return params;
   }
 

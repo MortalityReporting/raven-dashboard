@@ -16,6 +16,7 @@ import {
 } from "@angular/forms";
 import {DeathDateRange} from "../../../models/death-date-range";
 import {GridSearchParams} from "../../../models/grid-search-params";
+import {AppConstants} from "../../../../../providers/app-constants"
 
 
 
@@ -35,6 +36,8 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
   decedentGridDtoList: DecedentGridDTO[];
   isLoading = true;
   datePipe: DatePipe;
+  mannerOfDeathList: {code: number, display: string}[] = [];
+
 
   pageSize = 10;
   currentPage = 0;
@@ -60,7 +63,8 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
     deathDate: this.fb.group({
       start: [null],
       end: [null]
-    })
+    }),
+    mannerOfDeath: new FormControl<string>(''),
   });
 
   constructor(
@@ -71,12 +75,15 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
     private bundleHelperService: BundleHelperService,
     @Inject('config') public config: ModuleHeaderConfig,
     @Inject('appConfig') public appConfig: AppConfiguration,
-    @Inject('fhirProfiles') public fhirProfiles: FHIRProfileConstants
+    @Inject('fhirProfiles') public fhirProfiles: FHIRProfileConstants,
+    private appConstants: AppConstants
   ) {
+    this.mannerOfDeathList = this.appConstants.MANNER_OF_DEATH_LIST;
   }
 
   private get searchParams(): GridSearchParams {
     const params: GridSearchParams = {};
+
 
     // Add gender if selected
     const gender = this.searchFilterForm.controls.gender.value;
@@ -94,6 +101,11 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
     const name = this.searchFilterForm.controls.name.value;
     if (name) {
       params.name = name;
+    }
+
+    const mannerOfDeath = this.searchFilterForm.controls.mannerOfDeath.value;
+    if (mannerOfDeath) {
+      params.mannerOfDeath = mannerOfDeath;
     }
 
     return params;

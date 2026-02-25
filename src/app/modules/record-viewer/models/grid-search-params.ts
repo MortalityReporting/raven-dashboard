@@ -4,5 +4,6 @@ import {DeathDateRange} from "./death-date-range";
 export interface GridSearchParams {
   name?: string;
   deathDate?: DeathDateRange,
-  gender?: Gender
+  gender?: Gender,
+  mannerOfDeath?: string
 }
