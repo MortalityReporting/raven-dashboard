@@ -84,7 +84,6 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
   private get searchParams(): GridSearchParams {
     const params: GridSearchParams = {};
 
-
     // Add gender if selected
     const gender = this.searchFilterForm.controls.gender.value;
     if (gender) {
@@ -187,22 +186,6 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
     this.currentPage = event.pageIndex;
     let searchParams: GridSearchParams = this.searchParams;
     this.getDecedentRecords(this.currentPage, this.pageSize, searchParams);
-  }
-
-  getDecedentFullName(decedent: DecedentGridDTO): string {
-    if (decedent.lastName === 'MASKED' || decedent.firstName === 'MASKED') {
-      return 'MASKED';
-    }
-
-    if (!decedent.lastName && !decedent.firstName) {
-      return '';
-    }
-
-    if (!decedent.firstName) {
-      return decedent.lastName || '';
-    }
-
-    return `${decedent.lastName}, ${decedent.firstName}`;
   }
 
 }

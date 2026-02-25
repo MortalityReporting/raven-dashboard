@@ -1,8 +1,7 @@
 export class DecedentGridDTO {
   index: number;
   decedentId: number | string;
-  firstName: string;
-  lastName: string;
+  name: string;
   gender: string;
   tod: Date;
   age: number;

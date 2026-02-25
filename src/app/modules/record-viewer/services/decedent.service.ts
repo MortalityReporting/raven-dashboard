@@ -209,8 +209,7 @@ export class DecedentService {
     // Patient data
     if (patient) {
       dto.decedentId = patient?.id;
-      dto.firstName = this.extractFirstName(patient);
-      dto.lastName = this.extractLastName(patient);
+      dto.name = this.fhirHelperService.getOfficialName(patient);
       dto.gender = patient?.['gender'] ?? null;
       dto.patientResource = patient;
     }

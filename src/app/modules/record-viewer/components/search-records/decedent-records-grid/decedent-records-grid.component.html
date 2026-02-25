@@ -58,7 +58,7 @@
   <ng-container matColumnDef="lastName">
     <th mat-header-cell *matHeaderCellDef> Decedent Name</th>
     <td mat-cell class="pointer"
-        *matCellDef="let decedent"> {{ getDecedentFullName(decedent) }}
+        *matCellDef="let decedent"> {{ decedent.name }}
     </td>
   </ng-container>
 
