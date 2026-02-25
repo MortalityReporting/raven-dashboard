@@ -1,7 +1,7 @@
 import {Injectable, signal} from '@angular/core';
 import {HttpParams} from "@angular/common/http";
 import {catchError, forkJoin, map, mergeMap, Observable, of, skipWhile, tap} from "rxjs";
-import {Bundle, BundleHelperService, FhirClientService, FhirHelperService, FhirResource} from "../../fhir-util";
+import {BundleHelperService, FhirClientService, FhirHelperService, FhirResource} from "../../fhir-util";
 import {ConfigService} from "../../../service/config.service";
 import {GridSearchParams} from "../models/grid-search-params";
 import {DecedentGridDTO} from "../../../model/decedent.grid.dto";
