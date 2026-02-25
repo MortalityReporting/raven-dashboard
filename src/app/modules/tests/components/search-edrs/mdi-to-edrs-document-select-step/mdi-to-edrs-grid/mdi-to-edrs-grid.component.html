@@ -92,7 +92,7 @@
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onCaseSelected(row)"
-      [ngClass]="row.caseNumber == selectedRecord.caseNumber? 'selected-row':''"
+      [ngClass]="row.caseNumber == selectedRecord?.caseNumber? 'selected-row':''"
   ></tr>
 
   <tr class="mat-row" *matNoDataRow>
