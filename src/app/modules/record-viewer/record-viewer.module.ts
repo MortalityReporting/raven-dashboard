@@ -10,7 +10,7 @@ import {RouterModule} from "@angular/router";
 import {FhirExplorerModule} from "../fhir-explorer/fhir-explorer.module";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {DomSanitizer} from "@angular/platform-browser";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatSortModule} from "@angular/material/sort";
 import {ModuleHeaderConfig} from "../../providers/module-header-config";
 import {MatTableModule} from "@angular/material/table";
@@ -19,6 +19,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatListModule} from "@angular/material/list";
 import {MatCardModule} from "@angular/material/card";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatInputModule} from "@angular/material/input";
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
@@ -61,6 +62,9 @@ import { DcrContentDeathInvestigationComponent } from './components/dcr-viewer/d
 import { DcrContentCremationClearanceComponent } from './components/dcr-viewer/dcr-viewer-content/dcr-content-cremation-clearance/dcr-content-cremation-clearance.component';
 import { DcrContentCaseAdminInfoComponent } from './components/dcr-viewer/dcr-viewer-content/dcr-content-case-admin-info/dcr-content-case-admin-info.component';
 import { DcrViewerSignatureComponent } from './components/dcr-viewer/dcr-viewer-content/dcr-viewer-signature/dcr-viewer-signature.component';
+import {MatPaginator} from "@angular/material/paginator";
+import {MatProgressBar} from "@angular/material/progress-bar";
+import {provideNativeDateAdapter} from '@angular/material/core';
 
 @NgModule({
     declarations: [
@@ -98,31 +102,35 @@ import { DcrViewerSignatureComponent } from './components/dcr-viewer/dcr-viewer-
     ToxToMdiViewerMdiCaseComponent,
     ToxToMdiViewerContentComponent
   ],
-    imports: [
-        CommonModule,
-        FhirUtilModule, // Dependency
-        FhirMdiLibraryModule, // Dependency
-        MatSidenavModule,
-        MatIconModule,
-        MatListModule,
-        MatTooltipModule,
-        MatToolbarModule,
-        MatButtonModule,
-        RouterModule,
-        FhirExplorerModule,
-        MatTableModule,
-        MatExpansionModule,
-        MatInputModule,
-        MatProgressSpinnerModule,
-        MatTabsModule,
-        FormsModule,
-        MatCardModule,
-        MatSelectModule,
-        MatCheckboxModule,
-        MatSortModule,
-        ScrollingModule,
-        CommonErrorComponent
-    ]
+  imports: [
+    CommonModule,
+    FhirUtilModule, // Dependency
+    FhirMdiLibraryModule, // Dependency
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatTooltipModule,
+    MatToolbarModule,
+    MatButtonModule,
+    RouterModule,
+    FhirExplorerModule,
+    MatTableModule,
+    MatExpansionModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
+    MatTabsModule,
+    FormsModule,
+    MatCardModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatSortModule,
+    ScrollingModule,
+    CommonErrorComponent,
+    MatPaginator,
+    MatProgressBar,
+    MatDatepickerModule,
+    ReactiveFormsModule
+  ]
 })
 export class RecordViewerModule {
   constructor(private matIconRegistry: MatIconRegistry,
@@ -155,7 +163,8 @@ export class RecordViewerModule {
         {
           provide: 'fhirProfiles',
           useValue: fhirProfiles
-        }
+        },
+        provideNativeDateAdapter()
       ]
     }
   }
