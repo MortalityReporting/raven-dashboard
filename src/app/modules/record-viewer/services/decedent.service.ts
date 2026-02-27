@@ -151,7 +151,7 @@ export class DecedentService {
       return of({ dtos: [], totalCount });
     }
 
-    const allResources = this.bundleHelperService.mapBundleToEntries(bundle);
+    const allResources = this.bundleHelperService.flattenBundle(bundle);
 
     const compositions = allResources.filter(r => r.resourceType === 'Composition');
     const patients = allResources.filter(r => r.resourceType === 'Patient');
@@ -305,7 +305,7 @@ export class DecedentService {
 
     return this.getDecedentObservationsByCode(pair.patient, codes).pipe(
       map(observationBundle => {
-        const observations = this.bundleHelperService.mapBundleToEntries(observationBundle);
+        const observations = this.bundleHelperService.flattenBundle(observationBundle);
 
         // Extract specific observations
         const todObservation = this.findObservationByCode(observations, loincTimeOfDeath);

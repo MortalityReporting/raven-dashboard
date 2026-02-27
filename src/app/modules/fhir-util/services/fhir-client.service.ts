@@ -96,7 +96,7 @@ export class FhirClientService {
     if (flat) {
       return pagination$.pipe(
         map((completeBundle: Bundle) => {
-          const resourceList = this.bundleHelperService.mapBundleToEntries(completeBundle)
+          const resourceList = this.bundleHelperService.flattenBundle(completeBundle)
           return resourceList;
         }))
     }

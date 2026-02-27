@@ -74,7 +74,7 @@ export class BundleHelperService {
     return (bundle.entry.find((entry: any) => entry.fullUrl === fullUrlReference))?.resource || undefined;
   }
 
-  public mapBundleToEntries (completeBundle: Bundle) {
+  public flattenBundle (completeBundle: Bundle) {
     if(!completeBundle || !completeBundle['entry']) return null;
 
     let resourceList: FhirResource[] = [];
