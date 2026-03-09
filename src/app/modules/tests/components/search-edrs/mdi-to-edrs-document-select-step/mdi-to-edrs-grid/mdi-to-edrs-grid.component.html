@@ -1,82 +1,114 @@
 <div class="margin-top-md">
-  <div class="row">
-    <mat-form-field id="filter-form-field" appearance="outline" >
-      <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Search decedents" #input>
+  <form [formGroup]="searchFilterForm" (ngSubmit)="onSearch()">
+
+    <mat-form-field appearance="outline" class="margin-left-md" floatLabel="always" style="min-width: 20em">
+      <mat-label>Name</mat-label>
+      <input matInput type="text" formControlName="name">
+      <mat-hint>Enter first name, last name or part of a name</mat-hint>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" id="manner-select-form-filed">
-      <mat-label>Manner of Death</mat-label>
-      <mat-select (selectionChange)="applyMannerOfDeathFilter()" #mannerOfDeathSelect='matSelect'>
-        @for (mannerOfDeath of mannerOfDeathList; track mannerOfDeath) {
-          <mat-option [value]="mannerOfDeath">
-            {{ mannerOfDeath }}
+    <mat-form-field appearance="outline" class="margin-left-md narrow-filter" floatLabel="always">
+      <mat-label>Sex</mat-label>
+      <mat-select [formControl]="searchFilterForm.controls.gender">
+        @for (option of genderOptions; track option) {
+          <mat-option [value]="option.value">
+            {{ option.label }}
           </mat-option>
         }
       </mat-select>
     </mat-form-field>
-    <button mat-raised-button [style.background-color]="config.backgroundColor"
-      [style.color]="'white'" id="clear-filters-btn" (click)="onClearFilters()">
-      Clear Filters
+
+    <ng-container formGroupName="deathDate">
+      <mat-form-field appearance="outline" class="margin-left-md" floatLabel="always">
+        <mat-label>Date of Death Range</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input matStartDate formControlName="start" placeholder="Start date">
+          <input matEndDate formControlName="end" placeholder="End date">
+        </mat-date-range-input>
+        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+    </ng-container>
+
+    <mat-form-field appearance="outline" class="margin-left-md"  floatLabel="always">
+      <mat-label>Manner of Death</mat-label>
+      <mat-select [formControl]="searchFilterForm.controls.mannerOfDeath">
+        @for (mannerOfDeath of mannerOfDeathList; track mannerOfDeath) {
+          <mat-option [value]="mannerOfDeath.code">
+            {{ mannerOfDeath.display }}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button class="primary-color-button margin-left-md" type="submit"
+            [style.background-color]="config.backgroundColor" [style.color]="'white'">
+      Search
     </button>
-  </div>
-
-
-  @if (isLoading) {
-    <div class="spinner-container">
-      <mat-spinner [diameter]="70"></mat-spinner>
-    </div>
-  }
-
-  <table mat-table [dataSource]="dataSource" matSort matSortDisableClear matSortActive="personId"
-    class="search-results-grid">
-
-    <ng-container matColumnDef="index">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> #</th>
-      <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.index}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="lastName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name</th>
-      <td mat-cell class="pointer"
-        *matCellDef="let decedent"> {{decedent.lastName | titlecase}}{{decedent.firstName ? ', ' + decedent.firstName : ''}}
-      </td>
-    </ng-container>
-    <!--    TODO uncomment when we know how to use gender/sex fields per the CDC guidelines. Note that gender should come from Sex at Death-->
-<!--    <ng-container matColumnDef="gender">-->
-<!--      <th mat-header-cell *matHeaderCellDef mat-sort-header> Gender</th>-->
-<!--      <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.gender | titlecase}} </td>-->
-<!--    </ng-container>-->
-
-    <ng-container matColumnDef="age">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Age</th>
-      <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.age}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="tod">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of Death</th>
-      <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.tod | date: 'MM/dd/yyyy'}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="mannerOfDeath">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Manner of Death</th>
-      <td mat-cell class="pointer" *matCellDef="let decedent"> {{decedent.mannerOfDeath | titlecase}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="caseNumber">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> MDI Case Number</th>
-      <td mat-cell class="pointer" *matCellDef="let decedent"
-        [matTooltip]="'System: ' + (decedent.system || 'Unknown')"> {{decedent.caseNumber }}
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onCaseSelected(row)"
-      class="grid-row"
-      [ngClass]="{'selected-row': row.index === selectedCase?.index}">
-    </tr>
-
-  </table>
-  <mat-paginator [pageSize]="10"></mat-paginator>
+  </form>
 </div>
+
+@if (isLoading) {
+  <div class="spinner-container">
+    <mat-spinner [diameter]="70"></mat-spinner>
+  </div>
+}
+<table mat-table [dataSource]="dataSource">
+  <ng-container matColumnDef="lastName">
+    <th mat-header-cell *matHeaderCellDef> Decedent Name</th>
+    <td mat-cell class="pointer"
+        *matCellDef="let decedent"> {{ decedent.name }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="gender">
+    <th mat-header-cell *matHeaderCellDef> Sex</th>
+    <td mat-cell class="pointer" *matCellDef="let decedent"> {{ decedent.gender | titlecase }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="age">
+    <th mat-header-cell *matHeaderCellDef> Age</th>
+    <td mat-cell class="pointer" *matCellDef="let decedent"> {{ decedent.age }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="tod">
+    <th mat-header-cell *matHeaderCellDef> Date of Death</th>
+    <td mat-cell class="pointer" *matCellDef="let decedent"> {{ decedent.tod | date: 'MM/dd/yyyy' }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="mannerOfDeath">
+    <th mat-header-cell *matHeaderCellDef> Manner of Death</th>
+    <td mat-cell class="pointer" *matCellDef="let decedent"> {{ decedent.mannerOfDeath | titlecase }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="caseNumber">
+    <th mat-header-cell *matHeaderCellDef> MDI Case Number</th>
+    <td mat-cell class="pointer" *matCellDef="let decedent"
+        [matTooltip]="'System: ' + (decedent.system || 'Unknown')"> {{ decedent.caseNumber }}
+    </td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onCaseSelected(row)"
+      [ngClass]="row.caseNumber == selectedRecord?.caseNumber? 'selected-row':''"
+  ></tr>
+
+  <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell" [colSpan]="displayedColumns.length">
+      @if (!isLoading) {
+        No results found.
+      }
+  </tr>
+</table>
+
+<mat-paginator
+  #paginator
+  [length]="totalDataSize"
+  [pageSizeOptions]="pageSizes"
+  [pageSize]="pageSize"
+  showFirstLastButtons
+  (page)="onPageChanged($event)"
+  aria-label="Select page">
+  ></mat-paginator>

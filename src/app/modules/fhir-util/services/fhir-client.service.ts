@@ -4,6 +4,7 @@ import {EMPTY, expand, map, mergeMap, Observable, of, reduce, takeWhile, tap} fr
 import {FhirResource} from "../models/fhir/r4/base/fhir.resource";
 import {Bundle, BundleEntryComponent, BundleType} from "../models/fhir/r4/resources/bundle";
 import {ConfigService} from "../../../service/config.service";
+import {BundleHelperService} from "./bundle-helper.service";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class FhirClientService {
   private readonly logFhirRequests: boolean;
 
   constructor(private http: HttpClient,
-              private configService: ConfigService) {
+              private configService: ConfigService,
+              private bundleHelperService: BundleHelperService) {
     this.logFhirRequests = this.configService?.config?.logFhirRequests ?? true;
     this.serverBaseUrl = this.configService?.config?.ravenFhirServerBaseUrl;
   }
@@ -54,7 +56,7 @@ export class FhirClientService {
     let pagination$: Observable<Bundle>;
 
     if (typeof parameters === 'string' || parameters instanceof String) {
-      searchString = fullUrl ? fullUrl : this.createSearchRequestUrl(resourceType, parameters as string, baseUrl)
+      searchString = fullUrl ? fullUrl : this.createSearchRequestUrl(resourceType, parameters as string, baseUrl);
       pagination$ = this.http.get<Bundle>(searchString, {params: httpParams});
     }
     else {
@@ -94,15 +96,9 @@ export class FhirClientService {
     if (flat) {
       return pagination$.pipe(
         map((completeBundle: Bundle) => {
-            let resourceList: FhirResource[] = [];
-            if (completeBundle['entry']) {
-              completeBundle['entry'].map((bundleEntry: BundleEntryComponent) => {
-                resourceList.push(bundleEntry.resource)
-              });
-            }
-            return resourceList;
-          }
-        ))
+          const resourceList = this.bundleHelperService.flattenBundle(completeBundle)
+          return resourceList;
+        }))
     }
     else return pagination$;
   }

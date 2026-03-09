@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Inject, OnInit, Output, ViewChild} from '@angular/core';
 import {DecedentGridDTO} from "../../../../../../model/decedent.grid.dto";
 import {MatSort} from "@angular/material/sort";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -10,10 +10,23 @@ import {DecedentSimpleInfo} from "../../../../../../model/decedent-simple-info";
 import {FhirHelperService, PatientNameReturn} from "../../../../../fhir-util/services/fhir-helper.service";
 import {DatePipe} from "@angular/common";
 import {MatTableDataSource} from "@angular/material/table";
-import {MatPaginator} from "@angular/material/paginator";
-import {MatSelect} from "@angular/material/select";
+import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {TrackingNumberType} from "../../../../../fhir-mdi-library";
 import {ModuleHeaderConfig} from "../../../../../../providers/module-header-config";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {BundleHelperService} from "../../../../../fhir-util";
+import {AppConstants} from "../../../../../../providers/app-constants";
+import {GridSearchParams} from "../../../../../record-viewer/models/grid-search-params";
+import {
+  DecedentRecordsGridComponent
+} from "../../../../../record-viewer/components/search-records/decedent-records-grid/decedent-records-grid.component";
+
+export interface DeathDateRange{
+  start?: string;
+  end?: string;
+}
+
+export type Gender = 'male' | 'female' | 'unknown';
 
 @Component({
     selector: 'app-mdi-to-edrs-grid',
@@ -23,119 +36,142 @@ import {ModuleHeaderConfig} from "../../../../../../providers/module-header-conf
 })
 // For now this class component is almost exactly the same as the one we use for the decedent-records-grid.
 // However, the functionality will be different and we are going to change the code at some point in the near future.
-export class MdiToEdrsGridComponent implements OnInit {
+export class MdiToEdrsGridComponent implements OnInit, AfterViewInit {
 
   dataSource = new MatTableDataSource<any>();
-  //    TODO uncomment when we know how to use gender/sex fields per the CDC guidelines. Note that gender should come from Sex at Death
-  //displayedColumns: string[] = ['index', 'lastName', 'gender', 'tod', 'mannerOfDeath', 'caseNumber'];
-  displayedColumns: string[] = ['index', 'lastName', 'tod', 'mannerOfDeath', 'caseNumber'];
-  decedentGridDtoList: any[];
+  displayedColumns: string[] = ['lastName', 'gender', 'tod', 'mannerOfDeath', 'caseNumber'];
+  decedentGridDtoList: DecedentGridDTO[];
   isLoading = true;
+  datePipe: DatePipe;
   selectedCase: any;
   decedentInfo: DecedentSimpleInfo;
-  pipe: DatePipe;
+  selectedRecord : DecedentGridDTO = null;
+
+  pageSize = 5;
+  currentPage = 0;
+  mannerOfDeathList: {code: number, display: string}[] = [];
+
+  readonly genderOptions = [
+    { value: 'male', label: 'Male' },
+    { value: 'female', label: 'Female' },
+    { value: 'unknown', label: 'Unknown' }
+  ] as const;
+
+  @Output() serverErrorEventEmitter = new EventEmitter();
+  totalDataSize: number = 0;
+  readonly pageSizes = [5, 10, 20];
 
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild('input') input: ElementRef;
-  @ViewChild('mannerOfDeathSelect') mannerOfDeathSelect: MatSelect;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  mannerOfDeathList: string [] = [];
+  readonly searchFilterForm = new FormGroup({
+    name: new FormControl<string>(''),
+    gender: new FormControl<Gender | null>(null),
+    deathDate: this.fb.group({
+      start: [null],
+      end: [null]
+    }),
+    mannerOfDeath: new FormControl<string>(''),
+  });
 
   constructor(
     @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
-    private route: ActivatedRoute,
+    private fb: FormBuilder,
     private decedentService: DecedentService,
-    private router: Router,
     private utilsService: UtilsService,
     private searchEdrsService: SearchEdrsService,
-    private fhirHelperService: FhirHelperService
+    private appConstants: AppConstants
   ) {
+    this.mannerOfDeathList = this.appConstants.MANNER_OF_DEATH_LIST;
   }
 
-  mapToDto(entry: any): DecedentGridDTO {
-    let decedentDTO = new DecedentGridDTO();
-    decedentDTO.decedentId = entry?.id;
-    decedentDTO.firstName = this.fhirHelperService.getOfficialName(entry, PatientNameReturn.firstonly);
-    decedentDTO.lastName = this.fhirHelperService.getOfficialName(entry, PatientNameReturn.lastonly);
-    decedentDTO.gender = entry?.gender;
-    decedentDTO.system = entry.identifier?.[0]?.system || null;
-    decedentDTO.age = this.getAgeFromDob(new Date(entry.birthDate));
-    decedentDTO.patientResource = entry;
-    return decedentDTO;
+  private get searchParams(): GridSearchParams {
+    const params: GridSearchParams = {};
+
+    const gender = this.searchFilterForm.controls.gender.value;
+    if (gender) {
+      params.gender = gender;
+    }
+
+    const deathDate = this.deathDateRange;
+    if (deathDate) {
+      params.deathDate = deathDate;
+    }
+
+    const name = this.searchFilterForm.controls.name.value;
+    if (name) {
+      params.name = name;
+    }
+
+    const mannerOfDeath = this.searchFilterForm.controls.mannerOfDeath.value;
+    if (mannerOfDeath) {
+      params.mannerOfDeath = mannerOfDeath;
+    }
+
+    return params;
   }
 
-  ngOnInit(): void {
-    const loincCauseOfDeath = '69449-7';
-    const loincTimeOfDeath = '81956-5';
-    const codes = [loincCauseOfDeath, loincTimeOfDeath];
+
+  private get deathDateRange(): DeathDateRange | null {
+    const startValue = this.searchFilterForm.controls.deathDate.controls.start.value;
+    const endValue = this.searchFilterForm.controls.deathDate.controls.end.value;
+
+    if (!startValue && !endValue) {
+      return null;
+    }
+
+    return {
+      ...(startValue && { start: this.datePipe.transform(startValue, 'yyyy-MM-dd')! }),
+      ...(endValue && { end: this.datePipe.transform(endValue, 'yyyy-MM-dd')! })
+    };
+  }
+
+  onSearch() {
+    let searchParams: GridSearchParams = this.searchParams;
+    if (searchParams) {
+      this.decedentService.setSearchResultsBundleId(null);
+    }
+    this.currentPage = 0;
+    this.paginator.pageIndex = this.currentPage;
+    this.getDecedentRecords(this.currentPage, this.pageSize, searchParams)
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+  }
+
+  getDecedentRecords(pageNumber: number, pageSize: number, searchParams?: GridSearchParams) {
     this.isLoading = true;
+    this.selectedRecord = null;
 
-    this.searchEdrsService.documentBundle$.subscribe({
-      next: value => {
-        if(!value){
-          this.selectedCase = null;
-          this.searchEdrsService.setDecedentData(null);
-        }
-      }
-    });
-
-    this.decedentService.getDecedentRecords().pipe(
-      mergeMap((decedentRecordsList: any[]) =>
-        forkJoin(
-          decedentRecordsList.map((decedentRecord: any, i) =>
-            this.decedentService.getDecedentObservationsByCode(decedentRecord, codes).pipe(
-              map((observation: any) => {
-                decedentRecord = this.mapToDto(decedentRecord);
-                //const tod = observation?.entry?.find(entry => entry.resource?.code?.coding[0]?.code == loincTimeOfDeath)?.resource?.effectiveDateTime;
-                // TODO: duplicate code!!! We use the same coe in the decedent-record grid and we should refactor it
-                const tod = observation?.entry?.find(entry => entry.resource?.code?.coding[0]?.code == loincTimeOfDeath)?.resource?.valueDateTime;
-                decedentRecord.tod = tod;
-                const mannerOfDeath =  observation?.entry?.find(entry => entry.resource?.code?.coding[0]?.code == loincCauseOfDeath)?.resource?.valueCodeableConcept?.coding[0]?.display;
-                decedentRecord.mannerOfDeath = mannerOfDeath;
-                decedentRecord.index = i + 1;
-                return decedentRecord;
-              })
-            )
-          ))
-      )
-    ).pipe(
-      mergeMap((decedentRecordsList: any[]) =>
-        forkJoin(
-          decedentRecordsList.map((decedentRecord: any, i) =>
-            this.decedentService.getComposition(decedentRecord.decedentId).pipe(
-              map((composition: any) => {
-                const caseNumber = composition?.entry?.[0]?.resource?.extension?.[0]?.valueIdentifier?.value;
-                decedentRecord.caseNumber = caseNumber;
-                const mdiSystem = this.fhirHelperService.getTrackingNumberSystem(composition?.entry?.[0]?.resource, TrackingNumberType.Mdi);
-                decedentRecord.system = mdiSystem;
-                return decedentRecord
-              })
-            )
-          ))
-      )
-    )
+    this.decedentService.getDecedentRecordsAsGridDTOs(pageNumber, pageSize, searchParams)
       .subscribe({
-        next: (data) => {
-          this.decedentGridDtoList = data.filter(record => !!record.caseNumber);
+        next: (result) => {
+          this.totalDataSize = result.totalCount;
+          this.decedentGridDtoList = result.dtos;
+
+
           this.dataSource = new MatTableDataSource(this.decedentGridDtoList);
-          this.mannerOfDeathList = this.getMannerOfDeathList(this.decedentGridDtoList);
-          this.dataSource.sort = this.sort;
-          this.dataSource.paginator = this.paginator;
-          this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
           this.setDataSourceFilters();
         },
-        error: (e) => {
-          console.error(e);
-          this.utilsService.showErrorMessage();
+        error: (error) => {
+          this.isLoading = false;
+          console.error('Error loading decedent records:', error);
+          this.serverErrorEventEmitter.emit();
         },
-        complete:  () => {
+        complete: () => {
           this.isLoading = false;
         }
       });
   }
 
+  ngOnInit(): void {
+    this.decedentService.setSearchResultsBundleId(null);
+    this.getDecedentRecords(this.currentPage, this.pageSize);
+  }
+
   onCaseSelected(decedent: any) {
+    this.selectedRecord = decedent;
     this.selectedCase = decedent;
     this.decedentInfo = new DecedentSimpleInfo();
     this.decedentInfo.mdiTrackingNumber = decedent.caseNumber;
@@ -145,7 +181,9 @@ export class MdiToEdrsGridComponent implements OnInit {
     this.searchEdrsService.setDecedentData(this.decedentInfo);
 
     this.decedentService.getComposition(decedent.decedentId).pipe(
-      switchMap(composition => this.decedentService.getDocumentBundle(composition?.entry?.[0]?.resource?.id))
+      switchMap(
+        composition => this.decedentService.getDocumentBundle(composition?.entry?.[0]?.resource?.id)
+      )
     ).subscribe({
       next: result => this.searchEdrsService.setDocumentBundle(result),
       error: err => {
@@ -155,45 +193,19 @@ export class MdiToEdrsGridComponent implements OnInit {
     });
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  getAgeFromDob(birthday: any) {
-    const ageDifMs = Date.now() - birthday;
-    const ageDate = new Date(ageDifMs);
-    return Math.abs(ageDate.getUTCFullYear() - 1970);
-  }
-
-  private getMannerOfDeathList(decedentGridDtoList: DecedentGridDTO[]) {
-    const result = [...new Set (decedentGridDtoList.map(decedent => decedent.mannerOfDeath))].filter(element => !!element);
-    return result;
-  }
-
-  applyMannerOfDeathFilter() {
-    const mannerOfDeath = this.mannerOfDeathSelect.value;
-    this.dataSource.filter = mannerOfDeath;
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
-  onClearFilters() {
-    this.mannerOfDeathSelect.value = null;
-    this.input.nativeElement.value = '';
-    this.dataSource.filter = '';
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
   private setDataSourceFilters() {
-    this.pipe = new DatePipe('en');
+    this.datePipe = new DatePipe('en');
     const defaultPredicate = this.dataSource.filterPredicate;
     this.dataSource.filterPredicate = (data, filter) => {
-      const formatted = this.pipe.transform(data.tod,'MM/dd/yyyy');
-      return formatted.indexOf(filter) >= 0 || defaultPredicate(data,filter) ;
+      const formatted = this.datePipe.transform(data.tod, 'MM/dd/yyyy');
+      return formatted.indexOf(filter) >= 0 || defaultPredicate(data, filter);
     }
+  }
+
+  onPageChanged(event: PageEvent): void {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    let searchParams: GridSearchParams = this.searchParams;
+    this.getDecedentRecords(this.currentPage, this.pageSize, searchParams);
   }
 }

@@ -65,7 +65,13 @@ import { EstablishConnectionComponent } from './components/search-edrs-bluejay/e
 import { SearchEdrsBluejayComponent } from './components/search-edrs-bluejay/search-edrs-bluejay.component';
 import { DeathCertificateReviewSubmissionComponent } from './components/death-certificate-review-submission/death-certificate-review-submission.component';
 import {MatListItem, MatSelectionList} from "@angular/material/list";
-import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
+import {
+    MatDatepicker,
+    MatDatepickerInput,
+    MatDatepickerToggle,
+    MatDateRangeInput,
+    MatDateRangePicker, MatEndDate, MatStartDate
+} from "@angular/material/datepicker";
 import {provideNativeDateAdapter} from "@angular/material/core";
 import {MatTimepicker, MatTimepickerInput, MatTimepickerToggle} from "@angular/material/timepicker";
 import { DcrFormSubmissionComponent } from './components/death-certificate-review-submission/dcr-form-submission/dcr-form-submission.component';
@@ -80,6 +86,7 @@ import {
 import {
   SimpleJsonViewerComponent
 } from "./components/toxicology-record-submission/simple-json-viewer/simple-json-viewer.component";
+import {MatProgressBar} from "@angular/material/progress-bar";
 
 @NgModule({
   declarations: [
@@ -117,41 +124,46 @@ import {
     UpdateEdrsComponent,
     ValidationComponent
   ],
-  imports: [
-    CommonModule,
-    MatToolbarModule,
-    MatCardModule,
-    MatTabsModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatProgressSpinnerModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatTooltipModule,
-    MatRadioModule,
-    ReactiveFormsModule,
-    MatExpansionModule,
-    MatIconModule,
-    MatStepperModule,
-    MatButtonModule,
-    FormsModule,
-    MatInputModule,
-    MatSortModule,
-    MatCheckboxModule,
-    MatDividerModule,
-    ClipboardModule,
-    NgxHisbLoggerModule,
-    MatSelectionList,
-    MatListItem,
-    MatDatepicker,
-    MatDatepickerToggle,
-    MatDatepickerInput,
-    MatTimepickerInput,
-    MatTimepicker,
-    MatTimepickerToggle,
-    RecordViewerModule,
-    SimpleJsonViewerComponent,
-  ],
+    imports: [
+        CommonModule,
+        MatToolbarModule,
+        MatCardModule,
+        MatTabsModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatProgressSpinnerModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatTooltipModule,
+        MatRadioModule,
+        ReactiveFormsModule,
+        MatExpansionModule,
+        MatIconModule,
+        MatStepperModule,
+        MatButtonModule,
+        FormsModule,
+        MatInputModule,
+        MatSortModule,
+        MatCheckboxModule,
+        MatDividerModule,
+        ClipboardModule,
+        NgxHisbLoggerModule,
+        MatSelectionList,
+        MatListItem,
+        MatDatepicker,
+        MatDatepickerToggle,
+        MatDatepickerInput,
+        MatTimepickerInput,
+        MatTimepicker,
+        MatTimepickerToggle,
+        RecordViewerModule,
+        SimpleJsonViewerComponent,
+        MatDateRangeInput,
+        MatDateRangePicker,
+        MatEndDate,
+        MatProgressBar,
+        MatStartDate,
+    ],
 })
 export class TestsModule {
   public static forRoot(environment: any, config: ModuleHeaderConfig, appConfig: any): ModuleWithProviders<any> {
