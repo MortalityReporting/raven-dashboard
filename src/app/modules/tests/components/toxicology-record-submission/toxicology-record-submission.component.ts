@@ -21,18 +21,18 @@ export class ToxicologyRecordSubmissionComponent{
     private toxicologyHandler: ToxToMdiMessageHandlerService
   ){}
 
-  isLoadingData = false;
+  isLoading = signal(false);
 
   onToxRecordSelected(toxRecordDto: ToxicologyGridDto) {
     this.getToxRecordDetails(toxRecordDto);
   }
 
   private getToxRecordDetails(toxRecordDto: ToxicologyGridDto) {
-    this.isLoadingData = true;
+    this.isLoading.set(true);
     this.externalApiSubmissionService.setJsonRecord(null);
     this.toxicologyHandler.getRecord(toxRecordDto.toxcasenumber).subscribe({
       next: record => {
-        this.isLoadingData = false;
+        this.isLoading.set(false);
         if(record?.messageBundle){
           this.selectedToxRecord.set(record);
           this.externalApiSubmissionService.setJsonRecord(record.messageBundle);
@@ -43,7 +43,7 @@ export class ToxicologyRecordSubmissionComponent{
       },
       error: err => {
         console.error(err);
-        this.isLoadingData = false;
+        this.isLoading.set(false);
       }
     });
   }
