@@ -1,4 +1,14 @@
-import {Component, OnInit, ViewChild, Inject, Output, EventEmitter, AfterViewInit} from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  Inject,
+  Output,
+  EventEmitter,
+  AfterViewInit,
+  ChangeDetectorRef,
+  signal
+} from '@angular/core';
 import {DecedentGridDTO} from "../../../../../model/decedent.grid.dto";
 import {DecedentService} from "../../../services/decedent.service";
 import {Router} from "@angular/router";
@@ -34,7 +44,7 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['lastName', 'gender', 'tod', 'mannerOfDeath', 'caseNumber'];
   decedentGridDtoList: DecedentGridDTO[];
-  isLoading = true;
+  isLoading = signal(false);
   datePipe: DatePipe;
   mannerOfDeathList: {code: number, display: string}[] = [];
 
@@ -76,7 +86,7 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
     @Inject('config') public config: ModuleHeaderConfig,
     @Inject('appConfig') public appConfig: AppConfiguration,
     @Inject('fhirProfiles') public fhirProfiles: FHIRProfileConstants,
-    private appConstants: AppConstants
+    private appConstants: AppConstants,
   ) {
     this.mannerOfDeathList = this.appConstants.MANNER_OF_DEATH_LIST;
   }
@@ -140,26 +150,22 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
 
 
   getDecedentRecords(pageNumber: number, pageSize: number, searchParams?: GridSearchParams) {
-    this.isLoading = true;
+   this.isLoading.set(true)
 
     this.decedentService.getDecedentRecordsAsGridDTOs(pageNumber, pageSize, searchParams)
       .subscribe({
         next: (result) => {
           this.totalDataSize = result.totalCount;
           this.decedentGridDtoList = result.dtos;
-
-
           this.dataSource = new MatTableDataSource(this.decedentGridDtoList);
           this.setDataSourceFilters();
+          this.isLoading.set(false)
         },
         error: (error) => {
-          this.isLoading = false;
+          this.isLoading.set(false)
           console.error('Error loading decedent records:', error);
           this.serverErrorEventEmitter.emit();
         },
-        complete: () => {
-          this.isLoading = false;
-        }
       });
   }
 
@@ -169,7 +175,7 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
   }
 
   onCaseSelected(row: any) {
-    this.router.navigate([`${this.appConfig.modules['recordViewer'].route}/mdi/`, row.decedentId]);
+    this.router.navigate([`${this.appConfig.modules['recordViewer'].route}/mdi/`, row.decedentId]).then(()=>{console.log("Navigation completed")});
   }
 
   private setDataSourceFilters() {

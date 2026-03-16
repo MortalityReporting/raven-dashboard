@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, signal, ViewChild} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {AppConfiguration} from "../../../../providers/app-configuration";
@@ -20,6 +20,7 @@ export class ToxToMdiViewerComponent implements OnInit {
 
   /** Inputs to children **/
   toxToMdiRecord: ToxToMdiRecord;
+  isLoading = signal(false);
   serverErrorDetected: boolean = false;
 
   constructor(
@@ -31,6 +32,7 @@ export class ToxToMdiViewerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.isLoading = signal(true);
     this.serverErrorDetected = false;
     let toxLabId = this.route.snapshot.params['id'];
     this.toxicologyHandler.getRecord(toxLabId).subscribe({
@@ -42,10 +44,12 @@ export class ToxToMdiViewerComponent implements OnInit {
         else {
           console.warn("No message bundle found")
         }
+        this.isLoading.set(false);
       },
       error: err => {
         console.error(err);
         this.serverErrorDetected = true;
+        this.isLoading.set(false);
       }
     });
   }

@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, signal, ViewChild} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {MdiToEdrsDocumentHandlerService} from "../../services/mdi-to-edrs-document-handler.service";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
@@ -19,7 +19,7 @@ export class MdiToEdrsViewerComponent implements OnInit, OnDestroy {
 
   /** Inputs to children **/
   mdiToEdrsRecord: MdiToEdrsRecord;
-  isLoading: boolean = false;
+  isLoading = signal(false);
 
   documentBundle: any = {};
   compositionId: string = "";
@@ -42,17 +42,17 @@ export class MdiToEdrsViewerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     let subjectId = this.route.snapshot.params['id'];
-    this.isLoading = true;
+    this.isLoading.set(true);
     this.documentHandler.getRecord(subjectId).subscribe({
       next: record => {
         this.fhirExplorerService.setSelectedFhirResource(record.documentBundle);
         this.mdiToEdrsRecord = record;
-        this.isLoading = false;
+        this.isLoading.set(false);
       },
       error: err => {
         console.error(err);
         this.utilsService.showErrorMessage("Server error loading records.");
-        this.isLoading = false;
+        this.isLoading.set(false);
       }
     });
   }
