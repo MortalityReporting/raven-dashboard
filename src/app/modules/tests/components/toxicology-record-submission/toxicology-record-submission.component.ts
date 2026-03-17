@@ -13,6 +13,8 @@ import {ExternalApiSubmissionService} from "../../services/external-api-submissi
 })
 export class ToxicologyRecordSubmissionComponent{
   selectedToxRecord = signal<any>(null);
+  selectedRecordDTO = signal<ToxicologyGridDto>(null);
+
   externalApiSubmissionService = inject(ExternalApiSubmissionService);
 
   constructor(
@@ -24,6 +26,7 @@ export class ToxicologyRecordSubmissionComponent{
   isLoading = signal(false);
 
   onToxRecordSelected(toxRecordDto: ToxicologyGridDto) {
+    this.selectedRecordDTO.set(toxRecordDto);
     this.getToxRecordDetails(toxRecordDto);
   }
 
