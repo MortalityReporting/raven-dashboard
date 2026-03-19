@@ -8,7 +8,9 @@
         </mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <record-viewer-toxicology-grid [currentModule]="'workflowSimulator'" (onToxRecordSelected)="onToxRecordSelected($event)">
+        <record-viewer-toxicology-grid
+          [currentModule]="'workflowSimulator'"
+          (onToxRecordSelected)="onToxRecordSelected($event)">
         </record-viewer-toxicology-grid>
       </mat-card-content>
     </mat-card>
@@ -25,8 +27,14 @@
           @if(selectedToxRecord()){
             <tests-tox-record-details [selectedToxRecord]="selectedToxRecord()"></tests-tox-record-details>
           }
+          @else if(selectedRecordDTO()){
+            <div class="flex-row">
+              <div class="margin-right-sm"><mat-icon class="warning-color">warning</mat-icon></div>
+              <div class="warning-message">No tox data found for: {{selectedRecordDTO().lastName}}, {{selectedRecordDTO().firstName}}, MDI Case Number: {{ selectedRecordDTO().mdicasenumber}}</div>
+            </div>
+          }
           @else {
-            <em>No record Selected. Select a record from the grid above.</em>
+            <em>No record selected. Select a record from the grid above.</em>
           }
         }
         @else {
