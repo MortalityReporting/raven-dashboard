@@ -1,9 +1,14 @@
 <div class="summary-section-body">
   <div class="summary-section-grid">
     <div class="content-field-label">
-      <p><u>Submitter</u></p>
+      <h3 id="submitter-heading" style="text-decoration: underline; margin: 0; font-size: inherit; font-weight: inherit;">
+        Submitter
+      </h3>
     </div>
-    <div class="grid-row">
+    <div
+      class="grid-row"
+      role="group"
+      [attr.aria-labelledby]="'submitter-heading'">
       <div class="grid-col-1">
         <record-viewer-mdi-to-edrs-viewer-content-field
           [label]="'Name'"

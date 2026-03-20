@@ -1,11 +1,14 @@
 <div class="summary-section-body">
   <div class="summary-section-grid">
 
-    <div class="grid-row">
+    <div
+      class="grid-row"
+      role="group"
+      [attr.aria-label]="'Death information'">
       <div class="grid-col-1">
         <record-viewer-mdi-to-edrs-viewer-content-field
           [label]="'Date/Time of Death'"
-          [value]="deathInvestigation()?.dateTimeOfDeath"
+          [value]="deathInvestigation()?.dateTimeOfDeath?.toString() ?? ''"
           appSetFhirExplorer
           [resource]="deathInvestigation()?.resource"
         />
@@ -21,84 +24,94 @@
     </div>
 
     <div class="content-field-label margin-top-lg">
-      <p><u>Death Location</u></p>
+      <h3 id="death-location-heading" style="text-decoration: underline; margin: 0; font-size: inherit; font-weight: inherit;">
+        Death Location
+      </h3>
     </div>
-    <div class="grid-row">
-      <div class="grid-col-1">
-        <record-viewer-mdi-to-edrs-viewer-content-field
-          [label]="'Facility Name'"
-          [value]="deathInvestigation()?.placeOfDeath?.facilityName"
-          appSetFhirExplorer
-          [resource]="deathInvestigation()?.placeOfDeath.resource">
-        </record-viewer-mdi-to-edrs-viewer-content-field>
+
+    <div
+      role="group"
+      [attr.aria-labelledby]="'death-location-heading'">
+
+      <div class="grid-row">
+        <div class="grid-col-1">
+          <record-viewer-mdi-to-edrs-viewer-content-field
+            [label]="'Facility Name'"
+            [value]="deathInvestigation()?.placeOfDeath?.facilityName"
+            appSetFhirExplorer
+            [resource]="deathInvestigation()?.placeOfDeath?.resource">
+          </record-viewer-mdi-to-edrs-viewer-content-field>
+        </div>
+        <div class="grid-col-1" aria-hidden="true"></div>
       </div>
-      <div class="grid-col-1"></div>
+
+      @if (deathInvestigation()?.placeOfDeath?.addressText) {
+        <div class="grid-row">
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field
+              [label]="'Address Description'"
+              [value]="deathInvestigation()?.placeOfDeath?.addressText"
+              appSetFhirExplorer
+              [resource]="deathInvestigation()?.placeOfDeath?.resource">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+          <div class="grid-col-1" aria-hidden="true"></div>
+        </div>
+      } @else {
+        <div class="grid-row">
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field
+              [label]="'Address Line 1'"
+              [value]="deathInvestigation()?.placeOfDeath?.address?.line1"
+              appSetFhirExplorer
+              [resource]="deathInvestigation()?.placeOfDeath?.resource">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field
+              [label]="'Address Line 2'"
+              [value]="deathInvestigation()?.placeOfDeath?.address?.line2"
+              appSetFhirExplorer
+              [resource]="deathInvestigation()?.placeOfDeath?.resource">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+        </div>
+
+        <div class="grid-row">
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field
+              [label]="'City'"
+              [value]="deathInvestigation()?.placeOfDeath?.address?.city"
+              appSetFhirExplorer
+              [resource]="deathInvestigation()?.placeOfDeath?.resource">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field
+              [label]="'State'"
+              [value]="deathInvestigation()?.placeOfDeath?.address?.state"
+              appSetFhirExplorer
+              [resource]="deathInvestigation()?.placeOfDeath?.resource">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field
+              [label]="'Zip Code'"
+              [value]="deathInvestigation()?.placeOfDeath?.address?.zip"
+              appSetFhirExplorer
+              [resource]="deathInvestigation()?.placeOfDeath?.resource">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field
+              [label]="'Country'"
+              [value]="deathInvestigation()?.placeOfDeath?.address?.country"
+              appSetFhirExplorer
+              [resource]="deathInvestigation()?.placeOfDeath?.resource">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+        </div>
+      }
     </div>
-    @if (deathInvestigation()?.placeOfDeath?.addressText) {
-      <div class="grid-row">
-        <div class="grid-col-1">
-          <record-viewer-mdi-to-edrs-viewer-content-field
-            [label]="'Address Description'"
-            [value]="deathInvestigation()?.placeOfDeath?.addressText"
-            appSetFhirExplorer
-            [resource]="deathInvestigation()?.placeOfDeath?.resource">
-          </record-viewer-mdi-to-edrs-viewer-content-field>
-        </div>
-        <div class="grid-col-1"></div>
-      </div>
-    } @else {
-      <div class="grid-row">
-        <div class="grid-col-1">
-          <record-viewer-mdi-to-edrs-viewer-content-field
-            [label]="'Address Line 1'"
-            [value]="deathInvestigation()?.placeOfDeath?.address?.line1"
-            appSetFhirExplorer
-            [resource]="deathInvestigation()?.placeOfDeath.resource">
-          </record-viewer-mdi-to-edrs-viewer-content-field>
-        </div>
-        <div class="grid-col-1">
-          <record-viewer-mdi-to-edrs-viewer-content-field
-            [label]="'Address Line 2'"
-            [value]="deathInvestigation()?.placeOfDeath?.address?.line2"
-            appSetFhirExplorer
-            [resource]="deathInvestigation()?.placeOfDeath?.resource">
-          </record-viewer-mdi-to-edrs-viewer-content-field>
-        </div>
-      </div>
-      <div class="grid-row">
-        <div class="grid-col-1">
-          <record-viewer-mdi-to-edrs-viewer-content-field
-            [label]="'City'"
-            [value]="deathInvestigation()?.placeOfDeath?.address?.city"
-            appSetFhirExplorer
-            [resource]="deathInvestigation()?.placeOfDeath?.resource">
-          </record-viewer-mdi-to-edrs-viewer-content-field>
-        </div>
-        <div class="grid-col-1">
-          <record-viewer-mdi-to-edrs-viewer-content-field
-            [label]="'State'"
-            [value]="deathInvestigation()?.placeOfDeath?.address?.state"
-            appSetFhirExplorer
-            [resource]="deathInvestigation()?.placeOfDeath?.resource">
-          </record-viewer-mdi-to-edrs-viewer-content-field>
-        </div>
-        <div class="grid-col-1">
-          <record-viewer-mdi-to-edrs-viewer-content-field
-            [label]="'Zip Code'"
-            [value]="deathInvestigation()?.placeOfDeath?.address?.zip"
-            appSetFhirExplorer
-            [resource]="deathInvestigation()?.placeOfDeath?.resource">
-          </record-viewer-mdi-to-edrs-viewer-content-field>
-        </div>
-        <div class="grid-col-1">
-          <record-viewer-mdi-to-edrs-viewer-content-field
-            [label]="'Country'"
-            [value]="deathInvestigation()?.placeOfDeath?.address?.country"
-            appSetFhirExplorer
-            [resource]="deathInvestigation()?.placeOfDeath?.resource">
-          </record-viewer-mdi-to-edrs-viewer-content-field>
-        </div>
-      </div>
-    }
   </div>
 </div>
