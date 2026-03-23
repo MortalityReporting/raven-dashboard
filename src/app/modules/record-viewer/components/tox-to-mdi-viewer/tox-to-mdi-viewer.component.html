@@ -44,23 +44,23 @@
         role="complementary"
         [attr.aria-label]="'FHIR Explorer panel'">
         <div class="fhir-explorer-header">
-          <span class="explorer-header-title" role="heading" [attr.aria-level]="'2'">
-            FHIR Explorer
+          <span class="explorer-header-title" id="fhir-explorer-title">
+            FHIR Explorer (Click decedent header to show Bundle)
           </span>
-          <span class="visually-hidden">Click decedent header to show Bundle</span>
           <span class="content-spacer" aria-hidden="true"></span>
-          <button
-            type="button"
+          <mat-icon
             (click)="closeAllDrawers();"
+            [attr.tabindex]="'0'"
+            [attr.role]="'button'"
             [attr.aria-label]="'Close FHIR explorer panel'"
             [matTooltip]="'Close FHIR Explorer'"
-            style="background: none; border: none; padding: 0; cursor: pointer; display: inline-flex; align-items: center;">
-            <mat-icon aria-hidden="true">close</mat-icon>
-          </button>
+            class="pointer">
+            close
+          </mat-icon>
         </div>
         <div
           class="fhir-explorer-body"
-          [attr.aria-label]="'FHIR Explorer content'">
+          [attr.aria-labelledby]="'fhir-explorer-title'">
           <app-fhir-explorer></app-fhir-explorer>
         </div>
       </div>
@@ -69,12 +69,12 @@
         class="viewer-container-body-tabs"
         role="toolbar"
         [attr.aria-label]="'Viewer tools'">
-        <button
-          type="button"
+        <div
           (click)="openDrawer(0);"
+          [attr.tabindex]="'0'"
+          [attr.role]="'button'"
           [attr.aria-expanded]="showDrawer[0]"
           [attr.aria-label]="'Open FHIR Explorer panel'"
-          style="background: none; border: none; padding: 0; cursor: pointer; display: inline-flex; align-items: center; flex-direction: column;"
           class="hl7-fhir-logo-tab">
           <img
             src="assets/icon-fhir-32.png"
@@ -82,7 +82,7 @@
             class="fhir-explorer-icon"
             aria-hidden="true">
           <span class="fhir-explorer-label">FHIR Explorer</span>
-        </button>
+        </div>
       </div>
     </div>
   </div>

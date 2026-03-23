@@ -1,23 +1,41 @@
-<div class="mdi-case-number-flex-wrapper">
+<div
+  class="mdi-case-number-flex-wrapper"
+  role="group"
+  [attr.aria-label]="'MDI case number information'">
+
   <div class="mdi-case-number-label" appSetFhirExplorer [resource]="toxSummary.diagnosticReportResource">
     MDI Case Number:
   </div>
-  <div class="mdi-case-number-value" appSetFhirExplorer [resource]="toxSummary.diagnosticReportResource">
+  <div
+    class="mdi-case-number-value"
+    appSetFhirExplorer
+    [resource]="toxSummary.diagnosticReportResource"
+    [attr.aria-labelledby]="'mdi-case-number-label'">
     {{ toxSummary?.mdiCaseNumber || "No MDI Tracking Number Found" }}
   </div>
+
   @if(this.currentModule() == 'recordViewer'){
     <div class="mdi-case-number-open-related">
       @if (relatedCaseAvailable) {
-        <button mat-raised-button color="accent"
-                [routerLink]="'/' + appConfig.modules['recordViewer'].route + '/mdi/' + relatedCaseAvailable"
-                aria-label="Open Related MDI Document">
-          Open Related MDI Document
+        <button
+          mat-raised-button
+          type="button"
+          color="accent"
+          [routerLink]="'/' + appConfig.modules['recordViewer'].route + '/mdi/' + relatedCaseAvailable"
+          [attr.aria-label]="'Open related MDI document for case number ' + relatedCaseAvailable">
+          <span>Open Related MDI Document</span>
           <mat-icon aria-hidden="true">open_in_browser</mat-icon>
         </button>
       }
       @if (!relatedCaseAvailable) {
-        <button mat-raised-button color="accent" disabled>
-          Related Case Not Found
+        <button
+          mat-raised-button
+          type="button"
+          color="accent"
+          disabled
+          [attr.aria-label]="'Related case not found'"
+          [attr.aria-disabled]="'true'">
+          <span>Related Case Not Found</span>
           <mat-icon aria-hidden="true">info</mat-icon>
         </button>
       }
