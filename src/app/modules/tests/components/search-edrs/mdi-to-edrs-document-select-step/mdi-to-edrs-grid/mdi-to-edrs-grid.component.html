@@ -31,42 +31,34 @@
     </mat-form-field>
 
     <ng-container formGroupName="deathDate">
-      <div class="date-range-wrapper">
-        <mat-form-field appearance="outline" class="margin-left-md" floatLabel="always">
-          <mat-label>Date of Death Range</mat-label>
-
-          <mat-date-range-input [rangePicker]="picker">
-            <input
-              matStartDate
-              formControlName="start"
-              placeholder="Start date"
-              id="death-date-start"
-              name="deathDateStart"
-              [attr.aria-label]="'Start date for date of death range'"
-              [attr.aria-describedby]="'date-hint'">
-            <input
-              matEndDate
-              formControlName="end"
-              placeholder="End date"
-              id="death-date-end"
-              name="deathDateEnd"
-              [attr.aria-label]="'End date for date of death range'"
-              [attr.aria-describedby]="'date-hint'">
-          </mat-date-range-input>
-          <mat-hint id="date-hint">MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="picker"
-            [attr.aria-label]="'Open date picker for date of death range'">
-          </mat-datepicker-toggle>
-          <mat-date-range-picker #picker></mat-date-range-picker>
-        </mat-form-field>
-
-        <!-- Labels positioned after the form field to ensure they're in the DOM -->
-        <label for="death-date-start" class="visually-hidden">Start date for date of death range</label>
-        <label for="death-date-end" class="visually-hidden">End date for date of death range</label>
-      </div>
+      <mat-form-field appearance="outline" class="margin-left-md" floatLabel="always">
+        <mat-label>Date of Death Range</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input
+            matStartDate
+            formControlName="start"
+            placeholder="Start date"
+            title="Start date for date of death range"
+            [attr.aria-label]="'Start date for date of death range'"
+            [attr.aria-describedby]="'date-hint'">
+          <input
+            matEndDate
+            formControlName="end"
+            placeholder="End date"
+            title="End date for date of death range"
+            [attr.aria-label]="'End date for date of death range'"
+            [attr.aria-describedby]="'date-hint'">
+        </mat-date-range-input>
+        <mat-hint id="date-hint">MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+          [attr.aria-label]="'Open date picker for date of death range'">
+        </mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
     </ng-container>
+
     <mat-form-field appearance="outline" class="margin-left-md" floatLabel="always">
       <mat-label>Manner of Death</mat-label>
       <mat-select
@@ -87,7 +79,7 @@
       type="submit"
       [style.background-color]="config.backgroundColor"
       [style.color]="'white'"
-      aria-label="Search for decedents">
+      [attr.aria-label]="'Search for decedents'">
       Search
     </button>
   </form>
@@ -98,20 +90,20 @@
     class="spinner-container"
     role="status"
     aria-live="polite"
-    aria-label="Loading search results">
-    <mat-spinner [diameter]="70" aria-label="Loading"></mat-spinner>
+    [attr.aria-label]="'Loading search results'">
+    <mat-spinner [diameter]="70" [attr.aria-label]="'Loading'"></mat-spinner>
     <span class="visually-hidden">Loading search results...</span>
   </div>
 }
 
-<div role="region" aria-label="Search results" [attr.aria-busy]="isLoading">
+<div role="region" [attr.aria-label]="'Search results'" [attr.aria-busy]="isLoading">
   <table
     mat-table
     [dataSource]="dataSource"
     role="table"
-    aria-label="Decedent search results"
+    [attr.aria-label]="'Decedent search results'"
     [attr.aria-rowcount]="totalDataSize"
-    aria-describedby="results-description">
+    [attr.aria-describedby]="'results-description'">
 
     <caption class="visually-hidden" id="results-description">
       Decedent search results showing name, sex, age, date of death, manner of death, and MDI case number.
@@ -171,8 +163,8 @@
       (click)="onCaseSelected(row)"
       [ngClass]="row.caseNumber == selectedRecord?.caseNumber ? 'selected-row' : ''"
       [attr.aria-selected]="row.caseNumber == selectedRecord?.caseNumber"
-      [attr.tabindex]="0"
-      role="button"
+      [attr.tabindex]="'0'"
+      [attr.role]="'button'"
       [attr.aria-label]="'View details for ' + row.name + ', case number ' + row.caseNumber">
     </tr>
 
@@ -197,6 +189,6 @@
   [pageSize]="pageSize"
   showFirstLastButtons
   (page)="onPageChanged($event)"
-  aria-label="Navigate through search result pages"
+  [attr.aria-label]="'Navigate through search result pages'"
   role="navigation">
 </mat-paginator>

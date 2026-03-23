@@ -1,26 +1,55 @@
 <div class="generic-component-wrapper">
   <div class="generic-component-content">
     <mat-card class="mat-elevation-z8 margin-top-md">
-      <mat-horizontal-stepper #stepper>
+      <mat-horizontal-stepper
+        #stepper
+        [attr.aria-label]="'MDI to EDRS workflow steps'">
 
-        <mat-step label="{{ uiConstants.step1.STEP_LABEL }}" [completed]="false">
-          {{ uiConstants.step1.DESCRIPTION }}
+        <mat-step
+          [label]="uiConstants.step1.STEP_LABEL"
+          [completed]="false"
+          [attr.aria-label]="uiConstants.step1.STEP_LABEL">
+          <p>{{ uiConstants.step1.DESCRIPTION }}</p>
           <app-mdi-to-edrs-document-select-step
             [parentStepper]="stepper"
-          ></app-mdi-to-edrs-document-select-step>
+            role="region"
+            [attr.aria-label]="uiConstants.step1.STEP_LABEL + ' content'">
+          </app-mdi-to-edrs-document-select-step>
         </mat-step>
 
-        <mat-step label="{{ uiConstants.step2.STEP_LABEL }}" [completed]="false">
-          {{ uiConstants.step2.DESCRIPTION }}
-          <app-endpoint-configuration-step></app-endpoint-configuration-step>
+        <mat-step
+          [label]="uiConstants.step2.STEP_LABEL"
+          [completed]="false"
+          [attr.aria-label]="uiConstants.step2.STEP_LABEL">
+          <p>{{ uiConstants.step2.DESCRIPTION }}</p>
+          <app-endpoint-configuration-step
+            role="region"
+            [attr.aria-label]="uiConstants.step2.STEP_LABEL + ' content'">
+          </app-endpoint-configuration-step>
         </mat-step>
 
-        <mat-step label="{{ uiConstants.step3.STEP_LABEL }}" [completed]="false">
-          {{ uiConstants.step3.DESCRIPTION }}
-          <app-edrs-results-step [parentStepper]="stepper"></app-edrs-results-step>
+        <mat-step
+          [label]="uiConstants.step3.STEP_LABEL"
+          [completed]="false"
+          [attr.aria-label]="uiConstants.step3.STEP_LABEL">
+          <p>{{ uiConstants.step3.DESCRIPTION }}</p>
+          <app-edrs-results-step
+            [parentStepper]="stepper"
+            role="region"
+            [attr.aria-label]="uiConstants.step3.STEP_LABEL + ' content'">
+          </app-edrs-results-step>
 
-          <div class="padding-top-md">
-            <button mat-raised-button matStepperPrevious>Back</button>
+          <div
+            class="padding-top-md"
+            role="navigation"
+            [attr.aria-label]="'Step navigation'">
+            <button
+              mat-raised-button
+              type="button"
+              matStepperPrevious
+              [attr.aria-label]="'Go back to previous step'">
+              Back
+            </button>
           </div>
         </mat-step>
 
