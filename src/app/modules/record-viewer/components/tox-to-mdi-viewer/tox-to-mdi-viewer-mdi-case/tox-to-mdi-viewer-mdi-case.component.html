@@ -7,15 +7,15 @@
   </div>
   @if(this.currentModule() == 'recordViewer'){
     <div class="mdi-case-number-open-related">
-      @if (relatedCaseAvailable) {
+      @if (isRelatedCaseAvailable()) {
         <button mat-raised-button color="accent"
-                [routerLink]="'/' + appConfig.modules['recordViewer'].route + '/mdi/' + relatedCaseAvailable"
+                [routerLink]="'/' + appConfig.modules['recordViewer'].route + '/mdi/' + relatedCaseId"
                 aria-label="Open Related MDI Document">
           Open Related MDI Document
           <mat-icon aria-hidden="true">open_in_browser</mat-icon>
         </button>
       }
-      @if (!relatedCaseAvailable) {
+      @if (!isRelatedCaseAvailable()) {
         <button mat-raised-button color="accent" disabled>
           Related Case Not Found
           <mat-icon aria-hidden="true">info</mat-icon>
