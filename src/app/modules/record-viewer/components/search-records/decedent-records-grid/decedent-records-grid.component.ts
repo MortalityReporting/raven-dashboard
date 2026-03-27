@@ -99,7 +99,6 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
       }
     });
     this.searchFilterForm.controls.nameStatus.valueChanges.subscribe( value => {
-      console.log(value);
       if (value && value !== 'all'){
         this.searchFilterForm.controls.name.setValue('');
       }
