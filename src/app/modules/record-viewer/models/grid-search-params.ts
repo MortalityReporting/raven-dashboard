@@ -5,5 +5,6 @@ export interface GridSearchParams {
   name?: string;
   deathDate?: DeathDateRange,
   gender?: Gender,
-  mannerOfDeath?: string
+  mannerOfDeath?: string,
+  nameStatus?: string
 }
