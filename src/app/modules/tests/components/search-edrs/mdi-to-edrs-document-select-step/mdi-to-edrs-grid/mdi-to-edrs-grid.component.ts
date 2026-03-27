@@ -1,25 +1,19 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Inject, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Inject, OnInit, Output, ViewChild} from '@angular/core';
 import {DecedentGridDTO} from "../../../../../../model/decedent.grid.dto";
 import {MatSort} from "@angular/material/sort";
-import {ActivatedRoute, Router} from "@angular/router";
 import {DecedentService} from "../../../../../record-viewer/services/decedent.service";
 import {UtilsService} from "../../../../../../service/utils.service";
-import {forkJoin, map, mergeMap, switchMap} from "rxjs";
+import {switchMap} from "rxjs";
 import {SearchEdrsService} from "../../../../services/search-edrs.service";
 import {DecedentSimpleInfo} from "../../../../../../model/decedent-simple-info";
-import {FhirHelperService, PatientNameReturn} from "../../../../../fhir-util/services/fhir-helper.service";
 import {DatePipe} from "@angular/common";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
-import {TrackingNumberType} from "../../../../../fhir-mdi-library";
 import {ModuleHeaderConfig} from "../../../../../../providers/module-header-config";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
-import {BundleHelperService} from "../../../../../fhir-util";
 import {AppConstants} from "../../../../../../providers/app-constants";
 import {GridSearchParams} from "../../../../../record-viewer/models/grid-search-params";
-import {
-  DecedentRecordsGridComponent
-} from "../../../../../record-viewer/components/search-records/decedent-records-grid/decedent-records-grid.component";
+
 
 export interface DeathDateRange{
   start?: string;
@@ -57,6 +51,12 @@ export class MdiToEdrsGridComponent implements OnInit, AfterViewInit {
     { value: 'unknown', label: 'Unknown' }
   ] as const;
 
+  readonly nameStatusList = [
+    {value: 'all', label: 'All'},
+    {value: 'hasName', label: 'Has Name'},
+    {value: 'missingName', label: 'Missing Name'}
+  ] as const;
+
   @Output() serverErrorEventEmitter = new EventEmitter();
   totalDataSize: number = 0;
   readonly pageSizes = [5, 10, 20];
@@ -72,6 +72,7 @@ export class MdiToEdrsGridComponent implements OnInit, AfterViewInit {
       end: [null]
     }),
     mannerOfDeath: new FormControl<string>(''),
+    nameStatus: new FormControl(this.nameStatusList[0].value),
   });
 
   constructor(
@@ -80,9 +81,20 @@ export class MdiToEdrsGridComponent implements OnInit, AfterViewInit {
     private decedentService: DecedentService,
     private utilsService: UtilsService,
     private searchEdrsService: SearchEdrsService,
-    private appConstants: AppConstants
+    private appConstants: AppConstants,
+    private cdr: ChangeDetectorRef
   ) {
     this.mannerOfDeathList = this.appConstants.MANNER_OF_DEATH_LIST;
+    this.searchFilterForm.controls.name.valueChanges.subscribe( value => {
+      if (value.length > 0){
+        this.searchFilterForm.controls.nameStatus.setValue(this.nameStatusList[0].value);
+      }
+    });
+    this.searchFilterForm.controls.nameStatus.valueChanges.subscribe( value => {
+      if (value && value !== 'all'){
+        this.searchFilterForm.controls.name.setValue('');
+      }
+    });
   }
 
   private get searchParams(): GridSearchParams {
@@ -107,6 +119,9 @@ export class MdiToEdrsGridComponent implements OnInit, AfterViewInit {
     if (mannerOfDeath) {
       params.mannerOfDeath = mannerOfDeath;
     }
+
+    const nameStatus = this.searchFilterForm.controls.nameStatus.value;
+    params.nameStatus = nameStatus;
 
     return params;
   }
@@ -150,17 +165,16 @@ export class MdiToEdrsGridComponent implements OnInit, AfterViewInit {
           this.totalDataSize = result.totalCount;
           this.decedentGridDtoList = result.dtos;
 
-
           this.dataSource = new MatTableDataSource(this.decedentGridDtoList);
           this.setDataSourceFilters();
+          this.isLoading = false;
+          this.cdr.detectChanges();
         },
         error: (error) => {
           this.isLoading = false;
+          this.cdr.detectChanges();
           console.error('Error loading decedent records:', error);
           this.serverErrorEventEmitter.emit();
-        },
-        complete: () => {
-          this.isLoading = false;
         }
       });
   }
