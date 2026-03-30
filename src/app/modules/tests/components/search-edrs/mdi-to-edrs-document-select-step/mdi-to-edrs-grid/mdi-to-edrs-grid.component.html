@@ -49,16 +49,12 @@
             matStartDate
             formControlName="start"
             placeholder="Start date"
-            title="Start date for date of death range"
-            [attr.aria-label]="'Start date for date of death range'"
-            [attr.aria-describedby]="'date-hint'">
+            title="Start date for date of death range">
           <input
             matEndDate
             formControlName="end"
             placeholder="End date"
-            title="End date for date of death range"
-            [attr.aria-label]="'End date for date of death range'"
-            [attr.aria-describedby]="'date-hint'">
+            title="End date for date of death range">
         </mat-date-range-input>
         <mat-hint id="date-hint">MM/DD/YYYY – MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle
@@ -112,7 +108,6 @@
     mat-table
     [dataSource]="dataSource"
     role="table"
-    [attr.aria-label]="'Decedent search results'"
     [attr.aria-rowcount]="totalDataSize"
     [attr.aria-describedby]="'results-description'">
 

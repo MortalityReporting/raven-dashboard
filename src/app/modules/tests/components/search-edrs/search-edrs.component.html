@@ -7,8 +7,7 @@
 
         <mat-step
           [label]="uiConstants.step1.STEP_LABEL"
-          [completed]="false"
-          [attr.aria-label]="uiConstants.step1.STEP_LABEL">
+          [completed]="false">
           <p>{{ uiConstants.step1.DESCRIPTION }}</p>
           <app-mdi-to-edrs-document-select-step
             [parentStepper]="stepper"
@@ -19,8 +18,7 @@
 
         <mat-step
           [label]="uiConstants.step2.STEP_LABEL"
-          [completed]="false"
-          [attr.aria-label]="uiConstants.step2.STEP_LABEL">
+          [completed]="false">
           <p>{{ uiConstants.step2.DESCRIPTION }}</p>
           <app-endpoint-configuration-step
             role="region"
@@ -35,19 +33,16 @@
           <p>{{ uiConstants.step3.DESCRIPTION }}</p>
           <app-edrs-results-step
             [parentStepper]="stepper"
-            role="region"
-            [attr.aria-label]="uiConstants.step3.STEP_LABEL + ' content'">
+            role="region">
           </app-edrs-results-step>
 
           <div
             class="padding-top-md"
-            role="navigation"
-            [attr.aria-label]="'Step navigation'">
+            role="navigation">
             <button
               mat-raised-button
               type="button"
-              matStepperPrevious
-              [attr.aria-label]="'Go back to previous step'">
+              matStepperPrevious>
               Back
             </button>
           </div>
