@@ -70,11 +70,11 @@
     </button>
   </div>
   <div class="token-preview">
-    {{ bearerToken }}
+    {{ bearerToken() }}
   </div>
   <div>
-    <button mat-icon-button [matTooltip]="bearerToken?.length > 0 ? 'Copy token to clipboard' : 'Request Bearer token first'"
-      [disabled]="!bearerToken" [cdkCopyToClipboard]="bearerToken">
+    <button mat-icon-button [matTooltip]="bearerToken()?.length > 0 ? 'Copy token to clipboard' : 'Request Bearer token first'"
+      [disabled]="!bearerToken()" [cdkCopyToClipboard]="bearerToken()">
       <mat-icon>content_copy</mat-icon>
     </button>
   </div>
