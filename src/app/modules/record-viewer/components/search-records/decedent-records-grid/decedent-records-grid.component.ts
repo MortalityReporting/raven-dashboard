@@ -58,8 +58,11 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
     {value: 'unknown', label: 'Unknown'}
   ] as const;
 
-// Or simpler array if you want same value/label
-  readonly genders: Gender[] = ['male', 'female', 'unknown'];
+  readonly nameStatusList = [
+    {value: 'all', label: 'All'},
+    {value: 'hasName', label: 'Has Name'},
+    {value: 'missingName', label: 'Missing Name'}
+  ] as const;
 
   @Output() serverErrorEventEmitter = new EventEmitter();
   totalDataSize: number = 0;
@@ -75,6 +78,7 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
       end: [null]
     }),
     mannerOfDeath: new FormControl<string>(''),
+    nameStatus: new FormControl(this.nameStatusList[0].value),
   });
 
   constructor(
@@ -89,6 +93,16 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
     private appConstants: AppConstants,
   ) {
     this.mannerOfDeathList = this.appConstants.MANNER_OF_DEATH_LIST;
+    this.searchFilterForm.controls.name.valueChanges.subscribe( value => {
+      if (value.length > 0){
+        this.searchFilterForm.controls.nameStatus.setValue(this.nameStatusList[0].value);
+      }
+    });
+    this.searchFilterForm.controls.nameStatus.valueChanges.subscribe( value => {
+      if (value && value !== 'all'){
+        this.searchFilterForm.controls.name.setValue('');
+      }
+    });
   }
 
   private get searchParams(): GridSearchParams {
@@ -112,10 +126,8 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
       params.name = name;
     }
 
-    const mannerOfDeath = this.searchFilterForm.controls.mannerOfDeath.value;
-    if (mannerOfDeath) {
-      params.mannerOfDeath = mannerOfDeath;
-    }
+    const nameStatus = this.searchFilterForm.controls.nameStatus.value;
+    params.nameStatus = nameStatus;
 
     return params;
   }

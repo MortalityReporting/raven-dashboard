@@ -114,6 +114,12 @@ export class DecedentService {
       params = params.append('patient.name', searchParams.name);
     }
 
+    if (searchParams.nameStatus === 'hasName') {
+      params = params.append('patient.name:missing', false);
+    } else if (searchParams.nameStatus === 'missingName') {
+      params = params.append('patient.name:missing', true);
+    }
+
     if (searchParams.mannerOfDeath) {
       params = params.append('manner-of-death', `http://snomed.info/sct|${searchParams.mannerOfDeath}`);
     }
