@@ -1,13 +1,14 @@
-<div class="resource-reviewer">
+<div class="resource-reviewer" role="region" aria-label="FHIR bundle preview">
   @if (deathCertificateReviewService.fhirBundle()) {
-    <pre>{{ deathCertificateReviewService.fhirBundle() | json }}</pre>
+    <pre lang="json" role="region" aria-label="FHIR bundle JSON content">{{ deathCertificateReviewService.fhirBundle() | json }}</pre>
   }
 </div>
-<div class="controls">
+<div class="controls" role="group" aria-label="Bundle actions">
   <button mat-raised-button
           [disabled]="!deathCertificateReviewService.fhirBundle()"
           [cdkCopyToClipboard]="JSON.stringify(deathCertificateReviewService.fhirBundle(), null, 2)"
-          (click)="onCopyToClipboard()">
+          (click)="onCopyToClipboard()"
+          [attr.aria-label]="deathCertificateReviewService.fhirBundle() ? 'Copy FHIR bundle to clipboard' : 'Copy button disabled'">
     Copy Content
   </button>
 </div>

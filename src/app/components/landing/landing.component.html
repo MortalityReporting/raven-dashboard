@@ -1,78 +1,130 @@
-<!--<div class="container">-->
 <div class="landing-page-wrapper">
   <div>
     <div class="landing-page-content">
 
+      <!-- Alert Card - Version Information -->
       <div class="flex-cell zulip-cell margin-bottom-md margin-top-sm">
         <mat-card>
-          <mat-card-content onclick="window.open('https://build.fhir.org/ig/HL7/fhir-mdi-ig/', '_blank')">
-            <div class="zulip-row">
-              <div class="card-bold-text">
-                The Raven Platform is a testing tool built on the current CI Build version of the MDI FHIR IG, which may
-                change periodically.
-                It currently supports the version 2.0.0-ballot release as of March 2024.
+          <mat-card-content>
+            <a
+              href="https://build.fhir.org/ig/HL7/fhir-mdi-ig/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="clickable-card-link"
+              aria-label="View MDI FHIR IG CI Build (opens in new window)">
+              <div class="zulip-row">
+                <div class="card-bold-text">
+                  The Raven Platform is a testing tool built on the current CI Build version of the MDI FHIR IG, which may
+                  change periodically.
+                  It currently supports the version 2.0.0-ballot release as of March 2024.
+                </div>
+                <div class="card-open-new-window-icon" aria-hidden="true">
+                  <mat-icon>open_in_new</mat-icon>
+                </div>
               </div>
-              <div class="card-open-new-window-icon">
-                <mat-icon>open_in_new</mat-icon>
-              </div>
-            </div>
+            </a>
           </mat-card-content>
         </mat-card>
       </div>
 
+      <!-- Main Heading -->
       <h1 class="title-decoration" [style.border-left-color]="appConfiguration.color">
-        Welcome to the Raven Testing Platform!</h1>
+        Welcome to the Raven Testing Platform!
+      </h1>
+
+      <!-- Video Section -->
       <div class="playlist-wrapper">
         <iframe
           src="https://www.kaltura.com/p/2019031/sp/201903100/embedIframeJs/uiconf_id/40436601/partner_id/2019031/widget_id/1_la1g3oii?iframeembed=true&playerId=kaltura_player_&flashvars[playlistAPI.kpl0Id]=1_w9ob4is2&flashvars[ks]=&&flashvars[imageDefaultDuration]=30&flashvars[localizationCode]=en&flashvars[forceMobileHTML5]=true&flashvars[scrubber.sliderPreview]=false&flashvars[nextPrevBtn.plugin]=true&flashvars[sideBarContainer.plugin]=true&flashvars[sideBarContainer.position]=left&flashvars[sideBarContainer.clickToClose]=true&flashvars[chapters.plugin]=true&flashvars[chapters.layout]=vertical&flashvars[chapters.thumbnailRotator]=false&flashvars[streamSelector.plugin]=true&flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&flashvars[dualScreen.plugin]=true&flashvars[hotspots.plugin]=true&flashvars[kmsPlaylistHistory.plugin]=true&flashvars[kmsPlaylistHistory.iframeHTML5Js]=//kms-a.akamaihd.net/dc-1/latest/public/build0/playlisthistory/asset/mwembed-kms-playlist-history-v1.1.0.js?ver=522c33efdda0b8dc6ce90c991beb9666&flashvars[kmsPlaylistHistory.iframeHTML5Css]=//kms-a.akamaihd.net/dc-1/latest/public/build0/playlisthistory/asset/mwembed-kms-playlist-history-v1.1.0.css?ver=522c33efdda0b8dc6ce90c991beb9666&flashvars[kmsPlaylistHistory.progressBarColor]=%2300b4d1&flashvars[kmsPlaylistHistory.progressBarColorComplete]=%23bbbbbb&flashvars[kmsPlaylistHistory.completeOverlayIconColor]=&flashvars[playlistAPI.playlistUrl]=https://mediaspace.gatech.edu/playlist/details/{playlistAPI.kpl0Id}"
-          width="740" height="330" allowfullscreen webkitallowfullscreen mozAllowFullScreen
-          allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0" title="Raven Walkthrough"></iframe>
+          width="740"
+          height="330"
+          allowfullscreen
+          allow="autoplay *; fullscreen *; encrypted-media *"
+          title="Raven Platform Walkthrough Video Tutorial"
+          role="region"
+          aria-label="Video player: Raven platform walkthrough and tutorial">
+        </iframe>
       </div>
-      <mat-divider class="larger-divider"></mat-divider>
 
-      <p>
-        Raven is a proof of concept for the Medicolegal Death Investigation (MDI)
-        FHIR Implementation Guide (IG). It provides a tool for testing conformance to the MDI
-        FHIR IG, including resource validation, record comparison, and data exchange workflows.
-      </p>
-      <p>
-        Raven also serves as an educational tool, providing examples FHIR data format (JSON and XML) and the ability
-        to browse records and see how information is mapped between major fields and the underlying FHIR resources.
-      </p>
+      <mat-divider class="larger-divider" role="separator" aria-hidden="true"></mat-divider>
 
-      <mat-divider class="larger-divider"></mat-divider>
+      <!-- Introduction Text -->
+      <section aria-labelledby="intro-heading">
+        <h2 id="intro-heading" class="visually-hidden">About Raven</h2>
+        <p>
+          Raven is a proof of concept for the Medicolegal Death Investigation (MDI)
+          <abbr title="Fast Healthcare Interoperability Resources">FHIR</abbr> Implementation Guide (IG).
+          It provides a tool for testing conformance to the <abbr title="Medicolegal Death Investigation">MDI</abbr>
+          <abbr title="Fast Healthcare Interoperability Resources">FHIR</abbr> IG, including resource validation,
+          record comparison, and data exchange workflows.
+        </p>
+        <p>
+          Raven also serves as an educational tool, providing examples <abbr title="Fast Healthcare Interoperability Resources">FHIR</abbr>
+          data format (<abbr title="JavaScript Object Notation">JSON</abbr> and <abbr title="Extensible Markup Language">XML</abbr>)
+          and the ability to browse records and see how information is mapped between major fields and the underlying
+          <abbr title="Fast Healthcare Interoperability Resources">FHIR</abbr> resources.
+        </p>
+      </section>
+
+      <mat-divider class="larger-divider" role="separator" aria-hidden="true"></mat-divider>
+
+      <!-- Community Card -->
       <div class="flex-cell zulip-cell">
         <mat-card>
-          <mat-card-content onclick="window.open('https://chat.fhir.org','_blank')">
-            <div class="zulip-row">
-              <div>
-                <div class="hl7-fhir-logo-landing-page">
-                  <img src="../../../assets/files/svg/LOGO_FHIR_2.svg" class="hl7-fhir-logo-lg"/>
+          <mat-card-content>
+            <a
+              href="https://chat.fhir.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="clickable-card-link"
+              aria-label="Join FHIR Zulip chat (opens in new window)">
+              <div class="zulip-row">
+                <div>
+                  <div class="hl7-fhir-logo-landing-page">
+                    <img
+                      src="../../../assets/files/svg/LOGO_FHIR_2.svg"
+                      alt="HL7 FHIR Logo"
+                      class="hl7-fhir-logo-lg"/>
+                  </div>
+                </div>
+                <div class="card-bold-text">
+                  For Information on the <abbr title="Medicolegal Death Investigation">MDI</abbr> IG, join the conversation
+                  in the <abbr title="Fast Healthcare Interoperability Resources">FHIR</abbr> Zulip chat!
+                  <em>https://chat.fhir.org in the #Medicolegal Death Investigation Stream</em>
+                </div>
+                <div class="card-open-new-window-icon" aria-hidden="true">
+                  <mat-icon>open_in_new</mat-icon>
                 </div>
               </div>
-              <div class="card-bold-text">
-                For Information on the MDI IG, join the conversation in the FHIR Zulip chat!
-                <em>https://chat.fhir.org in the #Medicolegal Death Investigation Stream</em>
-              </div>
-              <div class="card-open-new-window-icon">
-                <mat-icon>open_in_new</mat-icon>
-              </div>
-            </div>
+            </a>
           </mat-card-content>
         </mat-card>
       </div>
+
+      <!-- Logo Disclaimer -->
       <div class="flex-cell hl7-fhir-logo-disclaimer">
-        The HL7 FHIR Logo is used in accordance with the policy for the FHIR Icon Pack laid out at
-        https://hl7.org/fhir/downloads.html.
+        <small>
+          The <abbr title="Health Level Seven">HL7</abbr> <abbr title="Fast Healthcare Interoperability Resources">FHIR</abbr>
+          Logo is used in accordance with the policy for the <abbr title="Fast Healthcare Interoperability Resources">FHIR</abbr>
+          Icon Pack laid out at
+          <a href="https://hl7.org/fhir/downloads.html" target="_blank" rel="noopener noreferrer">
+            https://hl7.org/fhir/downloads.html
+            <span class="visually-hidden">(opens in new window)</span>
+          </a>.
+        </small>
       </div>
     </div>
-    <div class="option-tile-container">
+
+    <!-- Feature Cards Section -->
+    <nav class="option-tile-container" aria-label="Main features">
+
+      <!-- Terminology Mapping Card -->
       <div class="flex-cell margin-top-xs orange-border margin-bottom-md">
-        <mat-card (click)="openPdf()">
+        <mat-card>
           <mat-card-content>
             <div class="zulip-row">
                 <div class="terminology-logo">
-                  <img src="../../../assets/files/svg/arrows.svg" class="hl7-fhir-logo-lg"/>
+                  <img alt="arrows icon" src="../../../assets/files/svg/arrows.svg" class="hl7-fhir-logo-lg"/>
                 </div>
               <div class="">
                 <div class="card-bold-text larget-text">Terminology Mapping Service for Toxicology</div>
@@ -88,12 +140,23 @@
           </mat-card-content>
         </mat-card>
       </div>
+
+      <!-- Record Viewer Card -->
       <div class="flex-cell">
-        <mat-card #recordViewer (click)="onBtnClick(appConfiguration?.modules?.['recordViewer']?.route);"
-                  cardHover [color]="appConfiguration?.modules?.['recordViewer']?.color">
+        <mat-card
+          tabindex="0"
+          role="button"
+          (click)="onBtnClick(appConfiguration?.modules?.['recordViewer']?.route)"
+          (keydown.enter)="onBtnClick(appConfiguration?.modules?.['recordViewer']?.route)"
+          (keydown.space)="onBtnClick(appConfiguration?.modules?.['recordViewer']?.route)"
+          cardHover
+          [color]="appConfiguration?.modules?.['recordViewer']?.color"
+          [attr.aria-label]="'Navigate to ' + appConfiguration?.modules?.['recordViewer']?.title">
           <mat-card-header>
             <mat-card-title class="mat-card-title-decoration">
-              <mat-icon [style.color]="appConfiguration?.modules?.['recordViewer']?.color">
+              <mat-icon
+                [style.color]="appConfiguration?.modules?.['recordViewer']?.color"
+                aria-hidden="true">
                 circle
               </mat-icon>
               {{ appConfiguration?.modules?.['recordViewer']?.title }}
@@ -101,19 +164,30 @@
           </mat-card-header>
           <mat-card-content>
             <p>
-              View different types of MDI records available on the Raven FHIR Server and explore the underlying FHIR
-              Resource
-              structures.
+              View different types of <abbr title="Medicolegal Death Investigation">MDI</abbr> records available on the
+              Raven <abbr title="Fast Healthcare Interoperability Resources">FHIR</abbr> Server and explore the underlying
+              <abbr title="Fast Healthcare Interoperability Resources">FHIR</abbr> Resource structures.
             </p>
           </mat-card-content>
         </mat-card>
       </div>
+
+      <!-- Record Import Card -->
       <div class="flex-cell">
-        <mat-card (click)="onBtnClick(appConfiguration?.modules?.['recordImport']?.route);"
-                  cardHover [color]="appConfiguration?.modules?.['recordImport']?.color">
+        <mat-card
+          tabindex="0"
+          role="button"
+          (click)="onBtnClick(appConfiguration?.modules?.['recordImport']?.route)"
+          (keydown.enter)="onBtnClick(appConfiguration?.modules?.['recordImport']?.route)"
+          (keydown.space)="onBtnClick(appConfiguration?.modules?.['recordImport']?.route)"
+          cardHover
+          [color]="appConfiguration?.modules?.['recordImport']?.color"
+          [attr.aria-label]="'Navigate to ' + appConfiguration?.modules?.['recordImport']?.title">
           <mat-card-header>
             <mat-card-title class="mat-card-title-decoration">
-              <mat-icon [style.color]="appConfiguration?.modules?.['recordImport']?.color">
+              <mat-icon
+                [style.color]="appConfiguration?.modules?.['recordImport']?.color"
+                aria-hidden="true">
                 circle
               </mat-icon>
               {{ appConfiguration?.modules?.['recordImport']?.title }}
@@ -121,17 +195,29 @@
           </mat-card-header>
           <mat-card-content>
             <p>
-              Import a record to the Raven FHIR Server for use in other features.
+              Import a record to the Raven <abbr title="Fast Healthcare Interoperability Resources">FHIR</abbr>
+              Server for use in other features.
             </p>
           </mat-card-content>
         </mat-card>
       </div>
+
+      <!-- Record Comparison Card -->
       <div class="flex-cell">
-        <mat-card (click)="onBtnClick(appConfiguration?.modules?.['recordComparison']?.route);"
-                  cardHover [color]="appConfiguration?.modules?.['recordComparison']?.color">
+        <mat-card
+          tabindex="0"
+          role="button"
+          (click)="onBtnClick(appConfiguration?.modules?.['recordComparison']?.route)"
+          (keydown.enter)="onBtnClick(appConfiguration?.modules?.['recordComparison']?.route)"
+          (keydown.space)="onBtnClick(appConfiguration?.modules?.['recordComparison']?.route)"
+          cardHover
+          [color]="appConfiguration?.modules?.['recordComparison']?.color"
+          [attr.aria-label]="'Navigate to ' + appConfiguration?.modules?.['recordComparison']?.title">
           <mat-card-header>
             <mat-card-title class="mat-card-title-decoration">
-              <mat-icon [style.color]="appConfiguration?.modules?.['recordComparison']?.color">
+              <mat-icon
+                [style.color]="appConfiguration?.modules?.['recordComparison']?.color"
+                aria-hidden="true">
                 circle
               </mat-icon>
               {{ appConfiguration?.modules?.['recordComparison']?.title }}
@@ -139,100 +225,160 @@
           </mat-card-header>
           <mat-card-content>
             <p>
-              Compare a user generated FHIR record against a known valid example from Raven.
+              Compare a user generated <abbr title="Fast Healthcare Interoperability Resources">FHIR</abbr>
+              record against a known valid example from Raven.
             </p>
           </mat-card-content>
         </mat-card>
       </div>
+
+      <!-- FHIR Validator Card -->
       <div class="flex-cell">
-        <mat-card (click)="onBtnClick(appConfiguration?.modules?.['fhirValidator']?.route);"
-                  cardHover [color]="appConfiguration?.modules?.['fhirValidator']?.color">
+        <mat-card
+          tabindex="0"
+          role="button"
+          (click)="onBtnClick(appConfiguration?.modules?.['fhirValidator']?.route)"
+          (keydown.enter)="onBtnClick(appConfiguration?.modules?.['fhirValidator']?.route)"
+          (keydown.space)="onBtnClick(appConfiguration?.modules?.['fhirValidator']?.route)"
+          cardHover
+          [color]="appConfiguration?.modules?.['fhirValidator']?.color"
+          [attr.aria-label]="'Navigate to ' + appConfiguration?.modules?.['fhirValidator']?.title">
           <mat-card-header>
             <mat-card-title class="mat-card-title-decoration">
-              <mat-icon [style.color]="appConfiguration?.modules?.['fhirValidator']?.color">circle
+              <mat-icon
+                [style.color]="appConfiguration?.modules?.['fhirValidator']?.color"
+                aria-hidden="true">
+                circle
               </mat-icon>
               {{ appConfiguration?.modules?.['fhirValidator']?.title }}
             </mat-card-title>
           </mat-card-header>
           <mat-card-content>
             <p>
-              Validate against the structure definitions for MDI FHIR Document Bundles or individual Resources and
-              Profiles.
+              Validate against the structure definitions for <abbr title="Medicolegal Death Investigation">MDI</abbr>
+              <abbr title="Fast Healthcare Interoperability Resources">FHIR</abbr> Document Bundles or individual
+              Resources and Profiles.
             </p>
           </mat-card-content>
         </mat-card>
       </div>
+
+      <!-- Workflow Simulator Card -->
       <div class="flex-cell">
-        <mat-card (click)="onBtnClick(appConfiguration?.modules?.['workflowSimulator']?.route);"
-                  cardHover [color]="appConfiguration?.modules?.['workflowSimulator']?.color">
+        <mat-card
+          tabindex="0"
+          role="button"
+          (click)="onBtnClick(appConfiguration?.modules?.['workflowSimulator']?.route)"
+          (keydown.enter)="onBtnClick(appConfiguration?.modules?.['workflowSimulator']?.route)"
+          (keydown.space)="onBtnClick(appConfiguration?.modules?.['workflowSimulator']?.route)"
+          cardHover
+          [color]="appConfiguration?.modules?.['workflowSimulator']?.color"
+          [attr.aria-label]="'Navigate to ' + appConfiguration?.modules?.['workflowSimulator']?.title">
           <mat-card-header>
             <mat-card-title class="mat-card-title-decoration">
-              <mat-icon [style.color]="appConfiguration?.modules?.['workflowSimulator']?.color">
+              <mat-icon
+                [style.color]="appConfiguration?.modules?.['workflowSimulator']?.color"
+                aria-hidden="true">
                 circle
               </mat-icon>
               {{ appConfiguration?.modules?.['workflowSimulator']?.title }}
             </mat-card-title>
           </mat-card-header>
-
           <mat-card-content>
             <p>
-              Supports either testing events or standalone testing for various MDI related workflows, such as a Case
-              Management System (CMS) to Electronic Death Registration System (EDRS) using
+              Supports either testing events or standalone testing for various <abbr title="Medicolegal Death Investigation">MDI</abbr>
+              related workflows, such as a Case Management System (<abbr title="Case Management System">CMS</abbr>) to
+              Electronic Death Registration System (<abbr title="Electronic Death Registration System">EDRS</abbr>) using
               the {{ appConfiguration?.workflowTitles?.['mdiToEdrs'] }}.
             </p>
           </mat-card-content>
-
         </mat-card>
-
       </div>
-      <div class="resources-wrapper">
-        <h2 class="title-decoration-sm" [style.border-left-color]="appConfiguration.color">
-          Resources</h2>
+
+      <!-- Resources Section -->
+      <section class="resources-wrapper" aria-labelledby="resources-heading">
+        <h2
+          id="resources-heading"
+          class="title-decoration-sm"
+          [style.border-left-color]="appConfiguration.color">
+          Resources
+        </h2>
         <ul class="list-decoration">
           <li>
-            <button mat-flat-button onclick="window.open('https://www.cdcfoundation.org/MDI-Connect-Resources', '_blank')"
-                    class="align-left">
-              CDCF Resources for MDI Offices and IT Developers
-              <mat-icon iconPositionEnd>open_in_new</mat-icon>
-            </button>
+            <a
+              href="https://www.cdcfoundation.org/MDI-Connect-Resources"
+              target="_blank"
+              rel="noopener noreferrer"
+              mat-flat-button
+              class="align-left">
+              <abbr title="Centers for Disease Control and Prevention Foundation">CDCF</abbr> Resources for
+              <abbr title="Medicolegal Death Investigation">MDI</abbr> Offices and IT Developers
+              <mat-icon iconPositionEnd aria-hidden="true">open_in_new</mat-icon>
+              <span class="visually-hidden">(opens in new window)</span>
+            </a>
           </li>
           <li>
-            <button mat-flat-button onclick="window.open('https://github.com/MortalityReporting', '_blank')"
-                    class="align-left">
+            <a
+              href="https://github.com/MortalityReporting"
+              target="_blank"
+              rel="noopener noreferrer"
+              mat-flat-button
+              class="align-left">
               Raven Mortality Reporting GitHub Organization
-              <mat-icon iconPositionEnd>open_in_new</mat-icon>
-            </button>
+              <mat-icon iconPositionEnd aria-hidden="true">open_in_new</mat-icon>
+              <span class="visually-hidden">(opens in new window)</span>
+            </a>
           </li>
           <li>
-            <button mat-flat-button onclick="window.open('https://build.fhir.org/ig/HL7/fhir-mdi-ig/', '_blank')"
-                    class="align-left">
-              Medicolegal Death Investigation FHIR IG - CI Build
-              <mat-icon iconPositionEnd>open_in_new</mat-icon>
-            </button>
+            <a
+              href="https://build.fhir.org/ig/HL7/fhir-mdi-ig/"
+              target="_blank"
+              rel="noopener noreferrer"
+              mat-flat-button
+              class="align-left">
+              Medicolegal Death Investigation <abbr title="Fast Healthcare Interoperability Resources">FHIR</abbr> IG - CI Build
+              <mat-icon iconPositionEnd aria-hidden="true">open_in_new</mat-icon>
+              <span class="visually-hidden">(opens in new window)</span>
+            </a>
           </li>
           <li>
-            <button mat-flat-button onclick="window.open('https://hl7.org/fhir/us/mdi/STU2/', '_blank')"
-                    class="align-left">
-              Medicolegal Death Investigation FHIR IG - 2.0.0 - STU2
-              <mat-icon iconPositionEnd>open_in_new</mat-icon>
-            </button>
+            <a
+              href="https://hl7.org/fhir/us/mdi/STU2/"
+              target="_blank"
+              rel="noopener noreferrer"
+              mat-flat-button
+              class="align-left">
+              Medicolegal Death Investigation <abbr title="Fast Healthcare Interoperability Resources">FHIR</abbr> IG - 2.0.0 - STU2
+              <mat-icon iconPositionEnd aria-hidden="true">open_in_new</mat-icon>
+              <span class="visually-hidden">(opens in new window)</span>
+            </a>
           </li>
           <li>
-            <button mat-flat-button onclick="window.open('https://hl7.org/fhir/R4/index.html', '_blank')"
-                    class="align-left">
-              HL7 FHIR R4 Standard
-              <mat-icon iconPositionEnd>open_in_new</mat-icon>
-            </button>
+            <a
+              href="https://hl7.org/fhir/R4/index.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              mat-flat-button
+              class="align-left">
+              <abbr title="Health Level Seven">HL7</abbr> <abbr title="Fast Healthcare Interoperability Resources">FHIR</abbr> R4 Standard
+              <mat-icon iconPositionEnd aria-hidden="true">open_in_new</mat-icon>
+              <span class="visually-hidden">(opens in new window)</span>
+            </a>
           </li>
           <li>
-            <button mat-flat-button onclick="window.open('https://hl7.org/fhir/us/core/STU5.0.1/', '_blank')"
-                    class="align-left">
-              US Core FHIR IG - 5.0.1 - STU5
-              <mat-icon iconPositionEnd>open_in_new</mat-icon>
-            </button>
+            <a
+              href="https://hl7.org/fhir/us/core/STU5.0.1/"
+              target="_blank"
+              rel="noopener noreferrer"
+              mat-flat-button
+              class="align-left">
+              US Core <abbr title="Fast Healthcare Interoperability Resources">FHIR</abbr> IG - 5.0.1 - STU5
+              <mat-icon iconPositionEnd aria-hidden="true">open_in_new</mat-icon>
+              <span class="visually-hidden">(opens in new window)</span>
+            </a>
           </li>
         </ul>
-      </div>
-    </div>
+      </section>
+    </nav>
   </div>
 </div>

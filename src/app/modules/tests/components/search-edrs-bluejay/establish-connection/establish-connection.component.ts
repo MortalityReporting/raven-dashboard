@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnDestroy, OnInit, signal} from '@angular/core';
 import {SearchEdrsService} from "../../../services/search-edrs.service";
 import {DecedentSimpleInfo} from "../../../../../model/decedent-simple-info";
 import {ModuleHeaderConfig} from "../../../../../model/model-header-config";
@@ -29,7 +29,7 @@ export class EstablishConnectionComponent implements OnInit, OnDestroy {
   }
 
   decedentInfo: DecedentSimpleInfo;
-  bearerToken: string = '';
+  bearerToken = signal<string>('');
 
   ngOnInit(): void {
     this.searchEdrsService.decedentData$.subscribe({
@@ -49,7 +49,7 @@ export class EstablishConnectionComponent implements OnInit, OnDestroy {
   onRequestAuth0Token(){
     this.errorMessage = '';
     this.accessTokenService.getAccessToken().subscribe({
-      next: value => {this.bearerToken = value;}
+      next: value => {this.bearerToken.set(value);}
     })
   }
 
@@ -58,7 +58,7 @@ export class EstablishConnectionComponent implements OnInit, OnDestroy {
   }
 
   onProceed(){
-    if(this.bearerToken){
+    if(this.bearerToken()){
       this.parentStepper.next();
     }
     else{

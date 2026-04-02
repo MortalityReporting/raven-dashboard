@@ -1,7 +1,7 @@
 <div class="generic-component-wrapper">
-  <div class="generic-component-content">
+  <div class="generic-component-content" role="region" aria-label="Toxicology record submission workflow">
 
-    <mat-card class="margin-bottom-lg">
+    <mat-card class="margin-bottom-lg" aria-label="Step 1: Select toxicology record">
       <mat-card-header>
         <mat-card-title>
           Step 1 - Select Toxicology Record
@@ -16,7 +16,7 @@
     </mat-card>
 
 
-    <mat-card class="margin-bottom-lg">
+    <mat-card class="margin-bottom-lg" aria-label="Step 2: Review record">
       <mat-card-header>
         <mat-card-title>
           Step 2 - Review Record
@@ -28,8 +28,8 @@
             <tests-tox-record-details [selectedToxRecord]="selectedToxRecord()"></tests-tox-record-details>
           }
           @else if(selectedRecordDTO()){
-            <div class="flex-row">
-              <div class="margin-right-sm"><mat-icon class="warning-color">warning</mat-icon></div>
+            <div class="flex-row" role="alert" aria-live="polite">
+              <div class="margin-right-sm"><mat-icon class="warning-color" aria-hidden="true">warning</mat-icon></div>
               <div class="warning-message">No tox data found for: {{selectedRecordDTO().lastName}}, {{selectedRecordDTO().firstName}}, MDI Case Number: {{ selectedRecordDTO().mdicasenumber}}</div>
             </div>
           }
@@ -38,14 +38,14 @@
           }
         }
         @else {
-          <div class="loading">Loading Toxicology Record Details</div>
+          <div class="loading" role="status" aria-live="polite">Loading Toxicology Record Details</div>
         }
 
       </mat-card-content>
     </mat-card>
 
 
-    <mat-card class="margin-bottom-lg">
+    <mat-card class="margin-bottom-lg" aria-label="Step 3: Enter submission details">
       <mat-card-header>
         <mat-card-title>
           Step 3 - Enter Submission Details

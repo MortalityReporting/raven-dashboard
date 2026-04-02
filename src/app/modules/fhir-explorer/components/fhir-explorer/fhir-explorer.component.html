@@ -1,65 +1,114 @@
-<div class="explorer-header-text">
-  Resource Type: {{fhirResource?.resourceType}}
+<div class="explorer-header-text" role="status" [attr.aria-label]="'Resource type'">
+  <strong>Resource Type:</strong> {{fhirResource?.resourceType}}
 </div>
 @if (fhirResource?.meta?.profile?.[0]) {
-  <div class="explorer-header-text">
-    Profile: {{fhirResource?.meta?.profile?.[0]}}
+  <div class="explorer-header-text" role="status" [attr.aria-label]="'Profile information'">
+    <strong>Profile:</strong> {{fhirResource?.meta?.profile?.[0]}}
   </div>
 }
+
 <div class="row">
   <div class="col-left">
-    <section>
-      <mat-button-toggle-group [(ngModel)]="selectedStructure" (click)="onToggleClick();" style="width: 100%">
+    <section [attr.aria-label]="'Resource format selection'">
+      <mat-button-toggle-group
+        [(ngModel)]="selectedStructure"
+        (click)="onToggleClick();"
+        style="width: 100%"
+        [attr.aria-label]="'Select resource format'"
+        role="group">
         <mat-button-toggle
-          value="narrative" style="width: 33%" [disabled]="!fhirResource?.text?.div"
-          [matTooltip]="!fhirResource?.text?.div ? 'No Narrative Found' : ''"
-          >
+          value="narrative"
+          style="width: 33%"
+          [disabled]="!fhirResource?.text?.div"
+          [attr.aria-label]="'View narrative format' + (!fhirResource?.text?.div ? ' - unavailable' : '')"
+          [matTooltip]="!fhirResource?.text?.div ? 'No Narrative Found' : 'View narrative format'">
           Narrative
         </mat-button-toggle>
-        <mat-button-toggle value="json" style="width: 33%">JSON</mat-button-toggle>
-        <mat-button-toggle value="xml" style="width: 34%">XML</mat-button-toggle>
+        <mat-button-toggle
+          value="json"
+          style="width: 33%"
+          [attr.aria-label]="'View JSON format'">
+          JSON
+        </mat-button-toggle>
+        <mat-button-toggle
+          value="xml"
+          style="width: 34%"
+          [attr.aria-label]="'View XML format'">
+          XML
+        </mat-button-toggle>
       </mat-button-toggle-group>
     </section>
   </div>
   <div class="col-right" style="margin-top: 0.5rem" align="center">
-    <button mat-button color="primary" matTooltip="Copy content to clipboard"
+    <button
+      mat-button
+      type="button"
+      color="primary"
+      [matTooltip]="'Copy content to clipboard'"
       [disabled]="selectedStructure==='narrative' || !this.formattedText"
+      [attr.aria-label]="'Copy ' + selectedStructure + ' content to clipboard'"
+      [attr.aria-disabled]="selectedStructure==='narrative' || !this.formattedText"
       [cdkCopyToClipboard]="formattedText"
       (click)="onCopyToClipboard(formattedText)">
-      <mat-icon>content_copy</mat-icon>
+      <mat-icon aria-hidden="true">content_copy</mat-icon>
+      <span class="visually-hidden">Copy to clipboard</span>
     </button>
   </div>
 </div>
 
 @if (!isNarrative()) {
-  <div>
+  <div
+    role="region"
+    [attr.aria-label]="selectedStructure + ' resource content'"
+    [attr.aria-live]="'polite'">
     @if (isLoadingXMLData) {
-      <div class="loading">Converting to XML resource</div>
+      <div
+        class="loading"
+        role="status"
+        aria-live="polite">
+        Converting to XML resource...
+      </div>
     }
     @if (formattedText && !isLoadingXMLData) {
-      <span><pre> {{ formattedText }} </pre></span>
+      <pre
+        role="code"
+        [attr.aria-label]="selectedStructure + ' formatted resource'">{{ formattedText }}</pre>
     }
     @if (!formattedText && !isLoadingXMLData) {
-      <span style="text-align: center"><pre> No Resource Found </pre></span>
+      <div
+        style="text-align: center"
+        role="status"
+        aria-live="polite">
+        <pre>No Resource Found</pre>
+      </div>
     }
   </div>
 }
 
 @if (selectedStructure === 'narrative') {
-  <div>
-    <br>
-      @if (formattedText) {
-        <div [innerHTML]="formattedText"></div>
-      }
-      @if (!formattedText) {
-        <div style="text-align: center">
-          @if (!fhirResource) {
-            <span><pre>Resource Not Found</pre></span>
-          }
-          @if (fhirResource) {
-            <span><pre>No Narrative Found</pre></span>
-          }
-        </div>
-      }
-    </div>
-  }
+  <div
+    role="region"
+    [attr.aria-label]="'Narrative resource content'"
+    [attr.aria-live]="'polite'">
+    <br aria-hidden="true">
+    @if (formattedText) {
+      <div
+        [innerHTML]="formattedText"
+        role="article"
+        [attr.aria-label]="'Narrative content'"></div>
+    }
+    @if (!formattedText) {
+      <div
+        style="text-align: center"
+        role="status"
+        aria-live="polite">
+        @if (!fhirResource) {
+          <pre>Resource Not Found</pre>
+        }
+        @if (fhirResource) {
+          <pre>No Narrative Found</pre>
+        }
+      </div>
+    }
+  </div>
+}
