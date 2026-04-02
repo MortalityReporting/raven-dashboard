@@ -1,28 +1,47 @@
-<div #menu
-     [style.background-color]="config.backgroundColor"
-     class="border-radius-xs">
-  <mat-nav-list aria-label="Toxicology Record Navigation">
-    <div>
-      <button mat-flat-button (click)="onItemClick('demographics');" [style.color]="appConfig.contrastColor"
-              [style.background-color]="config.backgroundColor">
-        <mat-icon aria-hidden="true"> person</mat-icon>
-        Demographics
+<nav
+  #menu
+  [style.background-color]="config.backgroundColor"
+  class="border-radius-xs"
+  role="navigation"
+  [attr.aria-label]="'Toxicology record sections'">
+  <mat-nav-list [attr.aria-label]="'Navigate to record sections'">
+    <div role="none">
+      <button
+        mat-flat-button
+        type="button"
+        (click)="onItemClick('demographics');"
+        [style.color]="appConfig.contrastColor"
+        [style.background-color]="config.backgroundColor"
+        [attr.aria-label]="'Navigate to Demographics section'">
+        <mat-icon aria-hidden="true">person</mat-icon>
+        <span>Demographics</span>
       </button>
     </div>
-    <div>
-      <button mat-flat-button (click)="onItemClick('deathInvestigation');" [style.color]="appConfig.contrastColor"
-              [style.background-color]="config.backgroundColor">
-        <mat-icon aria-hidden="true"> medical_services</mat-icon>
-        Death Investigation
+
+    <div role="none">
+      <button
+        mat-flat-button
+        type="button"
+        (click)="onItemClick('deathInvestigation');"
+        [style.color]="appConfig.contrastColor"
+        [style.background-color]="config.backgroundColor"
+        [attr.aria-label]="'Navigate to Death Investigation section'">
+        <mat-icon aria-hidden="true">medical_services</mat-icon>
+        <span>Death Investigation</span>
       </button>
     </div>
-    <div>
-      <button mat-flat-button (click)="onItemClick('cremationClearance');" [style.color]="appConfig.contrastColor"
-              [style.background-color]="config.backgroundColor">
+
+    <div role="none">
+      <button
+        mat-flat-button
+        type="button"
+        (click)="onItemClick('cremationClearance');"
+        [style.color]="appConfig.contrastColor"
+        [style.background-color]="config.backgroundColor"
+        [attr.aria-label]="'Navigate to Cremation Clearance Info section'">
         <mat-icon aria-hidden="true" svgIcon="clinical_notes"></mat-icon>
-        Cremation Clearance Info
+        <span>Cremation Clearance Info</span>
       </button>
     </div>
   </mat-nav-list>
-</div>
-
+</nav>

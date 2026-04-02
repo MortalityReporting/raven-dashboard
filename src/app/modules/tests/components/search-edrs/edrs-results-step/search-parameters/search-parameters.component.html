@@ -1,66 +1,113 @@
-<mat-expansion-panel [expanded]="true">
+<mat-expansion-panel
+  [expanded]="true"
+  [attr.aria-label]="'EDRS search parameters'">
 
   <mat-expansion-panel-header>
     <mat-panel-title class="panel-title">
-      EDRS Search Parameters
+      <span>EDRS Search Parameters</span>
     </mat-panel-title>
   </mat-expansion-panel-header>
-  <form [formGroup]="searchEdrsForm" (ngSubmit)="onSubmit()">
+
+  <form
+    [formGroup]="searchEdrsForm"
+    (ngSubmit)="onSubmit()"
+    [attr.aria-label]="'EDRS search form'">
     <div class="row" style="margin-top: 1em">
       <div class="col">
         <ng-container formArrayName="parameters">
 
           @for (parametersFormControl of parameters.controls; track parametersFormControl; let index = $index) {
-            <div [formGroupName]="index">
-              <mat-form-field appearance="outline">
+            <div
+              [formGroupName]="index"
+              role="group"
+              [attr.aria-label]="'Search parameter ' + (index + 1)">
+              <mat-form-field appearance="outline" floatLabel="always">
                 <mat-label>Parameter</mat-label>
-                <mat-select formControlName="name">
+                <mat-select
+                  formControlName="name"
+                  [id]="'parameter-select-' + index"
+                  [attr.aria-label]="'Select parameter type'">
                   @for (param of getFormControlParamTypes(index, parametersFormControl); track param) {
-                    <mat-option
-                      [value]="param.value">
+                    <mat-option [value]="param.value">
                       {{ param.display }}
                     </mat-option>
                   }
                 </mat-select>
               </mat-form-field>
-              <mat-form-field appearance="outline" style="margin-left: 1em">
-                <input matInput id="valueString" type="text" formControlName="valueString"/>
+              <mat-form-field appearance="outline" floatLabel="always" style="margin-left: 1em">
+                <mat-label>Value</mat-label>
+                <input
+                  matInput
+                  [id]="'parameter-value-' + index"
+                  type="text"
+                  formControlName="valueString"
+                  [attr.aria-label]="'Enter parameter value'"/>
               </mat-form-field>
-              <button mat-icon-button style="margin-left: 1em" aria-label="Remove Filter" color="warn"
+              <button
+                mat-icon-button
+                style="margin-left: 1em"
+                [attr.aria-label]="'Remove search parameter ' + (index + 1)"
+                color="warn"
                 type="button"
-                matTooltip="Remove Parameter"
+                [matTooltip]="'Remove Parameter'"
                 (click)="onDeleteFormParam(index)">
-                <mat-icon>close</mat-icon>
+                <mat-icon aria-hidden="true">close</mat-icon>
               </button>
             </div>
           }
 
         </ng-container>
-        <button mat-raised-button type="button" color="success" (click)="addNewFilter()">
-          <mat-icon>add</mat-icon>
-          Add Parameter
+        <button
+          mat-raised-button
+          type="button"
+          color="success"
+          (click)="addNewFilter()"
+          [attr.aria-label]="'Add new search parameter'">
+          <mat-icon aria-hidden="true">add</mat-icon>
+          <span>Add Parameter</span>
         </button>
       </div>
 
       <div class="col">
-        <div class="search-params-preview">
-          <pre>{{getSearchParametersResourcePreview() | json}}</pre>
+        <div
+          class="search-params-preview"
+          role="region"
+          [attr.aria-label]="'Search parameters preview'">
+          <h3 class="visually-hidden">Search Parameters Preview</h3>
+          <pre [attr.aria-label]="'JSON preview of search parameters'">{{getSearchParametersResourcePreview() | json}}</pre>
         </div>
       </div>
     </div>
+
     <div class="row" style="margin-top: 1em;">
       @if (errorMessage) {
-        <mat-error>{{ errorMessage }}</mat-error>
+        <div role="alert" [attr.aria-live]="'assertive'">
+          <mat-error>{{ errorMessage }}</mat-error>
+        </div>
       }
-      <div class="push-right">
-        <span style="margin-left: 1em"><button type="button" mat-raised-button (click)="onClearSearch()">Clear Search</button></span>
+      <nav
+        class="push-right"
+        [attr.aria-label]="'Search actions'">
         <span style="margin-left: 1em">
-          <button type="submit" mat-raised-button [style.background-color]="moduleConfig.backgroundColor" [style.color]="'white'">
+          <button
+            type="button"
+            mat-raised-button
+            (click)="onClearSearch()"
+            [attr.aria-label]="'Clear all search parameters'">
+            Clear Search
+          </button>
+        </span>
+        <span style="margin-left: 1em">
+          <button
+            type="submit"
+            mat-raised-button
+            [style.background-color]="moduleConfig.backgroundColor"
+            [style.color]="'white'"
+            [attr.aria-label]="'Submit search'">
             Search
           </button>
         </span>
-      </div>
-
+      </nav>
     </div>
 
   </form>

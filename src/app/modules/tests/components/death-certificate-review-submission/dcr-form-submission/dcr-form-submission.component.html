@@ -1,6 +1,6 @@
-<form [formGroup]="dcrForm" (submit)="onSubmit()" #formDirective="ngForm">
+<form [formGroup]="dcrForm" (submit)="onSubmit()" #formDirective="ngForm" aria-label="Death certificate review form">
   <div class="row">
-    <div class="col section">
+    <div class="col section" role="region" aria-label="Submitter information">
       <div class="section-title">
         Submitter
       </div>
@@ -42,7 +42,7 @@
       <div class="section-title">
         Death Investigation
       </div>
-      <div formGroupName="deathInvestigation">
+      <div formGroupName="deathInvestigation" role="region" aria-label="Death investigation details">
         <div class="form-row">
           <div class="form-col">
             <mat-form-field class="form-field" appearance="outline" floatLabel="always">
@@ -84,7 +84,8 @@
 
 
               <mat-radio-group formControlName="placeOfDeathRadio"
-                               (change)="onRacePlaceOfDeathRadioChange($event);" class="iterative-container">
+                               (change)="onRacePlaceOfDeathRadioChange($event);" class="iterative-container"
+                               aria-label="Select place of death">
                 @for (place of PLACE_OF_DEATH; track place) {
                   <div class="iterative-container-item">
                     <mat-radio-button [value]="place">
@@ -179,7 +180,7 @@
       </div>
     </div>
 
-    <div class="col section">
+    <div class="col section" role="region" aria-label="Funeral home information">
       <div class="section-title">
         Funeral Home
       </div>
@@ -290,7 +291,7 @@
         Decedent Demographics
       </div>
       <div class="section-label"></div>
-      <div formGroupName="decedentInfo">
+      <div formGroupName="decedentInfo" role="region" aria-label="Decedent demographic information">
         <div class="form-row">
           <div class="form-col">
             <mat-form-field class="form-field" appearance="outline" floatLabel="always">
@@ -348,7 +349,11 @@
                 </div>
               } @else {
                 <div class="h2-label flex-centered">Race&#42;
-                  <mat-icon class="info-icon" matTooltip="Based on US Core 5.0.1 and the 1997 OMB Race Categories">
+                  <mat-icon class="info-icon"
+                            matTooltip="Based on US Core 5.0.1 and the 1997 OMB Race Categories"
+                            aria-label="Race category information"
+                            role="button"
+                            tabindex="0">
                     info
                   </mat-icon>
                 </div>
@@ -365,7 +370,8 @@
 
               }
               <mat-radio-group formControlName="raceRadio"
-                               (change)="onRaceCategoryRadioChange($event)">
+                               (change)="onRaceCategoryRadioChange($event)"
+                               aria-label="Select race category">
                 @for (raceCategory of [RACE_CATEGORIES[RACE_CATEGORIES.length - 1], RACE_CATEGORIES[RACE_CATEGORIES.length - 3]]; track raceCategory) {
                   <div>
                     <mat-radio-button [value]="raceCategory">
@@ -388,7 +394,7 @@
             </div>
           </div>
           <div class="form-col">
-            <mat-radio-group formControlName="ethnicity">
+            <mat-radio-group formControlName="ethnicity" aria-label="Select ethnicity">
               <div class="h2-label">Ethnicity</div>
               @for (ethnicGroup of ETHNICITY.slice(0, 2).concat(ETHNICITY.slice(3)); track ethnicGroup) {
                 <div>
@@ -403,8 +409,8 @@
       </div>
     </div>
   </div>
-  <div class="controls">
-    <button mat-raised-button type="button" (click)="onFormClear()">
+  <div class="controls" role="group" aria-label="Form actions">
+    <button mat-raised-button type="button" (click)="onFormClear()" aria-label="Clear form">
       Clear
     </button>
     <button class="margin-left-md"
@@ -416,7 +422,7 @@
   </div>
 </form>
 @if (errorResponse) {
-  <mat-card>
+  <mat-card aria-label="Bundle generation error details">
     <mat-card-header>
       <div class="section-title">
         Bundle Generation Error

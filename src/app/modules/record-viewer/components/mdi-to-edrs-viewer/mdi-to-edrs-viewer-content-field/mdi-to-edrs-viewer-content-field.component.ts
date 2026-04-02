@@ -1,4 +1,4 @@
-import {Component, input, OnInit} from '@angular/core';
+import {Component, input} from '@angular/core';
 
 @Component({
     selector: 'record-viewer-mdi-to-edrs-viewer-content-field',
@@ -6,12 +6,11 @@ import {Component, input, OnInit} from '@angular/core';
     styleUrls: ['../mdi-to-edrs-viewer.component.scss', '../../../record-viewer-styles.scss'],
     standalone: false
 })
-export class MdiToEdrsViewerContentFieldComponent implements OnInit {
-  label = input()
-  value = input()
-  constructor() { }
+export class MdiToEdrsViewerContentFieldComponent {
+  label = input<string>('');
+  value = input<string>('');
 
-  ngOnInit(): void {
-  }
-
+  // Generate a unique ID for each instance
+  private static counter = 0;
+  protected elementId = `content-field-${++MdiToEdrsViewerContentFieldComponent.counter}`;
 }
