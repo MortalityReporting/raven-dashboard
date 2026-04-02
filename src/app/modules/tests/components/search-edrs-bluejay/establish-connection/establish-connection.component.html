@@ -17,40 +17,44 @@
 </div>
 
 <div class="padding-top-md">
-  <mat-card>
+  <mat-card aria-label="OAuth 2.0 configuration and example">
     <mat-card-content>
-      <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+      <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" aria-label="OAuth configuration views">
         <mat-tab label="Request Parameters">
-          <div class="grid-container">
-            <div class="grid-row">
+          <dl class="grid-container" role="list" aria-label="OAuth request parameters">
+            <div class="grid-row" role="listitem">
               <div class="grid-item display">{{ uiConstantsStep2.auth0Credentials.accessTokenUrl.display }}:</div>
               <div class="grid-item value">{{ uiConstantsStep2.auth0Credentials.accessTokenUrl.value }}</div>
             </div>
-            <div class="grid-row">
+            <div class="grid-row" role="listitem">
               <div class="grid-item display">{{ uiConstantsStep2.auth0Credentials.clientId.display }}:</div>
               <div class="grid-item value">{{ uiConstantsStep2.auth0Credentials.clientId.value }}</div>
             </div>
-            <div class="grid-row">
+            <div class="grid-row" role="listitem">
               <div class="grid-item display">{{ uiConstantsStep2.auth0Credentials.clientSecret.display }}:</div>
-              <div class="grid-item value">{{ uiConstantsStep2.auth0Credentials.clientSecret.value }}:</div>
+              <div class="grid-item value">{{ uiConstantsStep2.auth0Credentials.clientSecret.value }}</div>
             </div>
-            <div class="grid-row">
+            <div class="grid-row" role="listitem">
               <div class="grid-item display">{{ uiConstantsStep2.auth0Credentials.grantType.display }}:</div>
               <div class="grid-item value">{{ uiConstantsStep2.auth0Credentials.grantType.value }}</div>
             </div>
-            <div class="grid-row">
+            <div class="grid-row" role="listitem">
               <div class="grid-item display">{{ uiConstantsStep2.auth0Credentials.audience.display }}:</div>
               <div class="grid-item value">{{ uiConstantsStep2.auth0Credentials.audience.value }}</div>
             </div>
-          </div>
+          </dl>
 
         </mat-tab>
         <mat-tab label="Curl Example">
           <div class="code-container">
-            <pre>{{ uiConstantsStep2.auth0Credentials.curlExample.display }}</pre>
-            <span class="icon" (click)="onCopyToClipboard(uiConstantsStep2.auth0Credentials.curlExample.value)">
-              <mat-icon matTooltip="Copy curl command to clipboard">content_copy</mat-icon>
-            </span>
+            <pre lang="bash" role="region" aria-label="Curl command example">{{ uiConstantsStep2.auth0Credentials.curlExample.display }}</pre>
+            <button class="icon"
+                    (click)="onCopyToClipboard(uiConstantsStep2.auth0Credentials.curlExample.value)"
+                    [matTooltip]="'Copy curl command to clipboard'"
+                    aria-label="Copy curl command to clipboard"
+                    type="button">
+              <mat-icon aria-hidden="true">content_copy</mat-icon>
+            </button>
           </div>
         </mat-tab>
       </mat-tab-group>
@@ -65,7 +69,9 @@
 
 <div class="line-item">
   <div>
-    <button mat-raised-button (click)="onRequestAuth0Token()">
+    <button mat-raised-button
+            (click)="onRequestAuth0Token()"
+            aria-label="Request authorization token from OAuth server">
       <span class="no-wrap-label">Request Authorization Token</span>
     </button>
   </div>
@@ -73,22 +79,31 @@
     {{ bearerToken() }}
   </div>
   <div>
-    <button mat-icon-button [matTooltip]="bearerToken()?.length > 0 ? 'Copy token to clipboard' : 'Request Bearer token first'"
-      [disabled]="!bearerToken()" [cdkCopyToClipboard]="bearerToken()">
-      <mat-icon>content_copy</mat-icon>
+    <button mat-icon-button
+            [matTooltip]="bearerToken()?.length > 0 ? 'Copy token to clipboard' : 'Request Bearer token first'"
+            [disabled]="!bearerToken()"
+            [cdkCopyToClipboard]="bearerToken()"
+            [attr.aria-label]="bearerToken() ? 'Copy authorization token to clipboard' : 'Copy token button disabled'">
+      <mat-icon aria-hidden="true">content_copy</mat-icon>
     </button>
   </div>
 </div>
 
-<div class="actions">
-  <button mat-raised-button matStepperPrevious>Back</button>
+<div class="actions" role="navigation" aria-label="Step navigation">
+  <button mat-raised-button
+          matStepperPrevious
+          aria-label="Go back to previous step">
+    Back
+  </button>
 
   <mat-error>{{ errorMessage }}</mat-error>
 
-    <button type="submit" mat-raised-button
-            (click)="onProceed();"
-            [style.background-color]="moduleConfig.backgroundColor"
-            [style.color]="'white'">
-      {{ uiConstantsStep2.PROCEED_TO_NEXT_STEP_BTN }}
-    </button>
+  <button type="submit"
+          mat-raised-button
+          (click)="onProceed();"
+          [style.background-color]="moduleConfig.backgroundColor"
+          [style.color]="'white'"
+          aria-label="Proceed to next step">
+    {{ uiConstantsStep2.PROCEED_TO_NEXT_STEP_BTN }}
+  </button>
 </div>
