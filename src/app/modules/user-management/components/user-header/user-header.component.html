@@ -1,13 +1,19 @@
-<div class="user-profile-header">
+<div
+  class="user-profile-header"
+  role="region"
+  [attr.aria-label]="'User profile'">
   @if (auth.isAuthenticated$ | async) {
     <ng-container class="profile-wrapper">
     </ng-container>
   } @else {
-    <button mat-flat-button
+    <button
+      mat-flat-button
+      type="button"
       (click)="auth.loginWithRedirect({appState: {target: '/'}})"
-      class="login-button">
-      <mat-icon>login</mat-icon>
-      Sign In
+      class="login-button"
+      [attr.aria-label]="'Sign in to your account'">
+      <mat-icon aria-hidden="true">login</mat-icon>
+      <span>Sign In</span>
     </button>
   }
 
@@ -15,27 +21,44 @@
     <div>
       <img
         [src]="currentUser()?.picture ? currentUser().picture : '/assets/portrait_placeholder.png'"
+        [attr.alt]="'Profile picture for ' + currentUser()?.name + '. Click to open user menu.'"
         referrerpolicy="no-referrer"
         class="profile-image"
-        [matMenuTriggerFor]="userMenu">
-      <mat-menu #userMenu="matMenu" style="width: 250px;">
-        <div mat-menu-item>
-          <div class="user-card">
+        [matMenuTriggerFor]="userMenu"
+        [attr.tabindex]="'0'"
+        [attr.role]="'button'"
+        [attr.aria-haspopup]="'menu'"
+        [attr.aria-label]="'Open user menu for ' + currentUser()?.name">
+      <mat-menu
+        #userMenu="matMenu"
+        style="width: 250px;"
+        [attr.aria-label]="'User menu'">
+        <div
+          mat-menu-item>
+          <div
+            class="user-card"
+            role="group"
+            [attr.aria-label]="'User information'">
             <img
               [src]="currentUser().picture"
+              [attr.alt]="''"
               referrerpolicy="no-referrer"
               class="profile-image"
-              >
+              aria-hidden="true">
             <div class="details">
-              <div class="name">{{currentUser().name}}</div>
-              <div class="email">{{currentUser().email}}</div>
+              <div class="name">{{currentUser()?.name}}</div>
+              <div class="email">{{currentUser()?.email}}</div>
             </div>
           </div>
         </div>
-        <mat-divider></mat-divider>
-        <button mat-menu-item (click)="auth.logout({ logoutParams: { returnTo: env.adminLogoutUrl } })">
-          <mat-icon>logout</mat-icon>
-          Sign Out
+        <mat-divider role="separator" aria-hidden="true"></mat-divider>
+        <button
+          mat-menu-item
+          type="button"
+          (click)="auth.logout({ logoutParams: { returnTo: env.adminLogoutUrl } })"
+          [attr.aria-label]="'Sign out of your account'">
+          <mat-icon aria-hidden="true">logout</mat-icon>
+          <span>Sign Out</span>
         </button>
       </mat-menu>
     </div>

@@ -2,17 +2,27 @@
   <app-decedent-basic-info [decedentInfo]="decedentInfo"></app-decedent-basic-info>
 </div>
 
-<div class="double-top-margin">
+<div
+  class="double-top-margin"
+  role="note"
+  [attr.aria-label]="'Important information'">
   {{uiConstantsStep2.DISCLAIMER}}
 </div>
 
-<form [formGroup]="endpointConfigurationFormGroup" (ngSubmit)="onSubmitEndpointConfiguration()">
+<form
+  [formGroup]="endpointConfigurationFormGroup"
+  (ngSubmit)="onSubmitEndpointConfiguration()"
+  [attr.aria-label]="'Endpoint configuration form'">
 
   <div class="double-top-margin">
-    <mat-radio-group formControlName="inputType">
+    <mat-radio-group
+      formControlName="inputType"
+      [attr.aria-label]="'Select endpoint type'">
       @for (inputOption of endpointTypeOptions; track inputOption; let i = $index) {
-        <mat-radio-button class="radio-button endpoint-radio-btns"
-          [value]="inputOption">
+        <mat-radio-button
+          class="radio-button endpoint-radio-btns"
+          [value]="inputOption"
+          [attr.aria-label]="inputOption">
           {{ inputOption }}
         </mat-radio-button>
       }
@@ -21,10 +31,16 @@
 
   <!-- Registered Endpoint -->
   @if (endpointConfigurationFormGroup.controls['inputType'].value == 'Registered Endpoint') {
-    <div class="margin-top-md" formGroupName="registeredEndpoint">
-      <mat-form-field appearance="outline" class="server-select">
+    <div
+      class="margin-top-md"
+      formGroupName="registeredEndpoint"
+      role="region"
+      [attr.aria-label]="'Registered endpoint configuration'">
+      <mat-form-field appearance="outline" class="server-select" floatLabel="always">
         <mat-label>Select Endpoint</mat-label>
-        <mat-select formControlName="serverEndpoint">
+        <mat-select
+          formControlName="serverEndpoint"
+          id="server-endpoint-select">
           @for (serverEndpoint of serverEndpointList; track serverEndpoint; let i = $index) {
             <mat-option
               [disabled]="i > 0"
@@ -35,23 +51,35 @@
         </mat-select>
       </mat-form-field>
       @if (endpointConfigurationFormGroup?.controls?.['registeredEndpoint']?.value?.serverEndpoint == blueJayUri) {
-        <div class="simple-card">
+        <div
+          class="simple-card"
+          role="note"
+          [attr.aria-label]="'Blue Jay credentials'">
           <div>Blue Jay is the public Raven Test EDRS.</div>
-          <div>CREDENTIALS</div>
-          <div>Username: <em>client</em> </div>
-          <div>Password: <em>secret</em> </div>
+          <div><strong>CREDENTIALS</strong></div>
+          <div>Username: <em>client</em></div>
+          <div>Password: <em>secret</em></div>
         </div>
       }
       <div>
-        <button class="view-item-button" type="button" mat-raised-button color="accent"
-          (click)="onViewServerCapabilityStmt()">
+        <button
+          class="view-item-button"
+          type="button"
+          mat-raised-button
+          color="accent"
+          (click)="onViewServerCapabilityStmt()"
+          [attr.aria-label]="'View server capability statement'">
           {{ uiConstantsStep2.VIEW_CAPABILITY_STMT_BTN }}
         </button>
       </div>
       <div class="margin-top-md">
-        <button type="button" color="accent" class="view-item-button"
+        <button
+          type="button"
+          color="accent"
+          class="view-item-button"
           (click)="onViewServerMdiDocs()"
-          mat-raised-button>
+          mat-raised-button
+          [attr.aria-label]="'View server MDI documents operation definition'">
           {{ uiConstantsStep2.VIEW_SERVER_$MDI_DOCS_OP_DEFINITION_BTN }}
         </button>
       </div>
@@ -60,54 +88,100 @@
 
   <!-- Custom Endpoint -->
   @if (endpointConfigurationFormGroup.controls['inputType'].value == 'Custom Endpoint') {
-    <div formGroupName="customEndpoint">
+    <div
+      formGroupName="customEndpoint"
+      role="region"
+      [attr.aria-label]="'Custom endpoint configuration'">
       <div>
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" floatLabel="always">
           <mat-label>Endpoint URL</mat-label>
-          <input matInput formControlName="customEndpointUrl">
+          <input
+            matInput
+            type="url"
+            formControlName="customEndpointUrl"
+            id="custom-endpoint-url">
         </mat-form-field>
       </div>
       <div>
-        <mat-radio-group formControlName="authenticationType">
+        <mat-radio-group
+          formControlName="authenticationType"
+          [attr.aria-label]="'Select authentication type'">
           @for (authenticationType of authenticationOptions; track authenticationType) {
-            <mat-radio-button class="radio-button"
-              [value]="authenticationType">
+            <mat-radio-button
+              class="radio-button"
+              [value]="authenticationType"
+              [attr.aria-label]="authenticationType">
               {{ authenticationType }}
             </mat-radio-button>
           }
         </mat-radio-group>
       </div>
+
       <!-- Basic Authentication -->
       @if (endpointConfigurationFormGroup.value?.['customEndpoint']?.['authenticationType'] == 'Basic') {
-        <div formGroupName="userNamePassword">
-          <mat-form-field appearance="outline">
+        <div
+          formGroupName="userNamePassword"
+          role="group"
+          [attr.aria-label]="'Basic authentication credentials'">
+          <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Username</mat-label>
-            <input type="text" matInput formControlName="username">
+            <input
+              type="text"
+              matInput
+              formControlName="username"
+              id="auth-username"
+              autocomplete="username">
           </mat-form-field>
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Password</mat-label>
-            <input matInput type="password" formControlName="password">
+            <input
+              matInput
+              type="password"
+              formControlName="password"
+              id="auth-password"
+              autocomplete="current-password">
           </mat-form-field>
         </div>
       }
+
       <!-- Bearer Token Authentication -->
       @if (endpointConfigurationFormGroup.value?.['customEndpoint']?.['authenticationType'] == 'Bearer Token') {
-        <div formGroupName="bearerToken">
-          <mat-form-field appearance="outline">
+        <div
+          formGroupName="bearerToken"
+          role="group"
+          [attr.aria-label]="'Bearer token authentication'">
+          <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Bearer Token</mat-label>
-            <textarea type="text" matInput formControlName="token"></textarea>
+            <textarea
+              matInput
+              formControlName="token"
+              id="bearer-token"
+              rows="3"></textarea>
           </mat-form-field>
         </div>
       }
     </div>
   }
 
-  <div class="padding-top-md padding-bottom-md row">
-    <button mat-raised-button matStepperPrevious>Back</button>
+  <div
+    class="padding-top-md padding-bottom-md row"
+    role="navigation"
+    [attr.aria-label]="'Step navigation'">
+    <button
+      mat-raised-button
+      type="button"
+      matStepperPrevious
+      [attr.aria-label]="'Go back to previous step'">
+      Back
+    </button>
     <div class="push-right">
-      <button type="submit" mat-raised-button
+      <button
+        type="submit"
+        mat-raised-button
         [style.background-color]="moduleConfig.backgroundColor"
-        [style.color]="'white'" matStepperNext>
+        [style.color]="'white'"
+        matStepperNext
+        [attr.aria-label]="uiConstantsStep2.PROCEED_TO_NEXT_STEP_BTN">
         {{ uiConstantsStep2.PROCEED_TO_NEXT_STEP_BTN }}
       </button>
     </div>

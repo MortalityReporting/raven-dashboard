@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Inject, OnInit, output, input, Output, signal, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Inject, OnInit, output, input, Output, signal, ViewChild, AfterViewInit} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
 import {forkJoin, map, mergeMap} from "rxjs";
 import {ToxicologyGridDto} from "../../../../../model/toxicology.grid.dto";
@@ -15,12 +15,12 @@ import {TrackingNumberType} from "../../../../fhir-mdi-library";
 })
 export class ToxicologyGridComponent implements OnInit {
   currentModule = input('recordViewer');
-  selectedToxRecord = signal<ToxicologyGridDto>(null);
+  selectedToxRecord = signal<ToxicologyGridDto | null>(null);
 
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['lastName', 'reportdate', 'toxcasenumber', 'toxcasesystem', 'mdicasenumber', 'mdicasesystem'];
   toxGridDtoList: ToxicologyGridDto[];
-  isLoading = true;
+  isLoading = signal(false);
   showSystems = false;
 
   appConfiguration: AppConfiguration = AppConfiguration.config;
@@ -40,7 +40,7 @@ export class ToxicologyGridComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isLoading = true;
+    this.isLoading.set(true);
     this.selectedToxRecord.set(null);
 
     // TODO: Add logic to skip invalid records missing either a subject or tox tracking number.
@@ -61,16 +61,13 @@ export class ToxicologyGridComponent implements OnInit {
         this.toxGridDtoList = []; // Initialize data.
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.sort = this.sort;
-        this.isLoading = false;
+        this.isLoading.set(false);
       },
       error: (e) => {
         console.error(e);
-        this.isLoading = false;
+        this.isLoading.set(false);
         this.serverErrorEventEmitter.emit();
       },
-      complete:  () => {
-        this.isLoading = false
-      }
     });
   }
 

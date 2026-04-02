@@ -522,3 +522,30 @@ TODO: Refactor to generalize class names and move to a common shared .css file.
   align-items: center;
   justify-content: center;
 }
+
+.narrow-filter{
+  max-width: 10em;
+}
+
+/* Section 508 CSS improvements */
+
+/* Visually hidden but accessible to screen readers */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Make clickable cards keyboard accessible */
+.clickable-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}

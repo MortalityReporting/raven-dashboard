@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Inject, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Inject, OnInit, Output, signal, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
 import {AppConfiguration} from "../../../../../providers/app-configuration";
@@ -23,7 +23,7 @@ export class DcrGridComponent implements OnInit {
   // TODO uncomment when we know how to use gender/sex fields per the CDC guidelines. Note that gender should come from Sex at Death
   displayedColumns: string[] = ['name',  'deathDate', 'funeralHomeName'];
 
-  isLoading = false;
+  isLoading = signal(false);
 
   constructor(
     private router: Router,
@@ -53,20 +53,17 @@ export class DcrGridComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isLoading = true;
+    this.isLoading.set(true);
     this.dcrDocumentHandlerService.getRecords().subscribe({
       next: data => {
-        this.isLoading = false;
+        this.isLoading.set(false);
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.sort = this.sort;
       },
       error: error => {
-        this.isLoading = false;
+        this.isLoading.set(false);
         console.error(error);
         this.serverErrorEventEmitter.emit();
-      },
-      complete: () => {
-        this.isLoading = false;
       }
       }
     )

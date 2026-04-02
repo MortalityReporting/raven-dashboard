@@ -1,47 +1,85 @@
-<div #menu
-     [style.background-color]="config.backgroundColor"
-     class="border-radius-xs">
-  <mat-nav-list aria-label="Toxicology Record Navigation">
-    <div>
-      <button mat-flat-button (click)="onItemClick('mdiCaseNumber')" [style.color]="appConfig.contrastColor"
-              [style.background-color]="config.backgroundColor">
-        <mat-icon aria-hidden="true"> info</mat-icon>
-        MDI Case Number
+<div
+  #menu
+  [style.background-color]="config.backgroundColor"
+  class="border-radius-xs"
+  role="navigation"
+  [attr.aria-label]="'Toxicology record sections'">
+  <mat-nav-list [attr.aria-label]="'Navigate to record sections'">
+    <div role="none">
+      <button
+        mat-flat-button
+        type="button"
+        (click)="onItemClick('mdiCaseNumber')"
+        [style.color]="appConfig.contrastColor"
+        [style.background-color]="config.backgroundColor"
+        [attr.aria-label]="'Navigate to MDI Case Number section'">
+        <mat-icon aria-hidden="true">info</mat-icon>
+        <span>MDI Case Number</span>
       </button>
     </div>
-    <div>
-      <button mat-flat-button (click)="onItemClick('demographics');" [style.color]="appConfig.contrastColor"
-              [style.background-color]="config.backgroundColor">
-        <mat-icon aria-hidden="true"> person</mat-icon>
-        Demographics
+
+    <div role="none">
+      <button
+        mat-flat-button
+        type="button"
+        (click)="onItemClick('demographics');"
+        [style.color]="appConfig.contrastColor"
+        [style.background-color]="config.backgroundColor"
+        [attr.aria-label]="'Navigate to Demographics section'">
+        <mat-icon aria-hidden="true">person</mat-icon>
+        <span>Demographics</span>
       </button>
     </div>
-    <div>
-      <button mat-flat-button (click)="onItemClick('performers');" [style.color]="appConfig.contrastColor"
-              [style.background-color]="config.backgroundColor">
-        <mat-icon aria-hidden="true"> medical_services</mat-icon>
-        Performers
+
+    <div role="none">
+      <button
+        mat-flat-button
+        type="button"
+        (click)="onItemClick('performers');"
+        [style.color]="appConfig.contrastColor"
+        [style.background-color]="config.backgroundColor"
+        [attr.aria-label]="'Navigate to Performers section'">
+        <mat-icon aria-hidden="true">medical_services</mat-icon>
+        <span>Performers</span>
       </button>
     </div>
-    <div>
-      <button mat-flat-button (click)="onItemClick('specimens');" [style.color]="appConfig.contrastColor"
-              [style.background-color]="config.backgroundColor">
+
+    <div role="none">
+      <button
+        mat-flat-button
+        type="button"
+        (click)="onItemClick('specimens');"
+        [style.color]="appConfig.contrastColor"
+        [style.background-color]="config.backgroundColor"
+        [attr.aria-label]="'Navigate to Specimens section'">
         <mat-icon aria-hidden="true" svgIcon="labs"></mat-icon>
-        Specimens
+        <span>Specimens</span>
       </button>
     </div>
-    <div>
-      <button mat-flat-button (click)="onItemClick('results');" [style.color]="appConfig.contrastColor"
-              [style.background-color]="config.backgroundColor">
+
+    <div role="none">
+      <button
+        mat-flat-button
+        type="button"
+        (click)="onItemClick('results');"
+        [style.color]="appConfig.contrastColor"
+        [style.background-color]="config.backgroundColor"
+        [attr.aria-label]="'Navigate to Test Results section'">
         <mat-icon aria-hidden="true" svgIcon="lab_panel"></mat-icon>
-        Test Results
+        <span>Test Results</span>
       </button>
     </div>
-    <div>
-      <button mat-flat-button (click)="onItemClick('conclusion');" [style.color]="appConfig.contrastColor"
-              [style.background-color]="config.backgroundColor">
+
+    <div role="none">
+      <button
+        mat-flat-button
+        type="button"
+        (click)="onItemClick('conclusion');"
+        [style.color]="appConfig.contrastColor"
+        [style.background-color]="config.backgroundColor"
+        [attr.aria-label]="'Navigate to Conclusion section'">
         <mat-icon aria-hidden="true" svgIcon="clinical_notes"></mat-icon>
-        Conclusion
+        <span>Conclusion</span>
       </button>
     </div>
   </mat-nav-list>

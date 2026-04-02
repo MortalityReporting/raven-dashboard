@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {FhirResource} from "../models/fhir/r4/base/fhir.resource";
-import {Bundle} from "../models/fhir/r4/resources/bundle";
+import {Bundle, BundleEntryComponent} from "../models/fhir/r4/resources/bundle";
 
 @Injectable({
   providedIn: 'root'
@@ -72,6 +72,18 @@ export class BundleHelperService {
       return null;
     }
     return (bundle.entry.find((entry: any) => entry.fullUrl === fullUrlReference))?.resource || undefined;
+  }
+
+  public flattenBundle (completeBundle: Bundle) {
+    if(!completeBundle || !completeBundle['entry']) return null;
+
+    let resourceList: FhirResource[] = [];
+    if (completeBundle['entry']) {
+      completeBundle['entry'].map((bundleEntry: BundleEntryComponent) => {
+        resourceList.push(bundleEntry.resource)
+      });
+    }
+    return resourceList;
   }
 
 }

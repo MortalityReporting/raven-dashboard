@@ -19,10 +19,10 @@
   </ng-container>
 
 <!--    TODO uncomment when we know how to use gender/sex fields per the CDC guidelines. Note that gender should come from Sex at Death-->
-<!--  <ng-container matColumnDef="gender">-->
-<!--    <th mat-header-cell *matHeaderCellDef mat-sort-header> Gender</th>-->
-<!--    <td mat-cell class="pointer" *matCellDef="let dcrGridDTO"> {{dcrGridDTO?.gender | titlecase}}</td>-->
-<!--  </ng-container>-->
+  <ng-container matColumnDef="gender">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Sex</th>
+    <td mat-cell class="pointer" *matCellDef="let dcrGridDTO"> {{dcrGridDTO?.gender | titlecase}}</td>
+  </ng-container>
 
   <ng-container matColumnDef="deathDate">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of Death</th>
@@ -40,7 +40,7 @@
 
   <tr class="mat-row" *matNoDataRow>
     <td class="mat-cell" [colSpan]="displayedColumns.length">
-      @if (!isLoading) {
+      @if (!isLoading()) {
         No results found.
       } @else {
         <span class="inline-spinner-wrapper">

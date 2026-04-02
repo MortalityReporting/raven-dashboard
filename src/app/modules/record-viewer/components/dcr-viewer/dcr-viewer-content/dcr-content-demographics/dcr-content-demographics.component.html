@@ -1,5 +1,9 @@
 <div class="summary-section-body">
-  <div class="summary-section-grid">
+  <div
+    class="summary-section-grid"
+    role="group"
+    [attr.aria-label]="'Demographics information'">
+
     <div class="grid-row">
       <div class="grid-col-1">
         <record-viewer-mdi-to-edrs-viewer-content-field
@@ -9,16 +13,16 @@
           [resource]="demographics()?.patientResource"
         />
       </div>
-      <div class="grid-col-1">
-        <!--    TODO uncomment when we know how to use gender/sex fields per the CDC guidelines. Note that gender should come from Sex at Death-->
-<!--        <record-viewer-mdi-to-edrs-viewer-content-field-->
-<!--          [label]="'Sex'"-->
-<!--          [value]="demographics()?.gender"-->
-<!--          appSetFhirExplorer-->
-<!--          [resource]="demographics()?.patientResource"-->
-<!--        />-->
+      <div class="grid-col-1" aria-hidden="true">
+        <record-viewer-mdi-to-edrs-viewer-content-field
+          [label]="'Sex'"
+          [value]="demographics()?.gender"
+          appSetFhirExplorer
+          [resource]="demographics()?.patientResource"
+        />
       </div>
     </div>
+
     <div class="grid-row">
       <div class="grid-col-1">
         <record-viewer-mdi-to-edrs-viewer-content-field

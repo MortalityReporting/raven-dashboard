@@ -1,4 +1,4 @@
-import {Component, Inject, input, Input, OnInit} from '@angular/core';
+import {Component, Inject, input, Input, OnInit, signal} from '@angular/core';
 import { ToxSummary } from "../../../models/tox.summary";
 import { ModuleHeaderConfig } from "../../../../../providers/module-header-config";
 import { AppConfiguration } from "../../../../../providers/app-configuration";
@@ -13,7 +13,8 @@ import { ToxToMdiMessageHandlerService } from "../../../services/tox-to-mdi-mess
 export class ToxToMdiViewerMdiCaseComponent implements OnInit {
   @Input() toxSummary: ToxSummary;
   currentModule = input('recordViewer');
-  relatedCaseAvailable = false;
+  relatedCaseId = '';
+  isRelatedCaseAvailable =  signal<boolean>(false);
   appConfiguration: AppConfiguration = AppConfiguration.config;
   constructor(
     private toxHandler: ToxToMdiMessageHandlerService,
@@ -24,7 +25,8 @@ export class ToxToMdiViewerMdiCaseComponent implements OnInit {
   ngOnInit(): void {
     this.toxHandler.isRelatedMdiDocumentAvailable(this.toxSummary.mdiCaseNumber).subscribe(
       (result => {
-        this.relatedCaseAvailable = result?.split('/')[1];
+        this.relatedCaseId = result?.split('/')[1];
+        this.isRelatedCaseAvailable.set(this.relatedCaseId?.length > 0);
       })
     );
   }

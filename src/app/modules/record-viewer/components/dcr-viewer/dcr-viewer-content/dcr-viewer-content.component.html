@@ -1,85 +1,174 @@
-
-<div class="section-button-wrapper">
-  <button class="margin-right-sm" mat-raised-button (click)="onOpenAll()" [style.background-color]="config.backgroundColor" [style.color]="appConfig.contrastColor">
-    <mat-icon>expand_more</mat-icon>
-    Expand All Sections
+<div class="section-button-wrapper" role="toolbar" [attr.aria-label]="'Section controls'">
+  <button
+    class="margin-right-sm"
+    mat-raised-button
+    type="button"
+    (click)="onOpenAll()"
+    [style.background-color]="config.backgroundColor"
+    [style.color]="appConfig.contrastColor"
+    [attr.aria-label]="'Expand all sections'">
+    <mat-icon aria-hidden="true">expand_more</mat-icon>
+    <span>Expand All Sections</span>
   </button>
-  <button mat-raised-button (click)="onCloseAll()" [style.background-color]="config.backgroundColor" [style.color]="appConfig.contrastColor">
-    <mat-icon>expand_less</mat-icon>
-    Collapse All Sections
+  <button
+    mat-raised-button
+    type="button"
+    (click)="onCloseAll()"
+    [style.background-color]="config.backgroundColor"
+    [style.color]="appConfig.contrastColor"
+    [attr.aria-label]="'Collapse all sections'">
+    <mat-icon aria-hidden="true">expand_less</mat-icon>
+    <span>Collapse All Sections</span>
   </button>
-  <span class="content-spacer"></span>
-
+  <span class="content-spacer" aria-hidden="true"></span>
 </div>
 
-<mat-accordion multi>
+<mat-accordion
+  multi
+  role="region"
+  [attr.aria-label]="'Death certificate record sections'">
 
-  <!-- Patient Demographics Abridged -->
-  <mat-expansion-panel class="summary-section" id="caseAdminInfo" [expanded]="isExpanded('caseAdminInfo')" [style.border-color]="appConfig.color">
-    <mat-expansion-panel-header (click)="onToggleState( 'caseAdminInfo' )">
-      <mat-panel-title>Submission Information</mat-panel-title>
+  <!-- Submission Information -->
+  <mat-expansion-panel
+    class="summary-section"
+    id="caseAdminInfo"
+    [expanded]="isExpanded('caseAdminInfo')"
+    [style.border-color]="appConfig.color"
+    [attr.aria-label]="'Submission Information section'">
+    <mat-expansion-panel-header
+      (click)="onToggleState('caseAdminInfo')"
+      [attr.aria-controls]="'caseAdminInfo-content'"
+      [attr.aria-expanded]="isExpanded('caseAdminInfo')">
+      <mat-panel-title>
+        <span id="caseAdminInfo-title">Submission Information</span>
+      </mat-panel-title>
     </mat-expansion-panel-header>
-    <div class="summary-section-body">
+    <div
+      class="summary-section-body"
+      id="caseAdminInfo-content"
+      role="region"
+      [attr.aria-labelledby]="'caseAdminInfo-title'">
       <app-dcr-content-case-admin-info
         [caseAdminInfo]="dcrRecord?.dcrSummary?.caseAdminInfo">
       </app-dcr-content-case-admin-info>
     </div>
   </mat-expansion-panel>
 
-  <!-- Patient Demographics Abridged -->
-  <mat-expansion-panel class="summary-section" id="demographics" [expanded]="isExpanded('demographics')" [style.border-color]="appConfig.color">
-    <mat-expansion-panel-header (click)="onToggleState( 'demographics' )">
-      <mat-panel-title>Demographics</mat-panel-title>
+  <!-- Demographics -->
+  <mat-expansion-panel
+    class="summary-section"
+    id="demographics"
+    [expanded]="isExpanded('demographics')"
+    [style.border-color]="appConfig.color"
+    [attr.aria-label]="'Demographics section'">
+    <mat-expansion-panel-header
+      (click)="onToggleState('demographics')"
+      [attr.aria-controls]="'demographics-content'"
+      [attr.aria-expanded]="isExpanded('demographics')">
+      <mat-panel-title>
+        <span id="demographics-title">Demographics</span>
+      </mat-panel-title>
     </mat-expansion-panel-header>
-    <div class="summary-section-body">
-      <app-dcr-content-demographics [demographics]="dcrRecord?.dcrSummary?.demographics"></app-dcr-content-demographics>
+    <div
+      class="summary-section-body"
+      id="demographics-content"
+      role="region"
+      [attr.aria-labelledby]="'demographics-title'">
+      <app-dcr-content-demographics
+        [demographics]="dcrRecord?.dcrSummary?.demographics">
+      </app-dcr-content-demographics>
     </div>
   </mat-expansion-panel>
 
   <!-- Death Investigation -->
-  <mat-expansion-panel class="summary-section" #performers id="deathInvestigation" [expanded]="isExpanded('deathInvestigation')" [style.border-color]="appConfig.color">
-    <mat-expansion-panel-header (click)="onToggleState( 'deathInvestigation' )">
-      <mat-panel-title>Death Investigation</mat-panel-title>
+  <mat-expansion-panel
+    class="summary-section"
+    #performers
+    id="deathInvestigation"
+    [expanded]="isExpanded('deathInvestigation')"
+    [style.border-color]="appConfig.color"
+    [attr.aria-label]="'Death Investigation section'">
+    <mat-expansion-panel-header
+      (click)="onToggleState('deathInvestigation')"
+      [attr.aria-controls]="'deathInvestigation-content'"
+      [attr.aria-expanded]="isExpanded('deathInvestigation')">
+      <mat-panel-title>
+        <span id="deathInvestigation-title">Death Investigation</span>
+      </mat-panel-title>
     </mat-expansion-panel-header>
-    <div class="summary-section-body">
+    <div
+      class="summary-section-body"
+      id="deathInvestigation-content"
+      role="region"
+      [attr.aria-labelledby]="'deathInvestigation-title'">
       @if (dcrRecord?.dcrSummary?.deathInvestigation) {
-      <app-dcr-content-death-investigation
-        [deathInvestigation]="dcrRecord?.dcrSummary?.deathInvestigation">
-      </app-dcr-content-death-investigation>
+        <app-dcr-content-death-investigation
+          [deathInvestigation]="dcrRecord?.dcrSummary?.deathInvestigation">
+        </app-dcr-content-death-investigation>
+      } @else {
+        <p>No death investigation information available.</p>
       }
     </div>
   </mat-expansion-panel>
 
-  <!-- Cremation Clearance Info-->
-  <mat-expansion-panel class="summary-section" id="cremationClearance" [expanded]="isExpanded('cremationClearance')" [style.border-color]="appConfig.color">
-    <mat-expansion-panel-header (click)="onToggleState( 'cremationClearance' )">
-      <mat-panel-title>Cremation Clearance Info</mat-panel-title>
+  <!-- Cremation Clearance Info -->
+  <mat-expansion-panel
+    class="summary-section"
+    id="cremationClearance"
+    [expanded]="isExpanded('cremationClearance')"
+    [style.border-color]="appConfig.color"
+    [attr.aria-label]="'Cremation Clearance Info section'">
+    <mat-expansion-panel-header
+      (click)="onToggleState('cremationClearance')"
+      [attr.aria-controls]="'cremationClearance-content'"
+      [attr.aria-expanded]="isExpanded('cremationClearance')">
+      <mat-panel-title>
+        <span id="cremationClearance-title">Cremation Clearance Info</span>
+      </mat-panel-title>
     </mat-expansion-panel-header>
-    <div class="summary-section-body">
+    <div
+      class="summary-section-body"
+      id="cremationClearance-content"
+      role="region"
+      [attr.aria-labelledby]="'cremationClearance-title'">
       @if (dcrRecord?.dcrSummary?.cremationClearanceInfo) {
-      <app-dcr-content-cremation-clearance
-        [cremationClearanceInfo]="dcrRecord?.dcrSummary?.cremationClearanceInfo"
-      >
-      </app-dcr-content-cremation-clearance>
-    }
+        <app-dcr-content-cremation-clearance
+          [cremationClearanceInfo]="dcrRecord?.dcrSummary?.cremationClearanceInfo">
+        </app-dcr-content-cremation-clearance>
+      } @else {
+        <p>No cremation clearance information available.</p>
+      }
     </div>
   </mat-expansion-panel>
 
-
-  <!-- Cremation Clearance Info-->
-  <mat-expansion-panel class="summary-section" id="signature" [expanded]="isExpanded('signature')" [style.border-color]="appConfig.color">
-    <mat-expansion-panel-header (click)="onToggleState( 'signature' )">
-      <mat-panel-title>Signature</mat-panel-title>
+  <!-- Signature -->
+  <mat-expansion-panel
+    class="summary-section"
+    id="signature"
+    [expanded]="isExpanded('signature')"
+    [style.border-color]="appConfig.color"
+    [attr.aria-label]="'Signature section'">
+    <mat-expansion-panel-header
+      (click)="onToggleState('signature')"
+      [attr.aria-controls]="'signature-content'"
+      [attr.aria-expanded]="isExpanded('signature')">
+      <mat-panel-title>
+        <span id="signature-title">Signature</span>
+      </mat-panel-title>
     </mat-expansion-panel-header>
-    <div class="summary-section-body">
+    <div
+      class="summary-section-body"
+      id="signature-content"
+      role="region"
+      [attr.aria-labelledby]="'signature-title'">
       @if (dcrRecord?.dcrSummary?.signatureBlock) {
         <app-dcr-viewer-signature
-          [signature]="dcrRecord?.dcrSummary?.signatureBlock"
-        >
+          [signature]="dcrRecord?.dcrSummary?.signatureBlock">
         </app-dcr-viewer-signature>
+      } @else {
+        <p>No signature information available.</p>
       }
     </div>
   </mat-expansion-panel>
 
 </mat-accordion>
-

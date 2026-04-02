@@ -1,36 +1,64 @@
-<div class="padding-top-md">
-  {{ uiConstantsStep1.UPLOAD_JSON_CONTENT_MSG}}
-</div>
+<section aria-labelledby="upload-heading">
+  <h2 id="upload-heading" class="visually-hidden">
+    Upload MDI to EDRS Document
+  </h2>
 
-<div class="padding-top-md">
-  {{ uiConstantsStep1.UPLOAD_FILE_CONTENT_MSG }}
-</div>
+  <div class="padding-top-md" id="upload-instructions">
+    {{ uiConstantsStep1.UPLOAD_JSON_CONTENT_MSG}}
+  </div>
 
-<div class="padding-top-md">
-  <mat-error>{{errorMessage}}</mat-error>
-</div>
+  <div class="padding-top-md">
+    {{ uiConstantsStep1.UPLOAD_FILE_CONTENT_MSG }}
+  </div>
 
-<div class="padding-top-md">
+  @if (errorMessage) {
+    <div class="padding-top-md">
+      <mat-error
+        role="alert"
+        aria-live="assertive"
+        id="upload-error">
+        {{errorMessage}}
+      </mat-error>
+    </div>
+  }
 
-  <button mat-raised-button
-          [style.background-color]="config.backgroundColor"
-          [style.color]="'white'"
-          (click)="onInputMdiToEdrsBundle()">
-    Input MDI to EDRS Document Bundle
-  </button>
+  <div class="padding-top-md" aria-describedby="upload-instructions">
 
-  <input type="file" class="file-input" (click)="fileUpload.value=null"
-         accept=".json"
-         (change)="onFileSelected($event)" #fileUpload>
+    <button
+      mat-raised-button
+      [style.background-color]="config.backgroundColor"
+      [style.color]="'white'"
+      (click)="onInputMdiToEdrsBundle()"
+      aria-label="Manually input MDI to EDRS Document Bundle JSON">
+      Input MDI to EDRS Document Bundle
+    </button>
 
-  <button mat-raised-button color="success" class="left-spacer" (click)="fileUpload.click();">
-    <mat-icon>post_add</mat-icon>
-    Select File
-  </button>
+    <input
+      type="file"
+      class="file-input"
+      id="file-upload-input"
+      accept=".json"
+      aria-label="Select JSON file for MDI to EDRS Document Bundle"
+      (click)="fileUpload.value=null"
+      (change)="onFileSelected($event)"
+      #fileUpload>
 
-  <span id="filename">{{file?.name}}</span>
+    <button
+      mat-raised-button
+      color="success"
+      class="left-spacer"
+      (click)="fileUpload.click();"
+      aria-controls="file-upload-input"
+      aria-label="Browse for JSON file">
+      <mat-icon aria-hidden="true">post_add</mat-icon>
+      Select File
+    </button>
 
-</div>
-<div class="padding-top-md">
-  <app-decedent-basic-info [decedentInfo] = "decedentData"></app-decedent-basic-info>
-</div>
+    <span id="filename">{{file?.name}}</span>
+
+  </div>
+
+  <div class="padding-top-md">
+    <app-decedent-basic-info [decedentInfo]="decedentData"></app-decedent-basic-info>
+  </div>
+</section>
