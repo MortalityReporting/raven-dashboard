@@ -51,12 +51,6 @@ export class MdiToEdrsGridComponent implements OnInit, AfterViewInit {
     { value: 'unknown', label: 'Unknown' }
   ] as const;
 
-  readonly nameStatusList = [
-    {value: 'all', label: 'All'},
-    {value: 'hasName', label: 'Has Name'},
-    {value: 'missingName', label: 'Missing Name'}
-  ] as const;
-
   @Output() serverErrorEventEmitter = new EventEmitter();
   totalDataSize: number = 0;
   readonly pageSizes = [5, 10, 20];
@@ -72,7 +66,7 @@ export class MdiToEdrsGridComponent implements OnInit, AfterViewInit {
       end: [null]
     }),
     mannerOfDeath: new FormControl<string>(''),
-    nameStatus: new FormControl(this.nameStatusList[0].value),
+    // nameStatus: new FormControl(this.nameStatusList[0].value),
   });
 
   constructor(
@@ -85,16 +79,6 @@ export class MdiToEdrsGridComponent implements OnInit, AfterViewInit {
     private cdr: ChangeDetectorRef
   ) {
     this.mannerOfDeathList = this.appConstants.MANNER_OF_DEATH_LIST;
-    this.searchFilterForm.controls.name.valueChanges.subscribe( value => {
-      if (value.length > 0){
-        this.searchFilterForm.controls.nameStatus.setValue(this.nameStatusList[0].value);
-      }
-    });
-    this.searchFilterForm.controls.nameStatus.valueChanges.subscribe( value => {
-      if (value && value !== 'all'){
-        this.searchFilterForm.controls.name.setValue('');
-      }
-    });
   }
 
   private get searchParams(): GridSearchParams {
@@ -120,8 +104,8 @@ export class MdiToEdrsGridComponent implements OnInit, AfterViewInit {
       params.mannerOfDeath = mannerOfDeath;
     }
 
-    const nameStatus = this.searchFilterForm.controls.nameStatus.value;
-    params.nameStatus = nameStatus;
+    // const nameStatus = this.searchFilterForm.controls.nameStatus.value;
+    params.nameStatus = 'hasName';
 
     return params;
   }
@@ -181,7 +165,7 @@ export class MdiToEdrsGridComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.decedentService.setSearchResultsBundleId(null);
-    this.getDecedentRecords(this.currentPage, this.pageSize);
+    this.getDecedentRecords(this.currentPage, this.pageSize,  {nameStatus: 'hasName'});
   }
 
   onCaseSelected(decedent: any) {
