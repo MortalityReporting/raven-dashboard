@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import {UserProfileManagerService} from "../../services/user-profile-manager.service";
 import {AuthService} from '@auth0/auth0-angular';
 import {environment as env} from "../../../../../environments/environment";
@@ -19,7 +19,7 @@ import {UpdateAction} from "../../../testing-events/models/update-action";
 export class AdminPanelComponent implements OnInit {
   currentUser: any;
   env = env;
-  testEvents: any = undefined;
+  testEvents = signal<any>(undefined);
   error: any = undefined;
   selectedEvent: any;
   selected: any;
@@ -48,16 +48,16 @@ export class AdminPanelComponent implements OnInit {
     adminPanelData$.subscribe({
       next: value => {
         this.error = undefined;
-        this.testEvents = value['events'];
+        this.testEvents.set(value['events']);
         if(!this.selectedEvent){
-          this.selectedEvent = this.testEvents[0];
+          this.selectedEvent = this.testEvents()[0];
         }
         else {
-          this.selectedEvent = this.testEvents.find(testEvent => testEvent.id == this.selectedEvent.id);
+          this.selectedEvent = this.testEvents().find(testEvent => testEvent.id == this.selectedEvent.id);
         }
       },
       error: (e) => {
-        this.testEvents = undefined;
+        this.testEvents.set(undefined);
         console.error(e)
         this.error = e;
       }
