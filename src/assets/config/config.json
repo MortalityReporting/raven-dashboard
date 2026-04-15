@@ -7,6 +7,7 @@
   "ravenImportApiUrl": "https://raven.dev.heat.icl.gtri.org/raven-import-api/",
   "fhirValidatorUrl": "https://dev.heat.icl.gtri.org/fhir-validator-service/fhir",
   "blueJayServerBaseUrl": "https://bluejay.heat.icl.gtri.org/mdi-fhir-server",
+  "blueJayServerBasicAuth": "client:secret",
   "adminRedirectUrl": "https://localhost:4200/admin-panel",
   "adminLogoutUrl": "https://localhost:4200/",
   "logFhirRequests": false

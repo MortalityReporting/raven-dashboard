@@ -174,7 +174,7 @@ export class SearchParametersComponent implements OnInit {
     } else if (this.customEndpoint) { //when we use custom endpoint (Minnesota had a test case)
       authObject = this.customEndpoint.auth
     } else { //we use simple authentication
-      let authStringSplit = this.config.ravenFhirServerBasicAuth.split(":");
+      let authStringSplit = this.config.blueJayServerBasicAuth.split(":");
       authObject = {"username": authStringSplit[0], "password": authStringSplit[1]};
     }
     this.searchEdrsService.searchEdrs(this.config.blueJayServerBaseUrl, this.getSearchParametersResourcePreview(), authObject, accessToken).subscribe({
