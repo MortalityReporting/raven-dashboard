@@ -129,6 +129,12 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
     const nameStatus = this.searchFilterForm.controls.nameStatus.value;
     params.nameStatus = nameStatus;
 
+    const mannerOfDeath = this.searchFilterForm.controls.mannerOfDeath.value;
+    if (mannerOfDeath) {
+      params.mannerOfDeath = mannerOfDeath;
+    }
+
+
     return params;
   }
 

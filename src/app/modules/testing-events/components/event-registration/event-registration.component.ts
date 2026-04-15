@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import {EventModule} from "../../models/event-module";
 import {skipWhile, switchMap, tap} from "rxjs";
 import {UserProfileManagerService} from "../../../user-management";
@@ -18,9 +18,9 @@ export class EventRegistrationComponent implements OnInit{
   // Event Modules/Questionnaires
   eventList: EventModule[];
   currentUser: UserProfile;
-  registrations: Registration[] = [];
-  availableEvent: EventModule[] = [];
-  registeredEvent: EventModule[] = [];
+  registrations = signal<Registration[]>([]);
+  availableEvent = signal<EventModule[]>([]);
+  registeredEvent = signal<EventModule[]>([]);
   appConfiguration: any = AppConfiguration.config;
 
   constructor(
@@ -41,15 +41,15 @@ export class EventRegistrationComponent implements OnInit{
         switchMap((value)=> this.eventManager.getAllRegistrations(this.currentUser.fhirId, value))
     ).subscribe({
       next: value=> {
-        this.registrations = value;
-        this.availableEvent = this.eventList.filter( event=> !this.isRegistered(event));
-        this.registeredEvent = this.eventList.filter( event=> this.isRegistered(event));
+        this.registrations.set(value);
+        this.availableEvent.set(this.eventList.filter( event=> !this.isRegistered(event)));
+        this.registeredEvent.set(this.eventList.filter( event=> this.isRegistered(event)));
       }
     })
   }
 
   isRegistered(event: EventModule): boolean {
-    return this.registrations.some((registration: Registration) => registration.questionnaire.endsWith(event.fhirId));
+    return this.registrations().some((registration: Registration) => registration.questionnaire.endsWith(event.fhirId));
   }
 
   registerForEvent(event: any) {
