@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, signal} from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
 import {
   combineLatest,
@@ -30,7 +30,7 @@ import {MatDialog} from "@angular/material/dialog";
 })
 export class TestingEventRootComponent implements OnInit, OnDestroy {
   // Registrations/QuestionnaireResponses
-  registrations: Registration[] = [];
+  registrations = signal<Registration[]>([]);
   currentRegistration: Registration = undefined;
   currentIndex: number = -2;
   currentItem: RegistrationDisplayItem;
@@ -83,7 +83,7 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
 
     registrations$.subscribe({
         next: (registrations: Registration[]) => {
-          this.registrations = registrations;
+          this.registrations.set(registrations);
         }
       });
 
@@ -119,7 +119,7 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
       this.eventManager.setCurrentEvent(undefined);
     } else {
       // If item is selected, set current registration as it.
-      const registration: Registration = this.registrations[index];
+      const registration: Registration = this.registrations()[index];
       this.eventManager.setCurrentRegistration(registration);
       const matchedEvent: EventModule = this.eventManager.matchRegistrationToEvent(registration, this.eventList)
       this.eventManager.setCurrentEvent(matchedEvent);
