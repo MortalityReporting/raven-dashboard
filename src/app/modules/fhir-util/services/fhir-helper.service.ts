@@ -1,16 +1,38 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {TrackingNumberType} from "../../fhir-mdi-library";
 import {AppConstants} from "../../../providers/app-constants";
+import {FhirResource} from "../models/fhir/r4/base/fhir.resource";
+import {TitleCasePipe} from "@angular/common";
+
+interface HumanName {
+  use?: string;
+  family?: string;
+  given?: string[];
+  prefix?: string[];
+  extension?: any[];
+  _given?: any[];
+  _family?: any;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class FhirHelperService {
   public defaultString: string = this.appConstants.VALUE_NOT_FOUND;
+  private titleCasePipe = inject(TitleCasePipe)
 
   constructor(
     private appConstants: AppConstants,
   ) { }
+
+  getDataAbsentReason(data: any){
+    if(!data?.extension?.length){
+      return null;
+    }
+    const dataAbsentReasonUrl = "http://hl7.org/fhir/StructureDefinition/data-absent-reason";
+    const result =  data.extension.find(extension => extension.url === dataAbsentReasonUrl).valueCode;
+    return result;
+  }
 
   findObservationComponentByCode(observation: any, componentCode: string): any {
     if(!observation?.component || !componentCode){
@@ -41,105 +63,105 @@ export class FhirHelperService {
   }
 
 
-  getOfficialName(resource: any, returnStyle: PatientNameReturn = 0, includePrefix: boolean = false): string {
-    if(!resource.name){
+  getOfficialName(resource: any, returnStyle: PatientNameReturn = PatientNameReturn.fullname, includePrefix: boolean = false): string | null {
+    if (!resource?.name) {
       return this.defaultString;
     }
-    let nameList = resource.name;
 
-    // Helper function to check for extension and return title case
-    const getExtensionValue = (extensionArray: any[]): string | null => {
-      if (!extensionArray || !Array.isArray(extensionArray)) {
-        return null;
-      }
-      const maskedExt = extensionArray.find(ext =>
-        ext.valueCode === 'masked'
-      );
-      if (maskedExt && maskedExt.valueCode) {
-        // Convert to title case: first letter uppercase, rest lowercase
-        return maskedExt.valueCode.charAt(0).toUpperCase() + maskedExt.valueCode.slice(1).toLowerCase();
-      }
-      return null;
-    };
+    const nameList: HumanName[] = resource.name;
 
-    // Check if the name array itself only contains extension (no actual name data)
-    const nameExtension = getExtensionValue(nameList[0]?.extension);
-    if (nameExtension && !nameList[0]?.given && !nameList[0]?.family && !nameList[0]?.use) {
-      return nameExtension;
+    // Check if the name array only contains extension (no actual name data)
+    const initialAbsentReason = this.getDataAbsentReason(nameList[0]);
+    if (initialAbsentReason && !nameList[0]?.given && !nameList[0]?.family && !nameList[0]?.use) {
+      return this.titleCasePipe.transform(initialAbsentReason);
     }
 
-    let firstOrOfficialName = (nameList.filter((humanName: any) => humanName.use === "official"))[0];
-
-    // If No Official Name is Found, use First HumanName in List
-    if (firstOrOfficialName === undefined) {
-      firstOrOfficialName = nameList[0];
+    const selectedName = this.findOfficialOrFirstName(nameList);
+    if (!selectedName) {
+      return this.defaultString;
     }
 
     // Check if this name entry only has extension
-    const currentNameExtension = getExtensionValue(firstOrOfficialName?.extension);
-    if (currentNameExtension && !firstOrOfficialName?.given && !firstOrOfficialName?.family) {
-      return currentNameExtension;
+    const nameAbsentReason = this.getDataAbsentReason(selectedName);
+    if (nameAbsentReason && !selectedName?.given && !selectedName?.family) {
+      return this.titleCasePipe.transform(nameAbsentReason);
     }
 
-    // Helper function to get first/given name (checks value then extension)
-    const getFirstName = (): string | null => {
-      if (firstOrOfficialName?.given?.[0]?.trim()) {
-        return firstOrOfficialName.given[0].trim();
-      }
-      // Check for extension on the given name element
-      const givenExtension = firstOrOfficialName?._given?.[0]?.extension;
-      return getExtensionValue(givenExtension);
-    };
+    return this.formatNameByStyle(selectedName, returnStyle, includePrefix, nameAbsentReason);
+  }
 
-    // Helper function to get last/family name (checks value then extension)
-    const getLastName = (): string | null => {
-      if (firstOrOfficialName?.family?.trim()) {
-        return firstOrOfficialName.family.trim();
-      }
-      // Check for extension on the family name element
-      const familyExtension = firstOrOfficialName?._family?.extension;
-      return getExtensionValue(familyExtension);
-    };
+  private findOfficialOrFirstName(nameList: HumanName[]): HumanName | null {
+    if (!nameList?.length) {
+      return null;
+    }
 
-    // TODO: Add better conditional handling if not present.
-    switch(returnStyle) {
+    // Find official name or use first name in list
+    const officialName = nameList.find(name => name.use === 'official');
+    return officialName || nameList[0];
+  }
+
+  private extractFirstName(name: HumanName): string | null {
+    if (name?.given?.[0]?.trim()) {
+      return name.given[0].trim();
+    }
+
+    const givenNameAbsentReason = this.getDataAbsentReason(name?._given?.[0]);
+    return givenNameAbsentReason ? this.titleCasePipe.transform(givenNameAbsentReason) : null;
+  }
+
+  private extractLastName(name: HumanName): string | null {
+    if (name?.family?.trim()) {
+      return name.family.trim();
+    }
+
+    const familyNameAbsentReason = this.getDataAbsentReason(name?._family);
+    return familyNameAbsentReason ? this.titleCasePipe.transform(familyNameAbsentReason) : null;
+  }
+
+  private formatFullName(name: HumanName, includePrefix: boolean): string {
+    const parts: string[] = [];
+
+    if (includePrefix && name.prefix?.length) {
+      parts.push(...name.prefix);
+    }
+
+    const firstName = this.extractFirstName(name);
+    if (firstName) {
+      parts.push(firstName);
+    }
+
+    const lastName = this.extractLastName(name);
+    if (lastName) {
+      parts.push(lastName);
+    }
+
+    return parts.join(' ');
+  }
+
+  private formatNameByStyle(
+    name: HumanName,
+    returnStyle: PatientNameReturn,
+    includePrefix: boolean,
+    fallbackAbsentReason: string | null
+  ): string | null {
+    switch (returnStyle) {
       case PatientNameReturn.fullname: {
-        let fullName = "";
-        if (includePrefix) {
-          firstOrOfficialName?.prefix?.forEach((prefix: any) => {
-            fullName = fullName + prefix + " "
-          });
-        }
-
-        // Get first name (value or extension)
-        const firstName = getFirstName();
-        if (firstName) {
-          fullName = fullName + firstName + " ";
-        }
-
-        // Get last name (value or extension)
-        const lastName = getLastName();
-        if (lastName) {
-          fullName = fullName + lastName;
-        }
-
-        return fullName.trim() || currentNameExtension || this.defaultString;
+        const fullName = this.formatFullName(name, includePrefix);
+        return fullName || fallbackAbsentReason || this.defaultString;
       }
       case PatientNameReturn.lastfirst: {
-        const firstName = getFirstName();
-        const lastName = getLastName();
-
-        if (lastName && firstName) {
-          return lastName + ", " + firstName;
-        }
-        return null;
+        const firstName = this.extractFirstName(name);
+        const lastName = this.extractLastName(name);
+        return (lastName && firstName) ? `${lastName}, ${firstName}` : null;
       }
       case PatientNameReturn.firstonly: {
-        return getFirstName() || null;
+        return this.extractFirstName(name);
       }
       case PatientNameReturn.lastonly: {
-        return getLastName() || "";
+        return this.extractLastName(name) || '';
       }
+      default:
+        return this.defaultString;
     }
   }
 }
