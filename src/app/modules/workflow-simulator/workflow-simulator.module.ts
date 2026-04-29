@@ -8,6 +8,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {TestsModule} from "../tests/tests.module";
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatDivider} from "@angular/material/divider";
+import {ConfigService} from "../../config/config.service";
 
 @NgModule({
   declarations: [
@@ -25,14 +26,11 @@ import {MatDivider} from "@angular/material/divider";
 })
 export class WorkflowSimulatorModule {
 
-  public static forRoot(environment: any, config: ModuleHeaderConfig, appConfig: any): ModuleWithProviders<any> {
+  public static forRoot(config: ModuleHeaderConfig, appConfig: any): ModuleWithProviders<any> {
     return {
       ngModule: WorkflowSimulatorModule,
       providers: [
-        {
-          provide: 'env',
-          useValue: environment
-        },
+        ConfigService,
         {
           provide: 'workflowSimulatorConfig',
           useValue: config

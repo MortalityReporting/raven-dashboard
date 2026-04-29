@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {FhirResource} from "../../fhir-util";
-import {ConfigService} from "../../../service/config.service";
-import {Config} from "../../../model/config";
+import {ConfigService} from "../../../config/config.service";
+import {Config} from "../../../config/config";
 
 @Injectable({
   providedIn: 'root'

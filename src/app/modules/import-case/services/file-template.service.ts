@@ -3,8 +3,8 @@ import { Observable, Subject} from "rxjs";
 import {FileTemplate, TemplateContent} from "../models/file-template";
 import {map} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
-import {ConfigService} from "../../../service/config.service";
-import {Config} from "../../../model/config";
+import {ConfigService} from "../../../config/config.service";
+import {Config} from "../../../config/config";
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,7 @@ export class FileTemplateService {
   }
 
   getFileTemplates(): Observable<FileTemplate[]>{
-    return this.http.get(this.config.ravenFhirServerBaseUrl + 'DocumentReference?type=raven-template').pipe(map((result: any) => {
+    return this.http.get(this.config.ravenFhirServer.baseUrl + 'DocumentReference?type=raven-template').pipe(map((result: any) => {
       const fileTemplateList: FileTemplate[] = result.entry.map(entry => {
         const fileTemplate: FileTemplate = {
           description: entry.resource.description,

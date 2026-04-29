@@ -8,8 +8,8 @@ import {DecedentSimpleInfo} from "../../../../../../model/decedent-simple-info";
 import {MatTableDataSource} from "@angular/material/table";
 import {TrackingNumberType} from "../../../../../fhir-mdi-library";
 import {ModuleHeaderConfig} from "../../../../../../providers/module-header-config";
-import {ConfigService} from "../../../../../../service/config.service";
-import {Config} from "../../../../../../model/config";
+import {ConfigService} from "../../../../../../config/config.service";
+import {Config} from "../../../../../../config/config";
 import {AccessTokenService} from "../../../../services/access-token.service";
 import {ActivatedRoute} from "@angular/router";
 import {map, switchMap, tap} from "rxjs";
@@ -174,10 +174,10 @@ export class SearchParametersComponent implements OnInit {
     } else if (this.customEndpoint) { //when we use custom endpoint (Minnesota had a test case)
       authObject = this.customEndpoint.auth
     } else { //we use simple authentication
-      let authStringSplit = this.config.blueJayServerBasicAuth.split(":");
+      let authStringSplit = this.config.blueJayServer.basicAuth.split(":");
       authObject = {"username": authStringSplit[0], "password": authStringSplit[1]};
     }
-    this.searchEdrsService.searchEdrs(this.config.blueJayServerBaseUrl, this.getSearchParametersResourcePreview(), authObject, accessToken).subscribe({
+    this.searchEdrsService.searchEdrs(this.config.blueJayServer.baseUrl, this.getSearchParametersResourcePreview(), authObject, accessToken).subscribe({
       next: value => {
         this.searchResultsEmitter.emit({response: value, success: true});
       },

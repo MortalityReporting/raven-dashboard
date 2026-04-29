@@ -3,7 +3,7 @@ import {platformBrowser} from "@angular/platform-browser";
 import { HeaderConfig} from "ngx-hisb-common-ui";
 import {AppConfiguration} from "./providers/app-configuration";
 import {ThemeService} from "./service/theme.service";
-import {ConfigService} from "./service/config.service";
+import {ConfigService} from "./config/config.service";
 import {Platform} from "@angular/cdk/platform";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
     ) {
   }
   ngOnInit(): void {
-    this.title = this.configService.config.title;
+    this.title = "Raven";
     this.version = this.configService.config.version;
     document.title = this.title;
 

@@ -65,6 +65,7 @@ import { DcrViewerSignatureComponent } from './components/dcr-viewer/dcr-viewer-
 import {MatPaginator} from "@angular/material/paginator";
 import {MatProgressBar} from "@angular/material/progress-bar";
 import {provideNativeDateAdapter} from '@angular/material/core';
+import {ConfigService} from "../../config/config.service";
 
 @NgModule({
     declarations: [
@@ -144,14 +145,11 @@ export class RecordViewerModule {
       .bypassSecurityTrustResourceUrl(`${path}/clinical_notes.svg`));
   }
 
-  public static forRoot(environment: any, config: ModuleHeaderConfig, appConfig: any, fhirProfiles): ModuleWithProviders<any>{
+  public static forRoot(config: ModuleHeaderConfig, appConfig: any, fhirProfiles): ModuleWithProviders<any>{
     return {
       ngModule: RecordViewerModule,
       providers: [
-        {
-          provide: 'env',
-          useValue: environment
-        },
+        ConfigService,
         {
           provide: 'config',
           useValue: config

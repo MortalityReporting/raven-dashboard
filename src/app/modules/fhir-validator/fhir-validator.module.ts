@@ -1,4 +1,4 @@
-import {ModuleWithProviders, NgModule} from '@angular/core';
+import {inject, ModuleWithProviders, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {BrowserModule} from "@angular/platform-browser";
 import {AppRoutingModule} from "../../app-routing.module";
@@ -26,9 +26,8 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatRadioModule} from "@angular/material/radio";
 import {NgxFhirValidatorModule} from "ngx-fhir-validator";
-import {environment} from "../../../environments/environment";
 import {ModuleHeaderConfig} from "../../providers/module-header-config";
-import {ConfigService} from "../../service/config.service";
+import {ConfigService} from "../../config/config.service";
 
 @NgModule({
     declarations: [
@@ -61,21 +60,17 @@ import {ConfigService} from "../../service/config.service";
     MatCheckboxModule,
     MatTooltipModule,
     MatDividerModule,
-    NgxFhirValidatorModule.forRoot(environment.fhirValidator),
+    NgxFhirValidatorModule.forRoot("https://dev.heat.icl.gtri.org/fhir-validator-service/fhir"),
   ],
   exports: [
-  ],
+  ]
 })
 export class FhirValidatorModule {
-  public static forRoot(environment: any, config: ModuleHeaderConfig, appConfig: any): ModuleWithProviders<any> {
+  public static forRoot(config: ModuleHeaderConfig, appConfig: any): ModuleWithProviders<any> {
     return {
       ngModule: FhirValidatorModule,
       providers: [
         ConfigService,
-        {
-          provide: 'env',
-          useValue: environment
-        },
         {
           provide: 'fhirValidatorConfig',
           useValue: config

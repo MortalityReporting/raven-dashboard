@@ -15,5 +15,6 @@ export const environment = {
   fhirValidator: "https://dev.heat.icl.gtri.org/fhir-validator-service/fhir", // TODO: Refactor modules to not rely on this.
   // blueJayServerBase: "https://bluejay.heat.icl.gtri.org/mdi-fhir-server",
   adminRedirectUrl: "https://localhost:4200/admin-panel",
-  adminLogoutUrl: "https://localhost:4200/"
+  adminLogoutUrl: "https://localhost:4200/",
+  dashboardApiUrl: "https://raven.dev.heat.icl.gtri.org/raven-dashboard-api/"
 };

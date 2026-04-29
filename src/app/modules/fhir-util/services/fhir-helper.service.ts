@@ -1,7 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {TrackingNumberType} from "../../fhir-mdi-library";
 import {AppConstants} from "../../../providers/app-constants";
-import {FhirResource} from "../models/fhir/r4/base/fhir.resource";
 import {TitleCasePipe} from "@angular/common";
 
 interface HumanName {

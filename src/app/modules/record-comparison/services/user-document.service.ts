@@ -4,8 +4,8 @@ import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs";
 import {MdiToEDRSDocumentWrapper} from "../models/mdiToEdrsDocumentWrapper";
 import {Bundle} from "../../fhir-util";
-import {ConfigService} from "../../../service/config.service";
-import {Config} from "../../../model/config";
+import {ConfigService} from "../../../config/config.service";
+import {Config} from "../../../config/config";
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,7 @@ export class UserDocumentService {
   }
 
   getUserDocumentBundle(compositionId: string) {
-    return this.http.get(this.config.ravenFhirServerBaseUrl + "Composition/" + compositionId + "/$document").pipe(
+    return this.http.get(this.config.ravenFhirServer.baseUrl + "Composition/" + compositionId + "/$document").pipe(
       map((documentBundle: any) => {
         return this.createDocumentWrapper(documentBundle);
       })

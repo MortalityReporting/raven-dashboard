@@ -1,49 +1,42 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpEvent, HttpEventType, HttpParams, HttpParamsOptions, HttpRequest} from "@angular/common/http";
 import {EMPTY, expand, map, mergeMap, Observable, of, reduce, takeWhile, tap} from "rxjs";
 import {FhirResource} from "../models/fhir/r4/base/fhir.resource";
 import {Bundle, BundleEntryComponent, BundleType} from "../models/fhir/r4/resources/bundle";
-import {ConfigService} from "../../../service/config.service";
+import {ConfigService} from "../../../config/config.service";
 import {BundleHelperService} from "./bundle-helper.service";
+import {EnvironmentHandlerService} from "../../../config/environment-handler.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FhirClientService {
 
-  private readonly serverBaseUrl: string;
   private readonly logFhirRequests: boolean;
+  private environmentHandler = inject(EnvironmentHandlerService);
 
   constructor(private http: HttpClient,
               private configService: ConfigService,
               private bundleHelperService: BundleHelperService) {
     this.logFhirRequests = this.configService?.config?.logFhirRequests ?? true;
-    this.serverBaseUrl = this.configService?.config?.ravenFhirServerBaseUrl;
   }
 
   create(resourceType: string, resource: any): Observable<FhirResource> {
-    let requestString = this.serverBaseUrl + resourceType + "/";
-    return this.http.post<FhirResource>(requestString, resource);
+    return this.http.post<FhirResource>(`${this.environmentHandler.getApiUrl('ravenFhirServer')}`, resource);
   }
 
   update(resourceType: string, resource: FhirResource): Observable<FhirResource> {
     const id = resource["id"];
-    let requestString = this.serverBaseUrl + resourceType + "/" + id;
+    let requestString = `${this.environmentHandler.getApiUrl('ravenFhirServer')}${resourceType}/${id}`;
     return this.http.put<FhirResource>(requestString, resource);
   }
 
   read(resourceType: string, id: string, parameters?: string): Observable<FhirResource> {
     // TODO: Add parameter parsing. For now, parameters required in complete http string form.
-    let requestString = this.serverBaseUrl + resourceType + "/" + id;
+    let requestString = `${this.environmentHandler.getApiUrl('ravenFhirServer')}${resourceType}/${id}`;
     if (parameters) requestString += parameters;
     if (this.logFhirRequests) console.log("Making Read Request: " + requestString);
-    return this.http.get(requestString).pipe(
-      map((response: any) =>
-        {
-          return response;
-        }
-      )
-    );
+    return this.http.get<FhirResource>(requestString);
   }
 
   search(resourceType: string = "", parameters: string | FhirResource = "",
@@ -105,7 +98,7 @@ export class FhirClientService {
 
   // When baseUrl = true (default) prepend the URL. Otherwise, assume a full URL is passed and take it as is.
   private createSearchRequestUrl(resourceType: string, parameters: string, baseUrl: boolean = true): string {
-    if (baseUrl) return this.serverBaseUrl + resourceType + parameters;
+    if (baseUrl) return `${this.environmentHandler.getApiUrl('ravenFhirServer')}${resourceType}${parameters}`;
     else return resourceType + parameters;
   }
 

@@ -26,6 +26,7 @@ import { FileTemplateComponent } from './components/file-template/file-template.
 import {ModuleHeaderConfig} from "../../providers/module-header-config";
 import {NgxFhirValidatorModule} from "ngx-fhir-validator";
 import {MatDividerModule} from "@angular/material/divider";
+import {ConfigService} from "../../config/config.service";
 
 
 @NgModule({

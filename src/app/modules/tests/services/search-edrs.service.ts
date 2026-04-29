@@ -3,8 +3,8 @@ import {Observable, Subject} from "rxjs";
 import {DecedentSimpleInfo} from "../../../model/decedent-simple-info";
 import {map} from "rxjs/operators";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {ConfigService} from "../../../service/config.service";
-import {Config} from "../../../model/config";
+import {ConfigService} from "../../../config/config.service";
+import {Config} from "../../../config/config";
 import {TestStatusCodes} from "../../testing-events";
 import {AppConstants} from "../../../providers/app-constants";
 
@@ -66,7 +66,7 @@ export class SearchEdrsService {
   }
 
   getOperationDefinitionList(): Observable<any> {
-    return this.http.get(this.config.ravenFhirServerBaseUrl + this.appConstants.COMPOSITION_IT_DOCUMENT_OPERATION_DEFINITION)
+    return this.http.get(this.config.ravenFhirServer.baseUrl + this.appConstants.COMPOSITION_IT_DOCUMENT_OPERATION_DEFINITION)
   }
 
 

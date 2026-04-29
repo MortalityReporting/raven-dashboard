@@ -6,8 +6,8 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
-import {ConfigService} from "../service/config.service";
-import {Config} from "../model/config";
+import {ConfigService} from "../config/config.service";
+import {Config} from "../config/config";
 
 @Injectable()
 export class RegisteredEndpointsInterceptor implements HttpInterceptor {
@@ -34,7 +34,7 @@ export class RegisteredEndpointsInterceptor implements HttpInterceptor {
         ]
       },
       {
-        "baseUrl": this.config.ravenFhirServerBaseUrl,
+        "baseUrl": this.config.ravenFhirServer.baseUrl,
         "allowedEndpoints": [
           "*"
         ]
