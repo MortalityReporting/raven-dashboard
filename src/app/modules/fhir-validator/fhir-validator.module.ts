@@ -72,6 +72,10 @@ export class FhirValidatorModule {
       providers: [
         ConfigService,
         {
+          provide: 'env',
+          useValue: "https://dev.heat.icl.gtri.org/fhir-validator-service/fhir"
+        },
+        {
           provide: 'fhirValidatorConfig',
           useValue: config
         },
