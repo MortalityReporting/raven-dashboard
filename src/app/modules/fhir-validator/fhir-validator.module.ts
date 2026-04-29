@@ -1,4 +1,4 @@
-import {inject, ModuleWithProviders, NgModule} from '@angular/core';
+import {ModuleWithProviders, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {BrowserModule} from "@angular/platform-browser";
 import {AppRoutingModule} from "../../app-routing.module";
@@ -60,21 +60,26 @@ import {ConfigService} from "../../config/config.service";
     MatCheckboxModule,
     MatTooltipModule,
     MatDividerModule,
-    NgxFhirValidatorModule.forRoot("https://dev.heat.icl.gtri.org/fhir-validator-service/fhir"),
+    NgxFhirValidatorModule.forRoot(''), // Will be configured via serverBaseUrl provider
   ],
   exports: [
-  ]
+  ],
 })
 export class FhirValidatorModule {
+  constructor(private configService: ConfigService) {
+    // Initialize NgxFhirValidatorModule with runtime config
+    const config = this.configService.config;
+    if (config && config.fhirValidatorUrl) {
+      // The NgxFhirValidatorModule will be configured via the serverBaseUrl injection token
+      console.log('FHIR Validator configured with URL:', config.fhirValidatorUrl);
+    }
+  }
+
   public static forRoot(config: ModuleHeaderConfig, appConfig: any): ModuleWithProviders<any> {
     return {
       ngModule: FhirValidatorModule,
       providers: [
         ConfigService,
-        {
-          provide: 'env',
-          useValue: "https://dev.heat.icl.gtri.org/fhir-validator-service/fhir"
-        },
         {
           provide: 'fhirValidatorConfig',
           useValue: config
@@ -82,6 +87,13 @@ export class FhirValidatorModule {
         {
           provide: 'appConfig',
           useValue: appConfig
+        },
+        {
+          provide: 'serverBaseUrl',
+          useFactory: (configService: ConfigService) => {
+            return configService.config?.fhirValidatorUrl || '';
+          },
+          deps: [ConfigService]
         }
       ]
     }
