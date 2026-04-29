@@ -1,9 +1,9 @@
 import {Injectable, isDevMode} from '@angular/core';
-import {Config} from './config';
 import packageInfo from '../../../package.json';
 import {HttpBackend, HttpClient} from "@angular/common/http";
 import {map, of} from "rxjs";
 import {catchError} from "rxjs/operators";
+import {Config} from "./config";
 
 @Injectable({
   providedIn: 'root'
