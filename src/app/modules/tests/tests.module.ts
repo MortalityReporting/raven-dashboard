@@ -87,6 +87,7 @@ import {
   SimpleJsonViewerComponent
 } from "./components/toxicology-record-submission/simple-json-viewer/simple-json-viewer.component";
 import {MatProgressBar} from "@angular/material/progress-bar";
+import {ConfigService} from "../../config/config.service";
 
 @NgModule({
   declarations: [
@@ -166,15 +167,12 @@ import {MatProgressBar} from "@angular/material/progress-bar";
     ],
 })
 export class TestsModule {
-  public static forRoot(environment: any, config: ModuleHeaderConfig, appConfig: any): ModuleWithProviders<any> {
+  public static forRoot(config: ModuleHeaderConfig, appConfig: any): ModuleWithProviders<any> {
     return {
       ngModule: TestsModule,
       providers: [
         provideNativeDateAdapter(),
-        {
-          provide: 'env',
-          useValue: environment
-        },
+        ConfigService,
         {
           provide: 'workflowSimulatorConfig',
           useValue: config

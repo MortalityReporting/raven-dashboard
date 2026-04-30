@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {Router} from "@angular/router";
 import {AppConfiguration} from "../../providers/app-configuration";
-import {ConfigService} from "../../service/config.service";
+import {ConfigService} from "../../config/config.service";
 
 @Component({
     selector: 'app-landing',
@@ -20,6 +20,6 @@ export class LandingComponent{
   }
 
   openPdf() {
-    window.open(this.configService.config.dashboardApiUrl + "files/TerminologyServicePoC.pdf ", "_blank");
+    window.open(this.configService.getApiUrl("dashboardApiUrl") + "files/TerminologyServicePoC.pdf ", "_blank");
   }
 }

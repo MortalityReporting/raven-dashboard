@@ -15,7 +15,6 @@ import {ModalComponent} from './components/widgets/modal/modal.component';
 import {ImportCaseModule} from "./modules/import-case/import-case.module";
 import {RecordViewerModule} from "./modules/record-viewer/record-viewer.module";
 import {FhirUtilModule} from "./modules/fhir-util/fhir-util.module";
-import {environment} from "../environments/environment";
 import {FhirExplorerModule} from "./modules/fhir-explorer/fhir-explorer.module";
 import {RecordComparisonModule} from "./modules/record-comparison/record-comparison.module";
 import {BreadcrumbComponent} from './components/breadcrumb/breadcrumb.component';
@@ -35,7 +34,7 @@ import { UiStringConstants } from "./providers/ui-string-constants";
 import { FHIRProfileConstants } from "./providers/fhir-profile-constants";
 import {UserManagementModule} from "./modules/user-management/user-management.module";
 import { DocRefBase64TransformPipe } from './modules/fhir-util';
-import {ConfigService} from "./service/config.service";
+import {ConfigService} from "./config/config.service";
 import {RegisteredEndpointsInterceptor} from "./interceptors/registered-endpoints.interceptor";
 import {AuthHttpInterceptor} from "@auth0/auth0-angular";
 import {WorkflowSimulatorModule} from "./modules/workflow-simulator/workflow-simulator.module";
@@ -47,6 +46,10 @@ import {NavMenuComponent} from "./components/nav-menu/nav-menu.component";
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
 };
+
+export function fhirValidatorUrlFactory(configService: ConfigService) {
+  return configService.config.fhirValidatorUrl;
+}
 
 // TODO: Setup configGetter here to be able to load the config data into the forRoot methods
 // export function configGetter(configService: ConfigService) {
@@ -79,15 +82,15 @@ export const configFactory = (configService: ConfigService) => {
     ReactiveFormsModule,
     MatIconModule,
     HttpClientModule,
-    FhirValidatorModule.forRoot(environment, ModuleHeaderConfig.FhirValidator, AppConfiguration.config),
+    FhirValidatorModule.forRoot(ModuleHeaderConfig.FhirValidator, AppConfiguration.config),
     ClipboardModule,
-    ImportCaseModule.forRoot(environment, ModuleHeaderConfig.RecordImport, AppConfiguration.config),
-    RecordViewerModule.forRoot(environment, ModuleHeaderConfig.RecordViewer, AppConfiguration.config, FHIRProfileConstants.Profiles),
+    ImportCaseModule.forRoot(ModuleHeaderConfig.RecordImport, AppConfiguration.config),
+    RecordViewerModule.forRoot(ModuleHeaderConfig.RecordViewer, AppConfiguration.config, FHIRProfileConstants.Profiles),
     FhirUtilModule,
     FhirExplorerModule,
     RecordComparisonModule.forRoot(ModuleHeaderConfig.RecordComparison, FHIRProfileConstants.Profiles),
-    WorkflowSimulatorModule.forRoot(environment, ModuleHeaderConfig.WorkflowSimulator, AppConfiguration.config),
-    TestsModule.forRoot(environment, ModuleHeaderConfig.WorkflowSimulator, AppConfiguration.config),
+    WorkflowSimulatorModule.forRoot(ModuleHeaderConfig.WorkflowSimulator, AppConfiguration.config),
+    TestsModule.forRoot(ModuleHeaderConfig.WorkflowSimulator, AppConfiguration.config),
     MatSidenavModule,
     UserManagementModule,
     NavMenuComponent
@@ -124,7 +127,12 @@ export const configFactory = (configService: ConfigService) => {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthHttpInterceptor,
       multi: true
-    }
+    },
+    {
+      provide: 'FHIR_VALIDATOR_BASE_URL',
+      useFactory: fhirValidatorUrlFactory,
+      deps: [ConfigService]
+    },
   ],
   bootstrap: [AppComponent],
   exports: [

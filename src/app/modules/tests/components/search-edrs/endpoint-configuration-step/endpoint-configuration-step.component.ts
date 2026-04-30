@@ -4,8 +4,8 @@ import {DecedentSimpleInfo} from "../../../../../model/decedent-simple-info";
 import {ModuleHeaderConfig} from "../../../../../model/model-header-config";
 import {SearchEdrsService} from "../../../services/search-edrs.service";
 import {UiStringConstants} from "../../../../../providers/ui-string-constants";
-import {ConfigService} from "../../../../../service/config.service";
-import {Config} from "../../../../../model/config";
+import {ConfigService} from "../../../../../config/config.service";
+import {Config} from "../../../../../config/config";
 
 @Component({
     selector: 'app-endpoint-configuration-step',
@@ -33,7 +33,7 @@ export class EndpointConfigurationStepComponent implements OnInit {
     private configService: ConfigService
   ) {
     this.config = this.configService.config;
-    this.blueJayUri = this.config.blueJayServerBaseUrl;
+    this.blueJayUri = this.config.blueJayServer.baseUrl;
 
     this.uiConstantsStep2 = uiStringConstants.WorkflowSimulator.searchEdrs.step2;
     this.commonUIConstants = uiStringConstants.Common;
@@ -97,11 +97,11 @@ export class EndpointConfigurationStepComponent implements OnInit {
   }
 
   onViewServerMdiDocs() {
-    window.open(this.config.blueJayServerBaseUrl + "OperationDefinition/Composition-it-document", "_blank");
+    window.open(this.configService.getApiUrl('blueJayServer') + "OperationDefinition/Composition-it-document", "_blank");
   }
 
   onViewServerCapabilityStmt() {
-    window.open(this.config.blueJayServerBaseUrl + "metadata", "_blank");
+    window.open(this.configService.getApiUrl('blueJayServer') + "metadata", "_blank");
   }
 
   onSelected(endpointConfigurationFormGroup: UntypedFormGroup) {

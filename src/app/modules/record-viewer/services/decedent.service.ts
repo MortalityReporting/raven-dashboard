@@ -2,7 +2,7 @@ import {Injectable, signal} from '@angular/core';
 import {HttpParams} from "@angular/common/http";
 import {catchError, forkJoin, map, mergeMap, Observable, of, skipWhile, tap} from "rxjs";
 import {BundleHelperService, FhirClientService, FhirHelperService, FhirResource} from "../../fhir-util";
-import {ConfigService} from "../../../service/config.service";
+import {ConfigService} from "../../../config/config.service";
 import {GridSearchParams} from "../models/grid-search-params";
 import {DecedentGridDTO} from "../../../model/decedent.grid.dto";
 import {CombinedPatientObservationsComposition} from "../models/combined-patient-observations-composition";
@@ -25,7 +25,7 @@ export class DecedentService {
   private readonly MDI_EDRS_RECORDS_TYPE = "http://loinc.org|86807-5";
 
   constructor(private fhirClient: FhirClientService, private configService: ConfigService, private bundleHelperService: BundleHelperService, private fhirHelperService: FhirHelperService) {
-    this.serverBaseUrl = this.configService?.config?.ravenFhirServerBaseUrl;
+    this.serverBaseUrl = this.configService?.config?.ravenFhirServer.baseUrl;
   }
 
   // TODO delete if search result bundle is not used

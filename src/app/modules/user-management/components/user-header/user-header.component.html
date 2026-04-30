@@ -55,7 +55,7 @@
         <button
           mat-menu-item
           type="button"
-          (click)="auth.logout({ logoutParams: { returnTo: env.adminLogoutUrl } })"
+          (click)="auth.logout({ logoutParams: { returnTo: adminLogoutUrl() } })"
           [attr.aria-label]="'Sign out of your account'">
           <mat-icon aria-hidden="true">logout</mat-icon>
           <span>Sign Out</span>

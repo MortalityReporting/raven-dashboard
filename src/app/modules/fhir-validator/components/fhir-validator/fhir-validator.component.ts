@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+  import {Component, Inject} from '@angular/core';
 import {ValidatorInput} from "ngx-fhir-validator";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {FhirValidatorResultsExportService} from "../../../../service/fhir-validator-results-export.service";
