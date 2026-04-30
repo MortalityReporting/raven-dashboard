@@ -46,4 +46,35 @@ export class ConfigService {
       })
     )
   }
+
+  /**
+   * Get a normalized API URL from the configuration.
+   * Ensures the URL ends with a trailing slash for proper endpoint concatenation.
+   *
+   * @param configKey - The configuration key to retrieve the URL from
+   * @returns The normalized URL with a trailing slash
+   */
+  getApiUrl(configKey: 'dashboardApiUrl' | 'ravenImportApiUrl' | 'fhirValidatorUrl' | 'ravenFhirServer' | 'blueJayServer'): string {
+    if (!this.config) {
+      throw new Error('Configuration not loaded. Call loadConfig() first.');
+    }
+
+    let apiUrl: string;
+
+    // Handle direct string properties
+    if (configKey === 'dashboardApiUrl' || configKey === 'ravenImportApiUrl' || configKey === 'fhirValidatorUrl') {
+      apiUrl = this.config[configKey];
+    }
+    // Handle nested server objects
+    else {
+      apiUrl = this.config[configKey].baseUrl;
+    }
+
+    // Ensure URL ends with /
+    if (!apiUrl.endsWith("/")) {
+      apiUrl = apiUrl.concat("/");
+    }
+
+    return apiUrl;
+  }
 }

@@ -1,19 +1,19 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpEvent, HttpRequest} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {EnvironmentHandlerService} from "../../../config/environment-handler.service";
+import {ConfigService} from "../../../config/config.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DashboardApiInterfaceService {
 
-  private environmentHandler = inject(EnvironmentHandlerService);
+  private configService = inject(ConfigService);
   private http = inject(HttpClient);
 
   // GET /admin-panel
   getAdminPanelData(): Observable<any> {
-    return this.http.get(`${this.environmentHandler.getApiUrl('dashboardApiUrl')}admin-panel`);
+    return this.http.get(`${this.configService.getApiUrl('dashboardApiUrl')}admin-panel`);
   }
 
   // POST /document
@@ -21,7 +21,7 @@ export class DashboardApiInterfaceService {
     const data = new FormData();
     data.append('file', file, file.name);
     data.append('event', event.toLowerCase());
-    const request = new HttpRequest('POST', `${this.environmentHandler.getApiUrl('dashboardApiUrl')}attachment/upload`, data)
+    const request = new HttpRequest('POST', `${this.configService.getApiUrl('dashboardApiUrl')}attachment/upload`, data)
     return this.http.request(request);
   }
 
@@ -30,7 +30,7 @@ export class DashboardApiInterfaceService {
     const data = new FormData()
     data.append('bucket', bucketName);
     data.append('filename', fileName);
-    return this.http.post(`${this.environmentHandler.getApiUrl('dashboardApiUrl')}attachment/download`, data, {responseType: "blob"});
+    return this.http.post(`${this.configService.getApiUrl('dashboardApiUrl')}attachment/download`, data, {responseType: "blob"});
   }
 
 }

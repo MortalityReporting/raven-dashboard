@@ -5,7 +5,7 @@ import {map} from "rxjs/operators";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {TestStatusCodes} from "../../testing-events";
 import {AppConstants} from "../../../providers/app-constants";
-import {EnvironmentHandlerService} from "../../../config/environment-handler.service";
+import {ConfigService} from "../../../config/config.service";
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +29,7 @@ export class SearchEdrsService {
 
   constructor(
     private http:HttpClient,
-    private environmentHandler: EnvironmentHandlerService,
+    private configService: ConfigService,
     private appConstants: AppConstants
   ) {}
 
@@ -61,7 +61,7 @@ export class SearchEdrsService {
   }
 
   getOperationDefinitionList(): Observable<any> {
-    return this.http.get(this.environmentHandler.getApiUrl('ravenFhirServer') + this.appConstants.COMPOSITION_IT_DOCUMENT_OPERATION_DEFINITION)
+    return this.http.get(this.configService.getApiUrl('ravenFhirServer') + this.appConstants.COMPOSITION_IT_DOCUMENT_OPERATION_DEFINITION)
   }
 
 

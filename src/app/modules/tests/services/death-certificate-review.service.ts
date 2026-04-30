@@ -3,7 +3,6 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ConfigService} from "../../../config/config.service";
 import {Observable, tap} from "rxjs";
 import {ExternalApiSubmissionService} from "./external-api-submission.service";
-import {EnvironmentHandlerService} from "../../../config/environment-handler.service";
 
 @Injectable({
   providedIn: 'root'
@@ -22,10 +21,9 @@ export class DeathCertificateReviewService {
 
   constructor(
     private http: HttpClient,
-    private configService: ConfigService,
-    private environmentHandler: EnvironmentHandlerService
+    private configService: ConfigService
   ) {
-    this.dcrFhirBundleUrl = `${this.environmentHandler.getApiUrl('ravenFhirServer')}$ccr-funeralhome`;
+    this.dcrFhirBundleUrl = `${this.configService.getApiUrl('ravenFhirServer')}$ccr-funeralhome`;
   }
 
   generateDcrFhirBundle(data): Observable<any> {

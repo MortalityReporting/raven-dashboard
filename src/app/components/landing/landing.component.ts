@@ -20,6 +20,6 @@ export class LandingComponent{
   }
 
   openPdf() {
-    window.open(this.configService.config.dashboardApiUrl + "files/TerminologyServicePoC.pdf ", "_blank");
+    window.open(this.configService.getApiUrl("dashboardApiUrl") + "files/TerminologyServicePoC.pdf ", "_blank");
   }
 }

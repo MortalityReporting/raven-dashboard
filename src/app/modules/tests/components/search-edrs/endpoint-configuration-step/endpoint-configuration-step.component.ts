@@ -97,11 +97,11 @@ export class EndpointConfigurationStepComponent implements OnInit {
   }
 
   onViewServerMdiDocs() {
-    window.open(this.config.blueJayServer.baseUrl + "OperationDefinition/Composition-it-document", "_blank");
+    window.open(this.configService.getApiUrl('blueJayServer') + "OperationDefinition/Composition-it-document", "_blank");
   }
 
   onViewServerCapabilityStmt() {
-    window.open(this.config.blueJayServer.baseUrl + "metadata", "_blank");
+    window.open(this.configService.getApiUrl('blueJayServer') + "metadata", "_blank");
   }
 
   onSelected(endpointConfigurationFormGroup: UntypedFormGroup) {

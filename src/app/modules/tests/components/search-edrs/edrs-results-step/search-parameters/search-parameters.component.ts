@@ -177,7 +177,7 @@ export class SearchParametersComponent implements OnInit {
       let authStringSplit = this.config.blueJayServer.basicAuth.split(":");
       authObject = {"username": authStringSplit[0], "password": authStringSplit[1]};
     }
-    this.searchEdrsService.searchEdrs(this.config.blueJayServer.baseUrl, this.getSearchParametersResourcePreview(), authObject, accessToken).subscribe({
+    this.searchEdrsService.searchEdrs(this.configService.getApiUrl('blueJayServer'), this.getSearchParametersResourcePreview(), authObject, accessToken).subscribe({
       next: value => {
         this.searchResultsEmitter.emit({response: value, success: true});
       },

@@ -39,7 +39,4 @@ export class Config {
       audience: ""
     }
   };
-
-  // Optional properties
-  logFhirRequests?: boolean;
 }

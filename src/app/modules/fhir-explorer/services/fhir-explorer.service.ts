@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {FhirResource} from "../../fhir-util";
-import {EnvironmentHandlerService} from "../../../config/environment-handler.service";
+import {ConfigService} from "../../../config/config.service";
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +14,8 @@ export class FhirExplorerService {
 
   apiUrl: string;
 
-  constructor(private environmentHandler: EnvironmentHandlerService, private http:HttpClient) {
-    this.apiUrl =`${this.environmentHandler.getApiUrl('fhirValidatorUrl')}$translate`
+  constructor(private configService: ConfigService, private http:HttpClient) {
+    this.apiUrl =`${this.configService.getApiUrl('fhirValidatorUrl')}$translate`
   }
 
   setSelectedFhirResource(fhirResource: any) {
