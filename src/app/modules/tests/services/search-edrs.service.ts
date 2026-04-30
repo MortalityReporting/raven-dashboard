@@ -3,10 +3,9 @@ import {Observable, Subject} from "rxjs";
 import {DecedentSimpleInfo} from "../../../model/decedent-simple-info";
 import {map} from "rxjs/operators";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {ConfigService} from "../../../service/config.service";
-import {Config} from "../../../model/config";
 import {TestStatusCodes} from "../../testing-events";
 import {AppConstants} from "../../../providers/app-constants";
+import {ConfigService} from "../../../config/config.service";
 
 @Injectable({
   providedIn: 'root'
@@ -28,15 +27,11 @@ export class SearchEdrsService {
   private endpoint = new Subject<any>();
   endpoint$ = this.endpoint.asObservable();
 
-  config: Config;
-
   constructor(
     private http:HttpClient,
     private configService: ConfigService,
     private appConstants: AppConstants
-  ) {
-    this.config = this.configService.config;
-  }
+  ) {}
 
   setDocumentBundle(data): void {
     this.documentBundle.next(data);
@@ -66,7 +61,7 @@ export class SearchEdrsService {
   }
 
   getOperationDefinitionList(): Observable<any> {
-    return this.http.get(this.config.ravenFhirServerBaseUrl + this.appConstants.COMPOSITION_IT_DOCUMENT_OPERATION_DEFINITION)
+    return this.http.get(this.configService.getApiUrl('ravenFhirServer') + this.appConstants.COMPOSITION_IT_DOCUMENT_OPERATION_DEFINITION)
   }
 
 

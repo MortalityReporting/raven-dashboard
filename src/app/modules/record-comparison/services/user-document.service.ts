@@ -4,27 +4,22 @@ import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs";
 import {MdiToEDRSDocumentWrapper} from "../models/mdiToEdrsDocumentWrapper";
 import {Bundle} from "../../fhir-util";
-import {ConfigService} from "../../../service/config.service";
-import {Config} from "../../../model/config";
+import {ConfigService} from "../../../config/config.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserDocumentService {
 
-  config: Config;
-
   constructor(
     private http: HttpClient,
     private fhirHelper: FhirHelperService,
     private bundleHelper: BundleHelperService,
     private configService: ConfigService
-  ) {
-    this.config = this.configService.config;
-  }
+  ) {}
 
   getUserDocumentBundle(compositionId: string) {
-    return this.http.get(this.config.ravenFhirServerBaseUrl + "Composition/" + compositionId + "/$document").pipe(
+    return this.http.get(this.configService.getApiUrl('ravenFhirServer') + "Composition/" + compositionId + "/$document").pipe(
       map((documentBundle: any) => {
         return this.createDocumentWrapper(documentBundle);
       })

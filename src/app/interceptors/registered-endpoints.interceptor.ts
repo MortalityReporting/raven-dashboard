@@ -6,8 +6,8 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
-import {ConfigService} from "../service/config.service";
-import {Config} from "../model/config";
+import {ConfigService} from "../config/config.service";
+import {Config} from "../config/config";
 
 @Injectable()
 export class RegisteredEndpointsInterceptor implements HttpInterceptor {
@@ -18,15 +18,16 @@ export class RegisteredEndpointsInterceptor implements HttpInterceptor {
 
   constructor(private configService: ConfigService) {
     this.config = configService.config;
+    // Normalize URLs to ensure they end with /
     this.registeredEndpoints = [
       {
-        "baseUrl": this.config.dashboardApiUrl,
+        "baseUrl": this.normalizeUrl(this.config.dashboardApiUrl),
         "allowedEndpoints": [
           "*"
         ]
       },
       {
-        "baseUrl": this.config.fhirValidatorUrl,
+        "baseUrl": this.normalizeUrl(this.config.fhirValidatorUrl),
         "allowedEndpoints": [
           "$validate",
           "$translate",
@@ -34,18 +35,29 @@ export class RegisteredEndpointsInterceptor implements HttpInterceptor {
         ]
       },
       {
-        "baseUrl": this.config.ravenFhirServerBaseUrl,
+        "baseUrl": this.normalizeUrl(this.config.ravenFhirServer.baseUrl),
         "allowedEndpoints": [
           "*"
         ]
       },
       {
-        "baseUrl": this.config.ravenImportApiUrl,
+        "baseUrl": this.normalizeUrl(this.config.ravenImportApiUrl),
         "allowedEndpoints": [
           "*"
         ]
       }
     ]
+  }
+
+  /**
+   * Normalize URL to ensure it ends with /
+   * This matches the behavior of EnvironmentHandler.getApiUrl()
+   */
+  private normalizeUrl(url: string): string {
+    if (!url.endsWith("/")) {
+      return url.concat("/");
+    }
+    return url;
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -62,7 +74,10 @@ export class RegisteredEndpointsInterceptor implements HttpInterceptor {
     }
     else {
       let service = this.registeredEndpoints.find(service => request.url.startsWith(service.baseUrl));
-      if (service?.allowedEndpoints?.some(endpoint => request.url === service.baseUrl + endpoint || endpoint === "*")) {
+      // baseUrl already ends with / from EnvironmentHandler.getApiUrl()
+      if (service?.allowedEndpoints?.some(endpoint =>
+        endpoint === "*" || request.url === service.baseUrl + endpoint
+      )) {
         return next.handle(request);
       }
       else {

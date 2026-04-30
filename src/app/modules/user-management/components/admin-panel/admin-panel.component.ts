@@ -1,7 +1,7 @@
 import {Component, OnInit, signal} from '@angular/core';
 import {UserProfileManagerService} from "../../services/user-profile-manager.service";
 import {AuthService} from '@auth0/auth0-angular';
-import {environment as env} from "../../../../../environments/environment";
+
 import {DashboardApiInterfaceService} from "../../../dashboard-api";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
@@ -18,7 +18,6 @@ import {UpdateAction} from "../../../testing-events/models/update-action";
 })
 export class AdminPanelComponent implements OnInit {
   currentUser: any;
-  env = env;
   testEvents = signal<any>(undefined);
   error: any = undefined;
   selectedEvent: any;

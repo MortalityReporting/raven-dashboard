@@ -3,7 +3,7 @@ import {Observable, skipWhile} from "rxjs";
 import {UserProfile} from "../../models/user-profile";
 import {UserProfileManagerService} from "../../services/user-profile-manager.service";
 import {AuthService, User} from "@auth0/auth0-angular";
-import {environment as env} from "../../../../../environments/environment";
+import {ConfigService} from "../../../../config/config.service";
 
 @Component({
     selector: 'app-user-header',
@@ -13,13 +13,15 @@ import {environment as env} from "../../../../../environments/environment";
 })
 export class UserHeaderComponent {
   currentUser$: Observable<UserProfile> = new Observable<UserProfile>(null);
-  env = env;
+  protected readonly adminLogoutUrl = signal<string>('');
   currentUser= signal<User>(null)
 
   constructor(
     private userProfileManager: UserProfileManagerService,
     public auth: AuthService,
+    private configService: ConfigService
   ) {
+    this.adminLogoutUrl.set(this.configService.config.auth.logoutUrl);
     this.auth.user$.pipe(
       skipWhile(value => !value)
     ).subscribe({

@@ -2,14 +2,12 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {FhirResource} from "../../fhir-util";
-import {ConfigService} from "../../../service/config.service";
-import {Config} from "../../../model/config";
+import {ConfigService} from "../../../config/config.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FhirExplorerService {
-  config: Config;
 
   private fhirResource = new BehaviorSubject<FhirResource>(undefined);
   fhirResource$ = this.fhirResource.asObservable();
@@ -17,8 +15,7 @@ export class FhirExplorerService {
   apiUrl: string;
 
   constructor(private configService: ConfigService, private http:HttpClient) {
-    this.config = configService.config;
-    this.apiUrl =`${this.config.fhirValidatorUrl}$translate`
+    this.apiUrl =`${this.configService.getApiUrl('fhirValidatorUrl')}$translate`
   }
 
   setSelectedFhirResource(fhirResource: any) {

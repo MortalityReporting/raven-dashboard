@@ -1,37 +1,27 @@
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpEvent, HttpHeaders, HttpRequest, HttpResponse} from "@angular/common/http";
-import {ConfigService} from "../../../service/config.service";
+import {inject, Injectable} from '@angular/core';
+import {HttpClient, HttpEvent, HttpRequest} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {ConfigService} from "../../../config/config.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DashboardApiInterfaceService {
 
-  dashboardApiUrl: string;
-
-  constructor(private http: HttpClient, private config: ConfigService) {
-    this.dashboardApiUrl = this.config.getDashboardApiUrl()
-  }
-
-  // GET /config
-  // Special endpoint, see Config Service
+  private configService = inject(ConfigService);
+  private http = inject(HttpClient);
 
   // GET /admin-panel
   getAdminPanelData(): Observable<any> {
-    return this.http.get(`${this.dashboardApiUrl}admin-panel`);
+    return this.http.get(`${this.configService.getApiUrl('dashboardApiUrl')}admin-panel`);
   }
 
   // POST /document
   uploadFile(file: File, event: string): Observable<HttpEvent<any>> {
     const data = new FormData();
-    console.log(file);
-    console.log(event);
     data.append('file', file, file.name);
     data.append('event', event.toLowerCase());
-    //let httpHeaders: HttpHeaders = new HttpHeaders().set('Content-Type', 'multipart/form-data; boundary=');
-    //let httpOptions = {headers: httpHeaders}
-    const request = new HttpRequest('POST', `${this.dashboardApiUrl}attachment/upload`, data)
+    const request = new HttpRequest('POST', `${this.configService.getApiUrl('dashboardApiUrl')}attachment/upload`, data)
     return this.http.request(request);
   }
 
@@ -40,7 +30,7 @@ export class DashboardApiInterfaceService {
     const data = new FormData()
     data.append('bucket', bucketName);
     data.append('filename', fileName);
-    return this.http.post(`${this.dashboardApiUrl}attachment/download`, data, {responseType: "blob"});
+    return this.http.post(`${this.configService.getApiUrl('dashboardApiUrl')}attachment/download`, data, {responseType: "blob"});
   }
 
 }

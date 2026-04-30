@@ -26,6 +26,7 @@ import { FileTemplateComponent } from './components/file-template/file-template.
 import {ModuleHeaderConfig} from "../../providers/module-header-config";
 import {NgxFhirValidatorModule} from "ngx-fhir-validator";
 import {MatDividerModule} from "@angular/material/divider";
+import {ConfigService} from "../../config/config.service";
 
 
 @NgModule({
@@ -62,14 +63,11 @@ import {MatDividerModule} from "@angular/material/divider";
 })
 
 export class ImportCaseModule {
-  public static forRoot(environment: any, config: ModuleHeaderConfig, appConfig: any): ModuleWithProviders<any>{
+  public static forRoot(config: ModuleHeaderConfig, appConfig: any): ModuleWithProviders<any>{
     return {
       ngModule: ImportCaseModule,
       providers: [
-        {
-          provide: 'env',
-          useValue: environment
-        },
+        ConfigService,
         {
           provide: 'importConfig',
           useValue: config
