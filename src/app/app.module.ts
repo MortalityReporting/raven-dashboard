@@ -97,12 +97,6 @@ export function fhirValidatorUrlFactory(configService: ConfigService) {
   ],
   providers: [
     {
-      provide: APP_INITIALIZER,
-      useFactory: configFactory,
-      deps: [ConfigService],
-      multi: true
-    },
-    {
       provide: UiStringConstants,
     },
     {
