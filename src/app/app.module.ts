@@ -12,7 +12,7 @@ import {FhirAuthInterceptor} from "./interceptors/fhir-auth.interceptor";
 import {LandingComponent} from './components/landing/landing.component';
 import {ClipboardModule} from "@angular/cdk/clipboard";
 import {ModalComponent} from './components/widgets/modal/modal.component';
-import {ImportCaseModule} from "./modules/import-case/import-case.module";
+import {ImportCaseComponent, provideImportCase} from "./modules/import-case";
 import {RecordViewerModule} from "./modules/record-viewer/record-viewer.module";
 import {FhirUtilModule} from "./modules/fhir-util/fhir-util.module";
 import {FhirExplorerModule} from "./modules/fhir-explorer/fhir-explorer.module";
@@ -32,7 +32,7 @@ import {AppConfiguration} from "./providers/app-configuration";
 import { CardHoverDirective } from './directives/card-hover.directive';
 import { UiStringConstants } from "./providers/ui-string-constants";
 import { FHIRProfileConstants } from "./providers/fhir-profile-constants";
-import {UserManagementModule} from "./modules/user-management/user-management.module";
+import {UserHeaderComponent, provideUserManagement} from "./modules/user-management";
 import { DocRefBase64TransformPipe } from './modules/fhir-util';
 import {ConfigService} from "./config/config.service";
 import {RegisteredEndpointsInterceptor} from "./interceptors/registered-endpoints.interceptor";
@@ -84,7 +84,7 @@ export function fhirValidatorUrlFactory(configService: ConfigService) {
     HttpClientModule,
     FhirValidatorModule.forRoot(ModuleHeaderConfig.FhirValidator, AppConfiguration.config),
     ClipboardModule,
-    ImportCaseModule.forRoot(ModuleHeaderConfig.RecordImport, AppConfiguration.config),
+    ImportCaseComponent,
     RecordViewerModule.forRoot(ModuleHeaderConfig.RecordViewer, AppConfiguration.config, FHIRProfileConstants.Profiles),
     FhirUtilModule,
     FhirExplorerModule,
@@ -92,10 +92,12 @@ export function fhirValidatorUrlFactory(configService: ConfigService) {
     WorkflowSimulatorModule.forRoot(ModuleHeaderConfig.WorkflowSimulator, AppConfiguration.config),
     TestsModule.forRoot(ModuleHeaderConfig.WorkflowSimulator, AppConfiguration.config),
     MatSidenavModule,
-    UserManagementModule,
-    NavMenuComponent
+    NavMenuComponent,
+    UserHeaderComponent
   ],
   providers: [
+    provideUserManagement(),
+    provideImportCase(ModuleHeaderConfig.RecordImport, AppConfiguration.config),
     {
       provide: APP_INITIALIZER,
       useFactory: configFactory,

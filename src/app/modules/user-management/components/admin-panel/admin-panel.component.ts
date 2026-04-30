@@ -9,12 +9,29 @@ import {mergeMap, ReplaySubject, share, switchMap} from "rxjs";
 import {EventManagerService, TestStatusCodes} from "../../../testing-events";
 import {UtilsService} from "../../../../service/utils.service";
 import {UpdateAction} from "../../../testing-events/models/update-action";
+import {EventTableComponent} from "../event-table/event-table.component";
+import {ErrorFrameComponent} from "../error-frame/error-frame.component";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {AsyncPipe} from "@angular/common";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatSelectModule} from "@angular/material/select";
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
 
 @Component({
     selector: 'app-admin-panel',
     templateUrl: './admin-panel.component.html',
     styleUrls: ['./admin-panel.component.scss'],
-    standalone: false
+    imports: [
+        EventTableComponent,
+        ErrorFrameComponent,
+        MatProgressSpinnerModule,
+        AsyncPipe,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatIconModule,
+        MatButtonModule
+    ]
 })
 export class AdminPanelComponent implements OnInit {
   currentUser: any;
