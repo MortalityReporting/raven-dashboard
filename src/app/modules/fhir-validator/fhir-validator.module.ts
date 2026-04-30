@@ -66,14 +66,6 @@ import {ConfigService} from "../../config/config.service";
   ],
 })
 export class FhirValidatorModule {
-  constructor(private configService: ConfigService) {
-    // Initialize NgxFhirValidatorModule with runtime config
-    const config = this.configService.config;
-    if (config && config.fhirValidatorUrl) {
-      // The NgxFhirValidatorModule will be configured via the serverBaseUrl injection token
-      console.log('FHIR Validator configured with URL:', config.fhirValidatorUrl);
-    }
-  }
 
   public static forRoot(config: ModuleHeaderConfig, appConfig: any): ModuleWithProviders<any> {
     return {
