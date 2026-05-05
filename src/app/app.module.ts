@@ -7,7 +7,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MatIconModule, MatIconRegistry} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {FhirValidatorModule} from "./modules/fhir-validator/fhir-validator.module";
+import {provideFhirValidator} from "./modules/fhir-validator/fhir-validator.providers";
 import {FhirAuthInterceptor} from "./interceptors/fhir-auth.interceptor";
 import {LandingComponent} from './components/landing/landing.component';
 import {ClipboardModule} from "@angular/cdk/clipboard";
@@ -82,7 +82,6 @@ export function fhirValidatorUrlFactory(configService: ConfigService) {
     ReactiveFormsModule,
     MatIconModule,
     HttpClientModule,
-    FhirValidatorModule.forRoot(ModuleHeaderConfig.FhirValidator, AppConfiguration.config),
     ClipboardModule,
     ImportCaseComponent,
     RecordViewerModule.forRoot(ModuleHeaderConfig.RecordViewer, AppConfiguration.config, FHIRProfileConstants.Profiles),
@@ -98,6 +97,7 @@ export function fhirValidatorUrlFactory(configService: ConfigService) {
   providers: [
     provideUserManagement(),
     provideImportCase(ModuleHeaderConfig.RecordImport, AppConfiguration.config),
+    provideFhirValidator(ModuleHeaderConfig.FhirValidator, AppConfiguration.config),
     {
       provide: APP_INITIALIZER,
       useFactory: configFactory,

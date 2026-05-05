@@ -59,9 +59,9 @@ import {
 } from './components/onboarding/http-connection/http-response-results/http-response-results.component';
 import {ClipboardModule} from "@angular/cdk/clipboard";
 import { UpdateEdrsComponent } from './components/update-edrs/update-edrs.component';
-import {NgxHisbLoggerModule} from "ngx-hisb-logger";
 import { ValidationComponent } from './components/validation/validation.component';
 import { EstablishConnectionComponent } from './components/search-edrs-bluejay/establish-connection/establish-connection.component';
+import {NgxConsoleComponent} from "ngx-hisb-logger";
 import { SearchEdrsBluejayComponent } from './components/search-edrs-bluejay/search-edrs-bluejay.component';
 import { DeathCertificateReviewSubmissionComponent } from './components/death-certificate-review-submission/death-certificate-review-submission.component';
 import {MatListItem, MatSelectionList} from "@angular/material/list";
@@ -123,7 +123,8 @@ import {ConfigService} from "../../config/config.service";
     OnboardingComponent,
     SearchEdrsComponent,
     UpdateEdrsComponent,
-    ValidationComponent
+    ValidationComponent,
+    ExternalApiDataSubmission
   ],
     imports: [
         CommonModule,
@@ -148,7 +149,7 @@ import {ConfigService} from "../../config/config.service";
         MatCheckboxModule,
         MatDividerModule,
         ClipboardModule,
-        NgxHisbLoggerModule,
+        NgxConsoleComponent,
         MatSelectionList,
         MatListItem,
         MatDatepicker,

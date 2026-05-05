@@ -24,7 +24,6 @@ import {NgFor} from "@angular/common";
         FormsModule,
         MatDividerModule,
         FileTemplateComponent,
-        NgFor
     ]
 })
 

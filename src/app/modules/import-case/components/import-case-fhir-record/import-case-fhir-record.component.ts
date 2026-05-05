@@ -4,13 +4,12 @@ import {UtilsService} from "../../../../service/utils.service";
 import {FhirValidatorComponent} from "../../../fhir-validator/components/fhir-validator/fhir-validator.component";
 import {MatDialog} from "@angular/material/dialog";
 import {openConfirmationDialog} from "ngx-hisb-common-ui";
-import {ImplementationGuide, NgxFhirValidatorComponent, NgxFhirValidatorModule, ValidationResults} from "ngx-fhir-validator";
+import {ImplementationGuide, NgxFhirValidatorComponent, ValidationResults} from "ngx-fhir-validator";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {FhirValidatorResultsExportService} from "../../../../service/fhir-validator-results-export.service";
 import {MatButtonModule} from "@angular/material/button";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatIconModule} from "@angular/material/icon";
-import {NgIf} from "@angular/common";
 
 
 @Component({
@@ -18,11 +17,10 @@ import {NgIf} from "@angular/common";
     templateUrl: './import-case-fhir-record.component.html',
     styleUrls: ['./import-case-fhir-record.component.scss'],
     imports: [
-        NgxFhirValidatorModule,
+        NgxFhirValidatorComponent,
         MatButtonModule,
         MatProgressSpinnerModule,
-        MatIconModule,
-        NgIf
+        MatIconModule
     ]
 })
 export class ImportCaseFhirRecordComponent {

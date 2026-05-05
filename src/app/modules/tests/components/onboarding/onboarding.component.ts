@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, effect, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatAccordion} from "@angular/material/expansion";
 import {LoggerService, LogLine} from "ngx-hisb-logger";
 import {UtilsService} from "../../../../service/utils.service";
@@ -26,7 +26,11 @@ export class OnboardingComponent implements OnInit {
     private log: LoggerService,
     private utilsService: UtilsService,
     private dialog: MatDialog,
-  ){}
+  ){
+    effect(() => {
+      this.loggerData = this.log.logs();
+    });
+  }
 
   loggerData: LogLine[];
   stageList: Stage[] =[];
@@ -39,7 +43,7 @@ export class OnboardingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.log.logStream$.subscribe((value: LogLine[])=> this.loggerData = value);
+
     this.addStage();
   }
 
