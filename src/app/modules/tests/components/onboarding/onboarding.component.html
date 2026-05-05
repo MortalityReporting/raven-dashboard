@@ -100,7 +100,7 @@
           role="log"
           [attr.aria-label]="'Console log messages'"
           [attr.aria-live]="'polite'">
-          <ngx-console [logs]="loggerData"></ngx-console>
+          <ngx-console [logs]="loggerData()"></ngx-console>
         </div>
         <button
           mat-raised-button

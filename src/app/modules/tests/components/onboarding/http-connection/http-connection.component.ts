@@ -7,7 +7,8 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-  ViewChild
+  ViewChild,
+  signal
 } from '@angular/core';
 import {
   FormControl,
@@ -53,8 +54,8 @@ export class HttpConnectionComponent implements OnInit, OnChanges{
 
   selectedConnectionType: BasicNameValueType;
   componentName = this.constructor.name;
-  loginSuccessResponse: any;
-  loginErrorResponse: any;
+  protected readonly loginSuccessResponse = signal<any>(null);
+  protected readonly loginErrorResponse = signal<any>(null);
   isAdvancedSettingsVisible: boolean = false;
 
   constructor(
@@ -173,17 +174,16 @@ export class HttpConnectionComponent implements OnInit, OnChanges{
    * @param request
    */
   login(request: OnboardingHttpRequest){
-    this.loginSuccessResponse = null;
-    this.loginErrorResponse = null;
+    this.loginSuccessResponse.set(null);
+    this.loginErrorResponse.set(null);
     this.onboardingService.onLogin(request).subscribe({
       next: value => {
-        console.log(value);
         this.log.info("Successful login to " + request.url, this.componentName);
-        this.loginSuccessResponse = value;
+        this.loginSuccessResponse.set(value);
       },
       error: err => {
         console.error(err);
-        this.loginErrorResponse = err;
+        this.loginErrorResponse.set(err);
         this.log.error(JSON.stringify(err), this.componentName);
       }
     });

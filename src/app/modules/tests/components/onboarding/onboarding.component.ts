@@ -1,4 +1,4 @@
-import {Component, effect, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, computed, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatAccordion} from "@angular/material/expansion";
 import {LoggerService, LogLine} from "ngx-hisb-logger";
 import {UtilsService} from "../../../../service/utils.service";
@@ -21,19 +21,15 @@ export interface Stage {
 
 export class OnboardingComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
+  protected readonly loggerData = computed(() => this.log.logs());
+  stageList: Stage[] =[];
+
   constructor(
     @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
     private log: LoggerService,
     private utilsService: UtilsService,
     private dialog: MatDialog,
-  ){
-    effect(() => {
-      this.loggerData = this.log.logs();
-    });
-  }
-
-  loggerData: LogLine[];
-  stageList: Stage[] =[];
+  ){}
   MAX_FILE_SIZE = 10000;
   formValueAcc: any[] = [];
 
