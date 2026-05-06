@@ -99,12 +99,6 @@ export function fhirValidatorUrlFactory(configService: ConfigService) {
     provideImportCase(ModuleHeaderConfig.RecordImport, AppConfiguration.config),
     provideFhirValidator(ModuleHeaderConfig.FhirValidator, AppConfiguration.config),
     {
-      provide: APP_INITIALIZER,
-      useFactory: configFactory,
-      deps: [ConfigService],
-      multi: true
-    },
-    {
       provide: UiStringConstants,
     },
     {
