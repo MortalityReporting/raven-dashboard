@@ -1,4 +1,5 @@
 import {APP_INITIALIZER, NgModule} from '@angular/core';
+import {firstValueFrom} from 'rxjs';
 import {BrowserModule, DomSanitizer} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -95,6 +96,15 @@ export function fhirValidatorUrlFactory(configService: ConfigService) {
     UserHeaderComponent
   ],
   providers: [
+    // Load config before any other providers that depend on it
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (configService: ConfigService) => {
+        return () => firstValueFrom(configService.loadConfig());
+      },
+      deps: [ConfigService],
+      multi: true
+    },
     provideUserManagement(),
     provideImportCase(ModuleHeaderConfig.RecordImport, AppConfiguration.config),
     provideFhirValidator(ModuleHeaderConfig.FhirValidator, AppConfiguration.config),
