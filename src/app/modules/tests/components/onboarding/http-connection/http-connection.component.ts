@@ -99,7 +99,7 @@ export class HttpConnectionComponent implements OnInit {
   constructor(
     @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
     private fb: UntypedFormBuilder,
-    private log: LoggerService,
+    private loggerService: LoggerService,
     public onboardingService: OnboardingService,
     private utilsService: UtilsService
   ) {}
@@ -184,13 +184,13 @@ export class HttpConnectionComponent implements OnInit {
     this.loginErrorResponse.set(null);
     this.onboardingService.onLogin(request).subscribe({
       next: value => {
-        this.log.info("Successful login to " + request.url, this.componentName);
+        this.loggerService.info("Successful login to " + request.url, this.componentName);
         this.loginSuccessResponse.set(value);
       },
       error: err => {
         console.error(err);
         this.loginErrorResponse.set(err);
-        this.log.error(JSON.stringify(err), this.componentName);
+        this.loggerService.error(JSON.stringify(err), this.componentName);
       }
     });
 
@@ -383,7 +383,7 @@ export class HttpConnectionComponent implements OnInit {
     catch(e){
       console.error(e);
       this.utilsService.showErrorMessage("Error parsing form data.")
-      this.log.error("Error parsing form data.", this.componentName);
+      this.loggerService.error("Error parsing form data.", this.componentName);
     }
   }
 
