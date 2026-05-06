@@ -61,7 +61,6 @@ import {ClipboardModule} from "@angular/cdk/clipboard";
 import { UpdateEdrsComponent } from './components/update-edrs/update-edrs.component';
 import { ValidationComponent } from './components/validation/validation.component';
 import { EstablishConnectionComponent } from './components/search-edrs-bluejay/establish-connection/establish-connection.component';
-import {NgxConsoleComponent} from "ngx-hisb-logger";
 import { SearchEdrsBluejayComponent } from './components/search-edrs-bluejay/search-edrs-bluejay.component';
 import { DeathCertificateReviewSubmissionComponent } from './components/death-certificate-review-submission/death-certificate-review-submission.component';
 import {MatListItem, MatSelectionList} from "@angular/material/list";
@@ -150,7 +149,6 @@ import {ConsoleLoggerComponent} from "../console-logger/console-logger/console-l
     MatCheckboxModule,
     MatDividerModule,
     ClipboardModule,
-    NgxConsoleComponent,
     MatSelectionList,
     MatListItem,
     MatDatepicker,

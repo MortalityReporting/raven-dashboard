@@ -1,6 +1,6 @@
 import {inject, Injectable, signal} from '@angular/core';
 import {Clipboard} from '@angular/cdk/clipboard';
-import {LogLine} from "ngx-hisb-logger";
+import {LogLine} from "../model/log-line";
 import {LogLevel} from "../model/log-level";
 
 @Injectable({

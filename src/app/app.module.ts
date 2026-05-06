@@ -8,7 +8,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MatIconModule, MatIconRegistry} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {provideFhirValidator} from "./modules/fhir-validator/fhir-validator.providers";
+import {provideFhirValidator} from "./modules/fhir-validator-wrapper/fhir-validator.providers";
 import {FhirAuthInterceptor} from "./interceptors/fhir-auth.interceptor";
 import {LandingComponent} from './components/landing/landing.component';
 import {ClipboardModule} from "@angular/cdk/clipboard";

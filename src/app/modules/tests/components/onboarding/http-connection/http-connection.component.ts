@@ -23,7 +23,7 @@ import {ConnectionType} from "../../../models/connection-type";
 import {RequestType} from "../../../models/request-type";
 import {OnboardingHttpRequest} from "../../../models/onboarding-http-request";
 import {UtilsService} from "../../../../../service/utils.service";
-import {LoggerService} from "ngx-hisb-logger";
+import {LoggerService} from "../../../../console-logger/services/logger.service";
 import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
 
 

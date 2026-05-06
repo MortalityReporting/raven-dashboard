@@ -1,19 +1,21 @@
 import {Component, Inject} from '@angular/core';
-import {ValidatorInput, NgxFhirValidatorComponent} from "ngx-fhir-validator";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {FhirValidatorResultsExportService} from "../../../../service/fhir-validator-results-export.service";
 import {MatCardModule} from "@angular/material/card";
+import {FhirValidatorComponent} from "../fhir-validator/fhir-validator.component";
+import {ValidatorInput} from "../../modal/validator-input-format";
 
 @Component({
     selector: 'app-fhir-validator',
-    templateUrl: './fhir-validator.component.html',
-    styleUrls: ['./fhir-validator.component.scss'],
-    imports: [
-        MatCardModule,
-        NgxFhirValidatorComponent
-    ]
+    templateUrl: './fhir-validator-wrapper.component.html',
+    styleUrls: ['./fhir-validator-wrapper.component.scss'],
+  imports: [
+    MatCardModule,
+    FhirValidatorComponent,
+    FhirValidatorComponent
+  ]
 })
-export class FhirValidatorComponent {
+export class FhirValidatorWrapperComponent {
   constructor(
     @Inject('fhirValidatorConfig') public config: ModuleHeaderConfig,
     private fhirValidatorResultsExportService: FhirValidatorResultsExportService) {

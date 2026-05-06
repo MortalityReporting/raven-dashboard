@@ -1,32 +1,34 @@
 import {Component, Inject, ViewChild} from '@angular/core';
 import {ImportCaseService} from "../../services/import-case.service";
 import {UtilsService} from "../../../../service/utils.service";
-import {FhirValidatorComponent} from "../../../fhir-validator/components/fhir-validator/fhir-validator.component";
+import {FhirValidatorWrapperComponent} from "../../../fhir-validator-wrapper/components/fhir-validator-wrapper/fhir-validator-wrapper.component";
 import {MatDialog} from "@angular/material/dialog";
 import {openConfirmationDialog} from "ngx-hisb-common-ui";
-import {ImplementationGuide, NgxFhirValidatorComponent, ValidationResults} from "ngx-fhir-validator";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {FhirValidatorResultsExportService} from "../../../../service/fhir-validator-results-export.service";
 import {MatButtonModule} from "@angular/material/button";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatIconModule} from "@angular/material/icon";
+import {FhirValidatorComponent} from "../../../fhir-validator-wrapper/components/fhir-validator/fhir-validator.component";
+import {ImplementationGuide} from "../../../fhir-validator-wrapper/modal/implementation-guide";
+import {ValidationResults} from "../../../fhir-validator-wrapper/modal/validation-results";
 
 
 @Component({
     selector: 'app-import-case-fhir-record',
     templateUrl: './import-case-fhir-record.component.html',
     styleUrls: ['./import-case-fhir-record.component.scss'],
-    imports: [
-        NgxFhirValidatorComponent,
-        MatButtonModule,
-        MatProgressSpinnerModule,
-        MatIconModule
-    ]
+  imports: [
+    FhirValidatorComponent,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    MatIconModule
+  ]
 })
 export class ImportCaseFhirRecordComponent {
 
-  @ViewChild(FhirValidatorComponent) validator: FhirValidatorComponent;
-  @ViewChild(NgxFhirValidatorComponent) fhirValidator
+  @ViewChild(FhirValidatorWrapperComponent) validator: FhirValidatorWrapperComponent;
+  @ViewChild(FhirValidatorComponent) fhirValidator
 
   isLoading: boolean = false;
   fhirResource: any;

@@ -1,6 +1,6 @@
 import {Component, computed, Inject, OnInit, signal, ViewChild, QueryList, ViewChildren} from '@angular/core';
 import {MatAccordion} from "@angular/material/expansion";
-import {LoggerService, LogLine} from "ngx-hisb-logger";
+import {LoggerService} from "../../../console-logger/services/logger.service";
 import {UtilsService} from "../../../../service/utils.service";
 import {openConfirmationDialog} from "ngx-hisb-common-ui";
 import {MatDialog} from "@angular/material/dialog";
@@ -19,7 +19,6 @@ export interface Stage {
     styleUrls: ['./onboarding.component.scss'],
     standalone: false
 })
-
 export class OnboardingComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
   @ViewChildren(HttpConnectionComponent) httpConnectionComponents: QueryList<HttpConnectionComponent>;

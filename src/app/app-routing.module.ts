@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LandingComponent} from "./components/landing/landing.component";
 import {ImportCaseComponent} from "./modules/import-case";
-import {FhirValidatorComponent} from "./modules/fhir-validator/components/fhir-validator/fhir-validator.component";
+import {FhirValidatorWrapperComponent} from "./modules/fhir-validator-wrapper/components/fhir-validator-wrapper/fhir-validator-wrapper.component";
 import {SearchRecordsComponent} from "./modules/record-viewer/components/search-records/search-records.component";
 import {ModuleHeaderConfig} from "./providers/module-header-config";
 import {AppConfiguration} from "./providers/app-configuration";
@@ -90,7 +90,7 @@ const routes: Routes = [
 
   { // FHIR Validator Module
     path: AppConfiguration.config.modules['fhirValidator'].route,
-    component: FhirValidatorComponent,
+    component: FhirValidatorWrapperComponent,
     data: { moduleConfig: ModuleHeaderConfig.FhirValidator, componentTitle: undefined}
 
   },

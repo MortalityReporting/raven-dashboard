@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FhirValidatorComponent } from './fhir-validator.component';
+import { FhirValidatorWrapperComponent } from './fhir-validator-wrapper.component';
 
 describe('FhirValidatorComponent', () => {
-  let component: FhirValidatorComponent;
-  let fixture: ComponentFixture<FhirValidatorComponent>;
+  let component: FhirValidatorWrapperComponent;
+  let fixture: ComponentFixture<FhirValidatorWrapperComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FhirValidatorComponent ]
+      declarations: [ FhirValidatorWrapperComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FhirValidatorComponent);
+    fixture = TestBed.createComponent(FhirValidatorWrapperComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

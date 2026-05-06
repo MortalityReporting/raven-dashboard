@@ -25,7 +25,6 @@
     "jspdf": "^4.2.0",
     "jspdf-autotable": "^5.0.2",
     "jszip": "^3.10.1",
-    "ngx-fhir-validator": "github:HISB-Libraries/ngx-fhir-validator",
     "ngx-hisb-common-ui": "github:HISB-Libraries/ngx-hisb-common-ui",
     "rxjs": "~7.4.0",
     "rxjs-compat": "^6.6.7",
