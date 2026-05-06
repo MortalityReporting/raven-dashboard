@@ -2,11 +2,11 @@ import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewCh
 import {MatSort, MatSortModule} from "@angular/material/sort";
 import {MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {EventManagerService, TestStatusDictionary} from "../../../testing-events"
-import {openConfirmationDialog} from "ngx-hisb-common-ui";
 import {MatDialog} from "@angular/material/dialog";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
+import {openConfirmationDialog} from "../../../../components/widgets/confirmation-dialog/conformation-dialog.component";
 import {NgIf} from "@angular/common";
 
 @Component({

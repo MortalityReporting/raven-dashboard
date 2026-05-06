@@ -1,0 +1,32 @@
+
+.title {
+  margin-left: 10px;
+}
+
+.subtitle {
+  margin-left: 30px;
+  font-size: small;
+  width: 600px;
+  white-space: normal;
+}
+
+.subtitle p {
+  overflow-wrap: break-word;
+  line-height: normal;
+  margin: 0;
+}
+
+.version-label {
+  font-weight: bold;
+  font-size: small;
+  margin: 5px;
+}
+
+.content-spacer{
+  flex: 1 1 auto;
+}
+
+.header {
+  background-color: indigo;
+  color: white;
+}

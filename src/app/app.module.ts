@@ -28,7 +28,6 @@ import {MatCardModule} from "@angular/material/card";
 import {MatListModule} from "@angular/material/list";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
-import {HeaderComponent} from "ngx-hisb-common-ui";
 import {AppConfiguration} from "./providers/app-configuration";
 import { CardHoverDirective } from './directives/card-hover.directive';
 import { UiStringConstants } from "./providers/ui-string-constants";
@@ -43,6 +42,7 @@ import {TestsModule} from "./modules/tests/tests.module";
 import {AppConstants} from "./providers/app-constants";
 import {ModuleHeaderComponent} from "./components/module-header/module-header.component";
 import {NavMenuComponent} from "./components/nav-menu/nav-menu.component";
+import {HeaderComponent} from "./components/common-header/header.component";
 
 export const configFactory = (configService: ConfigService) => {
   return () => firstValueFrom(configService.loadConfig());
@@ -93,7 +93,8 @@ export function fhirValidatorUrlFactory(configService: ConfigService) {
     TestsModule.forRoot(ModuleHeaderConfig.WorkflowSimulator, AppConfiguration.config),
     MatSidenavModule,
     NavMenuComponent,
-    UserHeaderComponent
+    UserHeaderComponent,
+    HeaderComponent
   ],
   providers: [
     // Load config before any other providers that depend on it

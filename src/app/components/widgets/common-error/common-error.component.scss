@@ -1,0 +1,22 @@
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 24vh;
+}
+
+.error-code{
+  font-size: xx-large;
+  margin-bottom: 32px;
+}
+
+.error-message{
+  font-size: large;
+  width: 40vh;
+  text-align: center;
+}
+
+.action-button{
+  margin-top: 24px;
+}

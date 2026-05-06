@@ -2,10 +2,10 @@ import {Component, computed, Inject, OnInit, signal, ViewChild, QueryList, ViewC
 import {MatAccordion} from "@angular/material/expansion";
 import {LoggerService} from "../../../console-logger/services/logger.service";
 import {UtilsService} from "../../../../service/utils.service";
-import {openConfirmationDialog} from "ngx-hisb-common-ui";
 import {MatDialog} from "@angular/material/dialog";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {HttpConnectionComponent} from "./http-connection/http-connection.component";
+import {openConfirmationDialog} from "../../../../components/widgets/confirmation-dialog/conformation-dialog.component";
 
 
 export interface Stage {

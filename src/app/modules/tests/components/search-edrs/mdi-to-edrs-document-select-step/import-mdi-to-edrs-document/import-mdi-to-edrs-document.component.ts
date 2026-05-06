@@ -8,8 +8,8 @@ import {DecedentSimpleInfo} from "../../../../../../model/decedent-simple-info";
 import {UiStringConstants} from "../../../../../../providers/ui-string-constants";
 import {FhirHelperService, PatientNameReturn} from "../../../../../fhir-util/services/fhir-helper.service";
 import {MatDialog} from "@angular/material/dialog";
-import {openTextInputDialog} from "ngx-hisb-common-ui";
 import {ModuleHeaderConfig} from "../../../../../../providers/module-header-config";
+import {openTextInputDialog} from "../../../../../../components/text-input-dialog/text-input-dialog.component";
 
 @Component({
     selector: 'app-import-mdi-to-edrs-document',

@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {platformBrowser} from "@angular/platform-browser";
-import { HeaderConfig} from "ngx-hisb-common-ui";
 import {AppConfiguration} from "./providers/app-configuration";
 import {ThemeService} from "./service/theme.service";
 import {ConfigService} from "./config/config.service";
 import {Platform} from "@angular/cdk/platform";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {HeaderConfig} from "./components/common-header/header.config";
 
 @Component({
     selector: 'app-root',

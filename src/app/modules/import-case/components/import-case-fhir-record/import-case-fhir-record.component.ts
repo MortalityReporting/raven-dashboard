@@ -3,7 +3,6 @@ import {ImportCaseService} from "../../services/import-case.service";
 import {UtilsService} from "../../../../service/utils.service";
 import {FhirValidatorWrapperComponent} from "../../../fhir-validator-wrapper/components/fhir-validator-wrapper/fhir-validator-wrapper.component";
 import {MatDialog} from "@angular/material/dialog";
-import {openConfirmationDialog} from "ngx-hisb-common-ui";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {FhirValidatorResultsExportService} from "../../../../service/fhir-validator-results-export.service";
 import {MatButtonModule} from "@angular/material/button";
@@ -12,6 +11,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {FhirValidatorComponent} from "../../../fhir-validator-wrapper/components/fhir-validator/fhir-validator.component";
 import {ImplementationGuide} from "../../../fhir-validator-wrapper/modal/implementation-guide";
 import {ValidationResults} from "../../../fhir-validator-wrapper/modal/validation-results";
+import {openConfirmationDialog} from "../../../../components/widgets/confirmation-dialog/conformation-dialog.component";
 
 
 @Component({

@@ -50,7 +50,6 @@ import {ToxicologyGridComponent} from "./components/search-records/toxicology-gr
 import {
   ToxToMdiViewerMdiCaseComponent
 } from "./components/tox-to-mdi-viewer/tox-to-mdi-viewer-mdi-case/tox-to-mdi-viewer-mdi-case.component";
-import {CommonErrorComponent} from "ngx-hisb-common-ui";
 import {CustomSpinnerDirective} from "./directives/custom-spinner.directive";
 import { ToxDemoCardComponent } from './components/tox-to-mdi-viewer/tox-demo-card/tox-demo-card.component';
 import { DcrViewerComponent } from './components/dcr-viewer/dcr-viewer.component';
@@ -66,6 +65,7 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatProgressBar} from "@angular/material/progress-bar";
 import {provideNativeDateAdapter} from '@angular/material/core';
 import {ConfigService} from "../../config/config.service";
+import {CommonErrorComponent} from "../../components/widgets/common-error/common-error.component";
 
 @NgModule({
     declarations: [
@@ -103,35 +103,36 @@ import {ConfigService} from "../../config/config.service";
     ToxToMdiViewerMdiCaseComponent,
     ToxToMdiViewerContentComponent
   ],
-  imports: [
-    CommonModule,
-    FhirUtilModule, // Dependency
-    FhirMdiLibraryModule, // Dependency
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    MatTooltipModule,
-    MatToolbarModule,
-    MatButtonModule,
-    RouterModule,
-    FhirExplorerModule,
-    MatTableModule,
-    MatExpansionModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
-    MatTabsModule,
-    FormsModule,
-    MatCardModule,
-    MatSelectModule,
-    MatCheckboxModule,
-    MatSortModule,
-    ScrollingModule,
-    CommonErrorComponent,
-    MatPaginator,
-    MatProgressBar,
-    MatDatepickerModule,
-    ReactiveFormsModule
-  ]
+    imports: [
+        CommonModule,
+        FhirUtilModule, // Dependency
+        FhirMdiLibraryModule, // Dependency
+        MatSidenavModule,
+        MatIconModule,
+        MatListModule,
+        MatTooltipModule,
+        MatToolbarModule,
+        MatButtonModule,
+        RouterModule,
+        FhirExplorerModule,
+        MatTableModule,
+        MatExpansionModule,
+        MatInputModule,
+        MatProgressSpinnerModule,
+        MatTabsModule,
+        FormsModule,
+        MatCardModule,
+        MatSelectModule,
+        MatCheckboxModule,
+        MatSortModule,
+        ScrollingModule,
+        CommonErrorComponent,
+        MatPaginator,
+        MatProgressBar,
+        MatDatepickerModule,
+        ReactiveFormsModule,
+        CommonErrorComponent
+    ]
 })
 export class RecordViewerModule {
   constructor(private matIconRegistry: MatIconRegistry,
