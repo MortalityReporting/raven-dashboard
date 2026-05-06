@@ -3,19 +3,40 @@ import {ImportCaseService} from "../../services/import-case.service";
 import {UtilsService} from "../../../../service/utils.service";
 
 import {openModal} from "../../../../components/widgets/modal/modal.component";
-import {MatTableDataSource} from "@angular/material/table";
+import {MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {MatDialog} from "@angular/material/dialog";
 import {FileTemplate} from "../../models/file-template";
 import {FileTemplateService} from "../../services/file-template.service";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
+import {FileTemplateComponent} from "../file-template/file-template.component";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatSelectModule} from "@angular/material/select";
+import {MatButtonModule} from "@angular/material/button";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MappingsComponent} from "../mappings/mappings.component";
+import {JsonPipe, NgClass, NgFor, NgIf} from "@angular/common";
+import {MatIconModule} from "@angular/material/icon";
+import {MatTabsModule} from "@angular/material/tabs";
 
 
 @Component({
     selector: 'app-import-case-connectathon-template',
     templateUrl: './import-case-connectathon-template.component.html',
     styleUrls: ['./import-case-connectathon-template.component.scss'],
-    standalone: false
+    imports: [
+        MatFormFieldModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatProgressSpinnerModule,
+        MatTableModule,
+        MappingsComponent,
+        MatIconModule,
+        MatTabsModule,
+        JsonPipe,
+        NgClass
+    ]
 })
 export class ImportCaseConnectathonTemplateComponent implements OnInit {
   @Input() fileTemplates: FileTemplate[] = []

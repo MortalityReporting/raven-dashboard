@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LandingComponent} from "./components/landing/landing.component";
-import {ImportCaseComponent} from "./modules/import-case/components/import-case.component";
+import {ImportCaseComponent} from "./modules/import-case";
 import {FhirValidatorComponent} from "./modules/fhir-validator/components/fhir-validator/fhir-validator.component";
 import {SearchRecordsComponent} from "./modules/record-viewer/components/search-records/search-records.component";
 import {ModuleHeaderConfig} from "./providers/module-header-config";
@@ -9,8 +9,7 @@ import {AppConfiguration} from "./providers/app-configuration";
 import {
   RecordComparisonContentComponent
 } from "./modules/record-comparison/components/record-comparison-content/record-comparison-content.component";
-import {AdminPanelComponent} from "./modules/user-management/components/admin-panel/admin-panel.component";
-import {LoggedInComponent} from "./modules/user-management/components/logged-in/logged-in.component";
+import {AdminPanelComponent, LoggedInComponent} from "./modules/user-management";
 import {
   MdiToEdrsViewerComponent
 } from "./modules/record-viewer/components/mdi-to-edrs-viewer/mdi-to-edrs-viewer.component";

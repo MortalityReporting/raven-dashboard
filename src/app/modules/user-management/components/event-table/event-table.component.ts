@@ -1,15 +1,26 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {MatSort} from "@angular/material/sort";
-import {MatTableDataSource} from "@angular/material/table";
+import {MatSort, MatSortModule} from "@angular/material/sort";
+import {MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {EventManagerService, TestStatusDictionary} from "../../../testing-events"
 import {openConfirmationDialog} from "ngx-hisb-common-ui";
 import {MatDialog} from "@angular/material/dialog";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
+import {NgIf} from "@angular/common";
 
 @Component({
     selector: 'app-event-table',
     templateUrl: './event-table.component.html',
     styleUrls: ['./event-table.component.scss'],
-    standalone: false
+    imports: [
+        MatTableModule,
+        MatSortModule,
+        MatTooltipModule,
+        MatIconModule,
+        MatButtonModule,
+        NgIf
+    ]
 })
 export class EventTableComponent implements OnChanges {
   @Input() testingEvent: any;

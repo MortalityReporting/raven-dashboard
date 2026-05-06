@@ -1,7 +1,14 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {MatTableDataSource} from "@angular/material/table";
+import {MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {FileTemplateService} from "../../services/file-template.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatSelectModule} from "@angular/material/select";
+import {FormsModule} from "@angular/forms";
+import {NgClass, NgStyle} from "@angular/common";
+import {MatRadioModule} from "@angular/material/radio";
+import {MatIconModule} from "@angular/material/icon";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @Component({
     selector: 'app-mappings',
@@ -14,7 +21,17 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
             transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
         ]),
     ],
-    standalone: false
+    imports: [
+        MatTableModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        FormsModule,
+        MatRadioModule,
+        MatIconModule,
+        MatTooltipModule,
+        NgClass,
+        NgStyle
+    ]
 })
 export class MappingsComponent implements OnChanges {
   @Input() fhirBundle;

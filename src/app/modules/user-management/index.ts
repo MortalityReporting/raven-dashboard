@@ -1,1 +1,7 @@
 export * from "./services/user-profile-manager.service"
+export * from "./components/admin-panel/admin-panel.component"
+export * from "./components/logged-in/logged-in.component"
+export * from "./components/user-header/user-header.component"
+export * from "./components/event-table/event-table.component"
+export * from "./components/error-frame/error-frame.component"
+export * from "./user-management.providers"

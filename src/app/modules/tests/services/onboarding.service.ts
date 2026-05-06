@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {OnboardingHttpRequest} from "../models/onboarding-http-request";
-import {HttpClient, HttpRequest} from "@angular/common/http";
+import {HttpClient, HttpRequest, HttpResponse} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
+import {filter, map} from "rxjs/operators";
 import {RequestType} from "../models/request-type";
 
 @Injectable({
@@ -38,6 +39,9 @@ export class OnboardingService {
       // (in effect we are forcing an object copy)
       this.setHttpReq(JSON.parse(JSON.stringify(req)));
 
-      return this.http.request(req);
+      return this.http.request(req).pipe(
+        filter((event): event is HttpResponse<any> => event instanceof HttpResponse),
+        map(response => response.body)
+      );
     }
 }

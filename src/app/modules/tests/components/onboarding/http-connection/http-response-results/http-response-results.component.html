@@ -1,17 +1,17 @@
 <mat-tab-group mat-stretch-tabs="false">
 
   <mat-tab label="Result">
-    <div [ngClass]="errorResponse ? 'response-container-error': 'response-container'">
+    <div [ngClass]="errorResponse() ? 'response-container-error': 'response-container'">
 
       <div class="row">
         <div class="column column-20 result-label">Status:</div>
         <div class="column column-10"></div>
         <div class="column column-70">
-          @if (errorResponse) {
-            <span>{{ errorResponse?.status }} {{ errorResponse?.statusText }}</span>
+          @if (errorResponse()) {
+            <span>{{ errorResponse()?.status }} {{ errorResponse()?.statusText }}</span>
           }
-          @if (successResponse) {
-            <span>{{ successResponse?.status }} {{ successResponse?.statusText }}</span>
+          @if (successResponse()) {
+            <span>{{ successResponse()?.status }} {{ successResponse()?.statusText }}</span>
           }
         </div>
       </div>
@@ -20,16 +20,16 @@
         <div class="column column-20 result-label">URL:</div>
         <div class="column column-10"></div>
         <div class="column column-70">
-          @if (errorResponse) {
-            <span>{{ errorResponse?.url }}</span>
+          @if (errorResponse()) {
+            <span>{{ errorResponse()?.url }}</span>
           }
-          @if (successResponse) {
-            <span>{{ successResponse?.url }}</span>
+          @if (successResponse()) {
+            <span>{{ successResponse()?.url }}</span>
           }
         </div>
       </div>
 
-      @for (token of successResponseTokens; track token) {
+      @for (token of successResponseTokens(); track token) {
         <div class="result-row">
           <div class="column column-20 result-label">{{ token.name }}</div>
           <div class="column column-10">
@@ -44,14 +44,14 @@
         </div>
       }
 
-      @if (errorResponse) {
+      @if (errorResponse()) {
         <div class="result-row">
-          @if (errorResponse) {
+          @if (errorResponse()) {
             <div>
               <div class="column column-20 result-label">Message:</div>
               <div class="column column-10"></div>
               <div class="column column-70">
-                {{ errorResponse?.message }}
+                {{ errorResponse()?.message }}
               </div>
             </div>
           }
@@ -63,23 +63,23 @@
   </mat-tab>
 
   <mat-tab label="HTTP Request">
-    <div [ngClass]="errorResponse ? 'response-container-error': 'response-container'">
-      @if (request) {
-        <pre>{{ request | json}}</pre>
+    <div [ngClass]="errorResponse() ? 'response-container-error': 'response-container'">
+      @if (request()) {
+        <pre>{{ request() | json}}</pre>
       }
     </div>
   </mat-tab>
 
   <mat-tab label="HTTP Response">
-    <div [ngClass]="errorResponse ? 'response-container-error': 'response-container'">
-      @if (successResponse) {
+    <div [ngClass]="errorResponse() ? 'response-container-error': 'response-container'">
+      @if (successResponse()) {
         <div>
-          <pre>{{ successResponse| json }}</pre>
+          <pre>{{ successResponse()| json }}</pre>
         </div>
       }
-      @if (errorResponse) {
+      @if (errorResponse()) {
         <div>
-          <pre>{{ errorResponse | json }}</pre>
+          <pre>{{ errorResponse() | json }}</pre>
         </div>
       }
     </div>

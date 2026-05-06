@@ -391,8 +391,8 @@
       <!-- Second column with response results -->
       <div class="config-col">
         <app-http-response-results
-          [errorResponse]="loginErrorResponse"
-          [successResponse]="loginSuccessResponse"
+          [errorResponse]="loginErrorResponse()"
+          [successResponse]="loginSuccessResponse()"
           [request]="onboardingService.httpReq$ | async">
         </app-http-response-results>
       </div>

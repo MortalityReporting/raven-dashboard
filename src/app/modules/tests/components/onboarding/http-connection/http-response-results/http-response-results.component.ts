@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, computed, effect, input} from '@angular/core';
 import {Clipboard} from '@angular/cdk/clipboard';
 
 @Component({
@@ -7,23 +7,20 @@ import {Clipboard} from '@angular/cdk/clipboard';
     styleUrls: ['./http-response-results.component.scss'],
     standalone: false
 })
-export class HttpResponseResultsComponent  implements OnChanges {
-  @Input() errorResponse: any;
-  @Input() successResponse: any;
-  @Input() request: any;
+export class HttpResponseResultsComponent {
+  readonly errorResponse = input<any>();
+  readonly successResponse = input<any>();
+  readonly request = input<any>();
 
-  successResponseTokens: any;
+  protected readonly successResponseTokens = computed(() => {
+    const response = this.successResponse();
+    return response ? this.getTokens(response) : null;
+  });
 
   constructor(private clipboard: Clipboard){}
 
   copyToClipboard(object: any) {
     this.clipboard.copy(object)
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if(changes?.['successResponse']?.currentValue){
-      this.successResponseTokens = this.getTokens(changes?.['successResponse']?.currentValue);
-    }
   }
 
   /**

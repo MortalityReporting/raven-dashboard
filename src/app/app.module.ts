@@ -1,4 +1,5 @@
 import {APP_INITIALIZER, NgModule} from '@angular/core';
+import {firstValueFrom} from 'rxjs';
 import {BrowserModule, DomSanitizer} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -7,12 +8,12 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MatIconModule, MatIconRegistry} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {FhirValidatorModule} from "./modules/fhir-validator/fhir-validator.module";
+import {provideFhirValidator} from "./modules/fhir-validator/fhir-validator.providers";
 import {FhirAuthInterceptor} from "./interceptors/fhir-auth.interceptor";
 import {LandingComponent} from './components/landing/landing.component';
 import {ClipboardModule} from "@angular/cdk/clipboard";
 import {ModalComponent} from './components/widgets/modal/modal.component';
-import {ImportCaseModule} from "./modules/import-case/import-case.module";
+import {ImportCaseComponent, provideImportCase} from "./modules/import-case";
 import {RecordViewerModule} from "./modules/record-viewer/record-viewer.module";
 import {FhirUtilModule} from "./modules/fhir-util/fhir-util.module";
 import {FhirExplorerModule} from "./modules/fhir-explorer/fhir-explorer.module";
@@ -32,7 +33,7 @@ import {AppConfiguration} from "./providers/app-configuration";
 import { CardHoverDirective } from './directives/card-hover.directive';
 import { UiStringConstants } from "./providers/ui-string-constants";
 import { FHIRProfileConstants } from "./providers/fhir-profile-constants";
-import {UserManagementModule} from "./modules/user-management/user-management.module";
+import {UserHeaderComponent, provideUserManagement} from "./modules/user-management";
 import { DocRefBase64TransformPipe } from './modules/fhir-util';
 import {ConfigService} from "./config/config.service";
 import {RegisteredEndpointsInterceptor} from "./interceptors/registered-endpoints.interceptor";
@@ -44,7 +45,7 @@ import {ModuleHeaderComponent} from "./components/module-header/module-header.co
 import {NavMenuComponent} from "./components/nav-menu/nav-menu.component";
 
 export const configFactory = (configService: ConfigService) => {
-  return () => configService.loadConfig();
+  return () => firstValueFrom(configService.loadConfig());
 };
 
 export function fhirValidatorUrlFactory(configService: ConfigService) {
@@ -82,9 +83,8 @@ export function fhirValidatorUrlFactory(configService: ConfigService) {
     ReactiveFormsModule,
     MatIconModule,
     HttpClientModule,
-    FhirValidatorModule.forRoot(ModuleHeaderConfig.FhirValidator, AppConfiguration.config),
     ClipboardModule,
-    ImportCaseModule.forRoot(ModuleHeaderConfig.RecordImport, AppConfiguration.config),
+    ImportCaseComponent,
     RecordViewerModule.forRoot(ModuleHeaderConfig.RecordViewer, AppConfiguration.config, FHIRProfileConstants.Profiles),
     FhirUtilModule,
     FhirExplorerModule,
@@ -92,10 +92,20 @@ export function fhirValidatorUrlFactory(configService: ConfigService) {
     WorkflowSimulatorModule.forRoot(ModuleHeaderConfig.WorkflowSimulator, AppConfiguration.config),
     TestsModule.forRoot(ModuleHeaderConfig.WorkflowSimulator, AppConfiguration.config),
     MatSidenavModule,
-    UserManagementModule,
-    NavMenuComponent
+    NavMenuComponent,
+    UserHeaderComponent
   ],
   providers: [
+    // Load config before any other providers that depend on it
+    {
+      provide: APP_INITIALIZER,
+      useFactory: configFactory,
+      deps: [ConfigService],
+      multi: true
+    },
+    provideUserManagement(),
+    provideImportCase(ModuleHeaderConfig.RecordImport, AppConfiguration.config),
+    provideFhirValidator(ModuleHeaderConfig.FhirValidator, AppConfiguration.config),
     {
       provide: UiStringConstants,
     },
