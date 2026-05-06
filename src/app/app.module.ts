@@ -45,7 +45,7 @@ import {ModuleHeaderComponent} from "./components/module-header/module-header.co
 import {NavMenuComponent} from "./components/nav-menu/nav-menu.component";
 
 export const configFactory = (configService: ConfigService) => {
-  return () => configService.loadConfig();
+  return () => firstValueFrom(configService.loadConfig());
 };
 
 export function fhirValidatorUrlFactory(configService: ConfigService) {
@@ -99,9 +99,7 @@ export function fhirValidatorUrlFactory(configService: ConfigService) {
     // Load config before any other providers that depend on it
     {
       provide: APP_INITIALIZER,
-      useFactory: (configService: ConfigService) => {
-        return () => firstValueFrom(configService.loadConfig());
-      },
+      useFactory: configFactory,
       deps: [ConfigService],
       multi: true
     },
