@@ -1,10 +1,11 @@
-import {Component, computed, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, computed, Inject, OnInit, signal, ViewChild, QueryList, ViewChildren} from '@angular/core';
 import {MatAccordion} from "@angular/material/expansion";
 import {LoggerService, LogLine} from "ngx-hisb-logger";
 import {UtilsService} from "../../../../service/utils.service";
 import {openConfirmationDialog} from "ngx-hisb-common-ui";
 import {MatDialog} from "@angular/material/dialog";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
+import {HttpConnectionComponent} from "./http-connection/http-connection.component";
 
 
 export interface Stage {
@@ -21,6 +22,7 @@ export interface Stage {
 
 export class OnboardingComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
+  @ViewChildren(HttpConnectionComponent) httpConnectionComponents: QueryList<HttpConnectionComponent>;
   protected readonly loggerData = computed(() => this.log.logs());
   stageList: Stage[] =[];
 
@@ -31,7 +33,7 @@ export class OnboardingComponent implements OnInit {
     private dialog: MatDialog,
   ){}
   MAX_FILE_SIZE = 10000;
-  formValueAcc: any[] = [];
+  protected readonly formValueAcc = signal<any[]>([]);
 
 
   clearLog(){
@@ -49,7 +51,10 @@ export class OnboardingComponent implements OnInit {
 
   removeComponent(index: number) {
     this.stageList.splice(index, 1);
-    this.formValueAcc.splice(index, 1);
+    this.formValueAcc.update(arr => {
+      arr.splice(index, 1);
+      return [...arr];
+    });
   }
 
   getStageIndex(i: number) {
@@ -115,8 +120,9 @@ export class OnboardingComponent implements OnInit {
       fileReader.readAsText(file, "UTF-8");
 
       fileReader.onload = () => {
-        this.formValueAcc = JSON.parse(fileReader.result as string)
-        this.parseFormData(this.formValueAcc);
+        const data = JSON.parse(fileReader.result as string);
+        this.formValueAcc.set(data);
+        this.parseFormData(data);
       }
 
       fileReader.onerror = (error) => {
@@ -135,20 +141,34 @@ export class OnboardingComponent implements OnInit {
   private parseFormData(formDataList: any[]) {
     //clear the current stage list
     this.stageList = [];
-    //populate the stage list with blank elements
-    formDataList.forEach(formElement => this.addStage());
 
-    //add the form data to each of the elements (fill each stage with data)
-    formDataList.forEach((formElement, index) => this.stageList[index].formData = formElement);
+    //populate the stage list with data (create new stage objects with formData)
+    formDataList.forEach(formElement => {
+      this.stageList.push({
+        expanded: true,
+        formData: formElement
+      });
+    });
 
+    // Manually trigger form updates after view is ready
+    setTimeout(() => {
+      this.httpConnectionComponents?.forEach((component, index) => {
+        if (this.stageList[index]?.formData) {
+          component.fillFormFromJsonData(this.stageList[index].formData);
+        }
+      });
+    }, 0);
   }
 
   onFormValueChange(event: any, index: number) {
-    if(this.formValueAcc?.[index]){
-      this.formValueAcc[index] = event.formValue;
-    }
-    else {
-      this.formValueAcc.push(event.formValue);
-    }
+    this.formValueAcc.update(arr => {
+      if(arr[index]){
+        arr[index] = event.formValue;
+      }
+      else {
+        arr.push(event.formValue);
+      }
+      return [...arr];
+    });
   }
 }

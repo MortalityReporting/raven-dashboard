@@ -1,12 +1,9 @@
 import {
   Component,
-  EventEmitter,
   Inject,
-  Input,
-  OnChanges,
+  input,
   OnInit,
-  Output,
-  SimpleChanges,
+  output,
   ViewChild,
   signal
 } from '@angular/core';
@@ -36,10 +33,10 @@ import {ModuleHeaderConfig} from "../../../../../providers/module-header-config"
     styleUrls: ['./http-connection.component.scss'],
     standalone: false
 })
-export class HttpConnectionComponent implements OnInit, OnChanges{
+export class HttpConnectionComponent implements OnInit {
 
-  @Input() stage: any;
-  @Output() formValueChangeEvent = new EventEmitter<any>()
+  stage = input.required<any>();
+  formValueChangeEvent = output<any>();
 
   @ViewChild('form') form: NgForm;
   readonly ConnectionTypeOptionsArray = Object.values(ConnectionTypeOptions);
@@ -58,14 +55,6 @@ export class HttpConnectionComponent implements OnInit, OnChanges{
   protected readonly loginErrorResponse = signal<any>(null);
   isAdvancedSettingsVisible: boolean = false;
 
-  constructor(
-    @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
-    private fb: UntypedFormBuilder,
-    private log: LoggerService,
-    public onboardingService: OnboardingService,
-    private utilsService: UtilsService
-  ) {
-  }
 
   /**
    * Initialize the form int it's most for basic auth which is the simples from of authentication.
@@ -78,7 +67,12 @@ export class HttpConnectionComponent implements OnInit, OnChanges{
     this.onboardingForm.addControl('user', new FormControl('', Validators.required));
     this.onboardingForm.addControl('password', new FormControl('', Validators.required));
 
-    // Update the parent with the new form values
+    // Set up form value change subscription
+    this.onboardingForm.valueChanges
+      .subscribe(formValue=>
+        this.formValueChangeEvent.emit({formValue: formValue}));
+
+    // Update the parent with the initial form values
     this.formValueChangeEvent.emit({formValue: this.onboardingForm.value});
   }
 
@@ -102,11 +96,23 @@ export class HttpConnectionComponent implements OnInit, OnChanges{
     }
   }
 
+  constructor(
+    @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,
+    private fb: UntypedFormBuilder,
+    private log: LoggerService,
+    public onboardingService: OnboardingService,
+    private utilsService: UtilsService
+  ) {}
+
   ngOnInit(): void {
+    // Initialize the form with default values
     this.initOnboardingForm();
-    this.onboardingForm.valueChanges
-      .subscribe(formValue=>
-        this.formValueChangeEvent.emit({formValue: formValue}));
+
+    // Check if we have initial data to load (for when component is first created with data)
+    const stageData = this.stage();
+    if (stageData?.formData) {
+      this.fillFormFromJsonData(stageData.formData);
+    }
   }
 
   /**
@@ -301,21 +307,34 @@ export class HttpConnectionComponent implements OnInit, OnChanges{
    */
   fillFormFromJsonData(jsonData) {
     try {
-      this.onboardingForm = new FormGroup({});
+      // Clear existing form controls except the base ones
+      Object.keys(this.onboardingForm.controls).forEach(key => {
+        if (!['connectionType', 'requestType', 'endpointUrl'].includes(key)) {
+          this.onboardingForm.removeControl(key);
+        }
+      });
 
-      this.onboardingForm.addControl('connectionType', new FormControl(
-        ConnectionTypeOptions[ConnectionType?.[jsonData?.connectionType?.value]], Validators.required));
-      this.onboardingForm.addControl('endpointUrl', new FormControl(jsonData.endpointUrl, Validators.required));
-      this.onboardingForm.addControl('requestType', new FormControl(jsonData.requestType, Validators.required));
+      // Update base controls
+      this.onboardingForm.patchValue({
+        connectionType: ConnectionTypeOptions[ConnectionType?.[jsonData?.connectionType?.value]],
+        endpointUrl: jsonData.endpointUrl,
+        requestType: jsonData.requestType
+      });
 
+      // Add authentication controls
       if ('user' in jsonData) {
         this.onboardingForm.addControl('user', new FormControl(jsonData.user, Validators.required));
       }
 
       if ('password' in jsonData) {
-        this.onboardingForm.addControl('password', new FormControl(jsonData.user, Validators.required));
+        this.onboardingForm.addControl('password', new FormControl(jsonData.password, Validators.required));
       }
 
+      if ('token' in jsonData) {
+        this.onboardingForm.addControl('token', new FormControl(jsonData.token));
+      }
+
+      // Add request body controls
       if ('requestBodyOptions' in jsonData) {
         this.onboardingForm.addControl('requestBodyOptions', new FormControl(jsonData.requestBodyOptions));
       }
@@ -324,15 +343,17 @@ export class HttpConnectionComponent implements OnInit, OnChanges{
         this.onboardingForm.addControl('requestBody', new FormControl(jsonData.requestBody));
       }
 
-      if ('token' in jsonData) {
-        this.onboardingForm.addControl('token', new FormControl(jsonData.token));
-      }
-
-      if ("customizeHeaders" in jsonData) {
+      // Add advanced settings
+      if ("customizeHeaders" in jsonData || "addQueryParams" in jsonData) {
         this.isAdvancedSettingsVisible = true;
 
-        this.onboardingForm.addControl('customizeHeaders', new FormControl(jsonData.customizeHeaders));
-        this.onboardingForm.addControl('addQueryParams', new FormControl(jsonData.addQueryParams));
+        if ("customizeHeaders" in jsonData) {
+          this.onboardingForm.addControl('customizeHeaders', new FormControl(jsonData.customizeHeaders));
+        }
+
+        if ("addQueryParams" in jsonData) {
+          this.onboardingForm.addControl('addQueryParams', new FormControl(jsonData.addQueryParams));
+        }
 
         if (jsonData.headerParameters) {
           this.onboardingForm.addControl('headerParameters', this.fb.array([]));
@@ -355,10 +376,9 @@ export class HttpConnectionComponent implements OnInit, OnChanges{
           this.addUrlEncodedParam(param.key, param.value);
         });
       }
+
+      // Emit the updated form value
       this.formValueChangeEvent.emit({formValue: this.onboardingForm.value});
-      this.onboardingForm.valueChanges
-        .subscribe(formValue =>
-          this.formValueChangeEvent.emit({formValue: formValue}));
     }
     catch(e){
       console.error(e);
@@ -367,11 +387,4 @@ export class HttpConnectionComponent implements OnInit, OnChanges{
     }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if(changes['stage']?.currentValue?.formData) {
-      setTimeout(() => {  // without setTimeout angular fails to rerender the form on the DOM.
-        this.fillFormFromJsonData(changes['stage']?.currentValue?.formData)
-      });
-    }
-  }
 }

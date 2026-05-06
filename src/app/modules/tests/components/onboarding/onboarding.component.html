@@ -36,7 +36,7 @@
       multi
       role="region"
       [attr.aria-label]="'Network connection stages'">
-      @for (stage of stageList; track stage; let i = $index) {
+      @for (stage of stageList; track i; let i = $index) {
         <mat-expansion-panel
           [expanded]="stage.expanded"
           [attr.aria-label]="'Stage ' + getStageIndex(i)">
