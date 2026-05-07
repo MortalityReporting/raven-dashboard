@@ -1,6 +1,6 @@
 import {Component, computed, Inject, OnInit, signal, ViewChild, QueryList, ViewChildren} from '@angular/core';
 import {MatAccordion} from "@angular/material/expansion";
-import {LoggerService} from "../../../console-logger/services/logger.service";
+import {LoggerService} from "../../../../components/widgets/console-logger/services/logger.service";
 import {UtilsService} from "../../../../service/utils.service";
 import {MatDialog} from "@angular/material/dialog";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";

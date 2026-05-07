@@ -87,7 +87,7 @@ import {
 } from "./components/toxicology-record-submission/simple-json-viewer/simple-json-viewer.component";
 import {MatProgressBar} from "@angular/material/progress-bar";
 import {ConfigService} from "../../config/config.service";
-import {ConsoleLoggerComponent} from "../console-logger/console-logger/console-logger.component";
+import {ConsoleLoggerComponent} from "../../components/widgets/console-logger/console-logger/console-logger.component";
 
 @NgModule({
   declarations: [
