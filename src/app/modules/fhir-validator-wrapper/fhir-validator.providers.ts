@@ -22,7 +22,7 @@ export function provideFhirValidator(config: ModuleHeaderConfig, appConfig: any)
     {
       provide: 'serverBaseUrl',
       useFactory: (configService: ConfigService) => {
-        return configService.config?.fhirValidatorUrl || '';
+        return configService.getApiUrl('fhirValidatorUrl');
       },
       deps: [ConfigService]
     }

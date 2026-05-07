@@ -48,10 +48,6 @@ export const configFactory = (configService: ConfigService) => {
   return () => firstValueFrom(configService.loadConfig());
 };
 
-export function fhirValidatorUrlFactory(configService: ConfigService) {
-  return configService.config.fhirValidatorUrl;
-}
-
 // TODO: Setup configGetter here to be able to load the config data into the forRoot methods
 // export function configGetter(configService: ConfigService) {
 //   return new TranslateHttpLoader(httpClient);
@@ -132,11 +128,6 @@ export function fhirValidatorUrlFactory(configService: ConfigService) {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthHttpInterceptor,
       multi: true
-    },
-    {
-      provide: 'FHIR_VALIDATOR_BASE_URL',
-      useFactory: fhirValidatorUrlFactory,
-      deps: [ConfigService]
     },
   ],
   bootstrap: [AppComponent],
