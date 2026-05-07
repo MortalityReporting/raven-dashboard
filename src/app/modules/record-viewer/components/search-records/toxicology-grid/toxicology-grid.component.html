@@ -16,22 +16,22 @@
   </div>
 } @else {
 
-  <table mat-table [dataSource]="dataSource" matSort matSortDisableClear matSortActive="personId">
+  <table mat-table [dataSource]="dataSource">
 
     <ng-container matColumnDef="lastName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Decedent Name</th>
+      <th mat-header-cell *matHeaderCellDef> Decedent Name</th>
       <td mat-cell
           *matCellDef="let report"> {{ report.lastName | titlecase }}{{ report.firstName ? ', ' + report.firstName : '' }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="reportdate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Report Date</th>
+      <th mat-header-cell *matHeaderCellDef> Report Date</th>
       <td mat-cell *matCellDef="let report"> {{ report.reportdate | date: 'MM/dd/yyyy' }}</td>
     </ng-container>
 
     <ng-container matColumnDef="toxcasenumber">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      <th mat-header-cell *matHeaderCellDef>
         Toxicology Case Number<br>
       </th>
       <td mat-cell *matCellDef="let report">
@@ -40,7 +40,7 @@
     </ng-container>
 
     <ng-container matColumnDef="toxcasesystem">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      <th mat-header-cell *matHeaderCellDef>
         Toxicology Case System<br>
       </th>
       <td mat-cell *matCellDef="let report">
@@ -49,14 +49,14 @@
     </ng-container>
 
     <ng-container matColumnDef="mdicasenumber">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> MDI Case Number</th>
+      <th mat-header-cell *matHeaderCellDef> MDI Case Number</th>
       <td mat-cell *matCellDef="let report">
         {{ report.mdicasenumber }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="mdicasesystem">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      <th mat-header-cell *matHeaderCellDef>
         MDI Case System<br>
       </th>
       <td mat-cell *matCellDef="let report">

@@ -1,5 +1,4 @@
-import {Component, ElementRef, EventEmitter, Inject, OnInit, output, input, Output, signal, ViewChild, AfterViewInit} from '@angular/core';
-import {MatSort} from "@angular/material/sort";
+import {Component, ElementRef, EventEmitter, OnInit, output, input, Output, signal, ViewChild} from '@angular/core';
 import {forkJoin, map, mergeMap} from "rxjs";
 import {ToxicologyGridDto} from "../../../../../model/toxicology.grid.dto";
 import {MatTableDataSource} from "@angular/material/table";
@@ -19,13 +18,10 @@ export class ToxicologyGridComponent implements OnInit {
 
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['lastName', 'reportdate', 'toxcasenumber', 'toxcasesystem', 'mdicasenumber', 'mdicasesystem'];
-  toxGridDtoList: ToxicologyGridDto[];
   isLoading = signal(false);
   showSystems = false;
 
   appConfiguration: AppConfiguration = AppConfiguration.config;
-
-  @ViewChild(MatSort) sort: MatSort;
 
   @ViewChild('input') input: ElementRef;
 
@@ -58,9 +54,7 @@ export class ToxicologyGridComponent implements OnInit {
       )
     ).subscribe({
       next: (data) => {
-        this.toxGridDtoList = []; // Initialize data.
-        this.dataSource = new MatTableDataSource(data);
-        this.dataSource.sort = this.sort;
+        this.dataSource.data = data;
         this.isLoading.set(false);
       },
       error: (e) => {

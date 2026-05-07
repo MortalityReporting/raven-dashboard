@@ -4,7 +4,6 @@ import {ModuleHeaderConfig} from "../../../../../providers/module-header-config"
 import {AppConfiguration} from "../../../../../providers/app-configuration";
 import {Router} from "@angular/router";
 import {DcrDocumentHandlerService} from "../../../services/dcr-document-handler.service";
-import {MatSort} from "@angular/material/sort";
 import {DcrGridDTO} from "../../../models/dcr-record";
 
 @Component({
@@ -13,10 +12,9 @@ import {DcrGridDTO} from "../../../models/dcr-record";
   templateUrl: './dcr-grid.component.html',
   styleUrls: ['../../../record-viewer-styles.scss', '../search-records.component.scss'],
 })
-export class DcrGridComponent implements OnInit {
+export class DcrGridComponent implements OnInit{
   @Output() serverErrorEventEmitter = new EventEmitter();
   @ViewChild('input') input: ElementRef;
-  @ViewChild(MatSort) sort: MatSort;
 
   dataSource = new MatTableDataSource<DcrGridDTO>();
   //displayedColumns: string[] = ['name', 'gender', 'deathDate', 'funeralHomeName'];
@@ -57,8 +55,7 @@ export class DcrGridComponent implements OnInit {
     this.dcrDocumentHandlerService.getRecords().subscribe({
       next: data => {
         this.isLoading.set(false);
-        this.dataSource = new MatTableDataSource(data);
-        this.dataSource.sort = this.sort;
+        this.dataSource.data = data;
       },
       error: error => {
         this.isLoading.set(false);

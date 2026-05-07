@@ -6,14 +6,11 @@ import {
   Output,
   EventEmitter,
   AfterViewInit,
-  ChangeDetectorRef,
   signal
 } from '@angular/core';
-import {DecedentGridDTO} from "../../../../../model/decedent.grid.dto";
 import {DecedentService} from "../../../services/decedent.service";
 import {Router} from "@angular/router";
 import {DatePipe} from "@angular/common";
-import {BundleHelperService, FhirHelperService} from "../../../../fhir-util";
 import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
 import {MatTableDataSource} from "@angular/material/table";
 import {AppConfiguration} from "../../../../../providers/app-configuration";
@@ -43,7 +40,6 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
 
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['lastName', 'gender', 'tod', 'mannerOfDeath', 'caseNumber'];
-  decedentGridDtoList: DecedentGridDTO[];
   isLoading = signal(false);
   datePipe: DatePipe;
   mannerOfDeathList: {code: number, display: string}[] = [];
@@ -85,8 +81,6 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
     private decedentService: DecedentService,
     private router: Router,
-    private fhirHelperService: FhirHelperService,
-    private bundleHelperService: BundleHelperService,
     @Inject('config') public config: ModuleHeaderConfig,
     @Inject('appConfig') public appConfig: AppConfiguration,
     @Inject('fhirProfiles') public fhirProfiles: FHIRProfileConstants,
@@ -174,8 +168,7 @@ export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {
       .subscribe({
         next: (result) => {
           this.totalDataSize = result.totalCount;
-          this.decedentGridDtoList = result.dtos;
-          this.dataSource = new MatTableDataSource(this.decedentGridDtoList);
+          this.dataSource.data = result.dtos;
           this.setDataSourceFilters();
           this.isLoading.set(false)
         },
