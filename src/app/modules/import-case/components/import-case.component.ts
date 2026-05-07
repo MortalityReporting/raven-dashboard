@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FileTemplate} from "../models/file-template";
 import {FileTemplateService} from "../services/file-template.service";
 import {MatTabsModule} from "@angular/material/tabs";
@@ -9,7 +9,7 @@ import {MatRadioModule} from "@angular/material/radio";
 import {FormsModule} from "@angular/forms";
 import {MatDividerModule} from "@angular/material/divider";
 import {FileTemplateComponent} from "./file-template/file-template.component";
-import {NgFor} from "@angular/common";
+import {toSignal} from "@angular/core/rxjs-interop";
 
 @Component({
     selector: 'app-import-case',
@@ -27,20 +27,10 @@ import {NgFor} from "@angular/common";
     ]
 })
 
-export class ImportCaseComponent implements OnInit {
-
+export class ImportCaseComponent {
+  fileTemplateService = inject(FileTemplateService);
   inputOptions: string[] = ['MDI FHIR Bundle', 'Template Spreadsheet'];
   selectedInputOption: string = this.inputOptions[0];
-  fileTemplate: FileTemplate[] = [];
-
-  constructor(
-    private fileTemplateService: FileTemplateService
-  ) { }
-
-  ngOnInit(): void {
-    this.fileTemplateService.getFileTemplates().subscribe({
-      next: data => this.fileTemplate = data,
-    });
-  }
+  fileTemplate = toSignal<FileTemplate[], FileTemplate[]>(this.fileTemplateService.getFileTemplates(), { initialValue: [] });
 
 }

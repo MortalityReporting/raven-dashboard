@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit, signal} from '@angular/core';
 import {ImportCaseService} from "../../services/import-case.service";
 import {UtilsService} from "../../../../service/utils.service";
 
@@ -9,46 +9,47 @@ import {FileTemplate} from "../../models/file-template";
 import {FileTemplateService} from "../../services/file-template.service";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
-import {FileTemplateComponent} from "../file-template/file-template.component";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSelectModule} from "@angular/material/select";
 import {MatButtonModule} from "@angular/material/button";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MappingsComponent} from "../mappings/mappings.component";
-import {JsonPipe, NgClass, NgFor, NgIf} from "@angular/common";
+import {JsonPipe, NgClass} from "@angular/common";
 import {MatIconModule} from "@angular/material/icon";
 import {MatTabsModule} from "@angular/material/tabs";
+import {MatTooltip} from "@angular/material/tooltip";
 
 
 @Component({
     selector: 'app-import-case-connectathon-template',
     templateUrl: './import-case-connectathon-template.component.html',
     styleUrls: ['./import-case-connectathon-template.component.scss'],
-    imports: [
-        MatFormFieldModule,
-        MatSelectModule,
-        ReactiveFormsModule,
-        MatButtonModule,
-        MatProgressSpinnerModule,
-        MatTableModule,
-        MappingsComponent,
-        MatIconModule,
-        MatTabsModule,
-        JsonPipe,
-        NgClass
-    ]
+  imports: [
+    MatFormFieldModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    MatTableModule,
+    MappingsComponent,
+    MatIconModule,
+    MatTabsModule,
+    JsonPipe,
+    NgClass,
+    MatTooltip
+  ]
 })
 export class ImportCaseConnectathonTemplateComponent implements OnInit {
   @Input() fileTemplates: FileTemplate[] = []
 
-  isLoading: boolean = false;
+  isLoading = signal<boolean>(false);
   selectedCase: any;
   file: File = null;
   MAX_FILE_SIZE = 100000; // Max allowed file size is 100KB
   displayedColumns: string[] = ['name', 'status', 'state'];
   dataSource = new MatTableDataSource<any>();
-  isExportSuccessful: boolean = false;
-  errorsGenerated: boolean = false;
+  isExportSuccessful = signal<boolean>(false);
+  errorsGenerated = signal<boolean>(false);
   error: any;
 
   fileTemplate = new FormControl('', [Validators.required]);
@@ -90,8 +91,8 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
       return;
     }
     this.selectedCase = null;
-    this.isExportSuccessful = false;
-    this.errorsGenerated = false;
+    this.isExportSuccessful.set(false);
+    this.errorsGenerated.set(false);
   }
 
   clearUI() {
@@ -102,28 +103,28 @@ export class ImportCaseConnectathonTemplateComponent implements OnInit {
     if (this.importCaseForm.valid) {
       this.utilsService.closeNotification();
       if (this.file) {
-        this.isExportSuccessful = false;
-        this.errorsGenerated = false;
-        this.isLoading = true;
+        this.isExportSuccessful.set(false);
+        this.errorsGenerated.set(false);
+        this.isLoading.set(true);
         this.error = null;
         const apiParam = this.importCaseForm.controls['fileTemplate'].value.apiImportParameter;
         this.importCaseService.uploadFile(this.file, apiParam).subscribe({
           next: value => {
-            this.isLoading = false;
+            this.isLoading.set(false);
             this.dataSource = new MatTableDataSource(value);
             if (value?.length > 0) {
               this.selectedCase = value[0];
             } else {
               this.selectedCase = null;
             }
-            this.isExportSuccessful = true;
+            this.isExportSuccessful.set(true);
           },
           error: err => {
             console.error(err);
             this.error = err;
-            this.isLoading = false;
+            this.isLoading.set(false);
             this.utilsService.showErrorMessage("Error uploading file " + this.file?.name);
-            this.errorsGenerated = true;
+            this.errorsGenerated.set(true);
           }
         });
       }

@@ -1,9 +1,9 @@
-{{fileTemplate.description}}
-@for (templateContent of fileTemplate.templateContent; track templateContent) {
+{{fileTemplate().description}}
+@for (templateContent of fileTemplate().templateContent; track templateContent) {
   <div>
-    <a mat-flat-button [href]="templateContent.uri" target="_blank" class="buttons-class" (click)="onTemplateSelected(fileTemplate)">
+    <button mat-flat-button class="buttons-class" (click)="downloadFile(fileTemplate())">
       <mat-icon [style.background-color]="config.backgroundColor" [style.color]="'white'"> download </mat-icon>
       Download as {{ templateContent.fileExtension | uppercase}}
-    </a>
+    </button>
   </div>
 }

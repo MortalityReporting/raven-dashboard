@@ -19,7 +19,7 @@
       </div>
       <div class="row margin-top-md">
         <button mat-raised-button class="upload-btn"
-          (click)="clearUI(); fileUpload.click();" [disabled]=isLoading
+          (click)="clearUI(); fileUpload.click();" [disabled]="isLoading()"
           [style.background-color]="config.backgroundColor" [style.color]="'white'"
           >
           <mat-icon>upload_file</mat-icon>
@@ -54,7 +54,7 @@
         <div class="content-spacer"></div>
         <button mat-raised-button type=submit
           [style.background-color]="config.backgroundColor"
-          [style.color]="'white'" [disabled]="isLoading">
+          [style.color]="'white'" [disabled]="isLoading()">
           Submit
         </button>
       </form>
@@ -62,7 +62,7 @@
   </div>
 
 
-  @if (errorsGenerated) {
+  @if (errorsGenerated()) {
     <div class="error-container">
       <div> Error: {{ error?.error?.error }} Status: {{ error?.status }} </div>
       <div> Error Message: {{ error?.error?.message }} </div>
@@ -71,10 +71,10 @@
 
   <div class="padding-top-md">
     <h3>3. Review Test Case Mapping</h3>
-    @if (!isExportSuccessful || errorsGenerated) {
+    @if (!isExportSuccessful() || errorsGenerated()) {
       <div>Review available once spreadsheet is submitted.</div>
     }
-    @if (isExportSuccessful) {
+    @if (isExportSuccessful()) {
       <div class="wrapper">
         <div class="result-colum">
           <table mat-table [dataSource]="dataSource" style="width: 95%;" class="mat-elevation-z1">
@@ -126,7 +126,7 @@
       </div>
     }
   </div>
-  @if (isLoading) {
+  @if (isLoading()) {
     <div class="spinner-container">
       <mat-spinner [diameter]="70"></mat-spinner>
     </div>
