@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild, signal} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {FhirExplorerService} from "../../../fhir-explorer/services/fhir-explorer.service";
 import {UtilsService} from "../../../../service/utils.service";
@@ -16,8 +16,8 @@ import {DcrViewerContentComponent} from "./dcr-viewer-content/dcr-viewer-content
 export class DcrViewerComponent implements OnInit{
 
   @ViewChild(DcrViewerContentComponent) contentComponent: DcrViewerContentComponent;
-  dcrRecord: any;
-  isLoading: boolean = false;
+  dcrRecord = signal<any>(null);
+  isLoading = signal<boolean>(false);
   showFhirExplorerDrawer = false;
   showDrawer = [this.showFhirExplorerDrawer];
 
@@ -33,16 +33,16 @@ export class DcrViewerComponent implements OnInit{
 
   ngOnInit(): void {
     let recordId = this.route.snapshot.params['id'];
-    this.isLoading = true;
+    this.isLoading.set(true);
     this.dcrDocumentHandler.getById(recordId).subscribe({
       next: data => {
-        this.isLoading = false;
-        this.dcrRecord = data;
+        this.isLoading.set(false);
+        this.dcrRecord.set(data);
       },
       error: err => {
         console.error(err);
         this.utilsService.showErrorMessage("Server error loading records.");
-        this.isLoading = false;
+        this.isLoading.set(false);
       }
     });
   }

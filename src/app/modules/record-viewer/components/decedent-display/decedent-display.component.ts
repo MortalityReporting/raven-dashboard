@@ -1,7 +1,6 @@
-import {Component, Inject, Input} from '@angular/core';
+import {Component, Inject, input} from '@angular/core';
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {ThemeService} from "../../../../service/theme.service";
-
 
 @Component({
     selector: 'app-decedent-display',
@@ -10,8 +9,8 @@ import {ThemeService} from "../../../../service/theme.service";
     standalone: false
 })
 export class DecedentDisplayComponent {
-  @Input() decedentInformation: any;
-  @Input() type: string = "mdi-to-edrs";
+  decedentInformation = input<any>();
+  type = input<string>("mdi-to-edrs");
 
   color: any;
   textColor: string;
