@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { TrackingNumberVS } from "../../../service/mock-terminology/ValueSet-tracking-number-type";
 import { MdiCodesCS } from "../../../service/mock-terminology/CodeSystem-mdi-codes";
 
 @Injectable({
