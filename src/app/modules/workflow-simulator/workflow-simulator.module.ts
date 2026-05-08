@@ -7,7 +7,7 @@ import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import {TestsModule} from "../tests/tests.module";
 import {MatTabsModule} from "@angular/material/tabs";
-import {MatDivider} from "@angular/material/divider";
+import {MatDividerModule} from "@angular/material/divider";
 import {ConfigService} from "../../config/config.service";
 
 @NgModule({
@@ -21,7 +21,7 @@ import {ConfigService} from "../../config/config.service";
     MatCardModule,
     MatButtonModule,
     MatTabsModule,
-    MatDivider,
+    MatDividerModule,
   ]
 })
 export class WorkflowSimulatorModule {

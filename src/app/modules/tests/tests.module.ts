@@ -78,7 +78,6 @@ import { DcrFhirBundleReviewComponent } from './components/death-certificate-rev
 import { ExternalApiDataSubmission } from './components/external-api-data-submission/external-api-data-submission.component';
 import { ResponseViewerComponent } from './components/response-viewer/response-viewer.component';
 import { ToxicologyRecordSubmissionComponent } from './components/toxicology-record-submission/toxicology-record-submission.component';
-import {RecordViewerModule} from "../record-viewer/record-viewer.module";
 import {
   ToxRecordDetailsComponent
 } from "./components/toxicology-record-submission/tox-record-details/tox-record-details.component";
@@ -88,6 +87,7 @@ import {
 import {MatProgressBar} from "@angular/material/progress-bar";
 import {ConfigService} from "../../config/config.service";
 import {ConsoleLoggerComponent} from "../../components/widgets/console-logger/console-logger/console-logger.component";
+import {RecordViewerModule} from "../record-viewer/record-viewer.module";
 
 @NgModule({
   declarations: [
@@ -157,7 +157,6 @@ import {ConsoleLoggerComponent} from "../../components/widgets/console-logger/co
     MatTimepickerInput,
     MatTimepicker,
     MatTimepickerToggle,
-    RecordViewerModule,
     SimpleJsonViewerComponent,
     MatDateRangeInput,
     MatDateRangePicker,
@@ -165,6 +164,7 @@ import {ConsoleLoggerComponent} from "../../components/widgets/console-logger/co
     MatProgressBar,
     MatStartDate,
     ConsoleLoggerComponent,
+    RecordViewerModule,
   ],
 })
 export class TestsModule {

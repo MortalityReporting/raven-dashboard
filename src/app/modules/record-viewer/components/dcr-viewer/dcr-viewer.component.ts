@@ -6,11 +6,24 @@ import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {AppConfiguration} from "../../../../providers/app-configuration";
 import {DcrDocumentHandlerService} from "../../services/dcr-document-handler.service";
 import {DcrViewerContentComponent} from "./dcr-viewer-content/dcr-viewer-content.component";
+import {FhirExplorerModule} from "../../../fhir-explorer/fhir-explorer.module";
+import {MatIcon} from "@angular/material/icon";
+import {MatTooltip} from "@angular/material/tooltip";
+import {DecedentDisplayComponent} from "../decedent-display/decedent-display.component";
+import {RecordViewerModule} from "../../record-viewer.module";
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 @Component({
   selector: 'app-dcr-viewer',
-  standalone: false,
   templateUrl: './dcr-viewer.component.html',
+  imports: [
+    FhirExplorerModule,
+    MatIcon,
+    MatTooltip,
+    DecedentDisplayComponent,
+    RecordViewerModule,
+    MatProgressSpinner
+  ],
   styleUrl: './dcr-viewer.component.css'
 })
 export class DcrViewerComponent implements OnInit{

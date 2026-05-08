@@ -1,12 +1,15 @@
 import {Component, Inject, input} from '@angular/core';
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {ThemeService} from "../../../../service/theme.service";
+import {DatePipe} from "@angular/common";
 
 @Component({
-    selector: 'app-decedent-display',
-    templateUrl: './decedent-display.component.html',
-    styleUrls: ['./decedent-display.component.css'],
-    standalone: false
+  selector: 'app-decedent-display',
+  templateUrl: './decedent-display.component.html',
+  styleUrls: ['./decedent-display.component.css'],
+  imports: [
+    DatePipe
+  ]
 })
 export class DecedentDisplayComponent {
   decedentInformation = input<any>();
