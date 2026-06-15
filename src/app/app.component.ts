@@ -6,12 +6,17 @@ import {ConfigService} from "./config/config.service";
 import {Platform} from "@angular/cdk/platform";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {HeaderConfig} from "./components/common-header/header.config";
+import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
+import { HeaderComponent } from './components/common-header/header.component';
+import { UserHeaderComponent } from './features/user-management/components/user-header/user-header.component';
+import { ModuleHeaderComponent } from './components/module-header/module-header.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: [],
-    standalone: false
+    imports: [NavMenuComponent, HeaderComponent, UserHeaderComponent, ModuleHeaderComponent, RouterOutlet]
 })
 export class AppComponent implements OnInit {
   title: string;
@@ -21,17 +26,15 @@ export class AppComponent implements OnInit {
   contrastColor = AppConfiguration.config.contrastColor;
   headerConfig: HeaderConfig;
 
-  // TODO: remove extra code once confirmed working on live.
   constructor(
     private configService: ConfigService,
     private themeService: ThemeService,
     public platform: Platform,
     private _snackBar: MatSnackBar
-    ) {
-  }
+  ) {}
   ngOnInit(): void {
     this.title = "Raven";
-    this.version = this.configService.config.version;
+    this.version = this.configService.config?.version || 'unknown';
     document.title = this.title;
 
     this.themeService.setColor(this.color);

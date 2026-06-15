@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
-import {TestStatusCodes} from "../modules/testing-events";
-import {Test} from "../modules/tests";
+import {TestStatusCodes} from "../features/testing-events";
+import {Test} from "../features/tests";
 
 @Injectable()
 export class UiStringConstants {
