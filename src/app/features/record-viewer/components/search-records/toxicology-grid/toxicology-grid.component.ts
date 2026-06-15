@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, OnInit, output, input, Output, signal, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnInit, output, input, Output, signal, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {forkJoin, map, mergeMap} from "rxjs";
 import {ToxicologyGridDto} from "../../../../../model/toxicology.grid.dto";
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatNoDataRow } from "@angular/material/table";
@@ -15,6 +15,7 @@ import { NgClass, TitleCasePipe, DatePipe } from '@angular/common';
     selector: 'record-viewer-toxicology-grid',
     templateUrl: './toxicology-grid.component.html',
     styleUrls: ['../../../record-viewer-styles.scss', '../search-records.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatFormField, MatLabel, MatInput, MatButton, MatProgressSpinner, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatTooltip, NgClass, MatNoDataRow, TitleCasePipe, DatePipe]
 })
 export class ToxicologyGridComponent implements OnInit {

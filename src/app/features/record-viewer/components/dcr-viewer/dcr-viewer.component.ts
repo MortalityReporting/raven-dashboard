@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, ViewChild, signal} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild, signal, ChangeDetectionStrategy} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {FhirExplorerService} from "../../../fhir-explorer/services/fhir-explorer.service";
 import {UtilsService} from "../../../../service/utils.service";
@@ -28,6 +28,7 @@ import {DcrViewerNavMenuComponent} from "./dcr-viewer-nav-menu/dcr-viewer-nav-me
     DcrViewerContentComponent,
     MatProgressSpinner
 ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './dcr-viewer.component.css'
 })
 export class DcrViewerComponent implements OnInit{

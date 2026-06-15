@@ -1,4 +1,4 @@
-import {Component, effect, ElementRef, input, viewChild} from '@angular/core';
+import {Component, effect, ElementRef, input, viewChild, ChangeDetectionStrategy} from '@angular/core';
 import {LogLine} from "../model/log-line";
 import {DatePipe, NgClass} from "@angular/common";
 
@@ -9,6 +9,7 @@ import {DatePipe, NgClass} from "@angular/common";
     NgClass
   ],
   templateUrl: './console-logger.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './console-logger.component.css',
 })
 export class ConsoleLoggerComponent {

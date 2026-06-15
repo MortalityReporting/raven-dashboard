@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {AppConfiguration} from "../../../../providers/app-configuration";
 import {Router} from "@angular/router";
 import { MatCard, MatCardContent } from '@angular/material/card';
@@ -12,6 +12,7 @@ import { CommonErrorComponent } from '../../../../components/widgets/common-erro
     selector: 'record-viewer-search-records',
     templateUrl: './search-records.component.html',
     styleUrls: ['./search-records.component.scss', '../../record-viewer-styles.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatCard, MatCardContent, MatTabGroup, MatTab, DecedentRecordsGridComponent, ToxicologyGridComponent, DcrGridComponent, CommonErrorComponent]
 })
 export class SearchRecordsComponent implements OnInit, OnDestroy {

@@ -11,8 +11,8 @@
     <header class="viewer-container-header">
       <app-decedent-display
         appSetFhirExplorer
-        [resource]="dcrRecord()?.resource"
-        [decedentInformation]="dcrRecord()?.dcrSummary?.dcrHeader"
+        [resource]="$safeNavigationMigration(dcrRecord()?.resource)"
+        [decedentInformation]="$safeNavigationMigration(dcrRecord()?.dcrSummary?.dcrHeader)"
         [type]="'dcr'"
         role="banner"
         [attr.aria-label]="'Decedent information'">

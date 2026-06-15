@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, OnInit, Output, ChangeDetectionStrategy} from '@angular/core';
 import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {SearchEdrsService} from "../../../../services/search-edrs.service";
 import {UtilsService} from "../../../../../../service/utils.service";
@@ -26,6 +26,7 @@ import { JsonPipe } from '@angular/common';
     selector: 'app-search-parameters',
     templateUrl: './search-parameters.component.html',
     styleUrls: ['./search-parameters.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatSelect, MatOption, MatInput, MatIconButton, MatTooltip, MatIcon, MatButton, MatError, JsonPipe]
 })
 export class SearchParametersComponent implements OnInit {

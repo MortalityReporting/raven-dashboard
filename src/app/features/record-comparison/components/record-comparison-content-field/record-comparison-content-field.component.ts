@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import { MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from "@angular/material/expansion";
 import { MatIcon } from '@angular/material/icon';
 import { NgClass } from '@angular/common';
@@ -7,6 +7,7 @@ import { NgClass } from '@angular/common';
     selector: 'record-comparison-content-field',
     templateUrl: './record-comparison-content-field.component.html',
     styleUrls: ['./record-comparison-content-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatIcon, NgClass]
 })
 export class RecordComparisonContentFieldComponent implements OnInit, OnChanges{

@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Inject, OnInit, Output, signal, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Inject, OnInit, Output, signal, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatNoDataRow } from "@angular/material/table";
 import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
 import {AppConfiguration} from "../../../../../providers/app-configuration";
@@ -15,6 +15,7 @@ import { TitleCasePipe, DatePipe } from '@angular/common';
     selector: 'dcr-grid',
     templateUrl: './dcr-grid.component.html',
     styleUrls: ['../../../record-viewer-styles.scss', '../search-records.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         MatFormField,
         MatLabel,

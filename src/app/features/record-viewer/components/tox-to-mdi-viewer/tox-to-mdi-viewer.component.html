@@ -16,8 +16,8 @@
     <div class="viewer-container-header" role="banner">
       <app-decedent-display
         appSetFhirExplorer
-        [resource]="toxToMdiRecord?.messageBundle"
-        [decedentInformation]="toxToMdiRecord?.toxHeader"
+        [resource]="$safeNavigationMigration(toxToMdiRecord?.messageBundle)"
+        [decedentInformation]="$safeNavigationMigration(toxToMdiRecord?.toxHeader)"
         [type]="'tox'"
         [attr.aria-label]="'Decedent information'">
       </app-decedent-display>

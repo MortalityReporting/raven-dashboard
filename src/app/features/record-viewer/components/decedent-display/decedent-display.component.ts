@@ -1,4 +1,4 @@
-import {Component, Inject, input} from '@angular/core';
+import {Component, Inject, input, ChangeDetectionStrategy} from '@angular/core';
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {ThemeService} from "../../../../service/theme.service";
 import {DatePipe} from "@angular/common";
@@ -7,6 +7,7 @@ import {DatePipe} from "@angular/common";
   selector: 'app-decedent-display',
   templateUrl: './decedent-display.component.html',
   styleUrls: ['./decedent-display.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     DatePipe
   ]

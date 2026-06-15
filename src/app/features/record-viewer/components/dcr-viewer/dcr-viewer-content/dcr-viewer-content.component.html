@@ -49,7 +49,7 @@
       role="region"
       [attr.aria-labelledby]="'caseAdminInfo-title'">
       <app-dcr-content-case-admin-info
-        [caseAdminInfo]="dcrRecord?.dcrSummary?.caseAdminInfo">
+        [caseAdminInfo]="$safeNavigationMigration(dcrRecord?.dcrSummary?.caseAdminInfo)">
       </app-dcr-content-case-admin-info>
     </div>
   </mat-expansion-panel>
@@ -75,7 +75,7 @@
       role="region"
       [attr.aria-labelledby]="'demographics-title'">
       <app-dcr-content-demographics
-        [demographics]="dcrRecord?.dcrSummary?.demographics">
+        [demographics]="$safeNavigationMigration(dcrRecord?.dcrSummary?.demographics)">
       </app-dcr-content-demographics>
     </div>
   </mat-expansion-panel>
@@ -103,7 +103,7 @@
       [attr.aria-labelledby]="'deathInvestigation-title'">
       @if (dcrRecord?.dcrSummary?.deathInvestigation) {
         <app-dcr-content-death-investigation
-          [deathInvestigation]="dcrRecord?.dcrSummary?.deathInvestigation">
+          [deathInvestigation]="$safeNavigationMigration(dcrRecord?.dcrSummary?.deathInvestigation)">
         </app-dcr-content-death-investigation>
       } @else {
         <p>No death investigation information available.</p>
@@ -133,7 +133,7 @@
       [attr.aria-labelledby]="'cremationClearance-title'">
       @if (dcrRecord?.dcrSummary?.cremationClearanceInfo) {
         <app-dcr-content-cremation-clearance
-          [cremationClearanceInfo]="dcrRecord?.dcrSummary?.cremationClearanceInfo">
+          [cremationClearanceInfo]="$safeNavigationMigration(dcrRecord?.dcrSummary?.cremationClearanceInfo)">
         </app-dcr-content-cremation-clearance>
       } @else {
         <p>No cremation clearance information available.</p>
@@ -163,7 +163,7 @@
       [attr.aria-labelledby]="'signature-title'">
       @if (dcrRecord?.dcrSummary?.signatureBlock) {
         <app-dcr-viewer-signature
-          [signature]="dcrRecord?.dcrSummary?.signatureBlock">
+          [signature]="$safeNavigationMigration(dcrRecord?.dcrSummary?.signatureBlock)">
         </app-dcr-viewer-signature>
       } @else {
         <p>No signature information available.</p>

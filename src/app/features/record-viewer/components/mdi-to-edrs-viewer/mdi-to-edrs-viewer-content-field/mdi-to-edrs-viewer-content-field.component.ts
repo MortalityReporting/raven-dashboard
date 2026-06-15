@@ -1,8 +1,9 @@
-import {Component, input} from '@angular/core';
+import {Component, input, ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
     selector: 'record-viewer-mdi-to-edrs-viewer-content-field',
     templateUrl: './mdi-to-edrs-viewer-content-field.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['../mdi-to-edrs-viewer.component.scss', '../../../record-viewer-styles.scss']
 })
 export class MdiToEdrsViewerContentFieldComponent {

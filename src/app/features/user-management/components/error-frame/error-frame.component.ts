@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {HttpErrorResponse} from "@angular/common/http";
 import {MatSelectModule} from "@angular/material/select";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -9,6 +9,7 @@ import {MatIconModule} from "@angular/material/icon";
     selector: 'common-error-frame',
     templateUrl: './error-frame.component.html',
     styleUrls: ['./error-frame.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         MatSelectModule,
         FormsModule,

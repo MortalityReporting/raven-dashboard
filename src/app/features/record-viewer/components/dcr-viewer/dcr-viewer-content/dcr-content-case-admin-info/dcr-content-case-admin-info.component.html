@@ -12,17 +12,17 @@
       <div class="grid-col-1">
         <record-viewer-mdi-to-edrs-viewer-content-field
           [label]="'Name'"
-          [value]="caseAdminInfo()?.name"
+          [value]="$safeNavigationMigration(caseAdminInfo()?.name)"
           appSetFhirExplorer
-          [resource]="caseAdminInfo()?.resource"
+          [resource]="$safeNavigationMigration(caseAdminInfo()?.resource)"
         />
       </div>
       <div class="grid-col-1">
         <record-viewer-mdi-to-edrs-viewer-content-field
           [label]="'Email'"
-          [value]="caseAdminInfo()?.email"
+          [value]="$safeNavigationMigration(caseAdminInfo()?.email)"
           appSetFhirExplorer
-          [resource]="caseAdminInfo()?.resource"
+          [resource]="$safeNavigationMigration(caseAdminInfo()?.resource)"
         />
       </div>
     </div>

@@ -5,7 +5,8 @@ import {
   OnInit,
   output,
   ViewChild,
-  signal
+  signal,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { FormControl, FormGroup, NgForm, UntypedFormArray, UntypedFormBuilder, UntypedFormControl, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {BasicNameValueType} from "../../../../../model/basic-name-value-type";
@@ -34,6 +35,7 @@ import { AsyncPipe } from '@angular/common';
     selector: 'app-http-connection',
     templateUrl: './http-connection.component.html',
     styleUrls: ['./http-connection.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatCard, MatCardContent, MatCardTitle, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatSelect, MatOption, MatInput, MatError, MatRadioGroup, MatRadioButton, MatIconButton, MatTooltip, MatIcon, MatButton, MatCheckbox, MatDivider, HttpResponseResultsComponent, AsyncPipe]
 })
 export class HttpConnectionComponent implements OnInit {

@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from "@angular/core";
+import {Component, Inject, OnInit, ChangeDetectionStrategy} from "@angular/core";
 import { UntypedFormBuilder, UntypedFormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {DecedentSimpleInfo} from "../../../../../model/decedent-simple-info";
 import {ModuleHeaderConfig} from "../../../../../model/model-header-config";
@@ -17,6 +17,7 @@ import { MatStepperPrevious, MatStepperNext } from "@angular/material/stepper";
     selector: 'app-endpoint-configuration-step',
     templateUrl: './endpoint-configuration-step.component.html',
     styleUrls: ['./endpoint-configuration-step.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [DecedentBasicInfoComponent, FormsModule, ReactiveFormsModule, MatRadioGroup, MatRadioButton, MatFormField, MatLabel, MatSelect, MatOption, MatButton, MatInput, MatStepperPrevious, MatStepperNext]
 })
 export class EndpointConfigurationStepComponent implements OnInit {

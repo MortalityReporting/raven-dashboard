@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, Input, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import { MatSort, MatSortHeader } from "@angular/material/sort";
 import {Router} from "@angular/router";
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatNoDataRow } from "@angular/material/table";
@@ -9,6 +9,7 @@ import {AppConfiguration} from "../../../../../providers/app-configuration";
     selector: 'record-viewer-mdi-to-edrs-viewer-related-tox',
     templateUrl: './mdi-to-edrs-viewer-related-tox.component.html',
     styleUrls: ['../mdi-to-edrs-viewer.component.scss', '../../../record-viewer-styles.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatNoDataRow]
 })
 export class MdiToEdrsViewerRelatedToxComponent implements OnInit {

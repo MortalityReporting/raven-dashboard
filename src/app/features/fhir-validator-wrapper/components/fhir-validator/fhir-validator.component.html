@@ -96,7 +96,7 @@
 
   <!--File upload widget-->
   <input type="file" class="file-input" (click)="fileUpload.value=null"
-    [accept]="validationInputFormat()?.accepts?.toString()"
+    [accept]="$safeNavigationMigration(validationInputFormat()?.accepts?.toString())"
     (change)="onFileSelected($event)" #fileUpload
     aria-label="Select FHIR resource file to upload">
 

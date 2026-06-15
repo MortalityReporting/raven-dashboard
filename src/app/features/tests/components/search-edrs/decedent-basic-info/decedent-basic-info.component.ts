@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy} from '@angular/core';
 import {UiStringConstants} from "../../../../../providers/ui-string-constants";
 import { MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from '@angular/material/expansion';
 import { MatButton } from '@angular/material/button';
@@ -8,6 +8,7 @@ import { DatePipe } from '@angular/common';
     selector: 'app-decedent-basic-info',
     templateUrl: './decedent-basic-info.component.html',
     styleUrls: ['./decedent-basic-info.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatButton, DatePipe]
 })
 export class DecedentBasicInfoComponent implements OnInit {

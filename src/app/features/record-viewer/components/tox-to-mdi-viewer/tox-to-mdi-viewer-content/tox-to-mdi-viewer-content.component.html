@@ -38,7 +38,7 @@
           @if (toxToMdiRecord) {
             <record-viewer-tox-to-mdi-viewer-mdi-case
               [currentModule]="currentModule()"
-              [toxSummary]="toxToMdiRecord?.toxSummary">
+              [toxSummary]="$safeNavigationMigration(toxToMdiRecord?.toxSummary)">
             </record-viewer-tox-to-mdi-viewer-mdi-case>
           } @else {
             <p>No case information available.</p>
@@ -75,7 +75,7 @@
       role="region"
       [attr.aria-labelledby]="'demographics-title'">
       <record-viewer-tox-to-mdi-viewer-demographics
-        [demographics]="toxToMdiRecord?.toxSummary?.demographics">
+        [demographics]="$safeNavigationMigration(toxToMdiRecord?.toxSummary?.demographics)">
       </record-viewer-tox-to-mdi-viewer-demographics>
     </div>
   </mat-expansion-panel>
@@ -103,8 +103,8 @@
       [attr.aria-labelledby]="'performers-title'">
       @if (toxToMdiRecord?.toxSummary?.certifier) {
         <record-viewer-tox-to-mdi-viewer-certifier
-          [certifier]="toxToMdiRecord?.toxSummary?.certifier"
-          [toxSummary]="toxToMdiRecord?.toxSummary">
+          [certifier]="$safeNavigationMigration(toxToMdiRecord?.toxSummary?.certifier)"
+          [toxSummary]="$safeNavigationMigration(toxToMdiRecord?.toxSummary)">
         </record-viewer-tox-to-mdi-viewer-certifier>
       } @else {
         <p>No performer information available.</p>
@@ -134,7 +134,7 @@
       [attr.aria-labelledby]="'specimens-title'">
       @if (toxToMdiRecord?.toxSummary?.specimens) {
         <record-viewer-tox-to-mdi-viewer-grid-section
-          [data]="toxToMdiRecord?.toxSummary?.specimens"
+          [data]="$safeNavigationMigration(toxToMdiRecord?.toxSummary?.specimens)"
           [columns]="['type', 'site', 'identifier', 'collected', 'received', 'condition', 'container']">
         </record-viewer-tox-to-mdi-viewer-grid-section>
       } @else {
@@ -165,7 +165,7 @@
       [attr.aria-labelledby]="'results-title'">
       @if (toxToMdiRecord?.toxSummary?.results) {
         <record-viewer-tox-to-mdi-viewer-grid-section
-          [data]="toxToMdiRecord?.toxSummary?.results"
+          [data]="$safeNavigationMigration(toxToMdiRecord?.toxSummary?.results)"
           [columns]="['test', 'value', 'date', 'specimen']">
         </record-viewer-tox-to-mdi-viewer-grid-section>
       } @else {
@@ -196,7 +196,7 @@
       [attr.aria-labelledby]="'conclusion-title'"
       appSetFhirExplorer
       [profile]="fhirProfiles.ToxToMdi.Tox_Diagnostic_Report"
-      [bundle]="toxToMdiRecord?.messageBundle">
+      [bundle]="$safeNavigationMigration(toxToMdiRecord?.messageBundle)">
       @if (toxToMdiRecord?.toxSummary) {
         <label for="conclusion-textarea" class="visually-hidden">Toxicology conclusion</label>
         <textarea

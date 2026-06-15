@@ -30,7 +30,7 @@
   </div>
   <div class="grid-cell-span-2">
     @if (toxSummary?.performers) {
-      <record-viewer-tox-to-mdi-viewer-grid-section [data]="toxSummary?.performers" [columns]="['name']"></record-viewer-tox-to-mdi-viewer-grid-section>
+      <record-viewer-tox-to-mdi-viewer-grid-section [data]="$safeNavigationMigration(toxSummary?.performers)" [columns]="['name']"></record-viewer-tox-to-mdi-viewer-grid-section>
     }
   </div>
 

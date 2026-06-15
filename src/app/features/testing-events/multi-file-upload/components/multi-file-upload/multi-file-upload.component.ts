@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {MatButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
@@ -28,6 +28,7 @@ export interface MultiFileUploadDialogData {
     FileTypePipe,
   ],
   templateUrl: './multi-file-upload.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './multi-file-upload.component.scss'
 })
 export class MultiFileUploadComponent {

@@ -1,4 +1,4 @@
-import {Component, input} from '@angular/core';
+import {Component, input, ChangeDetectionStrategy} from '@angular/core';
 import {JsonPipe} from "@angular/common";
 
 @Component({
@@ -7,6 +7,7 @@ import {JsonPipe} from "@angular/common";
     JsonPipe
   ],
   templateUrl: './simple-json-viewer.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './simple-json-viewer.component.scss'
 })
 export class SimpleJsonViewerComponent {

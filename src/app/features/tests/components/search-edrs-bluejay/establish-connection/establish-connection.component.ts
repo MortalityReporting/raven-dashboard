@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnDestroy, OnInit, signal} from '@angular/core';
+import {Component, Inject, Input, OnDestroy, OnInit, signal, ChangeDetectionStrategy} from '@angular/core';
 import {SearchEdrsService} from "../../../services/search-edrs.service";
 import {DecedentSimpleInfo} from "../../../../../model/decedent-simple-info";
 import {ModuleHeaderConfig} from "../../../../../model/model-header-config";
@@ -18,6 +18,7 @@ import { MatError } from '@angular/material/input';
     selector: 'app-establish-connection',
     templateUrl: './establish-connection.component.html',
     styleUrl: './establish-connection.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [DecedentBasicInfoComponent, MatCard, MatCardContent, MatTabGroup, MatTab, MatTooltip, MatIcon, MatButton, MatIconButton, CdkCopyToClipboard, MatStepperPrevious, MatError]
 })
 export class EstablishConnectionComponent implements OnInit, OnDestroy {

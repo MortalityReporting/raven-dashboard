@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {UtilsService} from "../../../../../../service/utils.service";
 import {SearchEdrsService} from "../../../../services/search-edrs.service";
 import {Validators} from "@angular/forms";
@@ -19,6 +19,7 @@ import { DecedentBasicInfoComponent } from '../../decedent-basic-info/decedent-b
     selector: 'app-import-mdi-to-edrs-document',
     templateUrl: './import-mdi-to-edrs-document.component.html',
     styleUrls: ['./import-mdi-to-edrs-document.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatError, MatButton, MatIcon, DecedentBasicInfoComponent]
 })
 export class ImportMdiToEdrsDocumentComponent implements OnInit {

@@ -1,4 +1,4 @@
-import {Component, computed, Inject, OnInit, signal, ViewChild, QueryList, ViewChildren} from '@angular/core';
+import {Component, computed, Inject, OnInit, signal, ViewChild, QueryList, ViewChildren, ChangeDetectionStrategy} from '@angular/core';
 import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from "@angular/material/expansion";
 import {LoggerService} from "../../../../components/widgets/console-logger/services/logger.service";
 import {UtilsService} from "../../../../service/utils.service";
@@ -22,6 +22,7 @@ export interface Stage {
     selector: 'app-onboarding',
     templateUrl: './onboarding.component.html',
     styleUrls: ['./onboarding.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatButton, MatIcon, MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatMiniFabButton, MatTooltip, HttpConnectionComponent, MatCard, MatCardContent, MatCardTitle, ConsoleLoggerComponent]
 })
 export class OnboardingComponent implements OnInit {

@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Inject, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Inject, OnInit, Output, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {DecedentGridDTO} from "../../../../../../model/decedent.grid.dto";
 import {MatSort} from "@angular/material/sort";
 import {DecedentService} from "../../../../../record-viewer/services/decedent.service";
@@ -32,6 +32,7 @@ export type Gender = 'male' | 'female' | 'unknown';
     selector: 'app-mdi-to-edrs-grid',
     templateUrl: './mdi-to-edrs-grid.component.html',
     styleUrls: ['./mdi-to-edrs-grid.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatHint, MatSelect, MatOption, MatDateRangeInput, MatStartDate, MatEndDate, MatDatepickerToggle, MatSuffix, MatDateRangePicker, MatButton, MatProgressSpinner, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatTooltip, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, NgClass, MatNoDataRow, MatPaginator, TitleCasePipe, DatePipe]
 })
 // For now this class component is almost exactly the same as the one we use for the decedent-records-grid.

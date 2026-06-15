@@ -5,7 +5,8 @@ import {
   OnInit,
   output,
   signal,
-  ViewChild
+  ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { FormControl, FormGroup, UntypedFormControl, Validators, ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from "@angular/material/table";
@@ -44,6 +45,7 @@ export const FONT_WIDTH: number = 7.54;
             transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
         ]),
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatProgressSpinner, MatCardHeader, MatCardTitle, MatButton, MatIcon, MatRadioGroup, ReactiveFormsModule, FormsModule, MatRadioButton, MatFormField, MatLabel, MatSelect, MatOption, MatError, NgStyle, NgClass, MatButtonToggleGroup, MatButtonToggle, MatCheckbox, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatTooltip, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, TitleCasePipe]
 })
 

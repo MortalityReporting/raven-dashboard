@@ -1,4 +1,4 @@
-import {Component, inject, Inject, output, ViewChild} from '@angular/core';
+import {Component, inject, Inject, output, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormGroupDirective, ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
 import {Parameters} from "../../../../record-viewer/services/dcr-document-handler.service";
@@ -21,6 +21,7 @@ import { ResponseViewerComponent } from '../../response-viewer/response-viewer.c
     selector: 'app-dcr-form-submission',
     templateUrl: './dcr-form-submission.component.html',
     styleUrls: ['./dcr-form-submission.component.scss', '../death-certificate-review-submission.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         FormsModule,
         ReactiveFormsModule,

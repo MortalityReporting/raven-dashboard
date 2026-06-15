@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, OnInit, signal, ChangeDetectionStrategy} from '@angular/core';
 import {Observable, skipWhile} from "rxjs";
 import {UserProfile} from "../../models/user-profile";
 import {UserProfileManagerService} from "../../services/user-profile-manager.service";
@@ -14,6 +14,7 @@ import {AsyncPipe} from "@angular/common";
     selector: 'app-user-header',
     templateUrl: './user-header.component.html',
     styleUrls: ['./user-header.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         MatIconModule,
         MatButtonModule,

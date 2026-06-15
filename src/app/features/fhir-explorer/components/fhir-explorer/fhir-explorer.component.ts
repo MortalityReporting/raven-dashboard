@@ -1,4 +1,4 @@
-import {Component, OnInit, ElementRef} from '@angular/core';
+import {Component, OnInit, ElementRef, ChangeDetectionStrategy} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {UtilsService} from "../../../../service/utils.service";
 import {FhirExplorerService} from "../../services/fhir-explorer.service";
@@ -13,6 +13,7 @@ import { MatIcon } from '@angular/material/icon';
     selector: 'app-fhir-explorer',
     templateUrl: './fhir-explorer.component.html',
     styleUrls: ['./fhir-explorer.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatButtonToggleGroup, FormsModule, MatButtonToggle, MatTooltip, MatButton, CdkCopyToClipboard, MatIcon]
 })
 export class FhirExplorerComponent implements OnInit {

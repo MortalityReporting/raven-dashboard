@@ -1,4 +1,4 @@
-import {Component, Inject, ViewChild} from '@angular/core';
+import {Component, Inject, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {ImportCaseService} from "../../services/import-case.service";
 import {UtilsService} from "../../../../service/utils.service";
 import {FhirValidatorWrapperComponent} from "../../../fhir-validator-wrapper/components/fhir-validator-wrapper/fhir-validator-wrapper.component";
@@ -18,6 +18,7 @@ import {openConfirmationDialog} from "../../../../components/widgets/confirmatio
     selector: 'app-import-case-fhir-record',
     templateUrl: './import-case-fhir-record.component.html',
     styleUrls: ['./import-case-fhir-record.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     FhirValidatorComponent,
     MatButtonModule,

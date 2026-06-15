@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, signal, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, signal, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {AppConfiguration} from "../../../../providers/app-configuration";
@@ -18,6 +18,7 @@ import { FhirExplorerComponent } from '../../../fhir-explorer/components/fhir-ex
     selector: 'record-viewer-tox-to-mdi-viewer',
     templateUrl: './tox-to-mdi-viewer.component.html',
     styleUrls: ['./tox-to-mdi-viewer.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatProgressSpinner, DecedentDisplayComponent, SetFhirExplorerDirective, ToxToMdiViewerNavMenuComponent, ToxToMdiViewerContentComponent, MatIcon, MatTooltip, FhirExplorerComponent]
 })
 export class ToxToMdiViewerComponent implements OnInit {

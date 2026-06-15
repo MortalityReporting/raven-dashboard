@@ -1,4 +1,4 @@
-import {Component, computed, effect, input} from '@angular/core';
+import {Component, computed, effect, input, ChangeDetectionStrategy} from '@angular/core';
 import {Clipboard} from '@angular/cdk/clipboard';
 import { MatTabGroup, MatTab } from '@angular/material/tabs';
 import { NgClass, JsonPipe } from '@angular/common';
@@ -10,6 +10,7 @@ import { MatIcon } from '@angular/material/icon';
     selector: 'app-http-response-results',
     templateUrl: './http-response-results.component.html',
     styleUrls: ['./http-response-results.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatTabGroup, MatTab, NgClass, MatIconButton, MatTooltip, MatIcon, JsonPipe]
 })
 export class HttpResponseResultsComponent {

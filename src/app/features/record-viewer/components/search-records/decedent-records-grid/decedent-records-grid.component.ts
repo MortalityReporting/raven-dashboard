@@ -6,7 +6,8 @@ import {
   Output,
   EventEmitter,
   AfterViewInit,
-  signal
+  signal,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {DecedentService} from "../../../services/decedent.service";
 import {Router} from "@angular/router";
@@ -36,6 +37,7 @@ export type Gender = 'male' | 'female' | 'unknown';
     selector: 'record-viewer-decedent-records-grid',
     templateUrl: './decedent-records-grid.component.html',
     styleUrls: ['../../../record-viewer-styles.scss', '../search-records.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatHint, MatSelect, MatOption, MatDateRangeInput, MatStartDate, MatEndDate, MatDatepickerToggle, MatSuffix, MatDateRangePicker, MatButton, MatProgressSpinner, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatTooltip, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatNoDataRow, MatPaginator, TitleCasePipe, DatePipe]
 })
 export class DecedentRecordsGridComponent implements OnInit, AfterViewInit {

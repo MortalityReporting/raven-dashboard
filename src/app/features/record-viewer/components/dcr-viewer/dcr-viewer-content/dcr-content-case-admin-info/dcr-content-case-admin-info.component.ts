@@ -1,4 +1,4 @@
-import {Component, input} from '@angular/core';
+import {Component, input, ChangeDetectionStrategy} from '@angular/core';
 import {CaseAdminInfo} from "../../../../models/dcr-record";
 import { MdiToEdrsViewerContentFieldComponent } from '../../../mdi-to-edrs-viewer/mdi-to-edrs-viewer-content-field/mdi-to-edrs-viewer-content-field.component';
 import { SetFhirExplorerDirective } from '../../../../../fhir-explorer/directives/set-fhir-explorer.directive';
@@ -8,6 +8,7 @@ import { SetFhirExplorerDirective } from '../../../../../fhir-explorer/directive
     selector: 'app-dcr-content-case-admin-info',
     templateUrl: './dcr-content-case-admin-info.component.html',
     styleUrl: './dcr-content-case-admin-info.component.css',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MdiToEdrsViewerContentFieldComponent, SetFhirExplorerDirective]
 })
 export class DcrContentCaseAdminInfoComponent{

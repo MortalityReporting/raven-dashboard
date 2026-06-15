@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import {Router} from "@angular/router";
 import {AppConfiguration} from "../../providers/app-configuration";
 import {ConfigService} from "../../config/config.service";
@@ -12,6 +12,7 @@ import { MatButton } from '@angular/material/button';
     selector: 'app-landing',
     templateUrl: './landing.component.html',
     styleUrls: ['./landing.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatCard, MatCardContent, MatIcon, MatDivider, CardHoverDirective, MatCardHeader, MatCardTitle, MatButton]
 })
 export class LandingComponent{

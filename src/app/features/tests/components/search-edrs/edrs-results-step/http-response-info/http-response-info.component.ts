@@ -1,10 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ChangeDetectionStrategy} from '@angular/core';
 
 export const APPLICATION_JSON = `application-json`;
 
 @Component({
     selector: 'app-http-response-info',
     templateUrl: './http-response-info.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./http-response-info.component.scss']
 })
 export class HttpResponseInfoComponent implements OnInit {

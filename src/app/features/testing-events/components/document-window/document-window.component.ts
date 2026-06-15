@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogActions, MatDialogContent, MatDialogClose } from "@angular/material/dialog";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import { MatDivider } from '@angular/material/list';
@@ -10,6 +10,7 @@ import { CdkScrollable } from '@angular/cdk/scrolling';
     selector: 'app-document-window',
     templateUrl: './document-window.component.html',
     styleUrls: ['./document-window.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatDialogTitle, MatDivider, MatDialogActions, MatButton, MatIcon, CdkScrollable, MatDialogContent, MatDialogClose]
 })
 export class DocumentWindowComponent {

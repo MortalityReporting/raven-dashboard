@@ -1,4 +1,4 @@
-import {Component, input} from '@angular/core';
+import {Component, input, ChangeDetectionStrategy} from '@angular/core';
 import { MatTabGroup, MatTab } from '@angular/material/tabs';
 import { ToxToMdiViewerContentComponent } from '../../../../record-viewer/components/tox-to-mdi-viewer/tox-to-mdi-viewer-content/tox-to-mdi-viewer-content.component';
 import { SimpleJsonViewerComponent } from '../simple-json-viewer/simple-json-viewer.component';
@@ -7,6 +7,7 @@ import { SimpleJsonViewerComponent } from '../simple-json-viewer/simple-json-vie
     selector: 'tests-tox-record-details',
     templateUrl: './tox-record-details.component.html',
     styleUrl: './tox-record-details.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatTabGroup, MatTab, ToxToMdiViewerContentComponent, SimpleJsonViewerComponent]
 })
 export class ToxRecordDetailsComponent {

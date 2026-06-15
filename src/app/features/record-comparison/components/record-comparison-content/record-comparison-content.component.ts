@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from "@angular/material/expansion";
 import { USCorePatientDiff } from '../../models/us-core-patient.diff';
 import { CompositionMdiToEdrsDiff } from '../../models/composition-mdi-to-edrs.diff';
@@ -32,6 +32,7 @@ import { RecordComparisonContentFieldComponent } from '../record-comparison-cont
     selector: 'record-comparison-content',
     templateUrl: './record-comparison-content.component.html',
     styleUrls: ['./record-comparison-content.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatButton, MatFormField, MatSelect, MatOption, MatCard, MatCardSubtitle, MatCardContent, MatDivider, MatIcon, MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, RecordComparisonContentFieldComponent]
 })
 export class RecordComparisonContentComponent implements OnInit {

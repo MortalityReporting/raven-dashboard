@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output, ChangeDetectionStrategy} from '@angular/core';
 import {Registration} from "../../models/registration";
 import {EventManagerService} from "../../services/event-manager.service";
 import {EventModule} from "../../models/event-module";
@@ -16,6 +16,7 @@ import { MatIcon } from '@angular/material/icon';
     selector: 'testing-event-registered-module',
     templateUrl: './registered-module.component.html',
     styleUrls: ['./registered-module.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatButton, MatIcon]
 })
 //TODO: Rename to RegistrationStatus

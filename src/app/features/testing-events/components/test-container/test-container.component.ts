@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, Output, ChangeDetectionStrategy} from '@angular/core';
 import {Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {EventManagerService} from "../../services/event-manager.service";
@@ -27,6 +27,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
     selector: 'testing-event-test-container',
     templateUrl: './test-container.component.html',
     styleUrls: ['../testing-event.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [OnboardingComponent, SearchEdrsComponent, UpdateEdrsComponent, ValidationComponent, WorkflowIgDevelopmentComponent, GenericFileSubmissionComponent, MatButton, MatIcon, MatProgressSpinner]
 })
 export class TestContainerComponent {

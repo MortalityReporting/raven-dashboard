@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {MatSort, MatSortModule} from "@angular/material/sort";
 import {MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {EventManagerService, TestStatusDictionary} from "../../../testing-events"
@@ -13,6 +13,7 @@ import {NgIf} from "@angular/common";
     selector: 'app-event-table',
     templateUrl: './event-table.component.html',
     styleUrls: ['./event-table.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         MatTableModule,
         MatSortModule,

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import {UtilsService} from "../../../../service/utils.service";
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogContent, MatDialogActions } from "@angular/material/dialog";
 import { CdkScrollable } from '@angular/cdk/scrolling';
@@ -8,6 +8,7 @@ import { MatButton } from '@angular/material/button';
     selector: 'record-comparison-container-dialog',
     templateUrl: 'record-comparison-dialog.component.html',
     styleUrls: ['./record-comparison-dialog.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CdkScrollable, MatDialogContent, MatDialogActions, MatButton]
 })
 export class RecordComparisonDialogComponent {

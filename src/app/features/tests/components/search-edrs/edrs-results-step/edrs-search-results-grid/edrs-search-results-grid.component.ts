@@ -7,7 +7,8 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-  ViewChild
+  ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
   FHIRProfileConstants,
@@ -26,6 +27,7 @@ import { JsonPipe } from '@angular/common';
     selector: 'app-edrs-search-results-grid',
     templateUrl: './edrs-search-results-grid.component.html',
     styleUrls: ['./edrs-search-results-grid.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatTabGroup, MatTab, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatNoDataRow, HttpRequestInfoComponent, HttpResponseInfoComponent, JsonPipe]
 })
 export class EdrsSearchResultsGridComponent implements OnInit, OnChanges {

@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit, signal} from '@angular/core';
+import {Component, Inject, Input, OnInit, signal, ChangeDetectionStrategy} from '@angular/core';
 import {ImportCaseService} from "../../services/import-case.service";
 import {UtilsService} from "../../../../service/utils.service";
 
@@ -24,6 +24,7 @@ import {MatTooltip} from "@angular/material/tooltip";
     selector: 'app-import-case-connectathon-template',
     templateUrl: './import-case-connectathon-template.component.html',
     styleUrls: ['./import-case-connectathon-template.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     MatFormFieldModule,
     MatSelectModule,

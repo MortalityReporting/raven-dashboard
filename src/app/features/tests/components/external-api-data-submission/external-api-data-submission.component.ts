@@ -1,4 +1,4 @@
-import {Component, Inject, inject, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, inject, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormGroupDirective, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {UtilsService} from "../../../../service/utils.service";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
@@ -13,6 +13,7 @@ import { ResponseViewerComponent } from '../response-viewer/response-viewer.comp
     selector: 'app-external-api-data-submission',
     templateUrl: './external-api-data-submission.component.html',
     styleUrls: ['./external-api-data-submission.component.scss', '../death-certificate-review-submission/death-certificate-review-submission.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatError, MatIconButton, MatIcon, MatButton, MatCard, MatCardHeader, MatCardContent, ResponseViewerComponent]
 })
 export class ExternalApiDataSubmission implements OnInit{

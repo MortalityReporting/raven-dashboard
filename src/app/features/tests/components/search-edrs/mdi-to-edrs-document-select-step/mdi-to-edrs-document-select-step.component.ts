@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {UiStringConstants} from "../../../../../providers/ui-string-constants";
 import {SearchEdrsService} from "../../../services/search-edrs.service";
 import {MatStepper} from "@angular/material/stepper";
@@ -13,6 +13,7 @@ import { MatButton } from '@angular/material/button';
     selector: 'app-mdi-to-edrs-document-select-step',
     templateUrl: './mdi-to-edrs-document-select-step.component.html',
     styleUrls: ['./mdi-to-edrs-document-select-step.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatCard, MatCardContent, MatTabGroup, MatTab, MdiToEdrsGridComponent, ImportMdiToEdrsDocumentComponent, MatButton]
 })
 export class MdiToEdrsDocumentSelectStepComponent implements OnInit {

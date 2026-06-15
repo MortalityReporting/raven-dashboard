@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {FhirValidatorResultsExportService} from "../../../../service/fhir-validator-results-export.service";
 import {MatCardModule} from "@angular/material/card";
@@ -9,6 +9,7 @@ import {ValidatorInput} from "../../modal/validator-input-format";
     selector: 'app-fhir-validator',
     templateUrl: './fhir-validator-wrapper.component.html',
     styleUrls: ['./fhir-validator-wrapper.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     MatCardModule,
     FhirValidatorComponent,

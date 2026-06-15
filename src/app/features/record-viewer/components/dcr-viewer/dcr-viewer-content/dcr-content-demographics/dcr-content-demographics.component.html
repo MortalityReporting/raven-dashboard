@@ -8,17 +8,17 @@
       <div class="grid-col-1">
         <record-viewer-mdi-to-edrs-viewer-content-field
           [label]="'Date of Birth'"
-          [value]="demographics()?.birthDate"
+          [value]="$safeNavigationMigration(demographics()?.birthDate)"
           appSetFhirExplorer
-          [resource]="demographics()?.patientResource"
+          [resource]="$safeNavigationMigration(demographics()?.patientResource)"
         />
       </div>
       <div class="grid-col-1" aria-hidden="true">
         <record-viewer-mdi-to-edrs-viewer-content-field
           [label]="'Sex'"
-          [value]="demographics()?.gender"
+          [value]="$safeNavigationMigration(demographics()?.gender)"
           appSetFhirExplorer
-          [resource]="demographics()?.patientResource"
+          [resource]="$safeNavigationMigration(demographics()?.patientResource)"
         />
       </div>
     </div>
@@ -27,17 +27,17 @@
       <div class="grid-col-1">
         <record-viewer-mdi-to-edrs-viewer-content-field
           [label]="'Race'"
-          [value]="demographics()?.race"
+          [value]="$safeNavigationMigration(demographics()?.race)"
           appSetFhirExplorer
-          [resource]="demographics()?.patientResource"
+          [resource]="$safeNavigationMigration(demographics()?.patientResource)"
         />
       </div>
       <div class="grid-col-1">
         <record-viewer-mdi-to-edrs-viewer-content-field
           [label]="'Ethnicity'"
-          [value]="demographics()?.ethnicity"
+          [value]="$safeNavigationMigration(demographics()?.ethnicity)"
           appSetFhirExplorer
-          [resource]="demographics()?.patientResource"
+          [resource]="$safeNavigationMigration(demographics()?.patientResource)"
         />
       </div>
     </div>

@@ -1,9 +1,10 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Output, ChangeDetectionStrategy} from '@angular/core';
 import {TestStatusCodes} from "../../../testing-events";
 
 @Component({
     selector: 'app-validation',
     templateUrl: './validation.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./validation.component.css']
 })
 export class ValidationComponent {

@@ -22,7 +22,7 @@
           }
           <div>
             <div class="result-label">Operation Outcome:</div>
-            <div class='operation-outcome-html' [innerHTML]="errorResponse?.error?.text?.div"></div>
+            <div class='operation-outcome-html' [innerHTML]="$safeNavigationMigration(errorResponse?.error?.text?.div)"></div>
           </div>
         </div>
       }

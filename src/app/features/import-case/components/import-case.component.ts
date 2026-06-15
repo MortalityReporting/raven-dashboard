@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {FileTemplate} from "../models/file-template";
 import {FileTemplateService} from "../services/file-template.service";
 import {MatTabsModule} from "@angular/material/tabs";
@@ -15,6 +15,7 @@ import {toSignal} from "@angular/core/rxjs-interop";
     selector: 'app-import-case',
     templateUrl: './import-case.component.html',
     styleUrls: ['./import-case.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         MatTabsModule,
         ImportCaseFhirRecordComponent,

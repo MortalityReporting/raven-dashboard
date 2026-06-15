@@ -108,49 +108,49 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <record-comparison-content-field
-              [state]="difference.mdiToEdrs?.extension?.style"
+              [state]="$safeNavigationMigration(difference.mdiToEdrs?.extension?.style)"
               [title]="'Tracking Numbers'"
               [resource]="'Composition MDI TO EDRS'"
-              [fhirPath]="difference.mdiToEdrs?.expected?.resourceType + '.extension'"
-              [expected]="difference.mdiToEdrs?.extension?.expected"
-              [difference]="difference.mdiToEdrs?.extension?.difference"
+              [fhirPath]="$safeNavigationMigration(difference.mdiToEdrs?.expected?.resourceType) + '.extension'"
+              [expected]="$safeNavigationMigration(difference.mdiToEdrs?.extension?.expected)"
+              [difference]="$safeNavigationMigration(difference.mdiToEdrs?.extension?.difference)"
               [expanded]="isAccordionExpanded"
               >
             </record-comparison-content-field>
             <record-comparison-content-field
-              [state]="difference.practitioner?.name?.style"
+              [state]="$safeNavigationMigration(difference.practitioner?.name?.style)"
               [title]="'Chief ME/C Name'"
               [resource]="'US Core Practitioner'"
-              [fhirPath]="difference.practitioner?.expected?.resourceType + '.name'"
-              [expected]="difference.practitioner?.name?.expected"
-              [difference]="difference.practitioner?.name?.difference"
+              [fhirPath]="$safeNavigationMigration(difference.practitioner?.expected?.resourceType) + '.name'"
+              [expected]="$safeNavigationMigration(difference.practitioner?.name?.expected)"
+              [difference]="$safeNavigationMigration(difference.practitioner?.name?.difference)"
               [expanded]="isAccordionExpanded"
               >
             </record-comparison-content-field>
             <record-comparison-content-field
-              [state]="difference.practitioner?.identifier?.style"
+              [state]="$safeNavigationMigration(difference.practitioner?.identifier?.style)"
               [title]="'Chief ME/C License'"
               [resource]="'US Core Practitioner'"
-              [fhirPath]="difference.practitioner?.expected?.resourceType + '.identifier'"
-              [expected]="difference.practitioner?.identifier?.expected"
-              [difference]="difference.practitioner?.identifier?.difference"
+              [fhirPath]="$safeNavigationMigration(difference.practitioner?.expected?.resourceType) + '.identifier'"
+              [expected]="$safeNavigationMigration(difference.practitioner?.identifier?.expected)"
+              [difference]="$safeNavigationMigration(difference.practitioner?.identifier?.difference)"
               [expanded]="isAccordionExpanded">
             </record-comparison-content-field>
             <record-comparison-content-field
-              [state]="difference.practitioner?.telecom?.style"
+              [state]="$safeNavigationMigration(difference.practitioner?.telecom?.style)"
               [title]="'Chief ME/C Telecom'"
               [resource]="'US Core Practitioner'"
-              [fhirPath]="difference.practitioner?.expected?.resourceType + '.telecom'"
-              [expected]="difference.practitioner?.telecom?.expected"
-              [difference]="difference.practitioner?.telecom?.difference"
+              [fhirPath]="$safeNavigationMigration(difference.practitioner?.expected?.resourceType) + '.telecom'"
+              [expected]="$safeNavigationMigration(difference.practitioner?.telecom?.expected)"
+              [difference]="$safeNavigationMigration(difference.practitioner?.telecom?.difference)"
               [expanded]="isAccordionExpanded">
             </record-comparison-content-field>
             <record-comparison-content-field
-              [state]="difference.practitioner?.address?.style"
+              [state]="$safeNavigationMigration(difference.practitioner?.address?.style)"
               [title]="'Chief ME/C Address'" [resource]="'US Core Practitioner'"
-              [fhirPath]="difference.practitioner?.expected?.resourceType+ '.address'"
-              [expected]="difference.practitioner?.address?.expected"
-              [difference]="difference.practitioner?.address?.difference"
+              [fhirPath]="$safeNavigationMigration(difference.practitioner?.expected?.resourceType)+ '.address'"
+              [expected]="$safeNavigationMigration(difference.practitioner?.address?.expected)"
+              [difference]="$safeNavigationMigration(difference.practitioner?.address?.difference)"
               [expanded]="isAccordionExpanded">
             </record-comparison-content-field>
           </mat-expansion-panel>
@@ -168,66 +168,66 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <record-comparison-content-field
-              [state]="difference.patient?.name?.style"
+              [state]="$safeNavigationMigration(difference.patient?.name?.style)"
               [title]="'Name'"
               [resource]="'US Core Patient'"
-              [fhirPath]="difference.patient?.expected?.resourceType + '.name'"
-              [expected]="difference.patient?.name?.expected"
-              [difference]="difference.patient?.name?.difference"
+              [fhirPath]="$safeNavigationMigration(difference.patient?.expected?.resourceType) + '.name'"
+              [expected]="$safeNavigationMigration(difference.patient?.name?.expected)"
+              [difference]="$safeNavigationMigration(difference.patient?.name?.difference)"
               [expanded]="isAccordionExpanded">
             </record-comparison-content-field>
             <record-comparison-content-field
-              [state]="difference.patient?.gender?.style"
+              [state]="$safeNavigationMigration(difference.patient?.gender?.style)"
               [title]="'Legal Sex at Death'"
               [resource]="'US Core Patient'"
-              [fhirPath]="difference.patient?.expected?.resourceType + '.gender'"
-              [expected]="difference.patient?.gender?.expected"
-              [difference]="difference.patient?.gender?.difference"
+              [fhirPath]="$safeNavigationMigration(difference.patient?.expected?.resourceType) + '.gender'"
+              [expected]="$safeNavigationMigration(difference.patient?.gender?.expected)"
+              [difference]="$safeNavigationMigration(difference.patient?.gender?.difference)"
               [expanded]="isAccordionExpanded">
             </record-comparison-content-field>
             <record-comparison-content-field
-              [state]="difference.patient?.identifier?.style"
+              [state]="$safeNavigationMigration(difference.patient?.identifier?.style)"
               [title]="'Social Security Number'"
               [resource]="'US Core Patient'"
-              [fhirPath]="difference.patient?.expected?.resourceType + '.identifier'"
-              [expected]="difference.patient?.identifier?.expected"
-              [difference]="difference.patient?.identifier?.difference"
+              [fhirPath]="$safeNavigationMigration(difference.patient?.expected?.resourceType) + '.identifier'"
+              [expected]="$safeNavigationMigration(difference.patient?.identifier?.expected)"
+              [difference]="$safeNavigationMigration(difference.patient?.identifier?.difference)"
               [expanded]="isAccordionExpanded">
             </record-comparison-content-field>
             <record-comparison-content-field
-              [state]="difference.patient?.birthDate?.style"
+              [state]="$safeNavigationMigration(difference.patient?.birthDate?.style)"
               [title]="'Date of Birth'"
               [resource]="'US Core Patient'"
-              [fhirPath]="difference.patient?.expected?.resourceType + '.birthDate'"
-              [expected]="difference.patient?.birthDate?.expected"
-              [difference]="difference.patient?.birthDate?.difference"
+              [fhirPath]="$safeNavigationMigration(difference.patient?.expected?.resourceType) + '.birthDate'"
+              [expected]="$safeNavigationMigration(difference.patient?.birthDate?.expected)"
+              [difference]="$safeNavigationMigration(difference.patient?.birthDate?.difference)"
               [expanded]="isAccordionExpanded">
             </record-comparison-content-field>
             <record-comparison-content-field
-              [state]="difference.patient?.race?.style"
+              [state]="$safeNavigationMigration(difference.patient?.race?.style)"
               [title]="'Race'"
               [resource]="'US Core Patient'"
-              [fhirPath]="difference.patient?.expected?.resourceType + '.valueString'"
-              [expected]="difference.patient?.race?.expected"
-              [difference]="difference.patient?.race?.difference"
+              [fhirPath]="$safeNavigationMigration(difference.patient?.expected?.resourceType) + '.valueString'"
+              [expected]="$safeNavigationMigration(difference.patient?.race?.expected)"
+              [difference]="$safeNavigationMigration(difference.patient?.race?.difference)"
               [expanded]="isAccordionExpanded">
             </record-comparison-content-field>
             <record-comparison-content-field
-              [state]="difference.patient?.ethnicity?.style"
+              [state]="$safeNavigationMigration(difference.patient?.ethnicity?.style)"
               [title]="'Ethnicity'"
               [resource]="'US Core Patient'"
-              [fhirPath]="difference.patient?.expected?.resourceType + '.valueString'"
-              [expected]="difference.patient?.ethnicity?.expected"
-              [difference]="difference.patient?.ethnicity?.difference"
+              [fhirPath]="$safeNavigationMigration(difference.patient?.expected?.resourceType) + '.valueString'"
+              [expected]="$safeNavigationMigration(difference.patient?.ethnicity?.expected)"
+              [difference]="$safeNavigationMigration(difference.patient?.ethnicity?.difference)"
               [expanded]="isAccordionExpanded">
             </record-comparison-content-field>
             <record-comparison-content-field
-              [state]="difference.patient?.address?.style"
+              [state]="$safeNavigationMigration(difference.patient?.address?.style)"
               [title]="'Residence'"
               [resource]="'US Core Patient'"
-              [fhirPath]="difference.patient?.expected?.resourceType + '.address'"
-              [expected]="difference.patient?.address?.expected"
-              [difference]="difference.patient?.address?.difference"
+              [fhirPath]="$safeNavigationMigration(difference.patient?.expected?.resourceType) + '.address'"
+              [expected]="$safeNavigationMigration(difference.patient?.address?.expected)"
+              [difference]="$safeNavigationMigration(difference.patient?.address?.difference)"
               [expanded]="isAccordionExpanded">
             </record-comparison-content-field>
           </mat-expansion-panel>
@@ -246,40 +246,40 @@
             </mat-expansion-panel-header>
             <!-- Location - Death -->
             <record-comparison-content-field
-              [state]="difference.locationDeath?.name?.style"
+              [state]="$safeNavigationMigration(difference.locationDeath?.name?.style)"
               [title]="fields.deathLocation.title"
               [resource]="fields.deathLocation.profile"
               [fhirPath]="fields.deathLocation.fhirPath"
-              [expected]="difference.locationDeath?.name?.expected"
-              [difference]="difference.locationDeath?.name?.difference"
+              [expected]="$safeNavigationMigration(difference.locationDeath?.name?.expected)"
+              [difference]="$safeNavigationMigration(difference.locationDeath?.name?.difference)"
               [expanded]="isAccordionExpanded">
             </record-comparison-content-field>
             <!-- Location - Injury -->
             <record-comparison-content-field
-              [state]="difference.locationInjury?.name?.style"
+              [state]="$safeNavigationMigration(difference.locationInjury?.name?.style)"
               [title]="fields.injuryLocation.title"
               [resource]="fields.injuryLocation.profile"
               [fhirPath]="fields.injuryLocation.fhirPath"
-              [expected]="difference.locationInjury?.name?.expected"
-              [difference]="difference.locationInjury?.name?.difference"
+              [expected]="$safeNavigationMigration(difference.locationInjury?.name?.expected)"
+              [difference]="$safeNavigationMigration(difference.locationInjury?.name?.difference)"
               [expanded]="isAccordionExpanded">
             </record-comparison-content-field>
             <record-comparison-content-field
-              [state]="difference.tobaccoUse?.valueCodeableConcept?.style"
+              [state]="$safeNavigationMigration(difference.tobaccoUse?.valueCodeableConcept?.style)"
               [title]="'Tobacco Use Contributed to Death'"
               [resource]="'Observation-tobacco-use'"
-              [fhirPath]="difference.tobaccoUse?.expected?.resourceType + '.valueCodeableConcept'"
-              [expected]="difference.tobaccoUse?.valueCodeableConcept?.expected"
-              [difference]="difference.tobaccoUse?.valueCodeableConcept?.difference"
+              [fhirPath]="$safeNavigationMigration(difference.tobaccoUse?.expected?.resourceType) + '.valueCodeableConcept'"
+              [expected]="$safeNavigationMigration(difference.tobaccoUse?.valueCodeableConcept?.expected)"
+              [difference]="$safeNavigationMigration(difference.tobaccoUse?.valueCodeableConcept?.difference)"
               [expanded]="isAccordionExpanded">
             </record-comparison-content-field>
             <record-comparison-content-field
-              [state]="difference.pregnancy?.valueCodeableConcept?.style"
+              [state]="$safeNavigationMigration(difference.pregnancy?.valueCodeableConcept?.style)"
               [title]="'Decedent Pregnancy Status'"
               [resource]="'Observation-decedent-pregnancy'"
-              [fhirPath]="difference.pregnancy?.expected?.resourceType + '.valueCodeableConcept'"
-              [expected]="difference.pregnancy?.valueCodeableConcept?.expected"
-              [difference]="difference.pregnancy?.valueCodeableConcept?.difference"
+              [fhirPath]="$safeNavigationMigration(difference.pregnancy?.expected?.resourceType) + '.valueCodeableConcept'"
+              [expected]="$safeNavigationMigration(difference.pregnancy?.valueCodeableConcept?.expected)"
+              [difference]="$safeNavigationMigration(difference.pregnancy?.valueCodeableConcept?.difference)"
               [expanded]="isAccordionExpanded">
             </record-comparison-content-field>
           </mat-expansion-panel>
@@ -298,30 +298,30 @@
             </mat-expansion-panel-header>
             <!-- Observation - Death Date -->
             <record-comparison-content-field
-              [state]="difference.deathDate?.valueDateTime?.style"
+              [state]="$safeNavigationMigration(difference.deathDate?.valueDateTime?.style)"
               [title]="fields.deathDateTime.title"
               [resource]="fields.deathDateTime.profile"
               [fhirPath]="fields.deathDateTime.fhirPath"
-              [expected]="difference.deathDate?.valueDateTime?.expected"
-              [difference]="difference.deathDate?.valueDateTime?.difference"
+              [expected]="$safeNavigationMigration(difference.deathDate?.valueDateTime?.expected)"
+              [difference]="$safeNavigationMigration(difference.deathDate?.valueDateTime?.difference)"
               [expanded]="isAccordionExpanded">
             </record-comparison-content-field>
             <record-comparison-content-field
-              [state]="difference.deathDate?.pronouncedDateTime?.style"
+              [state]="$safeNavigationMigration(difference.deathDate?.pronouncedDateTime?.style)"
               [title]="'Pronounced Date/Time'"
               [resource]="'Observation-death-date'"
-              [fhirPath]="difference.deathDate?.expected?.resourceType + '.valueDateTime'"
-              [expected]="difference.deathDate?.pronouncedDateTime?.expected"
-              [difference]="difference.deathDate?.pronouncedDateTime?.difference"
+              [fhirPath]="$safeNavigationMigration(difference.deathDate?.expected?.resourceType) + '.valueDateTime'"
+              [expected]="$safeNavigationMigration(difference.deathDate?.pronouncedDateTime?.expected)"
+              [difference]="$safeNavigationMigration(difference.deathDate?.pronouncedDateTime?.difference)"
               [expanded]="isAccordionExpanded">
             </record-comparison-content-field>
             <record-comparison-content-field
-              [state]="difference.deathDate?.method?.style"
+              [state]="$safeNavigationMigration(difference.deathDate?.method?.style)"
               [title]="'Establishment Approach'"
               [resource]="'Observation-death-date'"
-              [fhirPath]="difference.deathDate?.expected?.resourceType + '.method'"
-              [expected]="difference.deathDate?.method?.expected"
-              [difference]="difference.deathDate?.method?.difference"
+              [fhirPath]="$safeNavigationMigration(difference.deathDate?.expected?.resourceType) + '.method'"
+              [expected]="$safeNavigationMigration(difference.deathDate?.method?.expected)"
+              [difference]="$safeNavigationMigration(difference.deathDate?.method?.difference)"
               [expanded]="isAccordionExpanded">
             </record-comparison-content-field>
           </mat-expansion-panel>
@@ -341,86 +341,86 @@
             @for (causeOfDeath1 of difference.causeOfDeath1List; track causeOfDeath1; let i = $index) {
               <div>
                 <record-comparison-content-field
-                  [state]="causeOfDeath1?.valueCodeableConcept?.style"
+                  [state]="$safeNavigationMigration(causeOfDeath1?.valueCodeableConcept?.style)"
                   [title]="'Part 1 Immediate Cause Event ' + (i+1)"
                   [resource]="'Observation-cause-of-death-part1'"
-                  [fhirPath]="causeOfDeath1?.expected?.resourceType + '.valueCodeableConcept'"
-                  [expected]="causeOfDeath1?.valueCodeableConcept?.expected"
-                  [difference]="causeOfDeath1?.valueCodeableConcept?.difference"
+                  [fhirPath]="$safeNavigationMigration(causeOfDeath1?.expected?.resourceType) + '.valueCodeableConcept'"
+                  [expected]="$safeNavigationMigration(causeOfDeath1?.valueCodeableConcept?.expected)"
+                  [difference]="$safeNavigationMigration(causeOfDeath1?.valueCodeableConcept?.difference)"
                   [expanded]="isAccordionExpanded">
                 </record-comparison-content-field>
                 <record-comparison-content-field
-                  [state]="causeOfDeath1?.valueString?.style"
+                  [state]="$safeNavigationMigration(causeOfDeath1?.valueString?.style)"
                   [title]="'Part 1 Immediate Cause Interval ' + (i+1)"
                   [resource]="'Observation-cause-of-death-part1'"
-                  [fhirPath]="causeOfDeath1?.expected?.resourceType + '.component.valueString'"
-                  [expected]="causeOfDeath1?.valueString?.expected"
-                  [difference]="causeOfDeath1?.valueString?.difference"
+                  [fhirPath]="$safeNavigationMigration(causeOfDeath1?.expected?.resourceType) + '.component.valueString'"
+                  [expected]="$safeNavigationMigration(causeOfDeath1?.valueString?.expected)"
+                  [difference]="$safeNavigationMigration(causeOfDeath1?.valueString?.difference)"
                   [expanded]="isAccordionExpanded">
                 </record-comparison-content-field>
               </div>
             }
             <record-comparison-content-field
-              [state]="difference.causeOfDeath2?.valueCodeableConcept?.style"
+              [state]="$safeNavigationMigration(difference.causeOfDeath2?.valueCodeableConcept?.style)"
               [title]="'Part 2 Contributing Cause'"
               [resource]="'Observation-cause-of-death-part2'"
-              [fhirPath]="difference.causeOfDeath2?.expected?.resourceType + '.valueCodeableConcept'"
-              [expected]="difference.causeOfDeath2?.valueCodeableConcept?.expected"
-              [difference]="difference.causeOfDeath2?.valueCodeableConcept?.difference"
+              [fhirPath]="$safeNavigationMigration(difference.causeOfDeath2?.expected?.resourceType) + '.valueCodeableConcept'"
+              [expected]="$safeNavigationMigration(difference.causeOfDeath2?.valueCodeableConcept?.expected)"
+              [difference]="$safeNavigationMigration(difference.causeOfDeath2?.valueCodeableConcept?.difference)"
               [expanded]="isAccordionExpanded">
             </record-comparison-content-field>
             <record-comparison-content-field
-              [state]="difference.mannerOfDeath?.valueCodeableConcept?.style"
+              [state]="$safeNavigationMigration(difference.mannerOfDeath?.valueCodeableConcept?.style)"
               [title]="'Manner of Death'"
               [resource]="'Observation-manner-of-death'"
-              [fhirPath]="difference.mannerOfDeath?.expected?.resourceType + '.valueCodeableConcept'"
-              [expected]="difference.mannerOfDeath?.valueCodeableConcept?.expected"
-              [difference]="difference.mannerOfDeath?.valueCodeableConcept?.difference"
+              [fhirPath]="$safeNavigationMigration(difference.mannerOfDeath?.expected?.resourceType) + '.valueCodeableConcept'"
+              [expected]="$safeNavigationMigration(difference.mannerOfDeath?.valueCodeableConcept?.expected)"
+              [difference]="$safeNavigationMigration(difference.mannerOfDeath?.valueCodeableConcept?.difference)"
               [expanded]="isAccordionExpanded">
             </record-comparison-content-field>
             <record-comparison-content-field
-              [state]="difference.howDeathOccurred?.placeOfInjury?.style"
+              [state]="$safeNavigationMigration(difference.howDeathOccurred?.placeOfInjury?.style)"
               [title]="'Place of Injury'"
               [resource]="'Observation-how-death-injury-occurred'"
-              [fhirPath]="difference.howDeathOccurred?.expected?.resourceType + '.valueCodeableConcept'"
-              [expected]="difference.howDeathOccurred?.placeOfInjury?.expected"
-              [difference]="difference.howDeathOccurred?.placeOfInjury?.difference"
+              [fhirPath]="$safeNavigationMigration(difference.howDeathOccurred?.expected?.resourceType) + '.valueCodeableConcept'"
+              [expected]="$safeNavigationMigration(difference.howDeathOccurred?.placeOfInjury?.expected)"
+              [difference]="$safeNavigationMigration(difference.howDeathOccurred?.placeOfInjury?.difference)"
               [expanded]="isAccordionExpanded">
             </record-comparison-content-field>
             <record-comparison-content-field
-              [state]="difference.howDeathOccurred?.howDeathInjuryOccurred?.style"
+              [state]="$safeNavigationMigration(difference.howDeathOccurred?.howDeathInjuryOccurred?.style)"
               [title]="'How Injury Occurred'"
               [resource]="'Observation-how-death-injury-occurred'"
-              [fhirPath]="difference.howDeathOccurred?.expected?.resourceType + '.valueCodeableConcept'"
-              [expected]="difference.howDeathOccurred?.howDeathInjuryOccurred?.expected"
-              [difference]="difference.howDeathOccurred?.howDeathInjuryOccurred?.difference"
+              [fhirPath]="$safeNavigationMigration(difference.howDeathOccurred?.expected?.resourceType) + '.valueCodeableConcept'"
+              [expected]="$safeNavigationMigration(difference.howDeathOccurred?.howDeathInjuryOccurred?.expected)"
+              [difference]="$safeNavigationMigration(difference.howDeathOccurred?.howDeathInjuryOccurred?.difference)"
               [expanded]="isAccordionExpanded">
             </record-comparison-content-field>
             <record-comparison-content-field
-              [state]="difference.howDeathOccurred?.effectiveDateTime?.style"
+              [state]="$safeNavigationMigration(difference.howDeathOccurred?.effectiveDateTime?.style)"
               [title]="'Injury Date/Time'"
               [resource]="'Observation-how-death-injury-occurred'"
-              [fhirPath]="difference.howDeathOccurred?.expected?.resourceType + '.effectiveDateTime'"
-              [expected]="difference.howDeathOccurred?.effectiveDateTime?.expected"
-              [difference]="difference.howDeathOccurred?.effectiveDateTime?.difference"
+              [fhirPath]="$safeNavigationMigration(difference.howDeathOccurred?.expected?.resourceType) + '.effectiveDateTime'"
+              [expected]="$safeNavigationMigration(difference.howDeathOccurred?.effectiveDateTime?.expected)"
+              [difference]="$safeNavigationMigration(difference.howDeathOccurred?.effectiveDateTime?.difference)"
               [expanded]="isAccordionExpanded">
             </record-comparison-content-field>
             <record-comparison-content-field
-              [state]="difference.howDeathOccurred?.injuryOccurredAtWork?.style"
+              [state]="$safeNavigationMigration(difference.howDeathOccurred?.injuryOccurredAtWork?.style)"
               [title]="'Injury/Event Occurred at Work'"
               [resource]="'Observation-how-death-injury-occurred'"
-              [fhirPath]="difference.howDeathOccurred?.expected?.resourceType + '.valueCodeableConcept'"
-              [expected]="difference.howDeathOccurred?.injuryOccurredAtWork?.expected"
-              [difference]="difference.howDeathOccurred?.injuryOccurredAtWork?.difference"
+              [fhirPath]="$safeNavigationMigration(difference.howDeathOccurred?.expected?.resourceType) + '.valueCodeableConcept'"
+              [expected]="$safeNavigationMigration(difference.howDeathOccurred?.injuryOccurredAtWork?.expected)"
+              [difference]="$safeNavigationMigration(difference.howDeathOccurred?.injuryOccurredAtWork?.difference)"
               [expanded]="isAccordionExpanded">
             </record-comparison-content-field>
             <record-comparison-content-field
-              [state]="difference.howDeathOccurred?.transportationRole.style"
+              [state]="$safeNavigationMigration(difference.howDeathOccurred?.transportationRole.style)"
               [title]="'Transportation Role'"
               [resource]="'Observation-how-death-injury-occurred'"
-              [fhirPath]="difference.howDeathOccurred?.expected?.resourceType + '.valueCodeableConcept'"
-              [expected]="difference.howDeathOccurred?.transportationRole?.expected"
-              [difference]="difference.howDeathOccurred?.transportationRole?.difference"
+              [fhirPath]="$safeNavigationMigration(difference.howDeathOccurred?.expected?.resourceType) + '.valueCodeableConcept'"
+              [expected]="$safeNavigationMigration(difference.howDeathOccurred?.transportationRole?.expected)"
+              [difference]="$safeNavigationMigration(difference.howDeathOccurred?.transportationRole?.difference)"
               [expanded]="isAccordionExpanded">
             </record-comparison-content-field>
           </mat-expansion-panel>
@@ -440,22 +440,22 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <record-comparison-content-field
-              [state]="difference.autopsyPerformed?.valueCodeableConcept?.style"
+              [state]="$safeNavigationMigration(difference.autopsyPerformed?.valueCodeableConcept?.style)"
               [title]="'Results Available'"
               [resource]="'Observation-autopsy-performed-indicator'"
-              [fhirPath]="difference.autopsyPerformed?.expected?.resourceType + '.valueCodeableConcept'"
-              [expected]="difference.autopsyPerformed?.valueCodeableConcept?.expected"
-              [difference]="difference.autopsyPerformed?.valueCodeableConcept?.difference"
+              [fhirPath]="$safeNavigationMigration(difference.autopsyPerformed?.expected?.resourceType) + '.valueCodeableConcept'"
+              [expected]="$safeNavigationMigration(difference.autopsyPerformed?.valueCodeableConcept?.expected)"
+              [difference]="$safeNavigationMigration(difference.autopsyPerformed?.valueCodeableConcept?.difference)"
               [expanded]="isAccordionExpanded"
               >
             </record-comparison-content-field>
             <record-comparison-content-field
-              [state]="difference.autopsyPerformed?.componentValueCodeableConcept?.style"
+              [state]="$safeNavigationMigration(difference.autopsyPerformed?.componentValueCodeableConcept?.style)"
               [title]="'Autopsy Performed'"
               [resource]="'Observation-autopsy-performed-indicator'"
-              [fhirPath]="difference.autopsyPerformed?.expected?.resourceType + '.component'"
-              [expected]="difference.autopsyPerformed?.componentValueCodeableConcept?.expected"
-              [difference]="difference.autopsyPerformed?.componentValueCodeableConcept?.difference"
+              [fhirPath]="$safeNavigationMigration(difference.autopsyPerformed?.expected?.resourceType) + '.component'"
+              [expected]="$safeNavigationMigration(difference.autopsyPerformed?.componentValueCodeableConcept?.expected)"
+              [difference]="$safeNavigationMigration(difference.autopsyPerformed?.componentValueCodeableConcept?.difference)"
               [expanded]="isAccordionExpanded">
             </record-comparison-content-field>
           </mat-expansion-panel>

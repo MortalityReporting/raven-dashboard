@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {DecedentSimpleInfo} from "../../../../../model/decedent-simple-info";
 import {SearchEdrsService} from "../../../services/search-edrs.service";
 import {MatStepper} from "@angular/material/stepper";
@@ -18,6 +18,7 @@ import { EdrsRecordSummaryComponent } from './edrs-record-summary/edrs-record-su
     selector: 'app-edrs-results-step',
     templateUrl: './edrs-results-step.component.html',
     styleUrls: ['./edrs-results-step.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [DecedentBasicInfoComponent, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatButton, SearchParametersComponent, MatCard, EdrsSearchResultsGridComponent, EdrsRecordSummaryComponent]
 })
 

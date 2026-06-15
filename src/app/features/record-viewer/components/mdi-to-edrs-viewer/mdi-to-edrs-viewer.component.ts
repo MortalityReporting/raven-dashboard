@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit, signal, ViewChild} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, signal, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {MdiToEdrsDocumentHandlerService} from "../../services/mdi-to-edrs-document-handler.service";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
@@ -20,6 +20,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
     selector: 'record-viewer-mdi-to-edrs-viewer',
     templateUrl: './mdi-to-edrs-viewer.component.html',
     styleUrls: ['./mdi-to-edrs-viewer.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [DecedentDisplayComponent, SetFhirExplorerDirective, MdiToEdrsViewerNavMenuComponent, MdiToEdrsViewerContentComponent, MatIcon, MatTooltip, FhirExplorerComponent, MdiToEdrsViewerRelatedToxComponent, MatProgressSpinner]
 })
 export class MdiToEdrsViewerComponent implements OnInit, OnDestroy {

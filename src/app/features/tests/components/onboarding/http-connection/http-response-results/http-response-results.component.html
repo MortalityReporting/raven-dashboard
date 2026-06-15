@@ -33,7 +33,7 @@
         <div class="result-row">
           <div class="column column-20 result-label">{{ token.name }}</div>
           <div class="column column-10">
-            <button mat-icon-button color="primary" (click)="copyToClipboard(token?.value)"
+            <button mat-icon-button color="primary" (click)="copyToClipboard($safeNavigationMigration(token?.value))"
               matTooltip="Copy to Clipboard">
               <mat-icon>content_copy</mat-icon>
             </button>

@@ -6,18 +6,18 @@
           <mat-card-content>
             <mat-tab-group mat-stretch-tabs="false"
               [(selectedIndex)]="selectedTabIndex">
-              <mat-tab [label]="appConfig.workflowTitles?.['mdiToEdrs'] + 's'">
+              <mat-tab [label]="$safeNavigationMigration(appConfig.workflowTitles?.['mdiToEdrs']) + 's'">
                 <record-viewer-decedent-records-grid
                   (serverErrorEventEmitter)="onServerErrorDetected()">
                 </record-viewer-decedent-records-grid>
               </mat-tab>
-              <mat-tab [label]="appConfig.workflowTitles?.['toxToMdi'] + 's'">
+              <mat-tab [label]="$safeNavigationMigration(appConfig.workflowTitles?.['toxToMdi']) + 's'">
                 <record-viewer-toxicology-grid
                   (serverErrorEventEmitter)="onServerErrorDetected()"
                   (onToxRecordSelected)="onToxRecordSelected($event)"
                 ></record-viewer-toxicology-grid>
               </mat-tab>
-              <mat-tab [label]="appConfig.workflowTitles?.['dcr'] + 's'">
+              <mat-tab [label]="$safeNavigationMigration(appConfig.workflowTitles?.['dcr']) + 's'">
                 <dcr-grid
                   (serverErrorEventEmitter)="onServerErrorDetected()"
                 ></dcr-grid>

@@ -8,7 +8,7 @@
     <div class="details-box">
       <div>
         <span class="label" [style.color]="color">Date | Time of Death:</span>
-        <span class="value" [style.color]="textColor">{{decedentInformation()?.deathDateTime| date: 'MM/dd/yy' : 'GMT'}} | {{decedentInformation()?.deathDateTime |  date: 'HH:mm':'GMT'}} GMT</span>
+        <span class="value" [style.color]="textColor">{{$safeNavigationMigration(decedentInformation()?.deathDateTime)| date: 'MM/dd/yy' : 'GMT'}} | {{$safeNavigationMigration(decedentInformation()?.deathDateTime) |  date: 'HH:mm':'GMT'}} GMT</span>
       </div>
       <div>
         <span class="label" [style.color]="color">MDI Case Number | System:</span>

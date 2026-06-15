@@ -1,9 +1,10 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Output, ChangeDetectionStrategy} from '@angular/core';
 import {TestStatusCodes} from "../../../testing-events";
 
 @Component({
     selector: 'app-update-edrs',
     templateUrl: './update-edrs.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./update-edrs.component.css']
 })
 export class UpdateEdrsComponent {

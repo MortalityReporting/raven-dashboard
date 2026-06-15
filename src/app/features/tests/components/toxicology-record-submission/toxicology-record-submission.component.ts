@@ -1,4 +1,4 @@
-import {Component, inject, Inject, signal} from '@angular/core';
+import {Component, inject, Inject, signal, ChangeDetectionStrategy} from '@angular/core';
 import {AppConfiguration} from "../../../../providers/app-configuration";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {ToxicologyGridDto} from "../../../../model/toxicology.grid.dto";
@@ -14,6 +14,7 @@ import { ExternalApiDataSubmission } from '../external-api-data-submission/exter
     selector: 'test-toxicology-record-submission',
     templateUrl: './toxicology-record-submission.component.html',
     styleUrl: './toxicology-record-submission.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent, ToxicologyGridComponent, ToxRecordDetailsComponent, MatIcon, ExternalApiDataSubmission]
 })
 export class ToxicologyRecordSubmissionComponent{

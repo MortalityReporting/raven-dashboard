@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit, signal} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, signal, ChangeDetectionStrategy} from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
 import {
   combineLatest,
@@ -33,6 +33,7 @@ import { AsyncPipe } from '@angular/common';
     selector: 'testing-event-root',
     templateUrl: './testing-event-root.component.html',
     styleUrls: ['../testing-event.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatDivider, RegisteredModuleComponent, TestContainerComponent, MatButton, MatIcon, RouterLink, MatProgressSpinner, AsyncPipe]
 })
 export class TestingEventRootComponent implements OnInit, OnDestroy {

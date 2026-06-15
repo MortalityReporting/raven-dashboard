@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy} from '@angular/core';
 import {EventModule} from "../../../models/event-module";
 import {AppConfiguration} from "../../../../../providers/app-configuration";
 import { MatButton } from '@angular/material/button';
@@ -8,6 +8,7 @@ import { MatButton } from '@angular/material/button';
     selector: 'testing-event-registration-card',
     templateUrl: './event-registration-card.component.html',
     styleUrls: ['./event-registration-card.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatButton]
 })
 export class EventRegistrationCardComponent{

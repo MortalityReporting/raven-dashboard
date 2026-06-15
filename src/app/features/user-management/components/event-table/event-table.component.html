@@ -41,7 +41,7 @@
 <!--        complete      Never show.     | Only show if attachment exists (We won't remove it, so the file can be accessed for further review post event, etc) -->
         <div class="flex-col" matTooltip="Mark Complete?">
           <button *ngIf="TestStatusDictionary[element[column]].display != 'Complete'"
-                  mat-icon-button aria-label="Mark Complete?" class="complete-button" (click)="onMarkTestComplete(element?.registrationId, column)">
+                  mat-icon-button aria-label="Mark Complete?" class="complete-button" (click)="onMarkTestComplete($safeNavigationMigration(element?.registrationId), column)">
             <mat-icon>assignment_turned_in</mat-icon>
           </button>
         </div>

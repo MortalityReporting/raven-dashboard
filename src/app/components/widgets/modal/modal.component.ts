@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {DomSanitizer} from "@angular/platform-browser";
 import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from "@angular/material/dialog";
 import {UtilsService} from "../../../service/utils.service";
@@ -13,6 +13,7 @@ import { JsonPipe } from '@angular/common';
     selector: 'app-modal',
     templateUrl: './modal.component.html',
     styleUrls: ['./modal.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatDialogActions, MatButton, MatTooltip, CdkCopyToClipboard, MatIcon, MatDialogClose, JsonPipe]
 })
 export class ModalComponent implements OnInit {

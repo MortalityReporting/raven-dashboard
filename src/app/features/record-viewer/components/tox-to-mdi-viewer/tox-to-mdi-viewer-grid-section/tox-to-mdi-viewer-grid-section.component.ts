@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import { MatSort, MatSortHeader } from "@angular/material/sort";
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from "@angular/material/table";
 import {FhirExplorerService} from "../../../../fhir-explorer/services/fhir-explorer.service";
@@ -7,6 +7,7 @@ import {FhirExplorerService} from "../../../../fhir-explorer/services/fhir-explo
     selector: 'record-viewer-tox-to-mdi-viewer-grid-section',
     templateUrl: './tox-to-mdi-viewer-grid-section.component.html',
     styleUrls: ['../tox-to-mdi-viewer.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow]
 })
 export class ToxToMdiViewerGridSectionComponent implements OnInit {

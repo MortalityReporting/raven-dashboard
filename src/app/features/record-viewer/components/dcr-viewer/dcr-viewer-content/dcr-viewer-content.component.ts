@@ -1,4 +1,4 @@
-import {Component, Inject, Input, ViewChild} from '@angular/core';
+import {Component, Inject, Input, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from "@angular/material/expansion";
 import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
 import {AppConfiguration} from "../../../../../providers/app-configuration";
@@ -15,6 +15,7 @@ import { DcrViewerSignatureComponent } from './dcr-viewer-signature/dcr-viewer-s
     selector: 'app-dcr-viewer-content',
     templateUrl: './dcr-viewer-content.component.html',
     styleUrl: './dcr-viewer-content.component.css',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatButton, MatIcon, MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, DcrContentCaseAdminInfoComponent, DcrContentDemographicsComponent, DcrContentDeathInvestigationComponent, DcrContentCremationClearanceComponent, DcrViewerSignatureComponent]
 })
 export class DcrViewerContentComponent {

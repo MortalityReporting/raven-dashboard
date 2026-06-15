@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output, ChangeDetectionStrategy} from '@angular/core';
 import {SearchEdrsService} from "../../services/search-edrs.service";
 import {UiStringConstants} from "../../../../providers/ui-string-constants";
 import {TestStatusCodes} from "../../../testing-events";
@@ -14,6 +14,7 @@ import { MatButton } from '@angular/material/button';
     selector: 'app-search-edrs-bluejay',
     templateUrl: './search-edrs-bluejay.component.html',
     styleUrl: './search-edrs-bluejay.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatCard, MatStepper, MatStep, MdiToEdrsDocumentSelectStepComponent, EstablishConnectionComponent, EdrsResultsStepComponent, MatButton, MatStepperPrevious]
 })
 export class SearchEdrsBluejayComponent implements OnInit, OnDestroy{

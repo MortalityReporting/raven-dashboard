@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {Router} from "@angular/router";
 import {ModuleHeaderService} from "../../service/module-header.service";
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
@@ -9,6 +9,7 @@ import { MatDivider } from '@angular/material/list';
     selector: 'app-module-header',
     templateUrl: './module-header.component.html',
     styleUrls: ['./module-header.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [BreadcrumbComponent, MatIcon, MatDivider]
 })
 export class ModuleHeaderComponent implements OnInit {

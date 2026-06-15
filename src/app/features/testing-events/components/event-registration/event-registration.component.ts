@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, OnInit, signal, ChangeDetectionStrategy} from '@angular/core';
 import {EventModule} from "../../models/event-module";
 import {skipWhile, switchMap, tap} from "rxjs";
 import {UserProfileManagerService} from "../../../user-management";
@@ -15,6 +15,7 @@ import { MatDivider } from '@angular/material/list';
     selector: 'app-event-registration',
     templateUrl: './event-registration.component.html',
     styleUrl: './event-registration.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [NgClass, EventRegistrationCardComponent, MatDivider]
 })
 export class EventRegistrationComponent implements OnInit{

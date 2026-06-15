@@ -10,15 +10,15 @@
           [label]="'Date/Time of Death'"
           [value]="deathInvestigation()?.dateTimeOfDeath?.toString() ?? ''"
           appSetFhirExplorer
-          [resource]="deathInvestigation()?.resource"
+          [resource]="$safeNavigationMigration(deathInvestigation()?.resource)"
         />
       </div>
       <div class="grid-col-1">
         <record-viewer-mdi-to-edrs-viewer-content-field
           [label]="'Place of Death'"
-          [value]="deathInvestigation()?.type"
+          [value]="$safeNavigationMigration(deathInvestigation()?.type)"
           appSetFhirExplorer
-          [resource]="deathInvestigation()?.resource"
+          [resource]="$safeNavigationMigration(deathInvestigation()?.resource)"
         />
       </div>
     </div>
@@ -37,9 +37,9 @@
         <div class="grid-col-1">
           <record-viewer-mdi-to-edrs-viewer-content-field
             [label]="'Facility Name'"
-            [value]="deathInvestigation()?.placeOfDeath?.facilityName"
+            [value]="$safeNavigationMigration(deathInvestigation()?.placeOfDeath?.facilityName)"
             appSetFhirExplorer
-            [resource]="deathInvestigation()?.placeOfDeath?.resource">
+            [resource]="$safeNavigationMigration(deathInvestigation()?.placeOfDeath?.resource)">
           </record-viewer-mdi-to-edrs-viewer-content-field>
         </div>
         <div class="grid-col-1" aria-hidden="true"></div>
@@ -50,9 +50,9 @@
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field
               [label]="'Address Description'"
-              [value]="deathInvestigation()?.placeOfDeath?.addressText"
+              [value]="$safeNavigationMigration(deathInvestigation()?.placeOfDeath?.addressText)"
               appSetFhirExplorer
-              [resource]="deathInvestigation()?.placeOfDeath?.resource">
+              [resource]="$safeNavigationMigration(deathInvestigation()?.placeOfDeath?.resource)">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
           <div class="grid-col-1" aria-hidden="true"></div>
@@ -62,17 +62,17 @@
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field
               [label]="'Address Line 1'"
-              [value]="deathInvestigation()?.placeOfDeath?.address?.line1"
+              [value]="$safeNavigationMigration(deathInvestigation()?.placeOfDeath?.address?.line1)"
               appSetFhirExplorer
-              [resource]="deathInvestigation()?.placeOfDeath?.resource">
+              [resource]="$safeNavigationMigration(deathInvestigation()?.placeOfDeath?.resource)">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field
               [label]="'Address Line 2'"
-              [value]="deathInvestigation()?.placeOfDeath?.address?.line2"
+              [value]="$safeNavigationMigration(deathInvestigation()?.placeOfDeath?.address?.line2)"
               appSetFhirExplorer
-              [resource]="deathInvestigation()?.placeOfDeath?.resource">
+              [resource]="$safeNavigationMigration(deathInvestigation()?.placeOfDeath?.resource)">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
         </div>
@@ -81,33 +81,33 @@
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field
               [label]="'City'"
-              [value]="deathInvestigation()?.placeOfDeath?.address?.city"
+              [value]="$safeNavigationMigration(deathInvestigation()?.placeOfDeath?.address?.city)"
               appSetFhirExplorer
-              [resource]="deathInvestigation()?.placeOfDeath?.resource">
+              [resource]="$safeNavigationMigration(deathInvestigation()?.placeOfDeath?.resource)">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field
               [label]="'State'"
-              [value]="deathInvestigation()?.placeOfDeath?.address?.state"
+              [value]="$safeNavigationMigration(deathInvestigation()?.placeOfDeath?.address?.state)"
               appSetFhirExplorer
-              [resource]="deathInvestigation()?.placeOfDeath?.resource">
+              [resource]="$safeNavigationMigration(deathInvestigation()?.placeOfDeath?.resource)">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field
               [label]="'Zip Code'"
-              [value]="deathInvestigation()?.placeOfDeath?.address?.zip"
+              [value]="$safeNavigationMigration(deathInvestigation()?.placeOfDeath?.address?.zip)"
               appSetFhirExplorer
-              [resource]="deathInvestigation()?.placeOfDeath?.resource">
+              [resource]="$safeNavigationMigration(deathInvestigation()?.placeOfDeath?.resource)">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
           <div class="grid-col-1">
             <record-viewer-mdi-to-edrs-viewer-content-field
               [label]="'Country'"
-              [value]="deathInvestigation()?.placeOfDeath?.address?.country"
+              [value]="$safeNavigationMigration(deathInvestigation()?.placeOfDeath?.address?.country)"
               appSetFhirExplorer
-              [resource]="deathInvestigation()?.placeOfDeath?.resource">
+              [resource]="$safeNavigationMigration(deathInvestigation()?.placeOfDeath?.resource)">
             </record-viewer-mdi-to-edrs-viewer-content-field>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Output, ChangeDetectionStrategy} from '@angular/core';
 import {AppConfiguration} from "../../../../../providers/app-configuration";
 import {ModuleHeaderConfig} from "../../../../../providers/module-header-config";
 import { MatNavList } from '@angular/material/list';
@@ -9,6 +9,7 @@ import { MatIcon } from '@angular/material/icon';
     selector: 'record-viewer-mdi-to-edrs-viewer-nav-menu',
     templateUrl: './mdi-to-edrs-viewer-nav-menu.component.html',
     styleUrls: ['../mdi-to-edrs-viewer.component.scss', '../../../record-viewer-styles.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatNavList, MatButton, MatIcon]
 })
 export class MdiToEdrsViewerNavMenuComponent {

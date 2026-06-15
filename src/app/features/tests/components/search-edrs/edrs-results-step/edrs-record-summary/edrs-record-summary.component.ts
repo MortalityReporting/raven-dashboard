@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {UiStringConstants} from "../../../../../../providers/ui-string-constants";
 import { MatTabGroup, MatTab } from '@angular/material/tabs';
 import { JsonPipe, DatePipe } from '@angular/common';
@@ -7,6 +7,7 @@ import { JsonPipe, DatePipe } from '@angular/common';
     selector: 'app-edrs-record-summary',
     templateUrl: './edrs-record-summary.component.html',
     styleUrls: ['./edrs-record-summary.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatTabGroup, MatTab, JsonPipe, DatePipe]
 })
 export class EdrsRecordSummaryComponent implements OnInit {

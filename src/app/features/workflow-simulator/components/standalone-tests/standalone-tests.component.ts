@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {Router} from "@angular/router";
 import {Test} from "../../../tests";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
@@ -11,6 +11,7 @@ import { MatDivider } from '@angular/material/list';
     selector: 'app-standalone-tests',
     templateUrl: './standalone-tests.component.html',
     styleUrls: ['./standalone-tests.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatButton, MatDivider]
 })
 export class StandaloneTestsComponent {

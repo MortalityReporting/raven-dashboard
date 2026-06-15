@@ -1,4 +1,4 @@
-import {Component, Inject, input, Input, OnInit, signal} from '@angular/core';
+import {Component, Inject, input, Input, OnInit, signal, ChangeDetectionStrategy} from '@angular/core';
 import { ToxSummary } from "../../../models/tox.summary";
 import { ModuleHeaderConfig } from "../../../../../providers/module-header-config";
 import { AppConfiguration } from "../../../../../providers/app-configuration";
@@ -12,6 +12,7 @@ import { MatIcon } from '@angular/material/icon';
     selector: 'record-viewer-tox-to-mdi-viewer-mdi-case',
     templateUrl: './tox-to-mdi-viewer-mdi-case.component.html',
     styleUrls: ['../tox-to-mdi-viewer.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [SetFhirExplorerDirective, MatButton, RouterLink, MatIcon]
 })
 export class ToxToMdiViewerMdiCaseComponent implements OnInit {

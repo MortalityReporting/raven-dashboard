@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, input, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, input, Input, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {ToxToMdiRecord} from "../../../models/toxToMdiRecord";
 import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from "@angular/material/expansion";
 import {FHIRProfileConstants} from "../../../../../providers/fhir-profile-constants";
@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
     selector: 'record-viewer-tox-to-mdi-viewer-content',
     templateUrl: './tox-to-mdi-viewer-content.component.html',
     styleUrls: ['../tox-to-mdi-viewer.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatButton, MatIcon, ToxToMdiViewerMdiCaseComponent, MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, ToxDemoCardComponent, ToxToMdiViewerCertifierComponent, ToxToMdiViewerGridSectionComponent, SetFhirExplorerDirective, FormsModule]
 })
 export class ToxToMdiViewerContentComponent implements AfterViewInit {

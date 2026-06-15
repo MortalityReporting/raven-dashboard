@@ -4,17 +4,17 @@
       <div class="grid-col-2">
         <record-viewer-mdi-to-edrs-viewer-content-field
           [label]="'Signed'"
-          [value]="signature()?.signedBy?.name"
+          [value]="$safeNavigationMigration(signature()?.signedBy?.name)"
           appSetFhirExplorer
-          [resource]="signature()?.signedBy?.resource"
+          [resource]="$safeNavigationMigration(signature()?.signedBy?.resource)"
         />
       </div>
       <div class="grid-col-2">
         <record-viewer-mdi-to-edrs-viewer-content-field
           [label]="'Date'"
-          [value]="signature()?.dateTime"
+          [value]="$safeNavigationMigration(signature()?.dateTime)"
           appSetFhirExplorer
-          [resource]="signature()?.resource"
+          [resource]="$safeNavigationMigration(signature()?.resource)"
         />
       </div>
     </div>

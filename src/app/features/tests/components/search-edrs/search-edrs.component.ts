@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewEncapsulation, ChangeDetectionStrategy} from '@angular/core';
 import {SearchEdrsService} from "../../services/search-edrs.service";
 import {UiStringConstants} from "../../../../providers/ui-string-constants";
 import {TestStatusCodes} from "../../../testing-events";
@@ -19,6 +19,7 @@ Parent component for the Search EDRS flow
     styleUrls: ['./search-edrs.component.scss'],
     encapsulation: ViewEncapsulation.None // we need this to disable the header for the stepper and use it as an indicator
     ,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatCard, MatStepper, MatStep, MdiToEdrsDocumentSelectStepComponent, EndpointConfigurationStepComponent, EdrsResultsStepComponent, MatButton, MatStepperPrevious]
 })
 export class SearchEdrsComponent implements OnInit {

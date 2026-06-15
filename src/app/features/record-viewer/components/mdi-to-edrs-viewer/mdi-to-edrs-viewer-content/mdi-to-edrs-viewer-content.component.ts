@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, Input, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {
   MatAccordion,
   MatExpansionPanel,
@@ -25,6 +25,7 @@ import {
   selector: 'record-viewer-mdi-to-edrs-viewer-content',
   templateUrl: './mdi-to-edrs-viewer-content.component.html',
   styleUrls: ['../mdi-to-edrs-viewer.component.scss', '../../../record-viewer-styles.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [MatButton, MatIcon, MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MdiToEdrsViewerContentFieldComponent, SetFhirExplorerDirective, MdiToEdrsViewerPractitionerCardComponent]
 })
 export class MdiToEdrsViewerContentComponent implements OnInit {

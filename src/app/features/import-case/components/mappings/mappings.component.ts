@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges, ChangeDetectionStrategy} from '@angular/core';
 import {MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {FileTemplateService} from "../../services/file-template.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
@@ -21,6 +21,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
             transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
         ]),
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         MatTableModule,
         MatFormFieldModule,

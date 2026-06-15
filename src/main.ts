@@ -2,7 +2,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { importProvidersFrom, provideAppInitializer, inject } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 
 import { AppComponent } from './app/app.component';
@@ -29,7 +29,7 @@ import { provideRecordViewer } from './app/features/record-viewer/record-viewer.
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withXhr(), withInterceptorsFromDi()),
     importProvidersFrom(
       BrowserAnimationsModule
     ),

@@ -1,8 +1,8 @@
 @if (mdiToEdrsRecord) {
   <div class="viewer-container-wrapper">
     <div class="viewer-container-header">
-      <app-decedent-display appSetFhirExplorer [resource]="mdiToEdrsRecord?.documentBundle"
-        [decedentInformation]="mdiToEdrsRecord?.caseHeader" [type]="'mdi'">
+      <app-decedent-display appSetFhirExplorer [resource]="$safeNavigationMigration(mdiToEdrsRecord?.documentBundle)"
+        [decedentInformation]="$safeNavigationMigration(mdiToEdrsRecord?.caseHeader)" [type]="'mdi'">
       </app-decedent-display>
     </div>
     <div class="viewer-container-body">

@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, OnInit, signal, ChangeDetectionStrategy} from '@angular/core';
 import {UserProfileManagerService} from "../../services/user-profile-manager.service";
 import {AuthService} from '@auth0/auth0-angular';
 
@@ -22,6 +22,7 @@ import {MatButtonModule} from "@angular/material/button";
     selector: 'app-admin-panel',
     templateUrl: './admin-panel.component.html',
     styleUrls: ['./admin-panel.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         EventTableComponent,
         ErrorFrameComponent,

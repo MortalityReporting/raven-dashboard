@@ -1,4 +1,4 @@
-import {Component, Inject, input} from '@angular/core';
+import {Component, Inject, input, ChangeDetectionStrategy} from '@angular/core';
 import {FileTemplate} from "../../models/file-template";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {FileTemplateService} from "../../services/file-template.service";
@@ -12,6 +12,7 @@ import {HttpClient} from "@angular/common/http";
     selector: 'app-file-template',
     templateUrl: './file-template.component.html',
     styleUrls: ['./file-template.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         MatCardModule,
         MatButtonModule,
