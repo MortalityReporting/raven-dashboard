@@ -49,11 +49,13 @@ bootstrapApplication(AppComponent, {
       const initFn = configFactory(configService);
       return initFn(); // Execute the initialization function
     }),
-    // Register SVG icons
+    // Register SVG icons - must complete before app initialization
     provideAppInitializer(() => {
       const matIconRegistry = inject(MatIconRegistry);
       const domSanitizer = inject(DomSanitizer);
       initializeSvgIcons(matIconRegistry, domSanitizer);
+      // Return a resolved promise to ensure this completes synchronously
+      return Promise.resolve();
     }),
     // Conditionally provide Auth0 based on enableDashboardApiServices
     provideUserManagement(),

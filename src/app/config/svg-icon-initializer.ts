@@ -12,16 +12,15 @@ export function initializeSvgIcons(
   matIconRegistry: MatIconRegistry,
   domSanitizer: DomSanitizer
 ): void {
-  const path = 'assets/files/svg';
+  // Use absolute path from root to ensure it works in both dev and production
+  const path = '/assets/files/svg';
 
   const icons = [
     'menu',
     'home',
-    'chevron_right',
     'event_admin',
     'event_register',
     'testing_event',
-    'arrow_down',
     'record-viewer',
     'record-import',
     'record-comparison',
@@ -31,9 +30,10 @@ export function initializeSvgIcons(
   ];
 
   icons.forEach(iconName => {
+    const iconUrl = `${path}/${iconName}.svg`;
     matIconRegistry.addSvgIcon(
       iconName,
-      domSanitizer.bypassSecurityTrustResourceUrl(`${path}/${iconName}.svg`)
+      domSanitizer.bypassSecurityTrustResourceUrl(iconUrl)
     );
   });
 }
