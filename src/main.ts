@@ -2,7 +2,9 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { importProvidersFrom, provideAppInitializer, inject } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DomSanitizer } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
+import { MatIconRegistry } from '@angular/material/icon';
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 
 import { AppComponent } from './app/app.component';
@@ -49,7 +51,9 @@ bootstrapApplication(AppComponent, {
     }),
     // Register SVG icons
     provideAppInitializer(() => {
-      initializeSvgIcons();
+      const matIconRegistry = inject(MatIconRegistry);
+      const domSanitizer = inject(DomSanitizer);
+      initializeSvgIcons(matIconRegistry, domSanitizer);
     }),
     // Conditionally provide Auth0 based on enableDashboardApiServices
     provideUserManagement(),
