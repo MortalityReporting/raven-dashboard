@@ -1,5 +1,5 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { importProvidersFrom, provideAppInitializer, inject, Provider, EnvironmentProviders } from '@angular/core';
+import { importProvidersFrom, provideAppInitializer, inject } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
@@ -20,34 +20,12 @@ import { AppConstants } from './app/providers/app-constants';
 import { FHIRProfileConstants } from './app/providers/fhir-profile-constants';
 import { RegisteredEndpointsInterceptor } from './app/interceptors/registered-endpoints.interceptor';
 import { FhirAuthInterceptor } from './app/interceptors/fhir-auth.interceptor';
+import { ConditionalAuthInterceptor } from './app/interceptors/conditional-auth.interceptor';
 import { provideTests } from './app/features/tests/tests.providers';
 import { provideWorkflowSimulator } from './app/features/workflow-simulator/workflow-simulator.providers';
 import { provideFhirUtil } from './app/features/fhir-util/fhir-util.providers';
 import { provideRecordComparison } from './app/features/record-comparison/record-comparison.providers';
 import { provideRecordViewer } from './app/features/record-viewer/record-viewer.providers';
-
-/**
- * Returns Auth0-related providers when Dashboard API services are enabled.
- * When disabled, returns an empty array to exclude Auth0 from the application.
- *
- * @param configService - The configuration service containing app settings
- * @returns Array of providers for Auth0 authentication and HTTP interceptor, or empty array
- */
-function getAuth0Providers(configService: ConfigService): (Provider | EnvironmentProviders)[] {
-  if (!configService.config?.enableDashboardApiServices) {
-    console.log('Dashboard API services disabled - skipping Auth0 initialization');
-    return [];
-  }
-
-  return [
-    provideUserManagement(),
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthHttpInterceptor,
-      multi: true
-    }
-  ];
-}
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -73,8 +51,14 @@ bootstrapApplication(AppComponent, {
     provideAppInitializer(() => {
       initializeSvgIcons();
     }),
-    // Conditionally provide Auth0 and HTTP interceptor based on enableDashboardApiServices
-    ...getAuth0Providers(inject(ConfigService)),
+    // Conditionally provide Auth0 based on enableDashboardApiServices
+    provideUserManagement(),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ConditionalAuthInterceptor,
+      deps: [ConfigService, AuthHttpInterceptor],
+      multi: true
+    },
     provideImportCase(ModuleHeaderConfig.RecordImport, AppConfiguration.config),
     provideFhirValidator(ModuleHeaderConfig.FhirValidator, AppConfiguration.config),
     {
