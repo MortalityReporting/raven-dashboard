@@ -57,14 +57,8 @@ bootstrapApplication(AppComponent, {
       // Return a resolved promise to ensure this completes synchronously
       return Promise.resolve();
     }),
-    // Conditionally provide Auth0 based on enableDashboardApiServices
+    // User management MUST come after config initializer (registers its own initializer for Auth0 config)
     provideUserManagement(),
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ConditionalAuthInterceptor,
-      deps: [ConfigService, AuthHttpInterceptor],
-      multi: true
-    },
     provideImportCase(ModuleHeaderConfig.RecordImport, AppConfiguration.config),
     provideFhirValidator(ModuleHeaderConfig.FhirValidator, AppConfiguration.config),
     {
@@ -86,6 +80,12 @@ bootstrapApplication(AppComponent, {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: FhirAuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ConditionalAuthInterceptor,
+      deps: [ConfigService, AuthHttpInterceptor],
       multi: true
     }
   ]
