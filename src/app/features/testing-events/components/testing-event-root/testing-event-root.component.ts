@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit, signal, ChangeDetectionStrategy} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, signal, ChangeDetectionStrategy, computed, inject} from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
 import {
   combineLatest,
@@ -28,6 +28,7 @@ import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { AsyncPipe } from '@angular/common';
+import {ConfigService} from "../../../../config/config.service";
 
 @Component({
     selector: 'testing-event-root',
@@ -39,6 +40,13 @@ import { AsyncPipe } from '@angular/common';
 export class TestingEventRootComponent implements OnInit, OnDestroy {
   // Registrations/QuestionnaireResponses
   registrations = signal<Registration[]>([]);
+
+  protected configService = inject(ConfigService);
+  protected readonly enableDashboardApiServices = computed(() =>
+    this.configService.config?.enableDashboardApiServices ?? false
+  );
+
+
   currentRegistration: Registration = undefined;
   currentIndex: number = -2;
   currentItem: RegistrationDisplayItem;
@@ -58,7 +66,7 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
   showRoot: boolean = true;
 
   constructor(@Inject('workflowSimulatorConfig')
-              public config: ModuleHeaderConfig,
+              public headerConfig: ModuleHeaderConfig,
               public auth: AuthService,
               protected eventManager: EventManagerService,
               private userProfileManager: UserProfileManagerService,

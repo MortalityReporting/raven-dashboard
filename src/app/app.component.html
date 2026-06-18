@@ -10,7 +10,9 @@
         [backgroundColor]="color"
         [configuration]="headerConfig"
       ></app-common-header>
-      <app-user-header></app-user-header>
+      @if(enableDashboardApiServices()){
+        <app-user-header></app-user-header>
+      }
     </div>
     <div>
       <app-module-header></app-module-header>

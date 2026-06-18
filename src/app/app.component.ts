@@ -1,4 +1,4 @@
-import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy, signal} from '@angular/core';
 import {platformBrowser} from "@angular/platform-browser";
 import {AppConfiguration} from "./providers/app-configuration";
 import {ThemeService} from "./service/theme.service";
@@ -26,6 +26,7 @@ export class AppComponent implements OnInit {
   color = AppConfiguration.config.color;
   contrastColor = AppConfiguration.config.contrastColor;
   headerConfig: HeaderConfig;
+  enableDashboardApiServices = signal<boolean>(false)
 
   constructor(
     private configService: ConfigService,
@@ -36,6 +37,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.title = "Raven";
     this.version = this.configService.config?.version || 'unknown';
+    this.enableDashboardApiServices.set(this.configService.config?.enableDashboardApiServices);
     document.title = this.title;
 
     this.themeService.setColor(this.color);
@@ -80,6 +82,4 @@ export class AppComponent implements OnInit {
       panelClass: ['browser-support-message-offset', 'app-notification-warn']
     });
   }
-
-  protected readonly platformBrowser = platformBrowser;
 }
