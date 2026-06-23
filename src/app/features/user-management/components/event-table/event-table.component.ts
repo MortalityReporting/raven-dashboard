@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import {Component, EventEmitter, Output, ViewChild, ChangeDetectionStrategy, input, effect} from '@angular/core';
 import {MatSort, MatSortModule} from "@angular/material/sort";
 import {MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {EventManagerService, TestStatusDictionary} from "../../../testing-events"
@@ -7,7 +7,6 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {openConfirmationDialog} from "../../../../components/widgets/confirmation-dialog/conformation-dialog.component";
-import {NgIf} from "@angular/common";
 
 @Component({
     selector: 'app-event-table',
@@ -19,12 +18,11 @@ import {NgIf} from "@angular/common";
         MatSortModule,
         MatTooltipModule,
         MatIconModule,
-        MatButtonModule,
-        NgIf
+        MatButtonModule
     ]
 })
-export class EventTableComponent implements OnChanges {
-  @Input() testingEvent: any;
+export class EventTableComponent {
+  testingEvent = input.required<any>();
   @Output() testingEventUpdated =
     new EventEmitter<{userEventRegistrationId: string, currentItemLinkId: string}>()
 
@@ -38,14 +36,15 @@ export class EventTableComponent implements OnChanges {
     this.dataSource.sort = sort;
   };
 
-  constructor(private dialog: MatDialog, private eventManagementService: EventManagerService) {}
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if(this.testingEvent){
-      this.columnDictionary = this.testingEvent['cols'];
-      this.displayedColumns = this.parseColKeys(this.testingEvent);
-      this.dataSource = new MatTableDataSource<any>(this.testingEvent.rows)
-    }
+  constructor(private dialog: MatDialog, private eventManagementService: EventManagerService) {
+    effect(() => {
+      const event = this.testingEvent();
+      if(event){
+        this.columnDictionary = event['cols'];
+        this.displayedColumns = this.parseColKeys(event);
+        this.dataSource = new MatTableDataSource<any>(event.rows)
+      }
+    });
   }
 
   capitalizeColumnHeader(column: string): string {

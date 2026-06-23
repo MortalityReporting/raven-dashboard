@@ -18,10 +18,12 @@ export function provideUserManagement(): EnvironmentProviders {
         authConfig.set({
           domain: config.auth.domain,
           clientId: config.auth.clientId,
+          cacheLocation: 'localstorage',
+          useRefreshTokens: true,
           authorizationParams: {
             redirect_uri: config.auth.redirectUrl,
             audience: config.auth.auth0.audience,
-            scope: "admin profile email openid"
+            scope: "admin profile email openid offline_access"
           },
           httpInterceptor: {
             allowedList: [

@@ -23,22 +23,22 @@ import {MatButtonModule} from "@angular/material/button";
     templateUrl: './admin-panel.component.html',
     styleUrls: ['./admin-panel.component.scss'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [
-        EventTableComponent,
-        ErrorFrameComponent,
-        MatProgressSpinnerModule,
-        AsyncPipe,
-        MatFormFieldModule,
-        MatSelectModule,
-        MatIconModule,
-        MatButtonModule
-    ]
+  imports: [
+    EventTableComponent,
+    ErrorFrameComponent,
+    MatProgressSpinnerModule,
+    AsyncPipe,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatIconModule,
+    MatButtonModule,
+  ]
 })
 export class AdminPanelComponent implements OnInit {
   currentUser: any;
   testEvents = signal<any>(undefined);
   error: any = undefined;
-  selectedEvent: any;
+  selectedEvent = signal<any>(null);
   selected: any;
   refreshTrigger$ = new ReplaySubject(1);
   isLoading = false;
@@ -66,11 +66,11 @@ export class AdminPanelComponent implements OnInit {
       next: value => {
         this.error = undefined;
         this.testEvents.set(value['events']);
-        if(!this.selectedEvent){
-          this.selectedEvent = this.testEvents()[0];
+        if(!this.selectedEvent()){
+          this.selectedEvent.set(this.testEvents()[0]);
         }
         else {
-          this.selectedEvent = this.testEvents().find(testEvent => testEvent.id == this.selectedEvent.id);
+          this.selectedEvent.set(this.testEvents().find(testEvent => testEvent.id == this.selectedEvent().id));
         }
       },
       error: (e) => {
