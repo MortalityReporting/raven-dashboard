@@ -78,8 +78,7 @@ bootstrapApplication(AppComponent, {
     },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: ConditionalAuthInterceptor,
-      deps: [ConfigService, AuthHttpInterceptor],
+      useClass: AuthHttpInterceptor,
       multi: true
     }
   ]

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 import { Observable } from 'rxjs';
@@ -13,34 +13,31 @@ import { ConfigService } from '../config/config.service';
  */
 @Injectable()
 export class ConditionalAuthInterceptor implements HttpInterceptor {
+  private authInterceptor: AuthHttpInterceptor | null = null;
+
   constructor(
     private configService: ConfigService,
-    private authInterceptor: AuthHttpInterceptor
+    private injector: Injector
   ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Always pass through if Dashboard API services are disabled
-    console.log(req);
+    console.log("I am running")
     if (!this.configService.config?.enableDashboardApiServices) {
       return next.handle(req);
     }
 
-    // Exclude relative URLs (assets, local files) - these should never go through Auth0
-
-    const isRelativeUrl = !req.url.startsWith('http://') && !req.url.startsWith('https://');
-    console.log(isRelativeUrl);
-    if (isRelativeUrl) {
-      return next.handle(req);
-    }
-
-
     // Check if this request is for a Dashboard API endpoint
     const dashboardApiUrl = this.configService.config.dashboardApiUrl;
     const isDashboardApiRequest = req.url.startsWith(dashboardApiUrl);
-    console.log(isDashboardApiRequest);
 
     // Only delegate to Auth0 interceptor for Dashboard API requests
     if (isDashboardApiRequest) {
+      console.log("I am intercepted")
+      // Lazy load AuthHttpInterceptor to avoid circular dependency issues
+      if (!this.authInterceptor) {
+        this.authInterceptor = this.injector.get(AuthHttpInterceptor);
+      }
       return this.authInterceptor.intercept(req, next);
     }
 
