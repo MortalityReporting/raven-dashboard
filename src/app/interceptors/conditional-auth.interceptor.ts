@@ -20,6 +20,7 @@ export class ConditionalAuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Always pass through if Dashboard API services are disabled
+    console.log(req);
     if (!this.configService.config?.enableDashboardApiServices) {
       return next.handle(req);
     }
