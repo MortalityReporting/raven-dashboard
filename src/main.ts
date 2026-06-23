@@ -25,6 +25,7 @@ import { provideWorkflowSimulator } from './app/features/workflow-simulator/work
 import { provideFhirUtil } from './app/features/fhir-util/fhir-util.providers';
 import { provideRecordComparison } from './app/features/record-comparison/record-comparison.providers';
 import { provideRecordViewer } from './app/features/record-viewer/record-viewer.providers';
+import {ConditionalAuthInterceptor} from "./app/interceptors/conditional-auth.interceptor";
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -77,7 +78,8 @@ bootstrapApplication(AppComponent, {
     },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AuthHttpInterceptor,
+      useClass: ConditionalAuthInterceptor,
+      deps: [ConfigService, AuthHttpInterceptor],
       multi: true
     }
   ]
