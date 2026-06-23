@@ -19,11 +19,21 @@ export class ConditionalAuthInterceptor implements HttpInterceptor {
   ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // Always pass through if Dashboard API services are disabled
     if (!this.configService.config?.enableDashboardApiServices) {
-      // Pass through without Auth0 interception when Dashboard API services are disabled
       return next.handle(req);
     }
-    // Delegate to Auth0 interceptor when Dashboard API services are enabled
-    return this.authInterceptor.intercept(req, next);
+
+    // Check if this request is for a Dashboard API endpoint
+    const dashboardApiUrl = this.configService.config.dashboardApiUrl;
+    const isDashboardApiRequest = req.url.startsWith(dashboardApiUrl);
+
+    // Only delegate to Auth0 interceptor for Dashboard API requests
+    if (isDashboardApiRequest) {
+      return this.authInterceptor.intercept(req, next);
+    }
+
+    // Pass through all other requests (like SVG assets, config files, etc.) without Auth0 interception
+    return next.handle(req);
   }
 }
