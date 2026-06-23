@@ -24,16 +24,26 @@ export class ConditionalAuthInterceptor implements HttpInterceptor {
       return next.handle(req);
     }
 
+    // Exclude relative URLs (assets, local files) - these should never go through Auth0
+
+    const isRelativeUrl = !req.url.startsWith('http://') && !req.url.startsWith('https://');
+    console.log(isRelativeUrl);
+    if (isRelativeUrl) {
+      return next.handle(req);
+    }
+
+
     // Check if this request is for a Dashboard API endpoint
     const dashboardApiUrl = this.configService.config.dashboardApiUrl;
     const isDashboardApiRequest = req.url.startsWith(dashboardApiUrl);
+    console.log(isDashboardApiRequest);
 
     // Only delegate to Auth0 interceptor for Dashboard API requests
     if (isDashboardApiRequest) {
       return this.authInterceptor.intercept(req, next);
     }
 
-    // Pass through all other requests (like SVG assets, config files, etc.) without Auth0 interception
+    // Pass through all other absolute URLs without Auth0 interception
     return next.handle(req);
   }
 }
