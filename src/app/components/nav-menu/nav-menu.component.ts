@@ -1,4 +1,4 @@
-import {Component, ChangeDetectionStrategy} from '@angular/core';
+import {Component, ChangeDetectionStrategy, inject, computed} from '@angular/core';
 import {MatIcon} from "@angular/material/icon";
 import {MatDivider} from "@angular/material/divider";
 import {NavigationEnd, Router} from "@angular/router";
@@ -6,6 +6,7 @@ import {NgClass} from "@angular/common";
 import {filter} from "rxjs/operators";
 import {AuthService} from "@auth0/auth0-angular";
 import {AppConstants} from "../../providers/app-constants";
+import {ConfigService} from "../../config/config.service";
 
 @Component({
   selector: 'app-nav-menu',
@@ -35,6 +36,10 @@ export class NavMenuComponent {
     { name: 'event-registration', display: 'Event Registration', route: 'event-registration', icon: 'event_register', loginRequired: true},
     { name: 'admin-panel', display: 'Admin Panel',  route: 'admin-panel', icon: 'admin_panel', loginRequired: true, requiredRole: this.appConstants.USER_ROLES.ADMIN}
   ]
+  protected configService = inject(ConfigService);
+  protected readonly enableDashboardApiServices = computed(() =>
+    this.configService.config?.enableDashboardApiServices ?? false
+  );
 
   constructor(public router: Router, public authService: AuthService, protected appConstants: AppConstants) {
     this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(e => {
