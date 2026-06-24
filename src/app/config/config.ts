@@ -22,6 +22,7 @@ export class Config {
   dashboardApiUrl: string = "";
   ravenImportApiUrl: string = "";
   fhirValidatorUrl: string = "";
+  enableDashboardApiServices: boolean = false; //false by default
   ravenFhirServer: FhirServerConfig = {
     baseUrl: "",
     basicAuth: ""
@@ -30,7 +31,7 @@ export class Config {
     baseUrl: "",
     basicAuth: ""
   };
-  auth: AuthConfig = {
+  auth?: AuthConfig = {
     redirectUrl: "",
     logoutUrl: "",
     clientId: "",
