@@ -1,0 +1,20 @@
+
+<h1 mat-dialog-title>{{data.title}}</h1>
+<form [formGroup]="dialogForm" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content>
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>{{data.inputLabelText}}</mat-label>
+      <textarea type="text" matInput formControlName="content"
+                #textareaElement
+                (input)="autoResizeTextarea(textareaElement)"></textarea>
+      <mat-error>
+        {{ data.validatorErrors }}
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button type="button" mat-stroked-button (click)="onCancel()" cdkFocusInitial>{{data.secondaryActionBtnTitle}}</button>
+    <button mat-stroked-button type="submit" color="primary" >{{data.primaryActionBtnTitle}}</button>
+  </div>
+</form>
+

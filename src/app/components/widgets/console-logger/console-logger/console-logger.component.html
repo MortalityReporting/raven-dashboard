@@ -1,0 +1,21 @@
+<div class="terminal"
+     #terminal
+     tabindex="0"
+     role="log"
+     aria-live="polite"
+     aria-atomic="false"
+     aria-label="Logger console output (scrollable)">
+  @for (item of logs(); track item) {
+    <div [ngClass]="item.level" class="log-entry" role="status">
+      <span class="log-icon" [attr.aria-label]="item.level + ' message'">
+        @if (item.level === 'ERROR') { <span aria-hidden="true">⛔</span> }
+        @if (item.level === 'WARN') { <span aria-hidden="true">⚠️</span> }
+        @if (item.level === 'DEBUG') { <span aria-hidden="true">🔧</span> }
+        @if (item.level === 'INFO') { <span aria-hidden="true">ℹ️</span> }
+      </span>
+      <span class="log-level" aria-hidden="true">[{{item.level}}]</span>
+      <span class="log-content">{{item.timeStamp | date : 'yyyy-MM-dd hh:mm:ss'}} - {{item.source}} - {{item.line}}</span>
+    </div>
+  }
+</div>
+

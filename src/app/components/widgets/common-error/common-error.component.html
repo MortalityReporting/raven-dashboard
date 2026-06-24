@@ -1,0 +1,9 @@
+<div class="box">
+  @if (errorCode()) {
+    <div class="error-code">Error Code: {{ errorCode() }}</div>
+  }
+  <div class="error-message">{{ errorMessage() }}</div>
+  <div class="action-button">
+    <button mat-raised-button (click)="onBtnClick()">{{ buttonName() }}</button>
+  </div>
+</div>

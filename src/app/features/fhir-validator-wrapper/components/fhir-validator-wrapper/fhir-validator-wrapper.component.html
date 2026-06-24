@@ -1,0 +1,18 @@
+<!--&lt;!&ndash; The section below wraps the FHIR validator when used in standalone mode (when accessed directly) &ndash;&gt;-->
+<div class="generic-component-wrapper">
+  <div class="generic-component-content">
+    <mat-card class="mat-elevation-z8">
+      <mat-card-content>
+        <app-fhir-validator-lib
+          [validatorTitle]="'FHIR Validator'"
+          [validationInputFormat]="validationTextFormat"
+          [formatResourceBtnShown]="true"
+          [buttonTxtColor]="'white'"
+          [buttonBackgroundColor]="config.backgroundColor"
+          [exportValidationResultsBtnName]="'Export Results (.zip)'"
+          (onExportValidationResults)="onExportValidationResults($event)"
+        ></app-fhir-validator-lib>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
