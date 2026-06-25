@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { inject } from '@angular/core';
 import { LandingComponent } from './components/landing/landing.component';
 import { ImportCaseComponent } from './features/import-case';
 import { FhirValidatorWrapperComponent } from './features/fhir-validator-wrapper/components/fhir-validator-wrapper/fhir-validator-wrapper.component';
@@ -36,6 +37,7 @@ import {
 import {
   ToxicologyRecordSubmissionComponent
 } from './features/tests/components/toxicology-record-submission/toxicology-record-submission.component';
+import { ConfigService } from './config/config.service';
 
 export const routes: Routes = [
   {
@@ -137,21 +139,25 @@ export const routes: Routes = [
       },
     ]
   },
+  // Conditionally include dashboard API routes only when enableDashboardApiServices is true
   {
     path: AppConfiguration.config.modules['testingEvents'].route,
     component: TestingEventRootComponent,
-    data: { moduleConfig: ModuleHeaderConfig.TestingEvents, componentTitle: undefined }
+    data: { moduleConfig: ModuleHeaderConfig.TestingEvents, componentTitle: undefined },
+    canMatch: [() => inject(ConfigService).config?.enableDashboardApiServices ?? false]
   },
   {
     path: AppConfiguration.config.modules['eventRegistration'].route,
     component: EventRegistrationComponent,
     data: { moduleConfig: ModuleHeaderConfig.EventRegistration, componentTitle: undefined },
+    canMatch: [() => inject(ConfigService).config?.enableDashboardApiServices ?? false]
   },
   {
     path: AppConfiguration.config.modules['adminPanel'].route,
     component: AdminPanelComponent,
     data: { moduleConfig: ModuleHeaderConfig.AdminPanel, componentTitle: undefined, role: 'admin' },
     canActivate: [authGuard],
+    canMatch: [() => inject(ConfigService).config?.enableDashboardApiServices ?? false]
   },
   {
     path: 'logged-in',

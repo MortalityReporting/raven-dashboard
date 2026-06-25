@@ -57,25 +57,26 @@
     </li>
     <mat-divider></mat-divider>
 
-    <!-- Testing and Events Menu Section -->
-    <li class="main-item-wrapper">
-      <div class="main-item">
-        @if (isExpanded) {
-          <span>Testing Events</span>
-        }
-      </div>
-      <ul class="sub-item-wrapper">
-        @for (item of TESTING_AND_EVENTS_CONFIG; track item.route) {
-          <li class="sub-item" (click)="onPathSelected(item.route)">
-            <mat-icon class="icon" svgIcon="{{item.icon}}"
-                      [ngClass]="this.currentRoute == item.route ? 'selected-menu-item ' : ''"></mat-icon>
-            @if (isExpanded) {
-              <span class="menu-text">{{ item.display }}</span>
-            }
-          </li>
-        }
-      </ul>
-    </li>
+    @if(enableDashboardApiServices()){
+      <li class="main-item-wrapper">
+        <div class="main-item">
+          @if (isExpanded) {
+            <span>Testing Events</span>
+          }
+        </div>
+        <ul class="sub-item-wrapper">
+          @for (item of TESTING_AND_EVENTS_CONFIG; track item.route) {
+            <li class="sub-item" (click)="onPathSelected(item.route)">
+              <mat-icon class="icon" svgIcon="{{item.icon}}"
+                        [ngClass]="this.currentRoute == item.route ? 'selected-menu-item ' : ''"></mat-icon>
+              @if (isExpanded) {
+                <span class="menu-text">{{ item.display }}</span>
+              }
+            </li>
+          }
+        </ul>
+      </li>
+    }
   </div>
 </ul>
 

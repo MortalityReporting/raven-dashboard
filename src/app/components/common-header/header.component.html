@@ -12,6 +12,9 @@
     @if (version()) {
       <div class="version-label">
         Version: {{ version() }}
+        @if(!enableDashboardApiServices()){
+          Community
+        }
       </div>
     }
     @if (configuration()?.menuItem) {

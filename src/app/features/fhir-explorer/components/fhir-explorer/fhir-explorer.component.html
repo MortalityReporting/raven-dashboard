@@ -63,10 +63,10 @@
     [attr.aria-live]="'polite'">
     @if (isLoadingXMLData) {
       <div
-        class="loading"
+        class="loading-ellipsis margin-top-md margin-left-md"
         role="status"
         aria-live="polite">
-        Converting to XML resource...
+        Converting to XML resource
       </div>
     }
     @if (formattedText && !isLoadingXMLData) {
