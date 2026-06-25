@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, computed, input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, input, OnInit, signal} from '@angular/core';
 import {HeaderConfig} from "./header.config";
 import {MatButtonModule} from "@angular/material/button";
 import {MatToolbarModule} from "@angular/material/toolbar";
@@ -6,6 +6,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatMenuModule} from "@angular/material/menu";
 import {RouterLink} from "@angular/router";
 import {MatDividerModule} from "@angular/material/divider";
+import {ConfigService} from "../../config/config.service";
 
 @Component({
   imports: [
@@ -21,7 +22,8 @@ import {MatDividerModule} from "@angular/material/divider";
   templateUrl: 'header.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+
   // Signal inputs
   configuration = input<HeaderConfig | undefined>();
   title = input<string>("");
@@ -30,6 +32,8 @@ export class HeaderComponent {
   splitSubtitleEvenly = input<boolean>(false);
   showUserManagement = input<boolean>(false);
   backgroundColor = input<string>("#646064");
+  enableDashboardApiServices = signal<boolean>(false);
+  configService = inject(ConfigService);
 
   // Computed signal for subtitle - replaces ngOnInit logic
   subtitleInsert = computed(() => {
@@ -39,6 +43,10 @@ export class HeaderComponent {
       return this.subtitle();
     }
   });
+
+  ngOnInit(): void {
+    this.enableDashboardApiServices.set(this.configService.config?.enableDashboardApiServices);
+  }
 
   private splitSubtitle(subtitle: string): string {
     const subtitleWordList = subtitle.split(" ");
