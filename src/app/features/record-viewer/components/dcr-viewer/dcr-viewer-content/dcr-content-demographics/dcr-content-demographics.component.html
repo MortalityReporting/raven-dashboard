@@ -1,0 +1,45 @@
+<div class="summary-section-body">
+  <div
+    class="summary-section-grid"
+    role="group"
+    [attr.aria-label]="'Demographics information'">
+
+    <div class="grid-row">
+      <div class="grid-col-1">
+        <record-viewer-mdi-to-edrs-viewer-content-field
+          [label]="'Date of Birth'"
+          [value]="$safeNavigationMigration(demographics()?.birthDate)"
+          appSetFhirExplorer
+          [resource]="$safeNavigationMigration(demographics()?.patientResource)"
+        />
+      </div>
+      <div class="grid-col-1" aria-hidden="true">
+        <record-viewer-mdi-to-edrs-viewer-content-field
+          [label]="'Sex'"
+          [value]="$safeNavigationMigration(demographics()?.gender)"
+          appSetFhirExplorer
+          [resource]="$safeNavigationMigration(demographics()?.patientResource)"
+        />
+      </div>
+    </div>
+
+    <div class="grid-row">
+      <div class="grid-col-1">
+        <record-viewer-mdi-to-edrs-viewer-content-field
+          [label]="'Race'"
+          [value]="$safeNavigationMigration(demographics()?.race)"
+          appSetFhirExplorer
+          [resource]="$safeNavigationMigration(demographics()?.patientResource)"
+        />
+      </div>
+      <div class="grid-col-1">
+        <record-viewer-mdi-to-edrs-viewer-content-field
+          [label]="'Ethnicity'"
+          [value]="$safeNavigationMigration(demographics()?.ethnicity)"
+          appSetFhirExplorer
+          [resource]="$safeNavigationMigration(demographics()?.patientResource)"
+        />
+      </div>
+    </div>
+  </div>
+</div>

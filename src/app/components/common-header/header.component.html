@@ -1,0 +1,50 @@
+<mat-toolbar class="header">
+
+  <mat-toolbar-row [style.background-color]="backgroundColor()">
+    <div class="title" [routerLink]="'/'" [style.cursor]="'pointer'">{{ title() }}</div>
+
+    <div class="subtitle">
+      <p [innerHTML]="subtitleInsert()">
+      </p>
+    </div>
+
+    <div class="content-spacer"></div>
+    @if (version()) {
+      <div class="version-label">
+        Version: {{ version() }}
+        @if(!enableDashboardApiServices()){
+          Community
+        }
+      </div>
+    }
+    @if (configuration()?.menuItem) {
+      <div>
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </div>
+    }
+    <div>
+      @if (showUserManagement()) {
+        <button mat-icon-button aria-label="User Management">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+      }
+    </div>
+  </mat-toolbar-row>
+
+  <mat-menu #menu="matMenu">
+    @for (item of configuration()?.menuItem; track item) {
+
+      @if (item.divider) {
+        <mat-divider></mat-divider>
+      }
+      @if (!item.divider) {
+        <button mat-menu-item (click)="openLink(item.link)">
+          <span>{{ item.label }}</span>
+        </button>
+      }
+
+    }
+  </mat-menu>
+</mat-toolbar>

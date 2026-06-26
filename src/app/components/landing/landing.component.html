@@ -146,11 +146,11 @@
         <mat-card
           tabindex="0"
           role="button"
-          (click)="onBtnClick(appConfiguration?.modules?.['recordViewer']?.route)"
-          (keydown.enter)="onBtnClick(appConfiguration?.modules?.['recordViewer']?.route)"
-          (keydown.space)="onBtnClick(appConfiguration?.modules?.['recordViewer']?.route)"
+          (click)="onBtnClick($safeNavigationMigration(appConfiguration?.modules?.['recordViewer']?.route))"
+          (keydown.enter)="onBtnClick($safeNavigationMigration(appConfiguration?.modules?.['recordViewer']?.route))"
+          (keydown.space)="onBtnClick($safeNavigationMigration(appConfiguration?.modules?.['recordViewer']?.route))"
           cardHover
-          [color]="appConfiguration?.modules?.['recordViewer']?.color"
+          [color]="$safeNavigationMigration(appConfiguration?.modules?.['recordViewer']?.color)"
           [attr.aria-label]="'Navigate to ' + appConfiguration?.modules?.['recordViewer']?.title">
           <mat-card-header>
             <mat-card-title class="mat-card-title-decoration">
@@ -177,11 +177,11 @@
         <mat-card
           tabindex="0"
           role="button"
-          (click)="onBtnClick(appConfiguration?.modules?.['recordImport']?.route)"
-          (keydown.enter)="onBtnClick(appConfiguration?.modules?.['recordImport']?.route)"
-          (keydown.space)="onBtnClick(appConfiguration?.modules?.['recordImport']?.route)"
+          (click)="onBtnClick($safeNavigationMigration(appConfiguration?.modules?.['recordImport']?.route))"
+          (keydown.enter)="onBtnClick($safeNavigationMigration(appConfiguration?.modules?.['recordImport']?.route))"
+          (keydown.space)="onBtnClick($safeNavigationMigration(appConfiguration?.modules?.['recordImport']?.route))"
           cardHover
-          [color]="appConfiguration?.modules?.['recordImport']?.color"
+          [color]="$safeNavigationMigration(appConfiguration?.modules?.['recordImport']?.color)"
           [attr.aria-label]="'Navigate to ' + appConfiguration?.modules?.['recordImport']?.title">
           <mat-card-header>
             <mat-card-title class="mat-card-title-decoration">
@@ -207,11 +207,11 @@
         <mat-card
           tabindex="0"
           role="button"
-          (click)="onBtnClick(appConfiguration?.modules?.['recordComparison']?.route)"
-          (keydown.enter)="onBtnClick(appConfiguration?.modules?.['recordComparison']?.route)"
-          (keydown.space)="onBtnClick(appConfiguration?.modules?.['recordComparison']?.route)"
+          (click)="onBtnClick($safeNavigationMigration(appConfiguration?.modules?.['recordComparison']?.route))"
+          (keydown.enter)="onBtnClick($safeNavigationMigration(appConfiguration?.modules?.['recordComparison']?.route))"
+          (keydown.space)="onBtnClick($safeNavigationMigration(appConfiguration?.modules?.['recordComparison']?.route))"
           cardHover
-          [color]="appConfiguration?.modules?.['recordComparison']?.color"
+          [color]="$safeNavigationMigration(appConfiguration?.modules?.['recordComparison']?.color)"
           [attr.aria-label]="'Navigate to ' + appConfiguration?.modules?.['recordComparison']?.title">
           <mat-card-header>
             <mat-card-title class="mat-card-title-decoration">
@@ -237,11 +237,11 @@
         <mat-card
           tabindex="0"
           role="button"
-          (click)="onBtnClick(appConfiguration?.modules?.['fhirValidator']?.route)"
-          (keydown.enter)="onBtnClick(appConfiguration?.modules?.['fhirValidator']?.route)"
-          (keydown.space)="onBtnClick(appConfiguration?.modules?.['fhirValidator']?.route)"
+          (click)="onBtnClick($safeNavigationMigration(appConfiguration?.modules?.['fhirValidator']?.route))"
+          (keydown.enter)="onBtnClick($safeNavigationMigration(appConfiguration?.modules?.['fhirValidator']?.route))"
+          (keydown.space)="onBtnClick($safeNavigationMigration(appConfiguration?.modules?.['fhirValidator']?.route))"
           cardHover
-          [color]="appConfiguration?.modules?.['fhirValidator']?.color"
+          [color]="$safeNavigationMigration(appConfiguration?.modules?.['fhirValidator']?.color)"
           [attr.aria-label]="'Navigate to ' + appConfiguration?.modules?.['fhirValidator']?.title">
           <mat-card-header>
             <mat-card-title class="mat-card-title-decoration">
@@ -268,11 +268,11 @@
         <mat-card
           tabindex="0"
           role="button"
-          (click)="onBtnClick(appConfiguration?.modules?.['workflowSimulator']?.route)"
-          (keydown.enter)="onBtnClick(appConfiguration?.modules?.['workflowSimulator']?.route)"
-          (keydown.space)="onBtnClick(appConfiguration?.modules?.['workflowSimulator']?.route)"
+          (click)="onBtnClick($safeNavigationMigration(appConfiguration?.modules?.['workflowSimulator']?.route))"
+          (keydown.enter)="onBtnClick($safeNavigationMigration(appConfiguration?.modules?.['workflowSimulator']?.route))"
+          (keydown.space)="onBtnClick($safeNavigationMigration(appConfiguration?.modules?.['workflowSimulator']?.route))"
           cardHover
-          [color]="appConfiguration?.modules?.['workflowSimulator']?.color"
+          [color]="$safeNavigationMigration(appConfiguration?.modules?.['workflowSimulator']?.color)"
           [attr.aria-label]="'Navigate to ' + appConfiguration?.modules?.['workflowSimulator']?.title">
           <mat-card-header>
             <mat-card-title class="mat-card-title-decoration">

@@ -119,10 +119,15 @@ export const MdiCodesCS: any = {
     "display": "Approximate",
     "definition": "Approximate"
   },
-  {
-    "code": "court-appointed",
-    "display": "Court Appointed",
-    "definition": "Court Appointed"
-  }
-]
+    {
+      "code": "court-appointed",
+      "display": "Court Appointed",
+      "definition": "Court Appointed"
+    },
+    {
+      "code": "funeral-home-case-number",
+      "display": "Funeral Home Case Number",
+      "definition": "Funeral Home Case Number"
+    }
+  ]
 }

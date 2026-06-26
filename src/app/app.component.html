@@ -2,15 +2,17 @@
   <app-nav-menu></app-nav-menu>
   <div #content class="app-flex-wrapper">
     <div class="app-header-wrapper">
-      <common-header
+      <app-common-header
         [title]="title"
         [subtitle]="subTitle"
         [splitSubtitleEvenly]="true"
         [version]="version"
         [backgroundColor]="color"
         [configuration]="headerConfig"
-      ></common-header>
-      <app-user-header></app-user-header>
+      ></app-common-header>
+      @if(enableDashboardApiServices()){
+        <app-user-header></app-user-header>
+      }
     </div>
     <div>
       <app-module-header></app-module-header>

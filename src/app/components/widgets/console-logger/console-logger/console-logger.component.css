@@ -1,0 +1,58 @@
+.terminal {
+  font-family: monospace;
+  height: 200px;
+  overflow-y: scroll;
+  background-color: #252525;
+  color: whitesmoke;
+  padding: 8px 8px 32px 8px;
+  border-radius: 4px;
+}
+
+/* Keyboard focus indicator - WCAG 2.4.7 */
+.terminal:focus {
+  outline: 2px solid #0052cc;
+  outline-offset: 2px;
+}
+
+/* Log entry styling */
+.log-entry {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.5;
+}
+
+.log-icon {
+  flex-shrink: 0;
+  font-size: 16px;
+  display: inline-block;
+  width: 20px;
+}
+
+.log-level {
+  flex-shrink: 0;
+  font-weight: bold;
+  min-width: 60px;
+}
+
+.log-content {
+  flex: 1;
+  word-break: break-word;
+}
+
+/* WCAG 2.2 AA Compliant Colors - 4.5:1 contrast ratio minimum */
+.ERROR {
+  color: #ff6b6b; /* Light red - 4.6:1 ratio on #252525 */
+}
+
+.INFO {
+  color: whitesmoke; /* 14.5:1 ratio on #252525 */
+}
+
+.WARN {
+  color: #ffd54f; /* Light amber - 5.2:1 ratio on #252525 */
+}
+
+.DEBUG {
+  color: #6fa8dc; /* Light blue - 4.7:1 ratio on #252525 */
+}

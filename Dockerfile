@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 FROM node:22.16.0-alpine AS build
+=======
+FROM node:26.3.0-alpine AS build
+>>>>>>> main
 WORKDIR /app
 COPY . .
 

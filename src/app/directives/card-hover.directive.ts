@@ -1,22 +1,37 @@
-import {Directive, ElementRef, HostListener, Input, Renderer2} from '@angular/core';
+import { Directive, ElementRef, Renderer2, input } from '@angular/core';
 
 @Directive({
-    selector: '[cardHover]',
-    standalone: false
+  selector: '[cardHover]',
+  host: {
+    '(mouseenter)': 'onMouseEnter()',
+    '(mouseleave)': 'onMouseLeave()'
+  }
 })
 export class CardHoverDirective {
-
-  @Input() color;
+  // Use signal-based input
+  color = input<string>();
 
   constructor(
-    private elementRef: ElementRef
-  ) { }
+    private elementRef: ElementRef,
+    private renderer: Renderer2
+  ) {}
 
-  @HostListener('mouseenter') onMouseEnter() {
-    this.elementRef.nativeElement.style.borderLeftColor = this.color;
+  onMouseEnter() {
+    const colorValue = this.color();
+    if (colorValue) {
+      this.renderer.setStyle(
+        this.elementRef.nativeElement,
+        'border-left-color',
+        colorValue
+      );
+    }
   }
 
-  @HostListener('mouseleave') onMouseLeave() {
-    this.elementRef.nativeElement.style.borderLeftColor = 'transparent';
+  onMouseLeave() {
+    this.renderer.setStyle(
+      this.elementRef.nativeElement,
+      'border-left-color',
+      'transparent'
+    );
   }
 }

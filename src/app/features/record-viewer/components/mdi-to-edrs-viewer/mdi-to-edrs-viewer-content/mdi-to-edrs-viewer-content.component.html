@@ -1,0 +1,437 @@
+
+<div class="section-button-wrapper">
+  <button class="margin-right-sm" mat-raised-button (click)="onOpenAll()" [style.background-color]="config.backgroundColor"
+    [style.color]="appConfig.contrastColor">
+    <mat-icon>expand_more</mat-icon>
+    Expand All Sections
+  </button>
+  <button class="margin-right-md" mat-raised-button (click)="onCloseAll()" [style.background-color]="config.backgroundColor"
+    [style.color]="appConfig.contrastColor">
+    <mat-icon>expand_less</mat-icon>
+    Collapse All Sections
+  </button>
+  <span class="content-spacer"></span>
+  <button mat-raised-button (click)="onOpenInComparisonTool()" [style.background-color]="config.backgroundColor"
+    [style.color]="appConfig.contrastColor">Open in Comparison Tool
+  </button>
+</div>
+
+<mat-accordion multi>
+  <mat-expansion-panel class="summary-section" id="caseAdminInfo" [expanded]="isExpanded('caseAdminInfo')">
+    <mat-expansion-panel-header (click)="onToggleState( 'caseAdminInfo' )">
+      <mat-panel-title>Case Administration Information</mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="summary-section-body">
+      <div class="summary-section-grid">
+        <div class="grid-row">
+          <div class="grid-col-1">
+            <div class="content-field-label">
+              <p><u>Tracking Numbers</u></p>
+            </div>
+            @for (trackingNumber of mdiToEdrsRecord?.caseHeader?.trackingNumbers; track trackingNumber) {
+              <div class="content-field-value">
+                <record-viewer-mdi-to-edrs-viewer-content-field [label]="trackingNumber.type" [value]="trackingNumber.value"
+                  appSetFhirExplorer
+                  [profile]="fhirProfiles.MdiToEdrs.Comp_MDItoEDRS"
+                  [bundle]="mdiToEdrsRecord.documentBundle">
+                </record-viewer-mdi-to-edrs-viewer-content-field>
+              </div>
+            }
+          </div>
+          <div class="grid-col-1">
+            <div class="content-field-label">
+              <p><u>Chief Medical Examiner/Coroner</u></p>
+            </div>
+            <div>
+              @if(mdiToEdrsRecord?.caseHeader?.authors?.[0]){
+                <record-viewer-mdi-to-edrs-viewer-practitioner-card [practitioner]="mdiToEdrsRecord.caseHeader.authors[0]"/>
+              }
+              @else {
+                {{ mdiToEdrsDocumentHandlerService.defaultString }}
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel class="summary-section" id="demographics" [expanded]="isExpanded('demographics')">
+    <mat-expansion-panel-header (click)="onToggleState( 'demographics' )">
+      <mat-panel-title>Demographics</mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="summary-section-body">
+      <div class="summary-section-grid">
+        <div class="grid-row">
+          <div class="grid-col-1">
+            <!--    TODO uncomment when we know how to use gender/sex fields per the CDC guidelines. Note that gender should come from Sex at Death-->
+<!--            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Legal Sex at Death'"-->
+<!--              [value]="mdiToEdrsRecord?.caseSummary?.demographics?.gender"-->
+<!--              appSetFhirExplorer-->
+<!--            [resource]="mdiToEdrsRecord?.caseSummary?.demographics?.patientResource"/>-->
+          </div>
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Social Security Number'"
+              [value]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.demographics?.ssn)"
+              appSetFhirExplorer
+            [resource]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.demographics?.patientResource)"/>
+          </div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Date of Birth'"
+              [value]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.demographics?.birthDate)"
+              appSetFhirExplorer
+              [resource]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.demographics?.patientResource)"
+            />
+          </div>
+          <div class="grid-col-1">
+          </div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Race'"
+              [value]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.demographics?.race)"
+              appSetFhirExplorer
+              [resource]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.demographics?.patientResource)"
+            />
+          </div>
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Ethnicity'"
+              [value]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.demographics?.ethnicity)"
+              appSetFhirExplorer
+              [resource]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.demographics?.patientResource)"
+            />
+          </div>
+        </div>
+        <br/>
+        Residence
+      </div>
+
+      <br/>
+
+      <div class="summary-section-grid">
+        <div class="grid-row">
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Address Line 1'"
+              [value]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.demographics?.address?.line1)"
+              appSetFhirExplorer
+              [resource]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.demographics?.patientResource)">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Address Line 2'"
+              [value]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.demographics?.address?.line2)"
+              appSetFhirExplorer
+              [resource]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.demographics?.patientResource)">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'City'"
+              [value]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.demographics.address?.city)"
+              appSetFhirExplorer
+              [resource]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.demographics?.patientResource)">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'State'"
+              [value]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.demographics?.address?.state)"
+              appSetFhirExplorer
+              [resource]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.demographics?.patientResource)">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Zip Code'"
+              [value]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.demographics?.address?.zip)"
+              appSetFhirExplorer
+              [resource]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.demographics?.patientResource)">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Country'"
+              [value]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.demographics?.address?.country)"
+              appSetFhirExplorer
+              [resource]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.demographics?.patientResource)">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel class="summary-section" id="circumstances" [expanded]="isExpanded('circumstances')">
+    <mat-expansion-panel-header (click)="onToggleState( 'circumstances' )">
+      <mat-panel-title>Circumstances</mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="summary-section-body">
+      <div class="summary-section-grid">
+        <div class="grid-row">
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Death Location'"
+              [value]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.circumstances.deathLocation)"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Loc_DeathLocation"
+              [bundle]="$safeNavigationMigration(mdiToEdrsRecord?.documentBundle)">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Injury Location'"
+              [value]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.circumstances.injuryLocation)"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Loc_InjuryLocation"
+              [bundle]="$safeNavigationMigration(mdiToEdrsRecord?.documentBundle)">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Tobacco Use Contributed to Death'"
+              [value]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.circumstances.tobaccoUseContributed)"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Obs_TobaccoUseContributedToDeath"
+              [bundle]="$safeNavigationMigration(mdiToEdrsRecord?.documentBundle)">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Decedent Pregnancy Status'"
+              [value]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.circumstances.pregnancy)"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Obs_DecedentPregnancyStatus"
+              [bundle]="$safeNavigationMigration(mdiToEdrsRecord?.documentBundle)">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel class="summary-section" id="jurisdiction" [expanded]="isExpanded('jurisdiction')">
+    <mat-expansion-panel-header (click)="onToggleState( 'jurisdiction' )">
+      <mat-panel-title>Jurisdiction</mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="summary-section-body">
+      <div class="summary-section-grid">
+        <div class="grid-row">
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Death Date/Time'"
+              [value]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.jurisdiction.deathDateTime)"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Obs_DeathDate"
+              [bundle]="$safeNavigationMigration(mdiToEdrsRecord?.documentBundle)">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Pronounced Date/Time'"
+              [value]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.jurisdiction.pronouncedDateTime)"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Obs_DeathDate"
+              [bundle]="$safeNavigationMigration(mdiToEdrsRecord?.documentBundle)">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Establishment Approach'"
+              [value]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.jurisdiction.establishmentApproach)"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Obs_DeathDate"
+              [bundle]="$safeNavigationMigration(mdiToEdrsRecord?.documentBundle)">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Type of Death Location'"
+              [value]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.jurisdiction.typeOfDeathLocation)"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Obs_DeathDate"
+              [bundle]="$safeNavigationMigration(mdiToEdrsRecord?.documentBundle)">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel class="summary-section" id="causeAndManner" [expanded]="isExpanded('causeAndManner')">
+    <mat-expansion-panel-header (click)="onToggleState( 'causeAndManner' )">
+      <mat-panel-title>Cause and Manner of Death</mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div class="summary-section-body">
+
+      <div class="summary-section-grid">
+        <div class="grid-row">
+          <div class="grid-col-1">
+            <div>PART I</div>
+            <div>Immediate Cause</div>
+          </div>
+          <div class="grid-col-6">
+            <table class="alias-table">
+              <tr>
+                <th>Event</th>
+                <th>Interval</th>
+              </tr>
+              @for (cause of mdiToEdrsRecord?.caseSummary?.causeAndManner?.causeOfDeathPart1; track cause) {
+                <tr>
+                  <td appSetFhirExplorer [resourceId]="cause.id" [bundle]="$safeNavigationMigration(mdiToEdrsRecord?.documentBundle)">
+                    {{cause.event}}
+                  </td>
+                  <td appSetFhirExplorer [resourceId]="cause.id" [bundle]="$safeNavigationMigration(mdiToEdrsRecord?.documentBundle)">
+                    {{cause.interval}}
+                  </td>
+                </tr>
+              }
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <br/>
+
+      <div class="summary-section-grid">
+        <div class="grid-row">
+          <div class="grid-col-1">
+            <div>PART II</div>
+            <div>Contributing Cause</div>
+          </div>
+          <div class="grid-col-6">
+            <table class="alias-table">
+              <tr>
+                <th>Event</th>
+              </tr>
+              @for (cause of mdiToEdrsRecord?.caseSummary?.causeAndManner?.causeOfDeathPart2; track cause) {
+                <tr>
+                  <td appSetFhirExplorer [resourceId]="cause.id" [bundle]="$safeNavigationMigration(mdiToEdrsRecord?.documentBundle)">
+                    {{cause.value}}
+                  </td>
+                </tr>
+              }
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <br/>
+
+      <div class="summary-section-grid">
+        <div class="grid-row">
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Manner of Death'"
+              [value]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.causeAndManner.mannerOfDeath)"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Obs_MannerOfDeath"
+              [bundle]="$safeNavigationMigration(mdiToEdrsRecord?.documentBundle)">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Place of Injury'"
+              [value]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.causeAndManner.placeOfInjury)"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Obs_InjuryIncident"
+              [bundle]="$safeNavigationMigration(mdiToEdrsRecord?.documentBundle)">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'How Injury Occurred'"
+              [value]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.causeAndManner.howDeathInjuryOccurred)"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Obs_InjuryIncident"
+              [bundle]="$safeNavigationMigration(mdiToEdrsRecord?.documentBundle)">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Injury Date/Time'"
+              [value]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.causeAndManner.injuryDateTime)"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Obs_InjuryIncident"
+              [bundle]="$safeNavigationMigration(mdiToEdrsRecord?.documentBundle)">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Injury/Event Occurred at Work'"
+              [value]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.causeAndManner.workInjuryIndicator)"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Obs_InjuryIncident"
+              [bundle]="$safeNavigationMigration(mdiToEdrsRecord?.documentBundle)">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Transportation Role'"
+              [value]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.causeAndManner.transportationRole)"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRDR.Obs_InjuryIncident"
+              [bundle]="$safeNavigationMigration(mdiToEdrsRecord?.documentBundle)">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+        </div>
+      </div>
+      <br/>
+    </div>
+
+  </mat-expansion-panel>
+
+<!--  TODO: Add back when data available. Sync with menu. -->
+<!--  <mat-expansion-panel class="summary-section" id="medicalHistory" [expanded]="isExpanded('medicalHistory')">-->
+<!--    <mat-expansion-panel-header (click)="onToggleState( 'medicalHistory' )">-->
+<!--      <mat-panel-title>Relevant Medical History</mat-panel-title>-->
+<!--    </mat-expansion-panel-header>-->
+<!--    <div class="summary-section-body">Not Yet Implemented in MDI-->
+<!--      Implementation Guide-->
+<!--    </div>-->
+<!--  </mat-expansion-panel>-->
+
+  <mat-expansion-panel class="summary-section" id="examAndAutopsy" [expanded]="isExpanded('examAndAutopsy')">
+    <mat-expansion-panel-header (click)="onToggleState( 'examAndAutopsy' )">
+      <mat-panel-title>Exam and Autopsy Notes</mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="summary-section-body">
+      <div class="summary-section-grid">
+        <div class="grid-row">
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Autopsy Performed?'"
+              [value]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.examAndAutopsy.performed)"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRCL.Obs_AutopsyPerformed"
+              [bundle]="$safeNavigationMigration(mdiToEdrsRecord?.documentBundle)">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Results Available?'"
+              [value]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.examAndAutopsy.resultsAvailable)"
+              appSetFhirExplorer
+              [profile]="fhirProfiles.VRCL.Obs_AutopsyPerformed"
+              [bundle]="$safeNavigationMigration(mdiToEdrsRecord?.documentBundle)">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-col-1">
+            <record-viewer-mdi-to-edrs-viewer-content-field [label]="'Autopsy Location'"
+              [value]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.examAndAutopsy?.autopsyLocation)"
+              appSetFhirExplorer
+              [resource]="$safeNavigationMigration(mdiToEdrsRecord?.caseSummary?.examAndAutopsy?.autopsyLocationResource)">
+            </record-viewer-mdi-to-edrs-viewer-content-field>
+          </div>
+          <div class="grid-col-1">
+            <!-- Empty Cell -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-expansion-panel>
+<!--  TODO: Add back when data available. Sync with menu. -->
+<!--  <mat-expansion-panel class="summary-section" id="narratives" [expanded]="isExpanded('narratives')">-->
+<!--    <mat-expansion-panel-header (click)="onToggleState( 'narratives' )">-->
+<!--      <mat-panel-title>Narratives</mat-panel-title>-->
+<!--    </mat-expansion-panel-header>-->
+<!--    <div class="summary-section-body">Not Yet Implemented in MDI-->
+<!--      Implementation Guide-->
+<!--    </div>-->
+<!--  </mat-expansion-panel>-->
+
+</mat-accordion>

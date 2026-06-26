@@ -3,24 +3,27 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor, HttpHeaders
+  HttpInterceptor,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {ConfigService} from "../service/config.service";
-import {Config} from "../model/config";
+import {ConfigService} from "../config/config.service";
 
 @Injectable()
 export class FhirAuthInterceptor implements HttpInterceptor {
 
-  config: Config;
-  constructor(private configService: ConfigService) {
-    this.config = configService.config;
-  }
+  constructor(private configService: ConfigService) {}
 
   // TODO: Fix so headers are added regardless of trailing slash.
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if (request.url.startsWith(this.config.ravenFhirServerBaseUrl)) {
-      let basicAuthCredentials = this.config.ravenFhirServerBasicAuth; // Format presumes user:pass
+    const config = this.configService.config;
+
+    // If config not loaded yet, pass through without modification
+    if (!config) {
+      return next.handle(request);
+    }
+
+    if (request.url.startsWith(config.ravenFhirServer.baseUrl)) {
+      let basicAuthCredentials = config.ravenFhirServer.basicAuth; // Format presumes user:pass
       let basicAuthHeader = 'Basic ' + btoa(basicAuthCredentials);
       request = request.clone({
         setHeaders: {
