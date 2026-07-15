@@ -22,7 +22,7 @@ export class RegisteredEndpointsInterceptor implements HttpInterceptor {
    */
   private getRegisteredEndpoints(): any[] {
     if (this.registeredEndpoints === null) {
-      const config = this.configService.config;
+      const config = this.configService.config();
       if (!config) {
         // Config not loaded yet, return empty array
         return [];
@@ -31,13 +31,13 @@ export class RegisteredEndpointsInterceptor implements HttpInterceptor {
       // Normalize URLs to ensure they end with /
       this.registeredEndpoints = [
         {
-          "baseUrl": this.normalizeUrl(config.dashboardApiUrl),
+          "baseUrl": this.normalizeUrl(config?.dashboardApiUrl),
           "allowedEndpoints": [
             "*"
           ]
         },
         {
-          "baseUrl": this.normalizeUrl(config.fhirValidatorUrl),
+          "baseUrl": this.normalizeUrl(config?.fhirValidatorUrl),
           "allowedEndpoints": [
             "$validate",
             "$translate",
@@ -45,13 +45,13 @@ export class RegisteredEndpointsInterceptor implements HttpInterceptor {
           ]
         },
         {
-          "baseUrl": this.normalizeUrl(config.ravenFhirServer.baseUrl),
+          "baseUrl": this.normalizeUrl(config?.ravenFhirServer?.baseUrl),
           "allowedEndpoints": [
             "*"
           ]
         },
         {
-          "baseUrl": this.normalizeUrl(config.ravenImportApiUrl),
+          "baseUrl": this.normalizeUrl(config?.ravenImportApiUrl),
           "allowedEndpoints": [
             "*"
           ]

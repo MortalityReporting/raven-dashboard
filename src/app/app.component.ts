@@ -26,18 +26,16 @@ export class AppComponent implements OnInit {
   color = AppConfiguration.config.color;
   contrastColor = AppConfiguration.config.contrastColor;
   headerConfig: HeaderConfig;
-  enableDashboardApiServices = signal<boolean>(false)
 
   constructor(
-    private configService: ConfigService,
+    protected configService: ConfigService,
     private themeService: ThemeService,
     public platform: Platform,
     private _snackBar: MatSnackBar
   ) {}
   ngOnInit(): void {
     this.title = "Raven";
-    this.version = this.configService.config?.version || 'unknown';
-    this.enableDashboardApiServices.set(this.configService.config?.enableDashboardApiServices);
+    this.version = this.configService.config()?.version || 'unknown';
     document.title = this.title;
 
     this.themeService.setColor(this.color);

@@ -48,8 +48,9 @@ export class UserHeaderComponent implements OnInit {
 
   ngOnInit(): void {
     // Access config in ngOnInit, which runs after APP_INITIALIZER completes
-    if (this.configService.config?.auth?.logoutUrl) {
-      this.adminLogoutUrl.set(this.configService.config.auth.logoutUrl);
+    // Only set logout URL if auth is enabled and configured
+    if (this.configService.config()?.enableDashboardApiServices && this.configService.config()?.auth?.logoutUrl) {
+      this.adminLogoutUrl.set(this.configService.config()?.auth.logoutUrl);
     }
   }
 }

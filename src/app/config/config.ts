@@ -31,13 +31,5 @@ export class Config {
     baseUrl: "",
     basicAuth: ""
   };
-  auth?: AuthConfig = {
-    redirectUrl: "",
-    logoutUrl: "",
-    clientId: "",
-    domain: "",
-    auth0: {
-      audience: ""
-    }
-  };
+  auth?: AuthConfig;
 }

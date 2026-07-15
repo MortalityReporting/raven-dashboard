@@ -42,10 +42,6 @@ export class TestingEventRootComponent implements OnInit, OnDestroy {
   registrations = signal<Registration[]>([]);
 
   protected configService = inject(ConfigService);
-  protected readonly enableDashboardApiServices = computed(() =>
-    this.configService.config?.enableDashboardApiServices ?? false
-  );
-
 
   currentRegistration: Registration = undefined;
   currentIndex: number = -2;

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, computed, inject, input, OnInit, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, input} from '@angular/core';
 import {HeaderConfig} from "./header.config";
 import {MatButtonModule} from "@angular/material/button";
 import {MatToolbarModule} from "@angular/material/toolbar";
@@ -22,7 +22,7 @@ import {ConfigService} from "../../config/config.service";
   templateUrl: 'header.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 
   // Signal inputs
   configuration = input<HeaderConfig | undefined>();
@@ -32,8 +32,7 @@ export class HeaderComponent implements OnInit {
   splitSubtitleEvenly = input<boolean>(false);
   showUserManagement = input<boolean>(false);
   backgroundColor = input<string>("#646064");
-  enableDashboardApiServices = signal<boolean>(false);
-  configService = inject(ConfigService);
+  protected configService = inject(ConfigService);
 
   // Computed signal for subtitle - replaces ngOnInit logic
   subtitleInsert = computed(() => {
@@ -43,10 +42,6 @@ export class HeaderComponent implements OnInit {
       return this.subtitle();
     }
   });
-
-  ngOnInit(): void {
-    this.enableDashboardApiServices.set(this.configService.config?.enableDashboardApiServices);
-  }
 
   private splitSubtitle(subtitle: string): string {
     const subtitleWordList = subtitle.split(" ");
