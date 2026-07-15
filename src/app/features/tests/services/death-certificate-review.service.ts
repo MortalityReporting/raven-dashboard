@@ -28,7 +28,7 @@ export class DeathCertificateReviewService {
 
   generateDcrFhirBundle(data): Observable<any> {
     let httpHeaders = new HttpHeaders().set('Content-Type', 'application/fhir+json');
-    let authStringSplit = this.configService.config.ravenFhirServer.basicAuth.split(":");
+    let authStringSplit = this.configService.config()?.ravenFhirServer?.basicAuth?.split(":");
     const basicAuthString = 'Basic ' + btoa(`${authStringSplit[0]}:${authStringSplit[1]}`);
     httpHeaders = httpHeaders.set('Authorization', basicAuthString);
 

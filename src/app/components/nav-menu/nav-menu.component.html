@@ -57,7 +57,7 @@
     </li>
     <mat-divider></mat-divider>
 
-    @if(enableDashboardApiServices()){
+    @if(configService.config()?.enableDashboardApiServices){
       <li class="main-item-wrapper">
         <div class="main-item">
           @if (isExpanded) {

@@ -12,7 +12,7 @@
     @if (version()) {
       <div class="version-label">
         Version: {{ version() }}
-        @if(!enableDashboardApiServices()){
+        @if(!configService.config()?.enableDashboardApiServices){
           Community
         }
       </div>

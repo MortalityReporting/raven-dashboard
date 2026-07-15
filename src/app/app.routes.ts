@@ -144,20 +144,20 @@ export const routes: Routes = [
     path: AppConfiguration.config.modules['testingEvents'].route,
     component: TestingEventRootComponent,
     data: { moduleConfig: ModuleHeaderConfig.TestingEvents, componentTitle: undefined },
-    canMatch: [() => inject(ConfigService).config?.enableDashboardApiServices ?? false]
+    canMatch: [() => inject(ConfigService).config()?.enableDashboardApiServices ?? false]
   },
   {
     path: AppConfiguration.config.modules['eventRegistration'].route,
     component: EventRegistrationComponent,
     data: { moduleConfig: ModuleHeaderConfig.EventRegistration, componentTitle: undefined },
-    canMatch: [() => inject(ConfigService).config?.enableDashboardApiServices ?? false]
+    canMatch: [() => inject(ConfigService).config()?.enableDashboardApiServices ?? false]
   },
   {
     path: AppConfiguration.config.modules['adminPanel'].route,
     component: AdminPanelComponent,
     data: { moduleConfig: ModuleHeaderConfig.AdminPanel, componentTitle: undefined, role: 'admin' },
     canActivate: [authGuard],
-    canMatch: [() => inject(ConfigService).config?.enableDashboardApiServices ?? false]
+    canMatch: [() => inject(ConfigService).config()?.enableDashboardApiServices ?? false]
   },
   {
     path: 'logged-in',

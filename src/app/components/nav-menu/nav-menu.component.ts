@@ -36,19 +36,21 @@ export class NavMenuComponent {
     { name: 'event-registration', display: 'Event Registration', route: 'event-registration', icon: 'event_register', loginRequired: true},
     { name: 'admin-panel', display: 'Admin Panel',  route: 'admin-panel', icon: 'admin_panel', loginRequired: true, requiredRole: this.appConstants.USER_ROLES.ADMIN}
   ]
+
   protected configService = inject(ConfigService);
-  protected readonly enableDashboardApiServices = computed(() =>
-    this.configService.config?.enableDashboardApiServices ?? false
-  );
 
   constructor(public router: Router, public authService: AuthService, protected appConstants: AppConstants) {
     this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(e => {
       this.currentRoute = e?.['urlAfterRedirects']?.substring(1).split('/')[0];
     });
+
     this.authService.idTokenClaims$.subscribe(tokenClaims => {
       this.TESTING_AND_EVENTS_CONFIG = this.TESTING_AND_EVENTS_CONFIG.filter(item => {
         if(!item['loginRequired']){
           return true;
+        }
+        else if(!this.configService.config()?.enableDashboardApiServices){
+          return false;
         }
         else if(!tokenClaims){
           return false;

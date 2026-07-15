@@ -1,4 +1,4 @@
-import {Injectable, isDevMode} from '@angular/core';
+import {Injectable, isDevMode, computed, signal} from '@angular/core';
 import packageInfo from '../../../package.json';
 import {HttpBackend, HttpClient} from "@angular/common/http";
 import {map, of} from "rxjs";
@@ -12,7 +12,9 @@ export class ConfigService {
 
   defaultConfigPath = 'assets/config/config.json';
   localConfigPath = 'assets/config/local-config.json';
-  config: Config | undefined;
+
+  // Public signal for config
+  readonly config = signal<Config | undefined>(undefined);
 
   private http: HttpClient
   packageInfo = packageInfo;
@@ -23,7 +25,8 @@ export class ConfigService {
 
   loadConfig() {
     // If config was already loaded, return it immediately
-    if (this.config && this.config.version) {
+    const currentConfig = this.config();
+    if (currentConfig && currentConfig.version) {
       return of(true);
     }
 
@@ -35,13 +38,13 @@ export class ConfigService {
     return this.http.get<Config>(configPath).pipe(
       map(config => {
         config.version = "v" + this.packageInfo.version;
-        this.config = config;
-        console.log(this.config);
+        this.config.set(config);
+        console.log(this.config());
         return true;
       }),
       catchError(error => {
         console.error("No configuration file found. If in dev mode please verify the existence of local-config.json file")
-        this.config = new Config();
+        this.config.set(new Config());
         return of(false);
       })
     )
@@ -55,7 +58,8 @@ export class ConfigService {
    * @returns The normalized URL with a trailing slash
    */
   getApiUrl(configKey: 'dashboardApiUrl' | 'ravenImportApiUrl' | 'fhirValidatorUrl' | 'ravenFhirServer' | 'blueJayServer'): string {
-    if (!this.config) {
+    const currentConfig = this.config();
+    if (!currentConfig) {
       throw new Error('Configuration not loaded. Call loadConfig() first.');
     }
 
@@ -63,11 +67,11 @@ export class ConfigService {
 
     // Handle direct string properties
     if (configKey === 'dashboardApiUrl' || configKey === 'ravenImportApiUrl' || configKey === 'fhirValidatorUrl') {
-      apiUrl = this.config[configKey];
+      apiUrl = currentConfig[configKey];
     }
     // Handle nested server objects
     else {
-      apiUrl = this.config[configKey].baseUrl;
+      apiUrl = currentConfig[configKey].baseUrl;
     }
 
     // Ensure URL ends with /
