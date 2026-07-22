@@ -18,7 +18,7 @@ export function provideUserManagement(): EnvironmentProviders {
         const authConfig = new AuthClientConfig();
 
         // Only configure Auth0 if auth is enabled
-        if (!config?.enableDashboardApiServices || !config?.auth) {
+        if (!config.enableDashboardApiServices || !config.auth) {
           // Return a minimal no-op configuration when auth is disabled
           authConfig.set({
             domain: '',
@@ -34,20 +34,20 @@ export function provideUserManagement(): EnvironmentProviders {
 
         // Configure Auth0 when auth is enabled
         authConfig.set({
-          domain: config?.auth.domain,
-          clientId: config?.auth.clientId,
+          domain: config.auth.domain,
+          clientId: config.auth.clientId,
           cacheLocation: 'localstorage',
           useRefreshTokens: true,
           authorizationParams: {
-            redirect_uri: config?.auth.redirectUrl,
-            audience: config?.auth.auth0.audience,
+            redirect_uri: config.auth.redirectUrl,
+            audience: config.auth.auth0.audience,
             scope: "admin profile email openid offline_access"
           },
           httpInterceptor: {
             allowedList: [
-              { uri: `${config?.dashboardApiUrl}admin-panel` },
-              { uri: `${config?.dashboardApiUrl}attachment/upload` },
-              { uri: `${config?.dashboardApiUrl}attachment/download` }
+              { uri: `${config.dashboardApiUrl}admin-panel` },
+              { uri: `${config.dashboardApiUrl}attachment/upload` },
+              { uri: `${config.dashboardApiUrl}attachment/download` }
             ]
           }
         });
