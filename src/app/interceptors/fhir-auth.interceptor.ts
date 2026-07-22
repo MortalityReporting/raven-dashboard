@@ -15,15 +15,15 @@ export class FhirAuthInterceptor implements HttpInterceptor {
 
   // TODO: Fix so headers are added regardless of trailing slash.
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const config = this.configService.config;
+    const config = this.configService.config();
 
     // If config not loaded yet, pass through without modification
     if (!config) {
       return next.handle(request);
     }
 
-    if (request.url.startsWith(config.ravenFhirServer.baseUrl)) {
-      let basicAuthCredentials = config.ravenFhirServer.basicAuth; // Format presumes user:pass
+    if (request.url.startsWith(config?.ravenFhirServer.baseUrl)) {
+      let basicAuthCredentials = config?.ravenFhirServer.basicAuth; // Format presumes user:pass
       let basicAuthHeader = 'Basic ' + btoa(basicAuthCredentials);
       request = request.clone({
         setHeaders: {

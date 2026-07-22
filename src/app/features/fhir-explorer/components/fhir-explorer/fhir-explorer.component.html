@@ -1,9 +1,9 @@
 <div class="explorer-header-text" role="status" [attr.aria-label]="'Resource type'">
-  <strong>Resource Type:</strong> {{fhirResource?.resourceType}}
+  <strong>Resource Type:</strong> {{fhirResource()?.resourceType}}
 </div>
-@if (fhirResource?.meta?.profile?.[0]) {
+@if (fhirResource()?.meta?.profile?.[0]) {
   <div class="explorer-header-text" role="status" [attr.aria-label]="'Profile information'">
-    <strong>Profile:</strong> {{fhirResource?.meta?.profile?.[0]}}
+    <strong>Profile:</strong> {{fhirResource()?.meta?.profile?.[0]}}
   </div>
 }
 
@@ -11,17 +11,17 @@
   <div class="col-left">
     <section [attr.aria-label]="'Resource format selection'">
       <mat-button-toggle-group
-        [(ngModel)]="selectedStructure"
-        (click)="onToggleClick();"
+        [value]="selectedStructure()"
+        (change)="selectedStructure.set($event.value); onToggleClick();"
         style="width: 100%"
         [attr.aria-label]="'Select resource format'"
         role="group">
         <mat-button-toggle
           value="narrative"
           style="width: 33%"
-          [disabled]="!fhirResource?.text?.div"
-          [attr.aria-label]="'View narrative format' + (!fhirResource?.text?.div ? ' - unavailable' : '')"
-          [matTooltip]="!fhirResource?.text?.div ? 'No Narrative Found' : 'View narrative format'">
+          [disabled]="!fhirResource()?.text?.div"
+          [attr.aria-label]="'View narrative format' + (!fhirResource()?.text?.div ? ' - unavailable' : '')"
+          [matTooltip]="!fhirResource()?.text?.div ? 'No Narrative Found' : 'View narrative format'">
           Narrative
         </mat-button-toggle>
         <mat-button-toggle
@@ -45,11 +45,11 @@
       type="button"
       color="primary"
       [matTooltip]="'Copy content to clipboard'"
-      [disabled]="selectedStructure==='narrative' || !this.formattedText"
-      [attr.aria-label]="'Copy ' + selectedStructure + ' content to clipboard'"
-      [attr.aria-disabled]="selectedStructure==='narrative' || !this.formattedText"
-      [cdkCopyToClipboard]="formattedText"
-      (click)="onCopyToClipboard(formattedText)">
+      [disabled]="selectedStructure()==='narrative' || !this.formattedText()"
+      [attr.aria-label]="'Copy ' + selectedStructure() + ' content to clipboard'"
+      [attr.aria-disabled]="selectedStructure()==='narrative' || !this.formattedText()"
+      [cdkCopyToClipboard]="formattedText()"
+      (click)="onCopyToClipboard(formattedText())">
       <mat-icon aria-hidden="true">content_copy</mat-icon>
       <span class="visually-hidden">Copy to clipboard</span>
     </button>
@@ -59,9 +59,9 @@
 @if (!isNarrative()) {
   <div
     role="region"
-    [attr.aria-label]="selectedStructure + ' resource content'"
+    [attr.aria-label]="selectedStructure() + ' resource content'"
     [attr.aria-live]="'polite'">
-    @if (isLoadingXMLData) {
+    @if (isLoadingXMLData()) {
       <div
         class="loading-ellipsis margin-top-md margin-left-md"
         role="status"
@@ -69,12 +69,12 @@
         Converting to XML resource
       </div>
     }
-    @if (formattedText && !isLoadingXMLData) {
+    @if (formattedText() && !isLoadingXMLData()) {
       <pre
         role="code"
-        [attr.aria-label]="selectedStructure + ' formatted resource'">{{ formattedText }}</pre>
+        [attr.aria-label]="selectedStructure() + ' formatted resource'">{{ formattedText() }}</pre>
     }
-    @if (!formattedText && !isLoadingXMLData) {
+    @if (!formattedText() && !isLoadingXMLData()) {
       <div
         style="text-align: center"
         role="status"
@@ -85,27 +85,27 @@
   </div>
 }
 
-@if (selectedStructure === 'narrative') {
+@if (selectedStructure() === 'narrative') {
   <div
     role="region"
     [attr.aria-label]="'Narrative resource content'"
     [attr.aria-live]="'polite'">
     <br aria-hidden="true">
-    @if (formattedText) {
+    @if (formattedText()) {
       <div
-        [innerHTML]="formattedText"
+        [innerHTML]="formattedText()"
         role="article"
         [attr.aria-label]="'Narrative content'"></div>
     }
-    @if (!formattedText) {
+    @if (!formattedText()) {
       <div
         style="text-align: center"
         role="status"
         aria-live="polite">
-        @if (!fhirResource) {
+        @if (!fhirResource()) {
           <pre>Resource Not Found</pre>
         }
-        @if (fhirResource) {
+        @if (fhirResource()) {
           <pre>No Narrative Found</pre>
         }
       </div>

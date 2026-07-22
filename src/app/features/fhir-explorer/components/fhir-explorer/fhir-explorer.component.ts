@@ -1,4 +1,4 @@
-import {Component, OnInit, ElementRef, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit, ElementRef, ChangeDetectionStrategy, signal} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {UtilsService} from "../../../../service/utils.service";
 import {FhirExplorerService} from "../../services/fhir-explorer.service";
@@ -18,10 +18,10 @@ import { MatIcon } from '@angular/material/icon';
 })
 export class FhirExplorerComponent implements OnInit {
 
-  formattedText: string;
-  fhirResource: any;
-  selectedStructure: string = "narrative";
-  isLoadingXMLData = false;
+  formattedText = signal<string>('');
+  fhirResource = signal<any>(null);
+  selectedStructure = signal<string>("narrative");
+  isLoadingXMLData = signal<boolean>(false);
 
   constructor(
     private httpClient: HttpClient,
@@ -33,29 +33,29 @@ export class FhirExplorerComponent implements OnInit {
 
   ngOnInit(): void {
     this.fhirExplorerService.fhirResource$.subscribe( resource => {
-      this.fhirResource = resource;
+      this.fhirResource.set(resource);
 
-      if(!this.fhirResource){
-        this.formattedText = '';
+      if(!this.fhirResource()){
+        this.formattedText.set('');
       }
-      else if(this.selectedStructure == "narrative"){
-        if(this.fhirResource?.text?.div){
-          this.formattedText = this.fhirResource?.text?.div;
+      else if(this.selectedStructure() == "narrative"){
+        if(this.fhirResource()?.text?.div){
+          this.formattedText.set(this.fhirResource()?.text?.div);
         }
         else {
-          this.selectedStructure = "json";
-          this.formattedText = JSON.stringify( resource, null, 2 );
+          this.selectedStructure.set("json");
+          this.formattedText.set(JSON.stringify( resource, null, 2 ));
         }
       }
-      else if (this.selectedStructure === "xml") {
-        this.isLoadingXMLData = true;
-        this.fhirExplorerService.translateToXml( this.fhirResource ).subscribe( response => {
-          this.formattedText = response;
-          this.isLoadingXMLData = false;
+      else if (this.selectedStructure() === "xml") {
+        this.isLoadingXMLData.set(true);
+        this.fhirExplorerService.translateToXml( this.fhirResource() ).subscribe( response => {
+          this.formattedText.set(response);
+          this.isLoadingXMLData.set(false);
         })
       }
       else {
-        this.formattedText = JSON.stringify( resource, null, 2 );
+        this.formattedText.set(JSON.stringify( resource, null, 2 ));
       }
       this.elRef.nativeElement.parentElement.parentElement.scrollTo(0, 0);
     })
@@ -63,15 +63,15 @@ export class FhirExplorerComponent implements OnInit {
 
 
   isNarrative() : boolean {
-    return this.selectedStructure === 'narrative';
+    return this.selectedStructure() === 'narrative';
   }
 
   onToggleClick() {
-    if (this.selectedStructure === "narrative") {
-      this.formattedText = this.fhirResource?.text?.div;
+    if (this.selectedStructure() === "narrative") {
+      this.formattedText.set(this.fhirResource()?.text?.div);
     }
     else {
-      this.fhirExplorerService.setSelectedFhirResource(this.fhirResource);
+      this.fhirExplorerService.setSelectedFhirResource(this.fhirResource());
     }
   }
 

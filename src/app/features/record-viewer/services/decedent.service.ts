@@ -25,7 +25,7 @@ export class DecedentService {
   private readonly MDI_EDRS_RECORDS_TYPE = "http://loinc.org|86807-5";
 
   constructor(private fhirClient: FhirClientService, private configService: ConfigService, private bundleHelperService: BundleHelperService, private fhirHelperService: FhirHelperService) {
-    this.serverBaseUrl = this.configService?.config?.ravenFhirServer.baseUrl;
+    this.serverBaseUrl = this.configService?.config()?.ravenFhirServer.baseUrl;
   }
 
   // TODO delete if search result bundle is not used

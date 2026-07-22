@@ -39,7 +39,7 @@ export class EndpointConfigurationStepComponent implements OnInit {
     uiStringConstants: UiStringConstants,
     private configService: ConfigService
   ) {
-    this.config = this.configService.config;
+    this.config = this.configService.config();
     this.blueJayUri = this.config.blueJayServer.baseUrl;
 
     this.uiConstantsStep2 = uiStringConstants.WorkflowSimulator.searchEdrs.step2;
