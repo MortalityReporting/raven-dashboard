@@ -22,13 +22,12 @@ export class ConditionalAuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Always pass through if Dashboard API services are disabled
-    console.log("I am running")
-    if (!this.configService.config?.enableDashboardApiServices) {
+    if (!this.configService.config()?.enableDashboardApiServices) {
       return next.handle(req);
     }
 
     // Check if this request is for a Dashboard API endpoint
-    const dashboardApiUrl = this.configService.config.dashboardApiUrl;
+    const dashboardApiUrl = this.configService.config()?.dashboardApiUrl;
     const isDashboardApiRequest = req.url.startsWith(dashboardApiUrl);
 
     // Only delegate to Auth0 interceptor for Dashboard API requests

@@ -9,7 +9,6 @@ import {MatTableDataSource} from "@angular/material/table";
 import {TrackingNumberType} from "../../../../../fhir-mdi-library";
 import {ModuleHeaderConfig} from "../../../../../../providers/module-header-config";
 import {ConfigService} from "../../../../../../config/config.service";
-import {Config} from "../../../../../../config/config";
 import {AccessTokenService} from "../../../../services/access-token.service";
 import {ActivatedRoute} from "@angular/router";
 import {map, switchMap, tap} from "rxjs";
@@ -48,8 +47,6 @@ export class SearchParametersComponent implements OnInit {
 
   customEndpoint: any;
 
-  config: Config;
-
   accessToken: string;
   isAccessTokenSearchActive = false;
 
@@ -64,7 +61,6 @@ export class SearchParametersComponent implements OnInit {
     private accessTokenService: AccessTokenService,
     private route: ActivatedRoute
   ) {
-    this.config = this.configService.config;
   }
 
   ngOnInit(): void {
@@ -182,7 +178,7 @@ export class SearchParametersComponent implements OnInit {
     } else if (this.customEndpoint) { //when we use custom endpoint (Minnesota had a test case)
       authObject = this.customEndpoint.auth
     } else { //we use simple authentication
-      let authStringSplit = this.config.blueJayServer.basicAuth.split(":");
+      let authStringSplit = this.configService.config().blueJayServer.basicAuth.split(":");
       authObject = {"username": authStringSplit[0], "password": authStringSplit[1]};
     }
     this.searchEdrsService.searchEdrs(this.configService.getApiUrl('blueJayServer'), this.getSearchParametersResourcePreview(), authObject, accessToken).subscribe({
