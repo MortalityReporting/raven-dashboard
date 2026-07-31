@@ -1,0 +1,44 @@
+// Hidden utility class
+.hidden {
+  display: none !important;
+}
+
+// Shared error message styles
+.error-message,
+.error-message-inline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #FBE3E2;
+  padding: 8px 8px 8px 16px;
+  margin: 16px;
+  border: 1px solid #E6615C;
+  border-radius: 4px;
+  min-height: 40px;
+
+  mat-icon {
+    color: #8B0000;
+    flex-shrink: 0;
+  }
+
+  .error-text {
+    flex: 1;
+    font-size: medium;
+    font-weight: 400;
+    color: #8B0000;
+  }
+}
+
+// Global banner specific - adds close button
+.error-message {
+  justify-content: space-between;
+
+  .close-button {
+    flex-shrink: 0;
+    color: #8B0000;
+
+    &:hover {
+      background-color: rgba(230, 97, 92, 0.1);
+    }
+  }
+}

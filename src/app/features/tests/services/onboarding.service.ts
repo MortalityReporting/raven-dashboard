@@ -1,9 +1,10 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {OnboardingHttpRequest} from "../models/onboarding-http-request";
 import {HttpClient, HttpRequest, HttpResponse} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, catchError, Observable} from "rxjs";
 import {filter, map} from "rxjs/operators";
 import {RequestType} from "../models/request-type";
+import {SharedHttpErrorService} from "../../../service/shared-http-error.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class OnboardingService {
 
   private _httpReq$ = new BehaviorSubject<any>(null);
   httpReq$ = this._httpReq$.asObservable();
+  private sharedHttpErrorService = inject(SharedHttpErrorService);
 
   private setHttpReq(httpReq: any){
     this._httpReq$.next(httpReq);
@@ -41,6 +43,7 @@ export class OnboardingService {
 
       return this.http.request(req).pipe(
         filter((event): event is HttpResponse<any> => event instanceof HttpResponse),
+        catchError(error => this.sharedHttpErrorService.handleError(error)),
         map(response => response.body)
       );
     }

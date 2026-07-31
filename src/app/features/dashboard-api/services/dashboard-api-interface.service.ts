@@ -1,7 +1,8 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpEvent, HttpRequest} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {catchError, Observable} from "rxjs";
 import {ConfigService} from "../../../config/config.service";
+import {SharedHttpErrorService} from "../../../service/shared-http-error.service";
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +11,12 @@ export class DashboardApiInterfaceService {
 
   private configService = inject(ConfigService);
   private http = inject(HttpClient);
+  private sharedHttpErrorService = inject(SharedHttpErrorService);
 
   // GET /admin-panel
   getAdminPanelData(): Observable<any> {
-    return this.http.get(`${this.configService.getApiUrl('dashboardApiUrl')}admin-panel`);
+    return this.http.get(`${this.configService.getApiUrl('dashboardApiUrl')}admin-panel`).pipe(
+      catchError(error => this.sharedHttpErrorService.handleError(error)));
   }
 
   // POST /document
@@ -30,7 +33,8 @@ export class DashboardApiInterfaceService {
     const data = new FormData()
     data.append('bucket', bucketName);
     data.append('filename', fileName);
-    return this.http.post(`${this.configService.getApiUrl('dashboardApiUrl')}attachment/download`, data, {responseType: "blob"});
+    return this.http.post(`${this.configService.getApiUrl('dashboardApiUrl')}attachment/download`, data, {responseType: "blob"})
+      .pipe(catchError(error => this.sharedHttpErrorService.handleError(error)));
   }
 
 }

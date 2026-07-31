@@ -11,13 +11,14 @@ import { HeaderComponent } from './components/common-header/header.component';
 import { UserHeaderComponent } from './features/user-management/components/user-header/user-header.component';
 import { ModuleHeaderComponent } from './components/module-header/module-header.component';
 import { RouterOutlet } from '@angular/router';
+import {ErrorMessageComponent} from "./components/error-message/error-message.component";
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: [],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [NavMenuComponent, HeaderComponent, UserHeaderComponent, ModuleHeaderComponent, RouterOutlet]
+  imports: [NavMenuComponent, HeaderComponent, UserHeaderComponent, ModuleHeaderComponent, RouterOutlet, ErrorMessageComponent]
 })
 export class AppComponent implements OnInit {
   title: string;
