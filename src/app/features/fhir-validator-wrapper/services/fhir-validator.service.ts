@@ -1,13 +1,15 @@
-import {Inject, Injectable} from '@angular/core';
+import {inject, Inject, Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import {map, Observable} from "rxjs";
+import {catchError, map, Observable} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ImplementationGuide} from "../modal/implementation-guide";
+import {SharedHttpErrorService} from "../../../service/shared-http-error.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FhirValidatorService {
+  private sharedHttpErrorService = inject(SharedHttpErrorService);
   constructor(
     private http: HttpClient,
     private _snackBar: MatSnackBar,
@@ -176,7 +178,9 @@ export class FhirValidatorService {
         .set('Content-Type', 'application/fhir+xml');
     }
 
-    return this.http.post(this.serverBaseUrl + "$validate", requestData, {headers: headers}).pipe(map((result: any) => (
+    return this.http.post(this.serverBaseUrl + "$validate", requestData, {headers: headers}).pipe(
+      catchError(error => this.sharedHttpErrorService.handleError(error)),
+      map((result: any) => (
       result as Object
     )));
   }

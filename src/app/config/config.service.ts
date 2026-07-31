@@ -1,9 +1,10 @@
-import {Injectable, isDevMode, computed, signal} from '@angular/core';
+import {Injectable, isDevMode, computed, signal, inject} from '@angular/core';
 import packageInfo from '../../../package.json';
 import {HttpBackend, HttpClient} from "@angular/common/http";
 import {map, of} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {Config} from "./config";
+import {SharedHttpErrorService} from "../service/shared-http-error.service";
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class ConfigService {
 
   private http: HttpClient
   packageInfo = packageInfo;
+  private sharedHttpErrorService = inject(SharedHttpErrorService);
 
   constructor(handler: HttpBackend) {
     this.http = new HttpClient(handler);
@@ -43,7 +45,9 @@ export class ConfigService {
         return true;
       }),
       catchError(error => {
-        console.error("No configuration file found. If in dev mode please verify the existence of local-config.json file")
+        const errMsg = "No configuration file found. If in dev mode please verify the existence of local-config.json file";
+        console.error(errMsg);
+        catchError(error => this.sharedHttpErrorService.handleError(error, errMsg))
         this.config.set(new Config());
         return of(false);
       })
