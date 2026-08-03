@@ -1,5 +1,5 @@
 import {Component, Inject, input, ChangeDetectionStrategy} from '@angular/core';
-import {FileTemplate} from "../../models/file-template";
+import {FileTemplate, TemplateContent} from "../../models/file-template";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {FileTemplateService} from "../../services/file-template.service";
 import {MatCardModule} from "@angular/material/card";
@@ -13,12 +13,12 @@ import {HttpClient} from "@angular/common/http";
     templateUrl: './file-template.component.html',
     styleUrls: ['./file-template.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [
-        MatCardModule,
-        MatButtonModule,
-        MatIconModule,
-        UpperCasePipe
-    ]
+  imports: [
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    UpperCasePipe,
+  ]
 })
 export class FileTemplateComponent {
   fileTemplate = input.required<FileTemplate>();
@@ -29,16 +29,16 @@ export class FileTemplateComponent {
     private http: HttpClient) {
   }
 
-  downloadFile(fileTemplate: FileTemplate) {
-    const uri = fileTemplate.templateContent[0].uri;
-    const downloadUrl = this.getDownloadUrl(uri);
+  downloadFile(fileTemplate: TemplateContent) {
+    const filename = this.getFileName(fileTemplate.uri);
+    const localPath = `assets/files/import-templates/${filename}`;
 
-    this.http.get(downloadUrl, { responseType: 'blob' }).subscribe({
+    this.http.get(localPath, { responseType: 'blob' }).subscribe({
       next: (blob) => {
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = this.getFileName(uri);
+        link.download = filename;
         link.click();
         window.URL.revokeObjectURL(url);
       },
@@ -46,24 +46,10 @@ export class FileTemplateComponent {
         console.error('Error downloading file:', error);
       }
     });
-
-    this.onTemplateSelected(fileTemplate);
-  }
-
-  private getDownloadUrl(uri: string): string {
-    // Convert GitHub blob URL to raw download URL
-    if (uri.includes('github.com') && uri.includes('/blob/')) {
-      return uri.replace('github.com', 'raw.githubusercontent.com').replace('/blob/', '/');
-    }
-    return uri;
   }
 
   private getFileName(uri: string): string {
     return uri.substring(uri.lastIndexOf('/') + 1);
-  }
-
-  onTemplateSelected(fileTemplate: FileTemplate) {
-    this.fileTemplateService.setSelectedFileTemplate(fileTemplate);
   }
 
 }
