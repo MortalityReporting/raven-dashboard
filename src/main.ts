@@ -2,7 +2,13 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { importProvidersFrom, provideAppInitializer, inject } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  provideHttpClient,
+  withInterceptors,
+  withInterceptorsFromDi,
+  withXhr
+} from '@angular/common/http';
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 
 import { AppComponent } from './app/app.component';
@@ -25,12 +31,16 @@ import { provideWorkflowSimulator } from './app/features/workflow-simulator/work
 import { provideFhirUtil } from './app/features/fhir-util/fhir-util.providers';
 import { provideRecordComparison } from './app/features/record-comparison/record-comparison.providers';
 import { provideRecordViewer } from './app/features/record-viewer/record-viewer.providers';
-import {ConditionalAuthInterceptor} from "./app/interceptors/conditional-auth.interceptor";
+import {httpErrorInterceptor} from "./app/interceptors/http-error.interceptor";
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
-    provideHttpClient(withXhr(), withInterceptorsFromDi()),
+    provideHttpClient(
+      withXhr(),
+      withInterceptorsFromDi(),
+      withInterceptors([httpErrorInterceptor])
+      ),
     importProvidersFrom(
       BrowserAnimationsModule
     ),

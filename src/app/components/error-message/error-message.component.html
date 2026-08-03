@@ -1,0 +1,22 @@
+@if (isVisible) {
+  @if (componentName()) {
+    <!-- Simple inline error for modals (no close button) -->
+    <div class="error-message-inline">
+      <mat-icon>error</mat-icon>
+      <div class="error-text">
+        {{ errorMessage() }}
+      </div>
+    </div>
+  } @else {
+    <!-- Full error banner for global display (with close button) -->
+    <div class="error-message">
+      <mat-icon>error</mat-icon>
+      <div class="error-text">
+        {{ errorMessage() }}
+      </div>
+      <button mat-icon-button (click)="close()" aria-label="Close error message" class="close-button">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  }
+}

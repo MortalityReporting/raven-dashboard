@@ -1,8 +1,9 @@
 import {inject, Injectable, signal} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ConfigService} from "../../../config/config.service";
-import {Observable, tap} from "rxjs";
+import {catchError, Observable, tap} from "rxjs";
 import {ExternalApiSubmissionService} from "./external-api-submission.service";
+import {SharedHttpErrorService} from "../../../service/shared-http-error.service";
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class DeathCertificateReviewService {
   }
 
   dcrFhirBundleUrl = '';
+  private sharedHttpErrorService = inject(SharedHttpErrorService);
 
   constructor(
     private http: HttpClient,
@@ -43,7 +45,8 @@ export class DeathCertificateReviewService {
 
     return this.http.post(`${this.dcrFhirBundleUrl}`, resource, httpOptions).pipe(
       tap((res: any) => {
-        this.setFhirBundle(res)
+        this.setFhirBundle(res);
+        catchError(error => this.sharedHttpErrorService.handleError(error))
       })
     );
   }
