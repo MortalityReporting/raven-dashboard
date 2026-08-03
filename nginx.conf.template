@@ -36,11 +36,6 @@ server {
         index index.html;
     }
 
-    # Fallback for root if BASE_HREF is not /
-    location = / {
-        return 301 ${BASE_HREF};
-    }
-
     # Deny access to hidden files
     location ~ /\. {
         deny all;
