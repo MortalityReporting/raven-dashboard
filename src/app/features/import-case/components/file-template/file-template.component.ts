@@ -5,7 +5,7 @@ import {FileTemplateService} from "../../services/file-template.service";
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
-import {JsonPipe, UpperCasePipe} from "@angular/common";
+import {UpperCasePipe} from "@angular/common";
 import {HttpClient} from "@angular/common/http";
 
 @Component({
@@ -18,7 +18,6 @@ import {HttpClient} from "@angular/common/http";
     MatButtonModule,
     MatIconModule,
     UpperCasePipe,
-    JsonPipe
   ]
 })
 export class FileTemplateComponent {
