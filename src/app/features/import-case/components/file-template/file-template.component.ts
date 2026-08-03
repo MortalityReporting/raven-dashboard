@@ -49,14 +49,6 @@ export class FileTemplateComponent {
     });
   }
 
-  private getDownloadUrl(uri: string): string {
-    // Convert GitHub blob URL to raw download URL
-    if (uri.includes('github.com') && uri.includes('/blob/')) {
-      return uri.replace('github.com', 'raw.githubusercontent.com').replace('/blob/', '/');
-    }
-    return uri;
-  }
-
   private getFileName(uri: string): string {
     return uri.substring(uri.lastIndexOf('/') + 1);
   }
