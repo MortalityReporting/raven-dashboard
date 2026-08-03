@@ -1,11 +1,11 @@
 import {Component, Inject, input, ChangeDetectionStrategy} from '@angular/core';
-import {FileTemplate} from "../../models/file-template";
+import {FileTemplate, TemplateContent} from "../../models/file-template";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {FileTemplateService} from "../../services/file-template.service";
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
-import {UpperCasePipe} from "@angular/common";
+import {JsonPipe, UpperCasePipe} from "@angular/common";
 import {HttpClient} from "@angular/common/http";
 
 @Component({
@@ -13,12 +13,13 @@ import {HttpClient} from "@angular/common/http";
     templateUrl: './file-template.component.html',
     styleUrls: ['./file-template.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [
-        MatCardModule,
-        MatButtonModule,
-        MatIconModule,
-        UpperCasePipe
-    ]
+  imports: [
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    UpperCasePipe,
+    JsonPipe
+  ]
 })
 export class FileTemplateComponent {
   fileTemplate = input.required<FileTemplate>();
@@ -29,16 +30,16 @@ export class FileTemplateComponent {
     private http: HttpClient) {
   }
 
-  downloadFile(fileTemplate: FileTemplate) {
-    const uri = fileTemplate.templateContent[0].uri;
-    const downloadUrl = this.getDownloadUrl(uri);
+  downloadFile(fileTemplate: TemplateContent) {
+    const filename = this.getFileName(fileTemplate.uri);
+    const localPath = `assets/files/import-templates/${filename}`;
 
-    this.http.get(downloadUrl, { responseType: 'blob' }).subscribe({
+    this.http.get(localPath, { responseType: 'blob' }).subscribe({
       next: (blob) => {
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = this.getFileName(uri);
+        link.download = filename;
         link.click();
         window.URL.revokeObjectURL(url);
       },
@@ -46,8 +47,6 @@ export class FileTemplateComponent {
         console.error('Error downloading file:', error);
       }
     });
-
-    this.onTemplateSelected(fileTemplate);
   }
 
   private getDownloadUrl(uri: string): string {
@@ -60,10 +59,6 @@ export class FileTemplateComponent {
 
   private getFileName(uri: string): string {
     return uri.substring(uri.lastIndexOf('/') + 1);
-  }
-
-  onTemplateSelected(fileTemplate: FileTemplate) {
-    this.fileTemplateService.setSelectedFileTemplate(fileTemplate);
   }
 
 }
