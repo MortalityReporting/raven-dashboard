@@ -13,12 +13,12 @@ import {HttpClient} from "@angular/common/http";
     templateUrl: './file-template.component.html',
     styleUrls: ['./file-template.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-  imports: [
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
-    UpperCasePipe,
-  ]
+    imports: [
+        MatCardModule,
+        MatButtonModule,
+        MatIconModule,
+        UpperCasePipe
+    ]
 })
 export class FileTemplateComponent {
   fileTemplate = input.required<FileTemplate>();
@@ -31,9 +31,7 @@ export class FileTemplateComponent {
 
   downloadFile(fileTemplate: TemplateContent) {
     const filename = this.getFileName(fileTemplate.uri);
-    const localPath = `assets/files/import-templates/${filename}`;
-
-    this.http.get(localPath, { responseType: 'blob' }).subscribe({
+    this.http.get(fileTemplate.uri, { responseType: 'blob' }).subscribe({
       next: (blob) => {
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -46,6 +44,7 @@ export class FileTemplateComponent {
         console.error('Error downloading file:', error);
       }
     });
+
   }
 
   private getFileName(uri: string): string {
