@@ -107,8 +107,10 @@ export class ComparisonService {
         this.bundleHelper.findResourceByProfileName( referenceDocument, this.fhirProfiles.USCore.USCorePatient ));
 
       difference.practitioner = new USCorePractitionerDiff(
-        this.bundleHelper.findResourceByProfileName( userDocument, this.fhirProfiles.USCore.USCorePractitioner ),
-        this.bundleHelper.findResourceByProfileName( referenceDocument, this.fhirProfiles.USCore.USCorePractitioner ));
+        this.bundleHelper.findResourceByProfileName(userDocument, this.fhirProfiles.USCore.USCorePractitioner) ||
+        this.bundleHelper.findResourceByProfileName(userDocument, this.fhirProfiles.VRCL.Practitioner_VR),
+        this.bundleHelper.findResourceByProfileName(referenceDocument, this.fhirProfiles.USCore.USCorePractitioner) ||
+        this.bundleHelper.findResourceByProfileName(referenceDocument, this.fhirProfiles.VRCL.Practitioner_VR));
 
       difference.autopsyPerformed = new ObservationAutopsyPerformedDiff(
         this.bundleHelper.findResourceByProfileName( userDocument, this.fhirProfiles.VRCL.Obs_AutopsyPerformed ),

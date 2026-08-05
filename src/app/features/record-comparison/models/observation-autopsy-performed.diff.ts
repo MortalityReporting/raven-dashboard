@@ -23,6 +23,11 @@ export class ObservationAutopsyPerformedDiff extends ObservationDiff {
     {
         super.doDiff();
 
+        // If parent detected missing resource, all fields are already marked invalid
+        if (this.style === 'invalid') {
+            return;
+        }
+
         try {
             this.componentValueCodeableConcept.expected = JSON.stringify( this.expected.component[0].valueCodeableConcept, null, 4 );
             this.componentValueCodeableConcept.actual = JSON.stringify( this.actual.component[0].valueCodeableConcept, null, 4 );

@@ -1,5 +1,6 @@
 import * as Diff from 'diff';
 import {DiffType} from './diff-type';
+import {markAllFieldsInvalid} from './base-diff.helper';
 
 export class USCoreLocationDiff {
     address: DiffType;
@@ -28,6 +29,12 @@ export class USCoreLocationDiff {
 
     doDiff()
     {
+        // Check if one resource exists but the other doesn't
+        if ((this.actual && !this.expected) || (!this.actual && this.expected)) {
+            markAllFieldsInvalid(this);
+            return;
+        }
+
         try {
             this.address.expected = JSON.stringify( this.expected.address, null, 4 );
             this.address.actual = JSON.stringify( this.actual.address, null, 4 );
