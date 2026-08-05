@@ -7,7 +7,7 @@ export class USCoreLocationDiff {
     meta: DiffType;
     resourceType: DiffType;
 
-    style: string = 'invalid';
+    style: string;
 
     actual: any;
     expected: any;
@@ -17,7 +17,7 @@ export class USCoreLocationDiff {
         this.actual = actual;
         this.expected = expected;
 
-        this.style = 'invalid';
+        this.style = null;
         this.address = new DiffType();
         this.id = new DiffType();
         this.meta = new DiffType();

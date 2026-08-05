@@ -11,7 +11,7 @@ export class ObservationAutopsyPerformedDiff extends ObservationDiff {
     {
         super( actual, expected );
 
-        this.style = 'invalid';
+        this.style = null;
         this.componentValueCodeableConcept = new DiffType();
         this.status = new DiffType();
         this.valueCodeableConcept = new DiffType();

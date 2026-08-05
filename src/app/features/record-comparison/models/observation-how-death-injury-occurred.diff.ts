@@ -12,7 +12,7 @@ export class ObservationHowDeathInjuryOccurredDiff extends ObservationDiff {
   constructor(actual: any, expected: any) {
     super(actual, expected);
 
-    this.style = 'invalid';
+    this.style = null;
     this.placeOfInjury = new DiffType();
     this.effectiveDateTime = new DiffType();
     this.transportationRole = new DiffType();

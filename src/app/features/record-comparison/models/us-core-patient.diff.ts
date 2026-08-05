@@ -24,7 +24,7 @@ export class USCorePatientDiff {
         this.actual = actual;
         this.expected = expected;
 
-        this.style = 'invalid';
+        this.style = null;
         this.address = new DiffType();
         this.birthDate = new DiffType();
         this.ethnicity = new DiffType();

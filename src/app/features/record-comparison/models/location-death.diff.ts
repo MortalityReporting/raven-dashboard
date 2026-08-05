@@ -10,7 +10,7 @@ export class LocationDeathDiff extends LocationDiff {
     {
         super( actual, expected );
 
-        this.style = 'invalid';
+        this.style = null;
         this.status = new DiffType();
         this.identifier = new DiffType();
 

@@ -1,14 +1,22 @@
-<mat-expansion-panel class="summary-section" id="name" #matExpansionPanel="matExpansionPanel">
+<mat-expansion-panel class="summary-section" id="name" #matExpansionPanel="matExpansionPanel" [disabled]="!differenceHasContents">
   <mat-expansion-panel-header>
 
     <mat-panel-title>
-      @if (state=='valid') {
-        <mat-icon class="valid-icon">done</mat-icon>
+      @if(differenceHasContents){
+        @if (state=='valid') {
+          <mat-icon class="valid-icon">done</mat-icon>
+        }
+        @if (state=='invalid') {
+          <mat-icon class="invalid-icon">error</mat-icon>
+        }
       }
-      @if (state=='invalid') {
-        <mat-icon class="invalid-icon">error</mat-icon>
+      @else {
+        <mat-icon class="no-data-icon">do_not_disturb_on</mat-icon>
       }
       {{title}}
+      @if(!differenceHasContents){
+        <span class="note margin-left-md"> No Data Found </span>
+      }
     </mat-panel-title>
 
   </mat-expansion-panel-header>

@@ -23,7 +23,7 @@ export class CompositionMdiToEdrsDiff {
     {
         this.actual = actual;
         this.expected = expected;
-        this.style = 'invalid';
+        this.style = null;
         this.author = new DiffType();
         this.date = new DiffType();
         this.extension = new DiffType();

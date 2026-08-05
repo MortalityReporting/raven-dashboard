@@ -19,7 +19,7 @@ export class LocationDiff {
         this.actual = actual;
         this.expected = expected;
 
-        this.style = 'invalid';
+        this.style = null;
         this.address = new DiffType();
         this.id = new DiffType();
         this.meta = new DiffType();

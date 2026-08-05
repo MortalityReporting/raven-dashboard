@@ -18,7 +18,7 @@ export class ObservationDiff {
         this.actual = actual;
         this.expected = expected;
 
-        this.style = 'invalid';
+        this.style = null;
         this.code = new DiffType();
         this.id = new DiffType();
         this.meta = new DiffType();
