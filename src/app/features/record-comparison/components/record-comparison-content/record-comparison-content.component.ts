@@ -133,8 +133,11 @@ export class RecordComparisonContentComponent implements OnInit {
       data: null
     }).afterClosed().subscribe(data => {
       if (data) {
-        const parsedBundle = JSON.parse( data ); // TODO: Add error handling.
-        this.userDocumentWrapper.set(this.userDocumentService.createDocumentWrapper(parsedBundle));
+        this.userDocumentWrapper.set(null);
+        setTimeout(() => { //we need to add a visual delay to indicate to the used that the dat was updated
+          const parsedBundle = JSON.parse( data ); // TODO: Add error handling.
+          this.userDocumentWrapper.set(this.userDocumentService.createDocumentWrapper(parsedBundle))
+        }, 500)
       }
     });
   }
