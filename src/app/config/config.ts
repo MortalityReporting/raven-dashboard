@@ -17,7 +17,6 @@ export interface AuthConfig {
 
 export interface CredentialField {
   value: string;
-  display: string;
 }
 
 export interface BlueJayAuth0Credentials {
