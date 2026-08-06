@@ -16,7 +16,6 @@ export interface AuthConfig {
 }
 
 export interface CredentialField {
-  name: string;
   value: string;
   display: string;
 }
