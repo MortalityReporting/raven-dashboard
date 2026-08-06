@@ -15,6 +15,24 @@ export interface AuthConfig {
   auth0: Auth0Config;
 }
 
+export interface CredentialField {
+  name: string;
+  value: string;
+  display: string;
+}
+
+export interface BlueJayAuth0Credentials {
+  grantType: CredentialField;
+  accessTokenUrl: CredentialField;
+  clientId: CredentialField;
+  clientSecret: CredentialField;
+  audience: CredentialField;
+}
+
+export interface WorkflowSimulatorConfig {
+  blueJayAuth0Credentials: BlueJayAuth0Credentials;
+}
+
 export class Config {
   constructor() {}
 
@@ -32,4 +50,5 @@ export class Config {
     basicAuth: ""
   };
   auth?: AuthConfig;
+  workflowSimulator?: WorkflowSimulatorConfig;
 }

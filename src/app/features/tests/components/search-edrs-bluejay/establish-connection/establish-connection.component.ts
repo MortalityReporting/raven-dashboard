@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnDestroy, OnInit, signal, ChangeDetectionStrategy} from '@angular/core';
+import {Component, Inject, Input, OnDestroy, OnInit, signal, computed, ChangeDetectionStrategy} from '@angular/core';
 import {SearchEdrsService} from "../../../services/search-edrs.service";
 import {DecedentSimpleInfo} from "../../../../../model/decedent-simple-info";
 import {ModuleHeaderConfig} from "../../../../../model/model-header-config";
@@ -25,6 +25,17 @@ export class EstablishConnectionComponent implements OnInit, OnDestroy {
 
   uiConstantsStep2: any;
   @Input('parentStepper') parentStepper: MatStepper;
+
+  protected readonly curlExample = computed(() => {
+    const creds = this.uiConstantsStep2?.auth0Credentials;
+    if (!creds) return { display: '', value: '' };
+
+    const display = `curl \t--request POST\n\t--url ${creds.accessTokenUrl.value}\n\t--header 'content-type: application/json'\n\t--data '{"client_id":"${creds.clientId.value}","client_secret":"${creds.clientSecret.value}","audience":"${creds.audience.value}","grant_type":"${creds.grantType.value}"}'`;
+
+    const value = `curl --request POST   --url ${creds.accessTokenUrl.value}   --header 'content-type: application/json'   --data '{"client_id":"${creds.clientId.value}","client_secret":"${creds.clientSecret.value}","audience":"${creds.audience.value}","grant_type":"${creds.grantType.value}"}'`;
+
+    return { display, value };
+  });
 
   constructor(
     @Inject('workflowSimulatorConfig') public moduleConfig: ModuleHeaderConfig,

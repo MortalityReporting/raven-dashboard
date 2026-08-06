@@ -47,9 +47,9 @@
         </mat-tab>
         <mat-tab label="Curl Example">
           <div class="code-container">
-            <pre lang="bash" role="region" aria-label="Curl command example">{{ uiConstantsStep2.auth0Credentials.curlExample.display }}</pre>
+            <pre lang="bash" role="region" aria-label="Curl command example">{{ curlExample().display }}</pre>
             <button class="icon"
-                    (click)="onCopyToClipboard(uiConstantsStep2.auth0Credentials.curlExample.value)"
+                    (click)="onCopyToClipboard(curlExample().value)"
                     [matTooltip]="'Copy curl command to clipboard'"
                     aria-label="Copy curl command to clipboard"
                     type="button">
