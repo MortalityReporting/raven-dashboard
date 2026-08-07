@@ -23,22 +23,22 @@ export class AccessTokenService {
 
   getAccessToken(): Observable<string> {
     const config = this.configService.config();
-    const blueJayCredentials = config?.workflowSimulator?.blueJayAuth0Credentials;
+    const searchEdrsCredentials = config?.workflowSimulator?.searchEdrsOAuthCredentials;
 
-    if (!blueJayCredentials) {
-      console.error('BlueJay Auth0 credentials not configured');
+    if (!searchEdrsCredentials) {
+      console.error('Search EDRS OAuth credentials not configured');
       return;
     }
 
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body = {
-      client_id: blueJayCredentials.clientId.value,
-      client_secret: blueJayCredentials.clientSecret.value,
-      audience: blueJayCredentials.audience.value,
-      grant_type: blueJayCredentials.grantType.value,
+      client_id: searchEdrsCredentials.clientId,
+      client_secret: searchEdrsCredentials.clientSecret,
+      audience: searchEdrsCredentials.audience,
+      grant_type: searchEdrsCredentials.grantType,
     };
 
-    return this.http.post(blueJayCredentials.accessTokenUrl.value, body, { headers })
+    return this.http.post(searchEdrsCredentials.accessTokenUrl, body, { headers })
       .pipe(
         map(response => response?.['access_token']),
         tap(value => this.accessToken.next(value)),
