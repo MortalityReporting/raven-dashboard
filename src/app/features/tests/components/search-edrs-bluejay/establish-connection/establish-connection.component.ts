@@ -30,9 +30,9 @@ export class EstablishConnectionComponent implements OnInit, OnDestroy {
     const creds = this.uiConstantsStep2?.auth0Credentials;
     if (!creds) return { display: '', value: '' };
 
-    const display = `curl \t--request POST\n\t--url ${creds.accessTokenUrl.value}\n\t--header 'content-type: application/json'\n\t--data '{"client_id":"${creds.clientId.value}","client_secret":"${creds.clientSecret.value}","audience":"${creds.audience.value}","grant_type":"${creds.grantType.value}"}'`;
+    const display = `curl \t--request POST\n\t--url ${creds.accessTokenUrl}\n\t--header 'content-type: application/json'\n\t--data '{"client_id":"${creds.clientId}","client_secret":"${creds.clientSecret}","audience":"${creds.audience}","grant_type":"${creds.grantType}"}'`;
 
-    const value = `curl --request POST   --url ${creds.accessTokenUrl.value}   --header 'content-type: application/json'   --data '{"client_id":"${creds.clientId.value}","client_secret":"${creds.clientSecret.value}","audience":"${creds.audience.value}","grant_type":"${creds.grantType.value}"}'`;
+    const value = `curl --request POST   --url ${creds.accessTokenUrl}   --header 'content-type: application/json'   --data '{"client_id":"${creds.clientId}","client_secret":"${creds.clientSecret}","audience":"${creds.audience}","grant_type":"${creds.grantType}"}'`;
 
     return { display, value };
   });
