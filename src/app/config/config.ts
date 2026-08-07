@@ -15,20 +15,16 @@ export interface AuthConfig {
   auth0: Auth0Config;
 }
 
-export interface CredentialField {
-  value: string;
-}
-
-export interface BlueJayAuth0Credentials {
-  grantType: CredentialField;
-  accessTokenUrl: CredentialField;
-  clientId: CredentialField;
-  clientSecret: CredentialField;
-  audience: CredentialField;
+export interface SearchEdrsAuth0Credentials {
+  grantType: string;
+  accessTokenUrl: string;
+  clientId: string;
+  clientSecret: string;
+  audience: string;
 }
 
 export interface WorkflowSimulatorConfig {
-  blueJayAuth0Credentials: BlueJayAuth0Credentials;
+  searchEdrsAuth0Credentials: SearchEdrsAuth0Credentials;
 }
 
 export class Config {
