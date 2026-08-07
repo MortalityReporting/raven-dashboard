@@ -27,7 +27,7 @@ export class EstablishConnectionComponent implements OnInit, OnDestroy {
   @Input('parentStepper') parentStepper: MatStepper;
 
   protected readonly curlExample = computed(() => {
-    const creds = this.uiConstantsStep2?.auth0Credentials;
+    const creds = this.uiConstantsStep2?.oAuthCredentials;
     if (!creds) return { display: '', value: '' };
 
     const display = `curl \t--request POST\n\t--url ${creds.accessTokenUrl}\n\t--header 'content-type: application/json'\n\t--data '{"client_id":"${creds.clientId}","client_secret":"${creds.clientSecret}","audience":"${creds.audience}","grant_type":"${creds.grantType}"}'`;
