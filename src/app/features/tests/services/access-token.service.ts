@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable, Subject, tap} from "rxjs";
 import {map} from "rxjs/operators";
-import {UiStringConstants} from "../../../providers/ui-string-constants";
+import {ConfigService} from "../../../config/config.service";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class AccessTokenService {
 
   constructor(
     private http: HttpClient,
-    private uiStringConstants: UiStringConstants) { }
+    private configService: ConfigService) { }
 
   private accessToken = new Subject<string>();
   accessToken$ = this.accessToken.asObservable();
@@ -22,15 +22,23 @@ export class AccessTokenService {
 
 
   getAccessToken(): Observable<string> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-      const body = {
-         client_id: this.uiStringConstants.blueJayAuth0Credentials.clientId.value,
-         client_secret: this.uiStringConstants.blueJayAuth0Credentials.clientSecret.value,
-         audience: this.uiStringConstants.blueJayAuth0Credentials.audience.value,
-         grant_type: this.uiStringConstants.blueJayAuth0Credentials.grantType.value,
-     };
+    const config = this.configService.config();
+    const blueJayCredentials = config?.workflowSimulator?.blueJayAuth0Credentials;
 
-    return this.http.post(this.uiStringConstants.blueJayAuth0Credentials.accessTokenUrl.value, body, { headers })
+    if (!blueJayCredentials) {
+      console.error('BlueJay Auth0 credentials not configured');
+      return;
+    }
+
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = {
+      client_id: blueJayCredentials.clientId.value,
+      client_secret: blueJayCredentials.clientSecret.value,
+      audience: blueJayCredentials.audience.value,
+      grant_type: blueJayCredentials.grantType.value,
+    };
+
+    return this.http.post(blueJayCredentials.accessTokenUrl.value, body, { headers })
       .pipe(
         map(response => response?.['access_token']),
         tap(value => this.accessToken.next(value)),

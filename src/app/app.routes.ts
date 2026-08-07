@@ -29,6 +29,7 @@ import {
   EventRegistrationComponent
 } from './features/testing-events/components/event-registration/event-registration.component';
 import { authGuard } from './guards/auth.guard';
+import { bluejayCredentialsGuard } from './guards/bluejay-credentials.guard';
 import { SearchEdrsBluejayComponent } from './features/tests/components/search-edrs-bluejay/search-edrs-bluejay.component';
 import { DcrViewerComponent } from './features/record-viewer/components/dcr-viewer/dcr-viewer.component';
 import {
@@ -120,6 +121,7 @@ export const routes: Routes = [
       {
         path: 'search-edrs-bluejay',
         component: SearchEdrsBluejayComponent,
+        canActivate: [bluejayCredentialsGuard],
         data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: 'Search EDRS Bluejay' }
       },
       {

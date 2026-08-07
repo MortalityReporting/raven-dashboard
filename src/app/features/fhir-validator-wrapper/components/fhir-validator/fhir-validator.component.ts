@@ -28,6 +28,8 @@ import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatTooltip } from '@angular/material/tooltip';
 import {FhirValidatorService} from "../../services/fhir-validator.service";
+import {SharedHttpWarningService} from "../../../../service/shared-http-warning.service";
+import {WarningMessageComponent} from "../../../../components/warning-message/warning-message.component";
 
 export type SubmitButtonAlignment = 'left' | 'right';
 export const SEVERITY_LEVELS: string[] = ['error', 'warning', 'information', 'note'];
@@ -46,7 +48,7 @@ export const FONT_WIDTH: number = 7.54;
         ]),
     ],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [MatProgressSpinner, MatCardHeader, MatCardTitle, MatButton, MatIcon, MatRadioGroup, ReactiveFormsModule, FormsModule, MatRadioButton, MatFormField, MatLabel, MatSelect, MatOption, MatError, NgStyle, NgClass, MatButtonToggleGroup, MatButtonToggle, MatCheckbox, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatTooltip, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, TitleCasePipe]
+    imports: [MatProgressSpinner, MatCardHeader, MatCardTitle, MatButton, MatIcon, MatRadioGroup, ReactiveFormsModule, FormsModule, MatRadioButton, MatFormField, MatLabel, MatSelect, MatOption, MatError, NgStyle, NgClass, MatButtonToggleGroup, MatButtonToggle, MatCheckbox, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatTooltip, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, TitleCasePipe, WarningMessageComponent]
 })
 
 
@@ -105,14 +107,13 @@ export class FhirValidatorComponent implements OnInit{
   selectedIG: ImplementationGuide;
   localResultDetailsExpanded: boolean = true; // Local state for expand/collapse button
 
-  //TODO remove this code when the API returns a timeout error
-  serverTimoutDetected = false;
-  SERVER_TIMEOUT_INTERVAL = 240000; //four minutes
+  SERVER_TIMEOUT_INTERVAL = 8000; // 4 minutes
 
   igSelectionFg = new FormGroup({});
 
   constructor(
     private fhirValidatorService: FhirValidatorService,
+    protected sharedHttpWarningService: SharedHttpWarningService,
   ) {
     this.displayedColumns = DISPLAYED_COLUMNS;
     this.severityLevelsFormControl = new UntypedFormControl(this.severityLevels);
@@ -258,7 +259,7 @@ export class FhirValidatorComponent implements OnInit{
     this.serverErrorList = [];
     this.serverErrorStatus = '';
     this.serverErrorDetected = false;
-    this.serverTimoutDetected = false;
+    this.sharedHttpWarningService.hideWarningComponent();
     this.severityLevelsFormControl.patchValue(this.severityLevels);
 
     this.validationErrorStr = this.fhirValidatorService.getUiValidationMessages(fhirResource, resourceFormat, this.selectedIG);
@@ -386,6 +387,8 @@ export class FhirValidatorComponent implements OnInit{
         },
         complete: () => {
           this.isLoading = false;
+          this.sharedHttpWarningService.hideWarningComponent();
+          this.sharedHttpWarningService.hideWarningComponent();
         }
       });
 
@@ -393,8 +396,9 @@ export class FhirValidatorComponent implements OnInit{
     setTimeout(
       () => {
         if(this.isLoading) {
-          this.isLoading = false;
-          this.serverTimoutDetected = true;
+          this.sharedHttpWarningService.setWarningMessage(
+            'The validator is downloading and caching packages and data, please wait or try later.'
+          );
         }
       }, this.SERVER_TIMEOUT_INTERVAL
     );
@@ -426,6 +430,7 @@ export class FhirValidatorComponent implements OnInit{
 
   onCancelValidation (){
     this.isLoading = false;
+    this.sharedHttpWarningService.hideWarningComponent();
   }
 
   checkExpandCollapseAllStatus() {
@@ -486,7 +491,7 @@ export class FhirValidatorComponent implements OnInit{
     this.serverErrorDetected = false;
     this.serverErrorList = [];
     this.serverErrorStatus = '';
-    this.serverTimoutDetected = false;
+    this.sharedHttpWarningService.hideWarningComponent();
     this.apiResponse.set(null);
   }
 

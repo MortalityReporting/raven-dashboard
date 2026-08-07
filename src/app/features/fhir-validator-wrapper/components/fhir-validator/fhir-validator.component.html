@@ -11,31 +11,7 @@
 }
 
 
-<!-- The section below renders error messages returned by the validator.-->
-@if (serverErrorDetected) {
-  <div class=server-error-message-container>
-    <button mat-button class="close-button" color="accent" aria-label="Close" disableRipple
-      (click)="onCloseServerErrorMessage()">
-      <mat-icon>close</mat-icon>
-    </button>
-    <div class="server-error-status"><h2>Server Error Response Status: {{ serverErrorStatus }}</h2></div>
-    @for (serverError of serverErrorList; track serverError) {
-      <div class="server-error-message-text"
-      [innerText]="serverError.diagnostics"></div>
-    }
-  </div>
-}
-
-<!-- TODO remove this code when the API code is updated to return 408 on request timeout -->
-@if (serverTimoutDetected) {
-  <div class=server-error-message-container>
-    <button mat-button class="close-button" color="accent" aria-label="Close" disableRipple
-      (click)="serverTimoutDetected = false">
-      <mat-icon>close</mat-icon>
-    </button>
-    <div class="server-error-status"><h2>Server Timeout Error.</h2></div>
-  </div>
-}
+<app-warning-message></app-warning-message>
 
 <!--Actions available above the FHIR validator input textarea-->
 <div class="row-button-wrapper">
@@ -398,12 +374,12 @@
       @if (localResultDetailsExpanded && apiResponse()?.formattedResource) {
         <div class="padding-top-md">
           <div class="line-numbers-response" #numbers>
-            @for (item of apiResponse()?.formattedResource?.split('\n'); track item; let i = $index) {
+            @for (item of apiResponse()?.formattedResource?.split('\n'); track i; let i = $index) {
               <div class="numbers-response">{{i + 1}}</div>
             }
           </div>
           <div class="validator-response">
-            @for (item of apiResponse()?.formattedResource?.split('\n'); track item; let i = $index) {
+            @for (item of apiResponse()?.formattedResource?.split('\n'); track i; let i = $index) {
               <span>
                 <pre [ngClass]="getLineItemClass(item, i)" class="line-item" [id]="'mark'+ (i+1)">{{item}}</pre>
               </span>
