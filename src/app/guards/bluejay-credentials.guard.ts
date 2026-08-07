@@ -11,15 +11,15 @@ export const bluejayCredentialsGuard: CanActivateFn = () => {
   const config = configService.config();
 
   // Check if searchEdrOAuthCredentials exists and has required properties
-  const searchEdrCredentials = config?.workflowSimulator?.searchEdrOAuthCredentials;
+  const searchEdrsCredentials = config?.workflowSimulator?.searchEdrOAuthCredentials;
 
   // Verify that credentials exist and have the essential properties
   return !!(
-    searchEdrCredentials &&
-    searchEdrCredentials.clientId &&
-    searchEdrCredentials.clientSecret &&
-    searchEdrCredentials.accessTokenUrl &&
-    searchEdrCredentials.audience &&
-    searchEdrCredentials.grantType
+    searchEdrsCredentials &&
+    searchEdrsCredentials.clientId &&
+    searchEdrsCredentials.clientSecret &&
+    searchEdrsCredentials.accessTokenUrl &&
+    searchEdrsCredentials.audience &&
+    searchEdrsCredentials.grantType
   );
 };
