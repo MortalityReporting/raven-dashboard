@@ -23,22 +23,22 @@ export class AccessTokenService {
 
   getAccessToken(): Observable<string> {
     const config = this.configService.config();
-    const searchEdrCredentials = config?.workflowSimulator?.searchEdrOAuthCredentials;
+    const searchEdrsCredentials = config?.workflowSimulator?.searchEdrsOAuthCredentials;
 
-    if (!searchEdrCredentials) {
-      console.error('Search EDR OAuth credentials not configured');
+    if (!searchEdrsCredentials) {
+      console.error('Search EDRS OAuth credentials not configured');
       return;
     }
 
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body = {
-      client_id: searchEdrCredentials.clientId,
-      client_secret: searchEdrCredentials.clientSecret,
-      audience: searchEdrCredentials.audience,
-      grant_type: searchEdrCredentials.grantType,
+      client_id: searchEdrsCredentials.clientId,
+      client_secret: searchEdrsCredentials.clientSecret,
+      audience: searchEdrsCredentials.audience,
+      grant_type: searchEdrsCredentials.grantType,
     };
 
-    return this.http.post(searchEdrCredentials.accessTokenUrl, body, { headers })
+    return this.http.post(searchEdrsCredentials.accessTokenUrl, body, { headers })
       .pipe(
         map(response => response?.['access_token']),
         tap(value => this.accessToken.next(value)),

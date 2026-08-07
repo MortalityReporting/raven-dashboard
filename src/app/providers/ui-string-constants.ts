@@ -42,7 +42,7 @@ export class UiStringConstants {
       PROCEED_TO_NEXT_STEP_BTN: `Establish Authorization`,
       authenticationOptions: ['None', 'Basic', 'Bearer Token'],
       endpointTypeOptions: ['Registered Endpoint', 'Custom Endpoint'],
-      oAuthCredentials: config?.workflowSimulator?.searchEdrOAuthCredentials
+      oAuthCredentials: config?.workflowSimulator?.searchEdrsOAuthCredentials
     };
   }
 
