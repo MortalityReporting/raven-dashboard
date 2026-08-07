@@ -23,10 +23,10 @@ export class AccessTokenService {
 
   getAccessToken(): Observable<string> {
     const config = this.configService.config();
-    const searchEdrsCredentials = config?.workflowSimulator?.searchEdrsAuth0Credentials;
+    const searchEdrsCredentials = config?.workflowSimulator?.searchEdrsOAuthCredentials;
 
     if (!searchEdrsCredentials) {
-      console.error('Search EDRS Auth0 credentials not configured');
+      console.error('Search EDRS OAuth credentials not configured');
       return;
     }
 

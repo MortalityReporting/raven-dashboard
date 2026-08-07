@@ -15,7 +15,7 @@ export interface AuthConfig {
   auth0: Auth0Config;
 }
 
-export interface SearchEdrsAuth0Credentials {
+export interface SearchEdrsOAuthCredentials {
   grantType: string;
   accessTokenUrl: string;
   clientId: string;
@@ -24,7 +24,7 @@ export interface SearchEdrsAuth0Credentials {
 }
 
 export interface WorkflowSimulatorConfig {
-  searchEdrsAuth0Credentials: SearchEdrsAuth0Credentials;
+  searchEdrsOAuthCredentials: SearchEdrsOAuthCredentials;
 }
 
 export class Config {

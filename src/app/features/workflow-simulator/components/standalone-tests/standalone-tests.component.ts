@@ -22,7 +22,7 @@ export class StandaloneTestsComponent {
   protected readonly standaloneTests = computed(() => {
     const allTests = this.uiStringConstants.WORKFLOW_STANDALONE_TESTS;
     const config = this.configService.config();
-    const hasSearchEdrsCredentials = !!config?.workflowSimulator?.searchEdrsAuth0Credentials;
+    const hasSearchEdrsCredentials = !!config?.workflowSimulator?.searchEdrsOAuthCredentials;
 
     // Filter out 'search-edrs-bluejay' if credentials are not configured
     return allTests.filter(test =>
