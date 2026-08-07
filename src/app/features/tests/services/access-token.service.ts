@@ -30,13 +30,33 @@ export class AccessTokenService {
       return;
     }
 
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const body = {
-      client_id: searchEdrsCredentials.clientId,
-      client_secret: searchEdrsCredentials.clientSecret,
-      audience: searchEdrsCredentials.audience,
-      grant_type: searchEdrsCredentials.grantType,
-    };
+    // Default to JSON if not specified
+    const contentType = searchEdrsCredentials.contentType || 'application/json';
+    const headers = new HttpHeaders({ 'Content-Type': contentType });
+
+    let body: any;
+
+    if (contentType === 'application/x-www-form-urlencoded') {
+      // Build URL-encoded form data
+      const params = new URLSearchParams();
+      params.set('client_id', searchEdrsCredentials.clientId);
+      params.set('client_secret', searchEdrsCredentials.clientSecret);
+      params.set('grant_type', searchEdrsCredentials.grantType);
+      if (searchEdrsCredentials.audience) {
+        params.set('audience', searchEdrsCredentials.audience);
+      }
+      body = params.toString();
+    } else {
+      // Build JSON body
+      body = {
+        client_id: searchEdrsCredentials.clientId,
+        client_secret: searchEdrsCredentials.clientSecret,
+        grant_type: searchEdrsCredentials.grantType,
+      };
+      if (searchEdrsCredentials.audience) {
+        body.audience = searchEdrsCredentials.audience;
+      }
+    }
 
     return this.http.post(searchEdrsCredentials.accessTokenUrl, body, { headers })
       .pipe(

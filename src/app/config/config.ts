@@ -20,7 +20,8 @@ export interface SearchEdrsOAuthCredentials {
   accessTokenUrl: string;
   clientId: string;
   clientSecret: string;
-  audience: string;
+  audience?: string;
+  contentType?: 'application/json' | 'application/x-www-form-urlencoded';
 }
 
 export interface WorkflowSimulatorConfig {
