@@ -14,12 +14,12 @@ export const bluejayCredentialsGuard: CanActivateFn = () => {
   const searchEdrsCredentials = config?.workflowSimulator?.searchEdrsOAuthCredentials;
 
   // Verify that credentials exist and have the essential properties
+  // Note: audience is optional as some OAuth servers don't require it
   return !!(
     searchEdrsCredentials &&
     searchEdrsCredentials.clientId &&
     searchEdrsCredentials.clientSecret &&
     searchEdrsCredentials.accessTokenUrl &&
-    searchEdrsCredentials.audience &&
     searchEdrsCredentials.grantType
   );
 };
