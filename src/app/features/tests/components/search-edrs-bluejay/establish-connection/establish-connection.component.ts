@@ -30,9 +30,24 @@ export class EstablishConnectionComponent implements OnInit, OnDestroy {
     const creds = this.uiConstantsStep2?.oAuthCredentials;
     if (!creds) return { display: '', value: '' };
 
-    const display = `curl \t--request POST\n\t--url ${creds.accessTokenUrl}\n\t--header 'content-type: application/json'\n\t--data '{"client_id":"${creds.clientId}","client_secret":"${creds.clientSecret}","audience":"${creds.audience}","grant_type":"${creds.grantType}"}'`;
+    // Build the data object conditionally
+    const dataObj: any = {
+      client_id: creds.clientId,
+      client_secret: creds.clientSecret
+    };
 
-    const value = `curl --request POST   --url ${creds.accessTokenUrl}   --header 'content-type: application/json'   --data '{"client_id":"${creds.clientId}","client_secret":"${creds.clientSecret}","audience":"${creds.audience}","grant_type":"${creds.grantType}"}'`;
+    // Only add audience if it exists and is not empty
+    if (creds.audience) {
+      dataObj.audience = creds.audience;
+    }
+
+    dataObj.grant_type = creds.grantType;
+
+    const dataString = JSON.stringify(dataObj);
+
+    const display = `curl \t--request POST\n\t--url ${creds.accessTokenUrl}\n\t--header 'content-type: application/json'\n\t--data '${dataString}'`;
+
+    const value = `curl --request POST   --url ${creds.accessTokenUrl}   --header 'content-type: application/json'   --data '${dataString}'`;
 
     return { display, value };
   });
