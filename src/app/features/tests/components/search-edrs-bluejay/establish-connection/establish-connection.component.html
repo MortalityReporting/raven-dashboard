@@ -38,10 +38,12 @@
               <div class="grid-item display">Grant Type:</div>
               <div class="grid-item value">{{ uiConstantsStep2.oAuthCredentials.grantType }}</div>
             </div>
-            <div class="grid-row" role="listitem">
-              <div class="grid-item display">Audience:</div>
-              <div class="grid-item value">{{ uiConstantsStep2.oAuthCredentials.audience }}</div>
-            </div>
+            @if(uiConstantsStep2.oAuthCredentials?.audience){
+              <div class="grid-row" role="listitem">
+                <div class="grid-item display">Audience:</div>
+                <div class="grid-item value">{{ uiConstantsStep2.oAuthCredentials.audience }}</div>
+              </div>
+            }
           </dl>
 
         </mat-tab>
