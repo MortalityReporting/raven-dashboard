@@ -24,11 +24,21 @@ export class StandaloneTestsComponent {
     const config = this.configService.config();
     const hasSearchEdrsCredentials = !!config?.workflowSimulator?.searchEdrsOAuthCredentials;
 
-    // Filter out 'search-edrs-bluejay' if credentials are not configured
-    return allTests.filter(test =>
-      test.name !== 'search-edrs-bluejay' || hasSearchEdrsCredentials
-    );
+    return allTests.filter(test => this.isTestAvailable(test, config, hasSearchEdrsCredentials));
   });
+
+  private isTestAvailable(test: Test, config: any, hasSearchEdrsCredentials: boolean): boolean {
+    // Tests require the service to be enabled
+    if (test.name === 'onboarding' && !config.enableDashboardApiServices) {
+      return false;
+    }
+
+    // Search EDRS test requires credentials
+    if (test.name === 'search-edrs-bluejay' && !hasSearchEdrsCredentials) {
+      return false;
+    }
+    return true;
+  }
 
   constructor(
     @Inject('workflowSimulatorConfig') public config: ModuleHeaderConfig,

@@ -135,17 +135,10 @@ export class UiStringConstants {
     {
       name: 'toxRecordSubmission',
       display: 'Toxicology Record Submission',
-      description: "Toxicology record submission description",
+      description: "The Toxicology Record Submission workflow simulation demonstrates the transfer of a toxicology report from a Laboratory Information Management System (LIMS) to a Coroner & Medical Examiner's Case Management System (CMS). In this simulation, the user provides the CMS toxicology receiving API endpoint URL, user credentials, and any required headers.",
       status: TestStatusCodes.notStarted,
       route: 'tox-submission'
-    },
-    {
-      name: 'updateEdrs',
-      display: 'Update EDRS',
-      description: "Updated EDRS module description",
-      status: TestStatusCodes.notStarted,
-      route: 'update-edrs'
-    },
+    }
   ];
 
 }
