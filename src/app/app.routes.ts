@@ -21,7 +21,6 @@ import { SearchEdrsComponent } from './features/tests/components/search-edrs/sea
 import {
   StandaloneTestsComponent
 } from './features/workflow-simulator/components/standalone-tests/standalone-tests.component';
-import { UpdateEdrsComponent } from './features/tests/components/update-edrs/update-edrs.component';
 import {
   TestingEventRootComponent
 } from './features/testing-events/components/testing-event-root/testing-event-root.component';
@@ -123,11 +122,6 @@ export const routes: Routes = [
         component: SearchEdrsBluejayComponent,
         canActivate: [bluejayCredentialsGuard],
         data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: 'Search EDRS Bluejay' }
-      },
-      {
-        path: 'update-edrs',
-        component: UpdateEdrsComponent,
-        data: { moduleConfig: ModuleHeaderConfig.WorkflowSimulator, componentTitle: 'Updated EDRS' }
       },
       {
         path: 'dcr-submission',

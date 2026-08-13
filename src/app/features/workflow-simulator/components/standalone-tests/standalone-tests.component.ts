@@ -29,7 +29,7 @@ export class StandaloneTestsComponent {
 
   private isTestAvailable(test: Test, config: any, hasSearchEdrsCredentials: boolean): boolean {
     // Tests require the service to be enabled
-    if ((test.name === 'onboarding' || test.name === 'updateEdrs') && !config.enableDashboardApiServices) {
+    if (test.name === 'onboarding' && !config.enableDashboardApiServices) {
       return false;
     }
 
@@ -37,7 +37,6 @@ export class StandaloneTestsComponent {
     if (test.name === 'search-edrs-bluejay' && !hasSearchEdrsCredentials) {
       return false;
     }
-
     return true;
   }
 
