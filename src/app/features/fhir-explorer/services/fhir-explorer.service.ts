@@ -15,7 +15,7 @@ export class FhirExplorerService {
   apiUrl: string;
 
   constructor(private configService: ConfigService, private http:HttpClient) {
-    this.apiUrl =`${this.configService.getApiUrl('fhirValidatorUrl')}$translate`
+    this.apiUrl =`${this.configService.getApiUrl('fhirValidatorUrl')}$convert`
   }
 
   setSelectedFhirResource(fhirResource: any) {
