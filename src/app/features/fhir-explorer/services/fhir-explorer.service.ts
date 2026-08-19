@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+
 import {BehaviorSubject, Observable} from 'rxjs';
 import {FhirResource} from "../../fhir-util";
 import {ConfigService} from "../../../config/config.service";
@@ -32,8 +33,12 @@ export class FhirExplorerService {
 
     const options  = {
       responseType: 'text' as 'text',
+      headers: new HttpHeaders({
+        'Accept': 'application/xml'
+      })
     };
 
     return this.http.post(this.apiUrl, body, options );
   }
+
 }
