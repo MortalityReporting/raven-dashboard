@@ -135,11 +135,19 @@ tr.text-value-row {
 }
 
 .validation-result-detail {
+  display: grid;
+  grid-template-rows: 0fr;
   overflow: hidden;
-  display: flex;
+  transition: grid-template-rows 225ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.expanded {
+    grid-template-rows: 1fr;
+  }
 }
 
 .validation-result-text-value {
+  overflow: hidden;
+  min-height: 0;
   padding: 16px;
 }
 
