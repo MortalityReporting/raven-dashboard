@@ -119,7 +119,7 @@ td , th {
 }
 
 #validator-title{
-  padding-left: 0px;
+  padding-left: 0;
 }
 
 table {
@@ -237,3 +237,8 @@ mat-button-toggle{
   margin: 0;
   white-space: pre;
 }
+
+.ig-name-field {
+  min-width: 280px;
+}
+

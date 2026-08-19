@@ -36,9 +36,10 @@
 
   @if(igList()?.length > 1){
     <form [formGroup]="igSelectionFg">
-    <mat-form-field appearance="outline" class="margin-left-md margin-top-md margin-right-md">
+    <mat-form-field appearance="outline" class="margin-left-md margin-top-md margin-right-md ig-name-field">
       <mat-label>Select IG Name</mat-label>
       <mat-select formControlName="selectedIgName">
+
         @for (igName of igNameList; track igName) {
           <mat-option [value]="igName">
             {{ igName }}
