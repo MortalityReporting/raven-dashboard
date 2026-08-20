@@ -3,7 +3,7 @@ import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {FhirValidatorResultsExportService} from "../../../../service/fhir-validator-results-export.service";
 import {MatCardModule} from "@angular/material/card";
 import {FhirValidatorComponent} from "../fhir-validator/fhir-validator.component";
-import {ValidatorInput} from "../../modal/validator-input-format";
+import {ValidatorInput} from "../../models/validator-input-format";
 
 @Component({
     selector: 'app-fhir-validator',

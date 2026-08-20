@@ -10,12 +10,12 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, UntypedFormControl, Validators, ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from "@angular/material/table";
-import {ResponseItem, FhirLocation} from "../../modal/response-item";
+import {ResponseItem, FhirLocation} from "../../models/response-item";
 
-import {ValidationResults} from "../../modal/validation-results";
-import {ApiResponse} from "../../modal/api-response";
-import {ValidatorInput} from "../../modal/validator-input-format";
-import {ImplementationGuide} from "../../modal/implementation-guide";
+import {ValidationResults} from "../../models/validation-results";
+import {ApiResponse} from "../../models/api-response";
+import {ValidatorInput} from "../../models/validator-input-format";
+import {ImplementationGuide} from "../../models/implementation-guide";
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { MatButton } from '@angular/material/button';
@@ -103,7 +103,7 @@ export class FhirValidatorComponent implements OnInit, OnDestroy {
   selectedIG: ImplementationGuide;
   localResultDetailsExpanded: boolean = true; // Local state for expand/collapse button
 
-  SERVER_TIMEOUT_INTERVAL = 8000; // 4 minutes
+  SERVER_TIMEOUT_INTERVAL = 8000; // 8 seconds
 
   igSelectionFg = new FormGroup({});
 
