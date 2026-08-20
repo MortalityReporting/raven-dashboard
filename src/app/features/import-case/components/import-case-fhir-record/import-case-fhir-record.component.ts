@@ -1,7 +1,6 @@
 import {Component, Inject, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {ImportCaseService} from "../../services/import-case.service";
 import {UtilsService} from "../../../../service/utils.service";
-import {FhirValidatorWrapperComponent} from "../../../fhir-validator-wrapper/components/fhir-validator-wrapper/fhir-validator-wrapper.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
 import {FhirValidatorResultsExportService} from "../../../../service/fhir-validator-results-export.service";
@@ -15,9 +14,9 @@ import {openConfirmationDialog} from "../../../../components/widgets/confirmatio
 
 
 @Component({
-    selector: 'app-import-case-fhir-record',
-    templateUrl: './import-case-fhir-record.component.html',
-    styleUrls: ['./import-case-fhir-record.component.scss'],
+  selector: 'app-import-case-fhir-record',
+  templateUrl: './import-case-fhir-record.component.html',
+  styleUrls: ['./import-case-fhir-record.component.scss'],
   changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     FhirValidatorComponent,
@@ -28,7 +27,6 @@ import {openConfirmationDialog} from "../../../../components/widgets/confirmatio
 })
 export class ImportCaseFhirRecordComponent {
 
-  @ViewChild(FhirValidatorWrapperComponent) validator: FhirValidatorWrapperComponent;
   @ViewChild(FhirValidatorComponent) fhirValidator
 
   isLoading: boolean = false;

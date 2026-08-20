@@ -1,6 +1,9 @@
 import {
   Component,
   ElementRef,
+  Inject,
+  Optional,
+  computed,
   input,
   OnInit,
   output,
@@ -17,19 +20,21 @@ import {ApiResponse} from "../../models/api-response";
 import {ValidatorInput} from "../../models/validator-input-format";
 import {ImplementationGuide} from "../../models/implementation-guide";
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { MatCardHeader, MatCardTitle } from '@angular/material/card';
+import { MatCardHeader, MatCardTitle, MatCardModule } from '@angular/material/card';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
 import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
 import { MatSelect, MatOption } from '@angular/material/select';
-import { NgStyle, NgClass, TitleCasePipe } from '@angular/common';
+import { NgStyle, NgClass, NgTemplateOutlet, TitleCasePipe } from '@angular/common';
 import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatTooltip } from '@angular/material/tooltip';
 import {FhirValidatorService} from "../../services/fhir-validator.service";
 import {SharedHttpWarningService} from "../../../../service/shared-http-warning.service";
 import {WarningMessageComponent} from "../../../../components/warning-message/warning-message.component";
+import {ModuleHeaderConfig} from "../../../../providers/module-header-config";
+import {FhirValidatorResultsExportService} from "../../../../service/fhir-validator-results-export.service";
 
 export type SubmitButtonAlignment = 'left' | 'right';
 export const SEVERITY_LEVELS: string[] = ['error', 'warning', 'information', 'note'];
@@ -44,7 +49,7 @@ export const OPERATION_OUTCOME_ISSUE_COL_URL = 'http://hl7.org/fhir/StructureDef
     templateUrl: 'fhir-validator.component.html',
     styleUrls: ['fhir-validator.component.scss'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [MatProgressSpinner, MatCardHeader, MatCardTitle, MatButton, MatIcon, MatRadioGroup, ReactiveFormsModule, FormsModule, MatRadioButton, MatFormField, MatLabel, MatSelect, MatOption, MatError, NgStyle, NgClass, MatButtonToggleGroup, MatButtonToggle, MatCheckbox, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatTooltip, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, TitleCasePipe, WarningMessageComponent]
+    imports: [MatProgressSpinner, MatCardHeader, MatCardTitle, MatCardModule, MatButton, MatIcon, MatRadioGroup, ReactiveFormsModule, FormsModule, MatRadioButton, MatFormField, MatLabel, MatSelect, MatOption, MatError, NgStyle, NgClass, NgTemplateOutlet, MatButtonToggleGroup, MatButtonToggle, MatCheckbox, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatTooltip, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, TitleCasePipe, WarningMessageComponent]
 })
 
 
@@ -61,7 +66,6 @@ export class FhirValidatorComponent implements OnInit, OnDestroy {
   maxFileSize = input<number>(250000); // Max allowed file size is 250KB
   submitBtnAlignment = input<SubmitButtonAlignment>('right'); // The default location for the Submit btn
   cancelValidationBtnShown = input<boolean>(true);
-  buttonTxtColor = input<string>('white');
   buttonBackgroundColor = input<string>('#4858B8');
   exportValidationResultsBtnName = input<string>('Export Results (.zip)');
   ig = input<ImplementationGuide | undefined>(undefined);
@@ -70,6 +74,31 @@ export class FhirValidatorComponent implements OnInit, OnDestroy {
   onApiError = output<any>();
   onResourceContentChanged = output<any>();
   onExportValidationResults = output<any>();
+
+  // Only true when this component is used as the routed FHIR Validator page (set explicitly via
+  // the route's `data.pageWrapperShown` and bound through `withComponentInputBinding()`). When
+  // embedded directly in another component/feature (e.g. Import Case), this stays false and the
+  // component renders without the extra wrapper/card, using the caller's own button color/config.
+  // Note: 'fhirValidatorConfig' is provided at the application root (see provideFhirValidator in
+  // main.ts), so its mere presence cannot be used to detect page vs. embedded usage - it is
+  // visible everywhere, including when this component is embedded in Import Case.
+  pageWrapperShown = input<boolean>(false);
+  effectiveButtonBackgroundColor = computed<string>(() =>
+    this.pageWrapperShown() ? (this.fhirValidatorConfig?.backgroundColor ?? this.buttonBackgroundColor()) : this.buttonBackgroundColor()
+  );
+  // Defaults matching the previous standalone FHIR Validator page (FhirValidatorWrapperComponent) behavior,
+  // applied automatically only when this component is used as the routed page.
+  effectiveValidatorTitle = computed<string>(() => this.validatorTitle() || (this.pageWrapperShown() ? 'FHIR Validator' : ''));
+  effectiveFormatResourceBtnShown = computed<boolean>(() => this.formatResourceBtnShown() || this.pageWrapperShown());
+  private readonly defaultValidationInputFormat: ValidatorInput = {format: 'json', accepts: '.json'};
+  effectiveValidationInputFormat = computed<ValidatorInput>(() => {
+    const current = this.validationInputFormat() ?? this.defaultValidationInputFormat;
+    const isDefault = current.format === this.defaultValidationInputFormat.format
+      && current.accepts === this.defaultValidationInputFormat.accepts;
+    return this.pageWrapperShown() && isDefault
+      ? { format: 'xml and json', accepts: 'text/*,.xml,.json' }
+      : current;
+  });
 
 
   @ViewChild('validatorInput',{static:false, read: ElementRef}) inputRef: any;
@@ -110,6 +139,8 @@ export class FhirValidatorComponent implements OnInit, OnDestroy {
   constructor(
     private fhirValidatorService: FhirValidatorService,
     protected sharedHttpWarningService: SharedHttpWarningService,
+    private fhirValidatorResultsExportService: FhirValidatorResultsExportService,
+    @Optional() @Inject('fhirValidatorConfig') private fhirValidatorConfig: ModuleHeaderConfig | null,
   ) {
     this.displayedColumns = DISPLAYED_COLUMNS;
     this.severityLevelsFormControl = new UntypedFormControl(this.severityLevels);
@@ -589,6 +620,14 @@ export class FhirValidatorComponent implements OnInit, OnDestroy {
     const resultsData = this.dataSource.data
       .map(element=> { return {severity: element.severity, diagnostics: element.diagnostics, location: element.locationDisplay, fhirPath: element?.expression?.[0]}})
       .filter(item => this.severityLevelsFormControl.value.indexOf(item.severity) != -1);
+
+    // When used as the routed FHIR Validator page (fhirValidatorConfig provided), there is no
+    // external consumer wiring up the (onExportValidationResults) output, so this component
+    // handles the export itself. When embedded (e.g. Import Case), the host component listens
+    // to the output and decides how to handle the export.
+    if (this.pageWrapperShown()) {
+      this.fhirValidatorResultsExportService.exportToPdf(jsonResource, resultsData);
+    }
 
     this.onExportValidationResults.emit({jsonResource: jsonResource, resultsData: resultsData});
   }

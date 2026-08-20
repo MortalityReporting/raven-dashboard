@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { inject } from '@angular/core';
 import { LandingComponent } from './components/landing/landing.component';
 import { ImportCaseComponent } from './features/import-case';
-import { FhirValidatorWrapperComponent } from './features/fhir-validator-wrapper/components/fhir-validator-wrapper/fhir-validator-wrapper.component';
+import { FhirValidatorComponent } from './features/fhir-validator-wrapper/components/fhir-validator/fhir-validator.component';
 import { SearchRecordsComponent } from './features/record-viewer/components/search-records/search-records.component';
 import { ModuleHeaderConfig } from './providers/module-header-config';
 import { AppConfiguration } from './providers/app-configuration';
@@ -90,8 +90,8 @@ export const routes: Routes = [
 
   { // FHIR Validator Module
     path: AppConfiguration.config.modules['fhirValidator'].route,
-    component: FhirValidatorWrapperComponent,
-    data: { moduleConfig: ModuleHeaderConfig.FhirValidator, componentTitle: undefined }
+    component: FhirValidatorComponent,
+    data: { moduleConfig: ModuleHeaderConfig.FhirValidator, componentTitle: undefined, pageWrapperShown: true }
 
   },
   { // Import Case Module
