@@ -9,8 +9,8 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatIconModule} from "@angular/material/icon";
 import {FhirValidatorComponent} from "../../../fhir-validator-wrapper/components/fhir-validator/fhir-validator.component";
-import {ImplementationGuide} from "../../../fhir-validator-wrapper/modal/implementation-guide";
-import {ValidationResults} from "../../../fhir-validator-wrapper/modal/validation-results";
+import {ImplementationGuide} from "../../../fhir-validator-wrapper/models/implementation-guide";
+import {ValidationResults} from "../../../fhir-validator-wrapper/models/validation-results";
 import {openConfirmationDialog} from "../../../../components/widgets/confirmation-dialog/conformation-dialog.component";
 
 
