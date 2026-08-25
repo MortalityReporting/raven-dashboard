@@ -367,9 +367,9 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let validationResultItem; columns: displayedColumns;"
             class="table-row"
-            [class.expanded-row]="validationResultItem.expanded">
-            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="text-value-row"></tr>
-          </table>
+            [class.expanded-row]="validationResultItem.expanded"></tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="text-value-row"></tr>
+        </table>
         }
       </div>
       <!-- Resource as returned from the validator. Note that the resource returned from the validator may be

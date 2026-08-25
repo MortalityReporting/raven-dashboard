@@ -142,13 +142,16 @@ tr.text-value-row {
 
   &.expanded {
     grid-template-rows: 1fr;
+
+    .validation-result-text-value {
+      padding: 16px;
+    }
   }
 }
 
 .validation-result-text-value {
   overflow: hidden;
   min-height: 0;
-  padding: 16px;
 }
 
 .expanded-row {
