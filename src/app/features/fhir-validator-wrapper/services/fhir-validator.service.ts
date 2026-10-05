@@ -193,7 +193,6 @@ export class FhirValidatorService {
 
   private buildValidatorLoaderUrl(): string {
     const url = new URL(this.validatorLoaderPath, this.serverBaseUrl);
-    url.port = '9888';
     return url.toString();
   }
 

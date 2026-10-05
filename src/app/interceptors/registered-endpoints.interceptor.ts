@@ -41,7 +41,8 @@ export class RegisteredEndpointsInterceptor implements HttpInterceptor {
           "allowedEndpoints": [
             "$validate",
             "$convert",
-            "$packages"
+            "$packages",
+            "health"
           ]
         },
         {
