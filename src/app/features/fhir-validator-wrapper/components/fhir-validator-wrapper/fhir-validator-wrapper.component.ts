@@ -6,7 +6,7 @@ import {MatCardModule} from "@angular/material/card";
 import {FhirValidatorComponent} from "../fhir-validator/fhir-validator.component";
 import {ValidatorInput} from "../../models/validator-input-format";
 import {ValidatorLoadingMessageComponent} from "../validator-loading-message/validator-loading-message.component";
-import {FhirValidatorService} from "../../services/fhir-validator.service";
+import {FhirValidatorReadinessService} from "../../services/fhir-validator-readiness.service";
 import {SharedHttpErrorService} from "../../../../service/shared-http-error.service";
 
 @Component({
@@ -16,7 +16,6 @@ import {SharedHttpErrorService} from "../../../../service/shared-http-error.serv
   changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     MatCardModule,
-    FhirValidatorComponent,
     FhirValidatorComponent,
     ValidatorLoadingMessageComponent
   ]
@@ -32,22 +31,32 @@ export class FhirValidatorWrapperComponent implements OnInit {
   constructor(
     @Inject('fhirValidatorConfig') public config: ModuleHeaderConfig,
     private fhirValidatorResultsExportService: FhirValidatorResultsExportService,
-    private fhirValidatorService: FhirValidatorService,
+    private fhirValidatorReadinessService: FhirValidatorReadinessService,
     private destroyRef: DestroyRef) {
   }
 
   validationTextFormat: ValidatorInput = {format: 'xml and json', accepts: 'text/*,.xml,.json'};
 
   ngOnInit(): void {
-    this.fhirValidatorService.getValidatorLoaded()
+    this.fhirValidatorReadinessService.getValidatorLoaded()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: response => {
           if (response.status === 'ready') {
             this.isDataLoading.set(false);
           }
+          else {
+            this.sharedHttpErrorService.setErrorMessage(
+              `FHIR Validator returned unknown status of ${response.status}`
+            );
+          }
         },
-        error: error => console.error('Unable to determine whether the FHIR validator is loaded.', error)
+        error: error => {
+          this.sharedHttpErrorService.setErrorMessage(
+            'FHIR validator encountered error while loading data.'
+          );
+          console.error('FHIR validator encountered error while loading data.', error);
+        }
       });
   }
 

@@ -11,8 +11,6 @@ const VALIDATOR_POLL_INTERVAL_MS = 3000;
   providedIn: 'root'
 })
 export class FhirValidatorService {
-  private readonly validatorLoaderPath = '/fhir-validator-service/fhir/health';
-
   constructor(
     private http: HttpClient,
     private _snackBar: MatSnackBar,
@@ -191,17 +189,12 @@ export class FhirValidatorService {
     return this.http.get(this.serverBaseUrl + "$packages")
   }
 
-  private buildValidatorLoaderUrl(): string {
-    const url = new URL(this.validatorLoaderPath, this.serverBaseUrl);
-    return url.toString();
-  }
-
   private fetchValidatorStatus(url: string): Observable<ValidatorLoadedResponse> {
     return this.http.get<ValidatorLoadedResponse>(url);
   }
 
   getValidatorLoaded(): Observable<ValidatorLoadedResponse> {
-    const url = this.buildValidatorLoaderUrl();
+    const url = this.serverBaseUrl + "health";
 
     return defer(() => this.fetchValidatorStatus(url)).pipe(
       repeat({delay: () => timer(VALIDATOR_POLL_INTERVAL_MS)}),
