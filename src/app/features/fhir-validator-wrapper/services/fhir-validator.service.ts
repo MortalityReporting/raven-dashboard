@@ -1,11 +1,8 @@
 import {Inject, Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import {defer, last, map, Observable, repeat, takeWhile, timer} from "rxjs";
+import {map, Observable} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ImplementationGuide} from "../models/implementation-guide";
-import {ValidatorLoadedResponse} from "../models/validator-loaded-response";
-
-const VALIDATOR_POLL_INTERVAL_MS = 3000;
 
 @Injectable({
   providedIn: 'root'
@@ -187,19 +184,5 @@ export class FhirValidatorService {
 
   getIgList(){
     return this.http.get(this.serverBaseUrl + "$packages")
-  }
-
-  private fetchValidatorStatus(url: string): Observable<ValidatorLoadedResponse> {
-    return this.http.get<ValidatorLoadedResponse>(url);
-  }
-
-  getValidatorLoaded(): Observable<ValidatorLoadedResponse> {
-    const url = this.serverBaseUrl + "health";
-
-    return defer(() => this.fetchValidatorStatus(url)).pipe(
-      repeat({delay: () => timer(VALIDATOR_POLL_INTERVAL_MS)}),
-      takeWhile(response => response.status !== 'ready', true),
-      last(),
-    );
   }
 }
