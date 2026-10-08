@@ -21,7 +21,10 @@
           "builder": "@angular/build:application",
           "options": {
             "allowedCommonJsDependencies": [ "raf", "core-js", "dompurify", "html2canvas", "rgbcolor", "jspdf-autotable", "jszip"],
-            "outputPath": "dist/raven",
+            "outputPath": {
+              "base": "dist/raven",
+              "browser": ""
+            },
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
